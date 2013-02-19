@@ -14,7 +14,7 @@ $config['created_field'] = 'created';
 $config['updated_field'] = 'updated';
 $config['local_time'] = FALSE;
 $config['unix_timestamp'] = FALSE;
-$config['timestamp_format'] = '';
+$config['timestamp_format'] = 'Y-m-d H:i:s';
 $config['lang_file_format'] = 'model_${model}';
 $config['field_label_lang_format'] = '${model}_${field}';
 $config['auto_transaction'] = FALSE;
@@ -29,8 +29,8 @@ $config['db_params'] = '';
 // Uncomment to enable the production cache
 // $config['production_cache'] = APPPATH.'cache';
 
-$config['extensions_path'] = '../sparks/Datamapper-ORM/1.8.2/extensions';
-$config['extensions'] = array();
+$config['extensions_path'] = 'extensions';
+$config['extensions'] = array('array');
 
 /* End of file datamapper.php */
 /* Location: ./sparks/Datamapper-ORM/config/datamapper.php */

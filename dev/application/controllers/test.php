@@ -27,8 +27,15 @@ class Test extends CI_Controller {
                 echo '<br />';
                 echo $comment->text;
             }
+            //echo '<br /><pre>' . print_r($p, true) . '</pre>';
             echo '<hr />';
         }
+        /*$new_post = new Post();
+        $new_post->from_array(array(
+            'title' => 'Pokus 3',
+            'text' => 'Lorem ipsum a tak dalej ...',
+        ));
+        $new_post->save();*/
     }
     
 }
