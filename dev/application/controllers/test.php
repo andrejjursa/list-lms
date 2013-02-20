@@ -10,15 +10,15 @@ class Test extends CI_Controller {
     
     public function index() {
         $post = new Post();
-        $post->get();
+        $post->get_iterated();
         foreach ($post as $p) {
             echo $p->title;
             echo '<br />';
             echo $p->text;
             echo '<br />';
             echo $p->id . ' / ' . $p->created . ' / ' . $p->updated;
-            $p->comment->get();
-            $p->tag->get();
+            $p->comment->get_iterated();
+            $p->tag->get_iterated();
             echo '<br />Tags: ';
             foreach ($p->tag as $tag) {
                 echo ' ' . $tag->tag . ' ';
