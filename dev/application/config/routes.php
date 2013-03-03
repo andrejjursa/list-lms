@@ -38,8 +38,11 @@
 |
 */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "tasks";
 $route['404_override'] = '';
+
+//$route['admin'] = ''; //TODO: set this to admin login controller
+$route['admin_(:any)'] = 'admin/$1';
 
 
 /* End of file routes.php */
