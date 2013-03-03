@@ -37,11 +37,10 @@ class Login {
         $student->where('password', sha1($password));
         $student->get();
         if ($student->exists()) {
-            $userdata = array(
-                'id' => $student->id,
-                'email' => $student->email,
-                'fullname' => $student->fullname,
-            );
+            $userdata = $student->to_array();
+            unset($userdata['password']);
+            unset($userdata['created']);
+            unset($userdata['updated']);
             $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_STUDENT, $userdata);
             $this->validate_student_login_verification(TRUE);
             return true;
@@ -58,6 +57,14 @@ class Login {
             redirect($redirects['student']);
             die();
         }
+    }
+    
+    public function get_student_language() {
+        if ($this->is_student_session_valid()) {
+            $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT);
+            return $userdata['language'];
+        }
+        return $this->CI->config->item('language');
     }
     
     private function validate_student_login_verification($status = NULL) {

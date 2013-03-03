@@ -22,12 +22,16 @@ class Migration_students_table1 extends CI_Migration {
                     'constraint' => 255,
                 ),
                 'email' => array(
-                    'type' => 'varchar',
+                    'type' => 'VARCHAR',
                     'constraint' => 255,
                 ),
                 'password' => array(
-                    'type' => 'varchar',
+                    'type' => 'VARCHAR',
                     'constraint' => 40,
+                ),
+                'language' => array(
+                    'type' => 'VARCHAR',
+                    'constraint' => 32,
                 ),
             )
         );

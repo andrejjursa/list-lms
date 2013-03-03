@@ -69,7 +69,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']	= 'sk';
 
 /*
 |--------------------------------------------------------------------------
@@ -367,6 +367,16 @@ $config['proxy_ips'] = '';
 */
 $config['login_redirects']['student'] = '';
 $config['login_redirects']['teacher'] = '';
+
+
+/*
+|--------------------------------------------------------------------------
+| URL rewriting with rewrite engine
+|--------------------------------------------------------------------------
+| Boolean value, if set to TRUE, links will be generated without index.php.
+| Set to FALSE to turn off rewrite engine support.
+*/
+$config['rewrite_engine_enabled'] = FALSE;
 
 
 /* End of file config.php */

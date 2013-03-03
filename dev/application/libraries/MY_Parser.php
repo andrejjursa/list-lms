@@ -26,6 +26,9 @@ class MY_Parser extends CI_Parser {
     // The name of the theme in use
     protected $_theme_name = '';
     
+    protected $css_files = array();
+    protected $js_files = array();
+    
     public function __construct()
     {
         // Codeigniter instance and other required libraries/files
@@ -182,6 +185,9 @@ class MY_Parser extends CI_Parser {
             }
         }
         
+        $this->CI->smarty->assign('list_internal_css_files', $this->css_files);
+        $this->CI->smarty->assign('list_internal_js_files', $this->js_files);
+        
         // Load our template into our string for judgement
         $template_string = $this->CI->smarty->fetch($template);
         
@@ -194,6 +200,64 @@ class MY_Parser extends CI_Parser {
         
         // We're returning the contents, fo' shizzle
         return $template_string;
+    }
+    
+    /**
+     * Add CSS file to list of files attached to template
+     *
+     * @access public
+     * @param $file
+     */
+    public function add_css_file($file, $attributes = array()) {
+        $defaults = array(
+            'media' => 'screen',
+            'rel'   => 'stylesheet',
+            'type'  => 'text/css'
+        );
+        
+        $attributes = array_merge($defaults, $attributes);
+        
+        $html = '<link rel="'.$attributes['rel'].'" type="'.$attributes['type'].'" href="'.base_url("/public/css/".$file).'" media="'.$attributes['media'].'" />';
+        
+        $this->css_files[] = array(
+            'html' => $html,
+            'attributes' => $attributes,
+        );
+    }
+    
+    /**
+     * Add JS file to list of files attached to template
+     *
+     * @access public
+     * @param $file
+     */
+    public function add_js_file($file, $attributes = array()) {
+        $defaults = array(
+            'type'  => 'text/javascript'
+        );
+
+        $attributes = array_merge($defaults, $attributes);
+
+        $html = '<script type="'.$attributes['type'].'" src="'.base_url("/public/js/".$file).'"></script>';
+        
+        $this->js_files[] = array(
+            'html' => $html,
+            'attributes' => $attributes,
+        );
+    }
+    
+    /**
+     * Clear the list of CSS files attached to template
+     */
+    public function clear_css_files() {
+        $this->css_files = array();
+    }
+    
+    /**
+     * Clear the list of JS files attached to template
+     */
+    public function clear_js_files() {
+        $this->js_files = array();
     }
 
     /**

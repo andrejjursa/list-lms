@@ -2,6 +2,4 @@
 
 class Student extends DataMapper {
     
-    
-    
 }
