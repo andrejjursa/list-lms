@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= '';
+$config['base_url']	= 'http://localhost.bc.dev/';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = '0123456789ABCDEF0123456789ABCDEF01';
 
 /*
 |--------------------------------------------------------------------------
@@ -356,6 +356,17 @@ $config['rewrite_short_tags'] = FALSE;
 |
 */
 $config['proxy_ips'] = '';
+
+
+/*
+|--------------------------------------------------------------------------
+| Redirect links for students and teachers
+|--------------------------------------------------------------------------
+| Students or teachers will be redirected to this links, when login library
+| do not successfuly verified 
+*/
+$config['login_redirects']['student'] = '';
+$config['login_redirects']['teacher'] = '';
 
 
 /* End of file config.php */
