@@ -19,3 +19,4 @@ $lang['students_registration_validation_field_fullname'] = 'full name';
 $lang['students_registration_validation_field_email'] = 'e-mail';
 $lang['students_registration_validation_field_password'] = 'password';
 $lang['students_registration_validation_field_password_verification'] = 'password verification';
+$lang['students_registration_error_cant_save_student'] = 'Failed to create student account. Please, try your registration later.';

@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.12, created on 2013-03-04 13:11:12
+<?php /* Smarty version Smarty-3.1.12, created on 2013-03-04 19:47:15
          compiled from "application\views\frontend\students\registration.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:8516513487c23869c2-44776357%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '6dd29cf59c6bc64ee029c57784bc3ff7ce21dd8a' => 
     array (
       0 => 'application\\views\\frontend\\students\\registration.tpl',
-      1 => 1362399067,
+      1 => 1362422719,
       2 => 'file',
     ),
     'ddc67b91e8ebcb0b468a0a19d1f48e5f3f8b178d' => 
@@ -57,6 +57,10 @@ $_smarty_tpl->tpl_vars['file']->_loop = true;
         
     <h1><?php echo smarty_function_translate(array('line'=>'students_registration_welcome_text'),$_smarty_tpl);?>
 </h1>
+    <?php if ($_smarty_tpl->tpl_vars['save_error']->value){?>
+    <div class="error"><?php echo smarty_function_translate(array('line'=>'students_registration_error_cant_save_student'),$_smarty_tpl);?>
+</div>
+    <?php }?>
     <form action="<?php echo smarty_function_internal_url(array('url'=>'students/do_registration'),$_smarty_tpl);?>
 " method="post">
         <div class="field_wrap">

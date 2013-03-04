@@ -50,11 +50,13 @@ class Usermanager {
         }
     }
     
-    public function student_login_protected_redirect() {
+    public function student_login_protected_redirect($send_current_url = TRUE) {
         if (!$this->is_student_session_valid()) {
+            $current_url = encode_for_url(current_url());
             $this->CI->load->helper('url');
             $redirects = $this->CI->config->item('login_redirects');
-            redirect($redirects['student']);
+            $redirect_student = $send_current_url ? ('/' . trim($redirects['student'], '/') . '/current_url/' . $current_url . '/') : '/' . trim($redirects['student'], '/') . '/';
+            redirect(create_internal_url($redirect_student));
             die();
         }
     }

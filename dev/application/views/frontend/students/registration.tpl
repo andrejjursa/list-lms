@@ -2,6 +2,9 @@
 {block title}{translate line='students_registration_welcome_text'}{/block}
 {block main_content}
     <h1>{translate line='students_registration_welcome_text'}</h1>
+    {if $save_error}
+    <div class="error">{translate line='students_registration_error_cant_save_student'}</div>
+    {/if}
     <form action="{internal_url url='students/do_registration'}" method="post">
         <div class="field_wrap">
             <label>{translate line='students_registration_label_fullname'}:</label><br />

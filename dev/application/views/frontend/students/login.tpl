@@ -4,7 +4,7 @@
     <div id="loginbox">
         <div class="boxborder">
             <h1>{translate line='students_login_welcome_text'}</h1>
-            <form action="{internal_url url='students/do_login'}" method="post">
+            <form action="{internal_url url="students/do_login/{$uri_params|implode_uri_params}"}" method="post">
                 <p><label>{translate line='students_login_label_email'}:</label></p>
                 <p><input type="text" name="student[email]" value="{$smarty.post.student.email|escape:'html'}" /></p>
                 {form_error field='student[email]' left_delimiter = '<p class="error">' right_delimiter='</p>'}

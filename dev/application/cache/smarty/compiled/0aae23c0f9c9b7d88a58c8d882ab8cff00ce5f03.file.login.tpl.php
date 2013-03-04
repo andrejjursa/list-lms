@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.12, created on 2013-03-03 18:29:21
+<?php /* Smarty version Smarty-3.1.12, created on 2013-03-04 20:24:18
          compiled from "application\views\frontend\students\login.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:272885133512b14fc26-25716192%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0aae23c0f9c9b7d88a58c8d882ab8cff00ce5f03' => 
     array (
       0 => 'application\\views\\frontend\\students\\login.tpl',
-      1 => 1362331759,
+      1 => 1362425019,
       2 => 'file',
     ),
     'ddc67b91e8ebcb0b468a0a19d1f48e5f3f8b178d' => 
@@ -59,7 +59,8 @@ $_smarty_tpl->tpl_vars['file']->_loop = true;
         <div class="boxborder">
             <h1><?php echo smarty_function_translate(array('line'=>'students_login_welcome_text'),$_smarty_tpl);?>
 </h1>
-            <form action="<?php echo smarty_function_internal_url(array('url'=>'students/do_login'),$_smarty_tpl);?>
+            <form action="<?php ob_start();?><?php echo implode_uri_params($_smarty_tpl->tpl_vars['uri_params']->value);?>
+<?php $_tmp1=ob_get_clean();?><?php echo smarty_function_internal_url(array('url'=>"students/do_login/".$_tmp1),$_smarty_tpl);?>
 " method="post">
                 <p><label><?php echo smarty_function_translate(array('line'=>'students_login_label_email'),$_smarty_tpl);?>
 :</label></p>

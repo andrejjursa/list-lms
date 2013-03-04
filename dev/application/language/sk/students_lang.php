@@ -19,3 +19,4 @@ $lang['students_registration_validation_field_fullname'] = 'celé meno';
 $lang['students_registration_validation_field_email'] = 'e-mail';
 $lang['students_registration_validation_field_password'] = 'heslo';
 $lang['students_registration_validation_field_password_verification'] = 'potvdenie hesla';
+$lang['students_registration_error_cant_save_student'] = 'Nepodarilo sa vytvoriť študentský účet. Prosím, pokúste sa opakovať registráciu neskôr.';

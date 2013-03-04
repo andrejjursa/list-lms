@@ -365,7 +365,7 @@ $config['proxy_ips'] = '';
 | Students or teachers will be redirected to this links, when login library
 | do not successfuly verified 
 */
-$config['login_redirects']['student'] = '';
+$config['login_redirects']['student'] = 'students/login';
 $config['login_redirects']['teacher'] = '';
 
 
@@ -376,7 +376,7 @@ $config['login_redirects']['teacher'] = '';
 | Boolean value, if set to TRUE, links will be generated without index.php.
 | Set to FALSE to turn off rewrite engine support.
 */
-$config['rewrite_engine_enabled'] = FALSE;
+$config['rewrite_engine_enabled'] = TRUE;
 
 
 /* End of file config.php */
