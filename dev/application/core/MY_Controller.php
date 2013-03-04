@@ -8,8 +8,8 @@ class MY_Controller extends CI_Controller {
     }
     
     protected function init_language_for_student() {
-        $this->load->library('login');
-        $this->lang->load(strtolower(get_class($this)), $this->login->get_student_language());
+        $this->load->library('usermanager');
+        $this->lang->load(strtolower(get_class($this)), $this->usermanager->get_student_language());
     }
     
     protected function init_language_for_teacher() {

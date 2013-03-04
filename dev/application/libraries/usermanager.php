@@ -3,7 +3,7 @@
 define('SESSION_AUTH_LOGIN_STUDENT', 'SESSION_STUDENT_DATA');
 define('SESSION_AUTH_LOGIN_TEACHER', 'SESSION_TEACHER_DATA');
 
-class Login {
+class Usermanager {
     
     private $CI = NULL;
     private $student_login_verified = NULL;
@@ -65,6 +65,13 @@ class Login {
             return $userdata['language'];
         }
         return $this->CI->config->item('language');
+    }
+    
+    public function do_student_logout() {
+        if ($this->is_student_session_valid()) {
+            $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_STUDENT, array());
+            $this->validate_student_login_verification(FALSE);
+        }
     }
     
     private function validate_student_login_verification($status = NULL) {

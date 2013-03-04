@@ -17,13 +17,13 @@ class Students extends MY_Controller {
     public function do_login() {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('student[email]', $this->lang->line('students_login_field_email'), 'required');
-        $this->form_validation->set_rules('student[password]', $this->lang->line('students_login_field_password'), 'required'); 
+        $this->form_validation->set_rules('student[email]', 'lang:students_login_field_email', 'required|valid_email');
+        $this->form_validation->set_rules('student[password]', 'lang:students_login_field_password', 'required'); 
         
         if ($this->form_validation->run()) {
-            $this->load->library('login');
+            $this->load->library('usermanager');
             $student_data = $this->input->post('student');
-            if ($this->login->authenticate_student_login($student_data['email'], $student_data['password'])) {
+            if ($this->usermanager->authenticate_student_login($student_data['email'], $student_data['password'])) {
                 echo 'login OK';
             } else {
                 echo 'login FAILED';
@@ -31,6 +31,30 @@ class Students extends MY_Controller {
             }
         } else {
             $this->login();
+        }
+    }
+    
+    public function logout() {
+        $this->load->library('usermanager');
+        $this->usermanager->do_student_logout();
+        $this->parser->parse('frontend/students/logout.tpl');
+    }
+    
+    public function registration() {
+        $this->parser->parse('frontend/students/registration.tpl');
+    }
+    
+    public function do_registration() {
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('student[fullname]', 'lang:students_registration_validation_field_fullname', 'required');
+        $this->form_validation->set_rules('student[email]', 'lang:students_registration_validation_field_email', 'required|valid_email');
+        $this->form_validation->set_rules('student[password]', 'lang:students_registration_validation_field_password', 'required');
+        $this->form_validation->set_rules('student[password_verification]', 'lang:students_registration_validation_field_password_verification', 'required|matches[student[password]]');
+        if ($this->form_validation->run()) {
+            
+        } else {
+            $this->registration();
         }
     }
 }
