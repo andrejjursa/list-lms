@@ -13,11 +13,17 @@ class Students extends MY_Controller {
         echo '<a href="' . create_internal_url('students/logout') . '">Odhlasit sa</a>';
     }
     
+    /**
+     * Display login form for student.
+     */
     public function login() {
         $uri_params = $this->uri->uri_to_assoc(3);
         $this->parser->parse('frontend/students/login.tpl', array('uri_params' => $uri_params));
     }
     
+    /**
+     * Performs student login authentification and redirects him to desired url.
+     */
     public function do_login() {
         $this->load->library('form_validation');
         
@@ -43,16 +49,25 @@ class Students extends MY_Controller {
         }
     }
     
+    /**
+     * Logs out student account.
+     */
     public function logout() {
         $this->load->library('usermanager');
         $this->usermanager->do_student_logout();
         $this->parser->parse('frontend/students/logout.tpl');
     }
     
+    /**
+     * Display registration form for student account registration.
+     */
     public function registration() {
         $this->parser->parse('frontend/students/registration.tpl');
     }
     
+    /**
+     * Performs student account registration and redirects him to students/registered controller action.
+     */
     public function do_registration() {
         $this->load->library('form_validation');
         
