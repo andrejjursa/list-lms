@@ -76,6 +76,15 @@ class Usermanager {
         }
     }
     
+    public function set_student_data_to_smarty() {
+        $this->CI->load->library('parser');
+        if ($this->is_student_session_valid()) {
+            $this->CI->parser->assign('list_student_account', $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT));
+        } else {
+            $this->CI->parser->assign('list_student_account', array());
+        }
+    }
+    
     private function validate_student_login_verification($status = NULL) {
         if ($status === NULL || $status === TRUE || $status === FALSE) {
             $this->student_login_verified = $status;
