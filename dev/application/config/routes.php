@@ -41,7 +41,7 @@
 $route['default_controller'] = "tasks";
 $route['404_override'] = '';
 
-//$route['admin'] = ''; //TODO: set this to admin login controller
+$route['admin'] = 'admin/teachers'; //TODO: set this to admin login controller
 $route['admin_(:any)'] = 'admin/$1';
 
 

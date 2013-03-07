@@ -1,7 +1,18 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * This extended CI_Form_validation library provides some new and better validation functions.
+ * @package LIST_Libraries
+ * @author Andrej Jursa
+ */
 class MY_Form_validation extends CI_Form_validation {
     
+    /**
+     * Better version of standard matches method, this one will check if field is array and find appropriate value of this field.
+     * @param string $str current value of form field.
+     * @param string $field form field name, can be array.
+     * @return boolean validation result.
+     */
     public function matches($str, $field) {
         if (strpos($field, '[') !== FALSE) {
             $path = explode('[', str_replace(']', '', $field));

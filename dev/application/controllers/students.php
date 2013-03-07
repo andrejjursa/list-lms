@@ -4,7 +4,8 @@ class Students extends MY_Controller {
     
     public function __construct() {
         parent::__construct();
-        $this->init_language_for_student();
+        $this->_init_language_for_student();
+        $this->_load_student_langfile();
     }
     
     public function index() {
@@ -28,20 +29,20 @@ class Students extends MY_Controller {
         $this->load->library('form_validation');
         
         $this->form_validation->set_rules('student[email]', 'lang:students_login_field_email', 'required|valid_email');
-        $this->form_validation->set_rules('student[password]', 'lang:students_login_field_password', 'required'); 
+        $this->form_validation->set_rules('student[password]', 'lang:students_login_field_password', 'required|min_length[6]|max_length[20]');
         
         if ($this->form_validation->run()) {
-            $this->load->library('usermanager');
             $student_data = $this->input->post('student');
             if ($this->usermanager->authenticate_student_login($student_data['email'], $student_data['password'])) {
                 $uri_params = $this->uri->uri_to_assoc(3);
                 if (isset($uri_params['current_url'])) {
                     redirect(decode_from_url($uri_params['current_url']));
                 } else {
-                    redirect(create_internal_url('students/index'));
+                    $redirects = $this->config->item('after_login_redirects');
+                    redirect(create_internal_url($redirects['student']));
                 }
             } else {
-                echo 'login FAILED';
+                $this->parser->assign('general_error', $this->lang->line('students_login_error_bad_email_or_password'));
                 $this->login();
             }
         } else {
@@ -53,7 +54,6 @@ class Students extends MY_Controller {
      * Logs out student account.
      */
     public function logout() {
-        $this->load->library('usermanager');
         $this->usermanager->do_student_logout();
         $this->parser->parse('frontend/students/logout.tpl');
     }

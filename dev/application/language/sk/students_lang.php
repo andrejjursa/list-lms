@@ -8,6 +8,7 @@ $lang['students_login_label_password'] = 'Heslo študenta';
 $lang['students_login_submit_button_label'] = 'Prihlás ma';
 $lang['students_login_field_email'] = 'e-mail';
 $lang['students_login_field_password'] = 'heslo';
+$lang['students_login_error_bad_email_or_password'] = 'Nesprávny e-mail alebo heslo.';
 $lang['students_logout_logout_message'] = 'Bol(a) ste úspešne odhlásený(á).';
 $lang['students_registration_welcome_text'] = 'Registrácia študenta';
 $lang['students_registration_label_fullname'] = 'Vaše celé meno';

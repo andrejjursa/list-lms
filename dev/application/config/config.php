@@ -69,7 +69,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'sk';
+$config['language']	= 'english';
 
 /*
 |--------------------------------------------------------------------------
@@ -366,8 +366,16 @@ $config['proxy_ips'] = '';
 | do not successfuly verified 
 */
 $config['login_redirects']['student'] = 'students/login';
-$config['login_redirects']['teacher'] = '';
+$config['login_redirects']['teacher'] = 'admin_teachers/login';
 
+
+/*
+|--------------------------------------------------------------------------
+| Redirect links for students and teachers after successful login
+|--------------------------------------------------------------------------
+*/
+$config['after_login_redirects']['student'] = 'students/index';
+$config['after_login_redirects']['teacher'] = 'admin_teachers/index';
 
 /*
 |--------------------------------------------------------------------------
