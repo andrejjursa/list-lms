@@ -375,7 +375,7 @@ $config['login_redirects']['teacher'] = 'admin_teachers/login';
 |--------------------------------------------------------------------------
 */
 $config['after_login_redirects']['student'] = 'students/index';
-$config['after_login_redirects']['teacher'] = 'admin_teachers/index';
+$config['after_login_redirects']['teacher'] = 'admin_dashboard/index';
 
 /*
 |--------------------------------------------------------------------------

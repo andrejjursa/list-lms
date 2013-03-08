@@ -124,6 +124,36 @@ class Usermanager {
         }
     }
     
+    public function refresh_student_userdata() {
+        if ($this->is_student_session_valid()) {
+            $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT);
+            $student = new Teacher();
+            $student->get_where(array('id' => @$userdata['id']));
+            if ($student->exists()) {
+                $userdata = $student->to_array();
+                unset($userdata['password']);
+                unset($userdata['created']);
+                unset($userdata['updated']);
+                $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_STUDENT, $userdata);
+            }
+        }
+    }
+    
+    public function refresh_teacher_userdata() {
+        if ($this->is_teacher_session_valid()) {
+            $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER);
+            $teacher = new Teacher();
+            $teacher->get_where(array('id' => @$userdata['id']));
+            if ($teacher->exists()) {
+                $userdata = $teacher->to_array();
+                unset($userdata['password']);
+                unset($userdata['created']);
+                unset($userdata['updated']);
+                $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_TEACHER, $userdata);
+            }
+        }
+    }
+    
     /**
      * This function will redirects browser to login page for student when no student is authentificated.
      * @param boolean $send_current_url if this is set to TRUE (default), current url will be encoded and sent to login page, so user will be redirected back to it after successful login.
@@ -174,6 +204,22 @@ class Usermanager {
             return $userdata['language'];
         }
         return $this->CI->config->item('language');
+    }
+    
+    public function get_student_id() {
+        if ($this->is_student_session_valid()) {
+            $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT);
+            return intval(@$userdata['id']);
+        }
+        return 0;
+    }
+    
+    public function get_teacher_id() {
+        if ($this->is_teacher_session_valid()) {
+            $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER);
+            return intval(@$userdata['id']);
+        }
+        return 0;
     }
     
     /**

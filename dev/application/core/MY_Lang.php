@@ -17,9 +17,31 @@ class MY_Lang extends CI_Lang {
     }
     
     public function reinitialize_for_idiom($idiom) {
-        $this->lang_idiom = $idiom;
-        $this->language = array();
-        $this->is_loaded = array();
+        if (is_string($idiom) && $this->lang_idiom != $idiom) {
+            $this->lang_idiom = $idiom;
+            $old_loaded = $this->is_loaded;
+            $this->language = array();
+            $this->is_loaded = array();
+            if (count($old_loaded) > 0) { foreach($old_loaded as $load_file) {
+                if (preg_match('/^(?P<langfile>.+)_lang\.php$/i', $load_file, $matches)) {
+                    $this->load($matches['langfile']);
+                }
+            }}
+        }
+    }
+    
+    public function get_list_of_languages() {
+        $languages = scandir(APPPATH . 'language');
+        $langs = array();
+        if (count($languages) > 0) { foreach($languages as $language) {
+            if (file_exists(APPPATH . 'language/' . $language . '/config.php')) {
+                include(APPPATH . 'language/' . $language . '/config.php');
+                if (isset($lang_config['idiom']) && isset($lang_config['title'])) {
+                    $langs[$lang_config['idiom']] = $lang_config['title'];
+                }
+            }
+        }}
+        return $langs;
     }
     
     protected function load_default_lang_idiom() {

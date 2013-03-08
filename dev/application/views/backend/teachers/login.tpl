@@ -3,6 +3,7 @@
 {block main_content}
     <h1>{translate line='admin_teachers_login_welcome_title'}</h1>
     {include file='partials/frontend_general/error_box.tpl' message=$general_error inline}
+    {include file='partials/backend_general/flash_messages.tpl' inline}
     <form action="{internal_url url="admin_teachers/do_login/{$uri_params|implode_uri_params}"}" method="post">
         <p><label for="id_teacher_email">{translate line='admin_teachers_login_label_email'}:</label></p>
         <p><input type="text" name="teacher[email]" value="{$smarty.post.teacher.email|escape:'html'}" id="id_teacher_email" /></p>

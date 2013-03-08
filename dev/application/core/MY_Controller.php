@@ -6,6 +6,7 @@ class MY_Controller extends CI_Controller {
         parent::__construct();
         $this->load->database();
         $this->load->library('usermanager');
+        $this->load->library('messages');
         $this->usermanager->set_student_data_to_smarty();
         $this->usermanager->set_teacher_data_to_smarty();
     }

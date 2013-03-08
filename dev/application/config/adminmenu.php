@@ -8,6 +8,19 @@ $config['adminmenu'] = array(
         'sub' => NULL,
     ),
     array(
+        'title' => 'lang:adminmenu_title_teacher_account',
+        'pagetag' => 'teacher_account',
+        'link' => 'admin_teachers/my_account',
+        'sub' => array(
+            array(
+                'title' => 'lang:adminmenu_title_logout',
+                'pagetag' => 'logout',
+                'link' => 'admin_teachers/logout',
+                'sub' => NULL,
+            ),
+        ),
+    ),
+    array(
         'title' => 'TEST',
         'pagetag' => 'test',
         'link' => 'EXTERNAL:javascript:void(0);',
