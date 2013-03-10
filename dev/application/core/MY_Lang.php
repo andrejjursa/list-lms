@@ -9,6 +9,10 @@ class MY_Lang extends CI_Lang {
         $this->load_default_lang_idiom();
     }
     
+    public function get_current_idiom() {
+        return $this->lang_idiom;
+    }
+    
     public function load($langfile = '', $idiom = '', $return = FALSE, $add_suffix = TRUE, $alt_path = '') {
         if ($idiom == '') {
             $idiom = $this->lang_idiom;
@@ -27,7 +31,9 @@ class MY_Lang extends CI_Lang {
                     $this->load($matches['langfile']);
                 }
             }}
+            return TRUE;
         }
+        return FALSE;
     }
     
     public function get_list_of_languages() {
@@ -42,6 +48,24 @@ class MY_Lang extends CI_Lang {
             }
         }}
         return $langs;
+    }
+    
+    public function add_custom_translations($translations) {
+        $this->language = array_merge($translations, $this->language);
+    }
+    
+    public function text($text, $default = '') {
+        $output = '';
+        if (strtolower(substr($text, 0, 5)) == 'lang:') {
+            $line = substr($text, 5);
+            $output = $this->line($line);
+        } else {
+            $output = $text;
+        }
+        if (!$output) {
+            $output = $default;
+        }
+        return $output;
     }
     
     protected function load_default_lang_idiom() {

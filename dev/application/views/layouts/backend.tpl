@@ -4,6 +4,10 @@
         <meta content="text/html" charset="utf-8" />
         <title>{block name='title'}{/block}</title>
         {foreach $list_internal_css_files as $file}{$file.html}{/foreach}
+        <script type="text/javascript" src="{'/public/js/jquery.js'|base_url}"></script>
+        <script type="text/javascript">
+            var global_base_url = "{'/'|base_url}";
+        </script>
         {foreach $list_internal_js_files as $file}{$file.html}{/foreach}
     </head>
     {include file='partials/backend_general/adminmenu.tpl' inline}

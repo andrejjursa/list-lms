@@ -8,6 +8,12 @@ $config['adminmenu'] = array(
         'sub' => NULL,
     ),
     array(
+        'title' => 'lang:adminmenu_title_translations_editor',
+        'pagetag' => 'translations_editor',
+        'link' => 'admin_translationseditor/index',
+        'sub' => NULL,
+    ),
+    array(
         'title' => 'lang:adminmenu_title_teacher_account',
         'pagetag' => 'teacher_account',
         'link' => 'admin_teachers/my_account',
@@ -17,26 +23,6 @@ $config['adminmenu'] = array(
                 'pagetag' => 'logout',
                 'link' => 'admin_teachers/logout',
                 'sub' => NULL,
-            ),
-        ),
-    ),
-    array(
-        'title' => 'TEST',
-        'pagetag' => 'test',
-        'link' => 'EXTERNAL:javascript:void(0);',
-        'sub' => array(
-            array(
-                'title' => 'TEST2',
-                'pagetag' => 'test2',
-                'link' => 'EXTERNAL:javascript:void(0);',
-                'sub' => array(
-                    array(
-                        'title' => 'TEST3',
-                        'pagetag' => 'test3',
-                        'link' => 'EXTERNAL:javascript:void(0);',
-                        'sub' => NULL,
-                    ),
-                ),
             ),
         ),
     ),

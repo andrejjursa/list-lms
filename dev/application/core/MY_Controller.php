@@ -7,6 +7,7 @@ class MY_Controller extends CI_Controller {
         $this->load->database();
         $this->load->library('usermanager');
         $this->load->library('messages');
+        $this->load->model('translations');
         $this->usermanager->set_student_data_to_smarty();
         $this->usermanager->set_teacher_data_to_smarty();
     }
@@ -14,6 +15,8 @@ class MY_Controller extends CI_Controller {
     protected function _init_language_for_student() {
         if ($this->usermanager->is_student_session_valid()) {
             $this->lang->reinitialize_for_idiom($this->usermanager->get_student_language());
+            $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
+            $this->lang->add_custom_translations($translations);
         }
     }
     
@@ -28,6 +31,8 @@ class MY_Controller extends CI_Controller {
     protected function _init_language_for_teacher() {
         if ($this->usermanager->is_teacher_session_valid()) {
             $this->lang->reinitialize_for_idiom($this->usermanager->get_teacher_language());
+            $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
+            $this->lang->add_custom_translations($translations);
         }
     }
     
