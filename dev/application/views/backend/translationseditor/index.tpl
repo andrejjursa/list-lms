@@ -2,7 +2,8 @@
 {block title}{translate line='adminmenu_title_translations_editor'}{/block}
 {block main_content}
     <h2>{translate line='adminmenu_title_translations_editor'}</h2>
-    <table style="min-width: 100%;">
+    <input type="button" name="button_new" value="{translate line='admin_translationseditor_new_translation_button_text'}" />
+    <table style="min-width: 100%;" id="translations_table">
         <thead>
             <tr>
                 <th>{translate line='admin_translationseditor_table_header_constant'}</th>
@@ -13,11 +14,7 @@
             </tr>
         </thead>
         <tbody>
-            {foreach $translations as $constant => $translation}
-                <tr class="constant_{$constant}">
-                {include file='backend/translationseditor/table_row.tpl'}
-                </tr>
-            {/foreach}
+            {include file='backend/translationseditor/table_body.tpl' inline}
         </tbody>
     </table>
 {/block}

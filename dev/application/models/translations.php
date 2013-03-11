@@ -27,6 +27,18 @@ class Translations extends CI_Model {
         return $output;
     }
     
+    public function get_constant_for_editing($constant) {
+        if (is_string($constant) && trim($constant) && preg_match(self::CONSTANT_VALIDATION_REGEXP, $constant)) {
+            $query = $this->db->select('*')->from('translations')->order_by('constant')->where('constant', $constant)->get();
+            $output = array();
+            if ($query->num_rows() > 0) { foreach ($query->result() as $row) {
+                $output[$row->constant][$row->idiom] = $row->text;
+            }}
+            return $output;
+        }
+        return array();
+    }
+    
     public function save_translation($constant, $idiom, $text) {
         if (is_string($constant) && trim($constant) != '' && preg_match(self::CONSTANT_VALIDATION_REGEXP, $constant) && is_string($idiom) && trim($idiom) != '') {
             $this->db->trans_start();
@@ -50,6 +62,15 @@ class Translations extends CI_Model {
             $this->db->where('constant', $constant);
             $this->db->delete('translations');
             return $this->db->affected_rows() > 0;
+        }
+        return FALSE;
+    }
+    
+    public function is_constant_free($constant) {
+        if (is_string($constant) && trim($constant) && preg_match(self::CONSTANT_VALIDATION_REGEXP, $constant)) {
+            $this->db->where('constant', $constant);
+            $query = $this->db->get('translations');
+            return $query->num_rows() == 0;
         }
         return FALSE;
     }
