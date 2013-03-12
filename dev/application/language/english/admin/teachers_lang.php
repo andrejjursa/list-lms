@@ -23,6 +23,7 @@ $lang['admin_teachers_my_account_error_invalid_account'] = 'Invalid account, can
 $lang['admin_teachers_my_account_error_save'] = 'No changes was made to account.';
 $lang['admin_teachers_my_account_success_save'] = 'Changes to account successfully saved.';
 $lang['admin_teachers_my_account_legent_change_password'] = 'Change password';
+$lang['admin_teachers_my_account_field_fullname'] = 'full name';
 $lang['admin_teachers_my_account_label_password_old'] = 'Old password';
 $lang['admin_teachers_my_account_label_password_new'] = 'New password';
 $lang['admin_teachers_my_account_label_password_validation'] = 'Re-enter password for validation';

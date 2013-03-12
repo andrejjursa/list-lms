@@ -6,6 +6,7 @@ $lang['admin_translationseditor_table_header_constant'] = 'Constant';
 $lang['admin_translationseditor_table_header_controlls'] = 'Controlls';
 $lang['admin_translationseditor_table_row_button_save'] = 'Save';
 $lang['admin_translationseditor_table_row_button_delete'] = 'Delete';
+$lang['admin_translationseditor_fieldset_table_legend'] = 'Table of translations of constants';
 $lang['admin_translationseditor_new_translation_button_text'] = 'New constant';
 $lang['admin_translationseditor_new_constant_title'] = 'New constant';
 $lang['admin_translationseditor_new_constant_label_constant'] = 'Constant';

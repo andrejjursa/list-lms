@@ -70,7 +70,7 @@ jQuery(document).ready(function($){
         $.fancybox(url, {
             type: 'iframe',
             width: 800,
-            height: 400,
+            height: 300,
             autoSize: false,
             beforeClose: function() {
                 $('#translations_table tbody tr td.controlls').html(get_working_text());

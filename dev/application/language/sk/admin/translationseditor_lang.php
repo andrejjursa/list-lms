@@ -6,6 +6,7 @@ $lang['admin_translationseditor_table_header_constant'] = 'Konštanta';
 $lang['admin_translationseditor_table_header_controlls'] = 'Ovládanie';
 $lang['admin_translationseditor_table_row_button_save'] = 'Uložiť';
 $lang['admin_translationseditor_table_row_button_delete'] = 'Vymazať';
+$lang['admin_translationseditor_fieldset_table_legend'] = 'Tabuľka prekladu konštánt';
 $lang['admin_translationseditor_new_translation_button_text'] = 'Nová konštanta';
 $lang['admin_translationseditor_new_constant_title'] = 'Nová konštanta';
 $lang['admin_translationseditor_new_constant_label_constant'] = 'Konštanta';

@@ -23,6 +23,7 @@ $lang['admin_teachers_my_account_error_invalid_account'] = 'Chyba účtu, nemô�
 $lang['admin_teachers_my_account_error_save'] = 'Na účte neboli vykonané žiadne zmeny.';
 $lang['admin_teachers_my_account_success_save'] = 'Zmeny na účte boli úspešne uložené.';
 $lang['admin_teachers_my_account_legent_change_password'] = 'Zmena hesla';
+$lang['admin_teachers_my_account_field_fullname'] = 'celé meno';
 $lang['admin_teachers_my_account_label_password_old'] = 'Staré heslo';
 $lang['admin_teachers_my_account_label_password_new'] = 'Nové heslo';
 $lang['admin_teachers_my_account_label_password_validation'] = 'Znovuzadanie hesla, kvôli potvrdeniu';
