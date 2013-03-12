@@ -25,6 +25,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus
 #jMenu li ul li a { font-size:11px; text-transform:none; padding:7px; display:block; border-top:1px solid transparent; border-bottom:1px solid transparent; }
 #jMenu li ul li a.isParent { background:#3A3A3A url('../images_ui/arrow_right.png') no-repeat right center; }
 #jMenu li ul li a:hover { background-color:#514c52; border-top:1px solid #322f32; border-bottom:1px solid #322f32; }
+#jMenu li.selected { background-color: darkgreen; }
 
 div.backend_body { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; }
 

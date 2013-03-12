@@ -11,6 +11,7 @@ class Translationseditor extends MY_Controller {
     }
     
     public function index() {
+        $this->_select_teacher_menu_pagetag('translations_editor');
         $languages = $this->lang->get_list_of_languages();
         $translations = $this->translations->get_all_for_editing();
         $this->parser->add_js_file('translations_editor_api.js');

@@ -46,6 +46,7 @@ class Teachers extends MY_Controller {
     }
     
     public function my_account() {
+        $this->_select_teacher_menu_pagetag('teacher_account');
         $this->_initialize_teacher_menu();
         $this->usermanager->teacher_login_protected_redirect();
         $teacher = new Teacher();
