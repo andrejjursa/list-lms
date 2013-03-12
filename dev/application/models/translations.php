@@ -2,7 +2,7 @@
 
 class Translations extends CI_Model {
     
-    const CONSTANT_VALIDATION_REGEXP = '/^[a-z0-9\_]+$/i';
+    const CONSTANT_VALIDATION_REGEXP = '/^[a-z]+[a-z0-9]*(\_[a-z0-9]+)*$/i';
     
     public function get_translations_for_idiom($idiom, $prefix = 'user_custom_') {
         if (is_string($idiom)) {
@@ -50,7 +50,7 @@ class Translations extends CI_Model {
                 $this->db->set('constant', $constant)->set('idiom', $idiom)->set('text', $text);
                 $this->db->where('constant', $constant)->where('idiom', $idiom);
                 $this->db->update('translations');
-                return $this->db->affected_rows() == 1;
+                return TRUE;
             }
             $this->db->trans_complete();
         }

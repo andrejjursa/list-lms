@@ -18,3 +18,12 @@
         </tbody>
     </table>
 {/block}
+{block custom_head}<script type="text/javascript">
+    var messages = {
+        error: {
+            operation_failed: '{translate line="admin_translationseditor_javascript_message_error_operation_failed"}'
+        },
+        working: '{translate line="admin_translationseditor_javascript_message_working"}',
+        delete_question: '{translate line="admin_translationseditor_javascript_message_delete_question"}'
+    };
+</script>{/block}

@@ -14,6 +14,7 @@ class Translationseditor extends MY_Controller {
         $languages = $this->lang->get_list_of_languages();
         $translations = $this->translations->get_all_for_editing();
         $this->parser->add_js_file('translations_editor_api.js');
+        $this->parser->add_css_file('admin_translationseditor.css');
         $this->parser->parse('backend/translationseditor/index.tpl', array('languages' => $languages, 'translations' => $translations));
     }
     
@@ -41,6 +42,11 @@ class Translationseditor extends MY_Controller {
         } else {
             $this->output->set_output(json_encode(array('result' => FALSE)));
         }
+    }
+    
+    public function ajax_delete($constant) {
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($this->translations->delete_translations($constant)));
     }
     
     public function new_constant() {

@@ -14,3 +14,6 @@ $lang['admin_translationseditor_new_constant_button_save'] = 'Vytvoriť preklad'
 $lang['admin_translationseditor_new_constant_field_constant'] = 'konštanta';
 $lang['admin_translationseditor_new_constant_form_error_valid_constant'] = 'Pole %s musí obsahovať iba alfa-numerické znaky a podčiarovníky.';
 $lang['admin_translationseditor_new_constant_form_error_free_constant'] = 'Pole %s musí obsahovať nepoužité meno konštanty.';
+$lang['admin_translationseditor_javascript_message_error_operation_failed'] = 'Operácia zlyhala.';
+$lang['admin_translationseditor_javascript_message_working'] = 'Pracujem.';
+$lang['admin_translationseditor_javascript_message_delete_question'] = 'Ste si istý, že chcete vymazať konštantu [$constant$]?';

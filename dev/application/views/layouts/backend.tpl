@@ -17,6 +17,7 @@
         <script type="text/javascript" src="{'/public/js/jquery.fancybox-media.js?v=1.0.0'|base_url}"></script>
         {foreach $list_internal_css_files as $file}{$file.html}{/foreach}
         {foreach $list_internal_js_files as $file}{$file.html}{/foreach}
+        {block name='custom_head'}{/block}
     </head>
     {include file='partials/backend_general/adminmenu.tpl' inline}
     <body>
