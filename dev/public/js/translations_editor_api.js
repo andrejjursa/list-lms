@@ -1,11 +1,15 @@
 jQuery(document).ready(function($){
     
+    var get_working_text = function() {
+        return '<p>' + messages.working + '</p>';
+    };
+    
     var on_button_save_click = function(event) {
         var data = $(this).parents('tr.row_of_constant').find('textarea').serializeArray();
         var row = $(this).parents('tr.row_of_constant');
         var cell = $(this).parents('td.controlls');
         var url = global_base_url + 'index.php/admin_translationseditor/ajax_save/';
-        cell.html('<p>' + messages.working + '</p>');
+        cell.html(get_working_text());
         $.ajax(url, {
             cache: false,
             type: 'post',
@@ -38,7 +42,7 @@ jQuery(document).ready(function($){
                 var constant = classes[i].substr(9);
                 var url = global_base_url + 'index.php/admin_translationseditor/ajax_delete/' + constant + '/';
                 if (!confirm(messages.delete_question.replace('[$constant$]', constant))) { return; }
-                cell.html('<p>' + messages.working + '</p>');
+                cell.html(get_working_text());
                 $.ajax(url, {
                     cache: false,
                     type: 'post',
@@ -69,6 +73,7 @@ jQuery(document).ready(function($){
             height: 400,
             autoSize: false,
             beforeClose: function() {
+                $('#translations_table tbody tr td.controlls').html(get_working_text());
                 var table_body = $('#translations_table tbody');
                 var url = global_base_url + 'index.php/admin_translationseditor/reload_table/';
                 $.ajax(url, {
