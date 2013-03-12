@@ -2,6 +2,7 @@
 {block title}{translate line='admin_translationseditor_new_constant_title'}{/block}
 {block main_content}
     <h3>{translate line='admin_translationseditor_new_constant_title'}</h3>
+    {include file='partials/backend_general/flash_messages.tpl' inline}
     <form action="{internal_url url='admin_translationseditor/save_new_constant/'}" method="post">
         <div class="field">
             <label>{translate line='admin_translationseditor_new_constant_label_constant'}:</label>

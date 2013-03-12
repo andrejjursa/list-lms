@@ -11,6 +11,6 @@
         <p><label for="id_teacher_password">{translate line='admin_teachers_login_label_password'}:</label></p>
         <p><input type="password" name="teacher[password]" value="{$smarty.post.teacher.password|escape:'html'}" id="id_teacher_password" /></p>
         {form_error field='teacher[password]' left_delimiter = '<p class="error">' right_delimiter='</p>'}
-        <p><input type="submit" name="submit_button" value="{translate line='admin_teachers_login_submit_button_text'}" /></p>
+        <p><input type="submit" name="submit_button" value="{translate line='admin_teachers_login_submit_button_text'}" class="button" /></p>
     </form>
 {/block}

@@ -2,7 +2,7 @@
 {block title}{translate line='adminmenu_title_translations_editor'}{/block}
 {block main_content}
     <h2>{translate line='adminmenu_title_translations_editor'}</h2>
-    <input type="button" name="button_new" value="{translate line='admin_translationseditor_new_translation_button_text'}" />
+    <input type="button" name="button_new" value="{translate line='admin_translationseditor_new_translation_button_text'}" class="button" />
     <table style="min-width: 100%;" id="translations_table">
         <thead>
             <tr>

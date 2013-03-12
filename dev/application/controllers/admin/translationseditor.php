@@ -67,6 +67,8 @@ class Translationseditor extends MY_Controller {
             if (count($translation['text']) > 0) { foreach ($translation['text'] as $idiom => $text) {
                 $this->translations->save_translation($constant, $idiom, $text);
             }}
+            $this->messages->add_message($this->lang->line('admin_translationseditor_new_constant_message_added'), Messages::MESSAGE_TYPE_SUCCESS);
+            redirect(create_internal_url('admin_translationseditor/new_constant'));
         } else {
             $this->new_constant();
         }

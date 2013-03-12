@@ -19,7 +19,7 @@
                 {form_error field='teacher[language]' left_delimiter='<p class="error">' right_delimiter='</p>'}
             </div>
             <div class="buttons">
-                <input type="submit" name="button_submit" value="{translate line='admin_teachers_my_account_button_submit'}" />
+                <input type="submit" name="button_submit" value="{translate line='admin_teachers_my_account_button_submit'}" class="button" />
             </div>
             <input type="hidden" name="teacher_id" value="{$smarty.post.teacher_id|default:$teacher->id|intval}" />
         </form>
@@ -43,7 +43,7 @@
                 {form_error field='teacher[password_validation]' left_delimiter='<p class="error">' right_delimiter='</p>'}
             </div>
             <div class="buttons">
-                <input type="submit" name="button_submit" value="{translate line='admin_teachers_my_account_button_submit'}" />
+                <input type="submit" name="button_submit" value="{translate line='admin_teachers_my_account_button_submit'}" class="button" />
             </div>
             <input type="hidden" name="teacher_id" value="{$smarty.post.teacher_id|default:$teacher->id|intval}" />
         </form>
