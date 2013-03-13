@@ -19,6 +19,7 @@ $lang['admin_teachers_my_account_label_fullname'] = 'Full name';
 $lang['admin_teachers_my_account_label_email'] = 'E-mail';
 $lang['admin_teachers_my_account_label_language'] = 'Language';
 $lang['admin_teachers_my_account_label_email_validation'] = 'E-mail validation';
+$lang['admin_teachers_my_account_label_email_current'] = 'Current e-mail';
 $lang['admin_teachers_my_account_button_submit'] = 'Save';
 $lang['admin_teachers_my_account_error_invalid_account'] = 'Invalid account, can\'t save changes.';
 $lang['admin_teachers_my_account_error_save'] = 'No changes was made to account.';

@@ -19,6 +19,7 @@ $lang['admin_teachers_my_account_label_fullname'] = 'Celé meno';
 $lang['admin_teachers_my_account_label_email'] = 'E-mail';
 $lang['admin_teachers_my_account_label_language'] = 'Jazyk';
 $lang['admin_teachers_my_account_label_email_validation'] = 'Validácia e-mailu';
+$lang['admin_teachers_my_account_label_email_current'] = 'Súčasný e-mail';
 $lang['admin_teachers_my_account_button_submit'] = 'Uložiť';
 $lang['admin_teachers_my_account_error_invalid_account'] = 'Chyba účtu, nemôžem uložiť zmeny.';
 $lang['admin_teachers_my_account_error_save'] = 'Na účte neboli vykonané žiadne zmeny.';
