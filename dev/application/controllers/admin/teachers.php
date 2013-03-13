@@ -135,4 +135,39 @@ class Teachers extends MY_Controller {
         $teacher->get();
         return $teacher->exists();
     }
+    
+    public function save_email() {
+        $this->_initialize_teacher_menu();
+        $this->usermanager->teacher_login_protected_redirect();
+        $this->load->library('form_validation');
+        
+        $teacher_id = intval($this->input->post('teacher_id'));
+        $this->form_validation->set_rules('teacher[email]', 'lang:admin_teachers_my_account_field_email', 'required|valid_email|is_unique[teachers.email]');
+        $this->form_validation->set_rules('teacher[email_validation]', 'lang:admin_teachers_my_account_field_email_validation', 'required|matches[teacher[email]]');
+        $this->form_validation->set_rules('teacher_id', 'id', 'required');
+        
+        if ($this->form_validation->run()) {
+            $error_invalid = true;
+            if ($teacher_id == $this->usermanager->get_teacher_id()) {
+                $teacher = new Teacher();
+                $teacher->get_where(array('id' => $teacher_id));
+                if ($teacher->exists()) {
+                    $teacher_post = $this->input->post('teacher');
+                    $teacher->email = $teacher_post['email'];
+                    if ($teacher->save()) {
+                        $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
+                    } else {
+                        $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
+                    }
+                    $error_invalid = false;
+                }
+            }
+            if ($error_invalid) {
+                $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
+            }
+            redirect(create_internal_url('admin_teachers/my_account'));
+        } else {
+            $this->my_account();
+        }
+    }
 }

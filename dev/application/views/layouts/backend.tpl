@@ -6,6 +6,7 @@
         <link href="{'/public/css/admin_general.css'|base_url}" rel="stylesheet" type="text/css" media="screen" />
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";
+            var logout_question_text = "{translate line='adminmenu_logout_question_text'}";
         </script>
         <script type="text/javascript" src="{'/public/js/jquery.js'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/jquery.mousewheel-3.0.6.pack.js'|base_url}"></script>

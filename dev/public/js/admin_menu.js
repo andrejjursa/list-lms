@@ -21,4 +21,9 @@ jQuery(document).ready(function($){
             paddingLeft: 5
         });
     }
+    $('nav a.adminmenu_logout').click(function(event) {
+        if (!confirm(logout_question_text)) {
+            event.preventDefault();
+        }
+    });
 });

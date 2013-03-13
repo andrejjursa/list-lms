@@ -2,6 +2,7 @@
 {block title}{translate line='adminmenu_title_translations_editor'}{/block}
 {block main_content}
     <h2>{translate line='adminmenu_title_translations_editor'}</h2>
+    {include file='partials/backend_general/flash_messages.tpl' inline}
     <fieldset>
         <legend>{translate line='admin_translationseditor_fieldset_table_legend'}</legend>
         <input type="button" name="button_new" value="{translate line='admin_translationseditor_new_translation_button_text'}" class="button" />

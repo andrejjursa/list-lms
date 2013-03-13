@@ -48,4 +48,23 @@
             <input type="hidden" name="teacher_id" value="{$smarty.post.teacher_id|default:$teacher->id|intval}" />
         </form>
     </fieldset>
+    <fieldset>
+        <legend>{translate line='admin_teachers_my_account_legend_change_email'}</legend>
+        <form action="{internal_url url='admin_teachers/save_email'}" method="post">
+            <div class="field">
+                <label for="teacher_email_id">{translate line='admin_teachers_my_account_label_email'}:</label>
+                <p class="input"><input type="text" name="teacher[email]" value="{$smarty.post.teacher.email|escape:'html'}" id="teacher_email_id" /></p>
+                {form_error field='teacher[email]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
+                <label for="teacher_email_validation_id">{translate line='admin_teachers_my_account_label_email_validation'}:</label>
+                <p class="input"><input type="text" name="teacher[email_validation]" value="{$smarty.post.teacher.email_validation|escape:'html'}" id="teacher_email_validation_id" /></p>
+                {form_error field='teacher[email_validation]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="buttons">
+                <input type="submit" name="button_submit" value="{translate line='admin_teachers_my_account_button_submit'}" class="button" />
+            </div>
+            <input type="hidden" name="teacher_id" value="{$smarty.post.teacher_id|default:$teacher->id|intval}" />
+        </form>
+    </fieldset>
 {/block}

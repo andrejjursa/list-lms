@@ -1,7 +1,7 @@
 * { margin: 0; padding: 0; }
-body { font-family: Verdana, Arial, sans-serif; }
+body { font-family: Verdana, Arial, sans-serif; background-color: white; color: black; }
 table { border-collapse: collapse; }
-nav { background-color:#322f32; }
+nav { background-color:#322f32; padding: 0 10px; }
 
 .button { transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; padding: 4px 10px; border: 1px solid green; border-radius: 30px; background-color: #B6FBA6; color: black; box-shadow: -3px -3px 3px gray inset; }
 .button:hover, .button:focus { border-color: black; background-color: #6DC052; box-shadow: -3px -3px 3px black inset; }
@@ -27,13 +27,25 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus
 #jMenu li ul li a:hover { background-color:#514c52; border-top:1px solid #322f32; border-bottom:1px solid #322f32; }
 #jMenu li.selected { background-color: darkgreen; }
 
+div.loginbox { width: 400px; margin: 150px auto 0 auto; padding: 20px; border: 1px solid black; border-radius: 15px; box-shadow: 15px 15px 15px silver; }
+div.loginbox h1 { margin: 0 0 15px 0; text-shadow: 0 0 4px gray; color: black; }
+
 div.backend_body { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; }
 
 div.backend_body > fieldset { margin: 5px; border: 1px solid gray; padding: 10px; border-radius: 5px; background-color: #E8E8E8; }
 div.backend_body > fieldset > legend { border: 1px solid gray; margin-left: 5px; width: 50%; padding: 4px; border-radius: 5px; background-color: #E8E8E8; font-weight: bold; }
-div.backend_body > h3, div.backend_body > h2 { margin: 5px; }
+div.backend_body > h3, div.backend_body > h2 { margin: 5px; text-shadow: 0 0 4px gray; color: black; }
 
-form div.field { margin: 1px 0; clear: both; }
+form div.field_login,
+form div.buttons_login { margin: 1px 0; clear: both; }
+form div.field_login label { font-weight: bold; width: 175px; display: block; float: left; }
+form div.field_login p.input { width: 210px; margin-left: 180px; }
+form div.field_login p.input input[type=text], form div.field_login p.input input[type=password], form div.field_login p.input textarea { width: 98%; }
+form div.field_login p.error { clear: both; width: 99%; }
+form div.field_login p.error span.message { padding: 2px; border: 1px solid red; color: red; border-radius: 3px; width: 98%; margin: 2px 0; display: block; background-color: #FFAFAF; }
+
+form div.field,
+form div.buttons { margin: 1px 0; clear: both; }
 form div.field label { font-weight: bold; width: 20%; display: block; float: left; }
 form div.field p.input { width: 80%; margin-left: 20%; }
 form div.field p.input input[type=text], form div.field p.input input[type=password], form div.field p.input textarea { width: 98%; }

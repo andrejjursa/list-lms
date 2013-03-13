@@ -8,6 +8,6 @@
         {foreach $list_internal_js_files as $file}{$file.html}{/foreach}
     </head>
     <body>
-        {block name='main_content'}{/block}
+        <div class="loginbox">{block name='main_content'}{/block}</div>
     </body>
 </html>
