@@ -18,4 +18,17 @@ class Settings extends MY_Controller {
         $this->parser->parse('backend/settings/index.tpl', array('config' => $config, 'languages' => $languages));
     }
     
+    public function save() {
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('config[language]', 'lang:admin_settings_form_field_language', 'required');
+        
+        if ($this->form_validation->run()) {
+            $config = $this->input->post('config');
+            $this->configurator->set_config_array('config', $config);
+            redirect(create_internal_url('admin_settings/index'));
+        } else {
+            $this->index();
+        }
+    }
 }
