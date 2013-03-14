@@ -16,6 +16,13 @@ $config['adminmenu'] = array(
         'sub' => NULL,
     ),
     array(
+        'title' => 'lang:adminmenu_title_application_settings',
+        'pagetag' => 'settings',
+        'link' => 'admin_settings',
+        'class' => '',
+        'sub' => NULL,
+    ),
+    array(
         'title' => 'lang:adminmenu_title_teacher_account',
         'pagetag' => 'teacher_account',
         'link' => 'admin_teachers/my_account',

@@ -8,3 +8,4 @@ $lang['adminmenu_title_dashboard'] = 'Dashboard';
 $lang['adminmenu_title_logout'] = 'Logout';
 $lang['adminmenu_title_teacher_account'] = 'My account';
 $lang['adminmenu_title_translations_editor'] = 'Translations editor';
+$lang['adminmenu_title_application_settings'] = 'Application settings';
