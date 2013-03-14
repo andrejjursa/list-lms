@@ -69,7 +69,7 @@ jQuery(document).ready(function($){
         var url = global_base_url + 'index.php/admin_translationseditor/new_constant/';
         $.fancybox(url, {
             type: 'iframe',
-            width: 800,
+            width: 850,
             height: 300,
             autoSize: false,
             beforeClose: function() {

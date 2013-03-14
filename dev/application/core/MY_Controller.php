@@ -13,11 +13,9 @@ class MY_Controller extends CI_Controller {
     }
     
     protected function _init_language_for_student() {
-        if ($this->usermanager->is_student_session_valid()) {
-            $this->lang->reinitialize_for_idiom($this->usermanager->get_student_language());
-            $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
-            $this->lang->add_custom_translations($translations);
-        }
+        $this->lang->reinitialize_for_idiom($this->usermanager->get_student_language());
+        $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
+        $this->lang->add_custom_translations($translations);
     }
     
     protected function _load_student_langfile($filename = NULL) {
@@ -29,11 +27,9 @@ class MY_Controller extends CI_Controller {
     }
     
     protected function _init_language_for_teacher() {
-        if ($this->usermanager->is_teacher_session_valid()) {
-            $this->lang->reinitialize_for_idiom($this->usermanager->get_teacher_language());
-            $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
-            $this->lang->add_custom_translations($translations);
-        }
+        $this->lang->reinitialize_for_idiom($this->usermanager->get_teacher_language());
+        $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
+        $this->lang->add_custom_translations($translations);
     }
     
     protected function _load_teacher_langfile($filename = NULL) {

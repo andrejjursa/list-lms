@@ -160,7 +160,7 @@ class Usermanager {
      */
     public function student_login_protected_redirect($send_current_url = TRUE) {
         if (!$this->is_student_session_valid()) {
-            $current_url = encode_for_url(current_url());
+            $current_url = encode_for_url($this->clear_current_url());
             $redirects = $this->CI->config->item('login_redirects');
             $redirect_student = $send_current_url ? ('/' . trim($redirects['student'], '/') . '/current_url/' . $current_url . '/') : '/' . trim($redirects['student'], '/') . '/';
             redirect(create_internal_url($redirect_student));
@@ -174,7 +174,7 @@ class Usermanager {
      */
     public function teacher_login_protected_redirect($send_current_url = TRUE) {
         if (!$this->is_teacher_session_valid()) {
-            $current_url = encode_for_url(current_url());
+            $current_url = encode_for_url($this->clear_current_url());
             $redirects = $this->CI->config->item('login_redirects');
             $redirect_student = $send_current_url ? ('/' . trim($redirects['teacher'], '/') . '/current_url/' . $current_url . '/') : '/' . trim($redirects['teacher'], '/') . '/';
             redirect(create_internal_url($redirect_student));
@@ -266,7 +266,7 @@ class Usermanager {
      * This internal function will set the verification status of student.
      * @param boolean $status status can be TRUE, FALSE or NULL.
      */
-    private function validate_student_login_verification($status = NULL) {
+    protected function validate_student_login_verification($status = NULL) {
         if ($status === NULL || $status === TRUE || $status === FALSE) {
             $this->student_login_verified = $status;
         }
@@ -276,10 +276,23 @@ class Usermanager {
      * This internal function will set the verification status of teacher.
      * @param boolean $status status can be TRUE, FALSE or NULL.
      */
-    private function validate_teacher_login_verification($status = NULL) {
+    protected function validate_teacher_login_verification($status = NULL) {
         if ($status === NULL || $status === TRUE || $status === FALSE) {
             $this->teacher_login_verified = $status;
         }
+    }
+    
+    /**
+     * This function returns current url with respect to rewrite engien setting.
+     * I.E. it clears $config['index_page'] from current url.
+     * @return string current url.
+     */
+    protected function clear_current_url() {
+        $current_url = current_url();
+        if ($this->CI->config->item('rewrite_engine_enabled')) {
+            $current_url = str_replace(array($this->CI->config->item('index_page') . '/', $this->CI->config->item('index_page')), array('', ''), $current_url);
+        }
+        return $current_url;
     }
     
 }

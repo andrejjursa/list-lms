@@ -25,13 +25,15 @@ class Configurator {
     }
     
     /**
-     * Saves new data array to given config file.
+     * Saves new data array to given config file and inject them to active configuration.
      * 
      * @param string $config name of config file without extension.
      * @param array<mixed> $data new values for config items.
+     * @param boolean $inject if set to TRUE, it will inject data to active configuration.
+     * @param boolean $independent if set to TRUE, it will inject data to $config subarray.
      * @return boolean returns TRUE if file is writen, FALSE otherwise.
      */
-    public function set_config_array($config, $data) {
+    public function set_config_array($config, $data, $inject = TRUE, $independent = FALSE) {
         $original_config_options = $this->get_config_array($config);
         if (!is_null($original_config_options)) {
             $config_data = $this->merge_array($original_config_options, $data);
@@ -46,6 +48,7 @@ class Configurator {
                 $f = fopen($file, 'w');
                 fputs($f, $content);
                 fclose($f);
+                if ($inject) { $this->inject_config_array($config, $data, $independent); }
                 return TRUE;
             } catch (exception $e) {
                 return FALSE;
@@ -53,6 +56,35 @@ class Configurator {
         }
         return FALSE;
     }   
+    
+    /**
+     * Inject config data to active codeigniter configuration.
+     * 
+     * @param string $config name of config file without extension.
+     * @param array<mixed> $data new values for config items.
+     * @param boolean $independent if set to true, it will inject data to $config subarray.
+     */
+    private function inject_config_array($config, $data, $independent = FALSE) {
+        $CI =& get_instance();
+        $CI->config->config;
+        if ($config == 'config') { $independent = FALSE; }
+        if ($independent) {
+            if (isset($CI->config->config[$config])) {
+                $CI->config->config[$config] = $this->merge_array($CI->config->config[$config], $data);
+            } else {
+                $CI->config->config[$config] = $this->merge_array($this->get_config_array($config), $data);
+            }
+        } else {
+            $CI->config->config = $this->merge_array($CI->config->config, $data);
+        }
+        if ($config == 'config') {
+            if (isset($CI->config->config[$config])) {
+                $CI->config->config[$config] = $this->merge_array($CI->config->config[$config], $data);
+            } else {
+                $CI->config->config[$config] = $this->merge_array($this->get_config_array($config), $data);
+            }
+        }
+    }
     
     /**
      * Saves new data array to given config file with custom arangement and custom config variable name.
@@ -63,7 +95,7 @@ class Configurator {
      * @param string $config_variable name of configuration array (variable name with dollar sign).
      * @return boolean returns TRUE if file is writen, FALSE otherwise.
      */
-    public function set_config_array_Custom($config, $data, $arangement, $config_variable = '$config') {
+    public function set_config_array_custom($config, $data, $arangement, $config_variable = '$config') {
         $file = APPPATH . 'config/' . $config . '.php';
         if (file_exists($file)) {
             try {
@@ -120,18 +152,17 @@ class Configurator {
      * @return string config file content.
      */
     private function make_config_file_content($data, $arangement, $config_variable = '$config') {
-        $content = '<?php if ( ! defined(\'BASEPATH\')) exit(\'No direct script access allowed\');' . "\n\n";
+        $content = '<?php if ( ! defined(\'BASEPATH\')) exit(\'No direct script access allowed\');' . "\n";
         foreach($arangement as $item) {
             if ($item['type'] == 'comment') {
-                $content .= $item['value'] . "\n";
+                $content .= "\n" . $item['value'] . "\n";
             } elseif ($item['type'] == 'config') {
                 $content .= $this->config_item_by_path($item['value'], $config_variable) . ' = ' . var_export($this->config_item_value_by_path($data, $item['value']), TRUE) . ';' . "\n";
             } elseif ($item['type'] == 'custom') {
                 $content .= $item['value'] . "\n";
             }
         }
-        $content .= "\n\n?>";
-        return $content;
+        return trim($content);
     }
     
     /**
