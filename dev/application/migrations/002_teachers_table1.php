@@ -39,6 +39,8 @@ class Migration_teachers_table1 extends CI_Migration {
         $this->dbforge->add_key('id', TRUE);
         
         $this->dbforge->create_table('teachers');
+        
+        change_mysql_table_to_InnoDB('teachers');
     }
     
     public function down() {

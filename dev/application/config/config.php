@@ -68,7 +68,7 @@ $config['url_suffix'] = '.html';
 | than english.
 |
 */
-$config['language'] = 'sk';
+$config['language'] = 'english';
 
 /*
 |--------------------------------------------------------------------------

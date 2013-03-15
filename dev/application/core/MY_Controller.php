@@ -2,6 +2,14 @@
 
 class MY_Controller extends CI_Controller {
     
+    const TRANSACTION_ISOLATION_REPEATABLE_READ = 'REPEATABLE READ';
+    const TRANSACTION_ISOLATION_READ_COMMITTED = 'READ COMMITTED';
+    const TRANSACTION_ISOLATION_READ_UNCOMMITTED = 'READ UNCOMMITTED';
+    const TRANSACTION_ISOLATION_SERIALIZABLE = 'SERIALIZABLE';
+    
+    const TRANSACTION_AREA_GLOBAL = 'GLOBAL';
+    const TRANSACTION_AREA_SESSION = 'SESSION';
+    
     public function __construct() {
         parent::__construct();
         $this->load->database();
@@ -48,6 +56,10 @@ class MY_Controller extends CI_Controller {
     
     protected function _select_teacher_menu_pagetag($tag = '') {
         $this->parser->assign('list_adminmenu_current', $tag);
+    }
+    
+    protected function _transaction_isolation($level = self::TRANSACTION_ISOLATION_SERIALIZABLE, $area = self::TRANSACTION_AREA_SESSION) {
+        $this->db->query('SET ' . $area . ' TRANSACTION ISOLATION LEVEL ' . $level . ';');
     }
     
 }

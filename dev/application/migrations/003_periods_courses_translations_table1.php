@@ -21,12 +21,19 @@ class Migration_periods_courses_translations_table1 extends CI_Migration {
                     'type' => 'VARCHAR',
                     'constraint' => 255,
                 ),
+                'sorting' => array(
+                    'type' => 'INT',
+                    'constraint' => '11',
+                    'unsigned' => TRUE,
+                ),
             )
         );
         
         $this->dbforge->add_key('id', TRUE);
         
         $this->dbforge->create_table('periods');
+        
+        change_mysql_table_to_InnoDB('periods');
         
         $this->dbforge->add_field(
             array(
@@ -60,6 +67,8 @@ class Migration_periods_courses_translations_table1 extends CI_Migration {
         
         $this->dbforge->create_table('courses');
         
+        change_mysql_table_to_InnoDB('courses');
+        
         $this->dbforge->add_field(
             array(
                 'idiom' => array(
@@ -82,6 +91,8 @@ class Migration_periods_courses_translations_table1 extends CI_Migration {
         $this->dbforge->add_key('constant');
         
         $this->dbforge->create_table('translations');
+        
+        change_mysql_table_to_InnoDB('translations');
     }
     
     public function down() {

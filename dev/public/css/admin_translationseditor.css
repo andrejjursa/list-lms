@@ -2,3 +2,4 @@
 #translations_table tbody tr:hover { background-color: silver; }
 #translations_table tbody tr.changed_row { background-color: #FF9292; }
 #translations_table tbody tr.saved_row { background-color: #7CE95B; }
+#translations_table tbody tr.failed_row { background-color: red; }

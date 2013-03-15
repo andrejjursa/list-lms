@@ -53,3 +53,24 @@ function implode_uri_params($params) {
     }
     return '';
 }
+
+/**
+ * Checks if database driver uses mysql, mysqli or pdo mysql.
+ * @return boolean TRUE if uses one of this drivers.
+ */ 
+function db_is_mysql() {
+    $CI =& get_instance();
+    $provider = strtolower($CI->db->dbdriver);
+    return $provider == 'mysql' || $provider == 'mysqli' || ($provider == 'pdo' && strpos($CI->db->hostname, 'mysql') !== FALSE);
+}
+
+/**
+ * If database uses mysql, it changes table to InnoDB engine (to support transactions).
+ * @param string $table table name.
+ */
+function change_mysql_table_to_InnoDB($table) {
+    if (db_is_mysql()) {
+        $CI =& get_instance();
+        $CI->db->query('ALTER TABLE `' . $table . '` ENGINE = INNODB');
+    }
+}

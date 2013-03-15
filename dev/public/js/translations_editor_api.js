@@ -24,10 +24,23 @@ jQuery(document).ready(function($){
                         row.removeClass('saved_row');
                     }, 5000);
                 } else {
+                    if (data.row != undefined) {
+                        row.html(data.row);
+                        row.removeClass('changed_row');
+                        row.addClass('failed_row');
+                        setTimeout(function() {
+                            row.removeClass('failed_row');
+                        }, 5000);
+                    }
                     alert(messages.error.operation_failed);
                 }
             },
             error: function(data) {
+                row.removeClass('changed_row');
+                row.addClass('failed_row');
+                setTimeout(function() {
+                    row.removeClass('failed_row');
+                }, 5000);
                 alert(messages.error.operation_failed);
             }
         });

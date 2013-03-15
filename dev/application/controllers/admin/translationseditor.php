@@ -29,12 +29,19 @@ class Translationseditor extends MY_Controller {
         $this->output->set_content_type('application/json');
         $translation = $this->input->post('translation');
         if (count($translation) == 1) {
-            $output = FALSE;
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
             $constant = key($translation);
             if (count($translation[$constant]) > 0) { foreach ($translation[$constant] as $idiom => $text) {
-                $result = $this->translations->save_translation($constant, $idiom, $text);
-                $output = $output || $result;
+                $this->translations->save_translation($constant, $idiom, $text);
             }}
+            $output = FALSE;
+            if ($this->db->trans_status()) {
+                $output = TRUE;
+                $this->db->trans_commit();
+            } else {
+                $this->db->trans_rollback();
+            }
             $new_row = $this->translations->get_constant_for_editing($constant);
             $languages = $this->lang->get_list_of_languages();
             $_POST = array();
@@ -47,7 +54,16 @@ class Translationseditor extends MY_Controller {
     
     public function ajax_delete($constant) {
         $this->output->set_content_type('application/json');
-        $this->output->set_output(json_encode($this->translations->delete_translations($constant)));
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $this->translations->delete_translations($constant);
+        if ($this->db->trans_status()) {
+            $this->db->trans_commit();
+            $this->output->set_output(json_encode(TRUE));    
+        } else {
+            $this->db->trans_rollback();
+            $this->output->set_output(json_encode(FALSE));   
+        }
     }
     
     public function new_constant() {
@@ -65,10 +81,18 @@ class Translationseditor extends MY_Controller {
         if ($this->form_validation->run()) {
             $translation = $this->input->post('translation');
             $constant = $translation['constant'];
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
             if (count($translation['text']) > 0) { foreach ($translation['text'] as $idiom => $text) {
                 $this->translations->save_translation($constant, $idiom, $text);
             }}
-            $this->messages->add_message($this->lang->line('admin_translationseditor_new_constant_message_added'), Messages::MESSAGE_TYPE_SUCCESS);
+            if ($this->db->trans_status()) {
+                $this->db->trans_commit();
+                $this->messages->add_message($this->lang->line('admin_translationseditor_new_constant_message_added'), Messages::MESSAGE_TYPE_SUCCESS);    
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message($this->lang->line('admin_translationseditor_new_constant_message_save_failed'), Messages::MESSAGE_TYPE_ERROR);
+            }
             redirect(create_internal_url('admin_translationseditor/new_constant'));
         } else {
             $this->new_constant();

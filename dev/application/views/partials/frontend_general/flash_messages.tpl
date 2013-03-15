@@ -13,3 +13,4 @@
     </div>
     {/if}
 {/foreach}
+{$list_flash_messages = []}

@@ -41,7 +41,6 @@ class Translations extends CI_Model {
     
     public function save_translation($constant, $idiom, $text) {
         if (is_string($constant) && trim($constant) != '' && preg_match(self::CONSTANT_VALIDATION_REGEXP, $constant) && is_string($idiom) && trim($idiom) != '') {
-            $this->db->trans_start();
             if ($this->db->select('*')->from('translations')->where('constant', $constant)->where('idiom', $idiom)->get()->num_rows() == 0) {
                 $this->db->set('constant', $constant)->set('idiom', $idiom)->set('text', $text);
                 $this->db->insert('translations');
@@ -52,7 +51,6 @@ class Translations extends CI_Model {
                 $this->db->update('translations');
                 return TRUE;
             }
-            $this->db->trans_complete();
         }
         return FALSE;
     }

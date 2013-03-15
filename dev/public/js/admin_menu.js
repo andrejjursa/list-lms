@@ -6,18 +6,18 @@ jQuery(document).ready(function($){
     if (menuExists) {
         $('#jMenu').jMenu({
             openClick : false,
-            ulWidth : 'auto',
+            ulWidth : 200,
             effects : {
                 effectSpeedOpen : 150,
                 effectSpeedClose : 150,
-                effectTypeOpen : 'slide',
-                effectTypeClose : 'slide',
+                effectTypeOpen : 'show',
+                effectTypeClose : 'hide',
                 effectOpen : 'linear',
                 effectClose : 'linear'
             },
             TimeBeforeOpening : 100,
             TimeBeforeClosing : 11,
-            animatedText : true,
+            animatedText : false,
             paddingLeft: 5
         });
     }
