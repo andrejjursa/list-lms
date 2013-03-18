@@ -13,4 +13,4 @@
     </div>
     {/if}
 {/foreach}
-{$list_flash_messages = []}
+{$list_flash_messages = [] scope=global}
