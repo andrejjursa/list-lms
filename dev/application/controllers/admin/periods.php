@@ -61,6 +61,58 @@ class Periods extends MY_Controller  {
         $this->parser->parse('backend/periods/new_period_form.tpl');
     }
     
+    public function edit() {
+        $this->_select_teacher_menu_pagetag('periods');
+        $uri = $this->uri->ruri_to_assoc(3);
+        $period_id = isset($uri['period_id']) ? intval($uri['period_id']) : 0;
+        $period = new Period();
+        $period->get_where(array('id' => $period_id));
+        $this->parser->parse('backend/periods/edit.tpl', array('period' => $period));
+    }
+    
+    public function update() {
+        $this->load->library('form_validation');
+        
+        $period_id = intval($this->input->post('period_id'));
+        
+        $this->form_validation->set_rules('period_id', 'id', 'required');
+        $this->form_validation->set_rules('period[name]', 'lang:admin_periods_form_field_name', 'required|callback__is_unique_name_not_in[' . $period_id . ']');
+        $this->form_validation->set_message('_is_unique_name_not_in', $this->lang->line('admin_periods_form_error_message_is_unique_name_not_in'));
+        
+        if ($this->form_validation->run()) {
+            $period = new Period();
+            $period->get_where(array('id' => $period_id));
+            if ($period->exists()) {
+                $period_data = $this->input->post('period');
+                $period->from_array($period_data, array('name'));
+                
+                $this->_transaction_isolation();
+                $this->db->trans_begin();
+                
+                if ($period->save() && $this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message('lang:admin_periods_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_periods_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                }
+            } else {
+                $this->messages->add_message('lang:admin_periods_error_period_not_found', Messages::MESSAGE_TYPE_ERROR);
+            }
+            redirect(create_internal_url('admin_periods/index'));
+        } else {
+            $this->edit();
+        }
+    }
+    
+    public function _is_unique_name_not_in($str, $id) {
+        $period = new Period();
+        $period->where('name', $str);
+        $period->where('id !=', intval($id));
+        $period->get();
+        return (bool)!$period->exists();
+    }
+    
     public function delete() {
         $this->output->set_content_type('application/json');
         $uri = $this->uri->ruri_to_assoc(3);

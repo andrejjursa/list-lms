@@ -3,6 +3,7 @@
 // English language
 
 $lang['admin_periods_page_title'] = 'Periods';
+$lang['admin_periods_page_title_edit'] = 'Periods - edit period';
 $lang['admin_periods_fieldset_legend_periods'] = 'Current periods';
 $lang['admin_periods_fieldset_legend_new_period'] = 'New period';
 $lang['admin_periods_form_label_name'] = 'Period name';
@@ -17,3 +18,5 @@ $lang['admin_periods_table_button_delete'] = 'Delete';
 $lang['admin_periods_table_button_up'] = 'Up';
 $lang['admin_periods_table_button_down'] = 'Down';
 $lang['admin_periods_delete_period_question'] = 'Are you sure you want to delete this period?';
+$lang['admin_periods_error_period_not_found'] = 'Desired period was not found.';
+$lang['admin_periods_form_error_message_is_unique_name_not_in'] = 'The <strong>%s</strong> field must have unique value.';
