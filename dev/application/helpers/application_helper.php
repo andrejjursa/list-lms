@@ -1,6 +1,17 @@
 <?php
 
 /**
+ * This function will check if there is server variable MOD_REWRITE_ENABLED, which is created in .htaccess.
+ * @return boolean TRUE, if this variable exists and is set to yes, FALSE otherwise.
+ */
+function is_mod_rewrite_enabled() {
+    if (isset($_SERVER['MOD_REWRITE_ENABLED']) && $_SERVER['MOD_REWRITE_ENABLED'] == 'yes') {
+        return TRUE;
+    }
+    return FALSE;
+}
+
+/**
  * Creates internal url from relative url.
  * Function respects setting of rewrite engine from application/config/config.php.
  * @param string $relative_url relative url as controller/action/[parameters].
@@ -8,7 +19,7 @@
  */
 function create_internal_url($relative_url) {
     $CI =& get_instance();
-    if ($CI->config->item('rewrite_engine_enabled')) {
+    if ($CI->config->item('rewrite_engine_enabled') && is_mod_rewrite_enabled()) {
         return base_url('/' . trim($relative_url, '/')) . $CI->config->item('url_suffix');
     } else {
         return base_url('index.php/' . trim($relative_url, '/')) . $CI->config->item('url_suffix');

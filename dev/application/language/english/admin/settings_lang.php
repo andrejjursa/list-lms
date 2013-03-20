@@ -13,3 +13,4 @@ $lang['admin_settings_form_field_language'] = 'language';
 $lang['admin_settings_form_field_rewrite_engine_enabled'] = 'enable rewrite engine';
 $lang['admin_settings_form_field_url_suffix'] = 'url suffix extension';
 $lang['admin_settings_form_error_message_url_suffix'] = 'The <strong>%s</strong> field must be file extension with dot, i.e.: .html';
+$lang['admin_settings_mod_rewrite_not_found'] = 'Can\'t found mod rewrite on this server. Please, check your server configuration and make sure there is system variable MOD_REWRITE_ENABLED set to "yes", when your server has working mod_rewrite installation.';
