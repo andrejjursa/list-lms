@@ -15,6 +15,7 @@ class Periods extends MY_Controller  {
         $this->parser->add_js_file('translation_selector.js');
         $this->parser->add_js_file('periods_api.js');
         $this->parser->add_js_file('periods/form.js');
+        $this->parser->add_css_file('admin_periods.css');
         $this->parser->parse('backend/periods/index.tpl');
     }
     

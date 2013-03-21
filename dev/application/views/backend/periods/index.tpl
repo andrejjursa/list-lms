@@ -15,7 +15,8 @@
             <thead>
                 <tr>
                     <th>{translate line='admin_periods_table_header_name'}</th>
-                    <th colspan="4">{translate line='admin_periods_table_header_controlls'}</th>
+                    <th>{translate line='admin_periods_table_header_relations_courses'}</th>
+                    <th colspan="4" class="controlls">{translate line='admin_periods_table_header_controlls'}</th>
                 </tr>
             </thead>
             <tbody id="periods_container_id">

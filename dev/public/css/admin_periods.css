@@ -1,0 +1,6 @@
+table.periods_table { width: 100%; }
+table.periods_table th { text-align: left; }
+table.periods_table th.controlls { width: 1px; text-align: center; }
+table.periods_table td.controlls { width: 1px;}
+table.periods_table tbody td { padding: 2px; }
+table.periods_table tbody tr:nth-child(even) { background-color: rgba(255,255,255,128); }

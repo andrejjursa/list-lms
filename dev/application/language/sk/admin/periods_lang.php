@@ -12,6 +12,7 @@ $lang['admin_periods_form_field_name'] = 'názov obdobia';
 $lang['admin_periods_flash_message_save_successful'] = 'Obdobie uložené úspešne.';
 $lang['admin_periods_flash_message_save_failed'] = 'Zlyhanie pri ukladaní obdobia.';
 $lang['admin_periods_table_header_name'] = 'Meno obdobia';
+$lang['admin_periods_table_header_relations_courses'] = 'Počet kurzov v relácii';
 $lang['admin_periods_table_header_controlls'] = 'Ovládanie';
 $lang['admin_periods_table_button_edit'] = 'Upraviť';
 $lang['admin_periods_table_button_delete'] = 'Vymazať';

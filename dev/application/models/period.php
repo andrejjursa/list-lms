@@ -2,6 +2,10 @@
 
 class Period extends DataMapper {
     
+    public $has_many = array(
+        'course'
+    );
+    
     public function move_up() {
         if (isset($this->id) && intval($this->id) > 0) {
             $up_period = new Period();
