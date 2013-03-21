@@ -27,7 +27,7 @@ $config['all_array_uses_ids'] = FALSE;
 $config['db_params'] = '';
 
 // Uncomment to enable the production cache
-// $config['production_cache'] = APPPATH.'cache';
+$config['production_cache'] = APPPATH.'datamapper/cache';
 
 $config['extensions_path'] = 'extensions';
 $config['extensions'] = array('array');

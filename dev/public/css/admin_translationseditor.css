@@ -1,4 +1,5 @@
 #translations_table tbody tr { transition: all 1s; -moz-transition: all 1s; -webkit-transition: all 1s; -o-transition: all 1s; }
+#translations_table tbody tr:nth-child(even) { background-color: rgba(255,255,255,128); }
 #translations_table tbody tr:hover { background-color: silver; }
 #translations_table tbody tr.changed_row { background-color: #FF9292; }
 #translations_table tbody tr.saved_row { background-color: #7CE95B; }
