@@ -27,6 +27,15 @@ class Translations extends CI_Model {
         return $output;
     }
     
+    public function get_all_for_idiom($idiom) {
+        $query = $this->db->select('*')->from('translations')->where('idiom', $idiom)->order_by('constant')->get();
+        $output = array();
+        if ($query->num_rows() > 0) { foreach ($query->result() as $row) {
+            $output[] = $row;
+        }}
+        return $output;
+    }
+    
     public function get_constant_for_editing($constant) {
         if (is_string($constant) && trim($constant) && preg_match(self::CONSTANT_VALIDATION_REGEXP, $constant)) {
             $query = $this->db->select('*')->from('translations')->order_by('constant')->where('constant', $constant)->get();

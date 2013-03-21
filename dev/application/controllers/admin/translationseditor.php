@@ -107,4 +107,10 @@ class Translationseditor extends MY_Controller {
         return $this->translations->is_constant_free($str);
     }
     
+    public function translations_json() {
+        $this->output->set_content_type('application/json');
+        $data = $this->translations->get_all_for_idiom($this->lang->get_current_idiom());
+        $this->output->set_output(json_encode($data));
+    }
+    
 }

@@ -12,7 +12,9 @@ class Periods extends MY_Controller  {
     
     public function index() {
         $this->_select_teacher_menu_pagetag('periods');
+        $this->parser->add_js_file('translation_selector.js');
         $this->parser->add_js_file('periods_api.js');
+        $this->parser->add_js_file('periods/form.js');
         $this->parser->parse('backend/periods/index.tpl');
     }
     
@@ -63,6 +65,8 @@ class Periods extends MY_Controller  {
     
     public function edit() {
         $this->_select_teacher_menu_pagetag('periods');
+        $this->parser->add_js_file('translation_selector.js');
+        $this->parser->add_js_file('periods/form.js');
         $uri = $this->uri->ruri_to_assoc(3);
         $period_id = isset($uri['period_id']) ? intval($uri['period_id']) : 0;
         $period = new Period();
