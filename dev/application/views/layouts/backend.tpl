@@ -4,6 +4,7 @@
         <meta content="text/html" charset="utf-8" />
         <title>{block name='title'}{/block}</title>
         <link href="{'/public/css/admin_general.css'|base_url}" rel="stylesheet" type="text/css" media="screen" />
+        <link href="{'/public/css/list-theme/jquery-ui-1.10.2.custom.css'|base_url}" rel="stylesheet" type="text/css" />
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";
             var logout_question_text = "{translate line='adminmenu_logout_question_text'}";
@@ -17,6 +18,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="{'/public/css/jquery.fancybox-thumbs.css?v=2.1.4'|base_url}" />
         <script type="text/javascript" src="{'/public/js/jquery.fancybox-thumbs.js?v=2.1.4'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/jquery.fancybox-media.js?v=1.0.0'|base_url}"></script>
+        <script type="text/javascript" src="{'/public/js/jquery-ui-1.10.2.custom.min.js'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/jMenu.jquery.min.js'}"></script>
         <script type="text/javascript" src="{'/public/js/admin_menu.js'}"></script>
         <script type="text/javascript" src="{'/public/js/api.js'}"></script>
@@ -26,7 +28,13 @@
     </head>
     {include file='partials/backend_general/adminmenu.tpl' inline}
     <body>
-        <h1>{translate line='adminmenu_administration_title'}</h1>
+        <div id="top_meta_informations">
+            <div class="left"></div>
+            <div class="right">{include file='partials/backend_general/metainfo_teacher.tpl' inline}</div>
+            <div class="clear"></div>
+        </div>
+        <h1>L.I.S.T. - {translate line='adminmenu_administration_title'}</h1>
+        <p>Long-term Internet Storage of Tasks</p>
         <nav>{make_adminmenu menu=$list_adminmenu current=$list_adminmenu_current}</nav>
         <div class="backend_body">{block name='main_content'}{/block}</div>
     </body>

@@ -53,7 +53,7 @@ $config['adminmenu'] = array(
             ),
         ),
     ),
-    array(
+    /*array(
         'title' => 'lang:adminmenu_title_teacher_account',
         'pagetag' => 'teacher_account',
         'link' => 'admin_teachers/my_account',
@@ -67,7 +67,7 @@ $config['adminmenu'] = array(
                 'sub' => NULL,
             ),
         ),
-    ),
+    ),*/
 );
 
 ?>
