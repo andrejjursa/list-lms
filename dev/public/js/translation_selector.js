@@ -1,4 +1,5 @@
 var translation_selector = function(jquerySelector) {
+    if (typeof jquerySelector != 'string') { return; }
     var element = jQuery(jquerySelector).filter('input[type=text], input[type=password], textarea');
     if (element.length > 0) {
         jQuery.ajax(global_base_url + 'index.php/admin_translationseditor/translations_json', {
