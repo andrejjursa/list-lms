@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta content="text/html" charset="utf-8" />
-        <title>{block name='title'}{/block}</title>
+        <title>{capture assign="list_title" name="list_title_cpt"}{block name='title'}{/block}{/capture}L.I.S.T.{if $list_title} - {$list_title}{/if}</title>
         <link href="{'/public/css/admin_general.css'|base_url}" rel="stylesheet" type="text/css" media="screen" />
         <link href="{'/public/css/list-theme/jquery-ui-1.10.2.custom.css'|base_url}" rel="stylesheet" type="text/css" />
         <script type="text/javascript">

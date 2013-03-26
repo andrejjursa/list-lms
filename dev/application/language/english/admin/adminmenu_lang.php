@@ -13,3 +13,4 @@ $lang['adminmenu_title_application_settings'] = 'Application settings';
 $lang['adminmenu_title_teaching'] = 'Teaching';
 $lang['adminmenu_title_organisation'] = 'Organisation';
 $lang['adminmenu_title_periods'] = 'Periods';
+$lang['adminmenu_title_courses'] = 'Courses';

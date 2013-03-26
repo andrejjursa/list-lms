@@ -27,6 +27,13 @@ $config['adminmenu'] = array(
                         'class' => '',
                         'sub' => NULL,
                     ),
+                    array(
+                        'title' => 'lang:adminmenu_title_courses',
+                        'pagetag' => 'courses',
+                        'link' => 'admin_courses',
+                        'class' => '',
+                        'sub' => NULL,
+                    ),
                 ),
             ),
         ),
@@ -53,21 +60,6 @@ $config['adminmenu'] = array(
             ),
         ),
     ),
-    /*array(
-        'title' => 'lang:adminmenu_title_teacher_account',
-        'pagetag' => 'teacher_account',
-        'link' => 'admin_teachers/my_account',
-        'class' => '',
-        'sub' => array(
-            array(
-                'title' => 'lang:adminmenu_title_logout',
-                'pagetag' => 'logout',
-                'link' => 'admin_teachers/logout',
-                'class' => 'adminmenu_logout',
-                'sub' => NULL,
-            ),
-        ),
-    ),*/
 );
 
 ?>
