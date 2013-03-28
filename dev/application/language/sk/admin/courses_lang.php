@@ -20,3 +20,4 @@ $lang['admin_courses_form_field_period'] = 'obdobie';
 $lang['admin_courses_flash_message_save_successful'] = 'Kurz bol úspešne uložený.';
 $lang['admin_courses_flash_message_save_failed'] = 'Počas ukladania kurzu sa vyskytla chyba, prosím skúsťe to znova.';
 $lang['admin_courses_message_delete_question'] = 'Ste si istý, že chcete vymazať tento kurz?';
+$lang['admin_courses_error_course_not_found'] = 'Kurz nebol nájdený.';

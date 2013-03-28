@@ -5,7 +5,7 @@
     {include file='partials/backend_general/flash_messages.tpl' inline}
     {if $period->exists() or $smarty.post.period}
         <fieldset>
-            <form action="{internal_url url='admin_periods/update'}" method="post">
+            <form action="{internal_url url="admin_periods/update"}" method="post">
                 <div class="field">
                     <label for="period_name_id">{translate line='admin_periods_form_label_name'}:</label>
                     <p class="input"><input type="text" name="period[name]" value="{$smarty.post.period.name|default:$period->name|escape:'html'}" id="period_name_id" /></p>
@@ -18,6 +18,6 @@
             </form>
         </fieldset>
     {else}
-        {include file='partials/backend_general/error_box.tpl' message='lang:admin_periods_error_period_not_found'}
+        {include file='partials/backend_general/error_box.tpl' message='lang:admin_periods_error_period_not_found' inline}
     {/if}
 {/block}

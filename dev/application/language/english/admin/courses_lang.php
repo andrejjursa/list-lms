@@ -20,3 +20,4 @@ $lang['admin_courses_form_field_period'] = 'period';
 $lang['admin_courses_flash_message_save_successful'] = 'Course was saved successfully.';
 $lang['admin_courses_flash_message_save_failed'] = 'An error occured during course save, please try again.';
 $lang['admin_courses_message_delete_question'] = 'Are you sure you want to delete this course?';
+$lang['admin_courses_error_course_not_found'] = 'Course not found.';
