@@ -24,6 +24,7 @@ class Courses extends MY_Controller {
     public function get_table_content() {
         $courses = new Course();
         $courses->get_iterated();
+        $this->lang->init_overlays('courses', $courses->all_to_array(), array('description'));
         $this->parser->parse('backend/courses/table_content.tpl', array('courses' => $courses));
     }
     
@@ -35,7 +36,7 @@ class Courses extends MY_Controller {
         if ($this->form_validation->run()) {
             $course = new Course();
             $course_data = $this->input->post('course');
-            $course->from_array($course_data, array('name', 'period_id'));
+            $course->from_array($course_data, array('name', 'period_id', 'description'));
             
             $this->_transaction_isolation();
             $this->db->trans_begin();
@@ -92,6 +93,8 @@ class Courses extends MY_Controller {
         $course = new Course();
         $course->get_where(array('id' => $course_id));
         $this->inject_periods();
+        $this->inject_languages();
+        $this->lang->load_all_overlays('courses', $course_id);
         
         $this->parser->parse('backend/courses/edit.tpl', array('course' => $course));
     }
@@ -109,12 +112,14 @@ class Courses extends MY_Controller {
             $course->get_where(array('id' => $course_id));
             if ($course->exists()) {
                 $course_data = $this->input->post('course');
-                $course->from_array($course_data, array('name', 'period_id'));
+                $course->from_array($course_data, array('name', 'period_id', 'description'));
+                
+                $overlay = $this->input->post('overlay');
                 
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
                 
-                if ($course->save() && $this->db->trans_status()) {
+                if ($course->save() && $this->lang->save_overlay_array($overlay) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_courses_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 } else {
@@ -141,6 +146,11 @@ class Courses extends MY_Controller {
             $data[(int) $row->id] = $row->name;
         }}
         $this->parser->assign('periods', $data);
+    }
+    
+    private function inject_languages() {
+        $languages = $this->lang->get_list_of_languages();
+        $this->parser->assign('languages', $languages);
     }
     
 }

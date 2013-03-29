@@ -8,6 +8,7 @@ $cache = array (
     2 => 'created',
     3 => 'name',
     4 => 'period_id',
+    5 => 'description',
   ),
   'validation' => 
   array (
@@ -43,6 +44,13 @@ $cache = array (
     'period_id' => 
     array (
       'field' => 'period_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'description' => 
+    array (
+      'field' => 'description',
       'rules' => 
       array (
       ),

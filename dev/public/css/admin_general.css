@@ -53,7 +53,7 @@ div.backend_body > h3, div.backend_body > h2 { margin: 5px; text-shadow: 0 0 4px
 
 form div.field_login,
 form div.buttons_login { margin: 4px 0; clear: both; }
-form div.field_login label { font-weight: bold; width: 175px; display: block; float: left; }
+form div.field_login > label { font-weight: bold; width: 175px; display: block; float: left; cursor: pointer; }
 form div.field_login p.input { width: 210px; margin-left: 180px; }
 form div.field_login p.input input[type=text], form div.field_login p.input input[type=password], form div.field_login p.input textarea { width: 98%; }
 form div.field_login p.error { clear: both; width: 99%; }
@@ -61,12 +61,14 @@ form div.field_login p.error span.message { padding: 2px; border: 1px solid red;
 
 form div.field,
 form div.buttons { margin: 4px 0; clear: both; }
-form div.field label { font-weight: bold; width: 20%; display: block; float: left; }
+form div.field > label { font-weight: bold; width: 20%; display: block; float: left; cursor: pointer; }
 form div.field p.input { width: 80%; margin-left: 20%; }
 form div.field p.input input[type=text], form div.field p.input input[type=password], form div.field p.input textarea { width: 98%; }
 form div.field p.input select { max-width: 98%; }
 form div.field p.error { width: 80%; margin-left: 20%; } 
 form div.field p.error span.message { padding: 2px; border: 1px solid red; color: red; border-radius: 3px; width: 98%; margin: 2px 0; display: block; background-color: #FFAFAF; }
+form div.field p.caption { width: 80%; margin-left: 20%; font-size: 0.9em; }
+form div.field p.caption > label { font-weight: bold; cursor: pointer; }
 
 div.flash_message { margin: 5px; padding: 5px; border: 1px solid black; background-color: #E8E8E8; border-radius: 5px; box-shadow: 0px 0px 2px 2px black inset; }
 div.flash_message.message_success { border-color: green; box-shadow: 0px 0px 2px 2px green inset; background-color: #ADFF9A; color: green; }
