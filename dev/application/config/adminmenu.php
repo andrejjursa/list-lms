@@ -34,6 +34,13 @@ $config['adminmenu'] = array(
                         'class' => '',
                         'sub' => NULL,
                     ),
+                    array(
+                        'title' => 'lang:adminmenu_title_groups',
+                        'pagetag' => 'groups',
+                        'link' => 'admin_groups',
+                        'class' => '',
+                        'sub' => NULL,
+                    ),
                 ),
             ),
         ),

@@ -146,6 +146,7 @@ class Courses extends MY_Controller {
             $data[(int) $row->id] = $row->name;
         }}
         $this->parser->assign('periods', $data);
+        $query->free_result();
     }
     
     private function inject_languages() {

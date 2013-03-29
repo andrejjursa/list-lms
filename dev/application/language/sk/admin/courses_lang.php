@@ -15,6 +15,7 @@ $lang['admin_courses_table_content_no_courses'] = 'Nie sú tu žiadne kurzy.';
 $lang['admin_courses_form_label_course_name'] = 'Názov kurzu';
 $lang['admin_courses_table_header_course_description'] = 'Popis kurzu';
 $lang['admin_courses_form_label_course_period'] = 'Obdobie';
+$lang['admin_courses_table_header_course_groups'] = 'Počet skupín';
 $lang['admin_courses_form_label_course_description'] = 'Popis';
 $lang['admin_courses_form_button_submit'] = 'Uložiť';
 $lang['admin_courses_form_field_name'] = 'názov kurzu';

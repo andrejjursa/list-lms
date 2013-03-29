@@ -17,6 +17,7 @@
                     <th>{translate line='admin_courses_table_header_course_name'}</th>
                     <th>{translate line='admin_courses_table_header_course_description'}</th>
                     <th>{translate line='admin_courses_table_header_course_period'}</th>
+                    <th>{translate line='admin_courses_table_header_course_groups'}</th>
                     <th colspan="2" class="controlls">{translate line='admin_courses_table_header_controlls'}</th>
                 </tr>
             </thead>

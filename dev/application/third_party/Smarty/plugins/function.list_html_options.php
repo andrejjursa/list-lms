@@ -183,6 +183,7 @@ function smarty_function_list_html_options_optoutput($key, $value, $selected, $i
 
 function smarty_function_list_html_options_optgroup($key, $values, $selected, $id, $class, &$idx)
 {
+    $CI =& get_instance();
     $optgroup_html = '<optgroup label="' . smarty_function_escape_special_chars($CI->lang->text($key)) . '">' . "\n";
     foreach ($values as $key => $value) {
         $optgroup_html .= smarty_function_list_html_options_optoutput($key, $value, $selected, $id, $class, $idx);

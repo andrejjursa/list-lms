@@ -6,4 +6,8 @@ class Course extends DataMapper {
         'period'
     );
     
+    public $has_many = array(
+        'group'
+    );
+    
 }

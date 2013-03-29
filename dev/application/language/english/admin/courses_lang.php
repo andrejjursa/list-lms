@@ -15,6 +15,7 @@ $lang['admin_courses_table_content_no_courses'] = 'There are no courses.';
 $lang['admin_courses_form_label_course_name'] = 'Course name';
 $lang['admin_courses_table_header_course_description'] = 'Course description';
 $lang['admin_courses_form_label_course_period'] = 'Period';
+$lang['admin_courses_table_header_course_groups'] = 'Groups count';
 $lang['admin_courses_form_label_course_description'] = 'Description';
 $lang['admin_courses_form_button_submit'] = 'Save';
 $lang['admin_courses_form_field_name'] = 'course name';

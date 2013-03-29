@@ -1,14 +1,13 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 $cache = array (
-  'table' => 'courses',
+  'table' => 'groups',
   'fields' => 
   array (
     0 => 'id',
     1 => 'updated',
     2 => 'created',
     3 => 'name',
-    4 => 'period_id',
-    5 => 'description',
+    4 => 'course_id',
   ),
   'validation' => 
   array (
@@ -41,30 +40,16 @@ $cache = array (
       array (
       ),
     ),
-    'period_id' => 
+    'course_id' => 
     array (
-      'field' => 'period_id',
+      'field' => 'course_id',
       'rules' => 
       array (
       ),
     ),
-    'description' => 
+    'course' => 
     array (
-      'field' => 'description',
-      'rules' => 
-      array (
-      ),
-    ),
-    'period' => 
-    array (
-      'field' => 'period',
-      'rules' => 
-      array (
-      ),
-    ),
-    'group' => 
-    array (
-      'field' => 'group',
+      'field' => 'course',
       'rules' => 
       array (
       ),
@@ -72,12 +57,12 @@ $cache = array (
   ),
   'has_one' => 
   array (
-    'period' => 
+    'course' => 
     array (
-      'class' => 'period',
-      'other_field' => 'course',
-      'join_self_as' => 'course',
-      'join_other_as' => 'period',
+      'class' => 'course',
+      'other_field' => 'group',
+      'join_self_as' => 'group',
+      'join_other_as' => 'course',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
@@ -86,17 +71,6 @@ $cache = array (
   ),
   'has_many' => 
   array (
-    'group' => 
-    array (
-      'class' => 'group',
-      'other_field' => 'course',
-      'join_self_as' => 'course',
-      'join_other_as' => 'group',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
   ),
   '_field_tracking' => 
   array (

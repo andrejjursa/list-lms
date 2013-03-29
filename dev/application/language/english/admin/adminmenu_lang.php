@@ -14,3 +14,4 @@ $lang['adminmenu_title_teaching'] = 'Teaching';
 $lang['adminmenu_title_organisation'] = 'Organisation';
 $lang['adminmenu_title_periods'] = 'Periods';
 $lang['adminmenu_title_courses'] = 'Courses';
+$lang['adminmenu_title_groups'] = 'Groups';
