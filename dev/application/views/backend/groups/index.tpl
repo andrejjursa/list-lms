@@ -11,5 +11,7 @@
     </fieldset>
     <fieldset>
         <legend></legend>
+        <div id="table_of_groups_container_id">
+        </div>
     </fieldset>
 {/block}

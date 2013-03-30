@@ -1,13 +1,16 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 $cache = array (
-  'table' => 'groups',
+  'table' => 'rooms',
   'fields' => 
   array (
     0 => 'id',
     1 => 'updated',
     2 => 'created',
     3 => 'name',
-    4 => 'course_id',
+    4 => 'group_id',
+    5 => 'time_begin',
+    6 => 'time_end',
+    7 => 'time_day',
   ),
   'validation' => 
   array (
@@ -40,23 +43,37 @@ $cache = array (
       array (
       ),
     ),
-    'course_id' => 
+    'group_id' => 
     array (
-      'field' => 'course_id',
+      'field' => 'group_id',
       'rules' => 
       array (
       ),
     ),
-    'course' => 
+    'time_begin' => 
     array (
-      'field' => 'course',
+      'field' => 'time_begin',
       'rules' => 
       array (
       ),
     ),
-    'room' => 
+    'time_end' => 
     array (
-      'field' => 'room',
+      'field' => 'time_end',
+      'rules' => 
+      array (
+      ),
+    ),
+    'time_day' => 
+    array (
+      'field' => 'time_day',
+      'rules' => 
+      array (
+      ),
+    ),
+    'group' => 
+    array (
+      'field' => 'group',
       'rules' => 
       array (
       ),
@@ -64,12 +81,12 @@ $cache = array (
   ),
   'has_one' => 
   array (
-    'course' => 
+    'group' => 
     array (
-      'class' => 'course',
-      'other_field' => 'group',
-      'join_self_as' => 'group',
-      'join_other_as' => 'course',
+      'class' => 'group',
+      'other_field' => 'room',
+      'join_self_as' => 'room',
+      'join_other_as' => 'group',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
@@ -78,17 +95,6 @@ $cache = array (
   ),
   'has_many' => 
   array (
-    'room' => 
-    array (
-      'class' => 'room',
-      'other_field' => 'group',
-      'join_self_as' => 'group',
-      'join_other_as' => 'room',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
   ),
   '_field_tracking' => 
   array (

@@ -11,6 +11,7 @@ class Groups extends MY_Controller {
     }
     
     public function index() {
+        smarty_inject_days();
         $this->inject_courses();
         $this->_select_teacher_menu_pagetag('groups');
         $this->parser->add_js_file('translation_selector.js');
@@ -21,8 +22,18 @@ class Groups extends MY_Controller {
     }
     
     public function new_group_form() {
+        smarty_inject_days();
         $this->inject_courses();
         $this->parser->parse('backend/groups/new_group_form.tpl');
+    }
+    
+    public function get_table_content() {
+        smarty_inject_days();
+        $groups = new Group();
+        $groups->order_by_related('course/period', 'sorting', 'asc');
+        $groups->get_iterated();
+        //$this->lang->init_overlays('courses', $courses->all_to_array(), array('description'));
+        $this->parser->parse('backend/groups/table_content.tpl', array('groups' => $groups));
     }
     
     public function create() {

@@ -85,3 +85,20 @@ function change_mysql_table_to_InnoDB($table) {
         $CI->db->query('ALTER TABLE `' . $table . '` ENGINE = INNODB');
     }
 }
+
+/**
+ * This function will construct days array and assign them to template parser.
+ */
+function smarty_inject_days() {
+    $CI =& get_instance();
+    $days = array(
+        1 => $CI->lang->line('common_day_monday'),
+        2 => $CI->lang->line('common_day_tuesday'),
+        3 => $CI->lang->line('common_day_wednesday'),
+        4 => $CI->lang->line('common_day_Thursday'),
+        5 => $CI->lang->line('common_day_friday'),
+        6 => $CI->lang->line('common_day_saturday'),
+        7 => $CI->lang->line('common_day_sunday'),
+    );
+    $CI->parser->assign('list_days', $days);
+}

@@ -96,7 +96,7 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array('admin/teachers');
+$autoload['language'] = array('admin/teachers', 'admin/common');
 
 
 /*

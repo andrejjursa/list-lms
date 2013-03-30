@@ -6,4 +6,7 @@ class Group extends DataMapper {
         'course'
     );
     
+    public $has_many = array(
+        'room'
+    );
 }

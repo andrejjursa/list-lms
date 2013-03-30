@@ -63,15 +63,20 @@ class Migration_groups_rooms_table1 extends CI_Migration {
                     'null' => TRUE,
                     'unsigned' => TRUE,
                 ),
-                'room_name' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 255,
-                ),
                 'time_begin' => array(
-                    'type' => 'timestamp',
+                    'type' => 'INT',
+                    'constraint' => 6,
+                    'unsigned' => TRUE,
                 ),
                 'time_end' => array(
-                    'type' => 'timestamp',
+                    'type' => 'INT',
+                    'constraint' => 6,
+                    'unsigned' => TRUE,
+                ),
+                'time_day' => array(
+                    'type' => 'INT',
+                    'constraint' => 2,
+                    'unsigned' => TRUE,
                 ),
             )
         );
