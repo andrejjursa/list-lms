@@ -14,6 +14,7 @@ var translation_selector = function(jquerySelector) {
                 });
                 selectorHTML.html(render_content(json_data));
                 selectorHTML.css('max-width', $(element[0]).width());
+                selectorHTML.data('canhide', true);
                 $(element[0]).after(selectorHTML);
                 $(element[0]).focus(function() {
                     selectorHTML.show();

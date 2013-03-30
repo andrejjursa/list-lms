@@ -2,6 +2,8 @@
 
 class Groups extends MY_Controller {
     
+    const STORED_FILTER_SESSION_NAME = 'course_filter_data';
+    
     public function __construct() {
         parent::__construct();
         $this->_init_language_for_teacher();
@@ -13,6 +15,7 @@ class Groups extends MY_Controller {
     public function index() {
         smarty_inject_days();
         $this->inject_courses();
+        $this->inject_stored_filter();
         $this->_select_teacher_menu_pagetag('groups');
         $this->parser->add_js_file('translation_selector.js');
         $this->parser->add_js_file('groups_api.js');
@@ -31,8 +34,13 @@ class Groups extends MY_Controller {
         smarty_inject_days();
         $groups = new Group();
         $groups->order_by_related('course/period', 'sorting', 'asc');
+        $groups->order_by_related('course', 'name', 'asc');
+        $filter = $this->input->post('filter');
+        $this->store_filter($filter);
+        if (isset($filter['course_id']) && intval($filter['course_id']) > 0) {
+            $groups->where_related_course('id', intval($filter['course_id']));
+        }
         $groups->get_iterated();
-        //$this->lang->init_overlays('courses', $courses->all_to_array(), array('description'));
         $this->parser->parse('backend/groups/table_content.tpl', array('groups' => $groups));
     }
     
@@ -63,6 +71,54 @@ class Groups extends MY_Controller {
         }
     }
     
+    public function edit() {
+        $uri = $this->uri->ruri_to_assoc(3);
+        $group_id = isset($uri['group_id']) ? intval($uri['group_id']) : 0;
+        $group = new Group();
+        $group->get_by_id($group_id);
+        
+        $this->inject_courses();
+        $this->_select_teacher_menu_pagetag('groups');
+        $this->parser->add_js_file('translation_selector.js');
+        $this->parser->add_js_file('groups/form.js');
+        $this->parser->parse('backend/groups/edit.tpl', array('group' => $group));
+    }
+    
+    public function update() {
+        $this->load->library('form_validation');
+        
+        $group_id = intval($this->input->post('group_id'));
+        
+        $this->form_validation->set_rules('group_id', 'id', 'required');
+        $this->form_validation->set_rules('group[name]', 'lang:admin_groups_form_field_group_name', 'required');
+        $this->form_validation->set_rules('group[course_id]', 'lang:admin_groups_form_field_group_course', 'required');
+        
+        if ($this->form_validation->run()) {
+            $group = new Group();
+            $group->get_by_id($group_id);
+            if ($group->exists()) {
+                $group_data = $this->input->post('group');
+                $group->from_array($group_data, array('name', 'course_id'));
+                
+                $this->_transaction_isolation();
+                $this->db->trans_begin();
+                
+                if ($group->save() && $this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message('lang:admin_groups_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_groups_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                }
+            } else {
+                $this->messages->add_message('lang:admin_groups_error_no_such_group_message', Messages::MESSAGE_TYPE_ERROR);
+            }
+            redirect(create_internal_url('admin_groups/index'));
+        } else {
+            $this->edit();
+        }
+    }
+    
     private function inject_courses() {
         $periods = new Period();
         $periods->order_by('sorting', 'asc');
@@ -75,6 +131,19 @@ class Groups extends MY_Controller {
             }}
         }}
         $this->parser->assign('courses', $data);
+    }
+    
+    private function store_filter($filter) {
+        if (is_array($filter)) {
+            $old_filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
+            $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
+            $this->session->set_userdata(self::STORED_FILTER_SESSION_NAME, $new_filter);
+        }
+    }
+    
+    private function inject_stored_filter() {
+        $filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
+        $this->parser->assign('filter', $filter);
     }
     
 }

@@ -1,8 +1,10 @@
 jQuery(document).ready(function($) {
     
     var reload_all_groups = function() {
+        var data = $('#filter_form_id').serializeArray();
+        console.log(data);
         var url = global_base_url + 'index.php/admin_groups/get_table_content';
-        api_ajax_load(url, '#table_of_groups_container_id');
+        api_ajax_load(url, '#table_of_groups_container_id', 'post', data);
     }
     
     reload_all_groups();
@@ -19,6 +21,11 @@ jQuery(document).ready(function($) {
             $.getScript(global_base_url + 'public/js/groups/form.js');
         };
         api_ajax_load(url, target, 'post', data, success);
+    });
+    
+    $('#filter_form_id').submit(function(event) {
+        event.preventDefault();
+        reload_all_groups();
     });
     
 });
