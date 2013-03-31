@@ -119,6 +119,33 @@ class Groups extends MY_Controller {
         }
     }
     
+    public function delete() {
+        $this->output->set_content_type('application/json');
+        $uri = $this->uri->ruri_to_assoc(3);
+        if (isset($uri['group_id'])) {
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $group = new Group();
+            $group->get_by_id(intval($uri['group_id']));
+            if ($group->exists()) {
+                $group->room->get()->delete_all();
+                $group->delete();
+                if ($this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->output->set_output(json_encode(TRUE));    
+                } else {
+                    $this->db->trans_rollback();
+                    $this->output->set_output(json_encode(FALSE));
+                }
+            } else {
+                $this->db->trans_rollback();
+                $this->output->set_output(json_encode(FALSE)); 
+            }
+        } else {
+            $this->output->set_output(json_encode(FALSE));
+        }
+    }
+    
     private function inject_courses() {
         $periods = new Period();
         $periods->order_by('sorting', 'asc');

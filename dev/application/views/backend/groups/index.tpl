@@ -38,3 +38,8 @@
         </table>
     </fieldset>
 {/block}
+{block custom_head}<script type="text/javascript">
+    var messages = {
+        delete_question: '{translate line="admin_groups_delete_period_question"}'
+    };
+</script>{/block}

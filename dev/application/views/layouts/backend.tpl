@@ -5,6 +5,7 @@
         <title>{capture assign="list_title" name="list_title_cpt"}{block name='title'}{/block}{/capture}L.I.S.T.{if $list_title} - {$list_title}{/if}</title>
         <link href="{'/public/css/admin_general.css'|base_url}" rel="stylesheet" type="text/css" media="screen" />
         <link href="{'/public/css/list-theme/jquery-ui-1.10.2.custom.css'|base_url}" rel="stylesheet" type="text/css" />
+        <link href="{'/public/css/jqueryui-timepicker-addon.css'|base_url}" rel="stylesheet" type="text/css" />
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";
             var logout_question_text = "{translate line='adminmenu_logout_question_text'}";
@@ -19,6 +20,7 @@
         <script type="text/javascript" src="{'/public/js/jquery.fancybox-thumbs.js?v=2.1.4'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/jquery.fancybox-media.js?v=1.0.0'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/jquery-ui-1.10.2.custom.min.js'|base_url}"></script>
+        <script type="text/javascript" src="{'/public/js/jquery-ui-timepicker-addon.js'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/jMenu.jquery.min.js'}"></script>
         <script type="text/javascript" src="{'/public/js/admin_menu.js'}"></script>
         <script type="text/javascript" src="{'/public/js/api.js'}"></script>
