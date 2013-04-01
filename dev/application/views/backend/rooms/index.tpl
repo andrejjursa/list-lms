@@ -8,11 +8,15 @@
         <form action="{internal_url url='admin_rooms/create'}" method="post" id="new_room_form_id">{include file='backend/rooms/new_room_form.tpl' inline}</form>
     </fieldset>
     <fieldset>
-        <legend>{translate line='admin_rooms_fieldset_legen_all_rooms'}</legend>
+        <legend>{translate|sprintf:{translate_text|escape:'html' text=$group->name} line='admin_rooms_fieldset_legen_all_rooms'}</legend>
         <table class="rooms_table">
             <thead>
                 <tr>
-                    <th></th>
+                    <th>{translate line='admin_rooms_table_header_field_name'}</th>
+                    <th>{translate line='admin_rooms_table_header_field_time_day'}</th>
+                    <th>{translate line='admin_rooms_table_header_field_time_begin'}</th>
+                    <th>{translate line='admin_rooms_table_header_field_time_end'}</th>
+                    <th class="controlls" colspan="2">{translate line='admin_rooms_table_header_controlls'}</th>
                 </tr>
             </thead>
             <tbody id="rooms_table_body_id">

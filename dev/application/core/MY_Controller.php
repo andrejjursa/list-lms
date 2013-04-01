@@ -24,6 +24,7 @@ class MY_Controller extends CI_Controller {
         $this->lang->reinitialize_for_idiom($this->usermanager->get_student_language());
         $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
         $this->lang->add_custom_translations($translations);
+        $this->_init_lang_js_messages();
     }
     
     protected function _load_student_langfile($filename = NULL) {
@@ -38,6 +39,7 @@ class MY_Controller extends CI_Controller {
         $this->lang->reinitialize_for_idiom($this->usermanager->get_teacher_language());
         $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
         $this->lang->add_custom_translations($translations);
+        $this->_init_lang_js_messages();
     }
     
     protected function _load_teacher_langfile($filename = NULL) {
@@ -62,4 +64,8 @@ class MY_Controller extends CI_Controller {
         $this->db->query('SET ' . $area . ' TRANSACTION ISOLATION LEVEL ' . $level . ';');
     }
     
+    private function _init_lang_js_messages() {
+        $path = 'public/js/language/' . $this->lang->get_current_idiom() . '/messages.js';
+        $this->parser->assign('list_lang_js_messages', $path);
+    }
 }

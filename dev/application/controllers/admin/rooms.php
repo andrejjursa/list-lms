@@ -10,56 +10,113 @@ class Rooms extends MY_Controller {
     }
     
     public function index($group_id) {
-        /*$this->inject_periods();
+        $group = new Group();
+        $group->get_by_id($group_id);
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('courses_api.js');
-        $this->parser->add_js_file('courses/form.js');
-        $this->parser->add_css_file('admin_courses.css');
-        $this->parser->parse('backend/courses/index.tpl');*/
+        $this->parser->add_js_file('rooms_api.js');
+        $this->parser->add_js_file('rooms/form.js');
+        $this->parser->add_css_file('admin_rooms.css');
         smarty_inject_days();
-        $this->parser->parse('backend/rooms/index.tpl');
+        $this->parser->parse('backend/rooms/index.tpl', array('group' => $group));
     }
     
-    public function get_table_content() {
-        /*$courses = new Course();
-        $courses->get_iterated();
-        $this->lang->init_overlays('courses', $courses->all_to_array(), array('description'));
-        $this->parser->parse('backend/courses/table_content.tpl', array('courses' => $courses));*/
+    public function get_table_content($group_id) {
+        smarty_inject_days();
+        $rooms = new Room();
+        $rooms->where_related_group('id', $group_id);
+        $rooms->order_by('time_day', 'asc')->order_by('time_begin', 'asc');
+        $rooms->get_iterated();
+        $this->parser->parse('backend/rooms/table_content.tpl', array('rooms' => $rooms));
     }
     
     public function create() {
-        /*$this->load->library('form_validation');
-        $this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
-        $this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('room[name]', 'lang:admin_rooms_form_field_name', 'required');
+        $this->form_validation->set_rules('room[time_begin]', 'lang:admin_rooms_form_field_time_begin', 'required|callback__is_time');
+        $this->form_validation->set_rules('room[time_end]', 'lang:admin_rooms_form_field_time_end', 'required|callback__is_time|callback__is_later_time');
+        $this->form_validation->set_rules('room[time_day]', 'lang:admin_rooms_form_field_time_day', 'required|callback__is_day');
+        $this->form_validation->set_rules('room[group_id]', 'group_id', 'required');
+        $this->form_validation->set_message('_is_time', $this->lang->line('admin_rooms_form_error_message_is_time'));
+        $this->form_validation->set_message('_is_day', $this->lang->line('admin_rooms_form_error_message_is_day'));
+        $this->form_validation->set_message('_is_later_time', $this->lang->line('admin_rooms_form_error_message_is_later_time'));
         
         if ($this->form_validation->run()) {
-            $course = new Course();
-            $course_data = $this->input->post('course');
-            $course->from_array($course_data, array('name', 'period_id', 'description'));
+            $room_data = $this->input->post('room');
             
             $this->_transaction_isolation();
             $this->db->trans_begin();
             
-            if ($course->save() && $this->db->trans_status()) {
-                $this->db->trans_commit();
-                $this->messages->add_message('lang:admin_courses_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+            $group = new Group();
+            $group->get_by_id($room_data['group_id']);
+            
+            if ($group->exists()) {
+                $room = new Room();
+                $room->name = $room_data['name'];
+                $room->time_day = intval($room_data['time_day']);
+                $room->time_begin = $this->time_to_int($room_data['time_begin']);
+                $room->time_end = $this->time_to_int($room_data['time_end']);
+                if ($room->save() && $group->save($room) && $this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message('lang:admin_rooms_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_rooms_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_courses_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message('lang:admin_rooms_flash_message_group_not_found', Messages::MESSAGE_TYPE_ERROR);
             }
-            redirect(create_internal_url('admin_courses/new_course_form'));
+            redirect(create_internal_url('admin_rooms/new_room_form/' . intval($room_data['group_id'])));
         } else {
-            $this->new_course_form();
-        }*/
+            $room_data = $this->input->post('room');
+            $this->new_room_form(intval($room_data['group_id']));
+        }
     }
     
-    public function new_course_form() {
-        /*$this->inject_periods();
-        $this->parser->parse('backend/courses/new_course_form.tpl');*/
+    public function _is_time($str) {
+        if (preg_match('/^(?P<h>[0-9]{2}):(?P<m>[0-9]{2}):(?P<s>[0-9]{2})$/', $str, $matches)) {
+            $h = intval($matches['h']);
+            $m = intval($matches['m']);
+            $s = intval($matches['s']);
+            if ($h >= 0 && $h <= 23 && $m >= 0 && $m <= 59 && $s >= 0 && $s <= 59) {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+    
+    public function _is_later_time($str) {
+        $room = $this->input->post('room');
+        if (isset($room['time_begin']) && $this->_is_time($room['time_begin']) && $this->_is_time($str)) {
+            $time_begin = $this->time_to_int($room['time_begin']);
+            $time_end = $this->time_to_int($str);
+            if ($time_begin >= $time_end) {
+                return FALSE;
+            }
+        }
+        return TRUE;
+    }
+    
+    public function _is_day($str) {
+        if (is_numeric($str)) {
+            $day = intval($str);
+            if ($day >= 1 && $day <= 7) {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+    
+    public function new_room_form($group_id) {
+        $group = new Group();
+        $group->get_by_id($group_id);
+        smarty_inject_days();
+        $this->parser->parse('backend/rooms/new_room_form.tpl', array('group' => $group));
     }
     
     public function delete() {
-        $this->output->set_content_type('application/json');
+        /*$this->output->set_content_type('application/json');
         $url = $this->uri->ruri_to_assoc(3);
         $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
         if ($course_id !== 0) {
@@ -77,11 +134,11 @@ class Rooms extends MY_Controller {
             }
         } else {
             $this->output->set_output(json_encode(FALSE));
-        }
+        }*/
     }
     
     public function edit() {
-        $this->_select_teacher_menu_pagetag('courses');
+        /*$this->_select_teacher_menu_pagetag('courses');
         
         $this->parser->add_js_file('translation_selector.js');
         $this->parser->add_js_file('courses_api.js');
@@ -95,11 +152,11 @@ class Rooms extends MY_Controller {
         $this->inject_languages();
         $this->lang->load_all_overlays('courses', $course_id);
         
-        $this->parser->parse('backend/courses/edit.tpl', array('course' => $course));
+        $this->parser->parse('backend/courses/edit.tpl', array('course' => $course));*/
     }
     
     public function update() {
-        $this->load->library('form_validation');
+        /*$this->load->library('form_validation');
         
         $this->form_validation->set_rules('course_id', 'id', 'required');
         $this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
@@ -131,7 +188,7 @@ class Rooms extends MY_Controller {
             redirect(create_internal_url('admin_courses/index'));
         } else {
             $this->edit();
-        }
+        }*/
     }
         
     private function inject_periods() {
@@ -153,4 +210,15 @@ class Rooms extends MY_Controller {
         $this->parser->assign('languages', $languages);
     }
     
+    private function time_to_int($time) {
+        if (preg_match('/^(?P<h>[0-9]{2}):(?P<m>[0-9]{2}):(?P<s>[0-9]{2})$/', $time, $matches)) {
+            $h = intval($matches['h']);
+            $m = intval($matches['m']);
+            $s = intval($matches['s']);
+            if ($h >= 0 && $h <= 23 && $m >= 0 && $m <= 59 && $s >= 0 && $s <= 59) {
+                return $s + 60 * $m + 3600 * $h;
+            }
+        }
+        return 0;
+    }
 }

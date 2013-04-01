@@ -1,3 +1,8 @@
+jQuery(document).ready(function() {
+    jQuery.datepicker.setDefaults(jQuery.datepicker.regional[jqueryui_datepicker_region]);
+    jQuery.timepicker.setDefaults(jQuery.timepicker.regional[jqueryui_datepicker_region]);    
+});
+
 var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
     method = method == undefined ? 'post' : method;
     data = data == undefined ? {} : data;

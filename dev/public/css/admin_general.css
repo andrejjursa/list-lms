@@ -1,5 +1,5 @@
 * { margin: 0; padding: 0; }
-body { font-family: Verdana, Arial, sans-serif; background-color: white; color: black; }
+body { font-family: Verdana, Arial, sans-serif; font-size: 14px; background-color: white; color: black; }
 table { border-collapse: collapse; }
 nav { background-color:#322f32; padding: 0 10px; margin-top: 10px; box-shadow: 0px 0px 5px 5px #322f32; }
 
@@ -83,3 +83,5 @@ div.flash_message.message_error { border-color: red; box-shadow: 0px 0px 2px 2px
 
 div.custom_translations_selector li { transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -webkit-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; }
 div.custom_translations_selector li.mouseover { background-color: #B6FBA6; }
+div.custom_translations_selector li.selected { background-color: #FFC1C1; }
+div.custom_translations_selector li.selected.mouseover { background-color: #FDFF83; }

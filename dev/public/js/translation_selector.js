@@ -17,12 +17,17 @@ var translation_selector = function(jquerySelector) {
                 selectorHTML.data('canhide', true);
                 $(element[0]).after(selectorHTML);
                 $(element[0]).focus(function() {
+                    selectCurrent(selectorHTML, $(this).val());
                     selectorHTML.show();
                 }).blur(function(){
                     var canhide = selectorHTML.data('canhide');
                     if (canhide) {
                         selectorHTML.hide();
                     }
+                }).change(function() {
+                    selectCurrent(selectorHTML, $(this).val());
+                }).keydown(function() {
+                    selectCurrent(selectorHTML, $(this).val());
                 });
                 selectorHTML.mouseover(function() {
                     selectorHTML.data('canhide', false);
@@ -34,11 +39,21 @@ var translation_selector = function(jquerySelector) {
                 });
                 selectorHTML.find('div.selection li').click(function(){
                     $(element[0]).val('lang:user_custom_' + $(this).attr('rel'));
+                    selectorHTML.find('div.selection li').removeClass('selected');
+                    $(this).addClass('selected');
                 }).css('cursor', 'pointer').css('list-style-type', 'none').mouseover(function() {
                     $(this).addClass('mouseover');
                 }).mouseout(function() {
                     $(this).removeClass('mouseover');
                 });
+                var selectCurrent = function(selectorHTML, value) {
+                    selectorHTML.find('div.selection li').each(function() {
+                        $(this).removeClass('selected');
+                        if (('lang:user_custom_' + $(this).attr('rel')) == value) {
+                            $(this).addClass('selected');                            
+                        }
+                    });
+                };
             }
         });
     }

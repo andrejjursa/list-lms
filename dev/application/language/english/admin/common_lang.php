@@ -8,3 +8,5 @@ $lang['common_day_thursday'] = 'Thursday';
 $lang['common_day_friday'] = 'Friday';
 $lang['common_day_saturday'] = 'Saturday';
 $lang['common_day_sunday'] = 'Sunday';
+
+$lang['common_jqueryui_datepicker_region'] = 'en';

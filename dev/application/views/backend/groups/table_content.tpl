@@ -3,11 +3,11 @@
     <td>{translate_text|escape:'html' text=$group->name}</td>
     <td>{translate_text|escape:'html' text=$group->course->get()->name} / {translate_text|escape:'html' text=$group->course->period->get()->name}</td>
     <td>
-        {if $group->room->order_by('name', 'asc')->get()->exists()}
+        {if $group->room->order_by('time_day', 'asc')->order_by('time_begin', 'asc')->get()->exists()}
         <ul class="room">
         {foreach $group->room as $room}
             <li>
-                <strong>{$room->name|escape:'html'}:</strong>
+                <strong>{translate_text|escape:'html' text=$room->name}:</strong>
                 <span>{$list_days[$room->time_day]|escape:'html'} ({$room->time_begin|is_time|escape:'html'} - {$room->time_end|is_time|escape:'html'})</span>
             </li>
         {/foreach}

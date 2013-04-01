@@ -8,3 +8,5 @@ $lang['common_day_thursday'] = 'Štvrtok';
 $lang['common_day_friday'] = 'Piatok';
 $lang['common_day_saturday'] = 'Sobota';
 $lang['common_day_sunday'] = 'Nedeľa';
+
+$lang['common_jqueryui_datepicker_region'] = 'sk';
