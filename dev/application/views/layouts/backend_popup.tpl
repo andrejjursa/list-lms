@@ -2,8 +2,10 @@
 <html>
     <head>
         <meta content="text/html" charset="utf-8" />
-        <title>{block name='title'}{/block}</title>
+        <title>{capture assign="list_title" name="list_title_cpt"}{block name='title'}{/block}{/capture}L.I.S.T.{if $list_title} - {$list_title}{/if}</title>
         <link href="{'/public/css/admin_general.css'|base_url}" rel="stylesheet" type="text/css" media="screen" />
+        <link href="{'/public/css/list-theme/jquery-ui-1.10.2.custom.css'|base_url}" rel="stylesheet" type="text/css" />
+        <link href="{'/public/css/jqueryui-timepicker-addon.css'|base_url}" rel="stylesheet" type="text/css" />
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";
         </script>
@@ -16,8 +18,12 @@
         <link rel="stylesheet" type="text/css" media="screen" href="{'/public/css/jquery.fancybox-thumbs.css?v=2.1.4'|base_url}" />
         <script type="text/javascript" src="{'/public/js/jquery.fancybox-thumbs.js?v=2.1.4'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/jquery.fancybox-media.js?v=1.0.0'|base_url}"></script>
+        <script type="text/javascript" src="{'/public/js/jquery-ui-1.10.2.custom.min.js'|base_url}"></script>
+        <script type="text/javascript" src="{'/public/js/jquery-ui-timepicker-addon.js'|base_url}"></script>
+        <script type="text/javascript" src="{'/public/js/api.js'}"></script>
         {foreach $list_internal_css_files as $file}{$file.html}{/foreach}
         {foreach $list_internal_js_files as $file}{$file.html}{/foreach}
+        {block name='custom_head'}{/block}
     </head>
     <body>
         <div class="backend_body">{block name='main_content'}{/block}</div>

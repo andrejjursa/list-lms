@@ -36,7 +36,11 @@ jQuery(document).ready(function($) {
             height: '100%',
             autoSize: false,
             autoHeight: false,
-            autoWidth: false
+            autoWidth: false,
+            beforeClose: function() {
+                reload_all_groups();
+                return true;
+            }
         });
     });
     $(document).on('click', '#table_of_groups_container_id a.delete', function(event) {

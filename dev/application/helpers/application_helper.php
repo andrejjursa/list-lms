@@ -95,7 +95,7 @@ function smarty_inject_days() {
         1 => $CI->lang->line('common_day_monday'),
         2 => $CI->lang->line('common_day_tuesday'),
         3 => $CI->lang->line('common_day_wednesday'),
-        4 => $CI->lang->line('common_day_Thursday'),
+        4 => $CI->lang->line('common_day_thursday'),
         5 => $CI->lang->line('common_day_friday'),
         6 => $CI->lang->line('common_day_saturday'),
         7 => $CI->lang->line('common_day_sunday'),
