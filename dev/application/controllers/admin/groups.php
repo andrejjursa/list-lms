@@ -35,6 +35,7 @@ class Groups extends MY_Controller {
         $groups = new Group();
         $groups->order_by_related('course/period', 'sorting', 'asc');
         $groups->order_by_related('course', 'name', 'asc');
+        $groups->order_by('name', 'asc');
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
         if (isset($filter['course_id']) && intval($filter['course_id']) > 0) {

@@ -26,3 +26,4 @@ $lang['admin_rooms_table_header_field_time_end'] = 'End of teaching';
 $lang['admin_rooms_table_header_controlls'] = 'Controlls';
 $lang['admin_rooms_table_controlls_button_edit'] = 'Edit';
 $lang['admin_rooms_table_controlls_button_delete'] = 'Delete';
+$lang['admin_rooms_error_room_not_found'] = 'Room with given ID does not exists.';

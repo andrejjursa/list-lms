@@ -17,7 +17,7 @@ class Rooms extends MY_Controller {
         $this->parser->add_js_file('rooms/form.js');
         $this->parser->add_css_file('admin_rooms.css');
         smarty_inject_days();
-        $this->parser->parse('backend/rooms/index.tpl', array('group' => $group));
+        $this->parser->parse('backend/rooms/index.tpl', array('group' => $group, 'group_id' => $group_id));
     }
     
     public function get_table_content($group_id) {
@@ -26,7 +26,7 @@ class Rooms extends MY_Controller {
         $rooms->where_related_group('id', $group_id);
         $rooms->order_by('time_day', 'asc')->order_by('time_begin', 'asc');
         $rooms->get_iterated();
-        $this->parser->parse('backend/rooms/table_content.tpl', array('rooms' => $rooms));
+        $this->parser->parse('backend/rooms/table_content.tpl', array('rooms' => $rooms, 'group_id' => $group_id));
     }
     
     public function create() {
@@ -112,7 +112,7 @@ class Rooms extends MY_Controller {
         $group = new Group();
         $group->get_by_id($group_id);
         smarty_inject_days();
-        $this->parser->parse('backend/rooms/new_room_form.tpl', array('group' => $group));
+        $this->parser->parse('backend/rooms/new_room_form.tpl', array('group' => $group, 'group_id' => $group_id));
     }
     
     public function delete() {
@@ -137,58 +137,57 @@ class Rooms extends MY_Controller {
         }*/
     }
     
-    public function edit() {
-        /*$this->_select_teacher_menu_pagetag('courses');
-        
+    public function edit($group_id) {
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('courses_api.js');
-        $this->parser->add_js_file('courses/form.js');
+        $this->parser->add_js_file('rooms/form.js');
         
-        $url = $this->uri->ruri_to_assoc(3);
-        $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
-        $course = new Course();
-        $course->get_where(array('id' => $course_id));
-        $this->inject_periods();
-        $this->inject_languages();
-        $this->lang->load_all_overlays('courses', $course_id);
-        
-        $this->parser->parse('backend/courses/edit.tpl', array('course' => $course));*/
+        $url = $this->uri->ruri_to_assoc(4);
+        $room_id = isset($url['room_id']) ? intval($url['room_id']) : 0;
+        $room = new Room();
+        $room->get_by_id($room_id);
+        smarty_inject_days();
+        $this->parser->parse('backend/rooms/edit.tpl', array('room' => $room, 'group_id' => $group_id));
     }
     
-    public function update() {
-        /*$this->load->library('form_validation');
+    public function update($group_id) {
+        $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('course_id', 'id', 'required');
-        $this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
-        $this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
+        $this->form_validation->set_rules('room[name]', 'lang:admin_rooms_form_field_name', 'required');
+        $this->form_validation->set_rules('room[time_begin]', 'lang:admin_rooms_form_field_time_begin', 'required|callback__is_time');
+        $this->form_validation->set_rules('room[time_end]', 'lang:admin_rooms_form_field_time_end', 'required|callback__is_time|callback__is_later_time');
+        $this->form_validation->set_rules('room[time_day]', 'lang:admin_rooms_form_field_time_day', 'required|callback__is_day');
+        $this->form_validation->set_rules('room_id', 'room_id', 'required');
+        $this->form_validation->set_message('_is_time', $this->lang->line('admin_rooms_form_error_message_is_time'));
+        $this->form_validation->set_message('_is_day', $this->lang->line('admin_rooms_form_error_message_is_day'));
+        $this->form_validation->set_message('_is_later_time', $this->lang->line('admin_rooms_form_error_message_is_later_time'));
         
         if ($this->form_validation->run()) {
-            $course_id = intval($this->input->post('course_id'));
-            $course = new Course();
-            $course->get_where(array('id' => $course_id));
-            if ($course->exists()) {
-                $course_data = $this->input->post('course');
-                $course->from_array($course_data, array('name', 'period_id', 'description'));
-                
-                $overlay = $this->input->post('overlay');
+            $room_id = intval($this->input->post('room_id'));
+            $room = new Room();
+            $room->get_by_id($room_id);
+            if ($room->exists()) {
+                $room_data = $this->input->post('room');
+                $room->from_array($room_data, array('name', 'time_day'));
+                $room->time_begin = $this->time_to_int($room_data['time_begin']);
+                $room->time_end = $this->time_to_int($room_data['time_end']);
                 
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
                 
-                if ($course->save() && $this->lang->save_overlay_array($overlay) && $this->db->trans_status()) {
+                if ($room->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_courses_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message('lang:admin_rooms_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_courses_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message('lang:admin_rooms_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
                 }
             } else {
-                $this->messages->add_message('lang:admin_courses_error_course_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message('lang:admin_rooms_error_room_not_found', Messages::MESSAGE_TYPE_ERROR);
             }
-            redirect(create_internal_url('admin_courses/index'));
+            redirect(create_internal_url('admin_rooms/index/' . $group_id));
         } else {
-            $this->edit();
-        }*/
+            $this->edit($group_id);
+        }
     }
         
     private function inject_periods() {
