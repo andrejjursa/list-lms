@@ -5,7 +5,7 @@
  * 
  * @author Andrej Jursa
  * @version 1.0
- * @package ListLibraries
+ * @package LIST_Libraries
  */
 class Configurator {
     

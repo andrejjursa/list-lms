@@ -39,7 +39,7 @@ class Usermanager {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT);
             if (isset($userdata['id']) && intval($userdata['id']) > 0) {
                 $student = new Student();
-                $student->get_where(array('id' => intval($userdata['id'])));
+                $student->get_by_id(intval($userdata['id']));
                 if ($student->exists()) {
                     $this->validate_student_login_verification(TRUE);
                 } else {
@@ -61,7 +61,7 @@ class Usermanager {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER);
             if (isset($userdata['id']) && intval($userdata['id']) > 0) {
                 $teacher = new Teacher();
-                $teacher->get_where(array('id' => intval($userdata['id'])));
+                $teacher->get_by_id(intval($userdata['id']));
                 if ($teacher->exists()) {
                     $this->validate_teacher_login_verification(TRUE);
                 } else {
@@ -124,11 +124,14 @@ class Usermanager {
         }
     }
     
+    /**
+     * Reloads student data from database to session.
+     */
     public function refresh_student_userdata() {
         if ($this->is_student_session_valid()) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT);
             $student = new Teacher();
-            $student->get_where(array('id' => @$userdata['id']));
+            $student->get_by_id(@$userdata['id']);
             if ($student->exists()) {
                 $userdata = $student->to_array();
                 unset($userdata['password']);
@@ -139,11 +142,14 @@ class Usermanager {
         }
     }
     
+    /**
+     * Reloads teacher data from database to session.
+     */
     public function refresh_teacher_userdata() {
         if ($this->is_teacher_session_valid()) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER);
             $teacher = new Teacher();
-            $teacher->get_where(array('id' => @$userdata['id']));
+            $teacher->get_by_id(@$userdata['id']);
             if ($teacher->exists()) {
                 $userdata = $teacher->to_array();
                 unset($userdata['password']);
@@ -206,6 +212,10 @@ class Usermanager {
         return $this->CI->config->item('language');
     }
     
+    /**
+     * Returns currently authenticated student id or zero if student is not loged in.
+     * @return integet student id.
+     */
     public function get_student_id() {
         if ($this->is_student_session_valid()) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT);
@@ -214,6 +224,10 @@ class Usermanager {
         return 0;
     }
     
+    /**
+     * Returns currently authenticated teacher id or zero if teacher is not loged in.
+     * @return integet teacher id.
+     */
     public function get_teacher_id() {
         if ($this->is_teacher_session_valid()) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER);

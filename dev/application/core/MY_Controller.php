@@ -10,6 +10,11 @@ class MY_Controller extends CI_Controller {
     const TRANSACTION_AREA_GLOBAL = 'GLOBAL';
     const TRANSACTION_AREA_SESSION = 'SESSION';
     
+    /**
+     * Main constructor, initialise controller.
+     * Database will be connected, libraries for usermanager and messages will be loaded and translations model will be loaded.
+     * All user data will be send to smarty template.
+     */
     public function __construct() {
         parent::__construct();
         $this->load->database();
@@ -20,6 +25,9 @@ class MY_Controller extends CI_Controller {
         $this->usermanager->set_teacher_data_to_smarty();
     }
     
+    /**
+     * Perform initialisation of student language settings.
+     */
     protected function _init_language_for_student() {
         $this->lang->reinitialize_for_idiom($this->usermanager->get_student_language());
         $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
@@ -27,6 +35,10 @@ class MY_Controller extends CI_Controller {
         $this->_init_lang_js_messages();
     }
     
+    /**
+     * Load student type language file.
+     * @param string $filename name of file to be loaded or NULL to load file with name of derived controller.
+     */
     protected function _load_student_langfile($filename = NULL) {
         if (is_null($filename)) {
             $this->lang->load(strtolower(get_class($this)));
@@ -35,6 +47,9 @@ class MY_Controller extends CI_Controller {
         }
     }
     
+    /**
+     * Perform initialisation of teacher language settings.
+     */
     protected function _init_language_for_teacher() {
         $this->lang->reinitialize_for_idiom($this->usermanager->get_teacher_language());
         $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
@@ -42,6 +57,10 @@ class MY_Controller extends CI_Controller {
         $this->_init_lang_js_messages();
     }
     
+    /**
+     * Load teacher type language file.
+     * @param string $filename name of file to be loaded or NULL to load file with name of derived controller.
+     */
     protected function _load_teacher_langfile($filename = NULL) {
         if (is_null($filename)) {
             $this->lang->load('admin/' . strtolower(get_class($this)));
@@ -50,20 +69,37 @@ class MY_Controller extends CI_Controller {
         }
     }
     
+    /**
+     * Loads and inject teacher menu configuration to template.
+     * Smarty template variable $list_adminmenu will be created.
+     */
     protected function _initialize_teacher_menu() {
         $this->config->load('adminmenu');
         $this->parser->assign('list_adminmenu', $this->config->item('adminmenu'));
         $this->_load_teacher_langfile('adminmenu');
     }
     
+    /**
+     * Set the active menu item in teacher menu.
+     * Smarty template variable $list_adminmenu_current will be created.
+     * @param string $tag page tag to be set as active item in menu.
+     */
     protected function _select_teacher_menu_pagetag($tag = '') {
         $this->parser->assign('list_adminmenu_current', $tag);
     }
     
+    /**
+     * Set the database transaction isolation level.
+     * @param string $level transaction isolation level, one of TRANSACTION_ISOLATION_* of MY_Controller class.
+     * @param string $area area of where isolation is aplied, one of TRANSACTION_AREA_* of MY_Controller class.
+     */
     protected function _transaction_isolation($level = self::TRANSACTION_ISOLATION_SERIALIZABLE, $area = self::TRANSACTION_AREA_SESSION) {
         $this->db->query('SET ' . $area . ' TRANSACTION ISOLATION LEVEL ' . $level . ';');
     }
     
+    /**
+     * Add language messages.js file to page headers.
+     */
     private function _init_lang_js_messages() {
         $path = 'public/js/language/' . $this->lang->get_current_idiom() . '/messages.js';
         $this->parser->assign('list_lang_js_messages', $path);
