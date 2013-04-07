@@ -10,7 +10,17 @@ class Teachers extends MY_Controller {
     
     public function login() {
         $uri_params = $this->uri->uri_to_assoc(3);
-        $this->parser->parse('backend/teachers/login.tpl', array('uri_params' => $uri_params));
+        if ($this->usermanager->is_teacher_session_valid()) {
+            if (isset($uri_params['current_url'])) {
+                redirect(decode_from_url($uri_params['current_url']));
+            } else {
+                $redirects = $this->config->item('after_login_redirects');
+                redirect(create_internal_url($redirects['teacher']));
+            }
+        } else {
+            $this->parser->add_js_file('teachers/login.js');
+            $this->parser->parse('backend/teachers/login.tpl', array('uri_params' => $uri_params));
+        }
     }
     
     public function do_login() {

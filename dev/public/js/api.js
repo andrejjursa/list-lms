@@ -1,6 +1,10 @@
 jQuery(document).ready(function() {
-    jQuery.datepicker.setDefaults(jQuery.datepicker.regional[jqueryui_datepicker_region]);
-    jQuery.timepicker.setDefaults(jQuery.timepicker.regional[jqueryui_datepicker_region]);    
+    if (jQuery.datepicker != undefined) {
+        jQuery.datepicker.setDefaults(jQuery.datepicker.regional[jqueryui_datepicker_region]);
+    }
+    if (jQuery.timepicker != undefined) {
+        jQuery.timepicker.setDefaults(jQuery.timepicker.regional[jqueryui_datepicker_region]);
+    }    
 });
 
 var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
