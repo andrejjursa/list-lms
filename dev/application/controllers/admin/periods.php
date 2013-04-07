@@ -86,7 +86,7 @@ class Periods extends MY_Controller  {
         
         if ($this->form_validation->run()) {
             $period = new Period();
-            $period->get_where(array('id' => $period_id));
+            $period->get_by_id($period_id);
             if ($period->exists()) {
                 $period_data = $this->input->post('period');
                 $period->from_array($period_data, array('name'));
@@ -125,7 +125,7 @@ class Periods extends MY_Controller  {
             $this->_transaction_isolation();
             $this->db->trans_begin();
             $period = new Period();
-            $period->get_where(array('id' => $uri['period_id']));
+            $period->get_by_id($uri['period_id']);
             $period->delete();
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
@@ -146,7 +146,7 @@ class Periods extends MY_Controller  {
             $this->_transaction_isolation();
             $this->db->trans_begin();
             $period = new Period();
-            $period->get_where(array('id' => $uri['period_id']));
+            $period->get_by_id($uri['period_id']);
             $period->move_up();
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
@@ -167,7 +167,7 @@ class Periods extends MY_Controller  {
             $this->_transaction_isolation();
             $this->db->trans_begin();
             $period = new Period();
-            $period->get_where(array('id' => $uri['period_id']));
+            $period->get_by_id($uri['period_id']);
             $period->move_down();
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();

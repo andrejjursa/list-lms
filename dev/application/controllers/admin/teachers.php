@@ -81,7 +81,7 @@ class Teachers extends MY_Controller {
             $teacher_id = intval($this->input->post('teacher_id'));
             if ($teacher_id == $this->usermanager->get_teacher_id()) {
                 $teacher = new Teacher();
-                $teacher->get_where(array('id' => $teacher_id));
+                $teacher->get_by_id($teacher_id);
                 if ($teacher->exists()) {
                     $teacher->from_array($this->input->post('teacher'), array('fullname', 'language'));
                     if ($teacher->save()) {
@@ -117,7 +117,7 @@ class Teachers extends MY_Controller {
         if ($this->form_validation->run()) {
             if ($teacher_id == $this->usermanager->get_teacher_id()) {
                 $teacher = new Teacher();
-                $teacher->get_where(array('id' => $teacher_id));
+                $teacher->get_by_id($teacher_id);
                 if ($teacher->exists()) {
                     $teacher_post = $this->input->post('teacher');
                     $teacher->password = sha1($teacher_post['password']);
@@ -160,7 +160,7 @@ class Teachers extends MY_Controller {
             $error_invalid = true;
             if ($teacher_id == $this->usermanager->get_teacher_id()) {
                 $teacher = new Teacher();
-                $teacher->get_where(array('id' => $teacher_id));
+                $teacher->get_by_id($teacher_id);
                 if ($teacher->exists()) {
                     $teacher_post = $this->input->post('teacher');
                     $teacher->email = $teacher_post['email'];

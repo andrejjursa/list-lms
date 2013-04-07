@@ -67,7 +67,7 @@ class Courses extends MY_Controller {
             $this->_transaction_isolation();
             $this->db->trans_begin();
             $course = new Course();
-            $course->get_where(array('id' => $course_id));
+            $course->get_by_id($course_id);
             $course->delete();
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
@@ -91,7 +91,7 @@ class Courses extends MY_Controller {
         $url = $this->uri->ruri_to_assoc(3);
         $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
         $course = new Course();
-        $course->get_where(array('id' => $course_id));
+        $course->get_by_id($course_id);
         $this->inject_periods();
         $this->inject_languages();
         $this->lang->load_all_overlays('courses', $course_id);
@@ -109,7 +109,7 @@ class Courses extends MY_Controller {
         if ($this->form_validation->run()) {
             $course_id = intval($this->input->post('course_id'));
             $course = new Course();
-            $course->get_where(array('id' => $course_id));
+            $course->get_by_id($course_id);
             if ($course->exists()) {
                 $course_data = $this->input->post('course');
                 $course->from_array($course_data, array('name', 'period_id', 'description'));
