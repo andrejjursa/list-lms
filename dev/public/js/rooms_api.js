@@ -20,4 +20,15 @@ jQuery(document).ready(function($) {
         api_ajax_load(url, '#new_room_form_id', 'post', data, success);
     });
     
+    var delete_room = function(event) {
+        event.preventDefault();
+        if (!confirm(messages.delete_question)) { return; }
+        
+        var url = $(this).attr('href');
+        
+        api_ajax_update(url, 'post', {}, reload_all_rooms);
+    };
+    
+    $(document).on('click', '#rooms_table_body_id a.delete', delete_room);
+    
 });

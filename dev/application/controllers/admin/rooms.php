@@ -115,16 +115,16 @@ class Rooms extends MY_Controller {
         $this->parser->parse('backend/rooms/new_room_form.tpl', array('group' => $group, 'group_id' => $group_id));
     }
     
-    public function delete() {
-        /*$this->output->set_content_type('application/json');
-        $url = $this->uri->ruri_to_assoc(3);
-        $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
-        if ($course_id !== 0) {
+    public function delete($group_id) {
+        $this->output->set_content_type('application/json');
+        $url = $this->uri->ruri_to_assoc(4);
+        $room_id = isset($url['room_id']) ? intval($url['room_id']) : 0;
+        if ($room_id !== 0) {
             $this->_transaction_isolation();
             $this->db->trans_begin();
-            $course = new Course();
-            $course->get_where(array('id' => $course_id));
-            $course->delete();
+            $room = new Room();
+            $room->get_by_id($room_id);
+            $room->delete();
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->output->set_output(json_encode(TRUE));    
@@ -134,7 +134,7 @@ class Rooms extends MY_Controller {
             }
         } else {
             $this->output->set_output(json_encode(FALSE));
-        }*/
+        }
     }
     
     public function edit($group_id) {

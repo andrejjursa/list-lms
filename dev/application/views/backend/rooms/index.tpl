@@ -26,4 +26,7 @@
 {/block}
 {block custom_head}<script type="text/javascript">
     var current_group_id = {$group->id|default:'0'};
+    var messages = {
+        delete_question: '{translate line="admin_rooms_delete_room_question"}'
+    }; 
 </script>{/block}
