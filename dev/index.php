@@ -205,7 +205,11 @@ require_once APPPATH.'third_party/datamapper/bootstrap.php';
  * And away we go...
  *
  */
-require_once BASEPATH.'core/CodeIgniter.php';
+try {
+    require_once BASEPATH.'core/CodeIgniter.php';
+} catch (exception $exception) {
+    require_once APPPATH.'errors/error_exception.php';
+}
 
 /* End of file index.php */
 /* Location: ./index.php */

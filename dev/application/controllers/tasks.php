@@ -4,7 +4,7 @@ class Tasks extends CI_Controller {
     
     public function index() {
         $this->load->library('migration');
-        $this->migration->version(5);
+        $this->migration->version(6);
         show_error($this->migration->error_string());
     }
     

@@ -189,25 +189,6 @@ class Rooms extends MY_Controller {
             $this->edit($group_id);
         }
     }
-        
-    /*private function inject_periods() {
-        $periods = new Period();
-        $periods->order_by('sorting', 'asc');
-        $query = $periods->get_raw();
-        $data = array(
-            NULL => '',
-        );
-        if ($query->num_rows() > 0) { foreach ($query->result() as $row) {
-            $data[(int) $row->id] = $row->name;
-        }}
-        $this->parser->assign('periods', $data);
-        $query->free_result();
-    }
-    
-    private function inject_languages() {
-        $languages = $this->lang->get_list_of_languages();
-        $this->parser->assign('languages', $languages);
-    }*/
     
     private function time_to_int($time) {
         if (preg_match('/^(?P<h>[0-9]{2}):(?P<m>[0-9]{2}):(?P<s>[0-9]{2})$/', $time, $matches)) {

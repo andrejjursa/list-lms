@@ -15,3 +15,5 @@ $lang['adminmenu_title_organisation'] = 'Organizácia';
 $lang['adminmenu_title_periods'] = 'Obdobia';
 $lang['adminmenu_title_courses'] = 'Kurzy';
 $lang['adminmenu_title_groups'] = 'Skupiny';
+$lang['adminmenu_title_content'] = 'Obsah';
+$lang['admin_title_categories'] = 'Kategórie';

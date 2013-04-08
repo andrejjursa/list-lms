@@ -43,6 +43,21 @@ $config['adminmenu'] = array(
                     ),
                 ),
             ),
+            array(
+                'title' => 'lang:adminmenu_title_content',
+                'pagetag' => 'content_tree',
+                'link' => 'external:javascript:void(0);',
+                'class' => 'inactive',
+                'sub' => array(
+                    array(
+                        'title' => 'lang:admin_title_categories',
+                        'pagetag' => 'categories',
+                        'link' => 'admin_categories',
+                        'class' => '',
+                        'sub' => NULL,
+                    ),
+                ),
+            ),
         ),
     ),
     array(
