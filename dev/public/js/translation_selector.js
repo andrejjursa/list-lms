@@ -7,16 +7,18 @@ var translation_selector = function(jquerySelector) {
             dataType: 'json',
             success: function(json_data) {
                 var selectorHTML = jQuery('<div class="custom_translations_selector" style="position: absolute; z-index: 100; display: none; border: 1px solid black; background-color: white;"></div>');
-                selectorHTML.position({
-                    'my': 'left top',
-                    'at': 'left bottom',
-                    'of': jquerySelector + ':first'
-                });
+                
                 selectorHTML.html(render_content(json_data));
-                selectorHTML.css('max-width', $(element[0]).width());
-                selectorHTML.data('canhide', true);
                 $(element[0]).after(selectorHTML);
                 $(element[0]).focus(function() {
+                    selectorHTML.css('top', '').css('left', '');
+                    selectorHTML.position({
+                        'my': 'left top',
+                        'at': 'left bottom',
+                        'of': jquerySelector + ':first'
+                    });
+                    selectorHTML.css('width', $(element[0]).width());
+                    selectorHTML.data('canhide', true);
                     selectCurrent(selectorHTML, $(this).val());
                     selectorHTML.show();
                 }).blur(function(){

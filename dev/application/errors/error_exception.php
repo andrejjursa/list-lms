@@ -57,9 +57,12 @@ p {
 </head>
 <body>
 	<div id="container">
-		<h1>Exception "<?php echo $exception->getMessage(); ?>" on line <?php echo $exception->getLine(); ?></h1>
+		<h1>Exception "<?php echo $exception->getMessage(); ?>"</h1>
 		<?php $trace = explode("\n", $exception->getTraceAsString()); ?>
-        <p>Trace:</p>
+        <p><strong>File:</strong> <?php echo $exception->getFile(); ?></p>
+        <p><strong>Line:</strong> <?php echo $exception->getLine(); ?></p>
+        <p><strong>Code:</strong> <?php echo $exception->getCode(); ?></p>
+        <p><strong>Trace:</strong></p>
         <ul>
             <?php foreach ($trace as $line): ?>
             <li><?php echo trim($line); ?></li>
