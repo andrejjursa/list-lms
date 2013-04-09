@@ -15,6 +15,7 @@ class Categories extends MY_Controller {
         $this->parser->add_js_file('translation_selector.js');
         $this->parser->add_js_file('categories_api.js');
         $this->parser->add_js_file('categories/form.js');
+        $this->parser->add_css_file('admin_categories.css');
         $categories = new Category();
         $structure = $categories->get_all_structured();
         $this->parser->parse('backend/categories/index.tpl', array('structure' => $structure));
