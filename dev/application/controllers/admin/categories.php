@@ -73,4 +73,17 @@ class Categories extends MY_Controller {
             $this->new_category_form();
         }
     }
+    
+    public function edit() {
+        $this->_select_teacher_menu_pagetag('categories');
+        $this->parser->add_js_file('translation_selector.js');
+        $this->parser->add_js_file('categories/form.js');
+        $uri = $this->uri->ruri_to_assoc(3);
+        $category_id = isset($uri['category_id']) ? intval($uri['category_id']) : 0;
+        $category = new Category();
+        $category->get_by_id($category_id);
+        $categories = new Category();
+        $structure = $categories->get_all_structured();
+        $this->parser->parse('backend/categories/edit.tpl', array('category' => $category, 'structure' => $structure));
+    }
 }

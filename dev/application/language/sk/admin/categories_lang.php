@@ -15,3 +15,4 @@ $lang['admin_categories_flash_message_save_successful'] = 'Kategória bola úspe
 $lang['admin_categories_flash_message_save_failed'] = 'Kategóriu sa nepodarilo uložiť, skúste to znova.';
 $lang['admin_categories_tree_controlls_edit'] = 'Upraviť';
 $lang['admin_categories_tree_controlls_delete'] = 'Vymazať';
+$lang['admin_categories_error_category_not_found'] = 'Požadovaná kategória nebola v databázy nájdená.';

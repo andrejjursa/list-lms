@@ -65,7 +65,7 @@ p {
         <p><strong>Trace:</strong></p>
         <ul>
             <?php foreach ($trace as $line): ?>
-            <li><?php echo trim($line); ?></li>
+            <li><?php echo htmlspecialchars(trim($line)); ?></li>
             <?php endforeach; ?>
         </ul>
 	</div>
