@@ -15,7 +15,7 @@
                 <div class="field">
                     <label for="category_parent_id_id">{translate line='admin_categories_form_label_parent_category'}:</label>
                     <p class="input"><select name="category[parent_id]" size="1" id="category_parent_id_id">
-                        <option value=""></option><option value="root"{if $smarty.post.category.parent_id eq 'root' or $category->parent_id|is_null} selected="selected"{/if}>[{translate line='admin_categories_parent_category_root'}]</option>{categories_tree_options structure=$structure selected=$smarty.post.category.parent_id|default:$category->parent_id}
+                        <option value=""></option><option value="root"{if $smarty.post.category.parent_id eq 'root' or ($category->exists() and $category->parent_id|is_null)} selected="selected"{/if}>[{translate line='admin_categories_parent_category_root'}]</option>{categories_tree_options structure=$structure selected=$smarty.post.category.parent_id|default:$category->parent_id}
                     </select></p>
                     {form_error field='category[parent_id]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>

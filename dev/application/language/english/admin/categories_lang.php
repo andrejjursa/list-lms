@@ -16,3 +16,4 @@ $lang['admin_categories_flash_message_save_failed'] = 'Failed to save category. 
 $lang['admin_categories_tree_controlls_edit'] = 'Edit';
 $lang['admin_categories_tree_controlls_delete'] = 'Delete';
 $lang['admin_categories_error_category_not_found'] = 'Desired category were not found in database.';
+$lang['admin_categories_message_delete_question'] = 'Are you sure to delete this category? All subcategories in next level will be redirected to root level.';

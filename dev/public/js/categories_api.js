@@ -20,6 +20,16 @@ jQuery(document).ready(function($) {
         api_ajax_load(url, '#new_category_form_id', 'post', data, success);
     });
     
+    var delete_category = function(event) {
+        event.preventDefault();
+        if (!confirm(messages.delete_question)) { return; }
+        var url = $(this).attr('href');
+        
+        api_ajax_update(url, 'post', {}, get_structured_tree);
+    }
+    
+    $(document).on('click', '#category_tree_id a.delete', delete_category);
+    
     /*var reload_all_rooms = function() {
         var url = global_base_url + 'index.php/admin_rooms/get_table_content/' + current_group_id;
         api_ajax_load(url, '#rooms_table_body_id');

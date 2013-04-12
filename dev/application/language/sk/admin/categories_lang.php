@@ -16,3 +16,4 @@ $lang['admin_categories_flash_message_save_failed'] = 'Kategóriu sa nepodarilo 
 $lang['admin_categories_tree_controlls_edit'] = 'Upraviť';
 $lang['admin_categories_tree_controlls_delete'] = 'Vymazať';
 $lang['admin_categories_error_category_not_found'] = 'Požadovaná kategória nebola v databázy nájdená.';
+$lang['admin_categories_message_delete_question'] = 'Ste si istý, že chcete vymazať túto kategóriu? Všetky podkategórie na nasledujúcej úrovni budú presmerované na úroveň koreňa.';

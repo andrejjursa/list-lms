@@ -16,3 +16,8 @@
         </div>
     </fieldset>
 {/block}
+{block custom_head}<script type="text/javascript">
+    var messages = {
+        delete_question: '{translate line="admin_categories_message_delete_question"}'
+    };
+</script>{/block}

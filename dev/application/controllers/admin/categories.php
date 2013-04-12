@@ -91,4 +91,73 @@ class Categories extends MY_Controller {
         $structure = $categories->get_all_structured();
         $this->parser->parse('backend/categories/edit.tpl', array('category' => $category, 'structure' => $structure));
     }
+    
+    public function update() {
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('category[name]', 'lang:admin_categories_form_field_category_name', 'required');
+        $this->form_validation->set_rules('category[parent_id]', 'lang:admin_categories_form_field_parent_category', 'required');
+        $this->form_validation->set_rules('category_id', 'id', 'required');
+        
+        if ($this->form_validation->run()) {
+            $categori_id = $this->input->post('category_id');
+            $category = new Category();
+            $category->get_by_id($categori_id);
+            if ($category->exists()) {
+                $category_data = $this->input->post('category');
+                $category->name = $category_data['name'];
+                
+                $this->_transaction_isolation();
+                $this->db->trans_begin();
+                
+                $cansave = TRUE;
+                if ($category_data['parent_id'] == 'root') {
+                    $category->parent_id = NULL;
+                } else {
+                    $parent = new Category();
+                    $parent->get_by_id(intval($category_data['parent_id']));
+                    if (!$parent->exists()) {
+                        $cansave = FALSE;
+                    } else {
+                        $category->parent_id = intval($category_data['parent_id']);
+                    }
+                }
+                
+                if ($cansave && $category->save() && $this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message('lang:admin_categories_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_categories_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                }
+            } else {
+                $this->messages->add_message('lang:admin_categories_error_category_not_found', Messages::MESSAGE_TYPE_ERROR);
+            }
+            redirect(create_internal_url('admin_categories/index'));
+        } else {
+            $this->edit();
+        }
+    }
+    
+    public function delete() {
+        $this->output->set_content_type('application/json');
+        $url = $this->uri->ruri_to_assoc(3);
+        $category_id = isset($url['category_id']) ? intval($url['category_id']) : 0;
+        if ($category_id !== 0) {
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $category = new Category();
+            $category->get_by_id($category_id);
+            $category->delete();
+            if ($this->db->trans_status()) {
+                $this->db->trans_commit();
+                $this->output->set_output(json_encode(TRUE));    
+            } else {
+                $this->db->trans_rollback();
+                $this->output->set_output(json_encode(FALSE));                
+            }
+        } else {
+            $this->output->set_output(json_encode(FALSE));
+        }
+    }
 }
