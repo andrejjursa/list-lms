@@ -50,7 +50,14 @@ $config['adminmenu'] = array(
                 'class' => 'inactive',
                 'sub' => array(
                     array(
-                        'title' => 'lang:admin_title_categories',
+                        'title' => 'lang:adminmenu_title_tasks',
+                        'pagetag' => 'tasks',
+                        'link' => 'admin_tasks',
+                        'class' => '',
+                        'sub' => NULL,
+                    ),
+                    array(
+                        'title' => 'lang:adminmenu_title_categories',
                         'pagetag' => 'categories',
                         'link' => 'admin_categories',
                         'class' => '',

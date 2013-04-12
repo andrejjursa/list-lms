@@ -21,6 +21,9 @@ class Category extends DataMapper {
             'class' => 'category',
             'other_field' => 'parent',
         ),
+        'task' => array(
+            'join_table' => 'task_category_rel',
+        ),
     );
     
     /**

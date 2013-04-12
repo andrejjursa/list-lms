@@ -1,13 +1,13 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 $cache = array (
-  'table' => 'categories',
+  'table' => 'tasks',
   'fields' => 
   array (
     0 => 'id',
     1 => 'updated',
     2 => 'created',
     3 => 'name',
-    4 => 'parent_id',
+    4 => 'text',
   ),
   'validation' => 
   array (
@@ -40,30 +40,23 @@ $cache = array (
       array (
       ),
     ),
-    'parent_id' => 
+    'text' => 
     array (
-      'field' => 'parent_id',
+      'field' => 'text',
       'rules' => 
       array (
       ),
     ),
-    'parent' => 
+    'category' => 
     array (
-      'field' => 'parent',
+      'field' => 'category',
       'rules' => 
       array (
       ),
     ),
-    'subcategory' => 
+    'task_set' => 
     array (
-      'field' => 'subcategory',
-      'rules' => 
-      array (
-      ),
-    ),
-    'task' => 
-    array (
-      'field' => 'task',
+      'field' => 'task_set',
       'rules' => 
       array (
       ),
@@ -71,38 +64,27 @@ $cache = array (
   ),
   'has_one' => 
   array (
-    'parent' => 
-    array (
-      'class' => 'category',
-      'other_field' => 'subcategory',
-      'join_self_as' => 'subcategory',
-      'join_other_as' => 'parent',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
   ),
   'has_many' => 
   array (
-    'subcategory' => 
+    'category' => 
     array (
+      'join_table' => 'task_category_rel',
       'class' => 'category',
-      'other_field' => 'parent',
-      'join_self_as' => 'parent',
-      'join_other_as' => 'subcategory',
-      'join_table' => '',
+      'other_field' => 'task',
+      'join_self_as' => 'task',
+      'join_other_as' => 'category',
       'reciprocal' => false,
       'auto_populate' => NULL,
       'cascade_delete' => true,
     ),
-    'task' => 
+    'task_set' => 
     array (
-      'join_table' => 'task_category_rel',
-      'class' => 'task',
-      'other_field' => 'category',
-      'join_self_as' => 'category',
-      'join_other_as' => 'task',
+      'join_table' => 'task_task_set_rel',
+      'class' => 'task_set',
+      'other_field' => 'task',
+      'join_self_as' => 'task',
+      'join_other_as' => 'task_set',
       'reciprocal' => false,
       'auto_populate' => NULL,
       'cascade_delete' => true,

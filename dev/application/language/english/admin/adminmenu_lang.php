@@ -16,4 +16,5 @@ $lang['adminmenu_title_periods'] = 'Periods';
 $lang['adminmenu_title_courses'] = 'Courses';
 $lang['adminmenu_title_groups'] = 'Groups';
 $lang['adminmenu_title_content'] = 'Content';
-$lang['admin_title_categories'] = 'Categories';
+$lang['adminmenu_title_categories'] = 'Categories';
+$lang['adminmenu_title_tasks'] = 'Tasks';
