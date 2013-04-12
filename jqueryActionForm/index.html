@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>jQuery Action Form plugin</title>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript" src="jquery.activeform.js"></script>
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $('#testform').activeForm({
+                    speed: 'fast',
+                    hiddenClass: 'hidden'
+                }).setDisplayCondition('div.display0', function() {
+                    return this.findElement('input[name=newsletter]').filter(':checked').length > 0;
+                }).setDisplayCondition('div.display1', function() {
+                    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return this.isDisplayed('div.display0') && re.test(this.findElement('input[name=test2]').val()) || this.isDisplayed('div.nomail') && this.findElement('select[name=select1]').val() >= 2;
+                }).setDisplayCondition('div.display2', function() {
+                    return this.isDisplayed('div.display1') || this.isDisplayed('div.nomail') && this.findElement('select[name=select1]').val() >= 2;
+                });  
+                $('#testform div.nomail').setActiveFormDisplayCondition(function() {
+                    return !this.isDisplayed('div.display0');
+                });
+                $('#testform').activeForm().applyConditions();
+                
+                $('#pagetestform').activeForm({
+                    speed: 'fast',
+                    hiddenClass: 'hidden',
+                    previousPageSelector: '.paginator .prev',
+                    nextPageSelector: '.paginator .next',
+                    changeButtonsTexts: true,
+                    nextPrefix: '[',
+                    nextSufix: ' &gt;&gt;]',
+                    prevPrefix: '[&lt;&lt; ',
+                    prevSufix: ']',
+                    pageTransitionSpeed: 'normal',
+                    pageButtonClickable: true
+                }).addPageAndCondition('div.page1', 'Z·kladnÈ ˙daje', '.pagesLinks .page1')
+                .addPageAndCondition('div.page2', 'V·ö e-mail', '.pagesLinks .page2', function() {
+                    return this.findElement('input[name=infomailom]').filter(':checked').length > 0;
+                }).addPageAndCondition('div.page3', 'PouûÌvateæskÈ d·ta', '.pagesLinks .page3')
+                .setDisplayCondition('div.infoIfNewsletter', function() {
+                    return this.idPageEnabled('div.page2');
+                }).setDisplayCondition('div.infoForNewsletter', function() {
+                    return this.idPageEnabled('div.page2');
+                });
+                $('#pagetestform div.page4').addActiveFormPage('DokonËenie', '.pagesLinks .page4');
+                $('#pagetestform div.checkPW').setActiveFormDisplayCondition(function() {
+                    return this.findElement('input[name=heslo]').val() != '';
+                });
+                $('#pagetestform').activeForm().applyConditions();
+            }); 
+        </script>
+        <style type="text/css">
+            div.pagesLinks { padding: 10px 4px; background-color: silver; border-radius: 4px; }
+            div.pagesLinks span.pageLink { padding: 4px; background-color: gray; border-radius: 4px; }
+            div.pagesLinks span.pageLink.inactive { background-color: black; color: white; }
+            div.pagesLinks span.pageLink.visited { background-color: black; color: yellow; }
+            div.pagesLinks span.pageLink.active { background-color: black; color: red; }
+        </style>
+    </head>
+    <body>
+        <h1>Simple test</h1>
+        <form action="post.php" method="post" id="testform">
+            <div><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></div>
+            <div class="fieldWrap">
+                <label>Test 1</label><br />
+                <input type="text" name="test1" value="" />
+            </div>
+            <div class="fieldWrap">
+                <label>Newsletter:</label>
+                <input type="checkbox" name="newsletter" value="yes" />
+            </div>
+            <div class="fieldWrap nomail">
+                <label>Select something</label><br />
+                <select name="select1" size="1">
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="fieldWrap display0">
+                <label>Email</label><br />
+                <input type="text" name="test2" value="" />
+            </div>
+            <div class="fieldWrap display1">
+                <label>First name</label><br />
+                <input type="text" name="test3" value="" />
+            </div>
+            <div class="fieldWrap display2">
+                <label>Last name</label><br />
+                <input type="text" name="test4" value="" />
+            </div>
+        </form>
+        <h1>Pages test</h1>
+        <form action="post.php" method="post" id="pagetestform">
+            <div><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></div>
+            <div class="pagesLinks">
+                <span class="pageLink page1">Z·kladnÈ ˙daje</span>
+                <span class="pageLink page2">V·ö e-mail</span>
+                <span class="pageLink page3">PouûÌvateæskÈ d·ta</span>
+                <span class="pageLink page4">DokonËenie</span>
+            </div>
+            <div class="page1">
+                <h2>Z·kladnÈ ˙daje</h2>
+                <div class="fieldWrap">
+                    <label>CelÈ meno</label><br />
+                    <input type="text" name="celemeno" />
+                </div>
+                <div class="fieldWrap">
+                    <label>Chcem dost·vaù inform·cie e-mailom</label>
+                    <input type="checkbox" name="infomailom" value="ano" />
+                </div>
+                <div class="infoForNewsletter">
+                    <p>Na nasleduj˙cej str·nke zad·te svoju e-mailov˙ adresu.</p>
+                </div>
+            </div>
+            <div class="page2" style="display: none;">
+                <h2>V·ö e-mail</h2>
+                <div class="fieldWrap">
+                    <label>Zadajte e-mail</label><br />
+                    <input type="text" name="email" />
+                </div>
+            </div>
+            <div class="page3" style="display: none;">
+                <h2>PouûÌvateæskÈ d·ta</h2>
+                <div class="fieldWrap">
+                    <label>Meno pouûÌvateæa</label><br />
+                    <input type="text" name="menopouzivatela" />
+                </div>
+                <div class="fieldWrap">
+                    <label>Heslo</label><br />
+                    <input type="password" name="heslo" />
+                </div>
+                <div class="fieldWrap checkPW">
+                    <label>Kontrola hesla</label><br />
+                    <input type="password" name="heslo2" />
+                </div>
+            </div>
+            <div class="page4" style="display: none;">
+                <h2>DokonËenie</h2>
+                <div class="info">
+                    <p>œakujeme V·m za vyplnenie registr·cie.</p>
+                </div>
+                <div class="infoIfNewsletter">
+                    <p>Na Vami zadan˙ e-mailov˙ adresu v·m bud˙ odteraz prich·dzaù obchodnÈ spr·vy.</p>
+                </div>
+            </div>
+            <div class="paginator">
+                <a href="#" class="prev">Predchodzia strana</a> <a href="#" class="next">œalöia strana</a>
+            </div>
+        </form>
+    </body>
+</html>
