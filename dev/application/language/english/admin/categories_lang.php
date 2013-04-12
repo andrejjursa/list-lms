@@ -13,3 +13,5 @@ $lang['admin_categories_form_button_save'] = 'Save';
 $lang['admin_categories_parent_category_root'] = 'Root';
 $lang['admin_categories_flash_message_save_successful'] = 'Category was saved successfully.';
 $lang['admin_categories_flash_message_save_failed'] = 'Failed to save category. Try again.';
+$lang['admin_categories_tree_controlls_edit'] = 'Edit';
+$lang['admin_categories_tree_controlls_delete'] = 'Delete';
