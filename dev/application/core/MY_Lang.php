@@ -1,5 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Overriden language class with support for adding custom language tags and language overlays.
+ * @package LIST_Core
+ * @author Andrej Jursa
+ */ 
 class MY_Lang extends CI_Lang {
     
     /**

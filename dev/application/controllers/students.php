@@ -1,5 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Students controller for frontend.
+ * @package LIST_FE_Controllers
+ * @author Andrej Jursa
+ */
 class Students extends MY_Controller {
     
     public function __construct() {

@@ -1,5 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Overriden controller class with few more useful methods.
+ * @package LIST_Core
+ * @author Andrej Jursa
+ */ 
 class MY_Controller extends CI_Controller {
     
     const TRANSACTION_ISOLATION_REPEATABLE_READ = 'REPEATABLE READ';

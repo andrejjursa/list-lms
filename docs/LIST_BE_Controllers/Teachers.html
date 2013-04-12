@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Teachers</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Teachers</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+											<a href="#sec-consts">Constants</a>
+						
+			</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Teachers controller for backend.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Andrej Jursa</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_controllers---admin---teachers.php.html">/controllers/admin/teachers.php</a> (line <span class="field"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminteachers.php.html#a8">8</a></span>)
+		</p>
+		
+				
+		<pre>CI_Controller
+   |
+   --<a href="../LIST_Core/MY_Controller.html">MY_Controller</a>
+      |
+      --Teachers</pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-consts">Constants</a>
+							
+									<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																												
+												<div class="method-definition">
+											<span class="method-result">Teachers</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#do_login" title="details" class="method-name">do_login</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#login" title="details" class="method-name">login</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#logout" title="details" class="method-name">logout</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#my_account" title="details" class="method-name">my_account</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#save_basic_information" title="details" class="method-name">save_basic_information</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#save_email" title="details" class="method-name">save_email</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#save_password" title="details" class="method-name">save_password</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_validate_old_password" title="details" class="method-name">_validate_old_password</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$teacher_id</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-consts">Constants</a>
+							
+										<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminteachers.php.html#a10">10</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Teachers</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../LIST_Core/MY_Controller.html#method__construct">MY_Controller::__construct()</a></dt>
+						<dd>Main constructor, initialise controller.</dd>
+					</dl>
+			
+	</div>
+<a name="methoddo_login" id="do_login"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">do_login</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminteachers.php.html#a31">31</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			do_login
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodlogin" id="login"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">login</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminteachers.php.html#a16">16</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			login
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodlogout" id="logout"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">logout</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminteachers.php.html#a57">57</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			logout
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodmy_account" id="my_account"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">my_account</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminteachers.php.html#a63">63</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			my_account
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodsave_basic_information" id="save_basic_information"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">save_basic_information</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminteachers.php.html#a76">76</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			save_basic_information
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodsave_email" id="save_email"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">save_email</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminteachers.php.html#a154">154</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			save_email
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodsave_password" id="save_password"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">save_password</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminteachers.php.html#a110">110</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			save_password
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method_validate_old_password" id="_validate_old_password"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_validate_old_password</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminteachers.php.html#a146">146</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_validate_old_password
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$teacher_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$str</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$teacher_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+							<h4>Inherited Methods</h4>
+				<a name='inherited_methods'><!-- --></a>	
+									<!-- =========== Summary =========== -->
+					<p>Inherited From <span class="classname"><a href="../LIST_Core/MY_Controller.html">MY_Controller</a></span></p>
+					<blockquote>
+													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method__construct">MY_Controller::__construct()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_initialize_teacher_menu">MY_Controller::_initialize_teacher_menu()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_init_language_for_student">MY_Controller::_init_language_for_student()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_init_language_for_teacher">MY_Controller::_init_language_for_teacher()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_init_lang_js_messages">MY_Controller::_init_lang_js_messages()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_load_student_langfile">MY_Controller::_load_student_langfile()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_load_teacher_langfile">MY_Controller::_load_teacher_langfile()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_select_teacher_menu_pagetag">MY_Controller::_select_teacher_menu_pagetag()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_transaction_isolation">MY_Controller::_transaction_isolation()</a></span><br>
+											</blockquote>
+										
+		</div>
+	</div>
+
+	<a name="sec-consts"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Constants</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+										<h4>Inherited Constants</h4>
+				<A NAME='inherited_vars'><!-- --></A>
+									<p>Inherited from <span class="classname"><a href="../LIST_Core/MY_Controller.html">MY_Controller</a></span></p>
+					<blockquote>
+													<span class="const-title">
+								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_AREA_GLOBAL">MY_Controller::TRANSACTION_AREA_GLOBAL</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_AREA_SESSION">MY_Controller::TRANSACTION_AREA_SESSION</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_READ_COMMITTED">MY_Controller::TRANSACTION_ISOLATION_READ_COMMITTED</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_READ_UNCOMMITTED">MY_Controller::TRANSACTION_ISOLATION_READ_UNCOMMITTED</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_REPEATABLE_READ">MY_Controller::TRANSACTION_ISOLATION_REPEATABLE_READ</a></span><br>
+							</span>
+													<span class="const-title">
+								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_SERIALIZABLE">MY_Controller::TRANSACTION_ISOLATION_SERIALIZABLE</a></span><br>
+							</span>
+											</blockquote> 
+										
+		</div>
+	</div>
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 12 Apr 2013 13:51:34 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+	</p>
+	</div></body>
+</html>

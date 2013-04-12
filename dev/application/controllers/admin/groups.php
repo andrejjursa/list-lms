@@ -1,5 +1,10 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Groups controller for backend.
+ * @package LIST_BE_Controllers
+ * @author Andrej Jursa
+ */
 class Groups extends MY_Controller {
     
     const STORED_FILTER_SESSION_NAME = 'course_filter_data';

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class DMZ_Json</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class DMZ_Json</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">DMZ_Json Class</p>
+		<p class="notes">
+			Located in <a class="field" href="_extensions---json.php.html">/extensions/json.php</a> (line <span class="field">23</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																												
+												<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#all_to_json" title="details" class="method-name">all_to_json</a>
+											(<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$fields</span> = <span class="var-default">''</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pretty_print</span> = <span class="var-default">FALSE</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">bool</span>
+										<a href="#from_json" title="details" class="method-name">from_json</a>
+											(<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$json_code</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$fields</span> = <span class="var-default">''</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#set_json_content_type" title="details" class="method-name">set_json_content_type</a>
+											(<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#to_json" title="details" class="method-name">to_json</a>
+											(<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$fields</span> = <span class="var-default">''</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pretty_print</span> = <span class="var-default">FALSE</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#_json_format" title="details" class="method-name">_json_format</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$json</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="methodall_to_json" id="all_to_json"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">all_to_json</span> (line <span class="line-number">80</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Convert the entire $object-&gt;all array result set into JSON code.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> A JSON formatted String, or FALSE if an error occurs.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			all_to_json
+		</span>
+					(<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$fields</span> = <span class="var-default">''</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pretty_print</span> = <span class="var-default">FALSE</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>
+				<span class="var-name">$object</span><span class="var-description">: The DataMapper Object to convert</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$fields</span><span class="var-description">: Array of fields to include.  If empty, includes all database columns.</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$pretty_print</span><span class="var-description">: Format the JSON code for legibility.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodfrom_json" id="from_json"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">from_json</span> (line <span class="line-number">107</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Convert a JSON object back into a DataMapper model.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE or FALSE on success or failure of converting the JSON string.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">bool</span>
+		<span class="method-name">
+			from_json
+		</span>
+					(<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$json_code</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$fields</span> = <span class="var-default">''</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>
+				<span class="var-name">$object</span><span class="var-description">: The DataMapper Object to save to.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$json_code</span><span class="var-description">: A string that contains JSON code.</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$fields</span><span class="var-description">: Array of 'safe' fields.  If empty, only include the database columns.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodset_json_content_type" id="set_json_content_type"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">set_json_content_type</span> (line <span class="line-number">132</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the HTTP Content-Type header to application/json</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			set_json_content_type
+		</span>
+					(<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>
+				<span class="var-name">$object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodto_json" id="to_json"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">to_json</span> (line <span class="line-number">33</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Convert a DataMapper model into JSON code.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> A JSON formatted String, or FALSE if an error occurs.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			to_json
+		</span>
+					(<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$fields</span> = <span class="var-default">''</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pretty_print</span> = <span class="var-default">FALSE</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../DataMapper/DataMapper.html">DataMapper</a></span>
+				<span class="var-name">$object</span><span class="var-description">: The DataMapper Object to convert</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$fields</span><span class="var-description">: Array of fields to include.  If empty, includes all database columns.</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$pretty_print</span><span class="var-description">: Format the JSON code for legibility.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_json_format" id="_json_format"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_json_format</span> (line <span class="line-number">146</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Formats a JSON string for readability.</p>
+<p class="description"><p>From @link http://php.net/manual/en/function.json-encode.php</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> Formatted JSON</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			_json_format
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$json</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$json</span><span class="var-description">: Unformatted JSON</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 12 Apr 2013 13:51:29 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+	</p>
+	</div></body>
+</html>

@@ -1,0 +1,852 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class MY_Lang</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class MY_Lang</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Overriden language class with support for adding custom language tags and language overlays.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Andrej Jursa</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_core---MY_Lang.php.html">/core/MY_Lang.php</a> (line <span class="field"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a8">8</a></span>)
+		</p>
+		
+				
+		<pre>CI_Lang
+   |
+   --MY_Lang</pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$lang_idiom" title="details" class="var-name">$lang_idiom</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$lang_overlays" title="details" class="var-name">$lang_overlays</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																				
+												<div class="method-definition">
+											<span class="method-result">MY_Lang</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#add_custom_translations" title="details" class="method-name">add_custom_translations</a>
+											(<span class="var-type">array<sting></span>&nbsp;<span class="var-name">$translations</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#get_current_idiom" title="details" class="method-name">get_current_idiom</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array<mixed></span>
+										<a href="#get_list_of_languages" title="details" class="method-name">get_list_of_languages</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#get_overlay" title="details" class="method-name">get_overlay</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#get_overlay_if_exists" title="details" class="method-name">get_overlay_if_exists</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">4</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#init_overlays" title="details" class="method-name">init_overlays</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">array<mixed></span>&nbsp;<span class="var-name">$rows</span>, <span class="var-type">array<string></span>&nbsp;<span class="var-name">$fields</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">mixed</span>
+										<a href="#load" title="details" class="method-name">load</a>
+											([<span class="var-type">string</span>&nbsp;<span class="var-name">$langfile</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span> = <span class="var-default">''</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$return</span> = <span class="var-default">FALSE</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$add_suffix</span> = <span class="var-default">TRUE</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$alt_path</span> = <span class="var-default">''</span>], <span class="var-type">boolean</span>&nbsp;<span class="var-name">$add_sufix</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#load_all_overlays" title="details" class="method-name">load_all_overlays</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#load_default_lang_idiom" title="details" class="method-name">load_default_lang_idiom</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#load_overlays" title="details" class="method-name">load_overlays</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span> = <span class="var-default">NULL</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$column</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#no_more_load_overlay" title="details" class="method-name">no_more_load_overlay</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#overlay_exists" title="details" class="method-name">overlay_exists</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#reinitialize_for_idiom" title="details" class="method-name">reinitialize_for_idiom</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#replace_null_overlay_text" title="details" class="method-name">replace_null_overlay_text</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$text</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#save_overlay" title="details" class="method-name">save_overlay</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$text</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#save_overlay_array" title="details" class="method-name">save_overlay_array</a>
+											(<span class="var-type">array<mixed></span>&nbsp;<span class="var-name">$array</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#text" title="details" class="method-name">text</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$text</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$default</span> = <span class="var-default">''</span>])
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$lang_idiom" id="$lang_idiom"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$lang_idiom</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a13">13</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">var string current language idiom.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$lang_overlays" id="$lang_overlays"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$lang_overlays</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a17">17</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">var array&lt;mixed&gt; loaded language overlays.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a22">22</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Constructor, creates object and load default idiom from config file.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">MY_Lang</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodadd_custom_translations" id="add_custom_translations"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">add_custom_translations</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a94">94</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Add custom translations to languages.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			add_custom_translations
+		</span>
+					(<span class="var-type">array<sting></span>&nbsp;<span class="var-name">$translations</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array<sting></span>
+				<span class="var-name">$translations</span><span class="var-description">: language translations to add to existing loaded translations.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_current_idiom" id="get_current_idiom"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_current_idiom</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a31">31</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns current language idiom.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> language idiom.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			get_current_idiom
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodget_list_of_languages" id="get_list_of_languages"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_list_of_languages</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a76">76</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Scans the language folder in APPPATH for config.php files, reads these files and outputs array of possible languages.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> possible languages in system.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array<mixed></span>
+		<span class="method-name">
+			get_list_of_languages
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodget_overlay" id="get_overlay"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_overlay</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a135">135</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns overlay text for given table name, table id, column and idiom (if provided).</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> language overlay text.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			get_overlay
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: name of table.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$table_id</span><span class="var-description">: table id.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$column</span><span class="var-description">: column name in given table.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$idiom</span><span class="var-description">: language idiom or NULL to use default.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_overlay_if_exists" id="get_overlay_if_exists"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_overlay_if_exists</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a252">252</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns overlay text for given parameters if this overlay exists.</p>
+<p class="description"><p>If overlay is not loaded, it will be.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			get_overlay_if_exists
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">4</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: name of table.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$table_id</span><span class="var-description">: table id.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$column</span><span class="var-description">: column name in given table.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$idiom</span><span class="var-description">: language idiom.</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">4</span><span class="var-description">: can return overlay text if overlay exists or NULL value of not exists.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodinit_overlays" id="init_overlays"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">init_overlays</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a220">220</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Initialize langauge overlay for given table, real table rows and array of fields.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			init_overlays
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">array<mixed></span>&nbsp;<span class="var-name">$rows</span>, <span class="var-type">array<string></span>&nbsp;<span class="var-name">$fields</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: name of table.</span>			</li>
+					<li>
+				<span class="var-type">array<mixed></span>
+				<span class="var-name">$rows</span><span class="var-description">: real rows obtained from database table.</span>			</li>
+					<li>
+				<span class="var-type">array<string></span>
+				<span class="var-name">$fields</span><span class="var-description">: array of fields (column names) in table for which overlays may be presented in overlay array.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodload" id="load"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">load</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a44">44</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Load language file.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">mixed</span>
+		<span class="method-name">
+			load
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$langfile</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span> = <span class="var-default">''</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$return</span> = <span class="var-default">FALSE</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$add_suffix</span> = <span class="var-default">TRUE</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$alt_path</span> = <span class="var-default">''</span>], <span class="var-type">boolean</span>&nbsp;<span class="var-name">$add_sufix</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$langfile</span><span class="var-description">: language file without suffix _lang.php.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$idiom</span><span class="var-description">: language idiom, if empty, default idiom will be used.</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$return</span><span class="var-description">: flag for returning lang file content from this method as array.</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$add_sufix</span><span class="var-description">: add suffix _lang to $langfile.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$alt_path</span><span class="var-description">: alternative path to look for lang file.</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$add_suffix</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodload_all_overlays" id="load_all_overlays"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">load_all_overlays</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a123">123</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Load all overlays for given table name and table id if provided.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			load_all_overlays
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: name of table.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$table_id</span><span class="var-description">: table id or NULL (NULL is default).</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodload_default_lang_idiom" id="load_default_lang_idiom"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">load_default_lang_idiom</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a316">316</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Loads default lang idiom from config file.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			load_default_lang_idiom
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodload_overlays" id="load_overlays"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">load_overlays</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a297">297</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Loads overlays from database for given parameters.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			load_overlays
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span> = <span class="var-default">NULL</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$column</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: table name for which overlays will be loaded.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$table_id</span><span class="var-description">: table id or NULL, if id provided, only overlays for this id will be loaded.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$column</span><span class="var-description">: name of column to load or NULL, if provided, only overlay for this column will be loaded.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodno_more_load_overlay" id="no_more_load_overlay"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">no_more_load_overlay</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a287">287</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Set overlay for given parameters to NULL value.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			no_more_load_overlay
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: name of table.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$table_id</span><span class="var-description">: table id.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$column</span><span class="var-description">: column name in given table.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$idiom</span><span class="var-description">: language idiom.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodoverlay_exists" id="overlay_exists"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">overlay_exists</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a272">272</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Checks if overlay for given parameters is loaded.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> returns TRUE if exists, FALSE otherwise.</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			overlay_exists
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: name of table.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$table_id</span><span class="var-description">: table id.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$column</span><span class="var-description">: column name in given table.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$idiom</span><span class="var-description">: language idiom.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodreinitialize_for_idiom" id="reinitialize_for_idiom"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">reinitialize_for_idiom</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a56">56</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Performs language idiom change and reload all previously loaded language files.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> returns TRUE, when switch to $idiom was made, FALSE otherwise (i.e. given idiom was already set).</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			reinitialize_for_idiom
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$idiom</span><span class="var-description">: language idiom to switch to.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodreplace_null_overlay_text" id="replace_null_overlay_text"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">replace_null_overlay_text</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a238">238</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Check text and returns empty string, if text value is NULL.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> replaced text.</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			replace_null_overlay_text
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$text</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$text</span><span class="var-description">: text.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsave_overlay" id="save_overlay"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">save_overlay</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a148">148</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Saves language overlay to database.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> returns TRUE if overlay is saved, FALSE otherwise.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			save_overlay
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$column</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$idiom</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$text</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: name of table.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$table_id</span><span class="var-description">: table id.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$column</span><span class="var-description">: column name in given table.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$idiom</span><span class="var-description">: language idiom.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$text</span><span class="var-description">: language overlay text.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodsave_overlay_array" id="save_overlay_array"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">save_overlay_array</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a189">189</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Performs save operation on given four dimensional associative array.</p>
+<p class="description"><p>First dimension is language idiom.  Second dimension is table name.  Third dimension is table id.  Fourth dimension is column name.  Value of array is language overlay text.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			save_overlay_array
+		</span>
+					(<span class="var-type">array<mixed></span>&nbsp;<span class="var-name">$array</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">array<mixed></span>
+				<span class="var-name">$array</span><span class="var-description">: language overlays array.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodtext" id="text"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">text</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a104">104</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Parse text as language line, if is prepended with lang: prefix.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> parsed text.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			text
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$text</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$default</span> = <span class="var-default">''</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$text</span><span class="var-description">: text to parse.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$default</span><span class="var-description">: default text to return if output of parsed $text is empty.</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 12 Apr 2013 13:51:30 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+	</p>
+	</div></body>
+</html>

@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class MY_Controller</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class MY_Controller</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+							<a href="#sec-descendents">Descendents</a>
+			|													<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+											<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+						
+			</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Overriden controller class with few more useful methods.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Andrej Jursa</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_core---MY_Controller.php.html">/core/MY_Controller.php</a> (line <span class="field"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a8">8</a></span>)
+		</p>
+		
+				
+		<pre>CI_Controller
+   |
+   --MY_Controller</pre>
+	
+			</div>
+</div>
+
+	<a name="sec-descendents"></a>
+	<div class="info-box">
+		<div class="info-box-title">Direct descendents</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+			<span class="disabled">Descendents</span>
+			|															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<table cellpadding="2" cellspacing="0" class="class-table">
+				<tr>
+					<th class="class-table-header">Class</th>
+					<th class="class-table-header">Description</th>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_BE_Controllers/Categories.html">Categories</a></td>
+					<td>
+											Categories controller for backend.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_BE_Controllers/Courses.html">Courses</a></td>
+					<td>
+											Courses controller for backend.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_BE_Controllers/Dashboard.html">Dashboard</a></td>
+					<td>
+											Dashboard controller for backend.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_BE_Controllers/Groups.html">Groups</a></td>
+					<td>
+											Groups controller for backend.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_BE_Controllers/Periods.html">Periods</a></td>
+					<td>
+											Periods controller for backend.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_BE_Controllers/Rooms.html">Rooms</a></td>
+					<td>
+											Rooms controller for backend.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_BE_Controllers/Settings.html">Settings</a></td>
+					<td>
+											Settings controller for backend.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_BE_Controllers/Teachers.html">Teachers</a></td>
+					<td>
+											Teachers controller for backend.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_BE_Controllers/Translationseditor.html">Translationseditor</a></td>
+					<td>
+											Translations editor controller for backend.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_FE_Controllers/Students.html">Students</a></td>
+					<td>
+											Students controller for frontend.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_FE_Controllers/Tasks.html">Tasks</a></td>
+					<td>
+											Tasks controller for frontend.
+										</td>
+				</tr>
+							</table>
+		</div>
+	</div>
+
+	<a name="sec-const-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constant Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendants</a> |
+						<span class="disabled">Constants</span> (<a href="#sec-consts">details</a>)
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<div class="const-summary">
+								<div class="const-title">
+					<a href="#TRANSACTION_AREA_GLOBAL" title="details" class="const-name">TRANSACTION_AREA_GLOBAL</a> = 					<span class="var-type"> 'GLOBAL'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#TRANSACTION_AREA_SESSION" title="details" class="const-name">TRANSACTION_AREA_SESSION</a> = 					<span class="var-type"> 'SESSION'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#TRANSACTION_ISOLATION_READ_COMMITTED" title="details" class="const-name">TRANSACTION_ISOLATION_READ_COMMITTED</a> = 					<span class="var-type"> 'READ COMMITTED'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#TRANSACTION_ISOLATION_READ_UNCOMMITTED" title="details" class="const-name">TRANSACTION_ISOLATION_READ_UNCOMMITTED</a> = 					<span class="var-type"> 'READ UNCOMMITTED'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#TRANSACTION_ISOLATION_REPEATABLE_READ" title="details" class="const-name">TRANSACTION_ISOLATION_REPEATABLE_READ</a> = 					<span class="var-type"> 'REPEATABLE READ'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#TRANSACTION_ISOLATION_SERIALIZABLE" title="details" class="const-name">TRANSACTION_ISOLATION_SERIALIZABLE</a> = 					<span class="var-type"> 'SERIALIZABLE'</span>
+
+				</div>
+							</div>
+		</div>
+	</div>
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+									<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																												
+												<div class="method-definition">
+											<span class="method-result">MY_Controller</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_initialize_teacher_menu" title="details" class="method-name">_initialize_teacher_menu</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_init_language_for_student" title="details" class="method-name">_init_language_for_student</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_init_language_for_teacher" title="details" class="method-name">_init_language_for_teacher</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_init_lang_js_messages" title="details" class="method-name">_init_lang_js_messages</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_load_student_langfile" title="details" class="method-name">_load_student_langfile</a>
+											([<span class="var-type">string</span>&nbsp;<span class="var-name">$filename</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_load_teacher_langfile" title="details" class="method-name">_load_teacher_langfile</a>
+											([<span class="var-type">string</span>&nbsp;<span class="var-name">$filename</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_select_teacher_menu_pagetag" title="details" class="method-name">_select_teacher_menu_pagetag</a>
+											([<span class="var-type">string</span>&nbsp;<span class="var-name">$tag</span> = <span class="var-default">''</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_transaction_isolation" title="details" class="method-name">_transaction_isolation</a>
+											([<span class="var-type">string</span>&nbsp;<span class="var-name">$level</span> = <span class="var-default">self::TRANSACTION_ISOLATION_SERIALIZABLE</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$area</span> = <span class="var-default">self::TRANSACTION_AREA_SESSION</span>])
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendents</a> |
+																		<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+										<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a23">23</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Main constructor, initialise controller.</p>
+<p class="description"><p>Database will be connected, libraries for usermanager and messages will be loaded and translations model will be loaded.  All user data will be send to smarty template.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">MY_Controller</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+			
+			<hr class="separator" />
+		<div class="notes">Redefined in descendants as:</div>
+		<ul class="redefinitions">
+					<li>
+				<a href="../LIST_BE_Controllers/Categories.html#method__construct">Categories::__construct()</a>
+							</li>
+					<li>
+				<a href="../LIST_BE_Controllers/Courses.html#method__construct">Courses::__construct()</a>
+							</li>
+					<li>
+				<a href="../LIST_BE_Controllers/Dashboard.html#method__construct">Dashboard::__construct()</a>
+							</li>
+					<li>
+				<a href="../LIST_BE_Controllers/Groups.html#method__construct">Groups::__construct()</a>
+							</li>
+					<li>
+				<a href="../LIST_BE_Controllers/Periods.html#method__construct">Periods::__construct()</a>
+							</li>
+					<li>
+				<a href="../LIST_BE_Controllers/Rooms.html#method__construct">Rooms::__construct()</a>
+							</li>
+					<li>
+				<a href="../LIST_BE_Controllers/Settings.html#method__construct">Settings::__construct()</a>
+							</li>
+					<li>
+				<a href="../LIST_BE_Controllers/Teachers.html#method__construct">Teachers::__construct()</a>
+							</li>
+					<li>
+				<a href="../LIST_BE_Controllers/Translationseditor.html#method__construct">Translationseditor::__construct()</a>
+							</li>
+					<li>
+				<a href="../LIST_FE_Controllers/Students.html#method__construct">Students::__construct()</a>
+							</li>
+				</ul>
+	</div>
+<a name="method_initialize_teacher_menu" id="_initialize_teacher_menu"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_initialize_teacher_menu</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a81">81</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Loads and inject teacher menu configuration to template.</p>
+<p class="description"><p>Smarty template variable $list_adminmenu will be created.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_initialize_teacher_menu
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method_init_language_for_student" id="_init_language_for_student"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_init_language_for_student</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a36">36</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Perform initialisation of student language settings.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_init_language_for_student
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method_init_language_for_teacher" id="_init_language_for_teacher"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_init_language_for_teacher</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a58">58</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Perform initialisation of teacher language settings.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_init_language_for_teacher
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method_init_lang_js_messages" id="_init_lang_js_messages"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_init_lang_js_messages</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a108">108</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Add language messages.js file to page headers.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_init_lang_js_messages
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method_load_student_langfile" id="_load_student_langfile"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_load_student_langfile</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a47">47</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Load student type language file.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_load_student_langfile
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$filename</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$filename</span><span class="var-description">: name of file to be loaded or NULL to load file with name of derived controller.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_load_teacher_langfile" id="_load_teacher_langfile"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_load_teacher_langfile</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a69">69</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Load teacher type language file.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_load_teacher_langfile
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$filename</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$filename</span><span class="var-description">: name of file to be loaded or NULL to load file with name of derived controller.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_select_teacher_menu_pagetag" id="_select_teacher_menu_pagetag"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_select_teacher_menu_pagetag</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a92">92</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Set the active menu item in teacher menu.</p>
+<p class="description"><p>Smarty template variable $list_adminmenu_current will be created.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_select_teacher_menu_pagetag
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$tag</span> = <span class="var-default">''</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$tag</span><span class="var-description">: page tag to be set as active item in menu.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_transaction_isolation" id="_transaction_isolation"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_transaction_isolation</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a101">101</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Set the database transaction isolation level.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_transaction_isolation
+		</span>
+					([<span class="var-type">string</span>&nbsp;<span class="var-name">$level</span> = <span class="var-default">self::TRANSACTION_ISOLATION_SERIALIZABLE</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$area</span> = <span class="var-default">self::TRANSACTION_AREA_SESSION</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$level</span><span class="var-description">: transaction isolation level, one of TRANSACTION_ISOLATION_* of MY_Controller class.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$area</span><span class="var-description">: area of where isolation is aplied, one of TRANSACTION_AREA_* of MY_Controller class.</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+	<a name="sec-consts"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+							<a href="#sec-descendents">Descendants</a> |
+										<a href="#sec-var-summary">Constants</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="constTRANSACTION_AREA_GLOBAL" id="TRANSACTION_AREA_GLOBAL"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">TRANSACTION_AREA_GLOBAL</span>
+			 = <span class="const-default"> 'GLOBAL'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a15">15</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constTRANSACTION_AREA_SESSION" id="TRANSACTION_AREA_SESSION"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">TRANSACTION_AREA_SESSION</span>
+			 = <span class="const-default"> 'SESSION'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a16">16</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constTRANSACTION_ISOLATION_READ_COMMITTED" id="TRANSACTION_ISOLATION_READ_COMMITTED"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">TRANSACTION_ISOLATION_READ_COMMITTED</span>
+			 = <span class="const-default"> 'READ COMMITTED'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a11">11</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constTRANSACTION_ISOLATION_READ_UNCOMMITTED" id="TRANSACTION_ISOLATION_READ_UNCOMMITTED"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">TRANSACTION_ISOLATION_READ_UNCOMMITTED</span>
+			 = <span class="const-default"> 'READ UNCOMMITTED'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a12">12</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constTRANSACTION_ISOLATION_REPEATABLE_READ" id="TRANSACTION_ISOLATION_REPEATABLE_READ"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">TRANSACTION_ISOLATION_REPEATABLE_READ</span>
+			 = <span class="const-default"> 'REPEATABLE READ'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a10">10</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constTRANSACTION_ISOLATION_SERIALIZABLE" id="TRANSACTION_ISOLATION_SERIALIZABLE"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">TRANSACTION_ISOLATION_SERIALIZABLE</span>
+			 = <span class="const-default"> 'SERIALIZABLE'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a13">13</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+						
+		</div>
+	</div>
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 12 Apr 2013 13:51:29 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+	</p>
+	</div></body>
+</html>

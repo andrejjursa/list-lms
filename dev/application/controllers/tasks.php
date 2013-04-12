@@ -1,6 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Tasks extends CI_Controller {
+/**
+ * Tasks controller for frontend.
+ * @package LIST_FE_Controllers
+ * @author Andrej Jursa
+ */
+class Tasks extends MY_Controller {
     
     public function index() {
         $this->load->library('migration');

@@ -1,6 +1,12 @@
 <?php
 
 /**
+ * Aplication helper functions.
+ * @package LIST_Helpers
+ * @author Andrej Jursa
+ */
+
+/**
  * This function will check if there is server variable MOD_REWRITE_ENABLED, which is created in .htaccess.
  * @return boolean TRUE, if this variable exists and is set to yes, FALSE otherwise.
  */

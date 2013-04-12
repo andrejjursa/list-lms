@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Usermanager</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Usermanager</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">User management library for LIST. This library can handle students and teachers.</p>
+	<ul class="tags">
+				<li><span class="field">author:</span> Andrej Jursa</li>
+			</ul>
+		<p class="notes">
+			Located in <a class="field" href="_libraries---usermanager.php.html">/libraries/usermanager.php</a> (line <span class="field"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a10">10</a></span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																								<div class="var-title">
+					<span class="var-type">object</span>
+					<a href="#$CI" title="details" class="var-name">$CI</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">boolean</span>
+					<a href="#$student_login_verified" title="details" class="var-name">$student_login_verified</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">boolean</span>
+					<a href="#$teacher_login_verified" title="details" class="var-name">$teacher_login_verified</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																																				
+												<div class="method-definition">
+											<span class="method-result">Usermanager</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#authenticate_student_login" title="details" class="method-name">authenticate_student_login</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$email</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$password</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$eamil</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#authenticate_teacher_login" title="details" class="method-name">authenticate_teacher_login</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$email</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$password</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$eamil</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#clear_current_url" title="details" class="method-name">clear_current_url</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#do_student_logout" title="details" class="method-name">do_student_logout</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#do_teacher_logout" title="details" class="method-name">do_teacher_logout</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">integet</span>
+										<a href="#get_student_id" title="details" class="method-name">get_student_id</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#get_student_language" title="details" class="method-name">get_student_language</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">integet</span>
+										<a href="#get_teacher_id" title="details" class="method-name">get_teacher_id</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#get_teacher_language" title="details" class="method-name">get_teacher_language</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#is_student_session_valid" title="details" class="method-name">is_student_session_valid</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#is_teacher_session_valid" title="details" class="method-name">is_teacher_session_valid</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#refresh_student_userdata" title="details" class="method-name">refresh_student_userdata</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#refresh_teacher_userdata" title="details" class="method-name">refresh_teacher_userdata</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#set_student_data_to_smarty" title="details" class="method-name">set_student_data_to_smarty</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#set_teacher_data_to_smarty" title="details" class="method-name">set_teacher_data_to_smarty</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#student_login_protected_redirect" title="details" class="method-name">student_login_protected_redirect</a>
+											([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$send_current_url</span> = <span class="var-default">TRUE</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#teacher_login_protected_redirect" title="details" class="method-name">teacher_login_protected_redirect</a>
+											([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$send_current_url</span> = <span class="var-default">TRUE</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#validate_student_login_verification" title="details" class="method-name">validate_student_login_verification</a>
+											([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$status</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#validate_teacher_login_verification" title="details" class="method-name">validate_teacher_login_verification</a>
+											([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$status</span> = <span class="var-default">NULL</span>])
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$CI" id="$CI"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">object</span>
+			<span class="var-name">$CI</span>
+			 = <span class="var-default"> NULL</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a15">15</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> CodeIgniter.</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$student_login_verified" id="$student_login_verified"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">boolean</span>
+			<span class="var-name">$student_login_verified</span>
+			 = <span class="var-default"> NULL</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a19">19</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> contains information about student account authentication in script runtime.</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$teacher_login_verified" id="$teacher_login_verified"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">boolean</span>
+			<span class="var-name">$teacher_login_verified</span>
+			 = <span class="var-default"> NULL</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a23">23</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">var:</span> contains information about teacher account authentication in script runtime.</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a28">28</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Constructor ...</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Usermanager</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodauthenticate_student_login" id="authenticate_student_login"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">authenticate_student_login</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a83">83</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Performs student account authentification and returns boolean information about success.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE, if student authentification is successful, FALSE otherwise (i.e. bad e-mail of password).</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			authenticate_student_login
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$email</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$password</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$eamil</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$eamil</span><span class="var-description">: student account e-mail address.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$password</span><span class="var-description">: student account password in plain text form.</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$email</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodauthenticate_teacher_login" id="authenticate_teacher_login"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">authenticate_teacher_login</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a108">108</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Performs teacher account authentification and returns boolean information about success.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE, if teacher authentification is successful, FALSE otherwise (i.e. bad e-mail of password).</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			authenticate_teacher_login
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$email</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$password</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$eamil</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$eamil</span><span class="var-description">: teacher account e-mail address.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$password</span><span class="var-description">: teacher account password in plain text form.</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$email</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodclear_current_url" id="clear_current_url"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">clear_current_url</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a304">304</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function returns current url with respect to rewrite engien setting.</p>
+<p class="description"><p>I.E. it clears $config['index_page'] from current url.</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> current url.</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			clear_current_url
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methoddo_student_logout" id="do_student_logout"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">do_student_logout</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a242">242</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function will remove student session data and log him off.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			do_student_logout
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methoddo_teacher_logout" id="do_teacher_logout"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">do_teacher_logout</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a250">250</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function will remove teacher session data and log him off.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			do_teacher_logout
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodget_student_id" id="get_student_id"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_student_id</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a219">219</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns currently authenticated student id or zero if student is not loged in.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> student id.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">integet</span>
+		<span class="method-name">
+			get_student_id
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodget_student_language" id="get_student_language"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_student_language</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a195">195</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns language selected by authenticated student, or default language, if no student is authenticated.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> language code.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			get_student_language
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodget_teacher_id" id="get_teacher_id"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_teacher_id</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a231">231</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns currently authenticated teacher id or zero if teacher is not loged in.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> teacher id.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">integet</span>
+		<span class="method-name">
+			get_teacher_id
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodget_teacher_language" id="get_teacher_language"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_teacher_language</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a207">207</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns language selected by authenticated teacher, or default language, if no teacher is authenticated.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> language code.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			get_teacher_language
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodis_student_session_valid" id="is_student_session_valid"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">is_student_session_valid</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a37">37</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Performs one-time check if student account is authenticated, then returns this value as boolean.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE, if student account is authenticated, FALSE otherwise.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			is_student_session_valid
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodis_teacher_session_valid" id="is_teacher_session_valid"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">is_teacher_session_valid</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a59">59</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Performs one-time check if teacher account is authenticated, then returns this value as boolean.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE, if teacher account is authenticated, FALSE otherwise.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			is_teacher_session_valid
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodrefresh_student_userdata" id="refresh_student_userdata"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">refresh_student_userdata</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a130">130</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Reloads student data from database to session.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			refresh_student_userdata
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodrefresh_teacher_userdata" id="refresh_teacher_userdata"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">refresh_teacher_userdata</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a148">148</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Reloads teacher data from database to session.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			refresh_teacher_userdata
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodset_student_data_to_smarty" id="set_student_data_to_smarty"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">set_student_data_to_smarty</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a258">258</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function will send data from student session to smarty template variable called 'list_student_account'.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			set_student_data_to_smarty
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodset_teacher_data_to_smarty" id="set_teacher_data_to_smarty"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">set_teacher_data_to_smarty</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a270">270</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function will send data from teacher session to smarty template variable called 'list_teacher_account'.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			set_teacher_data_to_smarty
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodstudent_login_protected_redirect" id="student_login_protected_redirect"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">student_login_protected_redirect</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a167">167</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function will redirects browser to login page for student when no student is authentificated.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			student_login_protected_redirect
+		</span>
+					([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$send_current_url</span> = <span class="var-default">TRUE</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$send_current_url</span><span class="var-description">: if this is set to TRUE (default), current url will be encoded and sent to login page, so user will be redirected back to it after successful login.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodteacher_login_protected_redirect" id="teacher_login_protected_redirect"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">teacher_login_protected_redirect</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a181">181</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This function will redirects browser to login page for teacher when no teacher is authentificated.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			teacher_login_protected_redirect
+		</span>
+					([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$send_current_url</span> = <span class="var-default">TRUE</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$send_current_url</span><span class="var-description">: if this is set to TRUE (default), current url will be encoded and sent to login page, so user will be redirected back to it after successful login.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodvalidate_student_login_verification" id="validate_student_login_verification"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">validate_student_login_verification</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a283">283</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This internal function will set the verification status of student.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			validate_student_login_verification
+		</span>
+					([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$status</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$status</span><span class="var-description">: status can be TRUE, FALSE or NULL.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodvalidate_teacher_login_verification" id="validate_teacher_login_verification"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">validate_teacher_login_verification</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a293">293</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This internal function will set the verification status of teacher.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			validate_teacher_login_verification
+		</span>
+					([<span class="var-type">boolean</span>&nbsp;<span class="var-name">$status</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$status</span><span class="var-description">: status can be TRUE, FALSE or NULL.</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 12 Apr 2013 13:51:35 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+	</p>
+	</div></body>
+</html>

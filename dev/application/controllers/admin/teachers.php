@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Teachers controller for backend.
+ * @package LIST_BE_Controllers
+ * @author Andrej Jursa
+ */
 class Teachers extends MY_Controller {
     
     public function __construct() {

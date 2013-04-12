@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Translations model.
+ * @package LIST_CI_Models
+ * @author Andrej Jursa
+ */
 class Translations extends CI_Model {
     
     const CONSTANT_VALIDATION_REGEXP = '/^[a-z]+[a-z0-9]*(\_[a-z0-9]+)*$/i';

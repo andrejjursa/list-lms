@@ -1,0 +1,1780 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class DMZ_Nestedsets</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class DMZ_Nestedsets</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">DMZ_Nestedsets Class</p>
+		<p class="notes">
+			Located in <a class="field" href="_extensions---nestedsets.php.html">/extensions/nestedsets.php</a> (line <span class="field">24</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																																																								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$use_symlink_pointers" title="details" class="var-name">$use_symlink_pointers</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_leftindex" title="details" class="var-name">$_leftindex</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_nodename" title="details" class="var-name">$_nodename</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_rightindex" title="details" class="var-name">$_rightindex</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_rootfield" title="details" class="var-name">$_rootfield</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_rootindex" title="details" class="var-name">$_rootindex</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$_symlinkindex" title="details" class="var-name">$_symlinkindex</a>
+				</div>
+											</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																																																																																																																																																																																																																																																																				
+												<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											([<span class="var-type">mixed</span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">array()</span>], [<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">integer</span>
+										<a href="#count_children" title="details" class="method-name">count_children</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#dump_dropdown" title="details" class="method-name">dump_dropdown</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span> = <span class="var-default">FALSE</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$skip_root</span> = <span class="var-default">TRUE</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">mixed</span>
+										<a href="#dump_tree" title="details" class="method-name">dump_tree</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$attributes</span> = <span class="var-default">NULL</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span> = <span class="var-default">'array'</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$skip_root</span> = <span class="var-default">TRUE</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#get_first_child" title="details" class="method-name">get_first_child</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#get_last_child" title="details" class="method-name">get_last_child</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#get_next_sibling" title="details" class="method-name">get_next_sibling</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#get_node_where_left" title="details" class="method-name">get_node_where_left</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$left_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#get_node_where_right" title="details" class="method-name">get_node_where_right</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$right_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#get_parent" title="details" class="method-name">get_parent</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#get_previous_sibling" title="details" class="method-name">get_previous_sibling</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#get_root" title="details" class="method-name">get_root</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#has_children" title="details" class="method-name">has_children</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#has_next_sibling" title="details" class="method-name">has_next_sibling</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#has_parent" title="details" class="method-name">has_parent</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#has_previous_sibling" title="details" class="method-name">has_previous_sibling</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#is_child" title="details" class="method-name">is_child</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#is_child_of" title="details" class="method-name">is_child_of</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#is_leaf" title="details" class="method-name">is_leaf</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#is_parent_of" title="details" class="method-name">is_parent_of</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#is_root" title="details" class="method-name">is_root</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#is_valid_node" title="details" class="method-name">is_valid_node</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">mixed</span>
+										<a href="#level" title="details" class="method-name">level</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#make_first_child_of" title="details" class="method-name">make_first_child_of</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#make_last_child_of" title="details" class="method-name">make_last_child_of</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#make_next_sibling_of" title="details" class="method-name">make_next_sibling_of</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#make_previous_sibling_of" title="details" class="method-name">make_previous_sibling_of</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#new_first_child" title="details" class="method-name">new_first_child</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#new_last_child" title="details" class="method-name">new_last_child</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#new_next_sibling" title="details" class="method-name">new_next_sibling</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#new_previous_sibling" title="details" class="method-name">new_previous_sibling</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#new_root" title="details" class="method-name">new_root</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#remove_node" title="details" class="method-name">remove_node</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#remove_tree" title="details" class="method-name">remove_tree</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$tree_id</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#select_root" title="details" class="method-name">select_root</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$tree</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#tree_config" title="details" class="method-name">tree_config</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">array()</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#_insertNew" title="details" class="method-name">_insertNew</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#_moveSubtree" title="details" class="method-name">_moveSubtree</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$node</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$destination_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#_shiftRLRange" title="details" class="method-name">_shiftRLRange</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$first</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$last</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$delta</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">object the</span>
+										<a href="#_shiftRLValues" title="details" class="method-name">_shiftRLValues</a>
+											(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$first</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$delta</span>)
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$use_symlink_pointers" id="$use_symlink_pointers"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$use_symlink_pointers</span>
+			 = <span class="var-default"> TRUE</span>			(line <span class="line-number">80</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">indicates with pointers need to be used</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_leftindex" id="$_leftindex"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_leftindex</span>
+			 = <span class="var-default"> 'left_id'</span>			(line <span class="line-number">32</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">name of the tree node left index field</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_nodename" id="$_nodename"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_nodename</span>
+			 = <span class="var-default"> NULL</span>			(line <span class="line-number">72</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">name of the tree node name field, used to build a path string</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_rightindex" id="$_rightindex"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_rightindex</span>
+			 = <span class="var-default"> 'right_id'</span>			(line <span class="line-number">40</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">name of the tree node right index field</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_rootfield" id="$_rootfield"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_rootfield</span>
+			 = <span class="var-default"> 'root_id'</span>			(line <span class="line-number">48</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">name of the tree root id field. Used when the tree contains multiple roots</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_rootindex" id="$_rootindex"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_rootindex</span>
+			 = <span class="var-default"> NULL</span>			(line <span class="line-number">56</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">value of the root field we need to filter on</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$_symlinkindex" id="$_symlinkindex"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$_symlinkindex</span>
+			 = <span class="var-default"> 'symlink_id'</span>			(line <span class="line-number">64</span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">name of the tree node symlink index field</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">92</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Class constructor</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			__construct
+		</span>
+					([<span class="var-type">mixed</span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">array()</span>], [<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$options</span><span class="var-description">: optional, array of load-time options or NULL</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcount_children" id="count_children"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">count_children</span> (line <span class="line-number">833</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">return the count of the objects children</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">integer</span>
+		<span class="method-name">
+			count_children
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddump_dropdown" id="dump_dropdown"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">dump_dropdown</span> (line <span class="line-number">1039</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">returns the tree in a key-value format suitable for html dropdowns</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			dump_dropdown
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$field</span> = <span class="var-default">FALSE</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$skip_root</span> = <span class="var-default">TRUE</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$field</span><span class="var-description">: optional, name of the column to use</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$skip_root</span><span class="var-description">: if true, the object itself (root of the dump) will not be included</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddump_tree" id="dump_tree"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">dump_tree</span> (line <span class="line-number">1088</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">dumps the entire tree in HTML or TAB formatted output</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">mixed</span>
+		<span class="method-name">
+			dump_tree
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">array</span>&nbsp;<span class="var-name">$attributes</span> = <span class="var-default">NULL</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span> = <span class="var-default">'array'</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$skip_root</span> = <span class="var-default">TRUE</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">array</span>
+				<span class="var-name">$attributes</span><span class="var-description">: list of columns to include in the dump</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$type</span><span class="var-description">: type of output requested, possible values 'html', 'tab', 'csv', 'array' ('array' = default)</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$skip_root</span><span class="var-description">: if true, the object itself (root of the dump) will not be included</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_first_child" id="get_first_child"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_first_child</span> (line <span class="line-number">496</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">returns the first child of the given node</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			get_first_child
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: parent node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_last_child" id="get_last_child"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_last_child</span> (line <span class="line-number">532</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">returns the last child of the given node</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			get_last_child
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: parent node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_next_sibling" id="get_next_sibling"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_next_sibling</span> (line <span class="line-number">604</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">returns the next sibling of the given node</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			get_next_sibling
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: sibling node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_node_where_left" id="get_node_where_left"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_node_where_left</span> (line <span class="line-number">450</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">returns the node with the requested left index pointer</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			get_node_where_left
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$left_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$left_id</span><span class="var-description">: a node's left index value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_node_where_right" id="get_node_where_right"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_node_where_right</span> (line <span class="line-number">473</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">returns the node with the requested right index pointer</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			get_node_where_right
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$right_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$right_id</span><span class="var-description">: a node's right index value</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_parent" id="get_parent"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_parent</span> (line <span class="line-number">413</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">returns the parent of the child 'node'</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			get_parent
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: child node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_previous_sibling" id="get_previous_sibling"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_previous_sibling</span> (line <span class="line-number">568</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">returns the previous sibling of the given node</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			get_previous_sibling
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: sibling node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_root" id="get_root"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_root</span> (line <span class="line-number">391</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">returns the root of the (selected) tree</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			get_root
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodhas_children" id="has_children"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">has_children</span> (line <span class="line-number">785</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">check if the object has children</p>
+<p class="description"><p>Note: this is an alias for ! is_leaf()</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			has_children
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodhas_next_sibling" id="has_next_sibling"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">has_next_sibling</span> (line <span class="line-number">815</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">check if the object has a next silbling</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			has_next_sibling
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodhas_parent" id="has_parent"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">has_parent</span> (line <span class="line-number">769</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">check if the object has a parent</p>
+<p class="description"><p>Note: this is an alias for is_child()</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			has_parent
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodhas_previous_sibling" id="has_previous_sibling"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">has_previous_sibling</span> (line <span class="line-number">799</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">check if the object has a previous silbling</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			has_previous_sibling
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodis_child" id="is_child"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">is_child</span> (line <span class="line-number">709</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">check if the object is a child node</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			is_child
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodis_child_of" id="is_child_of"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">is_child_of</span> (line <span class="line-number">724</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">check if the object is a child of node</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			is_child_of
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: parent node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodis_leaf" id="is_leaf"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">is_leaf</span> (line <span class="line-number">695</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">check if the object is a tree leaf (node with no children)</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			is_leaf
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodis_parent_of" id="is_parent_of"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">is_parent_of</span> (line <span class="line-number">744</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">check if the object is the parent of node</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			is_parent_of
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: parent node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodis_root" id="is_root"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">is_root</span> (line <span class="line-number">681</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">check if the object is a tree root</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			is_root
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodis_valid_node" id="is_valid_node"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">is_valid_node</span> (line <span class="line-number">641</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">check if the object is a valid tree node</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			is_valid_node
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodlevel" id="level"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">level</span> (line <span class="line-number">847</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">return the node level, where the root = 0</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> integer, of FALSE in case no valid object was passed</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">mixed</span>
+		<span class="method-name">
+			level
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmake_first_child_of" id="make_first_child_of"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">make_first_child_of</span> (line <span class="line-number">923</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">move the object as first child of 'node'</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			make_first_child_of
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: sibling node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmake_last_child_of" id="make_last_child_of"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">make_last_child_of</span> (line <span class="line-number">938</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">move the object as last child of 'node'</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			make_last_child_of
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: sibling node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmake_next_sibling_of" id="make_next_sibling_of"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">make_next_sibling_of</span> (line <span class="line-number">879</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">move the object as next sibling of 'node'</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			make_next_sibling_of
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: sibling node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmake_previous_sibling_of" id="make_previous_sibling_of"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">make_previous_sibling_of</span> (line <span class="line-number">901</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">move the object as previous sibling of 'node'</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			make_previous_sibling_of
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: sibling node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodnew_first_child" id="new_first_child"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">new_first_child</span> (line <span class="line-number">217</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">creates a new first child of 'node'</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			new_first_child
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: parent node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodnew_last_child" id="new_last_child"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">new_last_child</span> (line <span class="line-number">260</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">creates a new last child of 'node'</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			new_last_child
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: parent node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodnew_next_sibling" id="new_next_sibling"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">new_next_sibling</span> (line <span class="line-number">346</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">creates a new sibling after 'node'</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			new_next_sibling
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: sibling node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodnew_previous_sibling" id="new_previous_sibling"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">new_previous_sibling</span> (line <span class="line-number">303</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">creates a new sibling before 'node'</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			new_previous_sibling
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">object the</span>&nbsp;<span class="var-name">$node</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$node</span><span class="var-description">: sibling node</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodnew_root" id="new_root"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">new_root</span> (line <span class="line-number">190</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">create a new tree root</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			new_root
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodremove_node" id="remove_node"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">remove_node</span> (line <span class="line-number">996</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">deletes the current object, and all childeren</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			remove_node
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodremove_tree" id="remove_tree"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">remove_tree</span> (line <span class="line-number">955</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">deletes the entire tree structure including all records</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			remove_tree
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$tree_id</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$tree_id</span><span class="var-description">: optional, id of the tree to delete</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodselect_root" id="select_root"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">select_root</span> (line <span class="line-number">170</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">select a specific root if the table contains multiple trees</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			select_root
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$tree</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$tree</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodtree_config" id="tree_config"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">tree_config</span> (line <span class="line-number">112</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">runtime configuration of this nestedsets tree</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			tree_config
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$options</span> = <span class="var-default">array()</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$options</span><span class="var-description">: optional, array of options or NULL</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_insertNew" id="_insertNew"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_insertNew</span> (line <span class="line-number">1336</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">inserts a new record into the tree</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			_insertNew
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_moveSubtree" id="_moveSubtree"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_moveSubtree</span> (line <span class="line-number">1355</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">move a section of the tree to another location within the tree</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			_moveSubtree
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$node</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$destination_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object we're going to move</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$node</span><span class="var-description">: the destination node's left id value</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$destination_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_shiftRLRange" id="_shiftRLRange"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_shiftRLRange</span> (line <span class="line-number">1301</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">shifts a range of nodes up or down the left and right index by $delta</p>
+<p class="description"><p>note that $delta can also be negative!</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			_shiftRLRange
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$first</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$last</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$delta</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$first</span><span class="var-description">: left value of the start node</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$last</span><span class="var-description">: right value of the end node</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$delta</span><span class="var-description">: number of positions to shift</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_shiftRLValues" id="_shiftRLValues"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_shiftRLValues</span> (line <span class="line-number">1251</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">makes room for a new node (or nodes) by shifting the left and right  id's of nodes with larger values than our object by $delta</p>
+<p class="description"><p>note that $delta can also be negative!</p></p>
+	<ul class="tags">
+				<li><span class="field">return:</span> updated DataMapper object</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">object the</span>
+		<span class="method-name">
+			_shiftRLValues
+		</span>
+					(<span class="var-type">object the</span>&nbsp;<span class="var-name">$object</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$first</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$delta</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">object the</span>
+				<span class="var-name">$object</span><span class="var-description">: DataMapper object</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$first</span><span class="var-description">: left value of the start node</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$delta</span><span class="var-description">: number of positions to shift</span>			</li>
+				</ul>
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Fri, 12 Apr 2013 13:51:30 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+	</p>
+	</div></body>
+</html>
