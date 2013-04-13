@@ -74,6 +74,7 @@ class Courses extends MY_Controller {
             $course = new Course();
             $course->get_by_id($course_id);
             $course->delete();
+            $this->lang->delete_overlays('courses', intval($course_id));
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->output->set_output(json_encode(TRUE));    

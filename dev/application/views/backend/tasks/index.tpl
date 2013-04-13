@@ -15,7 +15,7 @@
             </form>
         </div>
         <a href="{internal_url url='admin_tasks/new_task'}" class="button">{translate line='admin_tasks_new_task_button_label'}</a>
-        <table>
+        <table class="tasks_table">
             <thead>
                 <tr>
                     <th>{translate line='admin_tasks_table_header_name'}</th>
@@ -29,6 +29,10 @@
             <tbody id="table_content_id">
             </tbody>
         </table>
-        <pre>{$filter|var_dump}</pre>
     </fieldset>
 {/block}
+{block custom_head}<script type="text/javascript">
+    var messages = {
+        delete_question: '{translate line="admin_tasks_javascript_message_delete_question"}'
+    }; 
+</script>{/block}

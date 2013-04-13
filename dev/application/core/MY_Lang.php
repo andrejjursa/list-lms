@@ -231,6 +231,24 @@ class MY_Lang extends CI_Lang {
     }
     
     /**
+     * Deletes overlay from database, but not from loaded overlays.
+     * @param string $table table name for which overlays will be deleted.
+     * @param integer $table_id table id or NULL, if id is provided, only overlays for this id will be deleted.
+     * @param string $column name of column to delete or NULL, if provided, only overlay for this column will be deleted.
+     */
+    public function delete_overlays($table, $table_id = NULL, $column = NULL) {
+        $CI =& get_instance();
+        $CI->db->from('lang_overlays')->where('table', $table);
+        if (!is_null($table_id)) {
+            $CI->db->where('table_id', intval($table_id));
+        }
+        if (!is_null($column)) {
+            $CI->db->where('column', intval($column));
+        }
+        $CI->db->delete();
+    }
+    
+    /**
      * Check text and returns empty string, if text value is NULL.
      * @param string $text text.
      * @return string replaced text.
@@ -291,7 +309,7 @@ class MY_Lang extends CI_Lang {
     /**
      * Loads overlays from database for given parameters.
      * @param string $table table name for which overlays will be loaded.
-     * @param integer $table_id table id or NULL, if id provided, only overlays for this id will be loaded.
+     * @param integer $table_id table id or NULL, if id is provided, only overlays for this id will be loaded.
      * @param string $column name of column to load or NULL, if provided, only overlay for this column will be loaded.
      */
     protected function load_overlays($table, $table_id = NULL, $column = NULL) {
