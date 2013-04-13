@@ -2,10 +2,11 @@ jQuery(document).ready(function($) {
     
     var reload_all_tasks = function() {
         var url = global_base_url + 'index.php/admin_tasks/get_all_tasks';
+        var data = $('#filter_form_id').serializeArray();
         var onSuccess = function() {
             $('#table_content_id #pagination_row_id').appendTo($('#table_pagination_footer_id'));
         };
-        api_ajax_load(url, '#table_content_id', 'post', {}, onSuccess);
+        api_ajax_load(url, '#table_content_id', 'post', data, onSuccess);
     }
     
     reload_all_tasks();

@@ -7,7 +7,7 @@
  */
 class Groups extends MY_Controller {
     
-    const STORED_FILTER_SESSION_NAME = 'course_filter_data';
+    const STORED_FILTER_SESSION_NAME = 'admin_groups_filter_data';
     
     public function __construct() {
         parent::__construct();
