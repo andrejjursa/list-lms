@@ -10,3 +10,8 @@ $lang['common_day_saturday'] = 'Saturday';
 $lang['common_day_sunday'] = 'Sunday';
 
 $lang['common_jqueryui_datepicker_region'] = 'en';
+
+$lang['common_pagination_page_of_pages'] = 'Page <strong>%d</strong> / <strong>%d</strong>';
+$lang['common_pagination_records'] = 'Record <strong>%d</strong> to <strong>%d</strong> out of <strong>%d</strong>';
+$lang['common_pagination_page'] = 'Page';
+$lang['common_pagination_rows_per_page'] = 'Records per page'; 

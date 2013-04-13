@@ -109,4 +109,13 @@ class MY_Controller extends CI_Controller {
         $path = 'public/js/language/' . $this->lang->get_current_idiom() . '/messages.js';
         $this->parser->assign('list_lang_js_messages', $path);
     }
+    
+    /**
+     * This method adds tinymce editor to template.
+     */
+    protected function _add_tinymce() {
+        $this->parser->add_js_file('tinymce/tinymce.min.js');
+        $this->parser->add_js_file('tinymce/jquery.tinymce.min.js');
+        $this->parser->add_css_file('tinymce/common.css');
+    }
 }

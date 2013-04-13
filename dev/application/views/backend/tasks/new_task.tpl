@@ -14,15 +14,18 @@
             </div>
             <div class="field">
                 <label for="task_text_id">{translate line='admin_tasks_form_label_text'}:</label>
-                <p class="input"><textarea name="task[text]" id="task_text_id"></textarea></p>
+                <p class="input"><textarea name="task[text]" id="task_text_id" class="tinymce">{$smarty.post.task.text}</textarea></p>
                 {form_error field='task[text]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="field">
                 <label for="task_categories_id">{translate line='admin_tasks_form_label_categories'}:</label>
-                <p class="input"><select size="10" name="task[categories]" multiple="multiple" id="task_categories_id">
+                <p class="input"><select size="10" name="task[categories][]" multiple="multiple" id="task_categories_id">
                     {categories_tree_options_multiple structure=$structure selected=$smarty.post.task.categories|default:[]}
                 </select></p>
-                {form_error field='task[categories]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                {form_error field='task[categories][]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="buttons">
+                <input type="submit" name="submit_button" value="{translate line='admin_tasks_form_button_save'}" class="button" />
             </div>
         </form>
     </fieldset>
