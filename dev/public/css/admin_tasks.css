@@ -7,3 +7,6 @@ table.tasks_table tbody tr:nth-child(even) { background-color: rgba(255,255,255,
 table.tasks_table tbody td ul { margin-left: 20px; }
 table.tasks_table tfoot td { text-align: right; background-color: rgba(192,192,192,128); padding: 2px; border-radius: 4px; }
 div.filter_wrap { margin-bottom: 10px; border-bottom: 1px solid silver; padding-bottom: 5px; }
+form div.categories_structure ul { list-style-type: none; }
+form div.categories_structure ul.ul_level_1 ul { margin-left: 20px; }
+form div.categories_structure ul li input { margin-right: 5px; }

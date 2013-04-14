@@ -68,7 +68,8 @@ form div.field_login p.error span.message { padding: 2px; border: 1px solid red;
 form div.field,
 form div.buttons { margin: 4px 0; clear: both; }
 form div.field > label { font-weight: bold; width: 20%; display: block; float: left; cursor: pointer; }
-form div.field p.input { width: 80%; margin-left: 20%; }
+form div.field p.input,
+form div.field div.input { width: 80%; margin-left: 20%; }
 form div.field p.input input[type=text], form div.field p.input input[type=password], form div.field p.input textarea { width: 98%; }
 form div.field p.input textarea { height: 100px; }
 form div.field p.input select { max-width: 98%; }

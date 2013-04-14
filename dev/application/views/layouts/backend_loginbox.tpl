@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta content="text/html" charset="utf-8" />
+        <meta charset="utf-8" />
         <title>{block name='title'}{/block}</title>
         <link href="{'/public/css/admin_general.css'|base_url}" rel="stylesheet" type="text/css" media="screen" />
         <script type="text/javascript">

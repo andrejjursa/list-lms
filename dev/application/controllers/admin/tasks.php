@@ -40,7 +40,8 @@ class Tasks extends MY_Controller {
         $category = new Category();
         $structure = $category->get_all_structured();
         $this->_add_tinymce();
-        $this->parser->add_js_file('tasks/form.js');
+        //$this->parser->add_js_file('tasks/form.js');
+        $this->parser->add_css_file('admin_tasks.css');
         $this->parser->parse('backend/tasks/new_task.tpl', array('structure' => $structure));
     }
     
@@ -90,6 +91,7 @@ class Tasks extends MY_Controller {
         $this->parser->add_js_file('tasks/form.js');
         $this->inject_languages();
         $this->lang->load_all_overlays('tasks', $task_id);
+        $this->parser->add_css_file('admin_tasks.css');
         $this->parser->parse('backend/tasks/edit.tpl', array('task' => $task, 'structure' => $structure));
     }
     

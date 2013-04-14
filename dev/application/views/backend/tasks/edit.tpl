@@ -3,7 +3,7 @@
 {block main_content}
     <h2>{translate line='admin_tasks_page_title'}</h2>
     {include file='partials/backend_general/flash_messages.tpl' inline}
-    {include file='backend/categories/categories_parent_selector.tpl' inline}
+    {include file='backend/tasks/category_checkboxes.tpl' inline}
     {if $smarty.post.task or $task->exists()}
     <fieldset>
         <legend>{translate line='admin_tasks_fieldset_legend_new_task'}</legend>
@@ -21,10 +21,8 @@
                 {include file='partials/backend_general/overlay_editor.tpl' table='tasks' table_id=$task->id column='text' editor_type='textarea' class='tinymce' inline}
             </div>
             <div class="field">
-                <label for="task_categories_id">{translate line='admin_tasks_form_label_categories'}:</label>
-                <p class="input"><select size="10" name="task[categories][]" multiple="multiple" id="task_categories_id">
-                    {categories_tree_options_multiple structure=$structure selected=$smarty.post.task.categories|default:$task->category->get()->all_to_single_array('id')|default:[]}
-                </select></p>
+                <label>{translate line='admin_tasks_form_label_categories'}:</label>
+                <div class="input categories_structure">{category_checkboxes chbname='task[categories][]' structure=$structure selected=$smarty.post.task.categories|default:$task->category->get()->all_to_single_array('id')|default:[]}</div>
                 {form_error field='task[categories][]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="buttons">
