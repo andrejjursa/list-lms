@@ -1,6 +1,7 @@
+var reload_all_tasks = function() {};
 jQuery(document).ready(function($) {
     
-    var reload_all_tasks = function() {
+    reload_all_tasks = function() {
         var url = global_base_url + 'index.php/admin_tasks/get_all_tasks';
         var data = $('#filter_form_id').serializeArray();
         var onSuccess = function() {
@@ -11,6 +12,11 @@ jQuery(document).ready(function($) {
     }
     
     reload_all_tasks();
+    
+    $('#filter_form_id').submit(function(event) {
+        event.preventDefault();
+        reload_all_tasks();
+    });
     
     $(document).on('change', '#table_pagination_footer_id select[name=paging_page]', function() {
         var value = $(this).val();

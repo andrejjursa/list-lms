@@ -20,9 +20,12 @@ class Tasks extends MY_Controller {
     public function index() {
         $this->_select_teacher_menu_pagetag('tasks');
         $this->parser->add_js_file('tasks_api.js');
+        $this->parser->add_js_file('tasks/filter.js');
         $this->parser->add_css_file('admin_tasks.css');
         $this->inject_stored_filter();
-        $this->parser->parse('backend/tasks/index.tpl');
+        $category = new Category();
+        $structure = $category->get_all_structured();
+        $this->parser->parse('backend/tasks/index.tpl', array('structure' => $structure));
     }
     
     public function get_all_tasks() {
@@ -174,6 +177,7 @@ class Tasks extends MY_Controller {
         if (is_array($filter)) {
             $old_filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
+            $new_filter['categories']['clauses'] = isset($filter['categories']['clauses']) ? $filter['categories']['clauses'] : array();
             $this->session->set_userdata(self::STORED_FILTER_SESSION_NAME, $new_filter);
         }
     }
