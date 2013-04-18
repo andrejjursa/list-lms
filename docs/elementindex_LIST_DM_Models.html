@@ -28,6 +28,7 @@
 <a href="elementindex.html">All elements</a>
 <br />
 <div class="index-letter-menu">
+	<a class="index-letter" href="elementindex_LIST_DM_Models.html#a">a</a>
 	<a class="index-letter" href="elementindex_LIST_DM_Models.html#c">c</a>
 	<a class="index-letter" href="elementindex_LIST_DM_Models.html#d">d</a>
 	<a class="index-letter" href="elementindex_LIST_DM_Models.html#g">g</a>
@@ -39,6 +40,21 @@
 	<a class="index-letter" href="elementindex_LIST_DM_Models.html#t">t</a>
 </div>
 
+	<a name="a"></a>
+	<div class="index-letter-section">
+		<div style="float: left" class="index-letter-title">a</div>
+		<div style="float: right"><a href="#top">top</a></div>
+		<div style="clear: both"></div>
+	</div>
+	<dl>
+			<dt class="field">
+						<span class="method-title">add_categories_filter</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Task.html#methodadd_categories_filter">Task::add_categories_filter()</a> in task.php</div>
+							<div class="index-item-description">Add special filtering of tasks by categories.</div>
+					</dd>
+		</dl>
 	<a name="c"></a>
 	<div class="index-letter-section">
 		<div style="float: left" class="index-letter-title">c</div>
@@ -46,6 +62,12 @@
 		<div style="clear: both"></div>
 	</div>
 	<dl>
+			<dt class="field">
+						<span class="var-title">$cached_categories_array</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Category.html#var$cached_categories_array">Category::$cached_categories_array</a> in category.php</div>
+					</dd>
 			<dt class="field">
 						Category
 					</dt>
@@ -102,6 +124,13 @@
 							<div class="index-item-description">Loads all categories from database and return them in tree structure.</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">get_id_list</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Category.html#methodget_id_list">Category::get_id_list()</a> in category.php</div>
+							<div class="index-item-description">For given ID returns list of all IDs (the ID given and all its childs).</div>
+					</dd>
+			<dt class="field">
 						Group
 					</dt>
 		<dd class="index-item-body">
@@ -126,7 +155,19 @@
 						<span class="var-title">$has_many</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Group.html#var$has_many">Group::$has_many</a> in group.php</div>
+			<div class="index-item-details"><a href="LIST_DM_Models/Period.html#var$has_many">Period::$has_many</a> in period.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$has_many</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Task.html#var$has_many">Task::$has_many</a> in task.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$has_many</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Task_set.html#var$has_many">Task_set::$has_many</a> in task_set.php</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$has_many</span>
@@ -138,13 +179,19 @@
 						<span class="var-title">$has_many</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Course.html#var$has_many">Course::$has_many</a> in course.php</div>
+			<div class="index-item-details"><a href="LIST_DM_Models/Group.html#var$has_many">Group::$has_many</a> in group.php</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$has_many</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Period.html#var$has_many">Period::$has_many</a> in period.php</div>
+			<div class="index-item-details"><a href="LIST_DM_Models/Course.html#var$has_many">Course::$has_many</a> in course.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$has_one</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Category.html#var$has_one">Category::$has_one</a> in category.php</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$has_one</span>
@@ -162,12 +209,6 @@
 						<span class="var-title">$has_one</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Category.html#var$has_one">Category::$has_one</a> in category.php</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$has_one</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_DM_Models/Group.html#var$has_one">Group::$has_one</a> in group.php</div>
 					</dd>
 		</dl>
@@ -178,6 +219,13 @@
 		<div style="clear: both"></div>
 	</div>
 	<dl>
+			<dt class="field">
+						<span class="method-title">make_id_list</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Category.html#methodmake_id_list">Category::make_id_list()</a> in category.php</div>
+							<div class="index-item-description">Recursively iterates through category array and builds output list of IDs.</div>
+					</dd>
 			<dt class="field">
 						<span class="method-title">make_structure</span>
 					</dt>
@@ -275,10 +323,36 @@
 			<div class="index-item-details"><a href="LIST_DM_Models/Category.html#var$table">Category::$table</a> in category.php</div>
 					</dd>
 			<dt class="field">
+						<span class="include-title">task.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/_models---task.php.html">task.php</a> in task.php</div>
+					</dd>
+			<dt class="field">
+						<span class="include-title">task_set.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/_models---task_set.php.html">task_set.php</a> in task_set.php</div>
+					</dd>
+			<dt class="field">
 						<span class="include-title">teacher.php</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_DM_Models/_models---teacher.php.html">teacher.php</a> in teacher.php</div>
+					</dd>
+			<dt class="field">
+						Task
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Task.html">Task</a> in task.php</div>
+							<div class="index-item-description">Task model.</div>
+					</dd>
+			<dt class="field">
+						Task_set
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Task_set.html">Task_set</a> in task_set.php</div>
+							<div class="index-item-description">Task_set model.</div>
 					</dd>
 			<dt class="field">
 						Teacher
@@ -290,6 +364,7 @@
 		</dl>
 
 <div class="index-letter-menu">
+	<a class="index-letter" href="elementindex_LIST_DM_Models.html#a">a</a>
 	<a class="index-letter" href="elementindex_LIST_DM_Models.html#c">c</a>
 	<a class="index-letter" href="elementindex_LIST_DM_Models.html#d">d</a>
 	<a class="index-letter" href="elementindex_LIST_DM_Models.html#g">g</a>

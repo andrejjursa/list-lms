@@ -76,7 +76,7 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																																																																																				
+																																																																																																																																																												
 												<div class="method-definition">
 											<span class="method-result">MY_Lang</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
@@ -86,6 +86,11 @@
 											<span class="method-result">void</span>
 										<a href="#add_custom_translations" title="details" class="method-name">add_custom_translations</a>
 											(<span class="var-type">array<sting></span>&nbsp;<span class="var-name">$translations</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#delete_overlays" title="details" class="method-name">delete_overlays</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span> = <span class="var-default">NULL</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$column</span> = <span class="var-default">NULL</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">string</span>
@@ -297,8 +302,43 @@
 		
 			
 	</div>
-<a name="methodget_current_idiom" id="get_current_idiom"><!-- --></a>
+<a name="methoddelete_overlays" id="delete_overlays"><!-- --></a>
 <div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">delete_overlays</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a239">239</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Deletes overlay from database, but not from loaded overlays.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			delete_overlays
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$table</span>, [<span class="var-type">integer</span>&nbsp;<span class="var-name">$table_id</span> = <span class="var-default">NULL</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$column</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$table</span><span class="var-description">: table name for which overlays will be deleted.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$table_id</span><span class="var-description">: table id or NULL, if id is provided, only overlays for this id will be deleted.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$column</span><span class="var-description">: name of column to delete or NULL, if provided, only overlay for this column will be deleted.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_current_idiom" id="get_current_idiom"><!-- --></a>
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">get_current_idiom</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a31">31</a></span>)
@@ -323,7 +363,7 @@
 			
 	</div>
 <a name="methodget_list_of_languages" id="get_list_of_languages"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">get_list_of_languages</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a76">76</a></span>)
@@ -348,7 +388,7 @@
 			
 	</div>
 <a name="methodget_overlay" id="get_overlay"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">get_overlay</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a135">135</a></span>)
@@ -387,10 +427,10 @@
 			
 	</div>
 <a name="methodget_overlay_if_exists" id="get_overlay_if_exists"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_overlay_if_exists</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a252">252</a></span>)
+		<span class="method-title">get_overlay_if_exists</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a270">270</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -429,7 +469,7 @@
 			
 	</div>
 <a name="methodinit_overlays" id="init_overlays"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">init_overlays</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a220">220</a></span>)
@@ -464,7 +504,7 @@
 			
 	</div>
 <a name="methodload" id="load"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">load</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a44">44</a></span>)
@@ -508,7 +548,7 @@
 			
 	</div>
 <a name="methodload_all_overlays" id="load_all_overlays"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">load_all_overlays</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a123">123</a></span>)
@@ -540,10 +580,10 @@
 			
 	</div>
 <a name="methodload_default_lang_idiom" id="load_default_lang_idiom"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">load_default_lang_idiom</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a316">316</a></span>)
+		<span class="method-title">load_default_lang_idiom</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a334">334</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -564,10 +604,10 @@
 			
 	</div>
 <a name="methodload_overlays" id="load_overlays"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">load_overlays</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a297">297</a></span>)
+		<span class="method-title">load_overlays</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a315">315</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -590,7 +630,7 @@
 				<span class="var-name">$table</span><span class="var-description">: table name for which overlays will be loaded.</span>			</li>
 					<li>
 				<span class="var-type">integer</span>
-				<span class="var-name">$table_id</span><span class="var-description">: table id or NULL, if id provided, only overlays for this id will be loaded.</span>			</li>
+				<span class="var-name">$table_id</span><span class="var-description">: table id or NULL, if id is provided, only overlays for this id will be loaded.</span>			</li>
 					<li>
 				<span class="var-type">string</span>
 				<span class="var-name">$column</span><span class="var-description">: name of column to load or NULL, if provided, only overlay for this column will be loaded.</span>			</li>
@@ -599,10 +639,10 @@
 			
 	</div>
 <a name="methodno_more_load_overlay" id="no_more_load_overlay"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">no_more_load_overlay</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a287">287</a></span>)
+		<span class="method-title">no_more_load_overlay</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a305">305</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -637,10 +677,10 @@
 			
 	</div>
 <a name="methodoverlay_exists" id="overlay_exists"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">overlay_exists</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a272">272</a></span>)
+		<span class="method-title">overlay_exists</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a290">290</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -676,7 +716,7 @@
 			
 	</div>
 <a name="methodreinitialize_for_idiom" id="reinitialize_for_idiom"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">reinitialize_for_idiom</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a56">56</a></span>)
@@ -706,10 +746,10 @@
 			
 	</div>
 <a name="methodreplace_null_overlay_text" id="replace_null_overlay_text"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">replace_null_overlay_text</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a238">238</a></span>)
+		<span class="method-title">replace_null_overlay_text</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a256">256</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -736,7 +776,7 @@
 			
 	</div>
 <a name="methodsave_overlay" id="save_overlay"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">save_overlay</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a148">148</a></span>)
@@ -778,7 +818,7 @@
 			
 	</div>
 <a name="methodsave_overlay_array" id="save_overlay_array"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">save_overlay_array</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a189">189</a></span>)
@@ -808,7 +848,7 @@
 			
 	</div>
 <a name="methodtext" id="text"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">text</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Lang.php.html#a104">104</a></span>)
@@ -846,7 +886,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Fri, 12 Apr 2013 13:51:30 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 18 Apr 2013 23:46:10 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>
