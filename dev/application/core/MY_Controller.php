@@ -114,8 +114,7 @@ class MY_Controller extends CI_Controller {
      * This method adds tinymce editor to template.
      */
     protected function _add_tinymce() {
-        $this->parser->add_js_file('tinymce/tinymce.min.js');
-        $this->parser->add_js_file('tinymce/jquery.tinymce.min.js');
+        $this->parser->add_js_file('tinymce/jquery.tinymce.js');
         $this->parser->add_css_file('tinymce/common.css');
     }
 }

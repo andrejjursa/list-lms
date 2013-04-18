@@ -21,7 +21,7 @@
                     <th>{translate line='admin_tasks_table_header_name'}</th>
                     <th>{translate line='admin_tasks_table_header_categories'}</th>
                     <th>{translate line='admin_tasks_table_header_task_sets'}</th>
-                    <th colspan="2" class="controlls">{translate line='admin_tasks_table_header_controlls'}</th>
+                    <th colspan="3" class="controlls">{translate line='admin_tasks_table_header_controlls'}</th>
                 </tr>
             </thead>
             <tfoot id="table_pagination_footer_id">

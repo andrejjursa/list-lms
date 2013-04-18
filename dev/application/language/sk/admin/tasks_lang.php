@@ -15,6 +15,7 @@ $lang['admin_tasks_form_label_text'] = 'Text úlohy';
 $lang['admin_tasks_form_label_categories'] = 'Kategórie úlohy';
 $lang['admin_tasks_form_button_save'] = 'Uložiť';
 $lang['admin_tasks_form_button_edit'] = 'Upraviť';
+$lang['admin_tasks_form_button_preview'] = 'Náhlad';
 $lang['admin_tasks_form_button_delete'] = 'Vymazať';
 $lang['admin_tasks_form_field_name'] = 'názov úlohy';
 $lang['admin_tasks_form_field_text'] = 'text úlohy';

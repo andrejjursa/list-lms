@@ -1,40 +1,24 @@
 jQuery(document).ready(function($) { 
     $('textarea.tinymce').tinymce({
-        theme: 'modern',
-        plugins: 'preview link code fullscreen table searchreplace visualblocks visualchars hr insertdatetime charmap lists nonbreaking advlist contextmenu layer',
-        toolbar1: 'undo redo | cut copy paste | alignleft aligncenter alignright alignjustify',
-        toolbar2: 'styleselect | bold italic underline strikethrough superscript subscript | link table hr | fullscreen preview code | forecolor backcolor | bullist numlist outdent indent',
+        script_url : global_base_url + 'public/js/tinymce/tiny_mce.js',
+        theme: 'advanced',
+        plugins : 'autolink,lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist',
+        theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect',
+		theme_advanced_buttons2 : 'cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor',
+		theme_advanced_buttons3 : 'tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,ltr,rtl,|,fullscreen',
+		theme_advanced_buttons4 : 'insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak',
+		theme_advanced_toolbar_location : 'top',
+		theme_advanced_toolbar_align : 'left',
+		theme_advanced_statusbar_location : 'bottom',
+
         style_formats: [
-            {title: 'Headers', items: [
-                {title: 'h1', block: 'h1'},
-                {title: 'h2', block: 'h2'},
-                {title: 'h3', block: 'h3'},
-                {title: 'h4', block: 'h4'},
-                {title: 'h5', block: 'h5'},
-                {title: 'h6', block: 'h6'}
-            ]},
-            {title: 'Blocks', items: [
-                {title: 'p', block: 'p'},
-                {title: 'div', block: 'div'},
-                {title: 'pre', block: 'pre'},
-                {title: 'code', block: 'code'}
-            ]},
-            {title: 'Containers', items: [
-                {title: 'section', block: 'section', wrapper: true, merge_siblings: false},
-                {title: 'article', block: 'article', wrapper: true, merge_siblings: false},
-                {title: 'blockquote', block: 'blockquote', wrapper: true},
-                {title: 'hgroup', block: 'hgroup', wrapper: true},
-                {title: 'aside', block: 'aside', wrapper: true},
-                {title: 'figure', block: 'figure', wrapper: true}
-            ]},
-            {title: 'Highlight', items: [
-                {title: 'Java', selector: 'code', attributes: {'lang': 'java'}},
-                {title: 'C++', selector: 'code', attributes: {'lang': 'cpp'}},
-                {title: 'PHP', selector: 'code', attributes: {'lang': 'php'}},
-                {title: 'HTML', selector: 'code', attributes: {'lang': 'html'}},
-                {title: 'JavaScript', selector: 'code', attributes: {'lang': 'javascript'}},
-                {title: 'CSS', selector: 'code', attributes: {'lang': 'css'}},
-            ]},
+            {title: 'Highlight - Java', selector: 'pre', attributes: { 'lang': 'java', 'class': 'highlight' }},
+            {title: 'Highlight - C++', selector: 'pre', attributes: { 'lang': 'cpp', 'class': 'highlight' }},
+            {title: 'Highlight - PHP', selector: 'pre', attributes: { 'lang': 'php', 'class': 'highlight' }},
+            {title: 'Highlight - HTML', selector: 'pre', attributes: { 'lang': 'html', 'class': 'highlight' }},
+            {title: 'Highlight - JavaScript', selector: 'pre', attributes: { 'lang': 'javascript', 'class': 'highlight' }},
+            {title: 'Highlight - jQuery', selector: 'pre', attributes: { 'lang': 'jquery', 'class': 'highlight' }},
+            {title: 'Highlight - CSS', selector: 'pre', attributes: { 'lang': 'css', 'class': 'highlight' }},
         ],
     });
 });

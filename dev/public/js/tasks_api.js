@@ -33,4 +33,16 @@ jQuery(document).ready(function($) {
         }
     });
     
+    $(document).on('click', '#table_content_id a.preview', function(event) {
+        event.preventDefault();
+        $.fancybox($(this).attr('href'), {
+            type: 'iframe',
+            width: '75%',
+            height: '100%',
+            autoSize: false,
+            autoHeight: false,
+            autoWidth: false,
+        })
+    });
+    
 });

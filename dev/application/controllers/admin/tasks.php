@@ -162,6 +162,14 @@ class Tasks extends MY_Controller {
         }
     }
     
+    public function preview() {
+        $url = $this->uri->ruri_to_assoc(3);
+        $task_id = isset($url['task_id']) ? intval($url['task_id']) : 0;
+        $task = new Task();
+        $task->get_by_id($task_id);
+        $this->parser->parse('backend/tasks/preview.tpl', array('task' => $task));
+    }
+    
     private function store_filter($filter) {
         if (is_array($filter)) {
             $old_filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);

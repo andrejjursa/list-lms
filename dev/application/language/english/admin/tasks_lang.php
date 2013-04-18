@@ -15,6 +15,7 @@ $lang['admin_tasks_form_label_text'] = 'Task text';
 $lang['admin_tasks_form_label_categories'] = 'Task categories';
 $lang['admin_tasks_form_button_save'] = 'Save';
 $lang['admin_tasks_form_button_edit'] = 'Edit';
+$lang['admin_tasks_form_button_preview'] = 'Preview';
 $lang['admin_tasks_form_button_delete'] = 'Delete';
 $lang['admin_tasks_form_field_name'] = 'task name';
 $lang['admin_tasks_form_field_text'] = 'task text';
