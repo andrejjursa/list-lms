@@ -34,6 +34,14 @@ jQuery(document).ready(function($) {
     };
     
     $(document).on('change', '#dynamic_categories_id select', function() {
+        var select_value = $(this).val();
+        $(this).find('option').each(function() {
+            if ($(this).attr('value') == select_value) {
+                $(this).attr('selected', 'selected');
+            } else {
+                $(this).removeAttr('selected');
+            }
+        });
         if (reload_all_tasks != undefined && typeof reload_all_tasks == 'function') {
             reload_all_tasks();
         }

@@ -7,6 +7,8 @@
  */
 class Category extends DataMapper {
     
+    private static $cached_categories_array = NULL;
+    
     public $table = 'categories';
     
     public $has_one = array(
@@ -54,5 +56,38 @@ class Category extends DataMapper {
             $output[$key]['subcategories'] = $this->make_structure($categories, $data['category']->id);
         }
         return $output;
+    }
+    
+    public function get_id_list($root_id) {
+        if (!is_integer($root_id)) { return array( 0 ); }
+        $cat_array = array();
+        if (!isset(self::$cached_categories_array)) {
+            $categories = new Category();
+            $query = $categories->select('id, parent_id')->order_by('parent_id', 'asc')->get_raw();
+            if ($query->num_rows() > 0) {
+                foreach ($query->result_array() as $row) {
+                    $cat_array[intval($row['parent_id'])][] = intval($row['id']);
+                }
+            }
+            self::$cached_categories_array = $cat_array;
+        } else {
+            $cat_array = self::$cached_categories_array;
+        }
+        if (count($cat_array) > 0) {
+            $output = array( intval($root_id) );
+            $this->make_id_list($cat_array, intval($root_id), $output);
+            return $output;
+        } else {
+            return array( 0 );
+        }
+    }
+    
+    private function make_id_list($cat_array, $parent, &$output) {
+        if (isset($cat_array[intval($parent)]) && count($cat_array[intval($parent)]) > 0) {
+            foreach ($cat_array[intval($parent)] as $child) {
+                $output[] = intval($child);
+                $this->make_id_list($cat_array, intval($child), $output);
+            }
+        }
     }
 }

@@ -33,6 +33,9 @@ class Tasks extends MY_Controller {
         $tasks->order_by('name', 'asc');
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
+        if (isset($filter['categories']['clauses']) && count($filter['categories']['clauses']) > 0) {
+            $tasks->add_categories_filter($filter['categories']['clauses']);
+        }
         $tasks->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('tasks', $tasks->all_to_array(), array('name'));
         $this->parser->parse('backend/tasks/all_tasks.tpl', array('tasks' => $tasks));
