@@ -58,6 +58,12 @@ class Category extends DataMapper {
         return $output;
     }
     
+    /**
+     * For given ID returns list of all IDs (the ID given and all its childs).
+     * On error it returns array with ID 0, to be properly used inside WHERE IN sql query.
+     * @array integer $root_id ID of root category.
+     * return array<integer> all IDs.
+     */ 
     public function get_id_list($root_id) {
         if (!is_integer($root_id)) { return array( 0 ); }
         $cat_array = array();
@@ -82,6 +88,12 @@ class Category extends DataMapper {
         }
     }
     
+    /**
+     * Recursively iterates through category array and builds output list of IDs.
+     * @param array<integer> $cat_array list of IDs, two dimensional, first dimension is parent and second dimension holds childs.
+     * @param integer $parent parent ID, which childs will go to output.
+     * @param array<integer> &$output output of function, array of all IDs.
+     */
     private function make_id_list($cat_array, $parent, &$output) {
         if (isset($cat_array[intval($parent)]) && count($cat_array[intval($parent)]) > 0) {
             foreach ($cat_array[intval($parent)] as $child) {

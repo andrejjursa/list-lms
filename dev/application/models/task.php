@@ -16,6 +16,10 @@ class Task extends DataMapper {
         ),
     );
     
+    /**
+     * Add special filtering of tasks by categories.
+     * @param array<mixed> $filter two dimensional array of category IDs, it is represented as logic formula in conjunctive normal form, where first dimension is clause and second is disjunct inside clause.
+     */
     public function add_categories_filter($filter) {
         if (count($filter) > 0) {
             $clause = 0;
