@@ -1,6 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 $cache = array (
-  'table' => 'task_sets',
+  'table' => 'task_set_types',
   'fields' => 
   array (
     0 => 'id',
@@ -39,16 +39,9 @@ $cache = array (
       array (
       ),
     ),
-    'task' => 
+    'task_set' => 
     array (
-      'field' => 'task',
-      'rules' => 
-      array (
-      ),
-    ),
-    'task_set_type' => 
-    array (
-      'field' => 'task_set_type',
+      'field' => 'task_set',
       'rules' => 
       array (
       ),
@@ -59,24 +52,13 @@ $cache = array (
   ),
   'has_many' => 
   array (
-    'task' => 
-    array (
-      'join_table' => 'task_task_set_rel',
-      'class' => 'task',
-      'other_field' => 'task_set',
-      'join_self_as' => 'task_set',
-      'join_other_as' => 'task',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
-    'task_set_type' => 
+    'task_set' => 
     array (
       'join_table' => 'task_set_task_set_type_rel',
-      'class' => 'task_set_type',
-      'other_field' => 'task_set',
-      'join_self_as' => 'task_set',
-      'join_other_as' => 'task_set_type',
+      'class' => 'task_set',
+      'other_field' => 'task_set_type',
+      'join_self_as' => 'task_set_type',
+      'join_other_as' => 'task_set',
       'reciprocal' => false,
       'auto_populate' => NULL,
       'cascade_delete' => true,

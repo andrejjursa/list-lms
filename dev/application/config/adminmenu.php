@@ -63,6 +63,13 @@ $config['adminmenu'] = array(
                         'class' => '',
                         'sub' => NULL,
                     ),
+                    array(
+                        'title' => 'lang:adminmenu_title_task_set_types',
+                        'pagetag' => 'task_set_types',
+                        'link' => 'admin_task_set_types',
+                        'class' => '',
+                        'sub' => NULL,
+                    ),
                 ),
             ),
         ),

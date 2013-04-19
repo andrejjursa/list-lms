@@ -18,3 +18,4 @@ $lang['adminmenu_title_groups'] = 'Skupiny';
 $lang['adminmenu_title_content'] = 'Obsah';
 $lang['adminmenu_title_categories'] = 'Kategórie';
 $lang['adminmenu_title_tasks'] = 'Úlohy';
+$lang['adminmenu_title_task_set_types'] = 'Typy zostáv úloh';

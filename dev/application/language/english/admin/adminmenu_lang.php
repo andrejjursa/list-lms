@@ -18,3 +18,4 @@ $lang['adminmenu_title_groups'] = 'Groups';
 $lang['adminmenu_title_content'] = 'Content';
 $lang['adminmenu_title_categories'] = 'Categories';
 $lang['adminmenu_title_tasks'] = 'Tasks';
+$lang['adminmenu_title_task_set_types'] = 'Types of task sets';
