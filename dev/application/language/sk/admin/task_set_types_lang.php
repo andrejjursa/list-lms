@@ -14,4 +14,5 @@ $lang['admin_task_set_types_table_buttons_edit'] = 'Upraviť';
 $lang['admin_task_set_types_table_buttons_delete'] = 'Vymazať';
 $lang['admin_task_set_types_table_header_name'] = 'Názov';
 $lang['admin_task_set_types_table_header_controlls'] = 'Ovládanie';
-$lang['admin_task_set_types_javascript_message_delete_question'] = 'Naozaj chcete vymazať tento typ zostavy úloh? Všetky zostavy úloh v relácii s týmto typom túto reláciu stratia.'; 
+$lang['admin_task_set_types_javascript_message_delete_question'] = 'Naozaj chcete vymazať tento typ zostavy úloh? Všetky zostavy úloh v relácii s týmto typom túto reláciu stratia.';
+$lang['admin_task_set_types_error_task_set_type_not_found'] = 'Požadovaný typ zostáv úloh sa nenašiel.'; 
