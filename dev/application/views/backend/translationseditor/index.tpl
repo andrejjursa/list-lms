@@ -27,6 +27,9 @@
         error: {
             operation_failed: '{translate line="admin_translationseditor_javascript_message_error_operation_failed"}'
         },
+        success: {
+          deleted: '{translate line="admin_translationseditor_javascript_message_success_deleted"}',
+        },
         working: '{translate line="admin_translationseditor_javascript_message_working"}',
         delete_question: '{translate line="admin_translationseditor_javascript_message_delete_question"}'
     };

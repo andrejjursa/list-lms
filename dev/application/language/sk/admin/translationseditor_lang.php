@@ -20,3 +20,4 @@ $lang['admin_translationseditor_new_constant_message_save_failed'] = 'Uloženie 
 $lang['admin_translationseditor_javascript_message_error_operation_failed'] = 'Operácia zlyhala.';
 $lang['admin_translationseditor_javascript_message_working'] = 'Pracujem.';
 $lang['admin_translationseditor_javascript_message_delete_question'] = 'Ste si istý, že chcete vymazať konštantu [$constant$]?';
+$lang['admin_translationseditor_javascript_message_success_deleted'] = 'Konštanta úspešne vymazaná.';

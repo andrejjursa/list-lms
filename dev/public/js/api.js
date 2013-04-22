@@ -7,6 +7,51 @@ jQuery(document).ready(function() {
     }    
 });
 
+var block_ui_message = lang != undefined && lang.messages != undefined && lang.messages.ajax_standby != undefined ? lang.messages.ajax_standby : 'Please wait ...';
+jQuery(document).ajaxStart(function () {
+  jQuery.blockUI({
+    message: '<h1>' + block_ui_message + '</h1>',
+    css: {
+      borderRadius: '10px',
+      border: 'none',
+      padding: '15px',
+      backgroundColor: 'black',
+      color: 'white',
+      opacity: 0.5 
+    }
+  });
+}).ajaxStop(jQuery.unblockUI);
+
+var show_notification = function(text, notif_class, title) {
+  if (text == undefined) { return; }
+  if (notif_class == undefined || notif_class == null) { notif_class = ''; }
+  if (title == undefined) { title = lang != undefined && lang.titles != undefined && lang.titles.growl_notification_title != undefined ? lang.titles.growl_notification_title : 'Notification'; }
+  setTimeout(function() { 
+    jQuery.blockUI({ 
+      message: '<div class="growlUI ' + notif_class + '"><h1>' + title + '</h1><h2>' + text + '</h2></div>', 
+      fadeIn: 700, 
+      fadeOut: 700, 
+      timeout: 5000, 
+      showOverlay: false, 
+      centerY: false, 
+      css: { 
+        width: '350px', 
+        top: '20px', 
+        left: '', 
+        right: '20px', 
+        border: 'none', 
+        padding: '5px', 
+        backgroundColor: notif_class == 'error' ? 'red' : (notif_class == 'success' ? '#008000' : '#000'), 
+        '-webkit-border-radius': '10px', 
+        '-moz-border-radius': '10px',
+        'border-radius': '10px', 
+        opacity: .75, 
+        color: '#fff' 
+      } 
+    });  
+  }, 250);
+}
+
 var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
     method = method == undefined ? 'post' : method;
     data = data == undefined ? {} : data;

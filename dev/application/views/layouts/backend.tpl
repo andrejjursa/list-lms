@@ -24,6 +24,7 @@
         <script type="text/javascript" src="{'/public/js/jquery-ui-1.10.2.custom.min.js'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/jquery-ui-timepicker-addon.js'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/jMenu.jquery.min.js'|base_url}"></script>
+        <script type="text/javascript" src="{'/public/js/jquery.blockUI.js'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/admin_menu.js'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/api.js'|base_url}"></script>
         {foreach $list_internal_css_files as $file}{$file.html}{/foreach}

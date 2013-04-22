@@ -20,3 +20,4 @@ $lang['admin_translationseditor_new_constant_message_save_failed'] = 'Save of ne
 $lang['admin_translationseditor_javascript_message_error_operation_failed'] = 'Operation failed.';
 $lang['admin_translationseditor_javascript_message_working'] = 'Working.';
 $lang['admin_translationseditor_javascript_message_delete_question'] = 'Are you sure you want to delete constant [$constant$]?';
+$lang['admin_translationseditor_javascript_message_success_deleted'] = 'Constant deleted successfully.';

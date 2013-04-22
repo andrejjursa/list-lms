@@ -32,7 +32,7 @@ jQuery(document).ready(function($){
                             row.removeClass('failed_row');
                         }, 5000);
                     }
-                    alert(messages.error.operation_failed);
+                    show_notification(messages.error.operation_failed, 'error');
                 }
             },
             error: function(data) {
@@ -41,7 +41,7 @@ jQuery(document).ready(function($){
                 setTimeout(function() {
                     row.removeClass('failed_row');
                 }, 5000);
-                alert(messages.error.operation_failed);
+                show_notification(messages.error.operation_failed, 'error');
             }
         });
     };
@@ -65,12 +65,13 @@ jQuery(document).ready(function($){
                             row.slideUp(1000, function() {
                                 row.remove();
                             });
+                            show_notification(messages.success.deleted, 'success');
                         } else {
-                            alert(messages.error.operation_failed);
+                            show_notification(messages.error.operation_failed, 'error');
                         }
                     },
                     error: function() {
-                        alert(messages.error.operation_failed);
+                        show_notification(messages.error.operation_failed, 'error');
                     }
                 });
                 return;

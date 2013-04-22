@@ -22,6 +22,7 @@
         <script type="text/javascript" src="{'/public/js/jquery.fancybox-media.js?v=1.0.0'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/jquery-ui-1.10.2.custom.min.js'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/jquery-ui-timepicker-addon.js'|base_url}"></script>
+        <script type="text/javascript" src="{'/public/js/jquery.blockUI.js'|base_url}"></script>
         <script type="text/javascript" src="{'/public/js/api.js'|base_url}"></script>
         {foreach $list_internal_css_files as $file}{$file.html}{/foreach}
         {foreach $list_internal_js_files as $file}{$file.html}{/foreach}

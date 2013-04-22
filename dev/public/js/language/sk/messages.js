@@ -36,3 +36,12 @@ jQuery(function($){
     	isRTL: false
     };
 });
+
+var lang = { 
+  messages: {
+    ajax_standby: 'Čakajte prosím ...',
+  },
+  titles: {
+    growl_notification_title: 'Notifikácia',
+  }
+};
