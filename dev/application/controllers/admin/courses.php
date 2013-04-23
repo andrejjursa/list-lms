@@ -140,6 +140,147 @@ class Courses extends MY_Controller {
             $this->edit();
         }
     }
+    
+    public function task_set_types() {
+        $url = $this->uri->ruri_to_assoc(3);
+        $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $this->inject_unused_task_set_types($course_id);
+        $this->parser->add_js_file('courses_api.js');
+        $this->parser->add_css_file('admin_courses.css');
+        $this->parser->parse('backend/courses/task_set_types.tpl', array('course' => $course));    
+    }
+    
+    public function get_task_set_types() {
+        $url = $this->uri->ruri_to_assoc(3);
+        $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type->order_by('name', 'asc')->include_join_fields()->get_iterated();
+        $this->parser->parse('backend/courses/task_set_types_content.tpl', array('task_set_types' => $course->task_set_type, 'course' => $course));
+    }
+    
+    public function get_task_set_type_form() {
+        $url = $this->uri->ruri_to_assoc(3);
+        $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
+        $this->inject_unused_task_set_types($course_id);
+        $this->parser->parse('backend/courses/add_task_set_type_form.tpl');
+    }
+    
+    public function add_task_set_type() {
+        $this->load->library('form_validation');
+        
+        $url = $this->uri->ruri_to_assoc(3);
+        $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
+        
+        $this->form_validation->set_rules('task_set_type[id]', 'lang:admin_courses_form_field_task_set_type_name', 'required');
+        $this->form_validation->set_rules('task_set_type[join_upload_solution]', 'lang:admin_courses_form_field_upload_solution', 'required');
+        
+        if ($this->form_validation->run()) {
+            $task_set_type_data = $this->input->post('task_set_type');
+            $course = new Course();
+            $course->get_by_id($course_id);
+            $task_set_type = new Task_set_type();
+            $task_set_type->get_by_id(intval($task_set_type_data['id']));
+            if ($course->exists() && $task_set_type->exists()) {
+                $this->_transaction_isolation();
+                $this->db->trans_begin();
+                
+                $course->save($task_set_type);
+                $course->set_join_field($task_set_type, 'upload_solution', intval($task_set_type_data['join_upload_solution']));
+                if ($this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message('lang:admin_courses_flash_message_task_set_type_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_courses_flash_message_task_set_type_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                }
+            } else {
+                $this->messages->add_message('lang:admin_courses_flash_message_task_set_type_save_failed', Messages::MESSAGE_TYPE_ERROR);    
+            }
+            redirect(create_internal_url('admin_courses/get_task_set_type_form/course_id/' . $course_id));
+        } else {
+            $this->get_task_set_type_form();    
+        }    
+    }
+    
+    public function save_task_set_type() {
+        $this->output->set_content_type('application/json');
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('upload_solution', 'upload_solution', 'required');
+        $this->form_validation->set_rules('task_set_type_id', 'task_set_type_id', 'required');
+        $this->form_validation->set_rules('course_id', 'course_id', 'required');
+        
+        if ($this->form_validation->run()) {
+            $course_id = intval($this->input->post('course_id'));
+            $task_set_type_id = intval($this->input->post('task_set_type_id'));
+            $upload_solution = intval($this->input->post('upload_solution'));
+            
+            $course = new Course();
+            $course->get_by_id($course_id);
+            
+            $task_set_type = new Task_set_type();
+            $task_set_type->get_by_id($task_set_type_id);
+            
+            if ($course->exists() && $task_set_type->exists()) {
+                $this->_transaction_isolation();
+                $this->db->trans_begin();
+                
+                $task_set_type->set_join_field($course, 'upload_solution', $upload_solution);
+                if ($this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->output->set_output(json_encode(TRUE));
+                    return;    
+                } else {
+                    $this->db->trans_rollback();
+                }
+            }
+        }
+        $this->output->set_output(json_encode(FALSE));        
+    }
+    
+    public function delete_task_set_type() {
+        $this->output->set_content_type('application/json');
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('task_set_type_id', 'task_set_type_id', 'required');
+        $this->form_validation->set_rules('course_id', 'course_id', 'required');
+        
+        if ($this->form_validation->run()) {
+            $course_id = intval($this->input->post('course_id'));
+            $task_set_type_id = intval($this->input->post('task_set_type_id'));
+            
+            $course = new Course();
+            $course->get_by_id($course_id);
+            
+            $task_set_type = new Task_set_type();
+            $task_set_type->get_by_id($task_set_type_id); 
+            
+            if ($course->exists() && $task_set_type->exists()) {
+                $this->_transaction_isolation();
+                $this->db->trans_begin();
+                
+                $course->delete($task_set_type);
+                
+                $task_sets = new Task_set();
+                $task_sets->where_related_course('id', $course_id)->get_iterated();
+                foreach ($task_sets as $task_set) {
+                    $task_set->delete($task_set_type);
+                }
+                
+                if ($this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->output->set_output(json_encode(TRUE));
+                    return;    
+                } else {
+                    $this->db->trans_rollback();
+                }
+            }   
+        }
+        $this->output->set_output(json_encode(FALSE));    
+    }
         
     private function inject_periods() {
         $periods = new Period();
@@ -158,6 +299,24 @@ class Courses extends MY_Controller {
     private function inject_languages() {
         $languages = $this->lang->get_list_of_languages();
         $this->parser->assign('languages', $languages);
+    }
+    
+    private function inject_unused_task_set_types($course_id) {
+        $course = new Course();
+        $course->get_by_id(intval($course_id));
+        $course->task_set_type->get();
+        $course_task_set_types = $course->task_set_type->all_to_single_array('id');
+        $task_set_types = new Task_set_type();
+        $task_set_types->where_not_in('id', count($course_task_set_types) > 0 ? $course_task_set_types : array( 0 ));
+        $query = $task_set_types->order_by('name', 'asc')->get_raw();
+        $data = array(
+            NULL => '',
+        );
+        if ($query->num_rows() > 0) { foreach ($query->result() as $row) {
+            $data[(int) $row->id] = $row->name;    
+        }}
+        $this->parser->assign('task_set_types', $data);
+        $query->free_result();
     }
     
 }

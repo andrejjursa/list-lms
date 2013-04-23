@@ -7,6 +7,8 @@ $cache = array (
     1 => 'updated',
     2 => 'created',
     3 => 'name',
+    4 => 'course_id',
+    5 => 'task_set_type_id',
   ),
   'validation' => 
   array (
@@ -39,9 +41,16 @@ $cache = array (
       array (
       ),
     ),
-    'task' => 
+    'course_id' => 
     array (
-      'field' => 'task',
+      'field' => 'course_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'task_set_type_id' => 
+    array (
+      'field' => 'task_set_type_id',
       'rules' => 
       array (
       ),
@@ -53,9 +62,45 @@ $cache = array (
       array (
       ),
     ),
+    'course' => 
+    array (
+      'field' => 'course',
+      'rules' => 
+      array (
+      ),
+    ),
+    'task' => 
+    array (
+      'field' => 'task',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
+    'task_set_type' => 
+    array (
+      'class' => 'task_set_type',
+      'other_field' => 'task_set',
+      'join_self_as' => 'task_set',
+      'join_other_as' => 'task_set_type',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'course' => 
+    array (
+      'class' => 'course',
+      'other_field' => 'task_set',
+      'join_self_as' => 'task_set',
+      'join_other_as' => 'course',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
   ),
   'has_many' => 
   array (
@@ -66,17 +111,6 @@ $cache = array (
       'other_field' => 'task_set',
       'join_self_as' => 'task_set',
       'join_other_as' => 'task',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
-    'task_set_type' => 
-    array (
-      'join_table' => 'task_set_task_set_type_rel',
-      'class' => 'task_set_type',
-      'other_field' => 'task_set',
-      'join_self_as' => 'task_set',
-      'join_other_as' => 'task_set_type',
       'reciprocal' => false,
       'auto_populate' => NULL,
       'cascade_delete' => true,

@@ -32,7 +32,7 @@ class Migration_task_set_types_table1 extends CI_Migration {
         
         $this->dbforge->add_field(
             array(
-                'task_set_id' => array(
+                'course_id' => array(
                     'type' => 'INT',
                     'constraint' => '11',
                     'unsigned' => TRUE,
@@ -53,17 +53,17 @@ class Migration_task_set_types_table1 extends CI_Migration {
             )
         );
         
-        $this->dbforge->add_key('task_set_id');
+        $this->dbforge->add_key('course_id');
         $this->dbforge->add_key('task_set_type_id');
         
-        $this->dbforge->create_table('task_set_task_set_type_rel');
+        $this->dbforge->create_table('course_task_set_type_rel');
         
-        change_mysql_table_to_InnoDB('task_set_task_set_type_rel');
+        change_mysql_table_to_InnoDB('course_task_set_type_rel');
     }
     
     public function down() {
         $this->dbforge->drop_table('task_set_types');
-        $this->dbforge->drop_table('task_set_task_set_type_rel');
+        $this->dbforge->drop_table('course_task_set_type_rel');
     }
     
 }

@@ -43,6 +43,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
+    
     $(document).on('click', '#table_of_groups_container_id a.delete', function(event) {
         event.preventDefault();
         if (confirm(messages.delete_question)) {

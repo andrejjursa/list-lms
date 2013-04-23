@@ -8,8 +8,9 @@
 class Task_set_type extends DataMapper {
     
     public $has_many = array(
-        'task_set' => array(
-            'join_table' => 'task_set_task_set_type_rel',
-        ),
+        'task_set',
+    	'course' => array(
+    		'join_table' => 'course_task_set_type_rel',
+    	),
     );
 }

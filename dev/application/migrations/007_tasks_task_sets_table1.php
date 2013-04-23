@@ -51,10 +51,24 @@ class Migration_tasks_task_sets_table1 extends CI_Migration {
                     'type' => 'VARCHAR',
                     'constraint' => 255,
                 ),
+            	'course_id' => array(
+            		'type' => 'INT',
+            		'constraint' => '11',
+            		'null' => TRUE,
+            		'unsigned' => TRUE,
+            	),
+            	'task_set_type_id' => array(
+            		'type' => 'INT',
+            		'constraint' => '11',
+            		'null' => TRUE,
+            		'unsigned' => TRUE,
+            	),
             )
         );
         
         $this->dbforge->add_key('id', TRUE);
+        $this->dbforge->add_key('course_id');
+        $this->dbforge->add_key('task_set_type_id');
         
         $this->dbforge->create_table('task_sets');
         

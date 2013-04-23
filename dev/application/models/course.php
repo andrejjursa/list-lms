@@ -12,7 +12,11 @@ class Course extends DataMapper {
     );
     
     public $has_many = array(
-        'group'
+        'group',
+    	'task_set_type' => array(
+    		'join_table' => 'course_task_set_type_rel',
+    	),
+    	'task_set',
     );
     
 }

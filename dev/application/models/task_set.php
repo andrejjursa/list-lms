@@ -11,8 +11,10 @@ class Task_set extends DataMapper {
         'task' => array(
             'join_table' => 'task_task_set_rel',
         ),
-        'task_set_type' => array(
-            'join_table' => 'task_set_task_set_type_rel',
-        ),
+    );
+    
+    public $has_one = array(
+    	'task_set_type',
+    	'course',
     );
 }

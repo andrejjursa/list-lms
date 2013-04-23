@@ -46,19 +46,37 @@ $cache = array (
       array (
       ),
     ),
+    'course' => 
+    array (
+      'field' => 'course',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
   ),
   'has_many' => 
   array (
+    'course' => 
+    array (
+      'join_table' => 'course_task_set_type_rel',
+      'class' => 'course',
+      'other_field' => 'task_set_type',
+      'join_self_as' => 'task_set_type',
+      'join_other_as' => 'course',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
     'task_set' => 
     array (
-      'join_table' => 'task_set_task_set_type_rel',
       'class' => 'task_set',
       'other_field' => 'task_set_type',
       'join_self_as' => 'task_set_type',
       'join_other_as' => 'task_set',
+      'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
       'cascade_delete' => true,

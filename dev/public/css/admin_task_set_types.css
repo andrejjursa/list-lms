@@ -1,0 +1,6 @@
+table.task_set_types_table { width: 100%; }
+table.task_set_types_table th { text-align: left; }
+table.task_set_types_table th.controlls { width: 1px; text-align: center; }
+table.task_set_types_table td.controlls { width: 1px;}
+table.task_set_types_table tbody td { padding: 2px; }
+table.task_set_types_table tbody tr:nth-child(even) { background-color: rgba(255,255,255,128); }
