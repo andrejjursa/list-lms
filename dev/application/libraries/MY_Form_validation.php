@@ -34,4 +34,16 @@ class MY_Form_validation extends CI_Form_validation {
         }
     }
     
+    public function min_length_optional($str, $length) {
+        if (empty($str)) { return TRUE; }
+        
+        return $this->min_length($str, $length);
+    }
+    
+    public function max_length_optional($str, $length) {
+        if (empty($str)) { return TRUE; }
+        
+        return $this->max_length($str, $length);
+    }
+    
 }

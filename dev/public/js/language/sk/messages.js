@@ -40,8 +40,5 @@ jQuery(function($){
 var lang = { 
   messages: {
     ajax_standby: 'Čakajte prosím ...',
-  },
-  titles: {
-    growl_notification_title: 'Notifikácia',
   }
 };

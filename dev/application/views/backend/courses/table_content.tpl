@@ -1,7 +1,7 @@
 {foreach $courses as $course}
 <tr>
     <td>{translate_text|escape:'html' text=$course->name}</td>
-    <td>{overlay|escape:'html' table='courses' table_id=$course->id column='description' default=$course->description}</td>
+    <td><div class="course_description">{overlay table='courses' table_id=$course->id column='description' default=$course->description}</div></td>
     <td>{translate_text|default:{translate line='admin_courses_table_content_no_period'}|escape:'html' text=$course->period->get()->name}</td>
     <td>{$course->group->count()}</td>
     <td>{$course->task_set_type->count()}</td>

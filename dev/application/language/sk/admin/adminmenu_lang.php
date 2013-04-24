@@ -19,3 +19,4 @@ $lang['adminmenu_title_content'] = 'Obsah';
 $lang['adminmenu_title_categories'] = 'Kategórie';
 $lang['adminmenu_title_tasks'] = 'Úlohy';
 $lang['adminmenu_title_task_set_types'] = 'Typy zostáv úloh';
+$lang['adminmenu_title_teachers_list'] = 'Správa učiteľov';

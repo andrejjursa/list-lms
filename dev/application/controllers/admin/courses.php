@@ -23,6 +23,7 @@ class Courses extends MY_Controller {
         $this->parser->add_js_file('courses_api.js');
         $this->parser->add_js_file('courses/form.js');
         $this->parser->add_css_file('admin_courses.css');
+        $this->_add_tinymce();
         $this->parser->parse('backend/courses/index.tpl');
     }
     
@@ -100,6 +101,7 @@ class Courses extends MY_Controller {
         $course->get_by_id($course_id);
         $this->inject_periods();
         $this->inject_languages();
+        $this->_add_tinymce();
         $this->lang->load_all_overlays('courses', $course_id);
         
         $this->parser->parse('backend/courses/edit.tpl', array('course' => $course));

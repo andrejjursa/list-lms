@@ -22,35 +22,23 @@ jQuery(document).ajaxStart(function () {
   });
 }).ajaxStop(jQuery.unblockUI);
 
-var show_notification = function(text, notif_class, title) {
+var show_notification = function(text, notif_type) {
   if (text == undefined) { return; }
-  if (notif_class == undefined || notif_class == null) { notif_class = ''; }
-  if (title == undefined) { title = lang != undefined && lang.titles != undefined && lang.titles.growl_notification_title != undefined ? lang.titles.growl_notification_title : 'Notification'; }
-  setTimeout(function() { 
-    jQuery.blockUI({ 
-      message: '<div class="growlUI ' + notif_class + '"><h1>' + title + '</h1><h2>' + text + '</h2></div>', 
-      fadeIn: 700, 
-      fadeOut: 700, 
-      timeout: 5000, 
-      showOverlay: false, 
-      centerY: false, 
-      css: { 
-        width: '350px', 
-        top: '20px', 
-        left: '', 
-        right: '20px', 
-        border: 'none', 
-        padding: '5px', 
-        backgroundColor: notif_class == 'error' ? 'red' : (notif_class == 'success' ? '#008000' : '#000'), 
-        '-webkit-border-radius': '10px', 
-        '-moz-border-radius': '10px',
-        'border-radius': '10px', 
-        opacity: .75, 
-        color: '#fff' 
-      } 
-    });  
-  }, 250);
+  if (notif_type == undefined || notif_type == null) { notif_type = 'information'; }
+  showNotification({
+    message: text,
+    type: notif_type,
+    autoClose: true,
+    duration: 5,
+  });
 }
+
+/*jQuery(document).ready(function() {
+    show_notification('TEST', 'success'); 
+    show_notification('TEST', 'error');
+    show_notification('TEST', 'warning');
+    show_notification('TEST', 'information');   
+});*/
 
 var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
     method = method == undefined ? 'post' : method;
@@ -249,4 +237,102 @@ var Base64url = {
         transformed_input = transformed_input.replace(/\_/g, '=');
         return Base64.decode(transformed_input);
     }
+}
+
+/**
+ * Javascript functions to show top nitification
+ * Error/Success/Info/Warning messages
+ * Developed By: Ravi Tamada
+ * url: http://androidhive.info
+ * demo: http://demos.9lessons.info/jnotification
+ * © androidhive.info
+ * 
+ * Created On: 10/4/2011
+ * version 1.0
+ * 
+ * Usage: call this function with params 
+ showNotification(params);
+ **/
+
+function showNotification(params){
+    // options array
+    var options = { 
+        'showAfter': 0, // number of sec to wait after page loads
+        'duration': 0, // display duration
+        'autoClose' : false, // flag to autoClose notification message
+        'type' : 'success', // type of info message error/success/info/warning
+        'message': '', // message to dispaly
+        'link_notification' : '', // link flag to show extra description
+        'description' : '' // link to desciption to display on clicking link message
+    }; 
+    // Extending array from params
+    jQuery.extend(true, options, params);
+    
+    var msgclass = 'succ_bg'; // default success message will shown
+    if(options['type'] == 'error'){
+        msgclass = 'error_bg'; // over write the message to error message
+    } else if(options['type'] == 'information'){
+        msgclass = 'info_bg'; // over write the message to information message
+    } else if(options['type'] == 'warning'){
+        msgclass = 'warn_bg'; // over write the message to warning message
+    } 
+    
+    // Parent Div container
+    var container = '<div id="info_message" class="'+msgclass+'"><div class="center_auto"><div class="info_message_text message_area">';
+    container += options['message'];
+    container += '</div><div class="info_close_btn button_area" onclick="return closeNotification()"></div><div class="clearboth"></div>';
+    container += '</div><div class="info_more_descrption"></div></div>';
+    
+    $notification = jQuery(container);
+    
+    // Appeding notification to Body
+    jQuery('body').append($notification);
+    
+    var divHeight = jQuery('div#info_message').height();
+    // see CSS top to minus of div height
+    jQuery('div#info_message').css({
+        top : '-'+divHeight+'px'
+    });
+    
+    // showing notification message, default it will be hidden
+    jQuery('div#info_message').show();
+    
+    // Slide Down notification message after startAfter seconds
+    slideDownNotification(options['showAfter'], options['autoClose'],options['duration']);
+    
+    jQuery(document).on('click', '.link_notification', function(){
+        jQuery('.info_more_descrption').html(options['description']).slideDown('fast');
+    });
+    
+}
+// function to close notification message
+// slideUp the message
+function closeNotification(duration){
+    var divHeight = jQuery('div#info_message').height();
+    setTimeout(function(){
+        jQuery('div#info_message').animate({
+            top: '-'+divHeight
+        }); 
+        // removing the notification from body
+        setTimeout(function(){
+            jQuery('div#info_message').remove();
+        },200);
+    }, parseInt(duration * 1000));   
+    
+
+    
+}
+
+// sliding down the notification
+function slideDownNotification(startAfter, autoClose, duration){    
+    setTimeout(function(){
+        jQuery('div#info_message').animate({
+            top: 0
+        }); 
+        if(autoClose){
+            setTimeout(function(){
+                closeNotification(duration);
+            }, duration);
+        }
+    }, parseInt(startAfter * 1000));    
 }

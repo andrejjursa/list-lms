@@ -86,12 +86,3 @@ div.custom_translations_selector li { transition: all 0.3s ease-in-out; -moz-tra
 div.custom_translations_selector li.mouseover { background-color: #B6FBA6; }
 div.custom_translations_selector li.selected { background-color: #FFC1C1; }
 div.custom_translations_selector li.selected.mouseover { background-color: #FDFF83; }
-
-div.growlUI { background: no-repeat 10px 10px; }
-div.growlUI h1, div.growlUI h2 {
-    color: white; padding: 5px 5px 5px 5px; text-align: left;
-}
-div.growlUI h1 { font-size: 1.5em; }
-div.growlUI h2 { font-size: 1em; }
-div.growlUI.error { background-color: red !important; border-color: red !important; }
-div.growlUI.error h1, div.growlUI.error h2 { color: black; }

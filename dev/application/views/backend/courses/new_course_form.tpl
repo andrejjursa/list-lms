@@ -13,7 +13,7 @@
 </div>
 <div class="field">
     <label for="course_description_id">{translate line='admin_courses_form_label_course_description'}:</label>
-    <p class="input"><textarea name="course[description]" id="course_description_id">{$smarty.post.course.description|escape:'html'}</textarea></p>
+    <p class="input"><textarea name="course[description]" id="course_description_id" class="tinymce">{$smarty.post.course.description|escape:'html'}</textarea></p>
     {form_error field='course[description]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
 </div>
 <div class="buttons">

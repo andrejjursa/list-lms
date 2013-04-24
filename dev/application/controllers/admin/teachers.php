@@ -185,4 +185,137 @@ class Teachers extends MY_Controller {
             $this->my_account();
         }
     }
+    
+    public function list_index() {
+        $this->_initialize_teacher_menu();
+        $this->usermanager->teacher_login_protected_redirect();
+        $this->_select_teacher_menu_pagetag('teachers_list');
+        $this->parser->add_js_file('teachers_api.js');
+        $this->parser->add_css_file('admin_teachers.css');
+        $this->parser->parse('backend/teachers/list_index.tpl');
+    }
+    
+    public function list_teachers_table() {
+        $this->usermanager->teacher_login_protected_redirect();
+        
+        $teachers = new Teacher();
+        $teachers->order_by('fullname', 'asc')->where('id !=', $this->usermanager->get_teacher_id())->get_iterated();
+        $this->parser->parse('backend/teachers/list_teachers_table.tpl', array('teachers' => $teachers));
+    }
+    
+    public function get_new_teacher_form() {
+        $this->usermanager->teacher_login_protected_redirect();
+        $this->parser->parse('backend/teachers/new_teacher_form.tpl');
+    }
+    
+    public function create_teacher() {
+        $this->usermanager->teacher_login_protected_redirect();
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('teacher[fullname]', 'lang:admin_teachers_list_form_field_fullname', 'required|max_length[255]');
+        $this->form_validation->set_rules('teacher[email]', 'lang:admin_teachers_list_form_field_email', 'required|valid_email|is_unique[teachers.email]');
+        $this->form_validation->set_rules('teacher[password]', 'lang:admin_teachers_list_form_field_password', 'required|min_length[6]|max_length[20]');
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        if ($this->form_validation->run()) {
+            $teacher_data = $this->input->post('teacher');
+            $teacher = new Teacher();
+            $teacher->from_array($teacher_data, array('fullname', 'email'));
+            $teacher->password = sha1($teacher_data['password']);
+            $teacher->language = $this->config->item('language');
+            if ($teacher->save() && $this->db->trans_status()) {
+                $this->db->trans_commit();
+                $this->messages->add_message('lang:admin_teachers_list_account_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+            } else {
+                $this->messages->add_message('lang:admin_teachers_list_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
+                $this->db->trans_rollback();
+            }
+            redirect(create_internal_url('admin_teachers/get_new_teacher_form'));
+        } else {
+            $this->db->trans_rollback();
+            $this->get_new_teacher_form();
+        }
+    }
+    
+    public function edit_teacher() {
+        $this->_initialize_teacher_menu();
+        $this->usermanager->teacher_login_protected_redirect();
+        $this->_select_teacher_menu_pagetag('teachers_list');
+        $url = $this->uri->ruri_to_assoc(3);
+        $teacher_id = isset($url['teacher_id']) ? intval($url['teacher_id']) : 0;
+        $teacher = new Teacher();
+        $teacher->where('id !=', $this->usermanager->get_teacher_id())->get_by_id($teacher_id);
+        $this->parser->parse('backend/teachers/edit_teacher.tpl', array('teacher' => $teacher));
+    }
+    
+    public function update_teacher() {
+        $this->usermanager->teacher_login_protected_redirect();
+        
+        $this->load->library('form_validation');
+        
+        $teacher_id = intval($this->input->post('teacher_id'));
+        
+        $this->form_validation->set_rules('teacher[fullname]', 'lang:admin_teachers_list_form_field_fullname', 'required|max_length[255]');
+        $this->form_validation->set_rules('teacher[email]', 'lang:admin_teachers_list_form_field_email', 'required|valid_email|callback__email_available[' . $teacher_id . ']');
+        $this->form_validation->set_rules('teacher[password]', 'lang:admin_teachers_list_form_field_password', 'min_length_optional[6]|max_length_optional[20]');
+        $this->form_validation->set_message('_email_available', $this->lang->line('admin_teachers_list_form_error_email_not_available'));
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        if ($this->form_validation->run()) {
+            $teacher = new Teacher();
+            $teacher->where('id !=', $this->usermanager->get_teacher_id())->get_by_id($teacher_id);
+            if ($teacher->exists()) {
+                $teacher_data = $this->input->post('teacher');
+                $teacher->from_array($teacher_data, array('fullname', 'email'));
+                if (isset($teacher_data['password']) && !empty($teacher_data['password'])) {
+                    $teacher->password = sha1($teacher_data['password']);
+                }
+                if ($teacher->save() && $this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message('lang:admin_teachers_list_account_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                } else {
+                    $this->messages->add_message('lang:admin_teachers_list_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
+                    $this->db->trans_rollback();
+                }
+            } else {
+                $this->messages->add_message('lang:admin_teachers_list_teacher_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->db->trans_rollback();
+            }
+            redirect(create_internal_url('admin_teachers/list_index'));
+        } else {
+            $this->edit_teacher();
+        }
+    }
+    
+    public function _email_available($str, $teacher_id) {
+        $teacher = new Teacher();
+        $teacher->where('email', $str)->where('id !=', $teacher_id);
+        $count = $teacher->count();
+        return $count == 0;
+    }
+    
+    public function delete_teacher() {
+        $this->output->set_content_type('application/json');
+        $this->usermanager->teacher_login_protected_redirect();
+        $url = $this->uri->ruri_to_assoc(3);
+        $teacher_id = isset($url['teacher_id']) ? intval($url['teacher_id']) : 0;
+        if ($teacher_id != 0) {
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $teacher = new Teacher();
+            $teacher->where('id !=', $this->usermanager->get_teacher_id())->get_by_id($teacher_id);
+            $teacher->delete();
+            if ($this->db->trans_status()) {
+                $this->db->trans_commit();
+                $this->output->set_output(json_encode(TRUE));    
+            } else {
+                $this->db->trans_rollback();
+                $this->output->set_output(json_encode(FALSE));                
+            }
+        } else {
+            $this->output->set_output(json_encode(FALSE));
+        }
+    }
 }

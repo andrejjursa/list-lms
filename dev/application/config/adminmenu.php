@@ -94,6 +94,13 @@ $config['adminmenu'] = array(
                 'class' => '',
                 'sub' => NULL,
             ),
+            array(
+                'title' => 'lang:adminmenu_title_teachers_list',
+                'pagetag' => 'teachers_list',
+                'link' => 'admin_teachers/list_index',
+                'class' => '',
+                'sub' => NULL,
+            ),
         ),
     ),
 );
