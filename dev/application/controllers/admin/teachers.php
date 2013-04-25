@@ -318,4 +318,12 @@ class Teachers extends MY_Controller {
             $this->output->set_output(json_encode(FALSE));
         }
     }
+    
+    public function switch_language($language, $current_url) {
+        $this->usermanager->teacher_login_protected_redirect();
+        if ($this->usermanager->set_teacher_language($language)) {
+            $this->messages->add_message('lang:admin_teachers_teacher_language_quick_changed', Messages::MESSAGE_TYPE_DEFAULT);
+        }
+        redirect(decode_from_url($current_url));
+    }
 }

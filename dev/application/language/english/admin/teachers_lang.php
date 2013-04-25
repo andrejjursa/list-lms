@@ -59,3 +59,5 @@ $lang['admin_teachers_list_teacher_not_found'] = 'Requested teacher not found in
 $lang['admin_teachers_list_form_error_email_not_available'] = 'The <strong>%s</strong> field must contain a unique value.';
 $lang['admin_teachers_list_message_delete_question'] = 'Are you sure you want to delete this teacher accout?';
 $lang['admin_teachers_list_message_after_delete'] = 'Teacher account was deleted.';
+
+$lang['admin_teachers_teacher_language_quick_changed'] = 'Language was changed.';

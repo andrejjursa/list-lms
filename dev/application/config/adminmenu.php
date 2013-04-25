@@ -101,6 +101,13 @@ $config['adminmenu'] = array(
                 'class' => '',
                 'sub' => NULL,
             ),
+            array(
+                'title' => 'lang:adminmenu_title_students_manager',
+                'pagetag' => 'students_manager',
+                'link' => 'admin_students',
+                'class' => '',
+                'sub' => NULL,
+            ),
         ),
     ),
 );

@@ -59,3 +59,5 @@ $lang['admin_teachers_list_teacher_not_found'] = 'Požadovaný učiteľ sa v dat
 $lang['admin_teachers_list_form_error_email_not_available'] = 'Pole <strong>%s</strong> musí obsahovať unikátnu hodnotu.';
 $lang['admin_teachers_list_message_delete_question'] = 'Ste si istý, že chcete vymazať tento učiteľský účet?';
 $lang['admin_teachers_list_message_after_delete'] = 'Učiteľský účet bol vymazaný.';
+
+$lang['admin_teachers_teacher_language_quick_changed'] = 'Jazyk bol zmenený.';

@@ -26,4 +26,12 @@ jQuery(document).ready(function($){
             event.preventDefault();
         }
     });
+    
+    $('#teacher_quick_langmenu').menu();
+    
+    $('div.teacher_quick_langmenu').mouseover(function() {
+        $('#teacher_quick_langmenu').show();
+    }).mouseout(function() {
+        $('#teacher_quick_langmenu').hide();
+    });
 });

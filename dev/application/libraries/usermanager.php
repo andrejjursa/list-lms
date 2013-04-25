@@ -161,6 +161,29 @@ class Usermanager {
     }
     
     /**
+     * Set new default teacher language idiom to database and session. Teacher must be loged in!
+     * @param string $language the language idiom to be set as default for teacher account.
+     * @return boolean TRUE, if language is set and session stored, FALSE otherwise.
+     */
+    public function set_teacher_language($language) {
+        if ($this->is_teacher_session_valid()) {
+            $all_langs = $this->CI->lang->get_list_of_languages();
+            if (array_key_exists($language, $all_langs)) {
+                $teacher = new Teacher();
+                $teacher->get_by_id($this->get_teacher_id());
+                $teacher->language = $language;
+                if ($teacher->save()) {
+                    $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER);
+                    $userdata['language'] = $language;
+                    $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_TEACHER, $userdata);
+                    return TRUE;
+                }
+            }
+        }
+        return FALSE;
+    }
+    
+    /**
      * This function will redirects browser to login page for student when no student is authentificated.
      * @param boolean $send_current_url if this is set to TRUE (default), current url will be encoded and sent to login page, so user will be redirected back to it after successful login.
      */
@@ -277,6 +300,19 @@ class Usermanager {
     }
     
     /**
+     * This function returns current url with respect to rewrite engien setting.
+     * I.E. it clears $config['index_page'] from current url.
+     * @return string current url.
+     */
+    public function clear_current_url() {
+        $current_url = current_url();
+        if ($this->CI->config->item('rewrite_engine_enabled')) {
+            $current_url = str_replace(array($this->CI->config->item('index_page') . '/', $this->CI->config->item('index_page')), array('', ''), $current_url);
+        }
+        return $current_url;
+    }
+    
+    /**
      * This internal function will set the verification status of student.
      * @param boolean $status status can be TRUE, FALSE or NULL.
      */
@@ -294,19 +330,6 @@ class Usermanager {
         if ($status === NULL || $status === TRUE || $status === FALSE) {
             $this->teacher_login_verified = $status;
         }
-    }
-    
-    /**
-     * This function returns current url with respect to rewrite engien setting.
-     * I.E. it clears $config['index_page'] from current url.
-     * @return string current url.
-     */
-    protected function clear_current_url() {
-        $current_url = current_url();
-        if ($this->CI->config->item('rewrite_engine_enabled')) {
-            $current_url = str_replace(array($this->CI->config->item('index_page') . '/', $this->CI->config->item('index_page')), array('', ''), $current_url);
-        }
-        return $current_url;
     }
     
 }

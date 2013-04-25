@@ -60,6 +60,7 @@ class MY_Controller extends CI_Controller {
         $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
         $this->lang->add_custom_translations($translations);
         $this->_init_lang_js_messages();
+        $this->_init_teacher_quick_langmenu();
     }
     
     /**
@@ -116,5 +117,13 @@ class MY_Controller extends CI_Controller {
     protected function _add_tinymce() {
         $this->parser->add_js_file('tinymce/jquery.tinymce.js');
         $this->parser->add_css_file('tinymce/common.css');
+    }
+    
+    /**
+     * Injects all possible languages to smarty parser.
+     */
+    private function _init_teacher_quick_langmenu() {
+        $languages = $this->lang->get_list_of_languages();
+        $this->parser->assign('list_quicklang_menu', $languages);
     }
 }

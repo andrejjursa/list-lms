@@ -24,6 +24,9 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus
 #top_meta_informations a { text-decoration: none; color: green; transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; }
 #top_meta_informations a:hover { color: #B6FBA6; }
 
+#teacher_quick_langmenu { display: none; position: absolute; }
+#top_meta_informations div.teacher_quick_langmenu { display: inline-block; }
+
 #jMenu { display:table; margin:0; padding:0; position: relative; z-index: 1000; }
 /********************/
 /** premier niveau **/
@@ -78,7 +81,7 @@ form div.field p.error span.message { padding: 2px; border: 1px solid red; color
 form div.field p.caption { width: 80%; margin-left: 20%; font-size: 0.9em; }
 form div.field p.caption > label { font-weight: bold; cursor: pointer; }
 
-div.flash_message { margin: 5px; padding: 5px; border: 1px solid black; background-color: #E8E8E8; border-radius: 5px; box-shadow: 0px 0px 2px 2px black inset; }
+div.flash_message { color: blue; margin: 5px; padding: 5px; border: 1px solid blue; background-color: #d0d8ff; border-radius: 5px; box-shadow: 0px 0px 2px 2px blue inset; }
 div.flash_message.message_success { border-color: green; box-shadow: 0px 0px 2px 2px green inset; background-color: #ADFF9A; color: green; }
 div.flash_message.message_error { border-color: red; box-shadow: 0px 0px 2px 2px red inset; background-color: #FFAFAF; color: red; }
 
