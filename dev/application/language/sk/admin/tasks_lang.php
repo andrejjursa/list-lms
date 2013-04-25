@@ -26,4 +26,5 @@ $lang['admin_tasks_form_field_categories'] = 'kategórie úlohy';
 $lang['admin_tasks_flash_message_save_successful'] = 'Úloha úspešne uložená.';
 $lang['admin_tasks_flash_message_save_failed'] = 'Úlohu sa nepodarilo uložiť. Skúste to znova.';
 $lang['admin_tasks_error_message_task_not_found'] = 'Úloha nebola nájdená.';
-$lang['admin_tasks_javascript_message_delete_question'] = 'Naozaj chcete vymazať túto úlohu? Bude odstránená zo všetkých zostáv úloh, tiež všetky jej jednotkové testy budú odstránené.'; 
+$lang['admin_tasks_javascript_message_delete_question'] = 'Naozaj chcete vymazať túto úlohu? Bude odstránená zo všetkých zostáv úloh, tiež všetky jej jednotkové testy budú odstránené.';
+$lang['admin_tasks_javascript_message_after_delete'] = 'Úloha bola úspešne vymazaná.'; 

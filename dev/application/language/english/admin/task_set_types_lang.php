@@ -16,3 +16,4 @@ $lang['admin_task_set_types_table_header_name'] = 'Name';
 $lang['admin_task_set_types_table_header_controlls'] = 'Controlls';
 $lang['admin_task_set_types_javascript_message_delete_question'] = 'Are you sure to delete this type of task set? All related task sets will lose this relations.';
 $lang['admin_task_set_types_error_task_set_type_not_found'] = 'Desired type of task sets was not found.';
+$lang['admin_task_set_types_javascript_message_after_delete'] = 'Type of task sets was successfully deleted.';

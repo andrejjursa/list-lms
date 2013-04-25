@@ -24,3 +24,4 @@ $lang['admin_groups_filter_by_course'] = 'Filtrovať podla kurzu';
 $lang['admin_groups_filter_submit_button'] = 'Použiť';
 $lang['admin_groups_error_no_such_group_message'] = 'Nie je databázový záznam s daným ID.';
 $lang['admin_groups_delete_period_question'] = 'Ste si istý vymazaním tejto skupiny? Všetky relácie študentou k tejto skupine budú stratené, rovnako ako busú vymazané všetky miestnosti tejto skupiny. Pokračovať?';
+$lang['admin_groups_message_after_delete'] = 'Skupina bola úspešne vymazaná.';

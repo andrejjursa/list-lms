@@ -30,7 +30,12 @@ jQuery(document).ready(function($) {
         
         var url = $(this).attr('href');
         
-        api_ajax_update(url, 'post', {}, reload_all_periods);
+        api_ajax_update(url, 'post', {}, function(output) {
+            if (output == true) {
+                reload_all_periods();
+                show_notification(messages.after_delete, 'success');    
+            }
+        });
     };
     
     $(document).on('click', '#periods_container_id a.button_up', up_down_period);

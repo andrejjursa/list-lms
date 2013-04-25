@@ -25,7 +25,12 @@ jQuery(document).ready(function($) {
         if (!confirm(messages.delete_question)) { return; }
         var url = $(this).attr('href');
         
-        api_ajax_update(url, 'post', {}, get_structured_tree);
+        api_ajax_update(url, 'post', {}, function(output) {
+            if (output == true) {
+                get_structured_tree();
+                show_notification(messages.after_delete, 'success');
+            }
+        });
     }
     
     $(document).on('click', '#category_tree_id a.delete', delete_category);

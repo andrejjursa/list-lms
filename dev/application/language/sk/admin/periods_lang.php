@@ -21,3 +21,4 @@ $lang['admin_periods_table_button_down'] = 'Nadol';
 $lang['admin_periods_delete_period_question'] = 'Naozaj chcete vymazať toto obdobie?';
 $lang['admin_periods_error_period_not_found'] = 'Nepodarilo sa nájsť požadované obdobie.';
 $lang['admin_periods_form_error_message_is_unique_name_not_in'] = 'Pole <strong>%s</strong> musí mať unikátnu hodnotu.';
+$lang['admin_periods_after_delete_message'] = 'Obdobie bolo úspešne vymazané.';

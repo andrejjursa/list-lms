@@ -44,3 +44,4 @@ $lang['admin_courses_message_delete_task_set_type_question'] = 'Are you sure you
 $lang['admin_courses_flash_message_task_set_type_save_failed'] = 'Failed to add type of task set.';
 $lang['admin_courses_flash_message_task_set_type_save_successful'] = 'Type of task set added successfully.';
 $lang['admin_courses_table_header_course_task_set_types'] = 'Number of types of task sets';
+$lang['admin_courses_message_after_delete'] = 'Course was successfully deleted.';

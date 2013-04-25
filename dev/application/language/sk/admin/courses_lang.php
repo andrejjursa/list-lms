@@ -44,3 +44,4 @@ $lang['admin_courses_message_delete_task_set_type_question'] = 'Naozaj chcete od
 $lang['admin_courses_flash_message_task_set_type_save_failed'] = 'Nepodarilo sa pridať typ zostavy úloh.';
 $lang['admin_courses_flash_message_task_set_type_save_successful'] = 'Typ zostavy úloh úspešne pridaný.';
 $lang['admin_courses_table_header_course_task_set_types'] = 'Počet typov zostáv úloh';
+$lang['admin_courses_message_after_delete'] = 'Kurz bol úspešne vymazaný.';

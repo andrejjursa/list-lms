@@ -47,8 +47,11 @@ jQuery(document).ready(function($) {
     $(document).on('click', '#table_of_groups_container_id a.delete', function(event) {
         event.preventDefault();
         if (confirm(messages.delete_question)) {
-            api_ajax_update($(this).attr('href'), 'get', {}, function() {
-                reload_all_groups();
+            api_ajax_update($(this).attr('href'), 'get', {}, function(output) {
+                if (output == true) {
+                    reload_all_groups();
+                    show_notification(messages.after_delete, 'success');
+                }
             });
         }
     });

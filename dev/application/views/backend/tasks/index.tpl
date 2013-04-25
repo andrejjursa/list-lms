@@ -58,7 +58,8 @@
 {block custom_head}<script type="text/javascript">
     {include file='backend/categories/categories_parent_selector.tpl' inline}
     var messages = {
-        delete_question: '{translate line="admin_tasks_javascript_message_delete_question"}'
+        delete_question: '{translate line="admin_tasks_javascript_message_delete_question"}',
+        after_delete: '{translate line="admin_tasks_javascript_message_after_delete"}',
     }; 
     var category_select_box = '<select name="" size="1">{categories_tree_options structure=$structure}</select>';
 </script>{/block}

@@ -27,3 +27,4 @@ $lang['admin_tasks_flash_message_save_successful'] = 'Task saved successfully.';
 $lang['admin_tasks_flash_message_save_failed'] = 'Task fail to be saved. Try again.';
 $lang['admin_tasks_error_message_task_not_found'] = 'Task not found.';
 $lang['admin_tasks_javascript_message_delete_question'] = 'Are you sure you want to delete this task? It will be removed from all task sets and all unit tests will be deleted as well.';
+$lang['admin_tasks_javascript_message_after_delete'] = 'Task was successfully deleted.';

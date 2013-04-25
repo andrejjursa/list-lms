@@ -21,3 +21,4 @@ $lang['admin_periods_table_button_down'] = 'Down';
 $lang['admin_periods_delete_period_question'] = 'Are you sure you want to delete this period?';
 $lang['admin_periods_error_period_not_found'] = 'Desired period was not found.';
 $lang['admin_periods_form_error_message_is_unique_name_not_in'] = 'The <strong>%s</strong> field must have unique value.';
+$lang['admin_periods_after_delete_message'] = 'Period was successfully deleted.';

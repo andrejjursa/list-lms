@@ -18,6 +18,7 @@
 {/block}
 {block custom_head}<script type="text/javascript">
     var messages = {
-        delete_question: '{translate line="admin_categories_message_delete_question"}'
+        delete_question: '{translate line="admin_categories_message_delete_question"}',
+        after_delete: '{translate line="admin_categories_message_after_delete"}',
     };
 </script>{/block}

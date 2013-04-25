@@ -18,3 +18,4 @@ $lang['admin_categories_tree_controlls_delete'] = 'Vymazať';
 $lang['admin_categories_error_category_not_found'] = 'Požadovaná kategória nebola v databázy nájdená.';
 $lang['admin_categories_message_delete_question'] = 'Ste si istý, že chcete vymazať túto kategóriu? Všetky podkategórie na nasledujúcej úrovni budú presmerované na úroveň koreňa.';
 $lang['admin_categories_category_used_info'] = 'Použitá v <strong>%d</strong> úlohách.';
+$lang['admin_categories_message_after_delete'] = 'Kategória bola úspešne vymazaná.';

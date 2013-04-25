@@ -26,6 +26,7 @@
 {/block}
 {block custom_head}<script type="text/javascript">
     var messages = {
-        delete_question: '{translate line="admin_periods_delete_period_question"}'
+        delete_question: '{translate line="admin_periods_delete_period_question"}',
+        after_delete: '{translate line="admin_periods_after_delete_message"}',
     };
 </script>{/block}

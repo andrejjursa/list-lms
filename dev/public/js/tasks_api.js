@@ -33,8 +33,11 @@ jQuery(document).ready(function($) {
     $(document).on('click', '#table_content_id a.delete', function(event) {
         event.preventDefault();
         if (confirm(messages.delete_question)) {
-            api_ajax_update($(this).attr('href'), 'get', {}, function() {
-                reload_all_tasks();
+            api_ajax_update($(this).attr('href'), 'get', {}, function(output) {
+                if (output == true) {
+                    reload_all_tasks();
+                    show_notification(messages.after_delete, 'success');    
+                }
             });
         }
     });

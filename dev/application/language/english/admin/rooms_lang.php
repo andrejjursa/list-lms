@@ -28,3 +28,4 @@ $lang['admin_rooms_table_controlls_button_edit'] = 'Edit';
 $lang['admin_rooms_table_controlls_button_delete'] = 'Delete';
 $lang['admin_rooms_error_room_not_found'] = 'Room with given ID does not exists.';
 $lang['admin_rooms_delete_room_question'] = 'Are you sure you want to delete this room?';
+$lang['admin_rooms_room_deleted_message'] = 'Room was successfully deleted.';

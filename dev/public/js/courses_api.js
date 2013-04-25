@@ -27,7 +27,12 @@ jQuery(document).ready(function($) {
             
             var url = $(this).attr('href');
             
-            api_ajax_update(url, 'post', {}, reload_table_content);
+            api_ajax_update(url, 'post', {}, function(output) {
+                if (output == true) {
+                    reload_table_content();
+                    show_notification(messages.after_delete, 'success');
+                }
+            });
         };
         
         $(document).on('click', '#table_content a.delete', delete_course);

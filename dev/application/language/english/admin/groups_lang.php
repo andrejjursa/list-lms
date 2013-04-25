@@ -24,3 +24,4 @@ $lang['admin_groups_filter_by_course'] = 'Filter by course';
 $lang['admin_groups_filter_submit_button'] = 'Apply';
 $lang['admin_groups_error_no_such_group_message'] = 'No database record with given ID.';
 $lang['admin_groups_delete_period_question'] = 'Are you sure with deleting of this group? All students relations to this group will be lost as well as all group rooms will be deleted. Continue?';
+$lang['admin_groups_message_after_delete'] = 'Group was successfully deleted.';

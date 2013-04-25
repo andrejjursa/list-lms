@@ -26,7 +26,12 @@ jQuery(document).ready(function($) {
         
         var url = $(this).attr('href');
         
-        api_ajax_update(url, 'post', {}, reload_all_rooms);
+        api_ajax_update(url, 'post', {}, function(output) {
+            if (output == true) {
+                reload_all_rooms();
+                show_notification(messages.after_delete, 'success');
+            }
+        });
     };
     
     $(document).on('click', '#rooms_table_body_id a.delete', delete_room);

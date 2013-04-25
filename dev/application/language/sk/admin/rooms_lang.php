@@ -28,3 +28,4 @@ $lang['admin_rooms_table_controlls_button_edit'] = 'Upraviť';
 $lang['admin_rooms_table_controlls_button_delete'] = 'Vymazať';
 $lang['admin_rooms_error_room_not_found'] = 'Miestnosť s daným ID neexistuje.';
 $lang['admin_rooms_delete_room_question'] = 'Ste si istý, že chcete vymazať túto miestnosť?';
+$lang['admin_rooms_room_deleted_message'] = 'Miestnosť bola úspešne vymazaná.';
