@@ -100,9 +100,21 @@
 										</td>
 				</tr>
 								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_FE_Controllers/Students.html">Students</a></td>
+					<td>
+											Students controller for frontend.
+										</td>
+				</tr>
+								<tr>
 					<td style="padding-right: 2em"><a href="../LIST_FE_Controllers/Tasks.html">Tasks</a></td>
 					<td>
 											Tasks controller for frontend.
+										</td>
+				</tr>
+								<tr>
+					<td style="padding-right: 2em"><a href="../LIST_BE_Controllers/Task_sets.html">Task_sets</a></td>
+					<td>
+											Task sets controller for backend.
 										</td>
 				</tr>
 								<tr>
@@ -121,12 +133,6 @@
 					<td style="padding-right: 2em"><a href="../LIST_BE_Controllers/Translationseditor.html">Translationseditor</a></td>
 					<td>
 											Translations editor controller for backend.
-										</td>
-				</tr>
-								<tr>
-					<td style="padding-right: 2em"><a href="../LIST_FE_Controllers/Students.html">Students</a></td>
-					<td>
-											Students controller for frontend.
 										</td>
 				</tr>
 							</table>
@@ -187,7 +193,7 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																				
+																																																																																												
 												<div class="method-definition">
 											<span class="method-result">MY_Controller</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
@@ -216,6 +222,11 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#_init_lang_js_messages" title="details" class="method-name">_init_lang_js_messages</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_init_teacher_quick_langmenu" title="details" class="method-name">_init_teacher_quick_langmenu</a>
 										()
 									</div>
 																<div class="method-definition">
@@ -258,7 +269,7 @@
 			<A NAME='method_detail'></A>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a23">23</a></span>)
@@ -306,6 +317,12 @@
 				<a href="../LIST_BE_Controllers/Settings.html#method__construct">Settings::__construct()</a>
 							</li>
 					<li>
+				<a href="../LIST_FE_Controllers/Students.html#method__construct">Students::__construct()</a>
+							</li>
+					<li>
+				<a href="../LIST_BE_Controllers/Task_sets.html#method__construct">Task_sets::__construct()</a>
+							</li>
+					<li>
 				<a href="../LIST_BE_Controllers/Task_set_types.html#method__construct">Task_set_types::__construct()</a>
 							</li>
 					<li>
@@ -314,16 +331,13 @@
 					<li>
 				<a href="../LIST_BE_Controllers/Translationseditor.html#method__construct">Translationseditor::__construct()</a>
 							</li>
-					<li>
-				<a href="../LIST_FE_Controllers/Students.html#method__construct">Students::__construct()</a>
-							</li>
 				</ul>
 	</div>
 <a name="method_add_tinymce" id="_add_tinymce"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_add_tinymce</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a116">116</a></span>)
+		<span class="method-title">_add_tinymce</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a117">117</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -344,10 +358,10 @@
 			
 	</div>
 <a name="method_initialize_teacher_menu" id="_initialize_teacher_menu"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_initialize_teacher_menu</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a81">81</a></span>)
+		<span class="method-title">_initialize_teacher_menu</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a82">82</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -369,7 +383,7 @@
 			
 	</div>
 <a name="method_init_language_for_student" id="_init_language_for_student"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">_init_language_for_student</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a36">36</a></span>)
@@ -393,7 +407,7 @@
 			
 	</div>
 <a name="method_init_language_for_teacher" id="_init_language_for_teacher"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">_init_language_for_teacher</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a58">58</a></span>)
@@ -417,10 +431,10 @@
 			
 	</div>
 <a name="method_init_lang_js_messages" id="_init_lang_js_messages"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_init_lang_js_messages</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a108">108</a></span>)
+		<span class="method-title">_init_lang_js_messages</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a109">109</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -433,6 +447,30 @@
 		<span class="method-result">void</span>
 		<span class="method-name">
 			_init_lang_js_messages
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method_init_teacher_quick_langmenu" id="_init_teacher_quick_langmenu"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_init_teacher_quick_langmenu</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a125">125</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Injects all possible languages to smarty parser.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_init_teacher_quick_langmenu
 		</span>
 				()
 			</div>
@@ -473,7 +511,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_load_teacher_langfile</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a69">69</a></span>)
+		<span class="method-title">_load_teacher_langfile</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a70">70</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -502,7 +540,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_select_teacher_menu_pagetag</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a92">92</a></span>)
+		<span class="method-title">_select_teacher_menu_pagetag</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a93">93</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -532,7 +570,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_transaction_isolation</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a101">101</a></span>)
+		<span class="method-title">_transaction_isolation</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreMY_Controller.php.html#a102">102</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -673,7 +711,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 22 Apr 2013 21:27:41 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 25 Apr 2013 16:41:17 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

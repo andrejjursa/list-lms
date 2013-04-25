@@ -1,5 +1,10 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Task sets controller for backend.
+ * @package LIST_BE_Controllers
+ * @author Andrej Jursa
+ */
 class Task_sets extends MY_Controller {
 	
 	public function __construct() {

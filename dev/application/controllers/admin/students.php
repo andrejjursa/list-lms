@@ -1,5 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Students controller for backend.
+ * @package LIST_BE_Controllers
+ * @author Andrej Jursa
+ */
 class Students extends MY_Controller {
     
     const STORED_FILTER_SESSION_NAME = 'admin_students_filter_data';

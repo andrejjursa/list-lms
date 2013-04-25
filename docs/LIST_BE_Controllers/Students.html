@@ -3,13 +3,13 @@
   <html xmlns="http://www.w3.org/1999/xhtml">
 		<head>
 			<!-- template designed by Marco Von Ballmoos -->
-			<title>Docs For Class Rooms</title>
+			<title>Docs For Class Students</title>
 			<link rel="stylesheet" href="../media/stylesheet.css" />
 			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
 		</head>
 		<body>
 			<div class="page-body">			
-<h2 class="class-name">Class Rooms</h2>
+<h2 class="class-name">Class Students</h2>
 
 <a name="sec-description"></a>
 <div class="info-box">
@@ -18,17 +18,17 @@
 					<span class="disabled">Description</span> |
 															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 						
-											<a href="#sec-consts">Constants</a>
+											<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
 						
 			</div>
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">Rooms controller for backend.</p>
+<p class="short-description">Students controller for backend.</p>
 	<ul class="tags">
 				<li><span class="field">author:</span> Andrej Jursa</li>
 			</ul>
 		<p class="notes">
-			Located in <a class="field" href="_controllers---admin---rooms.php.html">/controllers/admin/rooms.php</a> (line <span class="field"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a8">8</a></span>)
+			Located in <a class="field" href="_controllers---admin---students.php.html">/controllers/admin/students.php</a> (line <span class="field"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a8">8</a></span>)
 		</p>
 		
 				
@@ -36,12 +36,31 @@
    |
    --<a href="../LIST_Core/MY_Controller.html">MY_Controller</a>
       |
-      --Rooms</pre>
+      --Students</pre>
 	
 			</div>
 </div>
 
 
+	<a name="sec-const-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constant Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Constants</span> (<a href="#sec-consts">details</a>)
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<div class="const-summary">
+								<div class="const-title">
+					<a href="#STORED_FILTER_SESSION_NAME" title="details" class="const-name">STORED_FILTER_SESSION_NAME</a> = 					<span class="var-type"> 'admin_students_filter_data'</span>
+
+				</div>
+							</div>
+		</div>
+	</div>
 
 
 	<a name="sec-method-summary"></a>
@@ -49,15 +68,15 @@
 		<div class="info-box-title">Method Summary</span></div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
-															<a href="#sec-consts">Constants</a>
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
 							
 									<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																																				
+																																																																																												
 												<div class="method-definition">
-											<span class="method-result">Rooms</span>
+											<span class="method-result">Students</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
 										()
 									</div>
@@ -69,52 +88,47 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#delete" title="details" class="method-name">delete</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#edit" title="details" class="method-name">edit</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
-									</div>
-																<div class="method-definition">
-											<span class="method-result">void</span>
-										<a href="#get_table_content" title="details" class="method-name">get_table_content</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#index" title="details" class="method-name">index</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
-										<a href="#new_room_form" title="details" class="method-name">new_room_form</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
+										<a href="#inject_stored_filter" title="details" class="method-name">inject_stored_filter</a>
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
-										<a href="#time_to_int" title="details" class="method-name">time_to_int</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$time</span>)
+										<a href="#new_student_form" title="details" class="method-name">new_student_form</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#store_filter" title="details" class="method-name">store_filter</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$filter</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#table_content" title="details" class="method-name">table_content</a>
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#update" title="details" class="method-name">update</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
-										<a href="#_is_day" title="details" class="method-name">_is_day</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>)
-									</div>
-																<div class="method-definition">
-											<span class="method-result">void</span>
-										<a href="#_is_later_time" title="details" class="method-name">_is_later_time</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>)
-									</div>
-																<div class="method-definition">
-											<span class="method-result">void</span>
-										<a href="#_is_time" title="details" class="method-name">_is_time</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>)
+										<a href="#_email_available" title="details" class="method-name">_email_available</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$student_id</span>)
 									</div>
 								</div>
 		</div>
@@ -126,7 +140,7 @@
 		<div class="info-box-title">Methods</div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
-																		<a href="#sec-consts">Constants</a>
+																		<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
 							
 										<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
 						
@@ -138,7 +152,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a10">10</a></span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a12">12</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -147,7 +161,7 @@
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">Rooms</span>
+		<span class="method-result">Students</span>
 		<span class="method-name">
 			__construct
 		</span>
@@ -167,7 +181,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">create</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a37">37</a></span>)
+		<span class="method-title">create</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a41">41</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -190,7 +204,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a123">123</a></span>)
+		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a127">127</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -203,14 +217,9 @@
 		<span class="method-name">
 			delete
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
+				()
 			</div>
 	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$group_id</span>			</li>
-				</ul>
 		
 			
 	</div>
@@ -218,7 +227,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">edit</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a145">145</a></span>)
+		<span class="method-title">edit</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a69">69</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -231,50 +240,17 @@
 		<span class="method-name">
 			edit
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
+				()
 			</div>
 	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$group_id</span>			</li>
-				</ul>
-		
-			
-	</div>
-<a name="methodget_table_content" id="get_table_content"><!-- --></a>
-<div class="oddrow">
-	
-	<div class="method-header">
-		<span class="method-title">get_table_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a28">28</a></span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">void</span>
-		<span class="method-name">
-			get_table_content
-		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$group_id</span>			</li>
-				</ul>
 		
 			
 	</div>
 <a name="methodindex" id="index"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a17">17</a></span>)
+		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a20">20</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -287,50 +263,17 @@
 		<span class="method-name">
 			index
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
+				()
 			</div>
 	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$group_id</span>			</li>
-				</ul>
 		
 			
 	</div>
-<a name="methodnew_room_form" id="new_room_form"><!-- --></a>
-<div class="oddrow">
-	
-	<div class="method-header">
-		<span class="method-title">new_room_form</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a116">116</a></span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">void</span>
-		<span class="method-name">
-			new_room_form
-		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$group_id</span>			</li>
-				</ul>
-		
-			
-	</div>
-<a name="methodtime_to_int" id="time_to_int"><!-- --></a>
+<a name="methodinject_stored_filter" id="inject_stored_filter"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">time_to_int</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a198">198</a></span>)
+		<span class="method-title">inject_stored_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a158">158</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -341,24 +284,93 @@
 	<div class="method-signature">
 		<span class="method-result">void</span>
 		<span class="method-name">
-			time_to_int
+			inject_stored_filter
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$time</span>)
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodnew_student_form" id="new_student_form"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">new_student_form</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a28">28</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			new_student_form
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodstore_filter" id="store_filter"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">store_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a150">150</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			store_filter
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$filter</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type"></span>
-				<span class="var-name">$time</span>			</li>
+				<span class="var-name">$filter</span>			</li>
 				</ul>
 		
 			
 	</div>
-<a name="methodupdate" id="update"><!-- --></a>
+<a name="methodtable_content" id="table_content"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">update</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a157">157</a></span>)
+		<span class="method-title">table_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a32">32</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			table_content
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodupdate" id="update"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">update</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a80">80</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -371,50 +383,17 @@
 		<span class="method-name">
 			update
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>)
+				()
 			</div>
 	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$group_id</span>			</li>
-				</ul>
 		
 			
 	</div>
-<a name="method_is_day" id="_is_day"><!-- --></a>
-<div class="evenrow">
-	
-	<div class="method-header">
-		<span class="method-title">_is_day</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a106">106</a></span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">void</span>
-		<span class="method-name">
-			_is_day
-		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>)
-			</div>
-	
-			<ul class="parameters">
-					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$str</span>			</li>
-				</ul>
-		
-			
-	</div>
-<a name="method_is_later_time" id="_is_later_time"><!-- --></a>
+<a name="method_email_available" id="_email_available"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_is_later_time</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a94">94</a></span>)
+		<span class="method-title">_email_available</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a120">120</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -425,43 +404,18 @@
 	<div class="method-signature">
 		<span class="method-result">void</span>
 		<span class="method-name">
-			_is_later_time
+			_email_available
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>)
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$student_id</span>)
 			</div>
 	
 			<ul class="parameters">
 					<li>
 				<span class="var-type"></span>
 				<span class="var-name">$str</span>			</li>
-				</ul>
-		
-			
-	</div>
-<a name="method_is_time" id="_is_time"><!-- --></a>
-<div class="evenrow">
-	
-	<div class="method-header">
-		<span class="method-title">_is_time</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminrooms.php.html#a82">82</a></span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">void</span>
-		<span class="method-name">
-			_is_time
-		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$str</span>)
-			</div>
-	
-			<ul class="parameters">
 					<li>
 				<span class="var-type"></span>
-				<span class="var-name">$str</span>			</li>
+				<span class="var-name">$student_id</span>			</li>
 				</ul>
 		
 			
@@ -500,7 +454,22 @@
 							
 					</div>
 		<div class="info-box-body">
-										<h4>Inherited Constants</h4>
+			<a name="constSTORED_FILTER_SESSION_NAME" id="STORED_FILTER_SESSION_NAME"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">STORED_FILTER_SESSION_NAME</span>
+			 = <span class="const-default"> 'admin_students_filter_data'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a10">10</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+							<h4>Inherited Constants</h4>
 				<A NAME='inherited_vars'><!-- --></A>
 									<p>Inherited from <span class="classname"><a href="../LIST_Core/MY_Controller.html">MY_Controller</a></span></p>
 					<blockquote>
@@ -528,7 +497,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Thu, 25 Apr 2013 16:41:21 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 25 Apr 2013 16:41:22 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>
