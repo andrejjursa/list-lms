@@ -34,12 +34,24 @@ class MY_Form_validation extends CI_Form_validation {
         }
     }
     
+    /**
+     * Optional version of min_length().
+     * @param string $str string to evauluate, it must be empty or it must have at least $length characters.
+     * @param integer $length minimum number of characters in string $str.
+     * @return boolean TRUE, if conditions are satisfied, FALSE otherwise.
+     */
     public function min_length_optional($str, $length) {
         if (empty($str)) { return TRUE; }
         
         return $this->min_length($str, $length);
     }
     
+    /**
+     * Optional version of max_length().
+     * @param string $str string to evauluate, it must be empty or it must not have more than $length characters.
+     * @param integer $length maximum number of characters in string $str.
+     * @return boolean TRUE, if conditions are satisfied, FALSE otherwise.
+     */
     public function max_length_optional($str, $length) {
         if (empty($str)) { return TRUE; }
         
