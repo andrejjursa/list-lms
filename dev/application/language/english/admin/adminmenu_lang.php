@@ -21,3 +21,4 @@ $lang['adminmenu_title_tasks'] = 'Tasks';
 $lang['adminmenu_title_task_set_types'] = 'Types of task sets';
 $lang['adminmenu_title_teachers_list'] = 'Manage teachers';
 $lang['adminmenu_title_students_manager'] = 'Manage students';
+$lang['adminmenu_title_task_sets'] = 'Task sets';

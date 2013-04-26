@@ -22,7 +22,7 @@
  * @property CI_Model $model
  * @property CI_Output $output
  * @property CI_Pagination $pagination
- * @property CI_Parser $parser
+ * @property MY_Parser $parser
  * @property CI_Profiler $profiler
  * @property CI_Router $router
  * @property CI_Session $session
@@ -38,7 +38,9 @@
  * @property CI_Xmlrpc $xmlrpc
  * @property CI_Xmlrpcs $xmlrpcs
  * @property CI_Zip $zip
+ * @property Messages $messages
  * 
+ * @property Index $index
  */
 class CI_Controller {
     
@@ -73,6 +75,7 @@ class CI_DB_Driver {
  * @property CI_Loader $load
  * @property CI_Session $session
  * 
+ * @property Index $index
  */
 class CI_Model {
     

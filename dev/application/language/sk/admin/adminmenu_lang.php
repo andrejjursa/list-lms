@@ -21,3 +21,4 @@ $lang['adminmenu_title_tasks'] = 'Úlohy';
 $lang['adminmenu_title_task_set_types'] = 'Typy zostáv úloh';
 $lang['adminmenu_title_teachers_list'] = 'Správa učiteľov';
 $lang['adminmenu_title_students_manager'] = 'Správa študentov';
+$lang['adminmenu_title_task_sets'] = 'Zostavy úloh';

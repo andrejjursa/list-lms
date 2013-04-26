@@ -58,4 +58,17 @@ class MY_Form_validation extends CI_Form_validation {
         return $this->max_length($str, $length);
     }
     
+    public function exists_in_table($str, $table) {
+        $table_def = explode('.', $table);
+        $CI =& get_instance();
+        if (count($table_def) == 2) {
+            return $CI->db->from($table_def[0])->where($table_def[1], $str)->count_all_results() >= 1;
+        } else if (count($table_def) == 3) {
+            return $CI->db->from($table_def[0])->where($table_def[1], $str)->count_all_results() >= intval($table_def[2]);
+        } else if (count($table_def) == 4) {
+            $count = $CI->db->from($table_def[0])->where($table_def[1], $str)->count_all_results();
+            return $count >= intval($table_def[2]) && $count <= intval($table_def[3]);
+        }
+        return FALSE;
+    }
 }

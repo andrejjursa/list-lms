@@ -57,6 +57,13 @@ $config['adminmenu'] = array(
                         'sub' => NULL,
                     ),
                     array(
+                        'title' => 'lang:adminmenu_title_task_sets',
+                        'pagetag' => 'task_sets',
+                        'link' => 'admin_task_sets',
+                        'class' => '',
+                        'sub' => NULL,
+                    ),
+                    array(
                         'title' => 'lang:adminmenu_title_categories',
                         'pagetag' => 'categories',
                         'link' => 'admin_categories',
