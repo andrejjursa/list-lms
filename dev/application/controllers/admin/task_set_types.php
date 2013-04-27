@@ -26,6 +26,8 @@ class Task_set_types extends MY_Controller {
     
     public function get_table_content() {
         $task_set_types = new Task_set_type();
+        $task_set_types->include_related_count('task_set');
+        $task_set_types->include_related_count('course');
         $task_set_types->order_by('name', 'asc')->get_iterated();
         $this->parser->parse('backend/task_set_types/table_content.tpl', array('task_set_types' => $task_set_types));
     }

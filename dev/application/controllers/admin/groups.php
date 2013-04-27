@@ -46,6 +46,8 @@ class Groups extends MY_Controller {
         if (isset($filter['course_id']) && intval($filter['course_id']) > 0) {
             $groups->where_related_course('id', intval($filter['course_id']));
         }
+        $groups->include_related('course', 'name', TRUE);
+        $groups->include_related('course/period', 'name', TRUE);
         $groups->get_iterated();
         $this->parser->parse('backend/groups/table_content.tpl', array('groups' => $groups));
     }

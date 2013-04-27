@@ -1,7 +1,7 @@
 {foreach $groups as $group}
 <tr>
     <td>{translate_text|escape:'html' text=$group->name}</td>
-    <td>{translate_text|escape:'html' text=$group->course->get()->name} / {translate_text|escape:'html' text=$group->course->period->get()->name}</td>
+    <td>{translate_text|escape:'html' text=$group->course_name} / {translate_text|escape:'html' text=$group->course_period_name}</td>
     <td>
         {if $group->room->order_by('time_day', 'asc')->order_by('time_begin', 'asc')->get()->exists()}
         <ul class="room">

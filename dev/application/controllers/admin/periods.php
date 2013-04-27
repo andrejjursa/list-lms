@@ -27,6 +27,7 @@ class Periods extends MY_Controller  {
     public function ajax_periods_list() {
         $periods = new Period();
         $periods->order_by('sorting', 'asc');
+        $periods->include_related_count('course');
         $periods->get_iterated();
         $this->parser->parse('backend/periods/ajax_periods_list.tpl', array('periods' => $periods));
     }

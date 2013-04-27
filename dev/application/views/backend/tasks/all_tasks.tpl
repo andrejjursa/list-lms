@@ -2,7 +2,7 @@
 <tr>
     <td>{overlay|escape:'html' table='tasks' table_id=$task->id column='name' default=$task->name}</td>
     <td>{foreach $task->category->order_by('name', 'asc')->get_iterated() as $category}{if !$category@first}, {/if}{translate_text|escape:'html' text=$category->name}{/foreach}</td>
-    <td>{$task->task_set->count()}</td>
+    <td>{$task->task_set_count}</td>
     <td class="controlls"><a href="{internal_url url="admin_tasks/preview/task_id/{$task->id}"}" class="button special preview">{translate line='admin_tasks_form_button_preview'}</a></td>
     <td class="controlls"><a href="{internal_url url="admin_tasks/edit/task_id/{$task->id}"}" class="button">{translate line='admin_tasks_form_button_edit'}</a></td>
     <td class="controlls"><a href="{internal_url url="admin_tasks/delete/task_id/{$task->id}"}" class="button delete">{translate line='admin_tasks_form_button_delete'}</a></td>

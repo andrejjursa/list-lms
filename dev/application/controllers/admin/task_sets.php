@@ -58,9 +58,9 @@ class Task_sets extends MY_Controller {
         $this->store_filter($filter);
         $task_sets = new Task_set();
         $task_sets->order_by('name', 'asc');
-        $task_sets->include_related('course', '*', TRUE, TRUE);
+        $task_sets->include_related('course', 'name', TRUE);
         $task_sets->include_related('course/period', 'name', TRUE);
-        $task_sets->include_related('task_set_type', '*', TRUE, TRUE);
+        $task_sets->include_related('task_set_type', 'name', TRUE);
         $task_sets->include_related_count('task');
         if (isset($filter['course']) && intval($filter['course']) > 0) {
             $task_sets->where_related_course('id', intval($filter['course']));

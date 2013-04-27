@@ -29,6 +29,9 @@ class Courses extends MY_Controller {
     
     public function get_table_content() {
         $courses = new Course();
+        $courses->include_related_count('group');
+        $courses->include_related_count('task_set_type');
+        $courses->include_related('period', 'name', TRUE);
         $courses->get_iterated();
         $this->lang->init_overlays('courses', $courses->all_to_array(), array('description'));
         $this->parser->parse('backend/courses/table_content.tpl', array('courses' => $courses));
