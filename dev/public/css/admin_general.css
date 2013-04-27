@@ -56,8 +56,8 @@ div.loginbox h1 { margin: 0 0 15px 0; text-shadow: 0 0 4px gray; color: black; }
 
 div.backend_body { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; min-width: 800px; }
 
-div.backend_body > fieldset { margin: 5px; border: 1px solid gray; padding: 10px; border-radius: 5px; background-color: #E8E8E8; }
-div.backend_body > fieldset > legend { border: 1px solid gray; margin-left: 5px; width: 50%; padding: 4px; border-radius: 5px; background-color: #E8E8E8; font-weight: bold; }
+div.backend_body > fieldset, fieldset.basefieldset { margin: 5px; border: 1px solid gray; padding: 10px; border-radius: 5px; background-color: #E8E8E8; }
+div.backend_body > fieldset > legend, fieldset.basefieldset > legend { border: 1px solid gray; margin-left: 5px; width: 50%; padding: 4px; border-radius: 5px; background-color: #E8E8E8; font-weight: bold; }
 div.backend_body > h3, div.backend_body > h2 { margin: 5px; text-shadow: 0 0 4px gray; color: black; }
 
 form div.field_login,

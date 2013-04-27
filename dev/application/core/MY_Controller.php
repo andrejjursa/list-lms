@@ -120,6 +120,14 @@ class MY_Controller extends CI_Controller {
     }
     
     /**
+     * This method adds uploadify to template.
+     */
+    protected function _add_uploadify() {
+        $this->parser->add_js_file('jquery.uploadify.min.js');
+        $this->parser->add_css_file('uploadify.css');
+    }
+    
+    /**
      * Injects all possible languages to smarty parser.
      */
     private function _init_teacher_quick_langmenu() {

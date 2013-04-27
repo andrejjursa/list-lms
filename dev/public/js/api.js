@@ -1,4 +1,4 @@
-jQuery(document).ready(function() {
+jQuery(document).ready(function($) {
     if (jQuery.datepicker != undefined) {
         jQuery.datepicker.setDefaults(jQuery.datepicker.regional[jqueryui_datepicker_region]);
     }
@@ -29,16 +29,22 @@ var show_notification = function(text, notif_type) {
     message: text,
     type: notif_type,
     autoClose: true,
-    duration: 5,
+    duration: 5
   });
 }
 
-/*jQuery(document).ready(function() {
-    show_notification('TEST', 'success'); 
-    show_notification('TEST', 'error');
-    show_notification('TEST', 'warning');
-    show_notification('TEST', 'information');   
-});*/
+var api_make_tabs = function(structure_id_attr_value, options) {
+    var structure = jQuery('#' + structure_id_attr_value);
+    if (options == undefined) { options = {}; }
+    structure.tabs(options);
+    var tab_num = 1;
+    jQuery(structure).find('> div').each(function() {
+        if (jQuery(this).find('p.error').length > 0) {
+            jQuery(structure).find('> ul li:nth-child(' + tab_num + ')').addClass('ui-state-error').removeClass('ui-state-default');
+        }
+        tab_num++;
+    });
+}
 
 var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
     method = method == undefined ? 'post' : method;

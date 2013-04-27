@@ -50,7 +50,7 @@ jQuery(document).ready(function($) {
             height: '100%',
             autoSize: false,
             autoHeight: false,
-            autoWidth: false,
+            autoWidth: false
         })
     });
     

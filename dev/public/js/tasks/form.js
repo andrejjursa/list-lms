@@ -20,6 +20,6 @@ jQuery(document).ready(function($) {
             {title: 'Highlight - jQuery', selector: 'pre', attributes: { 'lang': 'jquery', 'class': 'highlight' }},
             {title: 'Highlight - CSS', selector: 'pre', attributes: { 'lang': 'css', 'class': 'highlight' }},
             {title: 'Highlight - Haskell', selector: 'pre', attributes: { 'lang': 'haskell', 'class': 'highlight' }},
-        ],
+        ]
     });
 });

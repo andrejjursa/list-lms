@@ -95,10 +95,12 @@ class Tasks extends MY_Controller {
         $category = new Category();
         $structure = $category->get_all_structured();
         $this->_add_tinymce();
+        $this->_add_uploadify();
         $this->parser->add_js_file('tasks/form.js');
+        $this->parser->add_js_file('tasks/form_edit.js');
+        $this->parser->add_css_file('admin_tasks.css');
         $this->inject_languages();
         $this->lang->load_all_overlays('tasks', $task_id);
-        $this->parser->add_css_file('admin_tasks.css');
         $this->parser->parse('backend/tasks/edit.tpl', array('task' => $task, 'structure' => $structure));
     }
     
@@ -177,6 +179,60 @@ class Tasks extends MY_Controller {
         $this->parser->parse('backend/tasks/preview.tpl', array('task' => $task));
     }
     
+    public function add_files($task_id) {
+        $task = new Task();
+        $task->get_by_id(intval($task_id));
+        if (!$task->exists()) {
+            $this->output->set_output($this->lang->line('admin_tasks_error_message_task_not_found'));
+            return;
+        }
+        $path = 'public/uploads/task_files/task_' . intval($task_id) . '/';
+        if (!file_exists($path)) {
+            @mkdir($path);
+            @chmod($path, 0644);
+        }
+        $config['upload_path'] = $path;
+        $config['allowed_types'] = '*';
+        $config['overwrite'] = FALSE;
+        $this->load->library('upload', $config);
+        if ($this->upload->do_upload('file_upload')) {
+            $this->output->set_output('ok');
+        } else {
+            $this->output->set_output(sprintf($this->lang->line('admin_tasks_file_upload_message_upload_error'), $this->upload->display_errors('<p>', '</p>')));
+        }
+    }
+    
+    public function get_task_files($task_id) {
+        $this->inject_files($task_id);
+        $this->parser->parse('backend/tasks/edit_files_list.tpl', array('task_id' => intval($task_id)));
+    }
+
+    public function download_file($task_id, $file) {
+        $filename = decode_from_url($file);
+        $filepath = 'public/uploads/task_files/task_' . intval($task_id) . '/' . $filename;
+        $this->output->set_header('Content-Type: application/octet-stream');
+        $this->output->set_header('Content-Transfer-Encoding: Binary');
+        $this->output->set_header('Content-disposition: attachment; filename="' . $filename . '"');
+        if (file_exists($filepath)) {
+            $file_content = file_get_contents($filepath);
+            $this->output->set_output($file_content);
+        } else {
+            $this->output->set_status_header(404, 'Not found');
+        }
+    }
+    
+    public function delete_file($task_id, $file) {
+        $filename = decode_from_url($file);
+        $filepath = 'public/uploads/task_files/task_' . intval($task_id) . '/' . $filename;
+        $this->output->set_content_type('application/json');
+        if (file_exists($filepath)) {
+            @unlink($filepath);
+            $this->output->set_output(json_encode(TRUE));
+        } else {
+            $this->output->set_output(json_encode(FALSE));
+        }
+    }
+
     private function store_filter($filter) {
         if (is_array($filter)) {
             $old_filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
@@ -194,5 +250,22 @@ class Tasks extends MY_Controller {
     private function inject_languages() {
         $languages = $this->lang->get_list_of_languages();
         $this->parser->assign('languages', $languages);
+    }
+    
+    private function inject_files($task_id) {
+        $path = 'public/uploads/task_files/task_' . intval($task_id) . '/';
+        $files = array();
+        if (file_exists($path)) {
+            $files_in_dir = scandir($path);
+            foreach ($files_in_dir as $file) {
+                if (is_file($path . $file)) {
+                    $files[] = array(
+                        'file' => $file,
+                        'filepath' => $path . $file,
+                    );
+                }
+            }
+        }
+        $this->parser->assign('files', $files);
     }
 }
