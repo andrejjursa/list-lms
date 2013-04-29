@@ -22,7 +22,7 @@
                     <label for="course_description_id">{translate line='admin_courses_form_label_course_description'}:</label>
                     <p class="input"><textarea name="course[description]" id="course_description_id" class="tinymce">{$smarty.post.course.description|default:$course->description|escape:'html'}</textarea></p>
                     {form_error field='course[description]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
-                    {include file='partials/backend_general/overlay_editor.tpl' table='courses' table_id=$course->id column='description' editor_type='textarea' class='tinymce' inline}
+                    {include file='partials/backend_general/overlay_editor.tpl' table='courses' table_id=$smarty.post.course_id|default:$course->id column='description' editor_type='textarea' class='tinymce' inline}
                 </div>
                 <div class="buttons">
                     <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" />

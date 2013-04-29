@@ -16,13 +16,13 @@
                     <label for="task_name_id">{translate line='admin_tasks_form_label_name'}:</label>
                     <p class="input"><input type="text" name="task[name]" value="{$smarty.post.task.name|default:$task->name|escape:'html'}" id="task_name_id" /></p>
                     {form_error field='task[name]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
-                    {include file='partials/backend_general/overlay_editor.tpl' table='tasks' table_id=$task->id column='name' editor_type='input' inline}
+                    {include file='partials/backend_general/overlay_editor.tpl' table='tasks' table_id=$smarty.post.task_id|default:$task->id column='name' editor_type='input' inline}
                 </div>
                 <div class="field">
                     <label for="task_text_id">{translate line='admin_tasks_form_label_text'}:</label>
                     <p class="input"><textarea name="task[text]" id="task_text_id" class="tinymce">{$smarty.post.task.text|default:$task->text}</textarea></p>
                     {form_error field='task[text]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
-                    {include file='partials/backend_general/overlay_editor.tpl' table='tasks' table_id=$task->id column='text' editor_type='textarea' class='tinymce' inline}
+                    {include file='partials/backend_general/overlay_editor.tpl' table='tasks' table_id=$smarty.post.task_id|default:$task->id column='text' editor_type='textarea' class='tinymce' inline}
                 </div>
                 <div class="field">
                     <label>{translate line='admin_tasks_form_label_categories'}:</label>
