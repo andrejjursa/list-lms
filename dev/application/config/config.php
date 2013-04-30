@@ -244,11 +244,11 @@ $config['encryption_key'] = '0123456789ABCDEF0123456789ABCDEF01';
 */
 $config['sess_cookie_name'] = 'list_session';
 $config['sess_expiration'] = 7200;
-$config['sess_expire_on_close'] = false;
+$config['sess_expire_on_close'] = true;
 $config['sess_encrypt_cookie'] = false;
 $config['sess_use_database'] = false;
 $config['sess_table_name'] = 'ci_sessions';
-$config['sess_match_ip'] = false;
+$config['sess_match_ip'] = true;
 $config['sess_match_useragent'] = true;
 $config['sess_time_to_update'] = 300;
 
