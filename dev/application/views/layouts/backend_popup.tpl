@@ -30,6 +30,8 @@
         {block name='custom_head'}{/block}
     </head>
     <body>
-        <div class="backend_body">{block name='main_content'}{/block}</div>
+        <div id="pagewrap_id">
+            <div class="backend_body">{block name='main_content'}{/block}</div>
+        </div>
     </body>
 </html>

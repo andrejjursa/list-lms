@@ -22,3 +22,6 @@ $lang['adminmenu_title_task_set_types'] = 'Types of task sets';
 $lang['adminmenu_title_teachers_list'] = 'Manage teachers';
 $lang['adminmenu_title_students_manager'] = 'Manage students';
 $lang['adminmenu_title_task_sets'] = 'Task sets';
+
+$lang['adminmenu_open_task_set_message'] = 'Opened task set: %s';
+$lang['adminmenu_open_task_set_nothing_opened'] = 'Nothing opened';

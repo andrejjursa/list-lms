@@ -14,6 +14,7 @@ class Task_sets extends MY_Controller {
         $this->_init_language_for_teacher();
         $this->_load_teacher_langfile();
         $this->_initialize_teacher_menu();
+        $this->_initialize_open_task_set();
         $this->usermanager->teacher_login_protected_redirect();
     }
 
@@ -175,6 +176,20 @@ class Task_sets extends MY_Controller {
         } else {
             $this->output->set_output(json_encode(FALSE));
         }
+    }
+    
+    public function open() {
+        $url = $this->uri->ruri_to_assoc(3);
+        $task_set_id = isset($url['task_set_id']) ? intval($url['task_set_id']) : 0;
+        if ($task_set_id !== 0) {
+            $task_set = new Task_set();
+            $task_set->get_by_id($task_set_id);
+            if ($task_set->exists()) {
+                $task_set->set_as_open();
+            }
+        }
+        $this->_initialize_open_task_set();
+        $this->parser->parse('partials/backend_general/open_task_set.tpl');
     }
 	
     private function inject_courses() {

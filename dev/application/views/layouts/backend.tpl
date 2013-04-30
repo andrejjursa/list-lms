@@ -34,14 +34,16 @@
     </head>
     {include file='partials/backend_general/adminmenu.tpl' inline}
     <body>
-        <div id="top_meta_informations">
-            <div class="left"></div>
-            <div class="right">{include file='partials/backend_general/metainfo_teacher.tpl' inline}</div>
-            <div class="clear"></div>
+        <div id="pagewrap_id">
+            <div id="top_meta_informations">
+                <div class="left"><span id="header_open_task_set_id">{include file='partials/backend_general/open_task_set.tpl' inline}</span></div>
+                <div class="right">{include file='partials/backend_general/metainfo_teacher.tpl' inline}</div>
+                <div class="clear"></div>
+            </div>
+            <h1>L.I.S.T. - {translate line='adminmenu_administration_title'}</h1>
+            <p>Long-term Internet Storage of Tasks</p>
+            <nav>{make_adminmenu menu=$list_adminmenu current=$list_adminmenu_current}</nav>
+            <div class="backend_body">{block name='main_content'}{/block}</div>
         </div>
-        <h1>L.I.S.T. - {translate line='adminmenu_administration_title'}</h1>
-        <p>Long-term Internet Storage of Tasks</p>
-        <nav>{make_adminmenu menu=$list_adminmenu current=$list_adminmenu_current}</nav>
-        <div class="backend_body">{block name='main_content'}{/block}</div>
     </body>
 </html>

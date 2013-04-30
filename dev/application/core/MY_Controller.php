@@ -86,6 +86,16 @@ class MY_Controller extends CI_Controller {
     }
     
     /**
+     * Loads and inject open task set to template.
+     * Smarty template variable $list_open_task_set will be created.
+     */
+    protected function _initialize_open_task_set() {
+        $task_set = new Task_set();
+        $task_set->get_as_open();
+        $this->parser->assign('list_open_task_set', $task_set);
+    }
+    
+    /**
      * Set the active menu item in teacher menu.
      * Smarty template variable $list_adminmenu_current will be created.
      * @param string $tag page tag to be set as active item in menu.

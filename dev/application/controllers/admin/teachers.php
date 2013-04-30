@@ -63,6 +63,7 @@ class Teachers extends MY_Controller {
     public function my_account() {
         $this->_select_teacher_menu_pagetag('teacher_account');
         $this->_initialize_teacher_menu();
+        $this->_initialize_open_task_set();
         $this->usermanager->teacher_login_protected_redirect();
         $teacher = new Teacher();
         $teacher->where('id', $this->usermanager->get_teacher_id());
@@ -74,7 +75,6 @@ class Teachers extends MY_Controller {
     }
     
     public function save_basic_information() {
-        $this->_initialize_teacher_menu();
         $this->usermanager->teacher_login_protected_redirect();
         $this->load->library('form_validation');
         
@@ -108,7 +108,6 @@ class Teachers extends MY_Controller {
     }
     
     public function save_password() {
-        $this->_initialize_teacher_menu();
         $this->usermanager->teacher_login_protected_redirect();
         $this->load->library('form_validation');
         
@@ -152,7 +151,6 @@ class Teachers extends MY_Controller {
     }
     
     public function save_email() {
-        $this->_initialize_teacher_menu();
         $this->usermanager->teacher_login_protected_redirect();
         $this->load->library('form_validation');
         
@@ -188,6 +186,7 @@ class Teachers extends MY_Controller {
     
     public function list_index() {
         $this->_initialize_teacher_menu();
+        $this->_initialize_open_task_set();
         $this->usermanager->teacher_login_protected_redirect();
         $this->_select_teacher_menu_pagetag('teachers_list');
         $this->parser->add_js_file('teachers_api.js');
@@ -239,6 +238,7 @@ class Teachers extends MY_Controller {
     }
     
     public function edit_teacher() {
+        $this->_initialize_open_task_set();
         $this->_initialize_teacher_menu();
         $this->usermanager->teacher_login_protected_redirect();
         $this->_select_teacher_menu_pagetag('teachers_list');

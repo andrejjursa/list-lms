@@ -4,7 +4,9 @@ jQuery(document).ready(function($) {
     }
     if (jQuery.timepicker != undefined) {
         jQuery.timepicker.setDefaults(jQuery.timepicker.regional[jqueryui_datepicker_region]);
-    }    
+    }
+
+    jQuery('[title]').tooltip();
 });
 
 var block_ui_message = lang != undefined && lang.messages != undefined && lang.messages.ajax_standby != undefined ? lang.messages.ajax_standby : 'Please wait ...';
@@ -20,7 +22,10 @@ jQuery(document).ajaxStart(function () {
       opacity: 0.5 
     }
   });
-}).ajaxStop(jQuery.unblockUI);
+}).ajaxStop(function() {
+    jQuery('[title]').tooltip();
+    jQuery.unblockUI();
+});
 
 var show_notification = function(text, notif_type) {
   if (text == undefined) { return; }

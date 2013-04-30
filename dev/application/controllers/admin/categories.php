@@ -12,6 +12,7 @@ class Categories extends MY_Controller {
         $this->_init_language_for_teacher();
         $this->_load_teacher_langfile();
         $this->_initialize_teacher_menu();
+        $this->_initialize_open_task_set();
         $this->usermanager->teacher_login_protected_redirect();
     }
     

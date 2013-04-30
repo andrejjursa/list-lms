@@ -2,6 +2,7 @@
 body { font-family: Verdana, Arial, sans-serif; font-size: 14px; background-color: white; color: black; }
 table { border-collapse: collapse; }
 nav { background-color:#322f32; padding: 0 10px; margin-top: 10px; box-shadow: 0px 0px 5px 5px #322f32; }
+#pagewrap_id { min-width: 800px; }
 
 .button { transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; padding: 4px 10px; border: 1px solid green; border-radius: 30px; background-color: #B6FBA6; color: black; box-shadow: -3px -3px 3px gray inset; text-decoration: none; font-size: 0.9em; }
 a.button { padding-top: 3px; display: inline-block; }
@@ -54,7 +55,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus
 div.loginbox { width: 400px; margin: 150px auto 0 auto; padding: 20px; border: 1px solid black; border-radius: 15px; box-shadow: 15px 15px 15px silver; }
 div.loginbox h1 { margin: 0 0 15px 0; text-shadow: 0 0 4px gray; color: black; }
 
-div.backend_body { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; min-width: 800px; }
+div.backend_body { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; }
 
 div.backend_body > fieldset, fieldset.basefieldset { margin: 5px; border: 1px solid gray; padding: 10px; border-radius: 5px; background-color: #E8E8E8; }
 div.backend_body > fieldset > legend, fieldset.basefieldset > legend { border: 1px solid gray; margin-left: 5px; width: 50%; padding: 4px; border-radius: 5px; background-color: #E8E8E8; font-weight: bold; }

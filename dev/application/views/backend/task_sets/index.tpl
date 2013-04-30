@@ -41,7 +41,7 @@
                         <th>{translate line='admin_task_sets_table_header_course'}</th>
                         <th>{translate line='admin_task_sets_table_header_task_set_type'}</th>
                         <th>{translate line='admin_task_sets_table_header_tasks'}</th>
-                        <th colspan="2" class="controlls">{translate line='admin_task_sets_table_header_controlls'}</th>
+                        <th colspan="3" class="controlls">{translate line='admin_task_sets_table_header_controlls'}</th>
                     </tr>
                 </thead>
                 <tfoot id="table_pagination_footer_id"></tfoot>
@@ -52,6 +52,7 @@
 {block custom_head}<script type="text/javascript">
     var messages = {
         delete_question: '{translate line="admin_task_set_javascript_message_delete_question"}',
-        after_delete: '{translate line="admin_task_set_javascript_message_after_delete"}'
+        after_delete: '{translate line="admin_task_set_javascript_message_after_delete"}',
+        after_open: '{translate line="admin_task_set_javascript_message_after_open"}'
     }; 
 </script>{/block}
