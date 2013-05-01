@@ -177,6 +177,8 @@ class Tasks extends MY_Controller {
         $task_id = isset($url['task_id']) ? intval($url['task_id']) : 0;
         $task = new Task();
         $task->get_by_id($task_id);
+        $this->inject_files($task_id);
+        $this->parser->add_css_file('admin_tasks.css');
         $this->parser->parse('backend/tasks/preview.tpl', array('task' => $task));
     }
     
@@ -225,6 +227,64 @@ class Tasks extends MY_Controller {
             $this->output->set_output(json_encode(TRUE));
         } else {
             $this->output->set_output(json_encode(FALSE));
+        }
+    }
+    
+    public function add_to_task_set() {
+        $url = $this->uri->ruri_to_assoc(3);
+        $task_id = isset($url['task_id']) ? intval($url['task_id']) : (intval($this->input->post('task_id')));
+        $task = new Task();
+        $task->get_by_id($task_id);
+        $task_set = new Task_set();
+        $task_set_id = intval($this->input->post('task_id'));
+        if ($task_set_id == 0) {
+            $task_set->get_as_open();
+        } else {
+            $task_set->get_by_id($task_set_id);
+        }
+        $this->parser->parse('backend/tasks/add_to_task_set.tpl', array(
+            'task' => $task,
+            'task_set' => $task_set,
+        ));
+    }
+    
+    public function insert_to_task_set() {
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('task_id', 'task_id', 'required');
+        $this->form_validation->set_rules('task_set_id', 'task_set_id', 'required');
+        $this->form_validation->set_rules('points_total', 'lang:admin_tasks_add_to_task_set_form_field_points_total', 'required|number|greater_than[0]');
+        
+        if ($this->form_validation->run()) {
+            $task_id = intval($this->input->post('task_id'));
+            $task_set_id = intval($this->input->post('task_set_id'));
+            $points_total = floatval($this->input->post('points_total'));
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $task = new Task();
+            $task->get_by_id($task_id);
+            $task_set = new Task_set();
+            $task_set->get_by_id($task_set_id);
+            if (!$task->exists()) {
+                $this->messages->add_message('lang:admin_tasks_error_message_task_not_found', Messages::MESSAGE_TYPE_ERROR);
+            } elseif (!$task_set->exists()) {
+                $this->messages->add_message('lang:admin_tasks_add_to_task_set_nothing_opened', Messages::MESSAGE_TYPE_ERROR);
+            } elseif ($task_set->is_related_to($task)) {
+                $this->messages->add_message('lang:admin_tasks_add_to_task_set_already_related', Messages::MESSAGE_TYPE_ERROR);
+            } else {
+                $task_set->save($task);
+                $task_set->set_join_field($task, 'points_total', $points_total);
+                if ($this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message('lang:admin_tasks_add_to_task_set_save_success', Messages::MESSAGE_TYPE_SUCCESS);
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_tasks_add_to_task_set_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                }
+            }
+            redirect(create_internal_url('admin_tasks/add_to_task_set/task_id/' . $task_id));
+        } else {
+            $this->add_to_task_set();
         }
     }
 

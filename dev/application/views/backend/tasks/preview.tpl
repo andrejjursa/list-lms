@@ -4,6 +4,12 @@
     {if $task->exists()}
         <h3>{overlay|escape:'html' table='tasks' table_id=$task->id column='name' default=$task->name}</h3>
         {overlay|task table='tasks' table_id=$task->id column='text' default=$task->text}
-    {else}
+        <div id="preview_tasks_id">
+            <ul>
+            {foreach $files as $file}
+                <li><a href="{internal_url url="admin_tasks/download_file/{$task->id}/{$file.file|encode_for_url}"}" target="_blank">{$file.file|escape:'html'}</a></li>
+            {/foreach}
+            </ul>
+        </div>
     {/if}
 {/block}

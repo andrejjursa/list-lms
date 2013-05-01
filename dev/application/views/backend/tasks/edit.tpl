@@ -33,7 +33,7 @@
             <div id="tabs-files">
                 <div class="field">
                     <label for="">{translate line='admin_tasks_form_label_file_upload'}:</label>
-                    <div class="input"><div id="plupload_queue_id"></div></div>
+                    <div class="input"><div id="plupload_queue_id">{translate line='admin_tasks_error_message_no_plupload_support'}</div></div>
                     <div class="input">
                         <table class="task_files_table">
                             <thead>

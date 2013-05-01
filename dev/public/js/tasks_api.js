@@ -54,4 +54,20 @@ jQuery(document).ready(function($) {
         })
     });
     
+    $(document).on('click', '#table_content_id a.add_to_task_set', function(event) {
+        event.preventDefault();
+        $.fancybox($(this).attr('href'), {
+            type: 'iframe',
+            width: '100%',
+            height: '100%',
+            autoSize: false,
+            autoHeight: false,
+            autoWidth: false,
+            beforeClose: function() {
+                reload_all_tasks();
+                return true;
+            }
+        })
+    });
+    
 });
