@@ -130,13 +130,21 @@ class MY_Controller extends CI_Controller {
     }
     
     /**
-     * This method adds uploadify to template.
+     * This method adds plupload to template and load plupload library.
      */
-    protected function _add_uploadify() {
-        $this->parser->add_js_file('jquery.uploadify.min.js');
-        $this->parser->add_css_file('uploadify.css');
+    protected function _add_plupload() {
+        $this->load->library('plupload');
+        $this->parser->add_js_file('plupload.js');
+        $this->parser->add_js_file('plupload.html5.js');
+        $this->parser->add_js_file('plupload.flash.js');
+        $this->parser->add_js_file('plupload.silverlight.js');
+        $this->parser->add_js_file('jquery.ui.plupload.js');
+        if (strlen($this->lang->line('plupload_i18n_langfile')) > 0) {
+            $this->parser->add_js_file('i18n/' . $this->lang->line('plupload_i18n_langfile'));
+        }
+        $this->parser->add_css_file('jquery.ui.plupload.css');
     }
-    
+
     /**
      * Injects all possible languages to smarty parser.
      */

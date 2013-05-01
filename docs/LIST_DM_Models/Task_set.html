@@ -17,9 +17,11 @@
 	<div class="nav-bar">
 					<span class="disabled">Description</span> |
 													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
-						|											<a href="#sec-methods">Methods</a>
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 						
-					</div>
+											<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+						
+			</div>
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Task_set model.</p>
@@ -39,6 +41,28 @@
 </div>
 
 
+	<a name="sec-const-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constant Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Constants</span> (<a href="#sec-consts">details</a>)
+												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<div class="const-summary">
+								<div class="const-title">
+					<a href="#OPEN_TASK_SET_SESSION_NAME" title="details" class="const-name">OPEN_TASK_SET_SESSION_NAME</a> = 					<span class="var-type"> 'OPEN_TASK_SET_SESSION'</span>
+
+				</div>
+							</div>
+		</div>
+	</div>
 
 	<a name="sec-var-summary"></a>
 	<div class="info-box">
@@ -47,12 +71,18 @@
 			<a href="#sec-description">Description</a> |
 						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
 							| 
-									<a href="#sec-methods">Methods</a>
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 							
-								</div>
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+					</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																																<div class="var-title">
+																																								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$filter_tasks_count_sql" title="details" class="var-name">$filter_tasks_count_sql</a>
+				</div>
+																<div class="var-title">
 					<span class="var-type">mixed</span>
 					<a href="#$has_many" title="details" class="var-name">$has_many</a>
 				</div>
@@ -64,28 +94,94 @@
 		</div>
 	</div>
 
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																												
+												<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#get_as_open" title="details" class="method-name">get_as_open</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#get_open_task_set_id" title="details" class="method-name">get_open_task_set_id</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#set_as_open" title="details" class="method-name">set_as_open</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../LIST_DM_Models/Task_set.html">Task_set</a></span>
+										<a href="#where_has_no_tasks" title="details" class="method-name">where_has_no_tasks</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../LIST_DM_Models/Task_set.html">Task_set</a></span>
+										<a href="#where_has_tasks" title="details" class="method-name">where_has_tasks</a>
+										()
+									</div>
+								</div>
+		</div>
+	</div>		
 
 	<a name="sec-vars"></a>
 	<div class="info-box">
 		<div class="info-box-title">Variables</div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
-										<span class="disabled">Vars</span>
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
 						
 			
+												<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
 										| 
-									<a href="#sec-methods">Methods</a>
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 							
 					</div>
 		<div class="info-box-body">
-			<a name="var$has_many" id="$has_many"><!-- --></A>
+			<a name="var$filter_tasks_count_sql" id="$filter_tasks_count_sql"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$filter_tasks_count_sql</span>
+			 = <span class="var-default"> '(SELECT COUNT(*) AS count FROM (`tasks`) LEFT OUTER JOIN `task_task_set_rel` task_task_set_rel ON `tasks`.`id` = `task_task_set_rel`.`task_id` LEFT OUTER JOIN `task_sets` `task_sets_subquery` ON `task_sets_subquery`.`id` = `task_task_set_rel`.`task_set_id` WHERE `task_sets_subquery`.`id` = `task_sets`.`id`)'</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a12">12</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
+		
+		
+
+</div>
+<a name="var$has_many" id="$has_many"><!-- --></A>
 <div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$has_many</span>
-			 = <span class="var-default">array(<br />        'task' =&gt; array(<br />            'join_table' =&gt; 'task_task_set_rel',<br />        ),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a10">10</a></span>)
+			 = <span class="var-default">array(<br />        'task' =&gt; array(<br />            'join_table' =&gt; 'task_task_set_rel',<br />        ),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a14">14</a></span>)
 		</span>
 	</div>
 
@@ -112,7 +208,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$has_one</span>
-			 = <span class="var-default">array(<br />    	'task_set_type',<br />    	'course',<br />    )</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a16">16</a></span>)
+			 = <span class="var-default">array(<br />    	'task_set_type',<br />    	'course',<br />    )</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a20">20</a></span>)
 		</span>
 	</div>
 
@@ -231,12 +327,133 @@
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
 															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
-																	<span class="disabled">Methods</span>
+																			<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+										<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
 						
 		</div>
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 
+<a name="methodget_as_open" id="get_as_open"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_as_open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a57">57</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			get_as_open
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodget_open_task_set_id" id="get_open_task_set_id"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_open_task_set_id</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a69">69</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			get_open_task_set_id
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodset_as_open" id="set_as_open"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">set_as_open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a43">43</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			set_as_open
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodwhere_has_no_tasks" id="where_has_no_tasks"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">where_has_no_tasks</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a38">38</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Add condition to load only tasks which have no task in relation.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> this object.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../LIST_DM_Models/Task_set.html">Task_set</a></span>
+		<span class="method-name">
+			where_has_no_tasks
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodwhere_has_tasks" id="where_has_tasks"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">where_has_tasks</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a29">29</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Add condition to load only task sets which have one or more related tasks.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> this object.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../LIST_DM_Models/Task_set.html">Task_set</a></span>
+		<span class="method-name">
+			where_has_tasks
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
 							<h4>Inherited Methods</h4>
 				<a name='inherited_methods'><!-- --></a>	
 									<!-- =========== Summary =========== -->
@@ -351,9 +568,41 @@
 		</div>
 	</div>
 
+	<a name="sec-consts"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Constants</a> (<span class="disabled">details</span>)
+						
+			
+												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+														| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="constOPEN_TASK_SET_SESSION_NAME" id="OPEN_TASK_SET_SESSION_NAME"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">OPEN_TASK_SET_SESSION_NAME</span>
+			 = <span class="const-default"> 'OPEN_TASK_SET_SESSION'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a10">10</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+						
+		</div>
+	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Thu, 25 Apr 2013 16:41:23 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Wed, 01 May 2013 15:13:14 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

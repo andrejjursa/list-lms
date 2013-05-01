@@ -96,7 +96,7 @@ class Tasks extends MY_Controller {
         $category = new Category();
         $structure = $category->get_all_structured();
         $this->_add_tinymce();
-        $this->_add_uploadify();
+        $this->_add_plupload();
         $this->parser->add_js_file('tasks/form.js');
         $this->parser->add_js_file('tasks/form_edit.js');
         $this->parser->add_css_file('admin_tasks.css');
@@ -180,27 +180,14 @@ class Tasks extends MY_Controller {
         $this->parser->parse('backend/tasks/preview.tpl', array('task' => $task));
     }
     
-    public function add_files($task_id) {
-        $task = new Task();
-        $task->get_by_id(intval($task_id));
-        if (!$task->exists()) {
-            $this->output->set_output($this->lang->line('admin_tasks_error_message_task_not_found'));
-            return;
-        }
+    public function plupload_file($task_id) {
+        $this->load->library('plupload');
         $path = 'public/uploads/task_files/task_' . intval($task_id) . '/';
         if (!file_exists($path)) {
             @mkdir($path);
             @chmod($path, 0644);
         }
-        $config['upload_path'] = $path;
-        $config['allowed_types'] = '*';
-        $config['overwrite'] = FALSE;
-        $this->load->library('upload', $config);
-        if ($this->upload->do_upload('file_upload')) {
-            $this->output->set_output('ok');
-        } else {
-            $this->output->set_output(sprintf($this->lang->line('admin_tasks_file_upload_message_upload_error'), $this->upload->display_errors('<p>', '</p>')));
-        }
+        $this->plupload->do_upload($path);
     }
     
     public function get_task_files($task_id) {
@@ -211,12 +198,19 @@ class Tasks extends MY_Controller {
     public function download_file($task_id, $file) {
         $filename = decode_from_url($file);
         $filepath = 'public/uploads/task_files/task_' . intval($task_id) . '/' . $filename;
-        $this->output->set_header('Content-Type: application/octet-stream');
-        $this->output->set_header('Content-Transfer-Encoding: Binary');
-        $this->output->set_header('Content-disposition: attachment; filename="' . $filename . '"');
         if (file_exists($filepath)) {
-            $file_content = file_get_contents($filepath);
-            $this->output->set_output($file_content);
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename='.basename($filepath));
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($filepath));
+            ob_clean();
+            flush();
+            readfile($filepath);
+            exit;
         } else {
             $this->output->set_status_header(404, 'Not found');
         }
@@ -260,13 +254,39 @@ class Tasks extends MY_Controller {
             $files_in_dir = scandir($path);
             foreach ($files_in_dir as $file) {
                 if (is_file($path . $file)) {
-                    $files[] = array(
-                        'file' => $file,
-                        'filepath' => $path . $file,
-                    );
+                    $ext = strrpos($path . $file, '.');
+                    if (substr($path . $file, $ext) !== 'upload_part') {
+                        $files[] = array(
+                            'file' => $file,
+                            'filepath' => $path . $file,
+                            'size' => $this->get_file_size($path . $file),
+                        );
+                    }
                 }
             }
         }
         $this->parser->assign('files', $files);
+    }
+    
+    private function get_file_size($filename) {
+        $size_bytes = @filesize($filename);
+        if ($size_bytes === FALSE || $size_bytes == 0) {
+            return '0 B';
+        }
+        $size = $size_bytes;
+        $unit = 'B';
+        if ($size > 1023) {
+            $size /= 1024;
+            $unit = 'KiB';
+        }
+        if ($size > 1023) {
+            $size /= 1024;
+            $unit = 'MiB';
+        }
+        if ($size > 1023) {
+            $size /= 1024;
+            $unit = 'GiB';
+        }
+        return number_format($size, 2, '.', ' ') . ' ' . $unit;
     }
 }

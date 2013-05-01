@@ -35,6 +35,7 @@ $lang['admin_tasks_javascript_text_select_files'] = 'Vybrať súbory';
 $lang['admin_tasks_file_upload_message_upload_error'] = 'Chyba uploadu súboru: %s';
 $lang['admin_tasks_edit_files_delete_file'] = 'Vymazať&nbsp;súbor';
 $lang['admin_tasks_edit_files_table_header_file'] = 'Súbor';
+$lang['admin_tasks_edit_files_table_header_size'] = 'Veľkosť';
 $lang['admin_tasks_edit_files_table_header_controlls'] = 'Ovládanie';
 $lang['admin_tasks_javascript_message_file_delete_question'] = 'Naozaj chcete vymazať tento súbor?';
 $lang['admin_tasks_javascript_message_file_after_delete'] = 'Súbor bol úspešne vymazaný.';

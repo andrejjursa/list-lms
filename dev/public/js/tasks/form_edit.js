@@ -1,23 +1,6 @@
 jQuery(document).ready(function($) { 
     api_make_tabs('tabs');
     var task_id = $('input[name=task_id]').val();
-    $('#file_upload_id').uploadify({
-        'swf' : global_base_url + 'public/swf/uploadify.swf',
-        'uploader' : global_base_url + 'index.php/admin_tasks/add_files/' + task_id,
-        'queueID' : 'uploadify_queue_id',
-        'width' : 120,
-        'height' : 28,
-        'fileObjName' : 'file_upload',
-        'buttonText' : select_files_text,
-        'onQueueComplete' : function() {
-            reload_files();
-        },
-        'onUploadSuccess' : function(file, data) {
-            if (data != 'ok') {
-                show_notification(data, 'error');    
-            }
-        }
-    });
     
     var reload_files = function() {
         var url = global_base_url + 'index.php/admin_tasks/get_task_files/' + task_id;
@@ -36,5 +19,23 @@ jQuery(document).ready(function($) {
                 }
             });
         }
+    });
+    
+    $('#plupload_queue_id').plupload({
+        runtimes: 'html5,flash,silverlight',
+        url: global_base_url + 'index.php/admin_tasks/plupload_file/' + task_id,
+        max_file_size: '1000mb',
+        max_file_count: 20,
+        chunk_size: '1mb',
+        multiple_queues: true,
+        flash_swf_url: global_base_url + 'public/swf/plupload.flash.swf'
+    });
+    
+    $('.plupload_container').attr('title', '');
+    
+    var uploader = $('#plupload_queue_id').plupload('getUploader');
+    
+    uploader.bind('UploadComplete', function(up, files) {
+        reload_files();
     });
 });

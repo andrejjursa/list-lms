@@ -19,7 +19,7 @@ form div.categories_structure ul li input { margin-right: 5px; }
 #dynamic_categories_id div.clauses div.clause span.categories span.category { padding-left: 20px; background-image: url('/public/images_ui/or.png'); background-position: left center; background-repeat: no-repeat; }
 #dynamic_categories_id div.clauses div.clause span.categories span.category.first_category { padding-left: 0px; background-image: none; }
 
-table.task_files_table { width: 100%; }
+table.task_files_table { width: 100%; margin-top: 10px; }
 table.task_files_table th { text-align: left; }
 table.task_files_table th.controlls { width: 1px; text-align: center; }
 table.task_files_table td.controlls { width: 1px;}

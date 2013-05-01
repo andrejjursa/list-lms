@@ -35,6 +35,7 @@ $lang['admin_tasks_javascript_text_select_files'] = 'Select files';
 $lang['admin_tasks_file_upload_message_upload_error'] = 'File upload error: %s';
 $lang['admin_tasks_edit_files_delete_file'] = 'Delete&nbsp;file';
 $lang['admin_tasks_edit_files_table_header_file'] = 'File';
+$lang['admin_tasks_edit_files_table_header_size'] = 'Size';
 $lang['admin_tasks_edit_files_table_header_controlls'] = 'Controlls';
 $lang['admin_tasks_javascript_message_file_delete_question'] = 'Are you sure you want delete this file?';
 $lang['admin_tasks_javascript_message_file_after_delete'] = 'File was deleted successfully.';
