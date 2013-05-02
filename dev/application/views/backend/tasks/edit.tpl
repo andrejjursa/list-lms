@@ -47,6 +47,22 @@
                         </table>
                     </div>
                 </div>
+                <div class="field">
+                    <label for="">{translate line='admin_tasks_form_label_hidden_file_upload'}:</label>
+                    <div class="input"><div id="plupload_queue_hidden_id">{translate line='admin_tasks_error_message_no_plupload_support'}</div></div>
+                    <div class="input">
+                        <table class="task_files_table">
+                            <thead>
+                                <tr>
+                                    <th>{translate line='admin_tasks_edit_files_table_header_file'}</th>
+                                    <th>{translate line='admin_tasks_edit_files_table_header_size'}</th>
+                                    <th class="controlls">{translate line='admin_tasks_edit_files_table_header_controlls'}</th>
+                                </tr>
+                            </thead>
+                            <tbody id="hidden_files_table_content_id"></tbody>
+                        </table>
+                    </div>
+                </div>                
             </div>
         </div>
         <fieldset class="basefieldset">

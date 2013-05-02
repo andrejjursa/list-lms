@@ -17,6 +17,7 @@ $lang['admin_tasks_form_label_name'] = 'Názov úlohy';
 $lang['admin_tasks_form_label_text'] = 'Text úlohy';
 $lang['admin_tasks_form_label_categories'] = 'Kategórie úlohy';
 $lang['admin_tasks_form_label_file_upload'] = 'Upload súborov';
+$lang['admin_tasks_form_label_hidden_file_upload'] = 'Upload skrytých súborov';
 $lang['admin_tasks_form_button_save'] = 'Uložiť';
 $lang['admin_tasks_form_button_edit'] = 'Upraviť';
 $lang['admin_tasks_form_button_preview'] = 'Náhlad';

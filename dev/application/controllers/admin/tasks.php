@@ -9,6 +9,9 @@ class Tasks extends MY_Controller {
     
     const STORED_FILTER_SESSION_NAME = 'admin_tasks_filter_data';
     
+    const FILELIST_PUBLIC = 1;
+    const FILELIST_HIDDEN = 2;
+    
     public function __construct() {
         parent::__construct();
         $this->_init_language_for_teacher();
@@ -196,35 +199,46 @@ class Tasks extends MY_Controller {
         $this->plupload->do_upload($path);
     }
     
+    public function plupload_hidden_file($task_id) {
+        $this->load->library('plupload');
+        $path_base = 'public/uploads/task_files/task_' . intval($task_id) . '/';
+        if (!file_exists($path_base)) {
+            @mkdir($path_base);
+            @chmod($path_base, 0644);
+        }
+        $path = 'public/uploads/task_files/task_' . intval($task_id) . '/hidden/';
+        if (!file_exists($path)) {
+            @mkdir($path);
+            @chmod($path, 0644);
+        }
+        $this->plupload->do_upload($path);
+    }
+    
     public function get_task_files($task_id) {
         $this->inject_files($task_id);
         $this->parser->parse('backend/tasks/edit_files_list.tpl', array('task_id' => intval($task_id)));
     }
-
-    public function download_file($task_id, $file) {
-        $filename = decode_from_url($file);
-        $filepath = 'public/uploads/task_files/task_' . intval($task_id) . '/' . $filename;
-        if (file_exists($filepath)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename='.basename($filepath));
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($filepath));
-            ob_clean();
-            flush();
-            readfile($filepath);
-            exit;
-        } else {
-            $this->output->set_status_header(404, 'Not found');
-        }
+    
+    public function get_hidden_task_files($task_id) {
+        $this->inject_files($task_id, self::FILELIST_HIDDEN);
+        $this->parser->parse('backend/tasks/edit_private_files_list.tpl', array('task_id' => intval($task_id)));
     }
     
     public function delete_file($task_id, $file) {
         $filename = decode_from_url($file);
         $filepath = 'public/uploads/task_files/task_' . intval($task_id) . '/' . $filename;
+        $this->output->set_content_type('application/json');
+        if (file_exists($filepath)) {
+            @unlink($filepath);
+            $this->output->set_output(json_encode(TRUE));
+        } else {
+            $this->output->set_output(json_encode(FALSE));
+        }
+    }
+    
+    public function delete_hidden_file($task_id, $file) {
+        $filename = decode_from_url($file);
+        $filepath = 'public/uploads/task_files/task_' . intval($task_id) . '/hidden/' . $filename;
         $this->output->set_content_type('application/json');
         if (file_exists($filepath)) {
             @unlink($filepath);
@@ -314,8 +328,9 @@ class Tasks extends MY_Controller {
         $this->parser->assign('languages', $languages);
     }
     
-    private function inject_files($task_id) {
+    private function inject_files($task_id, $source = self::FILELIST_PUBLIC) {
         $path = 'public/uploads/task_files/task_' . intval($task_id) . '/';
+        if ($source == self::FILELIST_HIDDEN) { $path .= 'hidden/'; } 
         $files = array();
         if (file_exists($path)) {
             $files_in_dir = scandir($path);
