@@ -161,6 +161,10 @@ class Tasks extends MY_Controller {
             $task->delete();
             $this->lang->delete_overlays('tasks', intval($task_id));
             if ($this->db->trans_status()) {
+                $files_dir = 'public/uploads/task_files/task_' . intval($task_id) . '/';
+                if (file_exists($files_dir)) {
+                    unlink_recursive($files_dir, TRUE);
+                }
                 $this->db->trans_commit();
                 $this->output->set_output(json_encode(TRUE));    
             } else {
@@ -272,8 +276,11 @@ class Tasks extends MY_Controller {
             } elseif ($task_set->is_related_to($task)) {
                 $this->messages->add_message('lang:admin_tasks_add_to_task_set_already_related', Messages::MESSAGE_TYPE_ERROR);
             } else {
+                $related_task = $task_set->task->include_join_fields()->order_by('join_sorting', 'desc')->limit(1)->get();
+                $new_sorting = $related_task->exists() ? intval($related_task->join_sorting) + 1 : 1; 
                 $task_set->save($task);
                 $task_set->set_join_field($task, 'points_total', $points_total);
+                $task_set->set_join_field($task, 'sorting', $new_sorting);
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_tasks_add_to_task_set_save_success', Messages::MESSAGE_TYPE_SUCCESS);

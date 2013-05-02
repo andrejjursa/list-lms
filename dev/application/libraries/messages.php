@@ -34,7 +34,7 @@ class Messages {
      */
     public function add_message($message, $type = self::MESSAGE_TYPE_DEFAULT) {
         $messages = $this->read_messages();
-        array_push($messages, array('message' => $message, 'type' => $type));
+        $messages[] = array('message' => $message, 'type' => $type);
         $this->CI->session->set_flashdata(self::FLASH_MESSAGES_NAME, $messages);
     }
     
@@ -51,8 +51,7 @@ class Messages {
      */
     public function read_messages() {
         $messages = $this->CI->session->flashdata(self::FLASH_MESSAGES_NAME);
-        $messages = is_array($messages) ? $messages : array();
-        return $messages;
+        return is_array($messages) ? $messages : array();
     }
     
     /**

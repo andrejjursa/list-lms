@@ -108,3 +108,26 @@ function smarty_inject_days() {
     );
     $CI->parser->assign('list_days', $days);
 }
+
+/** 
+ * Recursively delete a directory.
+ * @param string $dir directory name.
+ * @param boolean $delete_root_too delete specified top-level directory as well. 
+ */ 
+function unlink_recursive($dir, $delete_root_too) { 
+    if(!$dh = @opendir($dir)) { return; } 
+    
+    while (FALSE !== ($obj = readdir($dh))) { 
+        if($obj == '.' || $obj == '..') { continue; } 
+
+        if (!@unlink($dir . '/' . $obj)) { 
+            unlink_recursive($dir.'/'.$obj, TRUE); 
+        } 
+    } 
+
+    closedir($dh); 
+    
+    if ($delete_root_too) { @rmdir($dir); } 
+    
+    return; 
+} 

@@ -115,6 +115,11 @@ class Migration_tasks_task_sets_table1 extends CI_Migration {
                 'points_total' => array(
                     'type' => 'DOUBLE',
                 ),
+                'sorting' => array(
+                    'type' => 'INT',
+                    'constraint' => '11',
+                    'unsigned' => TRUE,
+                ),
             )
         );
         
