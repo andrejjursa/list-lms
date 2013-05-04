@@ -26,5 +26,9 @@
             </div>
         </form>
     </fieldset>
+    <fieldset>
+        <legend>{overlay table='tasks' table_id=$task->id column='name' default=$task->name}</legend>
+        {overlay|task table='tasks' table_id=$task->id column='text' default=$task->text}
+    </fieldset>
     {/if}
 {/block}
