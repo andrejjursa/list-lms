@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
             if ($('#new_task_set_type_form_id .flash_message.message_success').length > 0) {
                 reload_all_task_set_types();
             }
-            $.getScript(global_base_url + 'public/js/task_set_types/form.js');
+            $.getScript(global_base_url + 'public/js/admin_task_set_types/form.js');
         }
         api_ajax_load($(this).attr('action'), '#new_task_set_type_form_id', 'post', data, success);
     });

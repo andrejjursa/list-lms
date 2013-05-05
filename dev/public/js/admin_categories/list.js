@@ -15,7 +15,7 @@ jQuery(document).ready(function($) {
             if ($('#new_category_form_id .flash_message.message_success').length > 0) {
                 get_structured_tree();
             }
-            $.getScript(global_base_url + 'public/js/categories/form.js');
+            $.getScript(global_base_url + 'public/js/admin_categories/form.js');
         }
         api_ajax_load(url, '#new_category_form_id', 'post', data, success);
     });

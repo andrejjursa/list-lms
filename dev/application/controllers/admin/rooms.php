@@ -18,8 +18,8 @@ class Rooms extends MY_Controller {
         $group = new Group();
         $group->get_by_id($group_id);
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('rooms_api.js');
-        $this->parser->add_js_file('rooms/form.js');
+        $this->parser->add_js_file('admin_rooms/list.js');
+        $this->parser->add_js_file('admin_rooms/form.js');
         $this->parser->add_css_file('admin_rooms.css');
         smarty_inject_days();
         $this->parser->parse('backend/rooms/index.tpl', array('group' => $group, 'group_id' => $group_id));
@@ -144,7 +144,7 @@ class Rooms extends MY_Controller {
     
     public function edit($group_id) {
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('rooms/form.js');
+        $this->parser->add_js_file('admin_rooms/form.js');
         
         $url = $this->uri->ruri_to_assoc(4);
         $room_id = isset($url['room_id']) ? intval($url['room_id']) : 0;

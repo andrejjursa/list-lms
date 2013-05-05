@@ -19,8 +19,8 @@ class Categories extends MY_Controller {
     public function index() {
         $this->_select_teacher_menu_pagetag('categories');
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('categories_api.js');
-        $this->parser->add_js_file('categories/form.js');
+        $this->parser->add_js_file('admin_categories/list.js');
+        $this->parser->add_js_file('admin_categories/form.js');
         $this->parser->add_css_file('admin_categories.css');
         $categories = new Category();
         $structure = $categories->get_all_structured();
@@ -83,7 +83,7 @@ class Categories extends MY_Controller {
     public function edit() {
         $this->_select_teacher_menu_pagetag('categories');
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('categories/form.js');
+        $this->parser->add_js_file('admin_categories/form.js');
         $uri = $this->uri->ruri_to_assoc(3);
         $category_id = isset($uri['category_id']) ? intval($uri['category_id']) : 0;
         $category = new Category();

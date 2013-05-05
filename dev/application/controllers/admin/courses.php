@@ -21,8 +21,8 @@ class Courses extends MY_Controller {
         
         $this->inject_periods();
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('courses_api.js');
-        $this->parser->add_js_file('courses/form.js');
+        $this->parser->add_js_file('admin_courses/list.js');
+        $this->parser->add_js_file('admin_courses/form.js');
         $this->parser->add_css_file('admin_courses.css');
         $this->_add_tinymce();
         $this->parser->parse('backend/courses/index.tpl');
@@ -96,8 +96,8 @@ class Courses extends MY_Controller {
         $this->_select_teacher_menu_pagetag('courses');
         
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('courses_api.js');
-        $this->parser->add_js_file('courses/form.js');
+        $this->parser->add_js_file('admin_courses/list.js');
+        $this->parser->add_js_file('admin_courses/form.js');
         
         $url = $this->uri->ruri_to_assoc(3);
         $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
@@ -153,7 +153,7 @@ class Courses extends MY_Controller {
         $course = new Course();
         $course->get_by_id($course_id);
         $this->inject_unused_task_set_types($course_id);
-        $this->parser->add_js_file('courses_api.js');
+        $this->parser->add_js_file('admin_courses/list.js');
         $this->parser->add_css_file('admin_courses.css');
         $this->parser->parse('backend/courses/task_set_types.tpl', array('course' => $course));    
     }

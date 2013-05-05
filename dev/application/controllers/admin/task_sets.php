@@ -21,8 +21,8 @@ class Task_sets extends MY_Controller {
     public function index() {
         $this->_select_teacher_menu_pagetag('task_sets');
         $this->parser->add_js_file('jquery.activeform.js');
-        $this->parser->add_js_file('task_sets_api.js');
-        $this->parser->add_js_file('task_sets/form.js');
+        $this->parser->add_js_file('admin_task_sets/list.js');
+        $this->parser->add_js_file('admin_task_sets/form.js');
         $this->parser->add_css_file('admin_task_sets.css');
         $this->inject_courses();
         $this->inject_stored_filter();
@@ -113,7 +113,7 @@ class Task_sets extends MY_Controller {
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         $this->parser->add_js_file('jquery.activeform.js');
-        $this->parser->add_js_file('task_sets/form.js');
+        $this->parser->add_js_file('admin_task_sets/form.js');
         $this->inject_courses();
         $this->inject_languages();
         $this->parser->parse('backend/task_sets/edit.tpl', array('task_set' => $task_set));

@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
             if ($('#groups_form_id .flash_message.message_success').length > 0) {
                 reload_all_groups();
             }
-            $.getScript(global_base_url + 'public/js/groups/form.js');
+            $.getScript(global_base_url + 'public/js/admin_groups/form.js');
         };
         api_ajax_load(url, target, 'post', data, success);
     });

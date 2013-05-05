@@ -15,7 +15,7 @@ jQuery(document).ready(function($) {
             if ($('#new_room_form_id .flash_message.message_success').length > 0) {
                 reload_all_rooms();
             }
-            $.getScript(global_base_url + 'public/js/rooms/form.js');
+            $.getScript(global_base_url + 'public/js/admin_rooms/form.js');
         };
         api_ajax_load(url, '#new_room_form_id', 'post', data, success);
     });

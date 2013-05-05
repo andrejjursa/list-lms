@@ -24,8 +24,8 @@ class Groups extends MY_Controller {
         $this->inject_stored_filter();
         $this->_select_teacher_menu_pagetag('groups');
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('groups_api.js');
-        $this->parser->add_js_file('groups/form.js');
+        $this->parser->add_js_file('admin_groups/list.js');
+        $this->parser->add_js_file('admin_groups/form.js');
         $this->parser->add_css_file('admin_groups.css');
         $this->parser->parse('backend/groups/index.tpl');
     }
@@ -89,7 +89,7 @@ class Groups extends MY_Controller {
         $this->inject_courses();
         $this->_select_teacher_menu_pagetag('groups');
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('groups/form.js');
+        $this->parser->add_js_file('admin_groups/form.js');
         $this->parser->parse('backend/groups/edit.tpl', array('group' => $group));
     }
     

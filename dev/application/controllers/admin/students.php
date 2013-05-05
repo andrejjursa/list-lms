@@ -20,7 +20,7 @@ class Students extends MY_Controller {
     
     public function index() {
         $this->_select_teacher_menu_pagetag('students_manager');
-        $this->parser->add_js_file('students_api.js');
+        $this->parser->add_js_file('admin_students/list.js');
         $this->parser->add_css_file('admin_students.css');
         $this->inject_stored_filter();
         $this->parser->parse('backend/students/index.tpl');

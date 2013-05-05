@@ -23,7 +23,7 @@ class Teachers extends MY_Controller {
                 redirect(create_internal_url($redirects['teacher']));
             }
         } else {
-            $this->parser->add_js_file('teachers/login.js');
+            $this->parser->add_js_file('admin_teachers/login.js');
             $this->parser->parse('backend/teachers/login.tpl', array('uri_params' => $uri_params));
         }
     }
@@ -189,7 +189,7 @@ class Teachers extends MY_Controller {
         $this->_initialize_open_task_set();
         $this->usermanager->teacher_login_protected_redirect();
         $this->_select_teacher_menu_pagetag('teachers_list');
-        $this->parser->add_js_file('teachers_api.js');
+        $this->parser->add_js_file('admin_teachers/list.js');
         $this->parser->add_css_file('admin_teachers.css');
         $this->parser->parse('backend/teachers/list_index.tpl');
     }

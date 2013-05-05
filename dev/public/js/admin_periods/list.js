@@ -11,7 +11,7 @@ jQuery(document).ready(function($) {
             if ($('#new_period_form_id .flash_message.message_success').length > 0) {
                 reload_all_periods();
             }
-            $.getScript(global_base_url + 'public/js/periods/form.js');
+            $.getScript(global_base_url + 'public/js/admin_periods/form.js');
         };
         api_ajax_load($(this).attr('action'), '#new_period_form_id', 'post', data, success);
     });

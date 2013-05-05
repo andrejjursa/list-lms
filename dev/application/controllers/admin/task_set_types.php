@@ -19,8 +19,8 @@ class Task_set_types extends MY_Controller {
     public function index() {
         $this->_select_teacher_menu_pagetag('task_set_types');
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('task_set_types_api.js');
-        $this->parser->add_js_file('task_set_types/form.js');
+        $this->parser->add_js_file('admin_task_set_types/list.js');
+        $this->parser->add_js_file('admin_task_set_types/form.js');
         $this->parser->add_css_file('admin_task_set_types.css');
         $this->parser->parse('backend/task_set_types/index.tpl');
     }
@@ -69,7 +69,7 @@ class Task_set_types extends MY_Controller {
         $url = $this->uri->ruri_to_assoc(3);
         $task_set_type_id = isset($url['task_set_type_id']) ? intval($url['task_set_type_id']) : 0;
         $this->parser->add_js_file('translation_selector.js');
-        $this->parser->add_js_file('task_set_types/form.js');
+        $this->parser->add_js_file('admin_task_set_types/form.js');
         $task_set_type = new Task_set_type();
         $task_set_type->get_by_id($task_set_type_id);
         $this->parser->parse('backend/task_set_types/edit.tpl', array('task_set_type' => $task_set_type));

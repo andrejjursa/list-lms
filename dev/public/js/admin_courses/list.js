@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
                 if ($('#new_course_form_id .flash_message.message_success').length > 0) {
                     reload_table_content();
                 }
-                $.getScript(global_base_url + 'public/js/courses/form.js');
+                $.getScript(global_base_url + 'public/js/admin_courses/form.js');
             };
             api_ajax_load(url, '#new_course_form_id', 'post', data, success);
         });
