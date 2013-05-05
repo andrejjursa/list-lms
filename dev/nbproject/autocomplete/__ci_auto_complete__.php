@@ -7,20 +7,21 @@
  * @property CI_Calendar $calendar
  * @property CI_Cart $cart
  * @property CI_Config $config
- * @property CI_Controller $controller
+ * @property MY_Controller $controller
  * @property CI_Email $email
  * @property CI_Encrypt $encrypt
  * @property CI_Exceptions $exceptions
- * @property CI_Form_validation $form_validation
+ * @property MY_Form_validation $form_validation
  * @property CI_Ftp $ftp
  * @property CI_Hooks $hooks
  * @property CI_Image_lib $image_lib
  * @property CI_Input $input
  * @property CI_Language $language
+ * @property MY_Lang $lang
  * @property CI_Loader $load
  * @property CI_Log $log
  * @property CI_Model $model
- * @property CI_Output $output
+ * @property MY_Output $output
  * @property CI_Pagination $pagination
  * @property MY_Parser $parser
  * @property CI_Profiler $profiler
@@ -38,7 +39,10 @@
  * @property CI_Xmlrpc $xmlrpc
  * @property CI_Xmlrpcs $xmlrpcs
  * @property CI_Zip $zip
+ * @property Configurator $configurator
  * @property Messages $messages
+ * @property Pluplopad $plupload
+ * @property Usermanager $usermanager
  * 
  * @property Index $index
  */
