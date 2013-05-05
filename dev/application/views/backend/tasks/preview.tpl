@@ -7,7 +7,7 @@
         <div id="preview_tasks_id">
             <ul>
             {foreach $files as $file}
-                <li><a href="{internal_url url="admin_tasks/download_file/{$task->id}/{$file.file|encode_for_url}"}" target="_blank">{$file.file|escape:'html'}</a></li>
+                <li><a href="{internal_url url="tasks/download_file/{$task->id}/{$file.file|encode_for_url}"}" target="_blank">{$file.file|escape:'html'}</a></li>
             {/foreach}
             </ul>
         </div>

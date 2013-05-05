@@ -191,7 +191,7 @@ class Tasks extends MY_Controller {
     
     public function plupload_file($task_id) {
         $this->load->library('plupload');
-        $path = 'public/uploads/task_files/task_' . intval($task_id) . '/';
+        $path = 'private/uploads/task_files/task_' . intval($task_id) . '/';
         if (!file_exists($path)) {
             @mkdir($path);
             @chmod($path, 0644);
@@ -201,7 +201,7 @@ class Tasks extends MY_Controller {
     
     public function plupload_hidden_file($task_id) {
         $this->load->library('plupload');
-        $path_base = 'public/uploads/task_files/task_' . intval($task_id) . '/';
+        $path_base = 'private/uploads/task_files/task_' . intval($task_id) . '/';
         if (!file_exists($path_base)) {
             @mkdir($path_base);
             @chmod($path_base, 0644);
@@ -226,7 +226,7 @@ class Tasks extends MY_Controller {
     
     public function delete_file($task_id, $file) {
         $filename = decode_from_url($file);
-        $filepath = 'public/uploads/task_files/task_' . intval($task_id) . '/' . $filename;
+        $filepath = 'private/uploads/task_files/task_' . intval($task_id) . '/' . $filename;
         $this->output->set_content_type('application/json');
         if (file_exists($filepath)) {
             @unlink($filepath);
@@ -238,7 +238,7 @@ class Tasks extends MY_Controller {
     
     public function delete_hidden_file($task_id, $file) {
         $filename = decode_from_url($file);
-        $filepath = 'public/uploads/task_files/task_' . intval($task_id) . '/hidden/' . $filename;
+        $filepath = 'private/uploads/task_files/task_' . intval($task_id) . '/hidden/' . $filename;
         $this->output->set_content_type('application/json');
         if (file_exists($filepath)) {
             @unlink($filepath);
@@ -329,7 +329,7 @@ class Tasks extends MY_Controller {
     }
     
     private function inject_files($task_id, $source = self::FILELIST_PUBLIC) {
-        $path = 'public/uploads/task_files/task_' . intval($task_id) . '/';
+        $path = 'private/uploads/task_files/task_' . intval($task_id) . '/';
         if ($source == self::FILELIST_HIDDEN) { $path .= 'hidden/'; } 
         $files = array();
         if (file_exists($path)) {

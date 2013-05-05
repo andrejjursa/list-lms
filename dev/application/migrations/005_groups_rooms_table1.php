@@ -78,6 +78,11 @@ class Migration_groups_rooms_table1 extends CI_Migration {
                     'constraint' => 2,
                     'unsigned' => TRUE,
                 ),
+                'capacity' => array(
+                    'type' => 'INT',
+                    'constraint' => 4,
+                    'unsigned' => TRUE,
+                ),
             )
         );
         

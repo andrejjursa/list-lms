@@ -52,17 +52,44 @@ class Migration_tasks_task_sets_table1 extends CI_Migration {
                     'constraint' => 255,
                 ),
             	'course_id' => array(
-            		'type' => 'INT',
-            		'constraint' => '11',
-            		'null' => TRUE,
-            		'unsigned' => TRUE,
+                    'type' => 'INT',
+                    'constraint' => '11',
+                    'null' => TRUE,
+                    'unsigned' => TRUE,
             	),
             	'task_set_type_id' => array(
-            		'type' => 'INT',
-            		'constraint' => '11',
-            		'null' => TRUE,
-            		'unsigned' => TRUE,
+                    'type' => 'INT',
+                    'constraint' => '11',
+                    'null' => TRUE,
+                    'unsigned' => TRUE,
             	),
+                'published' => array(
+                    'type' => 'INT',
+                    'constraint' => 1,
+                    'unsigned' => TRUE,
+                ),
+                'publish_start_time' => array(
+                    'type' => 'timestamp',
+                    'null' => TRUE,
+                    'default' => NULL,
+                ),
+                'upload_end_time' => array(
+                    'type' => 'timestamp',
+                    'null' => TRUE,
+                    'default' => NULL,
+                ),
+                'group_id' => array(
+                    'type' => 'INT',
+                    'constraint' => '11',
+                    'unsigned' => TRUE,
+                    'null' => TRUE,
+                ),
+                'room_id' => array(
+                    'type' => 'INT',
+                    'constraint' => '11',
+                    'unsigned' => TRUE,
+                    'null' => TRUE,
+                ),
             )
         );
         

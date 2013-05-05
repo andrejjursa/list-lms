@@ -15,7 +15,7 @@ class Tasks extends MY_Controller {
     
     public function download_file($task_id, $file) {
         $filename = decode_from_url($file);
-        $filepath = 'public/uploads/task_files/task_' . intval($task_id) . '/' . $filename;
+        $filepath = 'private/uploads/task_files/task_' . intval($task_id) . '/' . $filename;
         if (file_exists($filepath)) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
@@ -36,7 +36,7 @@ class Tasks extends MY_Controller {
     
     public function download_hidden_file($task_id, $file) {
         $filename = decode_from_url($file);
-        $filepath = 'public/uploads/task_files/task_' . intval($task_id) . '/hidden/' . $filename;
+        $filepath = 'private/uploads/task_files/task_' . intval($task_id) . '/hidden/' . $filename;
         if (file_exists($filepath)) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
