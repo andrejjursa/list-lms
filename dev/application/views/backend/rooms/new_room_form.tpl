@@ -16,9 +16,13 @@
 </div>
 <div class="field">
     <label for="room_time_day_id">{translate line='admin_rooms_form_label_time_day'}:</label>
-    <!--<p class="input"><input type="text" name="room[time_end]" value="{$smarty.post.room.time_end|escape:'html'}" id="room_time_end_id" /></p>-->
     <select name="room[time_day]" size="1" id="room_time_day_id"><option value=""></option>{list_html_options options=$list_days selected=$smarty.post.room.time_day}</select>
     {form_error field='room[time_day]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+</div>
+<div class="field">
+    <label for="room_capacity_id">{translate line='admin_rooms_form_label_capacity'}:</label>
+    <p class="input"><input type="text" name="room[capacity]" value="{$smarty.post.room.capacity|escape:'html'}" id="room_capacity_id" /></p>
+    {form_error field='room[capacity]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
 </div>
 <div class="buttons">
     <input type="submit" name="submit_button" value="{translate line='admin_rooms_form_button_save'}" class="button" />

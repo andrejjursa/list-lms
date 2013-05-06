@@ -9,6 +9,11 @@ $cache = array (
     3 => 'name',
     4 => 'course_id',
     5 => 'task_set_type_id',
+    6 => 'published',
+    7 => 'publish_start_time',
+    8 => 'upload_end_time',
+    9 => 'group_id',
+    10 => 'room_id',
   ),
   'validation' => 
   array (
@@ -51,6 +56,41 @@ $cache = array (
     'task_set_type_id' => 
     array (
       'field' => 'task_set_type_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'published' => 
+    array (
+      'field' => 'published',
+      'rules' => 
+      array (
+      ),
+    ),
+    'publish_start_time' => 
+    array (
+      'field' => 'publish_start_time',
+      'rules' => 
+      array (
+      ),
+    ),
+    'upload_end_time' => 
+    array (
+      'field' => 'upload_end_time',
+      'rules' => 
+      array (
+      ),
+    ),
+    'group_id' => 
+    array (
+      'field' => 'group_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'room_id' => 
+    array (
+      'field' => 'room_id',
       'rules' => 
       array (
       ),

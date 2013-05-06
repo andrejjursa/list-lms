@@ -14,6 +14,7 @@ $lang['admin_groups_table_content_no_rooms_message'] = 'Táto skupina nemá žia
 $lang['admin_groups_table_header_group_name'] = 'Názov skupiny';
 $lang['admin_groups_table_header_group_course'] = 'Kurz';
 $lang['admin_groups_table_header_group_rooms'] = 'Miestnosti';
+$lang['admin_groups_table_header_group_capacity'] = 'Kapacita skupiny';
 $lang['admin_groups_table_header_controlls'] = 'Ovládanie';
 $lang['admin_groups_table_controlls_rooms'] = 'Miestnosti';
 $lang['admin_groups_table_controlls_edit'] = 'Upraviť';

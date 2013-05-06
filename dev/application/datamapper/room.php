@@ -11,6 +11,7 @@ $cache = array (
     5 => 'time_begin',
     6 => 'time_end',
     7 => 'time_day',
+    8 => 'capacity',
   ),
   'validation' => 
   array (
@@ -67,6 +68,13 @@ $cache = array (
     'time_day' => 
     array (
       'field' => 'time_day',
+      'rules' => 
+      array (
+      ),
+    ),
+    'capacity' => 
+    array (
+      'field' => 'capacity',
       'rules' => 
       array (
       ),

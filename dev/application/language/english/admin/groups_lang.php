@@ -14,6 +14,7 @@ $lang['admin_groups_table_content_no_rooms_message'] = 'There are no rooms for t
 $lang['admin_groups_table_header_group_name'] = 'Group name';
 $lang['admin_groups_table_header_group_course'] = 'Course';
 $lang['admin_groups_table_header_group_rooms'] = 'Rooms';
+$lang['admin_groups_table_header_group_capacity'] = 'Group capacity';
 $lang['admin_groups_table_header_controlls'] = 'Controlls';
 $lang['admin_groups_table_controlls_rooms'] = 'Rooms';
 $lang['admin_groups_table_controlls_edit'] = 'Edit';

@@ -41,6 +41,7 @@ class Rooms extends MY_Controller {
         $this->form_validation->set_rules('room[time_begin]', 'lang:admin_rooms_form_field_time_begin', 'required|callback__is_time');
         $this->form_validation->set_rules('room[time_end]', 'lang:admin_rooms_form_field_time_end', 'required|callback__is_time|callback__is_later_time');
         $this->form_validation->set_rules('room[time_day]', 'lang:admin_rooms_form_field_time_day', 'required|callback__is_day');
+        $this->form_validation->set_rules('room[capacity]', 'lang:admin_rooms_form_field_capacity', 'required|integer|greater_than[0]');
         $this->form_validation->set_rules('room[group_id]', 'group_id', 'required');
         $this->form_validation->set_message('_is_time', $this->lang->line('admin_rooms_form_error_message_is_time'));
         $this->form_validation->set_message('_is_day', $this->lang->line('admin_rooms_form_error_message_is_day'));
@@ -61,6 +62,7 @@ class Rooms extends MY_Controller {
                 $room->time_day = intval($room_data['time_day']);
                 $room->time_begin = $this->time_to_int($room_data['time_begin']);
                 $room->time_end = $this->time_to_int($room_data['time_end']);
+                $room->capacity = intval($room_data['capacity']);
                 if ($room->save() && $group->save($room) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_rooms_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
@@ -161,6 +163,7 @@ class Rooms extends MY_Controller {
         $this->form_validation->set_rules('room[time_begin]', 'lang:admin_rooms_form_field_time_begin', 'required|callback__is_time');
         $this->form_validation->set_rules('room[time_end]', 'lang:admin_rooms_form_field_time_end', 'required|callback__is_time|callback__is_later_time');
         $this->form_validation->set_rules('room[time_day]', 'lang:admin_rooms_form_field_time_day', 'required|callback__is_day');
+        $this->form_validation->set_rules('room[capacity]', 'lang:admin_rooms_form_field_capacity', 'required|integer|greater_than[0]');
         $this->form_validation->set_rules('room_id', 'room_id', 'required');
         $this->form_validation->set_message('_is_time', $this->lang->line('admin_rooms_form_error_message_is_time'));
         $this->form_validation->set_message('_is_day', $this->lang->line('admin_rooms_form_error_message_is_day'));
@@ -175,6 +178,7 @@ class Rooms extends MY_Controller {
                 $room->from_array($room_data, array('name', 'time_day'));
                 $room->time_begin = $this->time_to_int($room_data['time_begin']);
                 $room->time_end = $this->time_to_int($room_data['time_end']);
+                $room->capacity = intval($room_data['capacity']);
                 
                 $this->_transaction_isolation();
                 $this->db->trans_begin();

@@ -39,6 +39,9 @@ class Groups extends MY_Controller {
     public function get_table_content() {
         smarty_inject_days();
         $groups = new Group();
+        $rooms = $groups->room;
+        $rooms->select_min('capacity');
+        $rooms->where('group_id', '${parent}.id', FALSE);
         $groups->order_by_related('course/period', 'sorting', 'asc');
         $groups->order_by_related('course', 'name', 'asc');
         $groups->order_by('name', 'asc');
@@ -49,6 +52,7 @@ class Groups extends MY_Controller {
         }
         $groups->include_related('course', 'name', TRUE);
         $groups->include_related('course/period', 'name', TRUE);
+        $groups->select_subquery($rooms, 'group_capacity');
         $groups->get_iterated();
         $this->parser->parse('backend/groups/table_content.tpl', array('groups' => $groups));
     }

@@ -30,6 +30,7 @@
                     <th>{translate line='admin_groups_table_header_group_name'}</th>
                     <th>{translate line='admin_groups_table_header_group_course'}</th>
                     <th>{translate line='admin_groups_table_header_group_rooms'}</th>
+                    <th>{translate line='admin_groups_table_header_group_capacity'}</th>
                     <th colspan="3" class="controlls">{translate line='admin_groups_table_header_controlls'}</th>
                 </tr>
             </thead>
