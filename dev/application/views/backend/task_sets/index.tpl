@@ -39,8 +39,10 @@
                     <tr>
                         <th>{translate line='admin_task_sets_table_header_name'}</th>
                         <th>{translate line='admin_task_sets_table_header_course'}</th>
+                        <th>{translate line='admin_task_sets_table_header_group'}</th>
                         <th>{translate line='admin_task_sets_table_header_task_set_type'}</th>
                         <th>{translate line='admin_task_sets_table_header_tasks'}</th>
+                        <th>{translate line='admin_task_sets_table_header_published'}</th>
                         <th colspan="3" class="controlls">{translate line='admin_task_sets_table_header_controlls'}</th>
                     </tr>
                 </thead>

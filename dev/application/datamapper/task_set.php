@@ -109,6 +109,20 @@ $cache = array (
       array (
       ),
     ),
+    'room' => 
+    array (
+      'field' => 'room',
+      'rules' => 
+      array (
+      ),
+    ),
+    'group' => 
+    array (
+      'field' => 'group',
+      'rules' => 
+      array (
+      ),
+    ),
     'task' => 
     array (
       'field' => 'task',
@@ -136,6 +150,28 @@ $cache = array (
       'other_field' => 'task_set',
       'join_self_as' => 'task_set',
       'join_other_as' => 'course',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'room' => 
+    array (
+      'class' => 'room',
+      'other_field' => 'task_set',
+      'join_self_as' => 'task_set',
+      'join_other_as' => 'room',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'group' => 
+    array (
+      'class' => 'group',
+      'other_field' => 'task_set',
+      'join_self_as' => 'task_set',
+      'join_other_as' => 'group',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

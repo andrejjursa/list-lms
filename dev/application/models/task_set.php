@@ -20,6 +20,8 @@ class Task_set extends DataMapper {
     public $has_one = array(
     	'task_set_type',
     	'course',
+        'room',
+        'group',
     );
     
     /**

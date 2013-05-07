@@ -8,6 +8,7 @@
 class Task_sets extends MY_Controller {
 	
     const STORED_FILTER_SESSION_NAME = 'admin_task_sets_filter_data';
+    const REGEXP_PATTERN_DATETYME = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
     
     public function __construct() {
         parent::__construct();
@@ -54,6 +55,48 @@ class Task_sets extends MY_Controller {
         $this->parser->parse('backend/task_sets/task_set_types_options.tpl', array('task_set_types' => $task_set_types, 'task_set' => $task_set, 'selected_id' => $selected_id));
     }
     
+    public function get_task_set_groups($course_id, $selected_id = NULL, $task_set_id = NULL) {
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $query = $course->group->order_by('name', 'asc')->get_raw();
+        
+        $groups = array('' => '');
+        
+        if ($query->num_rows() > 0) { foreach ($query->result() as $row) {
+            $groups[$row->id] = $row->name;
+        }}
+        
+        $query->free_result();
+        
+        $task_set = new Task_set();
+        $task_set->where_related_course('id', $course_id)->get_by_id($task_set_id);
+        
+        $this->parser->parse('backend/task_sets/task_set_groups_options.tpl', array('groups' => $groups, 'task_set' => $task_set, 'selected_id' => $selected_id));
+    }
+    
+    public function get_task_set_group_rooms($course_id, $group_id, $selected_id = NULL, $task_set_id = NULL) {
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->group->get_by_id($group_id);
+        $query = $course->group->room->order_by('name', 'asc')->get_raw();
+        
+        $rooms = array('' => '');
+        
+        $days = get_days();
+        include (APPPATH . 'third_party/Smarty/plugins/modifier.is_time.php');
+        
+        if ($query->num_rows() > 0) { foreach ($query->result() as $row) {
+            $rooms[$row->id] = $this->lang->text($row->name) . ' (' . $days[$row->time_day] . ': ' . smarty_modifier_is_time($row->time_begin) . ' - ' . smarty_modifier_is_time($row->time_end) . ')';
+        }}
+        
+        $query->free_result();
+        
+        $task_set = new Task_set();
+        $task_set->where_related_course('id', $course_id)->get_by_id($task_set_id);
+        
+        $this->parser->parse('backend/task_sets/task_set_group_rooms_options.tpl', array('rooms' => $rooms, 'task_set' => $task_set, 'selected_id' => $selected_id));
+    }
+    
     public function get_all_task_sets() {
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
@@ -61,6 +104,7 @@ class Task_sets extends MY_Controller {
         $task_sets->order_by('name', 'asc');
         $task_sets->include_related('course', 'name', TRUE);
         $task_sets->include_related('course/period', 'name', TRUE);
+        $task_sets->include_related('group', 'name', TRUE);
         $task_sets->include_related('task_set_type', 'name', TRUE);
         $task_sets->include_related_count('task');
         if (isset($filter['course']) && intval($filter['course']) > 0) {
@@ -91,7 +135,11 @@ class Task_sets extends MY_Controller {
         if ($this->form_validation->run()) {
             $task_set = new Task_set();
             $task_set_data = $this->input->post('task_set');
-            $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id'));
+            $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published'));
+            $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
+            $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
+            $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
+            $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
             if ($task_set->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
@@ -132,7 +180,11 @@ class Task_sets extends MY_Controller {
             $task_set->get_by_id($task_set_id);
             if ($task_set->exists()) {
                 $task_set_data = $this->input->post('task_set');
-                $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id'));
+                $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published'));
+                $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
+                $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
+                $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
+                $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
                 
                 $overlay = $this->input->post('overlay');
                 
