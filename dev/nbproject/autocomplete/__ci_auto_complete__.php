@@ -7,23 +7,23 @@
  * @property CI_Calendar $calendar
  * @property CI_Cart $cart
  * @property CI_Config $config
- * @property MY_Controller $controller
+ * @property LIST_Controller $controller
  * @property CI_Email $email
  * @property CI_Encrypt $encrypt
  * @property CI_Exceptions $exceptions
- * @property MY_Form_validation $form_validation
+ * @property LIST_Form_validation $form_validation
  * @property CI_Ftp $ftp
  * @property CI_Hooks $hooks
  * @property CI_Image_lib $image_lib
  * @property CI_Input $input
  * @property CI_Language $language
- * @property MY_Lang $lang
+ * @property LIST_Lang $lang
  * @property CI_Loader $load
  * @property CI_Log $log
  * @property CI_Model $model
- * @property MY_Output $output
+ * @property LIST_Output $output
  * @property CI_Pagination $pagination
- * @property MY_Parser $parser
+ * @property LIST_Parser $parser
  * @property CI_Profiler $profiler
  * @property CI_Router $router
  * @property CI_Session $session
