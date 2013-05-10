@@ -113,6 +113,7 @@ function get_days() {
  * This function will construct days array and assign them to template parser.
  */
 function smarty_inject_days() {
+    $CI =& get_instance();
     $CI->parser->assign('list_days', get_days());
 }
 
