@@ -152,4 +152,19 @@ class LIST_Controller extends CI_Controller {
         $languages = $this->lang->get_list_of_languages();
         $this->parser->assign('list_quicklang_menu', $languages);
     }
+    
+    /**
+     * TODO
+     */
+    protected function _initialize_student_menu() {
+        
+    }
+    
+    /**
+     * TODO
+     * @param string $tag
+     */
+    protected function _select_student_menu_pagetag($tag = '') {
+        
+    }
 }

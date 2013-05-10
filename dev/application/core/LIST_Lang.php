@@ -218,7 +218,15 @@ class LIST_Lang extends CI_Lang {
      * @param array<string> $fields array of fields (column names) in table for which overlays may be presented in overlay array.
      */
     public function init_overlays($table, $rows, $fields) {
-        $this->load_overlays($table);
+        if (count($rows) > 0) {
+            $ids = array();
+            foreach ($rows as $row) {
+                $ids[] = intval($row['id']);
+            }
+            $this->load_overlays($table, $ids);
+        } else {
+            return;
+        }
         if (count($rows) > 0 && count($fields) > 0) {
             foreach ($rows as $row) {
                 foreach ($fields as $field) {
@@ -246,6 +254,44 @@ class LIST_Lang extends CI_Lang {
             $CI->db->where('column', intval($column));
         }
         $CI->db->delete();
+    }
+    
+    /**
+     * Performs cloning of all overlay data from table and old table id to the same table and new table id.
+     * @param string $table table name.
+     * @param integer $old_table_id old table id, source of cloning.
+     * @param integer $new_table_id new table id, destination of cloning.
+     * @return boolean TRUE, if all loaded data are successfully saved with new table id, FALSE otherwise.
+     */
+    public function clone_overlays($table, $old_table_id, $new_table_id) {
+        $data = $this->get_overlays_for_cloning($table, $old_table_id, $new_table_id);
+        
+        return $this->save_overlay_array($data);
+    }
+    
+    /**
+     * Loads all data belonging to table and old table id and prepare array of new data to be saved. This new array will have the same keys, except the table id will be the new table id.
+     * @param string $table table name.
+     * @param integer $old_table_id old table id, the source.
+     * @param integer $new_table_id new table id, the destination.
+     * @return array<mixed> new data to be saved as cloned data for old table id.
+     */
+    protected function get_overlays_for_cloning($table, $old_table_id, $new_table_id) {
+        $this->load_overlays($table, $old_table_id);
+        
+        $output = array();
+        
+        if (count($this->lang_overlays) > 0) { foreach ($this->lang_overlays as $idiom => $table_data) {
+            if (count($table_data) > 0) { foreach ($table_data as $a_table => $table_id_data) {
+                if ($a_table == $table && count($table_id_data) > 0) { foreach ($table_id_data as $a_table_id => $column_data) {
+                    if ($a_table_id == $old_table_id && count($column_data) > 0) { foreach ($column_data as $column => $text) {
+                        $output[$idiom][$table][intval($new_table_id)][$column] = $text;
+                    }}
+                }}
+            }}
+        }}
+        
+        return $output;
     }
     
     /**
@@ -309,14 +355,18 @@ class LIST_Lang extends CI_Lang {
     /**
      * Loads overlays from database for given parameters.
      * @param string $table table name for which overlays will be loaded.
-     * @param integer $table_id table id or NULL, if id is provided, only overlays for this id will be loaded.
+     * @param integer|array<integer> $table_id table id, array of table ids or NULL, if id is provided, only overlays for this id will be loaded, if array of ids is provited, loaded overlays will be restricted to these ids.
      * @param string $column name of column to load or NULL, if provided, only overlay for this column will be loaded.
      */
     protected function load_overlays($table, $table_id = NULL, $column = NULL) {
         $CI =& get_instance();
         $CI->db->from('lang_overlays')->where('table', $table);
         if (!is_null($table_id)) {
-            $CI->db->where('table_id', intval($table_id));
+            if (is_numeric($table_id)) {
+                $CI->db->where('table_id', intval($table_id));
+            } elseif (is_array($table_id) && count($table_id) > 0) {
+                $CI->db->where_in('table_id', $table_id);
+            }
         }
         if (!is_null($column)) {
             $CI->db->where('column', intval($column));
