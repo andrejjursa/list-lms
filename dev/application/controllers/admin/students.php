@@ -5,7 +5,7 @@
  * @package LIST_BE_Controllers
  * @author Andrej Jursa
  */
-class Students extends MY_Controller {
+class Students extends LIST_Controller {
     
     const STORED_FILTER_SESSION_NAME = 'admin_students_filter_data';
     

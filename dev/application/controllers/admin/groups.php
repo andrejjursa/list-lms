@@ -5,7 +5,7 @@
  * @package LIST_BE_Controllers
  * @author Andrej Jursa
  */
-class Groups extends MY_Controller {
+class Groups extends LIST_Controller {
     
     const STORED_FILTER_SESSION_NAME = 'admin_groups_filter_data';
     

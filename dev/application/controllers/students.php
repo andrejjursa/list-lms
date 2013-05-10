@@ -5,7 +5,7 @@
  * @package LIST_FE_Controllers
  * @author Andrej Jursa
  */
-class Students extends MY_Controller {
+class Students extends LIST_Controller {
     
     public function __construct() {
         parent::__construct();

@@ -5,7 +5,7 @@
  * @package LIST_BE_Controllers
  * @author Andrej Jursa
  */
-class Settings extends MY_Controller {
+class Settings extends LIST_Controller {
     
     public function __construct() {
         parent::__construct();

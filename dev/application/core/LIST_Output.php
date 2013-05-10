@@ -12,7 +12,7 @@
 */
 
 
-class MY_Output extends CI_Output {
+class LIST_Output extends CI_Output {
     	
 	public function _display($output = '')
 	{

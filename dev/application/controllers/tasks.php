@@ -5,7 +5,7 @@
  * @package LIST_FE_Controllers
  * @author Andrej Jursa
  */
-class Tasks extends MY_Controller {
+class Tasks extends LIST_Controller {
     
     public function index() {
         $this->load->library('migration');

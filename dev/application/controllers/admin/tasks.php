@@ -5,7 +5,7 @@
  * @package LIST_BE_Controllers
  * @author Andrej Jursa
  */
-class Tasks extends MY_Controller {
+class Tasks extends LIST_Controller {
     
     const STORED_FILTER_SESSION_NAME = 'admin_tasks_filter_data';
     

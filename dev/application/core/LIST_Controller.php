@@ -5,7 +5,7 @@
  * @package LIST_Core
  * @author Andrej Jursa
  */ 
-class MY_Controller extends CI_Controller {
+class LIST_Controller extends CI_Controller {
     
     const TRANSACTION_ISOLATION_REPEATABLE_READ = 'REPEATABLE READ';
     const TRANSACTION_ISOLATION_READ_COMMITTED = 'READ COMMITTED';

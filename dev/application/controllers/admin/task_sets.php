@@ -5,7 +5,7 @@
  * @package LIST_BE_Controllers
  * @author Andrej Jursa
  */
-class Task_sets extends MY_Controller {
+class Task_sets extends LIST_Controller {
 	
     const STORED_FILTER_SESSION_NAME = 'admin_task_sets_filter_data';
     const REGEXP_PATTERN_DATETYME = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';

@@ -13,7 +13,7 @@
  * @version   2.0
  */
 
-class MY_Parser extends CI_Parser {
+class LIST_Parser extends CI_Parser {
 
     protected $CI;
     

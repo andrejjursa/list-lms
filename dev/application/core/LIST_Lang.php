@@ -5,7 +5,7 @@
  * @package LIST_Core
  * @author Andrej Jursa
  */ 
-class MY_Lang extends CI_Lang {
+class LIST_Lang extends CI_Lang {
     
     /**
      * var string current language idiom.

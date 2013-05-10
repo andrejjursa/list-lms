@@ -5,7 +5,7 @@
  * @package LIST_BE_Controllers
  * @author Andrej Jursa
  */
-class Rooms extends MY_Controller {
+class Rooms extends LIST_Controller {
     
     public function __construct() {
         parent::__construct();

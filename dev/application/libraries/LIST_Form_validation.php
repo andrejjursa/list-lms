@@ -5,7 +5,7 @@
  * @package LIST_Libraries
  * @author Andrej Jursa
  */
-class MY_Form_validation extends CI_Form_validation {
+class LIST_Form_validation extends CI_Form_validation {
     
     /**
      * Better version of standard matches method, this one will check if field is array and find appropriate value of this field.
