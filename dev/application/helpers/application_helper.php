@@ -28,7 +28,7 @@ function create_internal_url($relative_url) {
     if ($CI->config->item('rewrite_engine_enabled') && is_mod_rewrite_enabled()) {
         return base_url('/' . trim($relative_url, '/')) . $CI->config->item('url_suffix');
     } else {
-        return base_url('index.php/' . trim($relative_url, '/')) . $CI->config->item('url_suffix');
+        return base_url($CI->config->item('index_page') . '/' . trim($relative_url, '/')) . $CI->config->item('url_suffix');
     }
 }
 
