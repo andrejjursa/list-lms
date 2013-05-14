@@ -368,7 +368,7 @@ $config['login_redirects']['teacher'] = 'admin_teachers/login';
 | Redirect links for students and teachers after successful login
 |--------------------------------------------------------------------------
 */
-$config['after_login_redirects']['student'] = 'students/index';
+$config['after_login_redirects']['student'] = 'courses/index';
 $config['after_login_redirects']['teacher'] = 'admin_dashboard/index';
 
 /*

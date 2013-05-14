@@ -38,10 +38,10 @@
 |
 */
 
-$route['default_controller'] = "tasks";
+$route['default_controller'] = "courses";
 $route['404_override'] = '';
 
-$route['admin'] = 'admin/dashboard'; //TODO: set this to admin login controller
+$route['admin'] = 'admin/dashboard';
 $route['admin_(:any)'] = 'admin/$1';
 
 
