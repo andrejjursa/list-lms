@@ -11,6 +11,7 @@ class Students extends LIST_Controller {
         parent::__construct();
         $this->_init_language_for_student();
         $this->_load_student_langfile();
+        $this->_initialize_student_menu();
     }
     
     public function index() {

@@ -154,10 +154,13 @@ class LIST_Controller extends CI_Controller {
     }
     
     /**
-     * TODO
+     * Loads and injects page navigation for student's frontend.
+     * Smarty template variable $list_pagemenu will be created.
      */
     protected function _initialize_student_menu() {
-        
+        $this->config->load('pagemenu');
+        $this->parser->assign('list_pagemenu', $this->config->item('pagemenu'));
+        $this->_load_student_langfile('pagemenu');
     }
     
     /**
@@ -165,6 +168,6 @@ class LIST_Controller extends CI_Controller {
      * @param string $tag
      */
     protected function _select_student_menu_pagetag($tag = '') {
-        
+        $this->parser->assign('list_pagemenu_current', $tag);
     }
 }

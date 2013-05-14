@@ -1,0 +1,5 @@
+* { margin: 0; padding: 0; }
+
+#mainwrap { min-width: 800px; max-width: 1200px; margin: 0 auto; text-align: center; }
+#leftwrap { text-align: left; float: left; width: 200px; }
+#rightwrap { text-align: left; margin-left: 200px; }

@@ -280,11 +280,14 @@ class Usermanager {
      */
     public function set_student_data_to_smarty() {
         $this->CI->load->library('parser');
+        $student = new Student();
         if ($this->is_student_session_valid()) {
+            $student->get_by_id($this->get_student_id());
             $this->CI->parser->assign('list_student_account', $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT));
         } else {
             $this->CI->parser->assign('list_student_account', array());
         }
+        $this->CI->parser->assign('list_student_account_model', $student);
     }
     
     /**
