@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>File Source for courses.php</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+		</head>
+		<body>
+						<h1>Source for file courses.php</h1>
+<p>Documentation is available at <a href="../LIST_FE_Controllers/_controllers---courses.php.html">courses.php</a></p>
+<div class="src-code">
+<div class="src-code"><ol><li><div class="src-line"><a name="a1"></a><span class="src-php">&lt;?php&nbsp;</span><span class="src-key">if&nbsp;</span><span class="src-sym">(&nbsp;</span><span class="src-sym">!&nbsp;</span><a href="http://www.php.net/defined">defined</a><span class="src-sym">(</span><span class="src-str">'BASEPATH'</span><span class="src-sym">))&nbsp;</span><span class="src-key">exit</span><span class="src-sym">(</span><span class="src-str">'No&nbsp;direct&nbsp;script&nbsp;access&nbsp;allowed'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a2"></a>&nbsp;</div></li>
+<li><div class="src-line"><a name="a3"></a><span class="src-doc">/**</span></div></li>
+<li><div class="src-line"><a name="a4"></a><span class="src-doc">&nbsp;*&nbsp;Courses&nbsp;controller&nbsp;for&nbsp;frontend.</span></div></li>
+<li><div class="src-line"><a name="a5"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@package</span><span class="src-doc">&nbsp;LIST_FE_Controllers</span></div></li>
+<li><div class="src-line"><a name="a6"></a><span class="src-doc">&nbsp;*&nbsp;</span><span class="src-doc-coretag">@author</span><span class="src-doc">&nbsp;Andrej&nbsp;Jursa</span></div></li>
+<li><div class="src-line"><a name="a7"></a><span class="src-doc">&nbsp;*/</span></div></li>
+<li><div class="src-line"><a name="a8"></a><span class="src-key">class&nbsp;</span><a href="../LIST_FE_Controllers/Courses.html">Courses</a>&nbsp;<span class="src-key">extends&nbsp;</span><a href="../LIST_Core/LIST_Controller.html">LIST_Controller</a>&nbsp;<span class="src-sym">{</span></div></li>
+<li><div class="src-line"><a name="a9"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a10"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../LIST_FE_Controllers/Courses.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-sym">)&nbsp;</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line"><a name="a11"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-id">parent</span><span class="src-sym">::</span><a href="../LIST_Core/LIST_Controller.html#method__construct">__construct</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a12"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a13"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-var">usermanager</span><span class="src-sym">-&gt;</span><span class="src-id">student_login_protected_redirect</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a14"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_student">_init_language_for_student</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a15"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../LIST_Core/LIST_Controller.html#method_load_student_langfile">_load_student_langfile</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a16"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../LIST_Core/LIST_Controller.html#method_initialize_student_menu">_initialize_student_menu</a><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a17"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><a name="a18"></a>&nbsp;&nbsp;&nbsp;&nbsp;</div></li>
+<li><div class="src-line"><a name="a19"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-key">public&nbsp;</span><span class="src-key">function&nbsp;</span><a href="../LIST_FE_Controllers/Courses.html#methodindex">index</a><span class="src-sym">(</span><span class="src-sym">)&nbsp;</span><span class="src-sym">{</span></div></li>
+<li><div class="src-line"><a name="a20"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><a href="../LIST_Core/LIST_Controller.html#method_select_student_menu_pagetag">_select_student_menu_pagetag</a><span class="src-sym">(</span><span class="src-str">'courses'</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a21"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$periods&nbsp;</span>=&nbsp;<span class="src-key">new&nbsp;</span><span class="src-id"><a href="../LIST_DM_Models/Period.html">Period</a></span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a22"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$periods</span><span class="src-sym">-&gt;</span><span class="src-id">order_by</span><span class="src-sym">(</span><span class="src-str">'sorting'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'asc'</span><span class="src-sym">)</span><span class="src-sym">-&gt;</span><span class="src-id">get_iterated</span><span class="src-sym">(</span><span class="src-sym">)</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a23"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-var">$this</span><span class="src-sym">-&gt;</span><span class="src-var">parser</span><span class="src-sym">-&gt;</span><span class="src-id">parse</span><span class="src-sym">(</span><span class="src-str">'frontend/courses/index.tpl'</span><span class="src-sym">,&nbsp;</span><span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">'periods'&nbsp;</span>=&gt;&nbsp;<span class="src-var">$periods</span><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+<li><div class="src-line"><a name="a24"></a>&nbsp;&nbsp;&nbsp;&nbsp;<span class="src-sym">}</span></div></li>
+<li><div class="src-line"><a name="a25"></a><span class="src-sym">}</span></div></li>
+</ol></div>
+</div>
+	<p class="notes" id="credit">
+		Documentation generated on Sat, 18 May 2013 19:29:31 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+	</p>
+	</body>
+</html>

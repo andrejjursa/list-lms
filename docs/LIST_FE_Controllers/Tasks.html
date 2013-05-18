@@ -34,7 +34,7 @@
 				
 		<pre>CI_Controller
    |
-   --<a href="../LIST_Core/MY_Controller.html">MY_Controller</a>
+   --<a href="../LIST_Core/LIST_Controller.html">LIST_Controller</a>
       |
       --Tasks</pre>
 	
@@ -55,8 +55,18 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-												
+																												
 												<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#download_file" title="details" class="method-name">download_file</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$file</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#download_hidden_file" title="details" class="method-name">download_hidden_file</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$file</span>)
+									</div>
+																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#index" title="details" class="method-name">index</a>
 										()
@@ -79,6 +89,68 @@
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 
+<a name="methoddownload_file" id="download_file"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">download_file</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerstasks.php.html#a16">16</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			download_file
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$file</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$file</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddownload_hidden_file" id="download_hidden_file"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">download_hidden_file</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerstasks.php.html#a37">37</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			download_hidden_file
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$file</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$file</span>			</li>
+				</ul>
+		
+			
+	</div>
 <a name="methodindex" id="index"><!-- --></a>
 <div class="oddrow">
 	
@@ -105,21 +177,23 @@
 							<h4>Inherited Methods</h4>
 				<a name='inherited_methods'><!-- --></a>	
 									<!-- =========== Summary =========== -->
-					<p>Inherited From <span class="classname"><a href="../LIST_Core/MY_Controller.html">MY_Controller</a></span></p>
+					<p>Inherited From <span class="classname"><a href="../LIST_Core/LIST_Controller.html">LIST_Controller</a></span></p>
 					<blockquote>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method__construct">MY_Controller::__construct()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_add_plupload">MY_Controller::_add_plupload()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_add_tinymce">MY_Controller::_add_tinymce()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_initialize_open_task_set">MY_Controller::_initialize_open_task_set()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_initialize_teacher_menu">MY_Controller::_initialize_teacher_menu()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_init_language_for_student">MY_Controller::_init_language_for_student()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_init_language_for_teacher">MY_Controller::_init_language_for_teacher()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_init_lang_js_messages">MY_Controller::_init_lang_js_messages()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_init_teacher_quick_langmenu">MY_Controller::_init_teacher_quick_langmenu()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_load_student_langfile">MY_Controller::_load_student_langfile()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_load_teacher_langfile">MY_Controller::_load_teacher_langfile()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_select_teacher_menu_pagetag">MY_Controller::_select_teacher_menu_pagetag()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_transaction_isolation">MY_Controller::_transaction_isolation()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_plupload">LIST_Controller::_add_plupload()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_tinymce">LIST_Controller::_add_tinymce()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_open_task_set">LIST_Controller::_initialize_open_task_set()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_student_menu">LIST_Controller::_initialize_student_menu()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_teacher_menu">LIST_Controller::_initialize_teacher_menu()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_student">LIST_Controller::_init_language_for_student()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_teacher">LIST_Controller::_init_language_for_teacher()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_lang_js_messages">LIST_Controller::_init_lang_js_messages()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_teacher_quick_langmenu">LIST_Controller::_init_teacher_quick_langmenu()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_student_langfile">LIST_Controller::_load_student_langfile()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_teacher_langfile">LIST_Controller::_load_teacher_langfile()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_student_menu_pagetag">LIST_Controller::_select_student_menu_pagetag()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_teacher_menu_pagetag">LIST_Controller::_select_teacher_menu_pagetag()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_transaction_isolation">LIST_Controller::_transaction_isolation()</a></span><br>
 											</blockquote>
 										
 		</div>
@@ -140,25 +214,25 @@
 		<div class="info-box-body">
 										<h4>Inherited Constants</h4>
 				<A NAME='inherited_vars'><!-- --></A>
-									<p>Inherited from <span class="classname"><a href="../LIST_Core/MY_Controller.html">MY_Controller</a></span></p>
+									<p>Inherited from <span class="classname"><a href="../LIST_Core/LIST_Controller.html">LIST_Controller</a></span></p>
 					<blockquote>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_AREA_GLOBAL">MY_Controller::TRANSACTION_AREA_GLOBAL</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_AREA_GLOBAL">LIST_Controller::TRANSACTION_AREA_GLOBAL</a></span><br>
 							</span>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_AREA_SESSION">MY_Controller::TRANSACTION_AREA_SESSION</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_AREA_SESSION">LIST_Controller::TRANSACTION_AREA_SESSION</a></span><br>
 							</span>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_READ_COMMITTED">MY_Controller::TRANSACTION_ISOLATION_READ_COMMITTED</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_ISOLATION_READ_COMMITTED">LIST_Controller::TRANSACTION_ISOLATION_READ_COMMITTED</a></span><br>
 							</span>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_READ_UNCOMMITTED">MY_Controller::TRANSACTION_ISOLATION_READ_UNCOMMITTED</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_ISOLATION_READ_UNCOMMITTED">LIST_Controller::TRANSACTION_ISOLATION_READ_UNCOMMITTED</a></span><br>
 							</span>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_REPEATABLE_READ">MY_Controller::TRANSACTION_ISOLATION_REPEATABLE_READ</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_ISOLATION_REPEATABLE_READ">LIST_Controller::TRANSACTION_ISOLATION_REPEATABLE_READ</a></span><br>
 							</span>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_SERIALIZABLE">MY_Controller::TRANSACTION_ISOLATION_SERIALIZABLE</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_ISOLATION_SERIALIZABLE">LIST_Controller::TRANSACTION_ISOLATION_SERIALIZABLE</a></span><br>
 							</span>
 											</blockquote> 
 										
@@ -166,7 +240,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Wed, 01 May 2013 15:13:14 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Sat, 18 May 2013 19:29:41 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

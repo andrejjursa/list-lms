@@ -34,7 +34,7 @@
 				
 		<pre>CI_Controller
    |
-   --<a href="../LIST_Core/MY_Controller.html">MY_Controller</a>
+   --<a href="../LIST_Core/LIST_Controller.html">LIST_Controller</a>
       |
       --Task_sets</pre>
 	
@@ -55,6 +55,10 @@
 		<div class="info-box-body">
 			<div class="const-summary">
 								<div class="const-title">
+					<a href="#REGEXP_PATTERN_DATETYME" title="details" class="const-name">REGEXP_PATTERN_DATETYME</a> = 					<span class="var-type"> '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/'</span>
+
+				</div>
+								<div class="const-title">
 					<a href="#STORED_FILTER_SESSION_NAME" title="details" class="const-name">STORED_FILTER_SESSION_NAME</a> = 					<span class="var-type"> 'admin_task_sets_filter_data'</span>
 
 				</div>
@@ -74,7 +78,7 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																																																												
+																																																																																																																																												
 												<div class="method-definition">
 											<span class="method-result">Task_sets</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
@@ -99,6 +103,16 @@
 											<span class="method-result">void</span>
 										<a href="#get_all_task_sets" title="details" class="method-name">get_all_task_sets</a>
 										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#get_task_set_groups" title="details" class="method-name">get_task_set_groups</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$course_id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$selected_id</span> = <span class="var-default">NULL</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#get_task_set_group_rooms" title="details" class="method-name">get_task_set_group_rooms</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$course_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$selected_id</span> = <span class="var-default">NULL</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span> = <span class="var-default">NULL</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -172,7 +186,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a12">12</a></span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a13">13</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -192,7 +206,7 @@
 			<hr class="separator" />
 		<div class="notes">Redefinition of:</div>
 		<dl>
-			<dt><a href="../LIST_Core/MY_Controller.html#method__construct">MY_Controller::__construct()</a></dt>
+			<dt><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></dt>
 						<dd>Main constructor, initialise controller.</dd>
 					</dl>
 			
@@ -201,7 +215,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">create</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a82">82</a></span>)
+		<span class="method-title">create</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a126">126</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -224,7 +238,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a158">158</a></span>)
+		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a210">210</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -247,7 +261,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">edit</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a109">109</a></span>)
+		<span class="method-title">edit</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a157">157</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -270,7 +284,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_all_task_sets</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a57">57</a></span>)
+		<span class="method-title">get_all_task_sets</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a100">100</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -289,11 +303,82 @@
 		
 			
 	</div>
+<a name="methodget_task_set_groups" id="get_task_set_groups"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_task_set_groups</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a58">58</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			get_task_set_groups
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$course_id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$selected_id</span> = <span class="var-default">NULL</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$course_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$selected_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_task_set_group_rooms" id="get_task_set_group_rooms"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_task_set_group_rooms</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a77">77</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			get_task_set_group_rooms
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$course_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$group_id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$selected_id</span> = <span class="var-default">NULL</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$course_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$group_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$selected_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
 <a name="methodget_task_set_types" id="get_task_set_types"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_task_set_types</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a38">38</a></span>)
+		<span class="method-title">get_task_set_types</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a39">39</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -327,7 +412,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a21">21</a></span>)
+		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a22">22</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -350,7 +435,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_courses</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a195">195</a></span>)
+		<span class="method-title">inject_courses</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a247">247</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -373,7 +458,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_languages</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a233">233</a></span>)
+		<span class="method-title">inject_languages</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a285">285</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -396,7 +481,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_stored_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a228">228</a></span>)
+		<span class="method-title">inject_stored_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a280">280</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -419,7 +504,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_task_set_types</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a209">209</a></span>)
+		<span class="method-title">inject_task_set_types</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a261">261</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -442,7 +527,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">new_task_set_form</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a33">33</a></span>)
+		<span class="method-title">new_task_set_form</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a34">34</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -465,7 +550,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a181">181</a></span>)
+		<span class="method-title">open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a233">233</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -488,7 +573,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">store_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a220">220</a></span>)
+		<span class="method-title">store_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a272">272</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -516,7 +601,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">update</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a122">122</a></span>)
+		<span class="method-title">update</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a170">170</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -538,21 +623,23 @@
 							<h4>Inherited Methods</h4>
 				<a name='inherited_methods'><!-- --></a>	
 									<!-- =========== Summary =========== -->
-					<p>Inherited From <span class="classname"><a href="../LIST_Core/MY_Controller.html">MY_Controller</a></span></p>
+					<p>Inherited From <span class="classname"><a href="../LIST_Core/LIST_Controller.html">LIST_Controller</a></span></p>
 					<blockquote>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method__construct">MY_Controller::__construct()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_add_plupload">MY_Controller::_add_plupload()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_add_tinymce">MY_Controller::_add_tinymce()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_initialize_open_task_set">MY_Controller::_initialize_open_task_set()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_initialize_teacher_menu">MY_Controller::_initialize_teacher_menu()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_init_language_for_student">MY_Controller::_init_language_for_student()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_init_language_for_teacher">MY_Controller::_init_language_for_teacher()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_init_lang_js_messages">MY_Controller::_init_lang_js_messages()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_init_teacher_quick_langmenu">MY_Controller::_init_teacher_quick_langmenu()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_load_student_langfile">MY_Controller::_load_student_langfile()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_load_teacher_langfile">MY_Controller::_load_teacher_langfile()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_select_teacher_menu_pagetag">MY_Controller::_select_teacher_menu_pagetag()</a></span><br>
-													<span class="method-name"><a href="../LIST_Core/MY_Controller.html#method_transaction_isolation">MY_Controller::_transaction_isolation()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_plupload">LIST_Controller::_add_plupload()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_tinymce">LIST_Controller::_add_tinymce()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_open_task_set">LIST_Controller::_initialize_open_task_set()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_student_menu">LIST_Controller::_initialize_student_menu()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_teacher_menu">LIST_Controller::_initialize_teacher_menu()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_student">LIST_Controller::_init_language_for_student()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_teacher">LIST_Controller::_init_language_for_teacher()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_lang_js_messages">LIST_Controller::_init_lang_js_messages()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_teacher_quick_langmenu">LIST_Controller::_init_teacher_quick_langmenu()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_student_langfile">LIST_Controller::_load_student_langfile()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_teacher_langfile">LIST_Controller::_load_teacher_langfile()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_student_menu_pagetag">LIST_Controller::_select_student_menu_pagetag()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_teacher_menu_pagetag">LIST_Controller::_select_teacher_menu_pagetag()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_transaction_isolation">LIST_Controller::_transaction_isolation()</a></span><br>
 											</blockquote>
 										
 		</div>
@@ -571,8 +658,23 @@
 							
 					</div>
 		<div class="info-box-body">
-			<a name="constSTORED_FILTER_SESSION_NAME" id="STORED_FILTER_SESSION_NAME"><!-- --></A>
+			<a name="constREGEXP_PATTERN_DATETYME" id="REGEXP_PATTERN_DATETYME"><!-- --></A>
 <div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">REGEXP_PATTERN_DATETYME</span>
+			 = <span class="const-default"> '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a11">11</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constSTORED_FILTER_SESSION_NAME" id="STORED_FILTER_SESSION_NAME"><!-- --></A>
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
@@ -588,25 +690,25 @@
 </div>
 							<h4>Inherited Constants</h4>
 				<A NAME='inherited_vars'><!-- --></A>
-									<p>Inherited from <span class="classname"><a href="../LIST_Core/MY_Controller.html">MY_Controller</a></span></p>
+									<p>Inherited from <span class="classname"><a href="../LIST_Core/LIST_Controller.html">LIST_Controller</a></span></p>
 					<blockquote>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_AREA_GLOBAL">MY_Controller::TRANSACTION_AREA_GLOBAL</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_AREA_GLOBAL">LIST_Controller::TRANSACTION_AREA_GLOBAL</a></span><br>
 							</span>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_AREA_SESSION">MY_Controller::TRANSACTION_AREA_SESSION</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_AREA_SESSION">LIST_Controller::TRANSACTION_AREA_SESSION</a></span><br>
 							</span>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_READ_COMMITTED">MY_Controller::TRANSACTION_ISOLATION_READ_COMMITTED</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_ISOLATION_READ_COMMITTED">LIST_Controller::TRANSACTION_ISOLATION_READ_COMMITTED</a></span><br>
 							</span>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_READ_UNCOMMITTED">MY_Controller::TRANSACTION_ISOLATION_READ_UNCOMMITTED</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_ISOLATION_READ_UNCOMMITTED">LIST_Controller::TRANSACTION_ISOLATION_READ_UNCOMMITTED</a></span><br>
 							</span>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_REPEATABLE_READ">MY_Controller::TRANSACTION_ISOLATION_REPEATABLE_READ</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_ISOLATION_REPEATABLE_READ">LIST_Controller::TRANSACTION_ISOLATION_REPEATABLE_READ</a></span><br>
 							</span>
 													<span class="const-title">
-								<span class="const-name"><a href="../LIST_Core/MY_Controller.html#constTRANSACTION_ISOLATION_SERIALIZABLE">MY_Controller::TRANSACTION_ISOLATION_SERIALIZABLE</a></span><br>
+								<span class="const-name"><a href="../LIST_Core/LIST_Controller.html#constTRANSACTION_ISOLATION_SERIALIZABLE">LIST_Controller::TRANSACTION_ISOLATION_SERIALIZABLE</a></span><br>
 							</span>
 											</blockquote> 
 										
@@ -614,7 +716,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Wed, 01 May 2013 15:13:15 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Sat, 18 May 2013 19:29:42 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>
