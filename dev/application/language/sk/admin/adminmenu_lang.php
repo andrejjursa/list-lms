@@ -23,5 +23,5 @@ $lang['adminmenu_title_teachers_list'] = 'Správa učiteľov';
 $lang['adminmenu_title_students_manager'] = 'Správa študentov';
 $lang['adminmenu_title_task_sets'] = 'Zostavy úloh';
 
-$lang['adminmenu_open_task_set_message'] = 'Otvorená zostava úloh: %s';
+$lang['adminmenu_open_task_set_message'] = 'Otvorená zostava úloh: %s (%s úloh)';
 $lang['adminmenu_open_task_set_nothing_opened'] = 'Nič nie je otvorené';
