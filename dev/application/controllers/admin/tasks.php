@@ -34,7 +34,7 @@ class Tasks extends LIST_Controller {
     
     public function get_all_tasks() {
         $tasks = new Task();
-        $tasks->order_by('name', 'asc');
+        $tasks->order_by_with_overlay('name', 'asc');
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
         if (isset($filter['categories']['clauses']) && count($filter['categories']['clauses']) > 0) {

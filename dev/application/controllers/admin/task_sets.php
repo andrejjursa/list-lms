@@ -101,7 +101,7 @@ class Task_sets extends LIST_Controller {
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
         $task_sets = new Task_set();
-        $task_sets->order_by('name', 'asc');
+        $task_sets->order_by_with_overlay('name', 'asc');
         $task_sets->include_related('course', 'name', TRUE);
         $task_sets->include_related('course/period', 'name', TRUE);
         $task_sets->include_related('group', 'name', TRUE);

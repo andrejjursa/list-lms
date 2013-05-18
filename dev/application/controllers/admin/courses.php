@@ -33,6 +33,7 @@ class Courses extends LIST_Controller {
         $courses->include_related_count('group');
         $courses->include_related_count('task_set_type');
         $courses->include_related('period', 'name', TRUE);
+        $courses->order_by_with_constant('name', 'asc');
         $courses->get_iterated();
         $this->lang->init_overlays('courses', $courses->all_to_array(), array('description'));
         $this->parser->parse('backend/courses/table_content.tpl', array('courses' => $courses));

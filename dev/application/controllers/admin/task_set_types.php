@@ -29,7 +29,7 @@ class Task_set_types extends LIST_Controller {
         $task_set_types = new Task_set_type();
         $task_set_types->include_related_count('task_set');
         $task_set_types->include_related_count('course');
-        $task_set_types->order_by('name', 'asc')->get_iterated();
+        $task_set_types->order_by_with_constant('name', 'asc')->get_iterated();
         $this->parser->parse('backend/task_set_types/table_content.tpl', array('task_set_types' => $task_set_types));
     }
     

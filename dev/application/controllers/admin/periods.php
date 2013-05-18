@@ -42,16 +42,13 @@ class Periods extends LIST_Controller  {
             $this->_transaction_isolation();
             $this->db->trans_begin();
             
-            $period_top = new Period();
-            $period_top->order_by('sorting', 'DESC')->limit(1)->get();
-            
-            $sorting = 1;
-            if ($period_top->exists()) { $sorting += intval($period_top->sorting); }
+            $periods = new Period();
+            $periods->update('sorting', 'sorting + 1', FALSE);
             
             $period_data = $this->input->post('period');
             $period = new Period();
             $period->from_array($period_data, array('name'));
-            $period->sorting = $sorting;
+            $period->sorting = 1;
             
             if ($period->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();

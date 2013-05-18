@@ -35,7 +35,7 @@ class Category extends DataMapper {
     public function get_all_structured() {
         $categories = new Category();
         $categories->include_related_count('task');
-        $categories->order_by('parent_id', 'asc')->order_by('name', 'asc')->get();
+        $categories->order_by('parent_id', 'asc')->order_by_with_constant('name', 'asc')->get();
         return $this->make_structure($categories->all);
     }
     

@@ -172,6 +172,10 @@ class LIST_Lang extends CI_Lang {
         
         if ($update || $CI->db->affected_rows() > 0) {
             $this->lang_overlays[$idiom][$table][intval($table_id)][$column] = $text;
+            
+            $CI->db->where('text', '');
+            $CI->db->delete('lang_overlays');
+            
             return TRUE;
         }
         return FALSE;

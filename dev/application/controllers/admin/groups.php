@@ -43,8 +43,8 @@ class Groups extends LIST_Controller {
         $rooms->select_min('capacity');
         $rooms->where('group_id', '${parent}.id', FALSE);
         $groups->order_by_related('course/period', 'sorting', 'asc');
-        $groups->order_by_related('course', 'name', 'asc');
-        $groups->order_by('name', 'asc');
+        $groups->order_by_related_with_constant('course', 'name', 'asc');
+        $groups->order_by_with_constant('name', 'asc');
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
         if (isset($filter['course_id']) && intval($filter['course_id']) > 0) {
