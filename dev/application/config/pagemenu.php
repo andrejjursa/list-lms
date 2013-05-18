@@ -6,5 +6,5 @@ $config['pagemenu'] = array(
         'pagetag' => 'courses',
         'link' => 'courses',
         'sub' => NULL,
-    )
+    ),
 );

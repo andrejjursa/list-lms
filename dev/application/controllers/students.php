@@ -24,6 +24,7 @@ class Students extends LIST_Controller {
      * Display login form for student.
      */
     public function login() {
+        $this->_select_student_menu_pagetag('test3');
         $uri_params = $this->uri->uri_to_assoc(3);
         $this->parser->parse('frontend/students/login.tpl', array('uri_params' => $uri_params));
     }

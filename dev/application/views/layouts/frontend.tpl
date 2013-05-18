@@ -9,11 +9,20 @@
     </head>
     <body>
         {include file='partials/frontend_general/pagemenu.tpl' inline}
+        <div id="top_meta_informations">
+            <div class="left">TEST</div>
+            <div class="right">TEST</div>
+            <div class="clear"></div>
+        </div>
         <div id="mainwrap">
             <div id="leftwrap">
+                <div class="title">
+                    <h4>{translate line='pagemenu_title'}</h4>
+                </div>
                 {make_pagemenu menu=$list_pagemenu current=$list_pagemenu_current}
             </div>
-            <div id="rightwrap">{block name='main_content'}{/block}</div>
+            <div id="rightwrap"><div class="internal_padding">{block name='main_content'}{/block}</div></div>
+            <div class="clear"></div>
         </div>
     </body>
 </html>

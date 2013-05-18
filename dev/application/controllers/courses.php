@@ -19,7 +19,7 @@ class Courses extends LIST_Controller {
     public function index() {
         $this->_select_student_menu_pagetag('courses');
         $periods = new Period();
-        $periods->order_by('sorting', 'desc')->get_iterated();
+        $periods->order_by('sorting', 'asc')->get_iterated();
         $this->parser->parse('frontend/courses/index.tpl', array('periods' => $periods));
     }
 }
