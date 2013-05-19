@@ -43,3 +43,4 @@ $lang['admin_task_sets_filter_form_field_tasks'] = 'Tasks';
 $lang['admin_task_sets_filter_form_field_tasks_option_all'] = 'All task sets';
 $lang['admin_task_sets_filter_form_field_tasks_option_without_tasks'] = 'Task sets without tasks';
 $lang['admin_task_sets_filter_form_field_tasks_option_with_tasks'] = 'Task sets with tasks';
+$lang['admin_task_sets_filter_form_field_name'] = 'Name';

@@ -40,6 +40,16 @@ class Tasks extends LIST_Controller {
         if (isset($filter['categories']['clauses']) && count($filter['categories']['clauses']) > 0) {
             $tasks->add_categories_filter($filter['categories']['clauses']);
         }
+        if ((isset($filter['name']) && trim($filter['name']) != '') || (isset($filter['text']) && trim($filter['text']) != '')) {
+            $tasks->group_start();
+            if (isset($filter['name']) && trim($filter['name']) != '') {
+                $tasks->or_like_with_overlay('name', trim($filter['name']));
+            }
+            if (isset($filter['text']) && trim($filter['text']) != '') {
+                $tasks->or_like_with_overlay('text', trim($filter['text']));
+            }
+            $tasks->group_end();
+        }
         $tasks->include_related_count('task_set');
         $tasks->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('tasks', $tasks->all_to_array(), array('name'));

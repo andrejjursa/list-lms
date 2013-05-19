@@ -118,6 +118,10 @@ class Task_sets extends LIST_Controller {
         } else if (isset($filter['tasks']) && is_numeric($filter['tasks']) && intval($filter['tasks']) == 1) {
             $task_sets->where_has_tasks();
         }
+        if (isset($filter['name']) && trim($filter['name']) != '') {
+            $name_value = trim($filter['name']);
+            $task_sets->like_with_overlay('name', $name_value);
+        }
         $task_sets->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('task_sets', $task_sets->all_to_array(), array('name'));
         $this->parser->parse('backend/task_sets/table_content.tpl', array('task_sets' => $task_sets));

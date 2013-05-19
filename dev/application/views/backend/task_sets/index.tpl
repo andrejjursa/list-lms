@@ -27,6 +27,10 @@
                         <p class="input"><input type="radio" name="filter[tasks]" value="0"{if $filter.tasks eq '0'} checked="checked" {/if}id="filter_tasks_without_tasks_id" /> <label for="filter_tasks_without_tasks_id">{translate line='admin_task_sets_filter_form_field_tasks_option_without_tasks'}</label></p>
                         <p class="input"><input type="radio" name="filter[tasks]" value="1"{if $filter.tasks eq '1'} checked="checked" {/if}id="filter_tasks_with_tasks_id" /> <label for="filter_tasks_with_tasks_id">{translate line='admin_task_sets_filter_form_field_tasks_option_with_tasks'}</label></p>
                     </div>
+                    <div class="field">
+                        <label>{translate line='admin_task_sets_filter_form_field_name'}:</label>
+                        <p class="input"><input type="text" name="filter[name]" value="{$filter.name|escape:'html'}" /></p>
+                    </div>
                     <div class="buttons">
                         <input type="submit" name="filter_submit" value="{translate line='admin_task_sets_filter_form_submit_button'}" class="button" />
                         <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />

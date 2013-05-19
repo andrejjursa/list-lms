@@ -43,3 +43,4 @@ $lang['admin_task_sets_filter_form_field_tasks'] = 'Úlohy';
 $lang['admin_task_sets_filter_form_field_tasks_option_all'] = 'Všetky zostavy úloh';
 $lang['admin_task_sets_filter_form_field_tasks_option_without_tasks'] = 'Zostavy úloh neobsahujúce úlohy';
 $lang['admin_task_sets_filter_form_field_tasks_option_with_tasks'] = 'Zostavy úloh obsahujúce úlohy';
+$lang['admin_task_sets_filter_form_field_name'] = 'Názov';

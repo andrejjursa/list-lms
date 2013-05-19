@@ -116,6 +116,116 @@ LIMIT 1)' . (strtolower($direction) == 'asc' ? 'ASC' : 'DESC');
         return $object;
     }
     
+    /**
+     * Add like condition to where clause for column which can contain language constant.
+     * @param DataMapper $object model object which will be using this function.
+     * @param string $column column name in table.
+     * @param string $value search text.
+     * @param string $wrap wraping constant, can be 'both', 'before', 'after'.
+     * @param string $lang_idiom language idiom, default is NULL = current language idion set in language object.
+     * @param string $constant_prefix prefix of user constant, default is 'user_custom_'.
+     * @return DataMapper returns object for method chaining.
+     */
+    public function like_with_constant($object, $column, $value, $wrap = 'both', $lang_idiom = NULL, $constant_prefix = 'user_custom_') {
+        $CI =& get_instance();
+        if (is_null($lang_idiom)) { $lang_idiom = $CI->lang->get_current_idiom(); }
+        
+        $like = $wrap == 'before' ? '%' . $object->db->escape_like_str($value) : ($wrap == 'after' ? $object->db->escape_like_str($value) . '%' : '%' . $object->db->escape_like_str($value) . '%');
+        
+        $subquery = '(SELECT `text` AS `like_text`
+FROM `translations`
+WHERE `idiom` = "' . $object->db->escape_str($lang_idiom) . '" AND CONCAT("lang:", "' . $object->db->escape_str($constant_prefix) . '", `constant`) = ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . '
+UNION
+SELECT ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . ' AS `like_text`
+LIMIT 1) LIKE "' . $like . '"';
+        
+        $object->where($subquery);
+        
+        return $object;
+    }
+    
+    /**
+     * Add like condition to where clause, with OR operator, for column which can contain language constant.
+     * @param DataMapper $object model object which will be using this function.
+     * @param string $column column name in table.
+     * @param string $value search text.
+     * @param string $wrap wraping constant, can be 'both', 'before', 'after'.
+     * @param string $lang_idiom language idiom, default is NULL = current language idion set in language object.
+     * @param string $constant_prefix prefix of user constant, default is 'user_custom_'.
+     * @return DataMapper returns object for method chaining.
+     */
+    public function or_like_with_constant($object, $column, $value, $wrap = 'both', $lang_idiom = NULL, $constant_prefix = 'user_custom_') {
+        $CI =& get_instance();
+        if (is_null($lang_idiom)) { $lang_idiom = $CI->lang->get_current_idiom(); }
+        
+        $like = $wrap == 'before' ? '%' . $object->db->escape_like_str($value) : ($wrap == 'after' ? $object->db->escape_like_str($value) . '%' : '%' . $object->db->escape_like_str($value) . '%');
+        
+        $subquery = '(SELECT `text` AS `like_text`
+FROM `translations`
+WHERE `idiom` = "' . $object->db->escape_str($lang_idiom) . '" AND CONCAT("lang:", "' . $object->db->escape_str($constant_prefix) . '", `constant`) = ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . '
+UNION
+SELECT ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . ' AS `like_text`
+LIMIT 1) LIKE "' . $like . '"';
+        
+        $object->or_where($subquery);
+        
+        return $object;
+    }
+    
+    /**
+     * Add like condition to where clause for column which can be translated with language overlay.
+     * @param DataMapper $object model object which will be using this function.
+     * @param string $column column name in table.
+     * @param string $value search text.
+     * @param string $wrap wraping constant, can be 'both', 'before', 'after'.
+     * @param string $lang_idiom language idiom, default is NULL = current language idion set in language object.
+     * @return DataMapper returns object for method chaining.
+     */
+    public function like_with_overlay($object, $column, $value, $wrap = 'both', $lang_idiom = NULL) {
+        $CI =& get_instance();
+        if (is_null($lang_idiom)) { $lang_idiom = $CI->lang->get_current_idiom(); }
+        
+        $like = $wrap == 'before' ? '%' . $object->db->escape_like_str($value) : ($wrap == 'after' ? $object->db->escape_like_str($value) . '%' : '%' . $object->db->escape_like_str($value) . '%');
+        
+        $subquery = '(SELECT `text` AS `like_text`
+FROM `lang_overlays`
+WHERE `table` = "' . $object->db->escape_str($object->table) . '" AND `table_id` = ' . $object->db->protect_identifiers($object->table) . '.`id` AND `column` = "' . $object->db->escape_str($column) . '" AND `idiom` = "' . $object->db->escape_str($lang_idiom) . '"
+UNION
+SELECT ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . ' AS `like_text`
+LIMIT 1) LIKE "' . $like . '"';
+        
+        $object->where($subquery);
+        
+        return $object;
+    }
+    
+    /**
+     * Add like condition to where clause, with OR operator, for column which can be translated with language overlay.
+     * @param DataMapper $object model object which will be using this function.
+     * @param string $column column name in table.
+     * @param string $value search text.
+     * @param string $wrap wraping constant, can be 'both', 'before', 'after'.
+     * @param string $lang_idiom language idiom, default is NULL = current language idion set in language object.
+     * @return DataMapper returns object for method chaining.
+     */
+    public function or_like_with_overlay($object, $column, $value, $wrap = 'both', $lang_idiom = NULL) {
+        $CI =& get_instance();
+        if (is_null($lang_idiom)) { $lang_idiom = $CI->lang->get_current_idiom(); }
+        
+        $like = $wrap == 'before' ? '%' . $object->db->escape_like_str($value) : ($wrap == 'after' ? $object->db->escape_like_str($value) . '%' : '%' . $object->db->escape_like_str($value) . '%');
+        
+        $subquery = '(SELECT `text` AS `like_text`
+FROM `lang_overlays`
+WHERE `table` = "' . $object->db->escape_str($object->table) . '" AND `table_id` = ' . $object->db->protect_identifiers($object->table) . '.`id` AND `column` = "' . $object->db->escape_str($column) . '" AND `idiom` = "' . $object->db->escape_str($lang_idiom) . '"
+UNION
+SELECT ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . ' AS `like_text`
+LIMIT 1) LIKE "' . $like . '"';
+        
+        $object->or_where($subquery);
+        
+        return $object;
+    }
+    
 }
 
 /* End of file translations.php */
