@@ -43,11 +43,12 @@ class Courses extends LIST_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
         $this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
+        $this->form_validation->set_rules('course[capacity]', 'lang:admin_courses_form_field_capacity', 'required|integer|greater_than[0]');
         
         if ($this->form_validation->run()) {
             $course = new Course();
             $course_data = $this->input->post('course');
-            $course->from_array($course_data, array('name', 'period_id', 'description'));
+            $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity'));
             
             $this->_transaction_isolation();
             $this->db->trans_begin();
@@ -118,6 +119,7 @@ class Courses extends LIST_Controller {
         $this->form_validation->set_rules('course_id', 'id', 'required');
         $this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
         $this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
+        $this->form_validation->set_rules('course[capacity]', 'lang:admin_courses_form_field_capacity', 'required|integer|greater_than[0]');
         
         if ($this->form_validation->run()) {
             $course_id = intval($this->input->post('course_id'));
@@ -125,7 +127,7 @@ class Courses extends LIST_Controller {
             $course->get_by_id($course_id);
             if ($course->exists()) {
                 $course_data = $this->input->post('course');
-                $course->from_array($course_data, array('name', 'period_id', 'description'));
+                $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity'));
                 
                 $overlay = $this->input->post('overlay');
                 

@@ -7,6 +7,11 @@ class Migration_courses_lang_overlays_table2 extends CI_Migration {
             'description' => array(
                 'type' => 'TEXT'
             ),
+            'capacity' => array(
+                'type' => 'INT',
+                'unsigned' => TRUE,
+                'constraint' => 4,
+            ),
         ));
         
         $this->dbforge->add_field(
