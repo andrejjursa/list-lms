@@ -103,8 +103,9 @@ class Tasks extends LIST_Controller {
     public function edit() {
         $this->_select_teacher_menu_pagetag('tasks');
         $url = $this->uri->ruri_to_assoc(3);
-        $task_id = isset($url['task_id']) ? intval($url['task_id']) : 0;
+        $task_id = isset($url['task_id']) ? intval($url['task_id']) : intval($this->input->post('task_id'));
         $task = new Task();
+        $task->include_related_count('task_set');
         $task->get_by_id($task_id);
         $category = new Category();
         $structure = $category->get_all_structured();

@@ -53,3 +53,4 @@ $lang['admin_tasks_add_to_task_set_nothing_opened'] = 'Nie je otvorená žiadna 
 $lang['admin_tasks_add_to_task_set_already_related'] = 'Úloha už patrí do tejto zostavy úloh.';
 $lang['admin_tasks_add_to_task_set_save_success'] = 'Úloha bola úspešne pridaná do zostavy úloh.';
 $lang['admin_tasks_add_to_task_set_save_failed'] = 'Úlohu sa nepodarilo pridať do zostavy úloh.';
+$lang['admin_tasks_edit_warning_task_assigned_to_n_task_sets'] = 'Varovanie: táto úloha je priradená do <strong>%s</strong> zostáv úloh.';

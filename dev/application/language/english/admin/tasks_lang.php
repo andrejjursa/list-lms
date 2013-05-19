@@ -53,3 +53,4 @@ $lang['admin_tasks_add_to_task_set_nothing_opened'] = 'There is no opened task s
 $lang['admin_tasks_add_to_task_set_already_related'] = 'Task already belongs to this task set.';
 $lang['admin_tasks_add_to_task_set_save_success'] = 'Task added to task set successfully.';
 $lang['admin_tasks_add_to_task_set_save_failed'] = 'Task failed to be added to task set.';
+$lang['admin_tasks_edit_warning_task_assigned_to_n_task_sets'] = 'Warning: this task is assigned to <strong>%s</strong> task sets.';

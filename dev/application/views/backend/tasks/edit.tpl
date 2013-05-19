@@ -2,6 +2,7 @@
 {block title}{translate line='admin_tasks_page_title'}{/block}
 {block main_content}
     <h2>{translate line='admin_tasks_page_title'}</h2>
+    {if $task->task_set_count gt 0}{include file='partials/backend_general/error_box.tpl' message={translate|sprintf:$task->task_set_count line='admin_tasks_edit_warning_task_assigned_to_n_task_sets'}}{/if}
     {include file='partials/backend_general/flash_messages.tpl' inline}
     {include file='backend/tasks/category_checkboxes.tpl' inline}
     {if $smarty.post.task or $task->exists()}
