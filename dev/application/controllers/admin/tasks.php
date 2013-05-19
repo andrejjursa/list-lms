@@ -319,6 +319,11 @@ class Tasks extends LIST_Controller {
             $this->add_to_task_set();
         }
     }
+    
+    public function get_metainfo_open_task_set() {
+        $this->_initialize_open_task_set();
+        $this->parser->parse('partials/backend_general/open_task_set.tpl');
+    }
 
     private function store_filter($filter) {
         if (is_array($filter)) {

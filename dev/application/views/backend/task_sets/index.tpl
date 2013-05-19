@@ -41,6 +41,7 @@
             <table class="task_sets_table">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>{translate line='admin_task_sets_table_header_name'}</th>
                         <th>{translate line='admin_task_sets_table_header_course'}</th>
                         <th>{translate line='admin_task_sets_table_header_group'}</th>

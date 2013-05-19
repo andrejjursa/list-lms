@@ -1,5 +1,6 @@
 {foreach $task_set_types as $task_set_type}
 <tr>
+    <td>{$task_set_type->id|intval}</td>
     <td>{translate_text|escape:'html' text=$task_set_type->name}</td>
     <td>{$task_set_type->task_set_count}</td>
     <td>{$task_set_type->course_count}</td>

@@ -27,6 +27,7 @@
         <table class="groups_table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>{translate line='admin_groups_table_header_group_name'}</th>
                     <th>{translate line='admin_groups_table_header_group_course'}</th>
                     <th>{translate line='admin_groups_table_header_group_rooms'}</th>

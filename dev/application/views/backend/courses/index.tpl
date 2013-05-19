@@ -14,6 +14,7 @@
         <table class="courses_table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>{translate line='admin_courses_table_header_course_name'}</th>
                     <th>{translate line='admin_courses_table_header_course_description'}</th>
                     <th>{translate line='admin_courses_table_header_course_period'}</th>

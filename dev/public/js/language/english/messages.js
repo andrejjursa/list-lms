@@ -3,5 +3,6 @@
 var lang = { 
   messages: {
     ajax_standby: 'Please wait ...',
+    filter_header: 'Filter'
   }
 };

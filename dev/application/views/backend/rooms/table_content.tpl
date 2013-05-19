@@ -1,5 +1,6 @@
 {foreach $rooms as $room}
 <tr>
+    <td>{$room->id|intval}</td>
     <td>{translate_text|escape:'html' text=$room->name}</td>
     <td>{$list_days[$room->time_day|intval]|escape:'html'}</td>
     <td>{$room->time_begin|is_time|escape:'html'}</td>

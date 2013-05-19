@@ -20,6 +20,7 @@
         <table class="students_table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>{translate line='admin_students_table_header_fullname'}</th>
                     <th>{translate line='admin_students_table_header_email'}</th>
                     <th class="controlls" colspan="2">{translate line='admin_students_table_header_controlls'}</th>

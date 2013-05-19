@@ -1,5 +1,6 @@
 {foreach $groups as $group}
 <tr>
+    <td>{$group->id|intval}</td>
     <td>{translate_text|escape:'html' text=$group->name}</td>
     <td>{translate_text|escape:'html' text=$group->course_name} / {translate_text|escape:'html' text=$group->course_period_name}</td>
     <td>

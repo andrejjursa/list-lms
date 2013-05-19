@@ -50,6 +50,7 @@
         <table class="tasks_table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>{translate line='admin_tasks_table_header_name'}</th>
                     <th>{translate line='admin_tasks_table_header_categories'}</th>
                     <th>{translate line='admin_tasks_table_header_task_sets'}</th>

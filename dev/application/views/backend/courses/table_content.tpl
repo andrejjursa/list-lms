@@ -1,5 +1,6 @@
 {foreach $courses as $course}
 <tr>
+    <td>{$course->id|intval}</td>
     <td>{translate_text|escape:'html' text=$course->name}</td>
     <td><div class="course_description">{overlay table='courses' table_id=$course->id column='description' default=$course->description}</div></td>
     <td>{translate_text|default:{translate line='admin_courses_table_content_no_period'}|escape:'html' text=$course->period_name}</td>
@@ -11,7 +12,7 @@
 </tr>
 {foreachelse}
 <tr>
-    <td colspan="4">
+    <td colspan="9">
         {include file='partials/backend_general/error_box.tpl' message='lang:admin_courses_table_content_no_courses'}
     </td>
 </tr>

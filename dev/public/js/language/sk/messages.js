@@ -40,5 +40,6 @@ jQuery(function($){
 var lang = { 
   messages: {
     ajax_standby: 'Čakajte prosím ...',
+    filter_header: 'Filter'
   }
 };

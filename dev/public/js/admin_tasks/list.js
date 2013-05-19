@@ -1,6 +1,8 @@
 var reload_all_tasks = function() {};
 jQuery(document).ready(function($) {
     
+    make_filter_form('#filter_form_id');
+    
     reload_all_tasks = function() {
         var url = global_base_url + 'index.php/admin_tasks/get_all_tasks';
         var data = $('#filter_form_id').serializeArray();
@@ -65,6 +67,8 @@ jQuery(document).ready(function($) {
             autoWidth: false,
             beforeClose: function() {
                 reload_all_tasks();
+                var url = global_base_url + 'index.php/admin_tasks/get_metainfo_open_task_set';
+                api_ajax_load(url, '#header_open_task_set_id');
                 return true;
             }
         })

@@ -13,6 +13,7 @@
         <legend>{translate line='admin_task_set_types_fieldset_legend_all_task_set_types'}</legend>
         <table class="task_set_types_table">
             <thead>
+                <th>ID</th>
                 <th>{translate line='admin_task_set_types_table_header_name'}</th>
                 <th>{translate line='admin_task_set_types_table_header_task_sets'}</th>
                 <th>{translate line='admin_task_set_types_table_header_courses'}</th>

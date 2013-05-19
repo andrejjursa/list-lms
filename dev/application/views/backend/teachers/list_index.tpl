@@ -13,6 +13,7 @@
         <legend>{translate line='admin_teachers_list_fieldset_legend_all_accounts'}</legend>
         <table class="teachers_list_table">
             <thead>
+                <th>ID</th>
                 <th>{translate line='admin_teachers_list_table_header_fullname'}</th>
                 <th>{translate line='admin_teachers_list_table_header_email'}</th>
                 <th colspan="2" class="controlls">{translate line='admin_teachers_list_table_header_controlls'}</th>

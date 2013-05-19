@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    make_filter_form('#filter_form_id');
+    
     var reload_all_task_sets = function() {
         var url = global_base_url + 'index.php/admin_task_sets/get_all_task_sets';
         var data = $('#filter_form_id').serializeArray();

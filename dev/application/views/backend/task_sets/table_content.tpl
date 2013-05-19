@@ -1,5 +1,6 @@
 {foreach $task_sets as $task_set}
 <tr>
+    <td>{$task_set->id|intval}</td>
     <td>{overlay|escape:'html' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}</td>
     <td>{translate_text text=$task_set->course_name} / {translate_text text=$task_set->course_period_name}</td>
     <td>{translate_text text=$task_set->group_name}</td>
@@ -12,5 +13,5 @@
 </tr>
 {/foreach}
 <tr id="pagination_row_id">
-    <td colspan="7">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
+    <td colspan="10">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
 </tr>

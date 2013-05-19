@@ -27,6 +27,34 @@ jQuery(document).ajaxStart(function () {
     jQuery.unblockUI();
 });
 
+var make_filter_form = function(selector) {
+    if (typeof(selector) == 'string') {
+        var filter = jQuery(selector);
+        if (filter.length == 1 && filter.is('form')) {
+            var filter_header = jQuery('<div></div>');
+            var filter_content = jQuery('<div></div>');
+            filter.after(filter_content);
+            filter.after(filter_header);
+            filter_header.css({
+                'font-weight': 'bold',
+                'line-height': '1.3em',
+                'cursor': 'pointer'
+            }).addClass('ui-widget-header');
+            var filter_text = '';
+            if (lang != undefined && lang.messages != undefined && lang.messages.filter_header != undefined) { filter_text = lang.messages.filter_header; }
+            filter_header.html('<span class="ui-icon ui-icon-plusthick" style="float: left;"></span> ' + filter_text);
+            filter_content.css({
+                'display': 'none'
+            });
+            filter.appendTo(filter_content);
+            filter_header.click(function(){
+                filter_content.toggle();
+                filter_header.find('span.ui-icon').toggleClass('ui-icon-minusthick').toggleClass('ui-icon-plusthick');
+            });
+        }
+    }
+}
+
 var show_notification = function(text, notif_type) {
   if (text == undefined) { return; }
   if (notif_type == undefined || notif_type == null) { notif_type = 'information'; }

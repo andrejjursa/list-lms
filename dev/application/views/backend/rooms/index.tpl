@@ -12,6 +12,7 @@
         <table class="rooms_table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>{translate line='admin_rooms_table_header_field_name'}</th>
                     <th>{translate line='admin_rooms_table_header_field_time_day'}</th>
                     <th>{translate line='admin_rooms_table_header_field_time_begin'}</th>

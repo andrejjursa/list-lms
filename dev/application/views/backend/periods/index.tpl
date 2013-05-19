@@ -14,6 +14,7 @@
         <table class="periods_table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>{translate line='admin_periods_table_header_name'}</th>
                     <th>{translate line='admin_periods_table_header_relations_courses'}</th>
                     <th colspan="4" class="controlls">{translate line='admin_periods_table_header_controlls'}</th>

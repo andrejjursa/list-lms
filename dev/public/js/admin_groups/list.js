@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    make_filter_form('#filter_form_id');
+    
     var reload_all_groups = function() {
         var data = $('#filter_form_id').serializeArray();
         var url = global_base_url + 'index.php/admin_groups/get_table_content';
