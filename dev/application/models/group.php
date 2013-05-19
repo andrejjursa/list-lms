@@ -12,6 +12,7 @@ class Group extends DataMapper {
     );
     
     public $has_many = array(
-        'room'
+        'room',
+        'participant',
     );
 }

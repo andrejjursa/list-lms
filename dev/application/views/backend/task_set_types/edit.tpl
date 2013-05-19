@@ -7,7 +7,7 @@
     <fieldset>
         <form action="{internal_url url='admin_task_set_types/update'}" method="post" id="new_task_set_type_form_id">
             <div class="field">
-                <label for="task_set_type_name_id">{translate line='admin_task_set_types_form_label_name'}:</label>
+                <label for="task_set_type_name_id" class="required">{translate line='admin_task_set_types_form_label_name'}:</label>
                 <p class="input"><input type="text" name="task_set_type[name]" value="{$smarty.post.task_set_type.name|default:$task_set_type->name|escape:'html'}" id="task_set_type_name_id" /></p>
                 {form_error field='task_set_type[name]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>

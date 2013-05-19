@@ -1,0 +1,33 @@
+<?php
+
+$lang['admin_participants_page_title'] = 'Course participants';
+$lang['admin_participants_fieldset_legend_all_participants'] = 'All course participants';
+$lang['admin_participants_message_no_participants_found'] = 'There is no course participants matching your filtering criteria.';
+$lang['admin_participants_message_participant_not_found'] = 'Course participant not found!';
+$lang['admin_participants_message_course_not_set'] = 'Course participant have not set the course!';
+$lang['admin_participants_message_course_is_full'] = 'Course selected by course participant is full!';
+$lang['admin_participants_message_group_is_full'] = 'Group selected by course participant is full!';
+$lang['admin_participants_message_participant_approwed'] = 'Courser participant application approved.';
+$lang['admin_participants_message_participant_cant_be_disapprowed'] = 'Participation in course was already approved and can not be disapproved.';
+$lang['admin_participants_message_participant_disapprowed'] = 'Course participant application disapprowed.';
+$lang['admin_participants_message_participant_deleted'] = 'Course participant was deleted from course.';
+$lang['admin_participants_message_participant_cant_be_deleted'] = 'Course participation can not be deleted because it was not approved.';
+$lang['admin_participants_column_allowed_0'] = 'New&nbsp;application';
+$lang['admin_participants_column_allowed_1'] = 'Approved';
+$lang['admin_participants_column_empty_message'] = 'Not selected';
+$lang['admin_participants_table_header_student_name_email'] = 'Student name (e-mail)';
+$lang['admin_participants_table_header_course_name'] = 'Course name';
+$lang['admin_participants_table_header_group_name'] = 'Group name';
+$lang['admin_participants_table_header_allowed_status'] = 'Participation status';
+$lang['admin_participants_table_header_controlls'] = 'Controlls';
+$lang['admin_participants_table_button_approve'] = 'Approve';
+$lang['admin_participants_table_button_disapprove'] = 'Disapprove';
+$lang['admin_participants_table_button_blow'] = 'Blow&nbsp;from&nbsp;the&nbsp;course';
+$lang['admin_participants_filter_label_student_fullname'] = 'Filter by student name';
+$lang['admin_participants_filter_label_course'] = 'Filter by course';
+$lang['admin_participants_filter_label_group'] = 'Add group to filter';
+$lang['admin_participants_filter_label_group_set'] = 'Filter by group membership';
+$lang['admin_participants_filter_label_group_set_all'] = 'Do not look at group membership';
+$lang['admin_participants_filter_label_group_set_none'] = 'Only course participants without group membership';
+$lang['admin_participants_filter_label_group_set_assigned'] = 'Only course participants with group membership';
+$lang['admin_participants_filter_button_submit'] = 'Apply';

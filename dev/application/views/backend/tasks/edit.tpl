@@ -14,19 +14,19 @@
             </ul>
             <div id="tabs-basic">
                 <div class="field">
-                    <label for="task_name_id">{translate line='admin_tasks_form_label_name'}:</label>
+                    <label for="task_name_id" class="required">{translate line='admin_tasks_form_label_name'}:</label>
                     <p class="input"><input type="text" name="task[name]" value="{$smarty.post.task.name|default:$task->name|escape:'html'}" id="task_name_id" /></p>
                     {form_error field='task[name]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                     {include file='partials/backend_general/overlay_editor.tpl' table='tasks' table_id=$smarty.post.task_id|default:$task->id column='name' editor_type='input' inline}
                 </div>
                 <div class="field">
-                    <label for="task_text_id">{translate line='admin_tasks_form_label_text'}:</label>
+                    <label for="task_text_id" class="required">{translate line='admin_tasks_form_label_text'}:</label>
                     <p class="input"><textarea name="task[text]" id="task_text_id" class="tinymce">{$smarty.post.task.text|default:$task->text}</textarea></p>
                     {form_error field='task[text]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                     {include file='partials/backend_general/overlay_editor.tpl' table='tasks' table_id=$smarty.post.task_id|default:$task->id column='text' editor_type='textarea' class='tinymce' inline}
                 </div>
                 <div class="field">
-                    <label>{translate line='admin_tasks_form_label_categories'}:</label>
+                    <label class="required">{translate line='admin_tasks_form_label_categories'}:</label>
                     <div class="input categories_structure">{category_checkboxes chbname='task[categories][]' structure=$structure selected=$smarty.post.task.categories|default:$task->category->get()->all_to_single_array('id')|default:[]}</div>
                     {form_error field='task[categories][]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>

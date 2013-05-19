@@ -7,4 +7,8 @@
  */
 class Student extends DataMapper {
     
+    public $has_many = array(
+        'participant',
+    );
+    
 }

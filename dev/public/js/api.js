@@ -91,7 +91,11 @@ var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
         data: data,
         method: method,
         success: function(html) {
-            jQuery(target).html(html);
+            if (typeof(target) == 'string') {
+                jQuery(target).html(html);
+            } else if (typeof(target) == 'object') {
+                target.html(html);
+            }
             onSuccess(html);
         },
         error: onError

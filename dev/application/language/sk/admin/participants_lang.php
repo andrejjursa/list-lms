@@ -1,0 +1,33 @@
+<?php
+
+$lang['admin_participants_page_title'] = 'Účastníci kurzov';
+$lang['admin_participants_fieldset_legend_all_participants'] = 'Všetci účastníci kurzov';
+$lang['admin_participants_message_no_participants_found'] = 'Nenašli sa žiadny účastníci kurzov zodpovedajúci Vašim filtrovacím kritériám.';
+$lang['admin_participants_message_participant_not_found'] = 'Účastník kurzu nebol nájdený!';
+$lang['admin_participants_message_course_not_set'] = 'Účastník kurzu nemá vybraný kurz!';
+$lang['admin_participants_message_course_is_full'] = 'Kurz zvolený účastníkom kurzu je plný!';
+$lang['admin_participants_message_group_is_full'] = 'Skupina zvolená účastnikom kurzu je plná!';
+$lang['admin_participants_message_participant_approwed'] = 'Požiadavka na účasť v kurze bola schválená.';
+$lang['admin_participants_message_participant_cant_be_disapprowed'] = 'Účasť v kurze už bola schválená a nenôže byť zamietnutá.';
+$lang['admin_participants_message_participant_disapprowed'] = 'Požiadavka na účasť v kurze bola zamietnutá.';
+$lang['admin_participants_message_participant_deleted'] = 'Účastník kurzu bol vymazaný z kurzu.';
+$lang['admin_participants_message_participant_cant_be_deleted'] = 'Účasť na kurze nie je možné zrušiť pretože nebola predtým schválená.';
+$lang['admin_participants_column_allowed_0'] = 'Nová&nbsp;prihláška';
+$lang['admin_participants_column_allowed_1'] = 'Schválený';
+$lang['admin_participants_column_empty_message'] = 'Nevybrané';
+$lang['admin_participants_table_header_student_name_email'] = 'Meno študenta (e-mail)';
+$lang['admin_participants_table_header_course_name'] = 'Názov kurzu';
+$lang['admin_participants_table_header_group_name'] = 'Názov skupiny';
+$lang['admin_participants_table_header_allowed_status'] = 'Účastnícky status';
+$lang['admin_participants_table_header_controlls'] = 'Ovládanie';
+$lang['admin_participants_table_button_approve'] = 'Schváliť';
+$lang['admin_participants_table_button_disapprove'] = 'Zamietnuť';
+$lang['admin_participants_table_button_blow'] = 'Vyhodiť&nbsp;z&nbsp;kurzu';
+$lang['admin_participants_filter_label_student_fullname'] = 'Filtrovať podla mena študenta';
+$lang['admin_participants_filter_label_course'] = 'Filtrovať podľa kurzu';
+$lang['admin_participants_filter_label_group'] = 'Pridať skupinu do filtra';
+$lang['admin_participants_filter_label_group_set'] = 'Filtrovať podľa členstva k skupine';
+$lang['admin_participants_filter_label_group_set_all'] = 'Nezohľadňovať členstvo v skupine';
+$lang['admin_participants_filter_label_group_set_none'] = 'Zobraziť iba účastníkov kurzov bez členstva v skupine';
+$lang['admin_participants_filter_label_group_set_assigned'] = 'Zobraziť iba účastníkov kurzov s členstvom v skupine';
+$lang['admin_participants_filter_button_submit'] = 'Použiť';

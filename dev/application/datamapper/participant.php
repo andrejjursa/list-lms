@@ -1,13 +1,15 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 $cache = array (
-  'table' => 'groups',
+  'table' => 'participants',
   'fields' => 
   array (
     0 => 'id',
     1 => 'updated',
     2 => 'created',
-    3 => 'name',
+    3 => 'student_id',
     4 => 'course_id',
+    5 => 'group_id',
+    6 => 'allowed',
   ),
   'validation' => 
   array (
@@ -33,9 +35,9 @@ $cache = array (
       array (
       ),
     ),
-    'name' => 
+    'student_id' => 
     array (
-      'field' => 'name',
+      'field' => 'student_id',
       'rules' => 
       array (
       ),
@@ -47,6 +49,27 @@ $cache = array (
       array (
       ),
     ),
+    'group_id' => 
+    array (
+      'field' => 'group_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'allowed' => 
+    array (
+      'field' => 'allowed',
+      'rules' => 
+      array (
+      ),
+    ),
+    'student' => 
+    array (
+      'field' => 'student',
+      'rules' => 
+      array (
+      ),
+    ),
     'course' => 
     array (
       'field' => 'course',
@@ -54,16 +77,9 @@ $cache = array (
       array (
       ),
     ),
-    'room' => 
+    'group' => 
     array (
-      'field' => 'room',
-      'rules' => 
-      array (
-      ),
-    ),
-    'participant' => 
-    array (
-      'field' => 'participant',
+      'field' => 'group',
       'rules' => 
       array (
       ),
@@ -71,12 +87,34 @@ $cache = array (
   ),
   'has_one' => 
   array (
+    'student' => 
+    array (
+      'class' => 'student',
+      'other_field' => 'participant',
+      'join_self_as' => 'participant',
+      'join_other_as' => 'student',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
     'course' => 
     array (
       'class' => 'course',
-      'other_field' => 'group',
-      'join_self_as' => 'group',
+      'other_field' => 'participant',
+      'join_self_as' => 'participant',
       'join_other_as' => 'course',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'group' => 
+    array (
+      'class' => 'group',
+      'other_field' => 'participant',
+      'join_self_as' => 'participant',
+      'join_other_as' => 'group',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
@@ -85,28 +123,6 @@ $cache = array (
   ),
   'has_many' => 
   array (
-    'room' => 
-    array (
-      'class' => 'room',
-      'other_field' => 'group',
-      'join_self_as' => 'group',
-      'join_other_as' => 'room',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
-    'participant' => 
-    array (
-      'class' => 'participant',
-      'other_field' => 'group',
-      'join_self_as' => 'group',
-      'join_other_as' => 'participant',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
   ),
   '_field_tracking' => 
   array (

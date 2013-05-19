@@ -79,6 +79,21 @@ $config['adminmenu'] = array(
                     ),
                 ),
             ),
+            array(
+                'title' => 'lang:adminmenu_title_students',
+                'pagetag' => 'students_tree',
+                'link' => 'external:javascript:void(0);',
+                'class' => 'inactive',
+                'sub' => array(
+                    array(
+                        'title' => 'lang:adminmenu_title_participants',
+                        'pagetag' => 'participants',
+                        'link' => 'admin_participants',
+                        'class' => '',
+                        'sub' => NULL,
+                    ),
+                ),
+            ),
         ),
     ),
     array(

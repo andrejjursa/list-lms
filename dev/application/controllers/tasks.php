@@ -9,7 +9,7 @@ class Tasks extends LIST_Controller {
     
     public function index() {
         $this->load->library('migration');
-        $this->migration->version(9);
+        $this->migration->version(10);
         show_error($this->migration->error_string());
     }
     

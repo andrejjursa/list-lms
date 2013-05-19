@@ -63,12 +63,30 @@ $cache = array (
       array (
       ),
     ),
+    'participant' => 
+    array (
+      'field' => 'participant',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
   ),
   'has_many' => 
   array (
+    'participant' => 
+    array (
+      'class' => 'participant',
+      'other_field' => 'student',
+      'join_self_as' => 'student',
+      'join_other_as' => 'participant',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
   ),
   '_field_tracking' => 
   array (

@@ -91,6 +91,13 @@ $cache = array (
       array (
       ),
     ),
+    'participant' => 
+    array (
+      'field' => 'participant',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -136,6 +143,17 @@ $cache = array (
       'other_field' => 'course',
       'join_self_as' => 'course',
       'join_other_as' => 'task_set',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'participant' => 
+    array (
+      'class' => 'participant',
+      'other_field' => 'course',
+      'join_self_as' => 'course',
+      'join_other_as' => 'participant',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

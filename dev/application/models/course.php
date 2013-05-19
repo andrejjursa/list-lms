@@ -17,6 +17,7 @@ class Course extends DataMapper {
     		'join_table' => 'course_task_set_type_rel',
     	),
     	'task_set',
+        'participant',
     );
     
 }

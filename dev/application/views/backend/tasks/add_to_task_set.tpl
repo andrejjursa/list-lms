@@ -15,7 +15,7 @@
                 <p class="input">{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name} / {translate_text text=$task_set->course->get()->name} / {translate_text text=$task_set->course->period->get()->name}</p>
             </div>
             <div class="field">
-                <label for="points_total_id">{translate line='admin_tasks_add_to_task_set_form_label_points_total'}:</label>
+                <label for="points_total_id" class="required">{translate line='admin_tasks_add_to_task_set_form_label_points_total'}:</label>
                 <p class="input"><input type="text" name="points_total" value="{$smarty.post.points_total|floatval}" id="points_total_id" /></p>
                 {form_error field='points_total' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>

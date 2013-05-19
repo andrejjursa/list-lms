@@ -8,17 +8,17 @@
         <legend>{translate line='admin_tasks_fieldset_legend_new_task'}</legend>
         <form action="{internal_url url='admin_tasks/create'}" method="post">
             <div class="field">
-                <label for="task_name_id">{translate line='admin_tasks_form_label_name'}:</label>
+                <label for="task_name_id" class="required">{translate line='admin_tasks_form_label_name'}:</label>
                 <p class="input"><input type="text" name="task[name]" value="{$smarty.post.task.name|escape:'html'}" id="task_name_id" /></p>
                 {form_error field='task[name]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="field">
-                <label for="task_text_id">{translate line='admin_tasks_form_label_text'}:</label>
+                <label for="task_text_id" class="required">{translate line='admin_tasks_form_label_text'}:</label>
                 <p class="input"><textarea name="task[text]" id="task_text_id" class="tinymce">{$smarty.post.task.text}</textarea></p>
                 {form_error field='task[text]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="field">
-                <label>{translate line='admin_tasks_form_label_categories'}:</label>
+                <label class="required">{translate line='admin_tasks_form_label_categories'}:</label>
                 <div class="input categories_structure">{category_checkboxes chbname='task[categories][]' structure=$structure selected=$smarty.post.task.categories|default:[]}</div>
                 {form_error field='task[categories][]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
