@@ -46,7 +46,7 @@ class Tasks extends LIST_Controller {
                 $tasks->or_like_with_overlay('name', trim($filter['name']));
             }
             if (isset($filter['text']) && trim($filter['text']) != '') {
-                $tasks->or_like_with_overlay('text', trim($filter['text']));
+                $tasks->or_like_with_overlay('text', trim($filter['text']), 'both', TRUE);
             }
             $tasks->group_end();
         }
