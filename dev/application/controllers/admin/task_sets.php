@@ -124,7 +124,9 @@ class Task_sets extends LIST_Controller {
         }
         $task_sets->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('task_sets', $task_sets->all_to_array(), array('name'));
-        $this->parser->parse('backend/task_sets/table_content.tpl', array('task_sets' => $task_sets));
+        $opened_task_set = new Task_set();
+        $opened_task_set->get_as_open();
+        $this->parser->parse('backend/task_sets/table_content.tpl', array('task_sets' => $task_sets, 'opened_task_set' => $opened_task_set));
     }
 
     public function create() {

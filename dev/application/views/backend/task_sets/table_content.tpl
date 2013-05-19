@@ -1,5 +1,5 @@
 {foreach $task_sets as $task_set}
-<tr>
+<tr{if $opened_task_set->exists() and $opened_task_set->id eq $task_set->id} class="opened_task_set"{/if}>
     <td>{$task_set->id|intval}</td>
     <td>{overlay|escape:'html' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}</td>
     <td>{translate_text text=$task_set->course_name} / {translate_text text=$task_set->course_period_name}</td>

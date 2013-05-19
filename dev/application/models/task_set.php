@@ -42,6 +42,10 @@ class Task_set extends DataMapper {
         return $this;
     }
     
+    /**
+     * Set the currently loaded task set as open task set.
+     * @return boolean TRUE, if task set is set as opened, FALSE otherwise.
+     */
     public function set_as_open() {
         if (!is_null($this->id)) {
             $CI =& get_instance();
@@ -56,6 +60,10 @@ class Task_set extends DataMapper {
         }
     }
     
+    /**
+     * Load record of opened task set from database table.
+     * @return Task_set this object for method chaining.
+     */
     public function get_as_open() {
         $CI =& get_instance();
         $CI->load->database();
@@ -68,6 +76,10 @@ class Task_set extends DataMapper {
         return $this;
     }
     
+    /**
+     * Returns opened task set ID.
+     * @return integer ID of opened task set.
+     */
     public function get_open_task_set_id() {
         $CI =& get_instance();
         $CI->load->database();

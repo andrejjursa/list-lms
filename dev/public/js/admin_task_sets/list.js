@@ -60,6 +60,7 @@ jQuery(document).ready(function($) {
         event.preventDefault();
         var url = $(this).attr('href');
         api_ajax_load(url, '#header_open_task_set_id', 'get', {}, function() {
+            reload_all_task_sets();
             show_notification(messages.after_open, 'success');
         });
     });
