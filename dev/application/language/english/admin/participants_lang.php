@@ -45,5 +45,7 @@ $lang['admin_participants_form_label_students'] = 'Students';
 $lang['admin_participants_form_button_add_student_to_list'] = 'Add to list';
 $lang['admin_participants_form_button_remove_students_from_list'] = 'Remove from list';
 $lang['admin_participants_form_button_submit'] = 'Add';
+$lang['admin_participants_form_field_course'] = 'course';
+$lang['admin_participants_form_field_students'] = 'students';
 $lang['admin_participants_javascript_question_disapprove'] = 'Are you sure you want disapprove this student application?';
 $lang['admin_participants_javascript_question_delete'] = 'Are you sure you want delete this student from course?';

@@ -45,5 +45,7 @@ $lang['admin_participants_form_label_students'] = 'Študenti';
 $lang['admin_participants_form_button_add_student_to_list'] = 'Pridať do zoznamu';
 $lang['admin_participants_form_button_remove_students_from_list'] = 'Vymazať so zoznamu';
 $lang['admin_participants_form_button_submit'] = 'Pridať';
+$lang['admin_participants_form_field_course'] = 'kurz';
+$lang['admin_participants_form_field_students'] = 'študenti';
 $lang['admin_participants_javascript_question_disapprove'] = 'Naozaj chcete zamietnut túto študentskú žiadosť o účasť?';
 $lang['admin_participants_javascript_question_delete'] = 'Naozaj chcete vymazať študenta z tohoto kurzu?';
