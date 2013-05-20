@@ -29,6 +29,7 @@ $lang['admin_participants_table_header_controlls'] = 'Ovládanie';
 $lang['admin_participants_table_button_approve'] = 'Schváliť';
 $lang['admin_participants_table_button_disapprove'] = 'Zamietnuť';
 $lang['admin_participants_table_button_blow'] = 'Vyhodiť&nbsp;z&nbsp;kurzu';
+$lang['admin_participants_table_button_save_new_group'] = 'Uložiť skupinu';
 $lang['admin_participants_filter_label_student_fullname'] = 'Filtrovať podla mena študenta';
 $lang['admin_participants_filter_label_course'] = 'Filtrovať podľa kurzu';
 $lang['admin_participants_filter_label_group'] = 'Pridať skupinu do filtra';

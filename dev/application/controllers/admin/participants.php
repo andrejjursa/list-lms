@@ -346,6 +346,60 @@ class Participants extends LIST_Controller {
         $this->output->set_output(json_encode($data));
     }
     
+    public function change_group($participant_id) {
+        $group_id = $this->input->post('group_id');
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        
+        $participant = new Participant();
+        $participant->get_by_id($participant_id);
+        
+        $group = new Group();
+        $group->get_by_id($group_id);
+        
+        $course = $participant->course->get();
+        if ($group->exists()) {
+            if ($group->is_related_to($course)) {
+                $participant->save($group);
+            }
+        } else {
+            $current_group = $participant->group->get();
+            $participant->delete($current_group);
+        }
+        
+        $is_ok = TRUE;
+        
+        if ($group->exists()) {
+            if ($participant->allowed == 1) {
+                $group_for_test = new Group();
+                $rooms = $group_for_test->room;
+                $rooms->select_min('capacity');
+                $rooms->where('group_id', '${parent}.id', FALSE);
+                $group_for_test->select_subquery($rooms, 'group_capacity');
+                $group_for_test->include_related_count('participant');
+                $group_for_test->where_related_participant('allowed', 1);
+                $group_for_test->get_by_id(intval($participant->group_id));
+                if ($group_for_test->exists()) {
+                    if (intval($group_for_test->participant_count) > intval($group_for_test->group_capacity)) {
+                         $is_ok = FALSE;
+                    }
+                }
+            }
+        }
+        
+        if ($is_ok && $this->db->trans_status()) {
+            $this->db->trans_commit();
+        } else {
+            $this->db->trans_rollback();
+        }
+        
+        $participant->include_related('group', 'name');
+        $participant->get_by_id($participant_id);
+        
+        $this->parser->parse('backend/participants/group_column.tpl', array('participant' => $participant));
+    }
+
     private function store_filter($filter) {
         if (is_array($filter)) {
             $old_filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
@@ -372,15 +426,4 @@ class Participants extends LIST_Controller {
         }}
         $this->parser->assign('courses', $data);
     }
-    
-    /*private function inject_students() {
-        $students = new Student();
-        $students->order_by('fullname', 'asc');
-        $students->get_iterated();
-        $data = array();
-        foreach ($students as $student) {
-            $data[] = array('value' => $student->fullname . ' (' . $student->email . ')', 'id' => $student->id);
-        }
-        $this->parser->assign('students', $data);
-    }*/
 }

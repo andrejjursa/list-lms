@@ -4,7 +4,9 @@
     <td>{$participant->id|intval}</td>
     <td>{$participant->student_fullname} ({$participant->student_email})</td>
     <td>{translate_text text=$participant->course_name default={translate line='admin_participants_column_empty_message'}} / {translate_text text=$participant->course_period_name default={translate line='admin_participants_column_empty_message'}}</td>
-    <td>{translate_text text=$participant->group_name default={translate line='admin_participants_column_empty_message'}}</td>
+    <td class="group_column">
+        {include file='backend/participants/group_column.tpl' inline}
+    </td>
     <td>{$allowed_status[$participant->allowed|intval]}</td>
     {if $participant->allowed eq 0}
         <td class="controlls"><a href="{internal_url url="admin_participants/approve_participation/participant_id/{$participant->id}"}" class="button special participation_approve">{translate line='admin_participants_table_button_approve'}</a></td>

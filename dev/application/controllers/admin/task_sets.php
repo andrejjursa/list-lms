@@ -256,7 +256,7 @@ class Task_sets extends LIST_Controller {
         $periods->get_iterated();
         $data = array( NULL => '' );
         if ($periods->exists()) { foreach ($periods as $period) {
-            $period->course->get_iterated();
+            $period->course->order_by_with_constant('name', 'asc')->get_iterated();
             if ($period->course->exists() > 0) { foreach ($period->course as $course) {
                 $data[$period->name][$course->id] = $course->name;
             }}

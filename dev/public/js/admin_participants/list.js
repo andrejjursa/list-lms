@@ -102,4 +102,24 @@ jQuery(document).ready(function($) {
         });
     });
     
+    $(document).on('click', '#table_content_id a.group_column', function(event) {
+        event.preventDefault();
+        var parent_td = $(this).parents('td.group_column');
+        var course_group = $(this).attr('rel').split(',', 2);
+        var url = global_base_url + 'index.php/admin_participants/get_groups_from_course/' + course_group[0] + '/' + course_group[1];
+        var target = parent_td.find('span.group_column_edit select');
+        api_ajax_load(url, target, 'post', {}, function() {
+            parent_td.find('a.group_column').hide();
+            parent_td.find('span.group_column_edit').show();
+        });
+    });
+    
+    $(document).on('click', '#table_content_id span.group_column_edit input.save_new_group', function(event) {
+        event.preventDefault();
+        var parent_td = $(this).parents('td.group_column');
+        var data = { 'group_id': parent_td.find('span.group_column_edit select').val() };
+        var url = global_base_url + 'index.php/admin_participants/change_group/' + $(this).attr('rel');
+        api_ajax_load(url, parent_td, 'post', data);
+    });
+    
 });
