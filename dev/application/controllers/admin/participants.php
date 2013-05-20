@@ -22,8 +22,10 @@ class Participants extends LIST_Controller {
         $this->_select_teacher_menu_pagetag('participants');
         $this->inject_stored_filter();
         $this->inject_courses();
+        //$this->inject_students();
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_participants/list.js');
+        $this->parser->add_js_file('admin_participants/form.js');
         $this->parser->add_css_file('admin_participants.css');
         $this->parser->parse('backend/participants/index.tpl');
     }
@@ -98,8 +100,8 @@ class Participants extends LIST_Controller {
                 $process_ok = FALSE;
             }
             
+            $course = $participant->course->get();
             if ($process_ok) {
-                $course = $participant->course->get();
                 if (!$course->exists()) {
                     $output['message'] = $this->lang->line('admin_participants_message_course_not_set');
                     $process_ok = FALSE;
@@ -107,6 +109,16 @@ class Participants extends LIST_Controller {
                 if ($course->participant->where('allowed', 1)->count() > intval($course->capacity)) {
                     $output['message'] = $this->lang->line('admin_participants_message_course_is_full');
                     $process_ok = FALSE;
+                }
+            }
+            
+            if ($process_ok) {
+                $group = $participant->group->get();
+                if ($group->exists()) {
+                    if (!$group->is_related_to($course)) {
+                        $output['message'] = $this->lang->line('admin_participants_message_student_group_not_belongs_to_course');
+                        $process_ok = FALSE;
+                    }
                 }
             }
             
@@ -120,7 +132,7 @@ class Participants extends LIST_Controller {
                 $group->where_related_participant('allowed', 1);
                 $group->get_by_id(intval($participant->group_id));
                 if ($group->exists()) {
-                    if (intval($group->participant_count) > intval($group->group_capacity)) {
+                     if (intval($group->participant_count) > intval($group->group_capacity)) {
                         $output['message'] = $this->lang->line('admin_participants_message_group_is_full');
                         $process_ok = FALSE;
                     }
@@ -219,7 +231,121 @@ class Participants extends LIST_Controller {
         }
         $this->output->set_output(json_encode($output));
     }
+    
+    public function add_participant_form() {
+        $this->inject_courses();
+        $this->parser->parse('backend/participants/add_participant_form.tpl');
+    }
+    
+    public function add_participant() {
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('participant[course]', 'lang:admin_participants_form_field_course', 'required');
+        $this->form_validation->set_rules('participant[students][]', 'lang:admin_participants_form_field_students', 'required');
+        
+        if ($this->form_validation->run()) {
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $process_ok = TRUE;
+            
+            $participant_data = $this->input->post('participant');
+            
+            $course = new Course();
+            $course->get_by_id(intval($participant_data['course']));
+            $group = new Group();
+            $group->get_by_id(intval(@$participant_data['group']));
+            
+            if (!$course->exists()) {
+                $this->messages->add_message('lang:admin_participants_message_course_not_exists', Messages::MESSAGE_TYPE_ERROR);
+                $process_ok = FALSE;
+            }
+            
+            if ($process_ok && $course->exists()) {
+                if ($group->exists() && !$group->is_related_to($course)) {
+                    $this->messages->add_message('lang:admin_participants_message_group_not_belongs_to_course', Messages::MESSAGE_TYPE_ERROR);
+                    $process_ok = FALSE;
+                }
+            }
+            
+            $disapproved = 0;
+            $added = 0;
+            if ($process_ok) {
+                foreach($participant_data['students'] as $student_id) {
+                    $student = new Student();
+                    $student->where_related('participant/course', 'id', $course->id);
+                    $student->get_by_id($student_id);
+                    
+                    if ($student->exists()) { continue; }
+                    
+                    $student->get_by_id($student_id);
+                    
+                    $participant = new Participant();
+                    $participant->allowed = intval(@$participant_data['allowed']);
+                    $participant->save(array($student, $course, $group));
+                    $added++;
+                    
+                    if ($participant->allowed == 1) {
+                        $disallowe_participant = FALSE;
+                        if ($course->participant->where('allowed', 1)->count() > intval($course->capacity)) {
+                            $disallowe_participant = TRUE;
+                        }
+                        
+                        if ($group->exists()) {
+                            $group_for_test = new Group();
+                            $rooms = $group_for_test->room;
+                            $rooms->select_min('capacity');
+                            $rooms->where('group_id', '${parent}.id', FALSE);
+                            $group_for_test->select_subquery($rooms, 'group_capacity');
+                            $group_for_test->include_related_count('participant');
+                            $group_for_test->where_related_participant('allowed', 1);
+                            $group_for_test->get_by_id(intval($group->id));
+                            if ($group_for_test->exists()) {
+                                if (intval($group_for_test->participant_count) > intval($group_for_test->group_capacity)) {
+                                    $disallowe_participant = TRUE;
+                                }
+                            }
+                        }
+                        
+                        if ($disallowe_participant) {
+                            $participant->allowed = 0;
+                            $participant->save();
+                            $disapproved++;
+                        }
+                    }
+                }
+            }
+            
+            if ($this->db->trans_status() && $process_ok) {
+                $this->db->trans_commit();
+                $info_approved = intval(@$participant_data['allowed']) == 1 ? $added - $disapproved : 0;
+                $info_disappoved = intval(@$participant_data['allowed']) == 1 ? $disapproved : $added;
+                $message = sprintf($this->lang->line('admin_participants_message_addition_successfull'), $info_approved, $info_disappoved);
+                $this->messages->add_message($message, Messages::MESSAGE_TYPE_SUCCESS);
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_participants_messages_error_in_addition_transaction', Messages::MESSAGE_TYPE_ERROR);
+            }
+            
+            redirect(create_internal_url('admin_participants/add_participant_form'));
+        } else {
+            $this->add_participant_form();
+        }
+    }
 
+    public function get_all_students() {
+        $this->output->set_content_type('application/json');
+        $students = new Student();
+        $students->order_by('fullname', 'asc');
+        $students->or_like('fullname', trim($this->input->get('term')));
+        $students->or_like('email', trim($this->input->get('term')));
+        $students->get_iterated();
+        $data = array();
+        foreach ($students as $student) {
+            $data[] = array('value' => $student->fullname . ' (' . $student->email . ')', 'id' => $student->id);
+        }
+        $this->output->set_output(json_encode($data));
+    }
+    
     private function store_filter($filter) {
         if (is_array($filter)) {
             $old_filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
@@ -246,4 +372,15 @@ class Participants extends LIST_Controller {
         }}
         $this->parser->assign('courses', $data);
     }
+    
+    /*private function inject_students() {
+        $students = new Student();
+        $students->order_by('fullname', 'asc');
+        $students->get_iterated();
+        $data = array();
+        foreach ($students as $student) {
+            $data[] = array('value' => $student->fullname . ' (' . $student->email . ')', 'id' => $student->id);
+        }
+        $this->parser->assign('students', $data);
+    }*/
 }

@@ -4,6 +4,12 @@
     <h2>{translate line='admin_participants_page_title'}</h2>
     {include file='partials/backend_general/flash_messages.tpl' inline}
     <fieldset>
+        <legend>{translate line='admin_participants_fieldset_legend_add_participant'}</legend>
+        <form action="{internal_url url='admin_participants/add_participant'}" method="post" id="add_participant_form_id">
+            {include file='backend/participants/add_participant_form.tpl' inline}
+        </form>
+    </fieldset>
+    <fieldset>
         <legend>{translate line='admin_participants_fieldset_legend_all_participants'}</legend>
         <div class="filter_wrap">
             <form action="{internal_url url='admin_participants/table_content'}" method="post" id="filter_form_id">
@@ -52,3 +58,10 @@
         </table>
     </fieldset>
 {/block}
+{block custom_head}<script type="text/javascript">
+    var students_cache = {ldelim}{rdelim};
+    var messages = {
+        disapprove_question: '{translate line='admin_participants_javascript_question_disapprove'}',
+        delete_question: '{translate line='admin_participants_javascript_question_delete'}'
+    };
+</script>{/block}

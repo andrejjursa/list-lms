@@ -43,6 +43,6 @@
 {block custom_head}<script type="text/javascript">
     var messages = {
         delete_question: '{translate line="admin_groups_delete_period_question"}',
-        after_delete: '{translate line="admin_groups_message_after_delete"}',
+        after_delete: '{translate line="admin_groups_message_after_delete"}'
     };
 </script>{/block}
