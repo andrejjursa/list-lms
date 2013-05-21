@@ -9,7 +9,6 @@ class Courses extends LIST_Controller {
     
     public function __construct() {
         parent::__construct();
-        
         $this->usermanager->student_login_protected_redirect();
         $this->_init_language_for_student();
         $this->_load_student_langfile();

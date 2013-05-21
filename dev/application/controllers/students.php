@@ -40,17 +40,23 @@ class Students extends LIST_Controller {
         
         if ($this->form_validation->run()) {
             $student_data = $this->input->post('student');
-            if ($this->usermanager->authenticate_student_login($student_data['email'], $student_data['password'])) {
-                $uri_params = $this->uri->uri_to_assoc(3);
-                if (isset($uri_params['current_url'])) {
-                    redirect(decode_from_url($uri_params['current_url']));
-                } else {
-                    $redirects = $this->config->item('after_login_redirects');
-                    redirect(create_internal_url($redirects['student']));
-                }
-            } else {
-                $this->parser->assign('general_error', $this->lang->line('students_login_error_bad_email_or_password'));
+            if ($this->usermanager->is_login_attempts_exceeded($student_data['email'], Usermanager::ACCOUNT_TYPE_STUDENT)) {
+                $message = sprintf($this->lang->line('students_login_error_attempts_exceeded'), $this->config->item('student_login_security_allowed_attempts'), $this->config->item('student_login_security_timeout'));
+                $this->parser->assign('general_error', $message);
                 $this->login();
+            } else {
+                if ($this->usermanager->authenticate_student_login($student_data['email'], $student_data['password'])) {
+                    $uri_params = $this->uri->uri_to_assoc(3);
+                    if (isset($uri_params['current_url'])) {
+                        redirect(decode_from_url($uri_params['current_url']));
+                    } else {
+                        $redirects = $this->config->item('after_login_redirects');
+                        redirect(create_internal_url($redirects['student']));
+                    }
+                } else {
+                    $this->parser->assign('general_error', $this->lang->line('students_login_error_bad_email_or_password'));
+                    $this->login();
+                }
             }
         } else {
             $this->login();
@@ -62,7 +68,9 @@ class Students extends LIST_Controller {
      */
     public function logout() {
         $this->usermanager->do_student_logout();
-        $this->parser->parse('frontend/students/logout.tpl');
+        $this->messages->add_message('lang:students_logout_logout_message', Messages::MESSAGE_TYPE_SUCCESS);
+        $redirects = $this->config->item('login_redirects');
+        redirect(create_internal_url($redirects['student']));
     }
     
     /**

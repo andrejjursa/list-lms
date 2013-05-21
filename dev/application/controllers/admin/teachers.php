@@ -36,18 +36,24 @@ class Teachers extends LIST_Controller {
         
         if ($this->form_validation->run()) {
             $teacher_data = $this->input->post('teacher');
-            if ($this->usermanager->authenticate_teacher_login($teacher_data['email'], $teacher_data['password'])) {
-                $uri_params = $this->uri->uri_to_assoc(3);
-                $this->messages->add_message('lang:admin_teachers_login_success', Messages::MESSAGE_TYPE_SUCCESS);
-                if (isset($uri_params['current_url'])) {
-                    redirect(decode_from_url($uri_params['current_url']));
-                } else {
-                    $redirects = $this->config->item('after_login_redirects');
-                    redirect(create_internal_url($redirects['teacher']));
-                }
-            } else {
-                $this->parser->assign('general_error', $this->lang->line('admin_teachers_login_error_bad_email_or_password'));
+            if ($this->usermanager->is_login_attempts_exceeded($teacher_data['email'], Usermanager::ACCOUNT_TYPE_TEACHER)) {
+                $message = sprintf($this->lang->line('admin_teachers_login_error_attempts_exceeded'), $this->config->item('teacher_login_security_allowed_attempts'), $this->config->item('teacher_login_security_timeout'));
+                $this->parser->assign('general_error', $message);
                 $this->login();
+            } else {
+                if ($this->usermanager->authenticate_teacher_login($teacher_data['email'], $teacher_data['password'])) {
+                    $uri_params = $this->uri->uri_to_assoc(3);
+                    $this->messages->add_message('lang:admin_teachers_login_success', Messages::MESSAGE_TYPE_SUCCESS);
+                    if (isset($uri_params['current_url'])) {
+                        redirect(decode_from_url($uri_params['current_url']));
+                    } else {
+                        $redirects = $this->config->item('after_login_redirects');
+                        redirect(create_internal_url($redirects['teacher']));
+                    }
+                } else {
+                    $this->parser->assign('general_error', $this->lang->line('admin_teachers_login_error_bad_email_or_password'));
+                    $this->login();
+                }
             }
         } else {
             $this->login();
@@ -57,7 +63,8 @@ class Teachers extends LIST_Controller {
     public function logout() {
         $this->usermanager->do_teacher_logout();
         $this->messages->add_message('lang:admin_teachers_logout_success', Messages::MESSAGE_TYPE_SUCCESS);
-        redirect(create_internal_url('admin_teachers/login'));
+        $redirects = $this->config->item('login_redirects');
+        redirect(create_internal_url($redirects['teacher']));
     }
     
     public function my_account() {

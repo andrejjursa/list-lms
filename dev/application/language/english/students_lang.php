@@ -9,6 +9,7 @@ $lang['students_login_submit_button_label'] = 'Log me in';
 $lang['students_login_field_email'] = 'e-mail';
 $lang['students_login_field_password'] = 'password';
 $lang['students_login_error_bad_email_or_password'] = 'Bad e-mail of password.';
+$lang['students_login_error_attempts_exceeded'] = 'Number of login attempts exceed allowed maximum of %s. Please, wait at least %s minutes and try again.';
 $lang['students_logout_logout_message'] = 'You were loged out successfuly.';
 $lang['students_registration_welcome_text'] = 'Student registration';
 $lang['students_registration_label_fullname'] = 'Your full name';

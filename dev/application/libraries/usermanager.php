@@ -9,6 +9,9 @@ define('SESSION_AUTH_LOGIN_TEACHER', 'SESSION_TEACHER_DATA');
  */
 class Usermanager {
     
+    const ACCOUNT_TYPE_TEACHER = 'teacher';
+    const ACCOUNT_TYPE_STUDENT = 'student';
+    
     /**
      * @var object $CI CodeIgniter.
      */
@@ -95,6 +98,7 @@ class Usermanager {
             return TRUE;
         } else {
             $this->validate_student_login_verification(FALSE);
+            $this->add_login_failed_record($email, self::ACCOUNT_TYPE_STUDENT);
             return FALSE;
         }
     }
@@ -120,8 +124,52 @@ class Usermanager {
             return TRUE;
         } else {
             $this->validate_teacher_login_verification(FALSE);
+            $this->add_login_failed_record($email, self::ACCOUNT_TYPE_TEACHER);
             return FALSE;
         }
+    }
+    
+    /**
+     * Check if login attemts exceed allowed number of attempts.
+     * @param string $email e-mail address of account.
+     * @param string $acc_type type of account (ACCOUNT_TYPE_* constant).
+     * @return boolean TRUE, if number of login attempts exceed allowed, FALSE otherwise.
+     */
+    public function is_login_attempts_exceeded($email, $acc_type = self::ACCOUNT_TYPE_TEACHER) {
+        $account_type = $acc_type == self::ACCOUNT_TYPE_TEACHER ? 'teacher' : 'student';
+        $this->CI->config->load('datamapper');
+        $datamapper = $this->CI->config->item('datamapper');
+        $browser = str_replace(array("\n", "\r"), array('', ''), substr($_SERVER['HTTP_USER_AGENT'], 0, 255));
+        $security = new Security();
+        $security->where('account_type', $account_type);
+        $security->where('account_email', $email);
+        $security->where('login_ip_address', getenv('REMOTE_ADDR'));
+        $security->where('login_browser', $browser);
+        $security->where('login_failed_time >=', date($datamapper['timestamp_format'], strtotime('now - ' . $this->CI->config->item($account_type . '_login_security_timeout') . ' minutes')));
+        $failed_times = $security->count();
+        if ($failed_times > $this->CI->config->item($account_type . '_login_security_allowed_attempts')) {
+            return TRUE;
+        }
+        return FALSE;
+    }
+    
+    /**
+     * Save record of failed login attempt.
+     * @param string $email e-mail address of account.
+     * @param string $acc_type type of account (ACCOUNT_TYPE_* constant).
+     */
+    public function add_login_failed_record($email, $acc_type = self::ACCOUNT_TYPE_TEACHER) {
+        $account_type = $acc_type == self::ACCOUNT_TYPE_TEACHER ? 'teacher' : 'student';
+        $this->CI->config->load('datamapper');
+        $datamapper = $this->CI->config->item('datamapper');
+        $browser = str_replace(array("\n", "\r"), array('', ''), substr($_SERVER['HTTP_USER_AGENT'], 0, 255));
+        $security = new Security();
+        $security->account_type = $account_type;
+        $security->account_email = $email;
+        $security->login_ip_address = getenv('REMOTE_ADDR');
+        $security->login_browser = $browser;
+        $security->login_failed_time = date($datamapper['timestamp_format']);
+        $security->save();
     }
     
     /**

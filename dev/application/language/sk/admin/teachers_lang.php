@@ -10,6 +10,7 @@ $lang['admin_teachers_login_submit_button_text'] = 'Prihlásiť sa';
 $lang['admin_teachers_login_field_email'] = 'e-mail';
 $lang['admin_teachers_login_field_password'] = 'heslo';
 $lang['admin_teachers_login_error_bad_email_or_password'] = 'Nesprávny e-mail alebo heslo.';
+$lang['admin_teachers_login_error_attempts_exceeded'] = 'Počet pokusov o prihlásenie prekročil povolené maximum %s pokusov. Prosím, počkajte aspoň %s minút a skúste znova.';
 $lang['admin_teachers_login_success'] = 'Prihlásenie úspešné.';
 $lang['admin_teachers_logout_success'] = 'Odhlásenie prebehlo úspešne.';
 $lang['admin_teachers_my_account_welcome_title'] = 'Môj účet';

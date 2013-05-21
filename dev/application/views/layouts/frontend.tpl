@@ -10,8 +10,8 @@
     <body>
         {include file='partials/frontend_general/pagemenu.tpl' inline}
         <div id="top_meta_informations">
-            <div class="left">TEST</div>
-            <div class="right">TEST</div>
+            <div class="left">{include file='partials/frontend_general/selected_course.tpl' inline}</div>
+            <div class="right">{include file='partials/frontend_general/student_panel.tpl' inline}</div>
             <div class="clear"></div>
         </div>
         <div id="mainwrap">

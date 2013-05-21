@@ -5,7 +5,10 @@
         <div class="boxborder">
             <div class="loginbox">
                 <h1>{translate line='students_login_welcome_text'}</h1>
-                {include file='partials/frontend_general/error_box.tpl' message=$general_error inline}
+                {if $general_error}
+                    {include file='partials/frontend_general/error_box.tpl' message=$general_error inline}
+                {/if}
+                {include file='partials/frontend_general/flash_messages.tpl' inline}
                 <form action="{internal_url url="students/do_login/{$uri_params|implode_uri_params}"}" method="post">
                     <div class="field_login">
                         <label for="id_students_email">{translate line='students_login_label_email'}:</label>

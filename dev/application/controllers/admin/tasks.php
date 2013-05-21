@@ -217,7 +217,7 @@ class Tasks extends LIST_Controller {
             @mkdir($path_base);
             @chmod($path_base, 0644);
         }
-        $path = 'public/uploads/task_files/task_' . intval($task_id) . '/hidden/';
+        $path = 'private/uploads/task_files/task_' . intval($task_id) . '/hidden/';
         if (!file_exists($path)) {
             @mkdir($path);
             @chmod($path, 0644);

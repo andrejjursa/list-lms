@@ -246,8 +246,8 @@ $config['sess_cookie_name'] = 'list_session';
 $config['sess_expiration'] = 7200;
 $config['sess_expire_on_close'] = true;
 $config['sess_encrypt_cookie'] = false;
-$config['sess_use_database'] = false;
-$config['sess_table_name'] = 'ci_sessions';
+$config['sess_use_database'] = true;
+$config['sess_table_name'] = 'sessions';
 $config['sess_match_ip'] = true;
 $config['sess_match_useragent'] = true;
 $config['sess_time_to_update'] = 300;
@@ -379,6 +379,27 @@ $config['after_login_redirects']['teacher'] = 'admin_dashboard/index';
 | Set to FALSE to turn off rewrite engine support.
 */
 $config['rewrite_engine_enabled'] = true;
+
+/*
+|--------------------------------------------------------------------------
+| Login timeouts (in minutes)
+|--------------------------------------------------------------------------
+| Set this values to number of minutes you want to be student or teacher
+| prevented from log into system if they account credentials does not 
+| match the stored one.
+*/
+$config['teacher_login_security_timeout'] = 5;
+$config['student_login_security_timeout'] = 5;
+
+/*
+|--------------------------------------------------------------------------
+| Allowed number of login attempts
+|--------------------------------------------------------------------------
+| Set this values to number of attempts which are allowed to login to 
+| system for students or teachers.
+*/
+$config['teacher_login_security_allowed_attempts'] = 5;
+$config['student_login_security_allowed_attempts'] = 5;
 
 /* End of file config.php */
 

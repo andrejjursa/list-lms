@@ -10,6 +10,7 @@ $lang['admin_teachers_login_submit_button_text'] = 'Log me in';
 $lang['admin_teachers_login_field_email'] = 'e-mail';
 $lang['admin_teachers_login_field_password'] = 'password';
 $lang['admin_teachers_login_error_bad_email_or_password'] = 'Bad e-mail or password.';
+$lang['admin_teachers_login_error_attempts_exceeded'] = 'Number of login attempts exceed allowed maximum of %s. Please, wait at least %s minutes and try again.';
 $lang['admin_teachers_login_success'] = 'Login successful.';
 $lang['admin_teachers_logout_success'] = 'Logout successful.';
 $lang['admin_teachers_my_account_welcome_title'] = 'My account';

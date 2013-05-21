@@ -1,5 +1,6 @@
 {extends file='layouts/frontend.tpl'}
 {block main_content}
+    {include file='partials/frontend_general/flash_messages.tpl' inline}
     {foreach $periods as $period}
         <h3>{translate_text text=$period->name}</h3>
         <div class="period_courses">
