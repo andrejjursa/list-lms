@@ -98,6 +98,13 @@ $cache = array (
       array (
       ),
     ),
+    'active_for_student' => 
+    array (
+      'field' => 'active_for_student',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -122,6 +129,17 @@ $cache = array (
       'other_field' => 'course',
       'join_self_as' => 'course',
       'join_other_as' => 'task_set_type',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'active_for_student' => 
+    array (
+      'class' => 'student',
+      'other_field' => 'active_course',
+      'join_self_as' => 'active_course',
+      'join_other_as' => 'active_for_student',
+      'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
       'cascade_delete' => true,

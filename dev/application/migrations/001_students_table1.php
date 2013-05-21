@@ -33,10 +33,17 @@ class Migration_students_table1 extends CI_Migration {
                     'type' => 'VARCHAR',
                     'constraint' => 32,
                 ),
+                'active_course_id' => array(
+                    'type' => 'INT',
+                    'constraint' => '11',
+                    'unsigned' => TRUE,
+                    'null' => TRUE,
+                ),
             )
         );
         
         $this->dbforge->add_key('id', TRUE);
+        $this->dbforge->add_key('active_course_id');
         
         $this->dbforge->create_table('students');
         

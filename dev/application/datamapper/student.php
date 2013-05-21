@@ -10,6 +10,7 @@ $cache = array (
     4 => 'email',
     5 => 'password',
     6 => 'language',
+    7 => 'active_course_id',
   ),
   'validation' => 
   array (
@@ -63,6 +64,20 @@ $cache = array (
       array (
       ),
     ),
+    'active_course_id' => 
+    array (
+      'field' => 'active_course_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'active_course' => 
+    array (
+      'field' => 'active_course',
+      'rules' => 
+      array (
+      ),
+    ),
     'participant' => 
     array (
       'field' => 'participant',
@@ -73,6 +88,17 @@ $cache = array (
   ),
   'has_one' => 
   array (
+    'active_course' => 
+    array (
+      'class' => 'course',
+      'other_field' => 'active_for_student',
+      'join_self_as' => 'active_for_student',
+      'join_other_as' => 'active_course',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
   ),
   'has_many' => 
   array (

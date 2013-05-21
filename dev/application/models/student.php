@@ -11,4 +11,11 @@ class Student extends DataMapper {
         'participant',
     );
     
+    public $has_one = array(
+        'active_course' => array(
+            'class' => 'course',
+            'other_field' => 'active_for_student',
+        ),
+    );
+    
 }
