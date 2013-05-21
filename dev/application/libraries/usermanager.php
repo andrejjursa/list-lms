@@ -178,7 +178,7 @@ class Usermanager {
     public function refresh_student_userdata() {
         if ($this->is_student_session_valid()) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT);
-            $student = new Teacher();
+            $student = new Student();
             $student->get_by_id(@$userdata['id']);
             if ($student->exists()) {
                 $userdata = $student->to_array();

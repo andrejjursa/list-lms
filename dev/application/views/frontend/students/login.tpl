@@ -1,4 +1,4 @@
-{extends file='layouts/frontend.tpl'}
+{extends file='layouts/frontend_loginbox.tpl'}
 {block title}{translate line='students_login_welcome_text'}{/block}
 {block main_content}
     <div id="loginbox">
@@ -12,12 +12,12 @@
                 <form action="{internal_url url="students/do_login/{$uri_params|implode_uri_params}"}" method="post">
                     <div class="field_login">
                         <label for="id_students_email">{translate line='students_login_label_email'}:</label>
-                        <p><input type="text" name="student[email]" value="{$smarty.post.student.email|escape:'html'}" id="id_students_email" /></p>
+                        <p class="input"><input type="text" name="student[email]" value="{$smarty.post.student.email|escape:'html'}" id="id_students_email" /></p>
                         {form_error field='student[email]' left_delimiter = '<p class="error"><span class="message">' right_delimiter='</span></p>'}
                     </div>
                     <div class="field_login">
                         <label for="id_students_password">{translate line='students_login_label_password'}:</label>
-                        <p><input type="password" name="student[password]" value="{$smarty.post.student.password|escape:'html'}" id="id_students_password" /></p>
+                        <p class="input"><input type="password" name="student[password]" value="{$smarty.post.student.password|escape:'html'}" id="id_students_password" /></p>
                         {form_error field='student[password]' left_delimiter = '<p class="error"><span class="message">' right_delimiter='</span></p>'}
                     </div>
                     <div class="buttons">

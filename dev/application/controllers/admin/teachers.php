@@ -29,6 +29,15 @@ class Teachers extends LIST_Controller {
     }
     
     public function do_login() {
+        $uri_params = $this->uri->uri_to_assoc(3);
+        if ($this->usermanager->is_teacher_session_valid()) {
+            if (isset($uri_params['current_url'])) {
+                redirect(decode_from_url($uri_params['current_url']));
+            } else {
+                $redirects = $this->config->item('after_login_redirects');
+                redirect(create_internal_url($redirects['teacher']));
+            }
+        }
         $this->load->library('form_validation');
         
         $this->form_validation->set_rules('teacher[email]', 'lang:admin_teachers_login_field_email', 'required|valid_email');
@@ -42,7 +51,6 @@ class Teachers extends LIST_Controller {
                 $this->login();
             } else {
                 if ($this->usermanager->authenticate_teacher_login($teacher_data['email'], $teacher_data['password'])) {
-                    $uri_params = $this->uri->uri_to_assoc(3);
                     $this->messages->add_message('lang:admin_teachers_login_success', Messages::MESSAGE_TYPE_SUCCESS);
                     if (isset($uri_params['current_url'])) {
                         redirect(decode_from_url($uri_params['current_url']));
@@ -73,8 +81,7 @@ class Teachers extends LIST_Controller {
         $this->_initialize_open_task_set();
         $this->usermanager->teacher_login_protected_redirect();
         $teacher = new Teacher();
-        $teacher->where('id', $this->usermanager->get_teacher_id());
-        $teacher->get();
+        $teacher->get_by_id($this->usermanager->get_teacher_id());
         
         $languages_available = $this->lang->get_list_of_languages();
         
@@ -92,18 +99,23 @@ class Teachers extends LIST_Controller {
         if ($this->form_validation->run()) {
             $teacher_id = intval($this->input->post('teacher_id'));
             if ($teacher_id == $this->usermanager->get_teacher_id()) {
+                $this->_transaction_isolation();
+                $this->db->trans_begin();
                 $teacher = new Teacher();
                 $teacher->get_by_id($teacher_id);
                 if ($teacher->exists()) {
                     $teacher->from_array($this->input->post('teacher'), array('fullname', 'language'));
-                    if ($teacher->save()) {
+                    if ($teacher->save() && $this->db->trans_status()) {
                         $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->db->trans_commit();
                         $this->usermanager->refresh_teacher_userdata();
                     } else {
                         $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
+                        $this->db->trans_rollback();
                     }
                 } else {
                     $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
+                    $this->db->trans_rollback();
                 }
             } else {
                 $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
@@ -127,17 +139,22 @@ class Teachers extends LIST_Controller {
         
         if ($this->form_validation->run()) {
             if ($teacher_id == $this->usermanager->get_teacher_id()) {
+                $this->_transaction_isolation();
+                $this->db->trans_begin();
                 $teacher = new Teacher();
                 $teacher->get_by_id($teacher_id);
                 if ($teacher->exists()) {
                     $teacher_post = $this->input->post('teacher');
                     $teacher->password = sha1($teacher_post['password']);
-                    if ($teacher->save()) {
+                    if ($teacher->save() && $this->db->trans_status()) {
                         $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->db->trans_commit();
                     } else {
                         $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
+                        $this->db->trans_rollback();
                     }
                 } else {
+                    $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
                 }
             } else {
@@ -167,22 +184,26 @@ class Teachers extends LIST_Controller {
         $this->form_validation->set_rules('teacher_id', 'id', 'required');
         
         if ($this->form_validation->run()) {
-            $error_invalid = true;
             if ($teacher_id == $this->usermanager->get_teacher_id()) {
+                $this->_transaction_isolation();
+                $this->db->trans_begin();
                 $teacher = new Teacher();
                 $teacher->get_by_id($teacher_id);
                 if ($teacher->exists()) {
                     $teacher_post = $this->input->post('teacher');
                     $teacher->email = $teacher_post['email'];
-                    if ($teacher->save()) {
+                    if ($teacher->save() && $this->db->trans_status()) {
                         $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->db->trans_commit();
                     } else {
                         $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
+                        $this->db->trans_rollback();
                     }
-                    $error_invalid = false;
+                } else {
+                    $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
+                    $this->db->trans_rollback();
                 }
-            }
-            if ($error_invalid) {
+            } else {
                 $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
             }
             redirect(create_internal_url('admin_teachers/my_account'));
