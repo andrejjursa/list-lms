@@ -7,4 +7,10 @@ $config['pagemenu'] = array(
         'link' => 'courses',
         'sub' => NULL,
     ),
+    array(
+        'title' => 'lang:pagemenu_title_groups',
+        'pagetag' => 'groups',
+        'link' => 'groups',
+        'sub' => NULL,
+    ),
 );
