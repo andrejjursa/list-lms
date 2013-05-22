@@ -70,6 +70,50 @@ class Courses extends LIST_Controller {
         $this->output->set_output(json_encode($output));
     }
 
+    public function activate_course($course_id) {
+        $this->output->set_content_type('application/json');
+        
+        $output = new stdClass();
+        $output->status = FALSE;
+        $output->message = '';
+        $output->content = '';
+        $output->metainfo = '';
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        
+        $course = new Course();
+        $course->get_by_id($course_id);
+        
+        if ($course->exists()) {
+            $participant = $student->participant->where_related($course)->where('allowed', 1)->get();
+            if ($participant->exists()) {
+                $student->save($course, 'active_course');
+                $this->db->trans_commit();
+                $this->usermanager->set_student_data_to_smarty();
+                $period = $course->period->get();
+                $output->content = $this->parser->parse('frontend/courses/period_courses.tpl', array('period' => $period), TRUE);
+                $output->metainfo = $this->parser->parse('partials/frontend_general/selected_course.tpl', array(), TRUE);
+                $output->status = TRUE;
+                $output->message = sprintf($this->lang->line('courses_message_switched_to_course'), $this->lang->text($course->name) . ' / ' . $this->lang->text($period->name));
+            } else {
+                $output->message = $this->lang->line('courses_message_cant_switch_to_unsigned_course');
+                $this->db->trans_rollback();
+            }
+        } else {
+            $output->message = $this->lang->line('courses_message_course_not_found');
+            $this->db->trans_rollback();
+        }
+        
+        $this->output->set_output(json_encode($output));
+    }
+    
+    public function show_details($course_id) {
+        
+    }
 
     private function inject_period_options() {
         $periods = new Period();
