@@ -111,6 +111,7 @@ function get_days() {
 
 /**
  * This function will construct days array and assign them to template parser.
+ * Days array is called $list_days inside template.
  */
 function smarty_inject_days() {
     $CI =& get_instance();

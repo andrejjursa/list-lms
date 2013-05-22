@@ -13,3 +13,11 @@ $lang['courses_message_signed_up_for_course'] = 'Signed up for course %s. Wait f
 $lang['courses_messages_unknown_error'] = 'Unknown error occured. Please try again later.';
 $lang['courses_message_switched_to_course'] = 'Successfully switched to course %s.';
 $lang['courses_message_cant_switch_to_unsigned_course'] = 'Can\'t switch to selected course. You are not member of this course or your membership have not been approwed yet.';
+
+$lang['courses_detail_page_title'] = 'Course details';
+$lang['courses_detail_description_missing'] = 'This course has no description.';
+$lang['courses_detail_fieldset_legend_groups'] = 'Groups';
+$lang['courses_detail_group_teaching'] = 'Teaching in rooms';
+$lang['courses_detail_group_empty'] = 'Group is empty.';
+$lang['courses_detail_group_without_rooms'] = 'This group does not have any room.';
+$lang['courses_detail_group_name_not_assigned'] = 'Not assigned to group';

@@ -13,3 +13,11 @@ $lang['courses_message_signed_up_for_course'] = 'Si zapísaný(á) na kurz %s. P
 $lang['courses_messages_unknown_error'] = 'Vyskytla sa neznáma chyba. Prosím zopakujte pokus neskôr.';
 $lang['courses_message_switched_to_course'] = 'Úspešne prepnuté na kurz %s.';
 $lang['courses_message_cant_switch_to_unsigned_course'] = 'Nie je možné prepnúť na kurz. Buď ste neni členom kurzu alebo členstvo v kurze ešte nebolo schválené.';
+
+$lang['courses_detail_page_title'] = 'Detaily kurzu';
+$lang['courses_detail_description_missing'] = 'Tento kurz nemá popis.';
+$lang['courses_detail_fieldset_legend_groups'] = 'Skupiny';
+$lang['courses_detail_group_teaching'] = 'Výuka v miestnostiach';
+$lang['courses_detail_group_empty'] = 'Skupina je prázdna.';
+$lang['courses_detail_group_without_rooms'] = 'Táto skupina nemá žiadnu miestnosť.';
+$lang['courses_detail_group_name_not_assigned'] = 'Nezaradení do skupiny';

@@ -112,7 +112,11 @@ class Courses extends LIST_Controller {
     }
     
     public function show_details($course_id) {
-        
+        $course = new Course();
+        $course->get_by_id($course_id);
+        smarty_inject_days();
+        $this->parser->add_css_file('frontend_courses.css');
+        $this->parser->parse('frontend/courses/course_details.tpl', array('course' => $course));
     }
 
     private function inject_period_options() {

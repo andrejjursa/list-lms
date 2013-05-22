@@ -43,6 +43,15 @@ jQuery(document).ready(function($) {
     
     $(document).on('click', 'div.period_course a.show_details', function(event) {
         event.preventDefault();
+        var url = $(this).attr('href');
+        $.fancybox(url, {
+            type: 'iframe',
+            width: '100%',
+            height: '100%',
+            autoSize: false,
+            autoHeight: false,
+            autoWidth: false
+        })
     });
     
 });
