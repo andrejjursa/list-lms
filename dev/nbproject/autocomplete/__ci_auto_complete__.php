@@ -85,6 +85,10 @@ class CI_Model {
     
 }
 
+class DMZ_Translations {
+    
+}
+
 /**
  * @return CI_Controller
  */
