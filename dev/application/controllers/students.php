@@ -64,6 +64,7 @@ class Students extends LIST_Controller {
                 $this->login();
             } else {
                 if ($this->usermanager->authenticate_student_login($student_data['email'], $student_data['password'])) {
+                    $this->messages->add_message('lang:students_login_successful', Messages::MESSAGE_TYPE_SUCCESS);
                     if (isset($uri_params['current_url'])) {
                         redirect(decode_from_url($uri_params['current_url']));
                     } else {

@@ -10,6 +10,7 @@ $cache = array (
     4 => 'period_id',
     5 => 'description',
     6 => 'capacity',
+    7 => 'groups_change_deadline',
   ),
   'validation' => 
   array (
@@ -59,6 +60,13 @@ $cache = array (
     'capacity' => 
     array (
       'field' => 'capacity',
+      'rules' => 
+      array (
+      ),
+    ),
+    'groups_change_deadline' => 
+    array (
+      'field' => 'groups_change_deadline',
       'rules' => 
       array (
       ),

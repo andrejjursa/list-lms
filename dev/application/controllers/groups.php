@@ -17,7 +17,25 @@ class Groups extends LIST_Controller {
     
     public function index() {
         $this->_select_student_menu_pagetag('groups');
-        $this->parser->parse('frontend/groups/index.tpl');
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        
+        $course = new Course();
+        $course->where_related_active_for_student($student);
+        $course->where_related('participant/student', $student);
+        $course->where_related_participant('allowed', 1);
+        $course->get();
+        
+        $can_change_group = FALSE;
+        
+        if ($course->exists()) {
+            if (is_null($course->groups_change_deadline) || date('U', strtotime($course->groups_change_deadline)) >= time()) { $can_change_group = TRUE; }
+        }
+        
+        smarty_inject_days();
+        $this->parser->add_css_file('frontend_groups.css');
+        
+        $this->parser->parse('frontend/groups/index.tpl', array('course' => $course, 'can_change_group' => $can_change_group));
     }
     
 }

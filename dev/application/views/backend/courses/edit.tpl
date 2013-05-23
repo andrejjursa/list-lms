@@ -29,6 +29,11 @@
                     <p class="input"><input type="text" name="course[capacity]" id="course_capacity_id" value="{$smarty.post.course.capacity|default:$course->capacity|escape:'html'}" /></p>
                     {form_error field='course[capacity]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>
+                <div class="field">
+                    <label for="course_groups_change_deadline_id">{translate line='admin_courses_form_label_course_groups_change_deadline'}:</label>
+                    <p class="input"><input type="text" name="course[groups_change_deadline]" value="{$smarty.post.course.groups_change_deadline|default:$course->groups_change_deadline|escape:'html'}" id="course_groups_change_deadline_id" /></p>
+                    <p class="input"><em>{translate line='admin_courses_form_label_course_groups_change_deadline_hint'}</em></p>
+                </div>
                 <div class="buttons">
                     <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" />
                 </div>

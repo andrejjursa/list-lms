@@ -14,4 +14,10 @@ jQuery(document).ready(function($) {
         theme_advanced_statusbar_location : 'bottom',
         entity_encoding: 'raw'
     });
+    
+    $('#course_groups_change_deadline_id').datetimepicker({
+        showSecond: true,
+        dateFormat: 'yy-mm-dd',
+        timeFormat: 'HH:mm:ss'
+    });
 });

@@ -7,6 +7,8 @@
  */
 class Courses extends LIST_Controller {
     
+    const REGEXP_PATTERN_DATETYME = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
+    
     public function __construct() {
         parent::__construct();
         $this->_init_language_for_teacher();
@@ -49,6 +51,7 @@ class Courses extends LIST_Controller {
             $course = new Course();
             $course_data = $this->input->post('course');
             $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity'));
+            $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
             
             $this->_transaction_isolation();
             $this->db->trans_begin();
@@ -128,6 +131,7 @@ class Courses extends LIST_Controller {
             if ($course->exists()) {
                 $course_data = $this->input->post('course');
                 $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity'));
+                $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
                 
                 $overlay = $this->input->post('overlay');
                 

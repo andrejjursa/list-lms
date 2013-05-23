@@ -1,5 +1,5 @@
 {if $message}
-<div class="error_box">
-    <p>{$message}</p>
+<div class="flash_message message_error">
+    {translate_text text=$message}
 </div>
 {/if}

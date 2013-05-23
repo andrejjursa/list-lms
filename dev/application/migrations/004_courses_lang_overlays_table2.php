@@ -12,6 +12,10 @@ class Migration_courses_lang_overlays_table2 extends CI_Migration {
                 'unsigned' => TRUE,
                 'constraint' => 4,
             ),
+            'groups_change_deadline' => array(
+                'type' => 'timestamp',
+                'null' => TRUE,
+            ),
         ));
         
         $this->dbforge->add_field(

@@ -207,6 +207,9 @@ class Participants extends LIST_Controller {
             $participant = new Participant();
             $participant->get_by_id($participant_id);
             
+            $student = $participant->student->get();
+            $course = $participant->course->get();
+            
             if (!$participant->exists()) {
                 $output['message'] = $this->lang->line('admin_participants_message_participant_not_found');
                 $process_ok = FALSE;
@@ -215,6 +218,9 @@ class Participants extends LIST_Controller {
             if ($process_ok) {
                 if ($participant->allowed != 0) {
                     $participant->delete();
+                    if ($student->is_related_to('active_course', $course->id)) {
+                        $student->delete($course, 'active_course');
+                    }
                     $output['message'] = $this->lang->line('admin_participants_message_participant_deleted');
                 } else {
                     $output['message'] = $this->lang->line('admin_participants_message_participant_cant_be_deleted');
