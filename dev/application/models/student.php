@@ -18,4 +18,13 @@ class Student extends DataMapper {
         ),
     );
     
+    public function delete($object = '', $related_field = '') {
+        if (empty($object) && !is_array($object) && !empty($this->id)) {
+            $participant = new Participant();
+            $participant->where_related($this);
+            $participant->get();
+            $participant->delete_all();
+        }
+        parent::delete($object, $related_field);
+    }
 }

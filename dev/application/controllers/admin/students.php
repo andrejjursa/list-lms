@@ -58,8 +58,8 @@ class Students extends LIST_Controller {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_students_account_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
             } else {
-                $this->messages->add_message('lang:admin_students_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
                 $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_students_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
             }
             redirect(create_internal_url('admin_students/new_student_form'));
         } else {
@@ -105,12 +105,12 @@ class Students extends LIST_Controller {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_students_account_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 } else {
-                    $this->messages->add_message('lang:admin_students_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
                     $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_students_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
                 }
             } else {
-                $this->messages->add_message('lang:admin_students_student_not_found', Messages::MESSAGE_TYPE_ERROR);
                 $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_students_student_not_found', Messages::MESSAGE_TYPE_ERROR);
             }
             redirect(create_internal_url('admin_students'));
         } else {

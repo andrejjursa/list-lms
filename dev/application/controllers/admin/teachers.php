@@ -106,16 +106,16 @@ class Teachers extends LIST_Controller {
                 if ($teacher->exists()) {
                     $teacher->from_array($this->input->post('teacher'), array('fullname', 'language'));
                     if ($teacher->save() && $this->db->trans_status()) {
-                        $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                         $this->db->trans_commit();
+                        $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                         $this->usermanager->refresh_teacher_userdata();
                     } else {
-                        $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                         $this->db->trans_rollback();
+                        $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                     }
                 } else {
-                    $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
                     $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
                 }
             } else {
                 $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
@@ -147,11 +147,11 @@ class Teachers extends LIST_Controller {
                     $teacher_post = $this->input->post('teacher');
                     $teacher->password = sha1($teacher_post['password']);
                     if ($teacher->save() && $this->db->trans_status()) {
-                        $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                         $this->db->trans_commit();
+                        $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                     } else {
-                        $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                         $this->db->trans_rollback();
+                        $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                     }
                 } else {
                     $this->db->trans_rollback();
@@ -193,15 +193,15 @@ class Teachers extends LIST_Controller {
                     $teacher_post = $this->input->post('teacher');
                     $teacher->email = $teacher_post['email'];
                     if ($teacher->save() && $this->db->trans_status()) {
-                        $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                         $this->db->trans_commit();
+                        $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                     } else {
-                        $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                         $this->db->trans_rollback();
+                        $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                     }
                 } else {
-                    $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
                     $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
                 }
             } else {
                 $this->messages->add_message('lang:admin_teachers_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
@@ -255,8 +255,8 @@ class Teachers extends LIST_Controller {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_teachers_list_account_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
             } else {
-                $this->messages->add_message('lang:admin_teachers_list_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
                 $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_teachers_list_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
             }
             redirect(create_internal_url('admin_teachers/get_new_teacher_form'));
         } else {
@@ -304,12 +304,12 @@ class Teachers extends LIST_Controller {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_teachers_list_account_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 } else {
-                    $this->messages->add_message('lang:admin_teachers_list_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
                     $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_teachers_list_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
                 }
             } else {
-                $this->messages->add_message('lang:admin_teachers_list_teacher_not_found', Messages::MESSAGE_TYPE_ERROR);
                 $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_teachers_list_teacher_not_found', Messages::MESSAGE_TYPE_ERROR);
             }
             redirect(create_internal_url('admin_teachers/list_index'));
         } else {

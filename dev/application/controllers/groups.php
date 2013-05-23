@@ -38,4 +38,67 @@ class Groups extends LIST_Controller {
         $this->parser->parse('frontend/groups/index.tpl', array('course' => $course, 'can_change_group' => $can_change_group));
     }
     
+    public function select_group() {
+        $group_id = $this->input->post('group_id');
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        
+        $group = new Group();
+        $group->get_by_id($group_id);
+        
+        if ($group->exists()) {
+            $course = $group->course->get();
+            
+            if (is_null($course->groups_change_deadline) || date('U', strtotime($course->groups_change_deadline)) >= time()) {
+
+                $student = new Student();
+                $student->get_by_id($this->usermanager->get_student_id());
+
+                if ($student->is_related_to('active_course', $course->id)) {
+                    $participant = new Participant();
+                    $participant->where_related($student);
+                    $participant->where_related($course);
+                    $participant->where('allowed', 1);
+                    $participant->get();
+                    if ($participant->exists()) {
+                        if (!$participant->is_related_to($group)) {
+                            $participant->save($group);
+                            $participant->where_related($course);
+                            $participant->where_related($group);
+                            $participant->where('allowed', 1);
+                            $participants_count = $participant->count();
+                            $room = new Room();
+                            $room->where_related($group)->order_by('capacity', 'asc')->limit(1)->get();
+                            if ($participants_count > intval($room->capacity)) {
+                                $this->db->trans_rollback();
+                                $this->messages->add_message('lang:groups_message_group_is_full', Messages::MESSAGE_TYPE_ERROR);
+                            } else {
+                                $this->db->trans_commit();
+                                $this->messages->add_message(sprintf($this->lang->line('groups_message_group_changed'), $this->lang->text($group->name)), Messages::MESSAGE_TYPE_SUCCESS);
+                            }
+                        } else {
+                            $this->db->trans_rollback();
+                            $this->messages->add_message('lang:groups_message_you_are_in_group', Messages::MESSAGE_TYPE_ERROR);
+                        }
+                    } else {
+                        $this->db->trans_rollback();
+                        $this->messages->add_message('lang:groups_message_cant_found_participant_record', Messages::MESSAGE_TYPE_ERROR);
+                    }
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:groups_message_cant_change_group_of_inactive_course', Messages::MESSAGE_TYPE_ERROR);
+                }
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:groups_message_groups_switching_disabled', Messages::MESSAGE_TYPE_ERROR);
+            }
+        } else {
+            $this->db->trans_rollback();
+            $this->messages->add_message('lang:groups_message_group_not_found', Messages::MESSAGE_TYPE_ERROR);
+        }
+        
+        redirect(create_internal_url('groups'));
+    }
+    
 }

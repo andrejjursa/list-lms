@@ -295,10 +295,13 @@ class Tasks extends LIST_Controller {
             $task_set = new Task_set();
             $task_set->get_by_id($task_set_id);
             if (!$task->exists()) {
+                $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_tasks_error_message_task_not_found', Messages::MESSAGE_TYPE_ERROR);
             } elseif (!$task_set->exists()) {
+                $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_tasks_add_to_task_set_nothing_opened', Messages::MESSAGE_TYPE_ERROR);
             } elseif ($task_set->is_related_to($task)) {
+                $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_tasks_add_to_task_set_already_related', Messages::MESSAGE_TYPE_ERROR);
             } else {
                 $related_task = $task_set->task->include_join_fields()->order_by('join_sorting', 'desc')->limit(1)->get();

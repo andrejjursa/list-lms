@@ -171,12 +171,12 @@ class Students extends LIST_Controller {
                 if ($student->exists()) {
                     $student->from_array($this->input->post('student'), array('fullname', 'language'));
                     if ($student->save() && $this->db->trans_status()) {
-                        $this->messages->add_message('lang:students_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                         $this->db->trans_commit();
+                        $this->messages->add_message('lang:students_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                         $this->usermanager->refresh_student_userdata();
                     } else {
-                        $this->messages->add_message('lang:students_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                         $this->db->trans_rollback();
+                        $this->messages->add_message('lang:students_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                     }
                 } else {
                     $this->db->trans_rollback();
@@ -212,11 +212,11 @@ class Students extends LIST_Controller {
                     $student_post = $this->input->post('student');
                     $student->password = sha1($student_post['password']);
                     if ($student->save() && $this->db->trans_status()) {
-                        $this->messages->add_message('lang:students_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                         $this->db->trans_commit();
+                        $this->messages->add_message('lang:students_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                     } else {
-                        $this->messages->add_message('lang:students_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                         $this->db->trans_rollback();
+                        $this->messages->add_message('lang:students_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                     }
                 } else {
                     $this->db->trans_rollback();
@@ -257,11 +257,11 @@ class Students extends LIST_Controller {
                     $student_post = $this->input->post('student');
                     $student->email = $student_post['email'];
                     if ($student->save() && $this->db->trans_status()) {
-                        $this->messages->add_message('lang:students_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                         $this->db->trans_commit();
+                        $this->messages->add_message('lang:students_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                     } else {
-                        $this->messages->add_message('lang:students_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                         $this->db->trans_rollback();
+                        $this->messages->add_message('lang:students_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
                     }
                 } else {
                     $this->db->trans_rollback();

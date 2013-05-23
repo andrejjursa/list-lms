@@ -262,12 +262,14 @@ class Participants extends LIST_Controller {
             $group->get_by_id(intval(@$participant_data['group']));
             
             if (!$course->exists()) {
+                $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_participants_message_course_not_exists', Messages::MESSAGE_TYPE_ERROR);
                 $process_ok = FALSE;
             }
             
             if ($process_ok && $course->exists()) {
                 if ($group->exists() && !$group->is_related_to($course)) {
+                    $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_participants_message_group_not_belongs_to_course', Messages::MESSAGE_TYPE_ERROR);
                     $process_ok = FALSE;
                 }
