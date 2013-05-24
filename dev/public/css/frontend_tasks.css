@@ -1,0 +1,19 @@
+table.task_sets_table { width: 100%; border-collapse: collapse; }
+table.task_sets_table thead th { background-color: #99ff99; }
+table.task_sets_table thead th:first-child { border-top-left-radius: 3px; }
+table.task_sets_table thead th:last-child { border-top-right-radius: 3px; }
+table.task_sets_table thead th,
+table.task_sets_table tbody td,
+table.task_sets_table tfoot td { padding: 4px; }
+table.task_sets_table tfoot td { background-color: #99ff99; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }
+table.task_sets_table thead th { text-align: left; font-weight: bold; }
+table.task_sets_table thead th.th_name {  }
+table.task_sets_table thead th.th_time_limit { width: 190px; }
+table.task_sets_table thead th.th_points { width: 90px; text-align: center; }
+table.task_sets_table thead th.th_comment { width: 35%; }
+table.task_sets_table tbody td.td_points { text-align: center; }
+table.task_sets_table tbody tr:nth-child(2n) { background-color: rgba(220,220,220,64); }
+table.task_sets_table tbody td a { text-decoration: none; color: green; transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; }
+table.task_sets_table tbody tr:nth-child(2n) a { color: darkgreen; }
+table.task_sets_table tbody td a:hover { color: blue; }
+div.points_total { padding: 5px 13px; margin: 15px 0 5px 0; background-color: #99ff99; border-radius: 3px; }

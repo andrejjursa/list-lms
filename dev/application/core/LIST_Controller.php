@@ -22,6 +22,10 @@ class LIST_Controller extends CI_Controller {
      */
     public function __construct() {
         parent::__construct();
+        if ($this->input->is_cli_request()) {
+            echo 'Error: You can\'t call this controller from CLI!';
+            die();
+        }
         $this->load->database();
         $this->load->library('usermanager');
         $this->load->library('messages');

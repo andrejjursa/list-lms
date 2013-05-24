@@ -1,16 +1,17 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 $cache = array (
-  'table' => 'students',
+  'table' => 'solutions',
   'fields' => 
   array (
     0 => 'id',
     1 => 'updated',
     2 => 'created',
-    3 => 'fullname',
-    4 => 'email',
-    5 => 'password',
-    6 => 'language',
-    7 => 'active_course_id',
+    3 => 'task_set_id',
+    4 => 'student_id',
+    5 => 'teacher_id',
+    6 => 'comment',
+    7 => 'points',
+    8 => 'revalidate',
   ),
   'validation' => 
   array (
@@ -36,58 +37,65 @@ $cache = array (
       array (
       ),
     ),
-    'fullname' => 
+    'task_set_id' => 
     array (
-      'field' => 'fullname',
+      'field' => 'task_set_id',
       'rules' => 
       array (
       ),
     ),
-    'email' => 
+    'student_id' => 
     array (
-      'field' => 'email',
+      'field' => 'student_id',
       'rules' => 
       array (
       ),
     ),
-    'password' => 
+    'teacher_id' => 
     array (
-      'field' => 'password',
+      'field' => 'teacher_id',
       'rules' => 
       array (
       ),
     ),
-    'language' => 
+    'comment' => 
     array (
-      'field' => 'language',
+      'field' => 'comment',
       'rules' => 
       array (
       ),
     ),
-    'active_course_id' => 
+    'points' => 
     array (
-      'field' => 'active_course_id',
+      'field' => 'points',
       'rules' => 
       array (
       ),
     ),
-    'active_course' => 
+    'revalidate' => 
     array (
-      'field' => 'active_course',
+      'field' => 'revalidate',
       'rules' => 
       array (
       ),
     ),
-    'participant' => 
+    'task_set' => 
     array (
-      'field' => 'participant',
+      'field' => 'task_set',
       'rules' => 
       array (
       ),
     ),
-    'solution' => 
+    'student' => 
     array (
-      'field' => 'solution',
+      'field' => 'student',
+      'rules' => 
+      array (
+      ),
+    ),
+    'teacher' => 
+    array (
+      'field' => 'teacher',
       'rules' => 
       array (
       ),
@@ -95,12 +103,34 @@ $cache = array (
   ),
   'has_one' => 
   array (
-    'active_course' => 
+    'task_set' => 
     array (
-      'class' => 'course',
-      'other_field' => 'active_for_student',
-      'join_self_as' => 'active_for_student',
-      'join_other_as' => 'active_course',
+      'class' => 'task_set',
+      'other_field' => 'solution',
+      'join_self_as' => 'solution',
+      'join_other_as' => 'task_set',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'student' => 
+    array (
+      'class' => 'student',
+      'other_field' => 'solution',
+      'join_self_as' => 'solution',
+      'join_other_as' => 'student',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'teacher' => 
+    array (
+      'class' => 'teacher',
+      'other_field' => 'solution',
+      'join_self_as' => 'solution',
+      'join_other_as' => 'teacher',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
@@ -109,28 +139,6 @@ $cache = array (
   ),
   'has_many' => 
   array (
-    'participant' => 
-    array (
-      'class' => 'participant',
-      'other_field' => 'student',
-      'join_self_as' => 'student',
-      'join_other_as' => 'participant',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
-    'solution' => 
-    array (
-      'class' => 'solution',
-      'other_field' => 'student',
-      'join_self_as' => 'student',
-      'join_other_as' => 'solution',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
   ),
   '_field_tracking' => 
   array (

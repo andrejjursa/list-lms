@@ -130,6 +130,13 @@ $cache = array (
       array (
       ),
     ),
+    'solution' => 
+    array (
+      'field' => 'solution',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -187,6 +194,17 @@ $cache = array (
       'other_field' => 'task_set',
       'join_self_as' => 'task_set',
       'join_other_as' => 'task',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'solution' => 
+    array (
+      'class' => 'solution',
+      'other_field' => 'task_set',
+      'join_self_as' => 'task_set',
+      'join_other_as' => 'solution',
+      'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
       'cascade_delete' => true,

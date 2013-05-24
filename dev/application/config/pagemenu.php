@@ -13,4 +13,10 @@ $config['pagemenu'] = array(
         'link' => 'groups',
         'sub' => NULL,
     ),
+    array(
+        'title' => 'lang:pagemenu_title_tasks',
+        'pagetag' => 'tasks',
+        'link' => 'tasks',
+        'sub' => NULL,
+    ),
 );

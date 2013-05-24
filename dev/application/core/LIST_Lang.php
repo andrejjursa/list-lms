@@ -225,7 +225,8 @@ class LIST_Lang extends CI_Lang {
         if (count($rows) > 0) {
             $ids = array();
             foreach ($rows as $row) {
-                $ids[] = intval($row['id']);
+                $row_id = is_object($row) ? $row->id : $row['id'];
+                $ids[] = intval($row_id);
             }
             $this->load_overlays($table, $ids);
         } else {
@@ -234,8 +235,9 @@ class LIST_Lang extends CI_Lang {
         if (count($rows) > 0 && count($fields) > 0) {
             foreach ($rows as $row) {
                 foreach ($fields as $field) {
-                    if (!$this->overlay_exists($table, $row['id'], $field, $this->lang_idiom)) {
-                        $this->no_more_load_overlay($table, $row['id'], $field, $this->lang_idiom);
+                    $row_id = is_object($row) ? $row->id : $row['id'];
+                    if (!$this->overlay_exists($table, $row_id, $field, $this->lang_idiom)) {
+                        $this->no_more_load_overlay($table, $row_id, $field, $this->lang_idiom);
                     }
                 }
             }

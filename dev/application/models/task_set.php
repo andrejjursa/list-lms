@@ -15,6 +15,7 @@ class Task_set extends DataMapper {
         'task' => array(
             'join_table' => 'task_task_set_rel',
         ),
+        'solution',
     );
     
     public $has_one = array(

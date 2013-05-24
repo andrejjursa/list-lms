@@ -114,7 +114,7 @@ class Students extends LIST_Controller {
         
         $this->form_validation->set_rules('student[fullname]', 'lang:students_registration_validation_field_fullname', 'required');
         $this->form_validation->set_rules('student[email]', 'lang:students_registration_validation_field_email', 'required|valid_email|is_unique[students.email]');
-        $this->form_validation->set_rules('student[password]', 'lang:students_registration_validation_field_password', 'required');
+        $this->form_validation->set_rules('student[password]', 'lang:students_registration_validation_field_password', 'required|min_length[6]|max_length[20]');
         $this->form_validation->set_rules('student[password_verification]', 'lang:students_registration_validation_field_password_verification', 'required|matches[student[password]]');
         if ($this->form_validation->run()) {
             $student_array = $this->input->post('student');

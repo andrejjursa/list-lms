@@ -7,4 +7,8 @@
  */
 class Teacher extends DataMapper {
     
+    public $has_many = array(
+        'solution',
+    );
+    
 }
