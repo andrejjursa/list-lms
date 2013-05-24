@@ -39,4 +39,82 @@ class Task extends DataMapper {
         }
         $this->group_by('id');
     }
+    
+    /**
+     * Return list of files for this task.
+     * @return array<mixed> list of files for this task.
+     */
+    public function get_task_files() {
+        if (!is_null($this->id)) {
+            $path = 'private/uploads/task_files/task_' . intval($this->id) . '/';
+            return $this->get_files($path);
+        } else {
+            return array();
+        }
+    }
+    
+    /**
+     * Return list of hidden files for this task.
+     * @return array<mixed> list of hidden files for this task.
+     */
+    public function get_task_hidden_files() {
+        if (!is_null($this->id)) {
+            $path = 'private/uploads/task_files/task_' . intval($this->id) . '/hidden/';
+            return $this->get_files($path);
+        } else {
+            return array();
+        }
+    }
+    
+    /**
+     * Return list of files from given path.
+     * @param string $path where to look for files.
+     * @return array<mixed> list of files.
+     */
+    private function get_files($path) {
+        $files = array();
+        if (file_exists($path)) {
+            $files_in_dir = scandir($path);
+            foreach ($files_in_dir as $file) {
+                if (is_file($path . $file)) {
+                    $ext = strrpos($path . $file, '.');
+                    if (substr($path . $file, $ext) !== 'upload_part') {
+                        $files[] = array(
+                            'file' => $file,
+                            'filepath' => $path . $file,
+                            'size' => $this->get_file_size($path . $file),
+                        );
+                    }
+                }
+            }
+        }
+        return $files;
+    }
+    
+    /**
+     * Compute file capacity and return value with unit.
+     * @param string $filename path and file name.
+     * @return string capacity of file in bytes, KiB, MiB or GiB.
+     */
+    private function get_file_size($filename) {
+        $size_bytes = @filesize($filename);
+        if ($size_bytes === FALSE || $size_bytes == 0) {
+            return '0 B';
+        }
+        $size = $size_bytes;
+        $unit = 'B';
+        if ($size > 1023) {
+            $size /= 1024;
+            $unit = 'KiB';
+        }
+        if ($size > 1023) {
+            $size /= 1024;
+            $unit = 'MiB';
+        }
+        if ($size > 1023) {
+            $size /= 1024;
+            $unit = 'GiB';
+        }
+        return number_format($size, 2, '.', ' ') . ' ' . $unit;
+    }
 }

@@ -348,46 +348,15 @@ class Tasks extends LIST_Controller {
     }
     
     private function inject_files($task_id, $source = self::FILELIST_PUBLIC) {
-        $path = 'private/uploads/task_files/task_' . intval($task_id) . '/';
-        if ($source == self::FILELIST_HIDDEN) { $path .= 'hidden/'; } 
+        $task = new Task();
+        $task->get_by_id($task_id);
         $files = array();
-        if (file_exists($path)) {
-            $files_in_dir = scandir($path);
-            foreach ($files_in_dir as $file) {
-                if (is_file($path . $file)) {
-                    $ext = strrpos($path . $file, '.');
-                    if (substr($path . $file, $ext) !== 'upload_part') {
-                        $files[] = array(
-                            'file' => $file,
-                            'filepath' => $path . $file,
-                            'size' => $this->get_file_size($path . $file),
-                        );
-                    }
-                }
-            }
+        if ($source == self::FILELIST_PUBLIC) {
+            $files = $task->get_task_files();
+        } elseif ($source == self::FILELIST_HIDDEN) {
+            $files = $task->get_task_hidden_files();
         }
         $this->parser->assign('files', $files);
     }
     
-    private function get_file_size($filename) {
-        $size_bytes = @filesize($filename);
-        if ($size_bytes === FALSE || $size_bytes == 0) {
-            return '0 B';
-        }
-        $size = $size_bytes;
-        $unit = 'B';
-        if ($size > 1023) {
-            $size /= 1024;
-            $unit = 'KiB';
-        }
-        if ($size > 1023) {
-            $size /= 1024;
-            $unit = 'MiB';
-        }
-        if ($size > 1023) {
-            $size /= 1024;
-            $unit = 'GiB';
-        }
-        return number_format($size, 2, '.', ' ') . ' ' . $unit;
-    }
 }

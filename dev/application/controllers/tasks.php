@@ -9,13 +9,14 @@ class Tasks extends LIST_Controller {
     
     public function __construct() {
         parent::__construct();
-        $this->usermanager->student_login_protected_redirect();
         $this->_init_language_for_student();
         $this->_load_student_langfile();
         $this->_initialize_student_menu();
     }
 
     public function index() {
+        $this->usermanager->student_login_protected_redirect();
+        
         $this->_select_student_menu_pagetag('tasks');
         
         $student = new Student();
@@ -64,6 +65,51 @@ class Tasks extends LIST_Controller {
         $this->parser->parse('frontend\tasks\index.tpl', array('course' => $course));
     }
     
+    public function task($task_set_id = NULL) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $this->_select_student_menu_pagetag('tasks');
+        
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        
+        $course = new Course();
+        $course->where_related('active_for_student', 'id', $student->id);
+        $course->where_related('participant', 'student_id', $student->id);
+        $course->where_related('participant', 'allowed', 1);
+        $course->include_related('period', 'name');
+        $course->get();
+        
+        if ($course->exists()) {
+            $group = new Group();
+            $group->where_related_participant('student_id', $student->id);
+            $group->where_related_participant('course_id', $course->id);
+            $group->get();
+            
+            $task_set = new Task_set();
+            $task_set->where('published', 1);
+            $task_set->where_related_course($course);
+            $task_set->group_start();
+                $task_set->or_where('group_id', NULL);
+                $task_set->or_where('group_id', $group->id);
+            $task_set->group_end();
+            $task_set->include_related('room', '*', TRUE, TRUE);
+            $task_set->include_related_count('task', 'total_tasks');
+            $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id`)', 'total_points');
+            $task_set->order_by_related_with_constant('task_set_type', 'name', 'asc');
+            $task_set->order_by_with_overlay('name', 'asc');
+            $task_set->get_by_id($task_set_id);
+            $task_sets = $this->filter_valid_task_sets($task_set);
+            $this->lang->init_overlays('task_sets', $task_sets, array('name'));
+            $this->parser->assign('task_set', count($task_sets) == 1 ? $task_sets[0] : new Task_set());
+        }
+        
+        $this->parser->add_css_file('frontend_tasks.css');
+        $this->parser->add_js_file('tasks\task.js');
+        
+        $this->parser->parse('frontend\tasks\task.tpl', array('course' => $course));
+    }
+
     public function download_file($task_id, $file) {
         $filename = decode_from_url($file);
         $filepath = 'private/uploads/task_files/task_' . intval($task_id) . '/' . $filename;
@@ -144,7 +190,7 @@ class Tasks extends LIST_Controller {
         return $output;
     }
     
-    public function compute_points($i_task_sets, Student $student) {
+    private function compute_points($i_task_sets, Student $student) {
         $task_sets = is_array($i_task_sets) ? $i_task_sets : (is_object($i_task_sets) && $i_task_sets instanceof Task_set ? $i_task_sets->all : array());
         
         $ids = array(0);
@@ -174,6 +220,27 @@ class Tasks extends LIST_Controller {
         }}
         
         return $output;
+    }
+    
+    private function inject_files($task_id) {
+        $path = 'private/uploads/task_files/task_' . intval($task_id) . '/';
+        $files = array();
+        if (file_exists($path)) {
+            $files_in_dir = scandir($path);
+            foreach ($files_in_dir as $file) {
+                if (is_file($path . $file)) {
+                    $ext = strrpos($path . $file, '.');
+                    if (substr($path . $file, $ext) !== 'upload_part') {
+                        $files[] = array(
+                            'file' => $file,
+                            'filepath' => $path . $file,
+                            'size' => $this->get_file_size($path . $file),
+                        );
+                    }
+                }
+            }
+        }
+        $this->parser->assign('files', $files);
     }
     
 }
