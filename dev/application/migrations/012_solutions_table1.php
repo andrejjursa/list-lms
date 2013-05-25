@@ -49,6 +49,10 @@ class Migration_Solutions_table1 extends CI_Migration {
         
         $this->dbforge->add_key('id', TRUE);
         
+        $this->dbforge->add_key('task_set_id');
+        $this->dbforge->add_key('student_id');
+        $this->dbforge->add_key('teacher_id');
+        
         $this->dbforge->create_table('solutions');
         
         change_mysql_table_to_InnoDB('solutions');

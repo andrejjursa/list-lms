@@ -324,7 +324,7 @@ class Usermanager {
     }
     
     /**
-     * This function will send data from student session to smarty template variable called 'list_student_account'.
+     * This function will send data from student session to smarty template variable called 'list_student_account' and create variable 'list_student_account_model' with student model.
      */
     public function set_student_data_to_smarty() {
         $this->CI->load->library('parser');

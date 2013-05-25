@@ -60,6 +60,7 @@ class LIST_Lang extends CI_Lang {
             $this->language = array();
             $this->is_loaded = array();
             if (count($old_loaded) > 0) { foreach($old_loaded as $load_file) {
+                $matches = array();
                 if (preg_match('/^(?P<langfile>.+)_lang\.php$/i', $load_file, $matches)) {
                     $this->load($matches['langfile']);
                 }
@@ -78,6 +79,7 @@ class LIST_Lang extends CI_Lang {
         $langs = array();
         if (count($languages) > 0) { foreach($languages as $language) {
             if (file_exists(APPPATH . 'language/' . $language . '/config.php')) {
+                $lang_config = array();
                 include(APPPATH . 'language/' . $language . '/config.php');
                 if (isset($lang_config['idiom']) && isset($lang_config['title'])) {
                     $langs[$lang_config['idiom']] = $lang_config['title'];
@@ -218,7 +220,7 @@ class LIST_Lang extends CI_Lang {
     /**
      * Initialize langauge overlay for given table, real table rows and array of fields.
      * @param string $table name of table.
-     * @param array<mixed> $rows real rows obtained from database table.
+     * @param array<mixed>|DataMapper $rows real rows obtained from database table.
      * @param array<string> $fields array of fields (column names) in table for which overlays may be presented in overlay array.
      */
     public function init_overlays($table, $rows, $fields) {

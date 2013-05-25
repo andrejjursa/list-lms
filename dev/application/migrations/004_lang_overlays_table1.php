@@ -1,23 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Migration_courses_lang_overlays_table2 extends CI_Migration {
+class Migration_lang_overlays_table1 extends CI_Migration {
     
     public function up() {
-        $this->dbforge->add_column('courses', array(
-            'description' => array(
-                'type' => 'TEXT'
-            ),
-            'capacity' => array(
-                'type' => 'INT',
-                'unsigned' => TRUE,
-                'constraint' => 4,
-            ),
-            'groups_change_deadline' => array(
-                'type' => 'timestamp',
-                'null' => TRUE,
-            ),
-        ));
-        
         $this->dbforge->add_field(
             array(
                 'table' => array(
@@ -51,8 +36,6 @@ class Migration_courses_lang_overlays_table2 extends CI_Migration {
     }
     
     public function down() {
-        $this->dbforge->drop_column('courses', 'description');
-        
         $this->dbforge->drop_table('lang_overlays');
     }
 

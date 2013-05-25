@@ -59,6 +59,18 @@ class Migration_periods_courses_translations_table1 extends CI_Migration {
                     'unsigned' => TRUE,
                     'null' => TRUE
                 ),
+                'description' => array(
+                    'type' => 'TEXT'
+                ),
+                'capacity' => array(
+                    'type' => 'INT',
+                    'unsigned' => TRUE,
+                    'constraint' => 4,
+                ),
+                'groups_change_deadline' => array(
+                    'type' => 'timestamp',
+                    'null' => TRUE,
+                ),
             )
         );
         

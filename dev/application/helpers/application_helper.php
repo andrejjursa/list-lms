@@ -146,7 +146,7 @@ function unlink_recursive($dir, $delete_root_too) {
  * @param string $string to normalize.
  * @return string string with normalized characters.
  */
-function normalize ($string) {
+function normalize($string) {
     $table = array(
         'Š'=>'S', 'š'=>'s', 'Đ'=>'Dj', 'đ'=>'dj', 'Ž'=>'Z', 'ž'=>'z', 'Č'=>'C', 'č'=>'c', 'Ć'=>'C', 'ć'=>'c',
         'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
