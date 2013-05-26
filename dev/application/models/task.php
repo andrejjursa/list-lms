@@ -82,7 +82,7 @@ class Task extends DataMapper {
                         $files[] = array(
                             'file' => $file,
                             'filepath' => $path . $file,
-                            'size' => $this->get_file_size($path . $file),
+                            'size' => get_file_size($path . $file),
                         );
                     }
                 }
@@ -91,30 +91,4 @@ class Task extends DataMapper {
         return $files;
     }
     
-    /**
-     * Compute file capacity and return value with unit.
-     * @param string $filename path and file name.
-     * @return string capacity of file in bytes, KiB, MiB or GiB.
-     */
-    private function get_file_size($filename) {
-        $size_bytes = @filesize($filename);
-        if ($size_bytes === FALSE || $size_bytes == 0) {
-            return '0 B';
-        }
-        $size = $size_bytes;
-        $unit = 'B';
-        if ($size > 1023) {
-            $size /= 1024;
-            $unit = 'KiB';
-        }
-        if ($size > 1023) {
-            $size /= 1024;
-            $unit = 'MiB';
-        }
-        if ($size > 1023) {
-            $size /= 1024;
-            $unit = 'GiB';
-        }
-        return number_format($size, 2, '.', ' ') . ' ' . $unit;
-    }
 }

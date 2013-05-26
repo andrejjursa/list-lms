@@ -29,8 +29,53 @@
                     {/if}
                     <div class="task_points">{translate|sprintf:{$task->join_points_total|floatval} line='tasks_task_points_for_task'}</div>
                     {/foreach}
+                    {if $task_set_can_upload}
+                    <div class="upload_solution">
+                        <fieldset class="basefieldset">
+                            <legend>{translate line='tasks_task_fieldset_legend_upload_solution'}</legend>
+                            <form action="{internal_url url="tasks/upload_solution/{$task_set->id|intval}"}" method="post" enctype="multipart/form-data">
+                                <div class="field">
+                                    <label for="file_id">{translate line='tasks_task_form_label_file'}:</label>
+                                    <p class="input"><input type="file" name="file" id="file_id" /></p>
+                                    <p class="input"><em>{translate|sprintf:$max_filesize line='tasks_task_form_label_file_hint'}</em></p>
+                                    {if $file_error_message}
+                                    <p class="error"><span class="message">{translate_text text=$file_error_message}</span></p>
+                                    {/if}
+                                </div>
+                                <div class="buttons">
+                                    <input type="submit" name="submit_button" value="{translate line='tasks_task_form_submit'}" class="button" />
+                                </div>
+                            </form>
+                        </fieldset>
+                    </div>
+                    {/if}
                 </div>
-                <div id="tabs-solution"></div>
+                <div id="tabs-solution">
+                    <table class="solutions_table">
+                        <thead>
+                            <tr>
+                                <th class="version">{translate line='tasks_task_solution_table_header_version'}</th>
+                                <th class="file">{translate line='tasks_task_solution_table_header_file'}</th>
+                                <th class="size">{translate line='tasks_task_solution_table_header_size'}</th>
+                                <th class="modified">{translate line='tasks_task_solution_table_header_modified'}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $solution_files as $file}
+                            <tr>
+                                <td class="version">{$file@key}</td>
+                                <td class="file"><a href="{internal_url url="tasks/download_solution/{$task_set->id|intval}/{$file.file|encode_for_url}"}" target="_blank">{$file.file_name}_{$file@key}.zip</a></td>
+                                <td class="size">{$file.size}</td>
+                                <td class="modified">{$file.last_modified|date_format:{translate line='tasks_date_format'}}</td>
+                            </tr>
+                        {foreachelse}
+                            <tr>
+                                <td colspan="4">{include file='partials/frontend_general/error_box.tpl' message='lang:tasks_task_no_solutions_yet' inline}</td>
+                            </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         {else}
             {include file='partials/frontend_general/flash_messages.tpl' inline}

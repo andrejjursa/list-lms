@@ -37,9 +37,11 @@ class Migration_Solutions_table1 extends CI_Migration {
             ),
             'comment' => array(
                 'type' => 'TEXT',
+                'null' => TRUE,
             ),
             'points' => array(
                 'type' => 'double',
+                'null' => TRUE,
             ),
             'revalidate' => array(
                 'type' => 'int',

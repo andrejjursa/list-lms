@@ -33,7 +33,7 @@
                         <td class="td_time_limit">{if is_null($task_set->upload_end_time)}{translate line='tasks_table_no_upload_limit'}{else}{$task_set->upload_end_time}{/if}</td>
                         <td class="td_points">{$solution->points|default:0|floatval} / {$task_set->total_points|default:0|floatval}</td>
                         <td class="td_comment">
-                            {if $solution->exists()}
+                            {if $solution->exists() AND !is_null($solution->points)}
                                 {$solution->comment|nl2br}
                                 <hr />
                                 <em>{$solution->teacher_fullname}</em>

@@ -160,3 +160,39 @@ function normalize($string) {
     
     return strtr($string, $table);
 }
+
+/**
+* Compute file capacity and return value with unit.
+* @param string $filename path and file name.
+* @return string capacity of file in bytes, KiB, MiB or GiB.
+*/
+function get_file_size($filename) {
+    $size_bytes = @filesize($filename);
+    if ($size_bytes === FALSE || $size_bytes == 0) {
+        return '0 B';
+    }
+    return compute_size_with_unit($size_bytes);
+}
+
+/**
+ * Compute size with units from given value in bytes.
+ * @param integer $size_bytes size in bytes.
+ * @return string size with unit.
+ */
+function compute_size_with_unit($size_bytes) {
+    $size = $size_bytes;
+    $unit = 'B';
+    if ($size > 1023) {
+        $size /= 1024;
+        $unit = 'KiB';
+    }
+    if ($size > 1023) {
+        $size /= 1024;
+        $unit = 'MiB';
+    }
+    if ($size > 1023) {
+        $size /= 1024;
+        $unit = 'GiB';
+    }
+    return number_format($size, 2, '.', ' ') . ' ' . $unit;
+}
