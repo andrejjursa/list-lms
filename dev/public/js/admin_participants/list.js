@@ -43,7 +43,9 @@ jQuery(document).ready(function($) {
                 var selected_id = this.findElement('input[name=filter_selected_group_id]').val() != undefined ? this.findElement('input[name=filter_selected_group_id]').val() : '0';
                 var url = global_base_url + 'index.php/admin_participants/get_groups_from_course/' + filter_course_id + '/' + selected_id;
                 var target = $('#filter_group_id');
-                api_ajax_load(url, target);
+                api_ajax_load(url, target, 'post', {}, function() {
+                    update_filter_group();
+                });
                 filter_last_course_id = filter_course_id;
             }
             return true;
@@ -54,6 +56,11 @@ jQuery(document).ready(function($) {
     });
     $('#filter_form_id').activeForm().applyConditions();
     
+    var update_filter_group = function() {
+        $('#filter_form_id input[name="filter[group]"]').val($('#filter_group_id').val());
+    };
+    
+    $(document).on('change', '#filter_group_id', update_filter_group);
     
     $(document).on('click', 'a.button.participation_approve', function(event) {
         event.preventDefault();

@@ -49,7 +49,7 @@ FROM `lang_overlays`
 WHERE `table` = "' . $object->db->escape_str($object->table) . '" AND `column` = "' . $object->db->escape_str($column) . '" AND `table_id` = ' . $object->db->protect_identifiers($object->table) . '.`id` AND `idiom` = "' . $object->db->escape_str($lang_idiom) . '" AND `text` != ""
 UNION
 SELECT ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . ' AS `sorting_text`
-LIMIT 1)' . (strtolower($direction) == 'asc' ? 'ASC' : 'DESC');
+LIMIT 1) ' . (strtolower($direction) == 'asc' ? 'ASC' : 'DESC');
         
         $object->db->ar_orderby[] = $subquery;
         return $object;
@@ -110,7 +110,7 @@ FROM `lang_overlays`
 WHERE `table` = "' . $object->db->escape_str($final_model->table) . '" AND `column` = "' . $object->db->escape_str($column) . '" AND `table_id` = ' . $object->db->protect_identifiers($related_table) . '.`id` AND `idiom` = "' . $object->db->escape_str($lang_idiom) . '" AND `text` != ""
 UNION
 SELECT ' . $object->db->protect_identifiers($related_table) . '.' . $object->db->protect_identifiers($column) . ' AS `sorting_text`
-LIMIT 1)' . (strtolower($direction) == 'asc' ? 'ASC' : 'DESC');
+LIMIT 1) ' . (strtolower($direction) == 'asc' ? 'ASC' : 'DESC');
         
         $object->db->ar_orderby[] = $subquery;
         return $object;

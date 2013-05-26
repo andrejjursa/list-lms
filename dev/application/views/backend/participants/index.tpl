@@ -21,12 +21,12 @@
                     <label>{translate line='admin_participants_filter_label_course'}:</label>
                     <p class="input"><select name="filter[course]" size="1">{list_html_options options=$courses selected=$filter.course|intval}</select></p>
                 </div>
-                <div class="field group_field" style="display: none;">
-                    <label>{translate line='admin_participants_filter_label_group'}:</label>
-                    <p class="input"><select name="filter[group]" size="1" id="filter_group_id"></select></p>
-                </div>
                 <div class="group_field_else">
                     <input type="hidden" name="filter[group]" value="" />
+                </div>
+                <div class="field group_field" style="display: none;">
+                    <label>{translate line='admin_participants_filter_label_group'}:</label>
+                    <p class="input"><select name="filter_group" size="1" id="filter_group_id"></select><input type="hidden" name="filter[group]" value="{$filter.group|intval}" /></p>
                 </div>
                 <div class="field">
                     <label>{translate line='admin_participants_filter_label_group_set'}:</label>

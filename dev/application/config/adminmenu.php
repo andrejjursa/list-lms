@@ -86,6 +86,13 @@ $config['adminmenu'] = array(
                 'class' => 'inactive',
                 'sub' => array(
                     array(
+                        'title' => 'lang:adminmenu_title_solutions',
+                        'pagetag' => 'solutions',
+                        'link' => 'admin_solutions',
+                        'class' => '',
+                        'sub' => NULL,
+                    ),
+                    array(
                         'title' => 'lang:adminmenu_title_participants',
                         'pagetag' => 'participants',
                         'link' => 'admin_participants',
