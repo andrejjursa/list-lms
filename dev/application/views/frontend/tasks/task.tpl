@@ -4,6 +4,7 @@
     <h1>{translate line='tasks_task_page_header'}</h1>
     {if $course->exists()}
         {if $task_set->exists()}
+            <h2 class="task_name">{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}</h2>
             {include file='partials/frontend_general/flash_messages.tpl' inline}
             <div id="tabs">
                 <ul style="height: 37px;">
