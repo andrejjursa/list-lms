@@ -68,7 +68,7 @@ class Tasks extends LIST_Controller {
         if ($filtered_task_set->id == intval($task_set_id) && $this->can_upload_file($filtered_task_set, $course)) {
             $config['upload_path'] = 'private/uploads/solutions/task_set_' . intval($task_set_id) . '/';
             $config['allowed_types'] = 'zip';
-            $config['max_size'] = $this->config->item('maximum_solition_filesize');
+            $config['max_size'] = intval($this->config->item('maximum_solition_filesize'));
             $config['file_name'] = $student->id . '_' . $this->normalize_student_name($student) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $filtered_task_set->get_student_file_next_version($student->id) . '.zip';
             @mkdir($config['upload_path']);
             $this->load->library('upload', $config);

@@ -33,8 +33,10 @@
                     <th>{translate line='admin_solutions_table_header_task_set_name'}</th>
                     <th>{translate line='admin_solutions_table_header_task_set_course'}</th>
                     <th>{translate line='admin_solutions_table_header_task_set_course_group'}</th>
+                    <th>{translate line='admin_solutions_table_header_task_set_task_set_type'}</th>
                     <th>{translate line='admin_solutions_table_header_task_set_solution_count'}</th>
                     <th>{translate line='admin_solutions_table_header_task_set_task_count'}</th>
+                    <th>{translate line='admin_solutions_table_header_task_set_task_upload_end_time'}</th>
                     <th class="controlls">{translate line='admin_solutions_table_header_controlls'}</th>
                 </tr>
             </thead>

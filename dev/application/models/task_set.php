@@ -97,25 +97,23 @@ class Task_set extends DataMapper {
      * @return array<string> sorted array of files.
      */
     public function get_student_files($student_id) {
-        $this->max_solution_version = 0;
         if (!is_null($this->id)) {
             $path = 'private/uploads/solutions/task_set_' . intval($this->id) . '/';
             if (file_exists($path)) {
                 $all_files = scandir($path);
                 $student_files = array();
                 if (count($all_files) > 0) { foreach ($all_files as $single_file) {
-                    if (is_file($path . $single_file) && preg_match(self::STUDENT_FILE_NAME_REGEXP, $single_file, $matches)) {
+                    if (is_file($path . $single_file) && preg_match(self::STUDENT_FILE_NAME_REGEXP, $single_file, $matches) && intval($matches['student_id']) == intval($student_id)) {
                         $student_files[intval($matches['solution_version'])] = array(
                             'file' => $single_file,
                             'filepath' => $path . $single_file,
                             'size' => get_file_size($path . $single_file),
-                            'student_id' => $matches['student_id'],
+                            'student_id' => intval($matches['student_id']),
                             'file_name' => $matches['file_name'],
                             'random_hash' => $matches['random_hash'],
                             'last_modified' => filemtime($path . $single_file),
                             'version' => intval($matches['solution_version']),
                         );
-                        $this->max_solution_version = max(array($this->max_solution_version, intval($matches['solution_version'])));
                     }
                 }}
                 ksort($student_files, SORT_NUMERIC);
@@ -126,12 +124,36 @@ class Task_set extends DataMapper {
     }
     
     /**
+     * Returns count of student files in this task set.
+     * @param integer $student_id ID of student.
+     * @return integer number of files.
+     */
+    public function get_student_files_count($student_id) {
+        $this->max_solution_version = 0;
+        if (!is_null($this->id)) {
+            $path = 'private/uploads/solutions/task_set_' . intval($this->id) . '/';
+            if (file_exists($path)) {
+                $all_files = scandir($path);
+                $count = 0;
+                if (count($all_files) > 0) { foreach ($all_files as $single_file) {
+                    if (is_file($path . $single_file) && preg_match(self::STUDENT_FILE_NAME_REGEXP, $single_file, $matches) && intval($matches['student_id']) == intval($student_id)) {
+                        $count++;
+                        $this->max_solution_version = max(array($this->max_solution_version, intval($matches['solution_version'])));
+                    }
+                }}
+                return $count;
+            }
+        }
+        return 0;
+    }
+    
+    /**
      * Return next version number of student solution for this task set.
      * @param integer $student_id ID of student.
      * @return integer next version number.
      */
     public function get_student_file_next_version($student_id) {
-        $this->get_student_files($student_id);
+        $this->get_student_files_count($student_id);
         return $this->max_solution_version + 1;
     }
     
