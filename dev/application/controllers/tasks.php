@@ -48,7 +48,7 @@ class Tasks extends LIST_Controller {
             $this->lang->init_overlays('task_sets', $task_sets, array('name'));
             $filtered_task_set = count($task_sets) == 1 ? $task_sets[0] : new Task_set();
             $this->parser->assign('task_set', $filtered_task_set);
-            $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set));
+            $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set, $course));
             $this->parser->assign('solution_files', $filtered_task_set->get_student_files($student->id));
             $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
         }
@@ -65,7 +65,7 @@ class Tasks extends LIST_Controller {
         $task_set = $this->get_task_sets($course, $group, $student, $task_set_id);
         $task_sets = $this->filter_valid_task_sets($task_set);
         $filtered_task_set = count($task_sets) == 1 ? $task_sets[0] : new Task_set();
-        if ($filtered_task_set->id == intval($task_set_id) && $this->can_upload_file($filtered_task_set)) {
+        if ($filtered_task_set->id == intval($task_set_id) && $this->can_upload_file($filtered_task_set, $course)) {
             $config['upload_path'] = 'private/uploads/solutions/task_set_' . intval($task_set_id) . '/';
             $config['allowed_types'] = 'zip';
             $config['max_size'] = $this->config->item('maximum_solition_filesize');
@@ -229,10 +229,13 @@ class Tasks extends LIST_Controller {
         return $task_set;
     }
     
-    private function can_upload_file($task_set) {
-        if ($task_set->exists()) {
-            if (is_null($task_set->upload_end_time)) { return TRUE; }
-            if (strtotime($task_set->upload_end_time) > time()) { return TRUE; }
+    private function can_upload_file($task_set, $course) {
+        if ($task_set->exists() && $course->exists()) {
+            $task_set_type = $course->task_set_type->where('id', $task_set->task_set_type_id)->include_join_fields()->get();
+            if ($task_set_type->exists() && $task_set_type->join_upload_solution == 1) {
+                if (is_null($task_set->upload_end_time)) { return TRUE; }
+                if (strtotime($task_set->upload_end_time) > time()) { return TRUE; }
+            }
         }
         return FALSE;
     }
