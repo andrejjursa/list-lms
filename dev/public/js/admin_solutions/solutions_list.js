@@ -8,4 +8,16 @@ jQuery(document).ready(function($) {
     
     refresh_all_solutions();
     
+    $('#new_solution_form_id').submit(function(event) {
+        event.preventDefault();
+        var url = $(this).attr('action');
+        var data = $(this).serializeArray();
+        var success = function() {
+            if ($('#new_solution_form_id .flash_message.message_success').length > 0) {
+                refresh_all_solutions();
+            }
+        };
+        api_ajax_load(url, '#new_solution_form_id', 'post', data, success);
+    });
+    
 });

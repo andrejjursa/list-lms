@@ -31,14 +31,72 @@ class Solutions extends LIST_Controller {
     public function solutions_list($task_set_id = NULL) {
         $this->_select_teacher_menu_pagetag('solutions');
         $task_set = new Task_set();
+        $task_set->select('`task_sets`.*');
+        $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id`)', 'task_set_total_points');
         $task_set->include_related('course', 'name');
         $task_set->include_related('course/period', 'name');
+        $task_set->include_related('group', 'name');
         $task_set->get_by_id($task_set_id);
         
         $this->inject_students($task_set_id);
         $this->parser->add_js_file('admin_solutions/solutions_list.js');
         $this->parser->add_css_file('admin_solutions.css');
         $this->parser->parse('backend/solutions/solutions_list.tpl', array('task_set' => $task_set));
+    }
+    
+    public function create_solution($task_set_id) {
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('solution[student_id]', 'lang:admin_solutions_list_form_field_student', 'required|exists_in_table[students.id.1.1]');
+        $this->form_validation->set_rules('solution[points]', 'lang:admin_solutions_list_form_field_points', 'required|floatpoint');
+        
+        if ($this->form_validation->run()) {
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $solution_data = $this->input->post('solution');
+            $task_set = new Task_set();
+            $task_set->where_related('course/participant/student', 'id', intval($solution_data['student_id']));
+            $task_set->where_related('course/participant', 'allowed', 1);
+            $task_set->group_start();
+                $task_set->or_where('group_id', NULL);
+                $task_set->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+            $task_set->group_end();
+            $task_set->get_by_id($task_set_id);
+            if ($task_set->exists()) {
+                $teacher = new Teacher();
+                $teacher->get_by_id($this->usermanager->get_teacher_id());
+                
+                $solution = new Solution();
+                $solution->from_array($solution_data, array('student_id', 'points', 'comment'));
+                $solution->revalidate = 0;
+                $solution->save(array($teacher, $task_set));
+                
+                $solution->where($task_set);
+                $solution->where('student_id', intval($solution_data['student_id']));
+                if ($solution->count() == 1) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message('lang:admin_solutions_list_new_solution_created', Messages::MESSAGE_TYPE_SUCCESS);
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_solutions_list_new_solution_error_solution_exists', Messages::MESSAGE_TYPE_ERROR);
+                }
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_solutions_list_new_solution_error_student_not_in_course_or_group', Messages::MESSAGE_TYPE_ERROR);
+            }
+            redirect(create_internal_url('admin_solutions/new_solution_form/' . intval($task_set_id)));
+        } else {
+            $this->new_solution_form($task_set_id);
+        }
+    }
+    
+    public function new_solution_form($task_set_id) {
+        $task_set = new Task_set();
+        $task_set->select('`task_sets`.*');
+        $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id`)', 'task_set_total_points');
+        $task_set->get_by_id($task_set_id);
+        $this->inject_students($task_set_id);
+        $this->parser->parse('backend/solutions/new_solution_form.tpl', array('task_set' => $task_set));
     }
 
     public function get_task_set_list() {
@@ -125,19 +183,27 @@ class Solutions extends LIST_Controller {
         $this->parser->assign('courses', $data);
     }
     
-    public function inject_students($task_set_id) {
-        $students = new Student();
-        $students->where_related('participant', 'allowed', 1);
-        $students->where_related('participant/course/task_set', 'id', $task_set_id);
-        $students->where('students.id = `students`.`id` AND NOT EXISTS (SELECT * FROM `solutions` WHERE `solutions`.`student_id` = `students`.`id` AND `solutions`.`task_set_id` = ' . intval($task_set_id) . ')');
-        $students->group_by('id');
-        $students->order_by('fullname', 'asc');
-        $students->order_by('email', 'asc');
-        $students->get_iterated();
+    private function inject_students($task_set_id) {
+        $task_set = new Task_set();
+        $task_set->get_by_id($task_set_id);
         
         $data = array('' => '');
-        foreach ($students as $student) {
-            $data[$student->id] = $student->fullname . ' (' . $student->email . ')';
+        if ($task_set->exists()) {
+            $students = new Student();
+            $students->where_related('participant', 'allowed', 1);
+            $students->where_related('participant/course/task_set', 'id', intval($task_set_id));
+            if (!is_null($task_set->group_id)) {
+                $students->where_related('participant/group', 'id', intval($task_set->group_id));
+            }
+            $students->where('students.id = `students`.`id` AND NOT EXISTS (SELECT * FROM `solutions` WHERE `solutions`.`student_id` = `students`.`id` AND `solutions`.`task_set_id` = ' . intval($task_set_id) . ')');
+            $students->group_by('id');
+            $students->order_by('fullname', 'asc');
+            $students->order_by('email', 'asc');
+            $students->get_iterated();
+
+            foreach ($students as $student) {
+                $data[$student->id] = $student->fullname . ' (' . $student->email . ')';
+            }
         }
         $this->parser->assign('students', $data);
     }

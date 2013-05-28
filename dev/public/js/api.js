@@ -322,7 +322,6 @@ function showNotification(params){
     
     // Parent Div container
     var container = '<div id="info_message" class="'+msgclass+'"><div class="center_auto"><div class="info_message_text message_area">';
-    container += options['message'];
     container += '</div><div class="info_close_btn button_area" onclick="return closeNotification()"></div><div class="clearboth"></div>';
     container += '</div><div class="info_more_descrption"></div></div>';
     
@@ -330,6 +329,7 @@ function showNotification(params){
     
     // Appeding notification to Body
     jQuery('body').append($notification);
+    jQuery('body #info_message div.info_message_text').html(options['message']);
     
     var divHeight = jQuery('div#info_message').height();
     // see CSS top to minus of div height

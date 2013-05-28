@@ -4,9 +4,12 @@
     <h2>{translate|sprintf:{overlay|default:'' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name} line='admin_solutions_list_page_title'}</h2>
     {include file='partials/backend_general/flash_messages.tpl' inline}
     {if $task_set->exists()}
-        <h3>{translate_text text=$task_set->course_name} / {translate_text text=$task_set->course_period_name}</h3>
+        <h3>{translate_text text=$task_set->course_name} / {translate_text text=$task_set->course_period_name} / {if $task_set->group_name}{translate_text text=$task_set->group_name}{else}{translate line='admin_solutions_list_h3_all_groups'}{/if}</h3>
         <fieldset>
             <legend>{translate line='admin_solutions_list_fieldset_legend_add_solution_record'}</legend>
+            <form action="{internal_url url="admin_solutions/create_solution/{$task_set->id|intval}"}" method="post" id="new_solution_form_id">
+                {include file='backend/solutions/new_solution_form.tpl' inline}
+            </form>
         </fieldset>
         <fieldset>
             <legend>{translate line='admin_solutions_list_fieldset_legend_all_solutions'}</legend>

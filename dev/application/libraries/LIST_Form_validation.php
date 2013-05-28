@@ -58,6 +58,12 @@ class LIST_Form_validation extends CI_Form_validation {
         return $this->max_length($str, $length);
     }
     
+    /**
+     * Tests if string value exists in database table.
+     * @param string $str input string to evaluate.
+     * @param string $table comma separated definition of table (first part), column (second part), least occurrence (third part) and most often occurrence (fourth part).
+     * @return boolean TRUE, if condition is satisfied, FALSE othewise.
+     */
     public function exists_in_table($str, $table) {
         $table_def = explode('.', $table);
         $CI =& get_instance();
@@ -68,6 +74,19 @@ class LIST_Form_validation extends CI_Form_validation {
         } else if (count($table_def) == 4) {
             $count = $CI->db->from($table_def[0])->where($table_def[1], $str)->count_all_results();
             return $count >= intval($table_def[2]) && $count <= intval($table_def[3]);
+        }
+        return FALSE;
+    }
+    
+    /**
+     * Evaluate text if contains numeric value with floating point.
+     * @param string $str string to evaluate.
+     * @return boolean TRUE, if string is floating point value, FALSE otherwise.
+     */
+    public function floatpoint($str) {
+        $pattern = '/^-{0,1}(0|[1-9]{1}[0-9]*)(\.[0-9]+){0,1}$/';
+        if (preg_match($pattern, $str)) {
+            return TRUE;
         }
         return FALSE;
     }
