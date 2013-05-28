@@ -20,4 +20,21 @@ jQuery(document).ready(function($) {
         api_ajax_load(url, '#new_solution_form_id', 'post', data, success);
     });
     
+    $(document).on('click', '#table_content_id a.open_valuation_dialog', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        $.fancybox(url, {
+            type: 'iframe',
+            width: '100%',
+            height: '100%',
+            autoSize: false,
+            autoHeight: false,
+            autoWidth: false,
+            beforeClose: function() {
+                refresh_all_solutions();
+                return true;
+            }
+        });
+    });
+    
 });

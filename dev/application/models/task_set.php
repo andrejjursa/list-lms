@@ -183,4 +183,89 @@ class Task_set extends DataMapper {
         }
         return FALSE;
     }
+    
+    /**
+     * Returns the internal files in ZIP archive of student solution.
+     * @param string $real_filename solution file name.
+     * @return array<string> array of ZIP archive content (array keys are ZIP archive file indexes).
+     */
+    public function get_student_file_content($real_filename) {
+        if (!is_null($this->id)) {
+            $path = 'private/uploads/solutions/task_set_' . intval($this->id) . '/';
+            if (file_exists($path)) {
+                $all_files = scandir($path);
+                if (in_array($real_filename, $all_files) && preg_match(self::STUDENT_FILE_NAME_REGEXP, $real_filename, $matches)) {
+                    $output = array();
+                    $zip_file = new ZipArchive();
+                    if ($zip_file->open($path . $real_filename) === TRUE) {
+                        for ($i = 0; $i < $zip_file->numFiles; $i++) {
+                            $output[$i] = $zip_file->getNameIndex($i);
+                        }
+                        $zip_file->close();
+                    }
+                    return $output;
+                }
+            }
+        }
+        return array();
+    }
+    
+    /**
+     * Extracts one file from given student ZIP file and index and returns its content.
+     * @param string $real_filename solution file name.
+     * @param integer $index index in ZIP file.
+     * @return boolean|array returns array with file content, name and extension or FALSE on error.
+     */
+    public function extract_student_file_by_index($real_filename, $index) {
+        $file_info = $this->get_specific_file_info($real_filename);
+        if ($file_info !== FALSE) {
+            $path = 'private/uploads/solutions/task_set_' . intval($this->id) . '/';
+            $CI =& get_instance();
+            $CI->load->library('session');
+            $supported_extensions = $this->trim_explode(',', $CI->config->item('readable_file_extensions'));
+            $all_userdata = $CI->session->all_userdata();
+            $extract_path = 'private/extracted_solutions/task_set_' . intval($this->id) . '/' . $all_userdata['session_id'] . '/';
+            @mkdir('private/extracted_solutions/task_set_' . intval($this->id) . '/');
+            @mkdir($extract_path);
+            $zip_file = new ZipArchive();
+            $open = $zip_file->open($path . $real_filename);
+            $content = '';
+            $filename = '';
+            $extension = '';
+            $file_read = TRUE;
+            if ($open === TRUE && intval($index) >= 0 && intval($index) < $zip_file->numFiles) {
+                $extracted_file = $zip_file->getNameIndex(intval($index));
+                $extension = '';
+                $ext_pos = strrpos($extracted_file, '.');
+                if ($ext_pos !== FALSE) { $extension = substr($extracted_file, $ext_pos + 1); }
+                if (in_array($extension, $supported_extensions)) {
+                    $zip_file->extractTo($extract_path, $extracted_file);
+                    $content = @file_get_contents($extract_path . $extracted_file);
+                    $filename = basename($extract_path . $extracted_file);
+                } else {
+                    $file_read = FALSE;
+                }
+                $zip_file->close();
+            } else {
+                $file_read = FALSE;
+            }
+            @unlink_recursive(rtrim($extract_path, '/'), TRUE);
+            return $file_read ? array('content' => $content, 'filename' => $filename, 'extension' => $extension) : FALSE;
+        }
+        return FALSE;
+    }
+    
+    /**
+     * Performs explode on given string by given delimiter and trims all array items in output array.
+     * @param string $delimiter delimiter.
+     * @param string $string string to split to array.
+     * @return array<string> result array.
+     */
+    private function trim_explode($delimiter, $string) {
+        $array = explode($delimiter, $string);
+        if (count($array) > 0) { foreach ($array as $key => $value) {
+            $array[$key] = trim($value);
+        }}
+        return $array;
+    }
 }

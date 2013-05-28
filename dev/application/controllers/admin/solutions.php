@@ -43,7 +43,7 @@ class Solutions extends LIST_Controller {
         $this->parser->add_css_file('admin_solutions.css');
         $this->parser->parse('backend/solutions/solutions_list.tpl', array('task_set' => $task_set));
     }
-    
+        
     public function create_solution($task_set_id) {
         $this->load->library('form_validation');
         
@@ -97,6 +97,101 @@ class Solutions extends LIST_Controller {
         $task_set->get_by_id($task_set_id);
         $this->inject_students($task_set_id);
         $this->parser->parse('backend/solutions/new_solution_form.tpl', array('task_set' => $task_set));
+    }
+    
+    public function valuation($task_set_id, $solution_id) {
+        $solution = new Solution();
+        $solution->select('`solutions`.*');
+        $solution->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `task_sets`.`id`)', 'task_set_total_points');
+        $solution->include_related('task_set', '*', TRUE, TRUE);
+        $solution->include_related('task_set/course', 'name');
+        $solution->include_related('task_set/course/period', 'name');
+        $solution->include_related('task_set/group', 'name');
+        $solution->include_related('student', array('fullname', 'email'));
+        $solution->include_related('teacher', array('fullname', 'email'));
+        $solution->where('student_id IS NOT NULL');
+        $solution->where('task_set_id', $task_set_id);
+        $solution->get_by_id($solution_id);
+        
+        $this->parser->add_js_file('jquery.activeform.js');
+        $this->parser->add_js_file('admin_solutions/valuation.js');
+        $this->parser->add_css_file('admin_solutions.css');
+        $this->parser->parse('backend/solutions/valuation.tpl', array('solution' => $solution));
+    }
+    
+    public function update_valuation($task_set_id, $solution_id) {
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('solution[points]', 'lang:admin_solutions_valuation_form_field_points', 'required|floatpoint');
+        
+        if ($this->form_validation->run()) {
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $solution = new Solution();
+            $solution->where('task_set_id', intval($task_set_id));
+            $solution->get_by_id($solution_id);
+            if ($solution->exists()) {
+                $solution_data = $this->input->post('solution');
+                $solution->from_array($solution_data, array('points', 'comment'));
+                if (is_null($solution->teacher_id)) { $solution->teacher_id = $this->usermanager->get_teacher_id(); }
+                $solution->revalidate = 0;
+                if ($solution->save() && $this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message('lang:admin_solutions_valuation_solution_saved', Messages::MESSAGE_TYPE_SUCCESS);
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_solutions_valuation_solution_not_saved', Messages::MESSAGE_TYPE_ERROR);
+                }
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_solutions_valuation_solution_not_found', Messages::MESSAGE_TYPE_ERROR);
+            }
+            redirect(create_internal_url('admin_solutions/valuation/' . $task_set_id . '/' . $solution_id));
+        } else {
+            $this->valuation($task_set_id, $solution_id);
+        }
+    }
+    
+    public function get_student_file_content($task_set_id, $solution_id, $solution_file) {
+        $task_set = new Task_set();
+        $task_set->where_related('solution', 'id', $solution_id);
+        $task_set->include_related('solution/student', 'id');
+        $task_set->get_by_id($task_set_id);
+        $files = array();
+        if ($task_set->exists()) {
+            $file_name = decode_from_url($solution_file);
+            $files = $task_set->get_student_file_content($file_name);
+        }
+        $this->parser->parse('backend/solutions/list_of_file_content.tpl', array('files' => $files));
+    }
+    
+    public function show_file_content($task_set_id, $solution_id, $solution_file, $zip_index) {
+        $this->output->set_content_type('text/plain');
+        $task_set = new Task_set();
+        $task_set->where_related('solution', 'id', $solution_id);
+        $task_set->include_related('solution/student', 'id');
+        $task_set->get_by_id($task_set_id);
+        if ($task_set->exists()) {
+            $file_name = decode_from_url($solution_file);
+            $output = $task_set->extract_student_file_by_index($file_name, $zip_index);
+            if ($output !== FALSE) {
+                $this->config->load('geshi');
+                $highlight_extensions = $this->config->item('file_extension_highlight');
+                if (isset($highlight_extensions[$output['extension']])) {
+                    include(APPPATH . 'third_party/geshi/geshi.php');
+                    $geshi = new GeSHi($output['content'], $highlight_extensions[$output['extension']]);
+                    $geshi->set_header_type(GESHI_HEADER_PRE_VALID);
+                    $geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+                    $this->output->set_output($geshi->parse_code());
+                } else {
+                    $this->output->set_output('<pre>' . htmlspecialchars($output['content']) . '</pre>');
+                }
+            } else {
+                $this->output->set_output($this->lang->line('admin_solutions_valuation_file_content_error_cant_read_file'));
+            }
+        } else {
+            $this->output->set_output($this->lang->line('admin_solutions_valuation_file_content_error_task_set_not_found'));
+        }
     }
 
     public function get_task_set_list() {

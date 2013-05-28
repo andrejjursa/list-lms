@@ -410,6 +410,14 @@ $config['student_login_security_allowed_attempts'] = 5;
 
 $config['maximum_solition_filesize'] = 10240;
 
+/**
+|--------------------------------------------------------------------------
+| All readable text file extensions for solution valuation file reader.
+|--------------------------------------------------------------------------
+| Comma separated list of extensions.
+*/
+$config['readable_file_extensions'] = 'txt,html,php,js,css,hs,java,c,cpp,h,pas';
+
 /* End of file config.php */
 
 /* Location: ./application/config/config.php */
