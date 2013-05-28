@@ -19,6 +19,7 @@ $lang['admin_solutions_table_button_select_task_set'] = 'Select&nbsp;task&nbsp;s
 $lang['admin_solutions_datetime_format'] = 'm/d/Y H:i:s';
 $lang['admin_solutions_no_time_information'] = 'No time information.';
 $lang['admin_solutions_no_solution_uploading'] = 'Solution uploading is disabled.';
+$lang['admin_solutions_group_no_group'] = 'No group';
 
 $lang['admin_solutions_list_page_title'] = 'Solutions for task set %s';
 $lang['admin_solutions_list_h3_all_groups'] = 'All groups';

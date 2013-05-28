@@ -19,6 +19,7 @@ $lang['admin_solutions_table_button_select_task_set'] = 'Vybrať&nbsp;zostavu&nb
 $lang['admin_solutions_datetime_format'] = 'd.m.Y H:i:s';
 $lang['admin_solutions_no_time_information'] = 'Časová informácia neexistuje.';
 $lang['admin_solutions_no_solution_uploading'] = 'Odosielanie riešení je zakázané.';
+$lang['admin_solutions_group_no_group'] = 'Bez skupiny';
 
 $lang['admin_solutions_list_page_title'] = 'Riešenia pre zostavu úloh %s';
 $lang['admin_solutions_list_h3_all_groups'] = 'Všetky skupiny';

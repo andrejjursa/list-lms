@@ -210,7 +210,9 @@ class Solutions extends LIST_Controller {
         if (isset($filter['course']) && intval($filter['course']) > 0) {
             $task_sets->where_related_course('id', intval($filter['course']));
         }
-        if (isset($filter['group']) && intval($filter['group']) > 0) {
+        if (isset($filter['group']) && $filter['group'] == 'NULL') {
+            $task_sets->where_related_group('id', NULL);
+        } else if (isset($filter['group']) && intval($filter['group']) > 0) {
             $task_sets->where_related_group('id', intval($filter['group']));
         }
         $task_sets->order_by_related('course/period', 'sorting', 'asc');
@@ -243,7 +245,8 @@ class Solutions extends LIST_Controller {
         $groups->order_by_with_constant('name', 'asc');
         $groups->get_iterated();
         $options = array(
-            '' => ''
+            '' => '',
+            'NULL' => $this->lang->line('admin_solutions_group_no_group'),
         );
         foreach ($groups as $group) {
             $options[$group->id] = $group->name;

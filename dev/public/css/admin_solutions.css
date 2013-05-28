@@ -17,6 +17,7 @@ table.solutions_table th.controlls { width: 1px; text-align: center; }
 table.solutions_table td.controlls { width: 1px;}
 table.solutions_table tbody td { padding: 2px; }
 table.solutions_table tbody tr:nth-child(even) { background-color: rgba(255,255,255,128); }
+table.solutions_table tbody tr.revalidate_this { border: 1px solid red; background-color: rgba(255,164,164,64); }
 table.solutions_table tbody td ul { margin-left: 20px; }
 table.solutions_table tfoot td { text-align: right; background-color: rgba(192,192,192,128); padding: 2px; border-radius: 4px; }
 table.solutions_table thead tr th { padding: 2px; background-color: rgba(192,192,192,128); }
