@@ -167,7 +167,9 @@ class Task_sets extends LIST_Controller {
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         $this->parser->add_js_file('jquery.activeform.js');
+        $this->parser->add_js_file('admin_task_sets/edit.js');
         $this->parser->add_js_file('admin_task_sets/form.js');
+        $this->parser->add_css_file('admin_task_sets.css');
         $this->inject_courses();
         $this->inject_languages();
         $this->parser->parse('backend/task_sets/edit.tpl', array('task_set' => $task_set));
@@ -180,10 +182,20 @@ class Task_sets extends LIST_Controller {
         $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
         $this->form_validation->set_rules('task_set[task_set_type_id]', 'lang:admin_task_sets_form_field_task_set_type_id', 'required|exists_in_table[task_set_types.id]');
         
-        if ($this->form_validation->run()) {
-            $task_set_id = intval($this->input->post('task_set_id'));
-            $task_set = new Task_set();
-            $task_set->get_by_id($task_set_id);
+        $task_set_id = intval($this->input->post('task_set_id'));
+        $task_set = new Task_set();
+        $task_set->get_by_id($task_set_id);
+        $tasks = $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get();
+        $tasks_join_fields_data = $this->input->post('task_join_field');
+        if ($tasks->exists()) { foreach ($tasks->all as $task) {
+            if (isset($tasks_join_fields_data[$task->id])) {
+                if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
+                    $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][points_total]', 'lang:admin_task_sets_form_field_task_points_total', 'required|number|greater_than[0]');
+                }
+            }
+        }}
+        
+        if ($this->form_validation->run()) {    
             if ($task_set->exists()) {
                 $task_set_data = $this->input->post('task_set');
                 $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published'));
@@ -196,6 +208,20 @@ class Task_sets extends LIST_Controller {
                 
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
+                
+                if ($tasks->exists()) {
+                    $tasks_sorting = array_flip(explode(',', $this->input->post('tasks_sorting')));
+                    foreach($tasks->all as $task) {
+                        if (isset($tasks_join_fields_data[$task->id])) {
+                            if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
+                                $task->set_join_field($task_set, 'sorting', $tasks_sorting[$task->id] + 1);
+                                $task->set_join_field($task_set, 'points_total', floatval($tasks_join_fields_data[$task->id]['points_total']));
+                            } else {
+                                $task_set->delete($task);
+                            }
+                        }
+                    }
+                }
                 
                 if ($task_set->save() && $this->lang->save_overlay_array($overlay) && $this->db->trans_status()) {
                     $this->db->trans_commit();

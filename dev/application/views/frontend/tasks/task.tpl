@@ -12,7 +12,7 @@
                     <li><a href="#tabs-solution">{translate line='tasks_task_tabs_solutions'}</a></li>
                 </ul>
                 <div id="tabs-task">
-                    {foreach $task_set->task->include_join_fields()->order_by_join_field('sorting', 'asc')->get_iterated() as $task}
+                    {foreach $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get_iterated() as $task}
                     <h3>{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}</h3>
                     <div class="task_text">
                     {overlay|task table='tasks' table_id=$task->id column='text' default=$task->text}
