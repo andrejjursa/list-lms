@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Update controller for CLI requests.
+ * Controller for CLI requests.
+ * @package LIST_CLI_Controllers
+ * @author Andrej Jursa
  */
 class Cli extends CI_Controller {
     
