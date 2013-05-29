@@ -11,6 +11,9 @@ class Period extends DataMapper {
         'course'
     );
     
+    /**
+     * This method will move current period up in sorting order.
+     */
     public function move_up() {
         if (isset($this->id) && intval($this->id) > 0) {
             $up_period = new Period();
@@ -32,6 +35,9 @@ class Period extends DataMapper {
         }
     }
     
+    /**
+     * This method will move current period down in sorting order.
+     */
     public function move_down() {
         if (isset($this->id) && intval($this->id) > 0) {
             $down_period = new Period();
@@ -53,6 +59,12 @@ class Period extends DataMapper {
         }
     }
     
+    /**
+     * Delete this period or related object.
+     * If no parameters are set, this method deletes current period and re-sort all other periods.
+     * @param DataMapper|string $object related object to delete from relation.
+     * @param string $related_field relation internal name.
+     */
     public function delete($object = '', $related_field = '') {
         if (empty($object) && !is_array($object) && !empty($this->id)) {
             $lower_periods = new Period();

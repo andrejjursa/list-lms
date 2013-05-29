@@ -19,6 +19,12 @@ class Student extends DataMapper {
         ),
     );
     
+    /**
+     * Delete this student or related object.
+     * If no parameters are set, this method deletes current student and all participant record related with this student.
+     * @param DataMapper|string $object related object to delete from relation.
+     * @param string $related_field relation internal name.
+     */
     public function delete($object = '', $related_field = '') {
         if (empty($object) && !is_array($object) && !empty($this->id)) {
             $participant = new Participant();
