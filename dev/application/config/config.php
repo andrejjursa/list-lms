@@ -407,7 +407,6 @@ $config['student_login_security_allowed_attempts'] = 5;
 |--------------------------------------------------------------------------
 | Value is in kilobytes, i.e. 1024 = 1 MB.
 */
-
 $config['maximum_solition_filesize'] = 10240;
 
 /**
