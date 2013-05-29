@@ -1,0 +1,1 @@
+{list_html_options options=$groups selected=$selected_id|default:$task_set->group_id|intval}

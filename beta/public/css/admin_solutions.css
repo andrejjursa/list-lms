@@ -1,0 +1,30 @@
+table.task_sets_table { width: 100%; }
+table.task_sets_table th { text-align: left; }
+table.task_sets_table th.controlls { width: 1px; text-align: center; }
+table.task_sets_table td.controlls { width: 1px;}
+table.task_sets_table tbody td { padding: 2px; }
+table.task_sets_table tbody tr:nth-child(even) { background-color: rgba(255,255,255,128); }
+table.task_sets_table tbody td ul { margin-left: 20px; }
+table.task_sets_table tfoot td { text-align: right; background-color: rgba(192,192,192,128); padding: 2px; border-radius: 4px; }
+table.task_sets_table thead tr th { padding: 2px; background-color: rgba(192,192,192,128); }
+table.task_sets_table thead tr th:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+table.task_sets_table thead tr th:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+div.filter_wrap { margin-bottom: 10px; border-bottom: 1px solid silver; padding-bottom: 5px; }
+
+table.solutions_table { width: 100%; }
+table.solutions_table th { text-align: left; }
+table.solutions_table th.controlls { width: 1px; text-align: center; }
+table.solutions_table td.controlls { width: 1px;}
+table.solutions_table tbody td { padding: 2px; }
+table.solutions_table tbody tr:nth-child(even) { background-color: rgba(255,255,255,128); }
+table.solutions_table tbody td ul { margin-left: 20px; }
+table.solutions_table tfoot td { text-align: right; background-color: rgba(192,192,192,128); padding: 2px; border-radius: 4px; }
+table.solutions_table thead tr th { padding: 2px; background-color: rgba(192,192,192,128); }
+table.solutions_table thead tr th.valuation { text-align: center; }
+table.solutions_table thead tr th.left_corner { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+table.solutions_table thead tr th.right_corner { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+
+#file_content_id { width: 100%; height: 400px; overflow: auto; border: 1px solid black; border-radius: 3px; padding: 3px; }
+#file_content_id ol { background-color: #99ff99; }
+#file_content_id ol li { margin-left: 75px; padding-left: 5px; background-color: white; }
+#file_content_id ol li pre { display: block; }

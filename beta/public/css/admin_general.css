@@ -1,0 +1,95 @@
+* { margin: 0; padding: 0; }
+body { font-family: Verdana, Arial, sans-serif; font-size: 14px; background-color: white; color: black; }
+table { border-collapse: collapse; }
+nav { background-color:#322f32; padding: 0 10px; margin-top: 10px; box-shadow: 0px 0px 5px 5px #322f32; }
+#pagewrap_id { min-width: 800px; }
+#headerwrap_id { position: fixed; top: 0px; width: 100%; background-color: white; z-index: 100; min-width: 800px; }
+div.header_margin { margin-top: 140px !important; }
+
+.button { transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; padding: 4px 10px; border: 1px solid green; border-radius: 30px; background-color: #B6FBA6; color: black; box-shadow: -3px -3px 3px gray inset; text-decoration: none; font-size: 0.9em; }
+a.button { padding-top: 3px; display: inline-block; }
+.button:hover, .button:focus { border-color: black; background-color: #6DC052; box-shadow: -3px -3px 3px black inset; }
+.button:active { border-color: black; box-shadow: 3px 3px 3px black inset; }
+.button.delete { background-color: #FF8080; border-color: red; }
+.button.delete:hover { background-color: #FF2F2F; }
+.button.delete:active { border-color: black; }
+.button.special { background-color: #96BFFF; border-color: blue; }
+.button.special:hover { background-color: #447DFF; }
+.button.special:active { border-color: black; }
+input[type=text], input[type=password], textarea, select { border: 1px solid black; background-color: white; color: black; font-family: Verdana, Arial, sans-serif; border-radius: 3px; box-shadow: -3px -3px 3px silver inset; padding: 3px; }
+input[type=text]:hover, input[type=password]:hover, textarea:hover, select:hover,
+input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus { box-shadow: 3px 3px 3px silver inset; }
+
+#top_meta_informations { background-color: #322f32; padding: 5px 4px 3px 4px; color: white; box-shadow: 0px 5px 5px 2px #322f32; margin-bottom: 10px; font-size: 0.8em; }
+#top_meta_informations div.left { float: left; }
+#top_meta_informations div.right { float: right; }
+#top_meta_informations div.clear { clear: both; }
+#top_meta_informations a { text-decoration: none; color: green; transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; }
+#top_meta_informations a:hover { color: #B6FBA6; }
+
+#teacher_quick_langmenu { display: none; position: absolute; }
+#top_meta_informations div.teacher_quick_langmenu { display: inline-block; }
+
+#jMenu { display:table; margin:0; padding:0; position: relative; z-index: 1000; }
+/********************/
+/** premier niveau **/
+/********************/
+#jMenu li { display:table-cell; background-color:#322f32; margin:0; }
+#jMenu li a { padding:10px; display:block; background-color: transparent; color:#fff; text-transform:uppercase; text-decoration: none; cursor:pointer; font-size:12px; }
+#jMenu li a:hover { background-color:#514c52; }
+#jMenu li.selected > a:hover { background-color: green; }
+#jMenu li.selected { background-color: darkgreen; }
+/*******************/
+/** second niveau **/
+/*******************/
+#jMenu li ul { display:none; position:absolute; padding:0; margin:0; }
+#jMenu li ul li { background-color:#322f32; display:block; border-bottom:1px solid #484548; padding:0; }
+#jMenu li ul li.arrow { background:#322f32 url('../images_ui/arrow_down.png') no-repeat center center; height:6px; padding:0; border-bottom:none; padding-bottom:10px; }
+#jMenu li ul li a { font-size:11px; text-transform:none; padding:7px; display:block; border-top:1px solid transparent; border-bottom:1px solid transparent; }
+#jMenu li ul li a.isParent { background:#3A3A3A url('../images_ui/arrow_right.png') no-repeat right center; }
+#jMenu li ul li.selected { background-color: darkgreen; }
+#jMenu li ul li.selected a.isParent { background-color: transparent; }
+#jMenu li ul li a:hover { background-color:#514c52; border-top:1px solid #322f32; border-bottom:1px solid #322f32; }
+#jMenu li ul li.selected > a:hover { background-color: green; }
+#jMenu li a.inactive { color: gray; }
+#jMenu li.selected > a.inactive { color: silver; }
+
+div.loginbox { width: 400px; margin: 150px auto 0 auto; padding: 20px; border: 1px solid black; border-radius: 15px; box-shadow: 15px 15px 15px silver; }
+div.loginbox h1 { margin: 0 0 15px 0; text-shadow: 0 0 4px gray; color: black; }
+
+div.backend_body { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; }
+
+div.backend_body > fieldset, fieldset.basefieldset { margin: 5px; border: 1px solid gray; padding: 10px; border-radius: 5px; background-color: #E8E8E8; }
+div.backend_body > fieldset > legend, fieldset.basefieldset > legend { border: 1px solid gray; margin-left: 5px; width: 50%; padding: 4px; border-radius: 5px; background-color: #E8E8E8; font-weight: bold; }
+div.backend_body > h4, div.backend_body > h3, div.backend_body > h2 { margin: 5px; text-shadow: 0 0 4px gray; color: black; }
+
+form div.field_login,
+form div.buttons_login { margin: 4px 0; clear: both; }
+form div.field_login > label { font-weight: bold; width: 175px; display: block; float: left; cursor: pointer; }
+form div.field_login p.input { width: 210px; margin-left: 180px; }
+form div.field_login p.input input[type=text], form div.field_login p.input input[type=password], form div.field_login p.input textarea { width: 98%; }
+form div.field_login p.error { clear: both; width: 99%; }
+form div.field_login p.error span.message { padding: 2px; border: 1px solid red; color: red; border-radius: 3px; width: 98%; margin: 2px 0; display: block; background-color: #FFAFAF; }
+
+form div.field,
+form div.buttons { margin: 4px 0; clear: both; padding: 3px 0 0 0; }
+form div.field > label { font-weight: bold; width: 20%; display: block; float: left; cursor: pointer; padding: 3px 0 0 0; }
+form div.field > label.required:after { content: ' *'; }
+form div.field p.input,
+form div.field div.input { width: 80%; margin-left: 20%; padding: 3px 0 0 0; }
+form div.field p.input input[type=text], form div.field p.input input[type=password], form div.field p.input textarea { width: 98%; }
+form div.field p.input textarea { height: 100px; }
+form div.field p.input select { max-width: 98%; }
+form div.field p.error { width: 80%; margin-left: 20%; } 
+form div.field p.error span.message { padding: 2px; border: 1px solid red; color: red; border-radius: 3px; width: 98%; margin: 2px 0; display: block; background-color: #FFAFAF; }
+form div.field p.caption { width: 80%; margin-left: 20%; font-size: 0.9em; }
+form div.field p.caption > label { font-weight: bold; cursor: pointer; }
+
+div.flash_message { color: blue; margin: 5px; padding: 5px; border: 1px solid blue; background-color: #d0d8ff; border-radius: 5px; box-shadow: 0px 0px 2px 2px blue inset; }
+div.flash_message.message_success { border-color: green; box-shadow: 0px 0px 2px 2px green inset; background-color: #ADFF9A; color: green; }
+div.flash_message.message_error { border-color: red; box-shadow: 0px 0px 2px 2px red inset; background-color: #FFAFAF; color: red; }
+
+div.custom_translations_selector li { transition: all 0.3s ease-in-out; -moz-transition: all 0.3s ease-in-out; -webkit-transition: all 0.3s ease-in-out; -o-transition: all 0.3s ease-in-out; }
+div.custom_translations_selector li.mouseover { background-color: #B6FBA6; }
+div.custom_translations_selector li.selected { background-color: #FFC1C1; }
+div.custom_translations_selector li.selected.mouseover { background-color: #FDFF83; }
