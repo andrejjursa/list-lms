@@ -1,6 +1,7 @@
 jQuery(document).ready(function($) {
     
     if ($('#new_course_form_id').length != 0) {
+        make_switchable_form('#new_course_form_id');
         
         var reload_table_content = function() {
             api_ajax_load(global_base_url + 'index.php/admin_courses/get_table_content', '#table_content');
@@ -55,6 +56,7 @@ jQuery(document).ready(function($) {
         });
         
     } else if ($('#add_task_set_type_form_id').length != 0) {
+        make_switchable_form('#add_task_set_type_form_id');
         
         var reload_table_content = function() {
             api_ajax_load(global_base_url + 'index.php/admin_courses/get_task_set_types/course_id/' + current_course, '#table_content_id');

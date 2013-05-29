@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
     
+    make_switchable_form('#add_participant_form_id');
     make_filter_form('#filter_form_id');
     
     var reload_all_participants = function() {

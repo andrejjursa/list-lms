@@ -130,6 +130,7 @@ class LIST_Controller extends CI_Controller {
      */
     protected function _add_tinymce() {
         $this->parser->add_js_file('tinymce/jquery.tinymce.js');
+        $this->parser->add_js_file('tinymce_fix.js');
         $this->parser->add_css_file('tinymce/common.css');
     }
     

@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    make_switchable_form('#new_task_set_type_form_id');
+    
     var reload_all_task_set_types = function() {
         api_ajax_load(global_base_url + 'index.php/admin_task_set_types/get_table_content', '#task_set_types_table_content_id');
     };

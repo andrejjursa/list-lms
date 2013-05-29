@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    make_switchable_form('#new_room_form_id');
+    
     var reload_all_rooms = function() {
         var url = global_base_url + 'index.php/admin_rooms/get_table_content/' + current_group_id;
         api_ajax_load(url, '#rooms_table_body_id');

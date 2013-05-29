@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    make_switchable_form('#new_period_form_id');
+    
     var reload_all_periods = function() {
         api_ajax_load(global_base_url + 'index.php/admin_periods/ajax_periods_list', '#periods_container_id');
     };

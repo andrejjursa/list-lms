@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    make_switchable_form('#new_teacher_form_id');
+    
     var reload_all_teachers = function() {
         var url = global_base_url + 'index.php/admin_teachers/list_teachers_table';
         api_ajax_load(url, '#table_content_id');

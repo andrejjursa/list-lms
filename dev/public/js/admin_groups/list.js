@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
     
+    make_switchable_form('#groups_form_id');
     make_filter_form('#filter_form_id');
     
     var reload_all_groups = function() {

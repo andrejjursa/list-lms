@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    make_switchable_form('#new_category_form_id');
+    
     var get_structured_tree = function() {
         var url = global_base_url + 'index.php/admin_categories/tree_structure';
         api_ajax_load(url, '#category_tree_id');
