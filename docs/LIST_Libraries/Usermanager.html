@@ -19,7 +19,9 @@
 													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
 						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 						
-					</div>
+											<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+						
+			</div>
 	<div class="info-box-body">
         		<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">User management library for LIST. This library can handle students and teachers.</p>
@@ -37,6 +39,32 @@
 </div>
 
 
+	<a name="sec-const-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constant Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Constants</span> (<a href="#sec-consts">details</a>)
+												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<div class="const-summary">
+								<div class="const-title">
+					<a href="#ACCOUNT_TYPE_STUDENT" title="details" class="const-name">ACCOUNT_TYPE_STUDENT</a> = 					<span class="var-type"> 'student'</span>
+
+				</div>
+								<div class="const-title">
+					<a href="#ACCOUNT_TYPE_TEACHER" title="details" class="const-name">ACCOUNT_TYPE_TEACHER</a> = 					<span class="var-type"> 'teacher'</span>
+
+				</div>
+							</div>
+		</div>
+	</div>
 
 	<a name="sec-var-summary"></a>
 	<div class="info-box">
@@ -47,7 +75,9 @@
 							| 
 									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 							
-								</div>
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+					</div>
 		<div class="info-box-body">
 			<div class="var-summary">
 																																								<div class="var-title">
@@ -71,18 +101,25 @@
 		<div class="info-box-title">Method Summary</span></div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
-																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
 				 
 				|
 						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																																																																																																												
+																																																																																																																																																																																												
 												<div class="method-definition">
 											<span class="method-result">Usermanager</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
 										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#add_login_failed_record" title="details" class="method-name">add_login_failed_record</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$email</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$acc_type</span> = <span class="var-default">self::ACCOUNT_TYPE_TEACHER</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">boolean</span>
@@ -128,6 +165,11 @@
 											<span class="method-result">string</span>
 										<a href="#get_teacher_language" title="details" class="method-name">get_teacher_language</a>
 										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#is_login_attempts_exceeded" title="details" class="method-name">is_login_attempts_exceeded</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$email</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$acc_type</span> = <span class="var-default">self::ACCOUNT_TYPE_TEACHER</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">boolean</span>
@@ -196,6 +238,8 @@
 										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
 						
 			
+												<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
 										| 
 									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 							
@@ -208,7 +252,7 @@
 		<span class="var-title">
 			<span class="var-type">object</span>
 			<span class="var-name">$CI</span>
-			 = <span class="var-default"> NULL</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a15">15</a></span>)
+			 = <span class="var-default"> NULL</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a18">18</a></span>)
 		</span>
 	</div>
 
@@ -230,7 +274,7 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$student_login_verified</span>
-			 = <span class="var-default"> NULL</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a19">19</a></span>)
+			 = <span class="var-default"> NULL</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a22">22</a></span>)
 		</span>
 	</div>
 
@@ -252,7 +296,7 @@
 		<span class="var-title">
 			<span class="var-type">boolean</span>
 			<span class="var-name">$teacher_login_verified</span>
-			 = <span class="var-default"> NULL</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a23">23</a></span>)
+			 = <span class="var-default"> NULL</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a26">26</a></span>)
 		</span>
 	</div>
 
@@ -277,7 +321,9 @@
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
 															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
-																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+																			<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
+							
+										<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
 						
 		</div>
 		<div class="info-box-body">
@@ -287,7 +333,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a28">28</a></span>)
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a31">31</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -307,11 +353,43 @@
 		
 			
 	</div>
-<a name="methodauthenticate_student_login" id="authenticate_student_login"><!-- --></a>
+<a name="methodadd_login_failed_record" id="add_login_failed_record"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">authenticate_student_login</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a83">83</a></span>)
+		<span class="method-title">add_login_failed_record</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a161">161</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Save record of failed login attempt.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			add_login_failed_record
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$email</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$acc_type</span> = <span class="var-default">self::ACCOUNT_TYPE_TEACHER</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$email</span><span class="var-description">: e-mail address of account.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$acc_type</span><span class="var-description">: type of account (ACCOUNT_TYPE_* constant).</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodauthenticate_student_login" id="authenticate_student_login"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">authenticate_student_login</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a86">86</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -344,10 +422,10 @@
 			
 	</div>
 <a name="methodauthenticate_teacher_login" id="authenticate_teacher_login"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">authenticate_teacher_login</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a108">108</a></span>)
+		<span class="method-title">authenticate_teacher_login</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a112">112</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -380,10 +458,10 @@
 			
 	</div>
 <a name="methodclear_current_url" id="clear_current_url"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">clear_current_url</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a310">310</a></span>)
+		<span class="method-title">clear_current_url</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a358">358</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -406,10 +484,10 @@
 			
 	</div>
 <a name="methoddo_student_logout" id="do_student_logout"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">do_student_logout</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a265">265</a></span>)
+		<span class="method-title">do_student_logout</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a313">313</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -430,10 +508,10 @@
 			
 	</div>
 <a name="methoddo_teacher_logout" id="do_teacher_logout"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">do_teacher_logout</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a273">273</a></span>)
+		<span class="method-title">do_teacher_logout</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a321">321</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -454,10 +532,10 @@
 			
 	</div>
 <a name="methodget_student_id" id="get_student_id"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_student_id</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a242">242</a></span>)
+		<span class="method-title">get_student_id</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a290">290</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -479,10 +557,10 @@
 			
 	</div>
 <a name="methodget_student_language" id="get_student_language"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_student_language</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a218">218</a></span>)
+		<span class="method-title">get_student_language</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a266">266</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -504,10 +582,10 @@
 			
 	</div>
 <a name="methodget_teacher_id" id="get_teacher_id"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_teacher_id</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a254">254</a></span>)
+		<span class="method-title">get_teacher_id</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a302">302</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -529,10 +607,10 @@
 			
 	</div>
 <a name="methodget_teacher_language" id="get_teacher_language"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_teacher_language</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a230">230</a></span>)
+		<span class="method-title">get_teacher_language</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a278">278</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -553,11 +631,44 @@
 		
 			
 	</div>
+<a name="methodis_login_attempts_exceeded" id="is_login_attempts_exceeded"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">is_login_attempts_exceeded</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a138">138</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Check if login attemts exceed allowed number of attempts.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE, if number of login attempts exceed allowed, FALSE otherwise.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			is_login_attempts_exceeded
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$email</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$acc_type</span> = <span class="var-default">self::ACCOUNT_TYPE_TEACHER</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$email</span><span class="var-description">: e-mail address of account.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$acc_type</span><span class="var-description">: type of account (ACCOUNT_TYPE_* constant).</span>			</li>
+				</ul>
+		
+			
+	</div>
 <a name="methodis_student_session_valid" id="is_student_session_valid"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">is_student_session_valid</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a37">37</a></span>)
+		<span class="method-title">is_student_session_valid</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a40">40</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -582,7 +693,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">is_teacher_session_valid</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a59">59</a></span>)
+		<span class="method-title">is_teacher_session_valid</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a62">62</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -607,7 +718,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">refresh_student_userdata</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a130">130</a></span>)
+		<span class="method-title">refresh_student_userdata</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a178">178</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -631,7 +742,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">refresh_teacher_userdata</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a148">148</a></span>)
+		<span class="method-title">refresh_teacher_userdata</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a196">196</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -655,11 +766,11 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">set_student_data_to_smarty</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a281">281</a></span>)
+		<span class="method-title">set_student_data_to_smarty</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a329">329</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">This function will send data from student session to smarty template variable called 'list_student_account'.</p>
+<p class="short-description">This function will send data from student session to smarty template variable called 'list_student_account' and create variable 'list_student_account_model' with student model.</p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -679,7 +790,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">set_teacher_data_to_smarty</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a296">296</a></span>)
+		<span class="method-title">set_teacher_data_to_smarty</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a344">344</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -703,7 +814,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">set_teacher_language</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a168">168</a></span>)
+		<span class="method-title">set_teacher_language</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a216">216</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -733,7 +844,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">student_login_protected_redirect</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a190">190</a></span>)
+		<span class="method-title">student_login_protected_redirect</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a238">238</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -762,7 +873,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">teacher_login_protected_redirect</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a204">204</a></span>)
+		<span class="method-title">teacher_login_protected_redirect</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a252">252</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -791,7 +902,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">validate_student_login_verification</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a322">322</a></span>)
+		<span class="method-title">validate_student_login_verification</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a370">370</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -820,7 +931,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">validate_teacher_login_verification</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a332">332</a></span>)
+		<span class="method-title">validate_teacher_login_verification</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a380">380</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -849,9 +960,56 @@
 		</div>
 	</div>
 
+	<a name="sec-consts"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constants</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Constants</a> (<span class="disabled">details</span>)
+						
+			
+												<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+														| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="constACCOUNT_TYPE_STUDENT" id="ACCOUNT_TYPE_STUDENT"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">ACCOUNT_TYPE_STUDENT</span>
+			 = <span class="const-default"> 'student'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a13">13</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+<a name="constACCOUNT_TYPE_TEACHER" id="ACCOUNT_TYPE_TEACHER"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">ACCOUNT_TYPE_TEACHER</span>
+			 = <span class="const-default"> 'teacher'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesusermanager.php.html#a12">12</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+						
+		</div>
+	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Sat, 18 May 2013 19:29:46 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Wed, 29 May 2013 15:38:11 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

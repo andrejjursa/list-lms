@@ -60,6 +60,10 @@
 					<a href="#OPEN_TASK_SET_SESSION_NAME" title="details" class="const-name">OPEN_TASK_SET_SESSION_NAME</a> = 					<span class="var-type"> 'OPEN_TASK_SET_SESSION'</span>
 
 				</div>
+								<div class="const-title">
+					<a href="#STUDENT_FILE_NAME_REGEXP" title="details" class="const-name">STUDENT_FILE_NAME_REGEXP</a> = 					<span class="var-type"> '/^(?P&lt;student_id&gt;[0-9]+)\_(?P&lt;file_name&gt;[a-zA-Z]+)\_(?P&lt;random_hash&gt;[a-zA-Z0-9]+)\_(?P&lt;solution_version&gt;[0-9]+)\.zip$/i'</span>
+
+				</div>
 							</div>
 		</div>
 	</div>
@@ -78,7 +82,7 @@
 					</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																																								<div class="var-title">
+																																																<div class="var-title">
 					<span class="var-type">mixed</span>
 					<a href="#$filter_tasks_count_sql" title="details" class="var-name">$filter_tasks_count_sql</a>
 				</div>
@@ -89,6 +93,10 @@
 																<div class="var-title">
 					<span class="var-type">mixed</span>
 					<a href="#$has_one" title="details" class="var-name">$has_one</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$max_solution_version" title="details" class="var-name">$max_solution_version</a>
 				</div>
 											</div>
 		</div>
@@ -108,21 +116,56 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																												
+																																																																																																				
 												<div class="method-definition">
-											<span class="method-result">void</span>
+											<span class="method-result">boolean|array</span>
+										<a href="#extract_student_file_by_index" title="details" class="method-name">extract_student_file_by_index</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$real_filename</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$index</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result"><a href="../LIST_DM_Models/Task_set.html">Task_set</a></span>
 										<a href="#get_as_open" title="details" class="method-name">get_as_open</a>
 										()
 									</div>
 																<div class="method-definition">
-											<span class="method-result">void</span>
+											<span class="method-result">integer</span>
 										<a href="#get_open_task_set_id" title="details" class="method-name">get_open_task_set_id</a>
 										()
 									</div>
 																<div class="method-definition">
-											<span class="method-result">void</span>
+											<span class="method-result">boolean|array<mixed></span>
+										<a href="#get_specific_file_info" title="details" class="method-name">get_specific_file_info</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$real_filename</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array<string></span>
+										<a href="#get_student_files" title="details" class="method-name">get_student_files</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$student_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">integer</span>
+										<a href="#get_student_files_count" title="details" class="method-name">get_student_files_count</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$student_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array<string></span>
+										<a href="#get_student_file_content" title="details" class="method-name">get_student_file_content</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$real_filename</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">integer</span>
+										<a href="#get_student_file_next_version" title="details" class="method-name">get_student_file_next_version</a>
+											(<span class="var-type">integer</span>&nbsp;<span class="var-name">$student_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
 										<a href="#set_as_open" title="details" class="method-name">set_as_open</a>
 										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array<string></span>
+										<a href="#trim_explode" title="details" class="method-name">trim_explode</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$delimiter</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$string</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result"><a href="../LIST_DM_Models/Task_set.html">Task_set</a></span>
@@ -160,7 +203,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$filter_tasks_count_sql</span>
-			 = <span class="var-default"> '(SELECT COUNT(*) AS count FROM (`tasks`) LEFT OUTER JOIN `task_task_set_rel` task_task_set_rel ON `tasks`.`id` = `task_task_set_rel`.`task_id` LEFT OUTER JOIN `task_sets` `task_sets_subquery` ON `task_sets_subquery`.`id` = `task_task_set_rel`.`task_set_id` WHERE `task_sets_subquery`.`id` = `task_sets`.`id`)'</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a12">12</a></span>)
+			 = <span class="var-default"> '(SELECT COUNT(*) AS count FROM (`tasks`) LEFT OUTER JOIN `task_task_set_rel` task_task_set_rel ON `tasks`.`id` = `task_task_set_rel`.`task_id` LEFT OUTER JOIN `task_sets` `task_sets_subquery` ON `task_sets_subquery`.`id` = `task_task_set_rel`.`task_set_id` WHERE `task_sets_subquery`.`id` = `task_sets`.`id`)'</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a13">13</a></span>)
 		</span>
 	</div>
 
@@ -181,7 +224,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$has_many</span>
-			 = <span class="var-default">array(<br />        'task' =&gt; array(<br />            'join_table' =&gt; 'task_task_set_rel',<br />        ),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a14">14</a></span>)
+			 = <span class="var-default">array(<br />        'task' =&gt; array(<br />            'join_table' =&gt; 'task_task_set_rel',<br />        ),'solution',)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a16">16</a></span>)
 		</span>
 	</div>
 
@@ -208,7 +251,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$has_one</span>
-			 = <span class="var-default">array(<br />    	'task_set_type',<br />    	'course',<br />        'room',<br />        'group',<br />    )</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a20">20</a></span>)
+			 = <span class="var-default">array(<br />    	'task_set_type',<br />    	'course',<br />        'room',<br />        'group',<br />    )</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a23">23</a></span>)
 		</span>
 	</div>
 
@@ -224,6 +267,27 @@
 			<dt><a href="../DataMapper/DataMapper.html#var$has_one">DataMapper::$has_one</a></dt>
 						<dd>Contains any related objects of which this model is singularly related.</dd>
 					</dl>
+		
+		
+
+</div>
+<a name="var$max_solution_version" id="$max_solution_version"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$max_solution_version</span>
+			 = <span class="var-default"> 0</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a14">14</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	
 		
 		
 
@@ -335,20 +399,55 @@
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 
-<a name="methodget_as_open" id="get_as_open"><!-- --></a>
-<div class="oddrow">
+<a name="methodextract_student_file_by_index" id="extract_student_file_by_index"><!-- --></a>
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_as_open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a59">59</a></span>)
+		<span class="method-title">extract_student_file_by_index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a219">219</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Extracts one file from given student ZIP file and index and returns its content.</p>
 	<ul class="tags">
+				<li><span class="field">return:</span> returns array with file content, name and extension or FALSE on error.</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">void</span>
+		<span class="method-result">boolean|array</span>
+		<span class="method-name">
+			extract_student_file_by_index
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$real_filename</span>, <span class="var-type">integer</span>&nbsp;<span class="var-name">$index</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$real_filename</span><span class="var-description">: solution file name.</span>			</li>
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$index</span><span class="var-description">: index in ZIP file.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_as_open" id="get_as_open"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_as_open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a70">70</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Load record of opened task set from database table.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> this object for method chaining.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result"><a href="../LIST_DM_Models/Task_set.html">Task_set</a></span>
 		<span class="method-name">
 			get_as_open
 		</span>
@@ -362,16 +461,18 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_open_task_set_id</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a71">71</a></span>)
+		<span class="method-title">get_open_task_set_id</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a86">86</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns opened task set ID.</p>
 	<ul class="tags">
+				<li><span class="field">return:</span> ID of opened task set.</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">void</span>
+		<span class="method-result">integer</span>
 		<span class="method-name">
 			get_open_task_set_id
 		</span>
@@ -381,20 +482,172 @@
 		
 			
 	</div>
-<a name="methodset_as_open" id="set_as_open"><!-- --></a>
+<a name="methodget_specific_file_info" id="get_specific_file_info"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">set_as_open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a45">45</a></span>)
+		<span class="method-title">get_specific_file_info</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a165">165</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Return info about solution file with specific real file name.</p>
 	<ul class="tags">
+				<li><span class="field">return:</span> returns FALSE if file is not found or array of file informations if it is found.</li>
 				<li><span class="field">access:</span> public</li>
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">void</span>
+		<span class="method-result">boolean|array<mixed></span>
+		<span class="method-name">
+			get_specific_file_info
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$real_filename</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$real_filename</span><span class="var-description">: solution file name.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_student_files" id="get_student_files"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_student_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a99">99</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Reads the directory for solutions of this task set and sorted array of all files belonging to student.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> sorted array of files.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array<string></span>
+		<span class="method-name">
+			get_student_files
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$student_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$student_id</span><span class="var-description">: ID of student.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_student_files_count" id="get_student_files_count"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_student_files_count</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a131">131</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns count of student files in this task set.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> number of files.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">integer</span>
+		<span class="method-name">
+			get_student_files_count
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$student_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$student_id</span><span class="var-description">: ID of student.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_student_file_content" id="get_student_file_content"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_student_file_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a192">192</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns the internal files in ZIP archive of student solution.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> array of ZIP archive content (array keys are ZIP archive file indexes).</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array<string></span>
+		<span class="method-name">
+			get_student_file_content
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$real_filename</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$real_filename</span><span class="var-description">: solution file name.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodget_student_file_next_version" id="get_student_file_next_version"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_student_file_next_version</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a155">155</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Return next version number of student solution for this task set.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> next version number.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">integer</span>
+		<span class="method-name">
+			get_student_file_next_version
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$student_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$student_id</span><span class="var-description">: ID of student.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodset_as_open" id="set_as_open"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">set_as_open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a52">52</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Set the currently loaded task set as open task set.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE, if task set is set as opened, FALSE otherwise.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
 		<span class="method-name">
 			set_as_open
 		</span>
@@ -404,11 +657,44 @@
 		
 			
 	</div>
+<a name="methodtrim_explode" id="trim_explode"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">trim_explode</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a264">264</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Performs explode on given string by given delimiter and trims all array items in output array.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> result array.</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array<string></span>
+		<span class="method-name">
+			trim_explode
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$delimiter</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$string</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$delimiter</span><span class="var-description">: delimiter.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$string</span><span class="var-description">: string to split to array.</span>			</li>
+				</ul>
+		
+			
+	</div>
 <a name="methodwhere_has_no_tasks" id="where_has_no_tasks"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">where_has_no_tasks</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a40">40</a></span>)
+		<span class="method-title">where_has_no_tasks</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a43">43</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -433,7 +719,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">where_has_tasks</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a31">31</a></span>)
+		<span class="method-title">where_has_tasks</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a34">34</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -597,12 +883,27 @@
 	
 	
 </div>
+<a name="constSTUDENT_FILE_NAME_REGEXP" id="STUDENT_FILE_NAME_REGEXP"><!-- --></A>
+<div class="oddrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">STUDENT_FILE_NAME_REGEXP</span>
+			 = <span class="const-default"> '/^(?P&lt;student_id&gt;[0-9]+)\_(?P&lt;file_name&gt;[a-zA-Z]+)\_(?P&lt;random_hash&gt;[a-zA-Z0-9]+)\_(?P&lt;solution_version&gt;[0-9]+)\.zip$/i'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a11">11</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
 						
 		</div>
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Sat, 18 May 2013 19:29:41 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Wed, 29 May 2013 15:38:06 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

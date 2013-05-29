@@ -16,8 +16,8 @@
 	<div class="info-box-title">Description</div>
 	<div class="nav-bar">
 					<span class="disabled">Description</span> |
-													<a href="#sec-vars">Vars</a>
-						|											<a href="#sec-methods">Methods</a>
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 						
 					</div>
 	<div class="info-box-body">
@@ -40,22 +40,120 @@
 
 
 
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+																																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$has_many" title="details" class="var-name">$has_many</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$has_one" title="details" class="var-name">$has_one</a>
+				</div>
+											</div>
+		</div>
+	</div>
 
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+												
+												<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#delete" title="details" class="method-name">delete</a>
+											([<span class="var-type">DataMapper|string</span>&nbsp;<span class="var-name">$object</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$related_field</span> = <span class="var-default">''</span>])
+									</div>
+								</div>
+		</div>
+	</div>		
 
 	<a name="sec-vars"></a>
 	<div class="info-box">
 		<div class="info-box-title">Variables</div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
-										<span class="disabled">Vars</span>
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
 						
 			
 										| 
-									<a href="#sec-methods">Methods</a>
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 							
 					</div>
 		<div class="info-box-body">
-										<h4>Inherited Variables</h4>
+			<a name="var$has_many" id="$has_many"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$has_many</span>
+			 = <span class="var-default">array(<br />        'participant',<br />        'solution',<br />    )</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a10">10</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../DataMapper/DataMapper.html#var$has_many">DataMapper::$has_many</a></dt>
+						<dd>Contains any related objects of which this model is related one or more times.</dd>
+					</dl>
+		
+		
+
+</div>
+<a name="var$has_one" id="$has_one"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$has_one</span>
+			 = <span class="var-default">array(<br />        'active_course' =&gt; array(<br />            'class' =&gt; 'course',<br />            'other_field' =&gt; 'active_for_student',<br />        ),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a15">15</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../DataMapper/DataMapper.html#var$has_one">DataMapper::$has_one</a></dt>
+						<dd>Contains any related objects of which this model is singularly related.</dd>
+					</dl>
+		
+		
+
+</div>
+							<h4>Inherited Variables</h4>
 				<A NAME='inherited_vars'><!-- --></A>
 									<p>Inherited from <span class="classname"><a href="../DataMapper/DataMapper.html">DataMapper</a></span></p>
 					<blockquote>
@@ -85,12 +183,6 @@
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$global_extensions">DataMapper::$global_extensions</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$has_many">DataMapper::$has_many</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$has_one">DataMapper::$has_one</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$model">DataMapper::$model</a></span><br>
@@ -159,13 +251,52 @@
 		<div class="info-box-title">Methods</div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
-															<a href="#sec-vars">Vars</a>
-																	<span class="disabled">Methods</span>
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
 						
 		</div>
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 
+<a name="methoddelete" id="delete"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a28">28</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Delete this student or related object.</p>
+<p class="description"><p>If no parameters are set, this method deletes current student and all participant record related with this student.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			delete
+		</span>
+					([<span class="var-type">DataMapper|string</span>&nbsp;<span class="var-name">$object</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$related_field</span> = <span class="var-default">''</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">DataMapper|string</span>
+				<span class="var-name">$object</span><span class="var-description">: related object to delete from relation.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$related_field</span><span class="var-description">: relation internal name.</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../DataMapper/DataMapper.html#methoddelete">DataMapper::delete()</a></dt>
+						<dd>Delete</dd>
+					</dl>
+			
+	</div>
 							<h4>Inherited Methods</h4>
 				<a name='inherited_methods'><!-- --></a>	
 									<!-- =========== Summary =========== -->
@@ -282,7 +413,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Sat, 18 May 2013 19:29:39 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Wed, 29 May 2013 15:38:02 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

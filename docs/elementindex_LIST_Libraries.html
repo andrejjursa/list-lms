@@ -13,6 +13,7 @@
 	<h3>Package indexes</h3>
 	<ul>
 				<li><a href="elementindex_LIST_BE_Controllers.html">LIST_BE_Controllers</a></li>
+					<li><a href="elementindex_default.html">default</a></li>
 					<li><a href="elementindex_LIST_FE_Controllers.html">LIST_FE_Controllers</a></li>
 					<li><a href="elementindex_LIST_Core.html">LIST_Core</a></li>
 					<li><a href="elementindex_CodeIgniter.html">CodeIgniter</a></li>
@@ -83,6 +84,25 @@
 		<div style="clear: both"></div>
 	</div>
 	<dl>
+			<dt class="field">
+						ACCOUNT_TYPE_STUDENT
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Libraries/Usermanager.html#constACCOUNT_TYPE_STUDENT">Usermanager::ACCOUNT_TYPE_STUDENT</a> in usermanager.php</div>
+					</dd>
+			<dt class="field">
+						ACCOUNT_TYPE_TEACHER
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Libraries/Usermanager.html#constACCOUNT_TYPE_TEACHER">Usermanager::ACCOUNT_TYPE_TEACHER</a> in usermanager.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">add_login_failed_record</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Libraries/Usermanager.html#methodadd_login_failed_record">Usermanager::add_login_failed_record()</a> in usermanager.php</div>
+							<div class="index-item-description">Save record of failed login attempt.</div>
+					</dd>
 			<dt class="field">
 						<span class="method-title">add_message</span>
 					</dt>
@@ -214,6 +234,7 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_Libraries/LIST_Form_validation.html#methodexists_in_table">LIST_Form_validation::exists_in_table()</a> in LIST_Form_validation.php</div>
+							<div class="index-item-description">Tests if string value exists in database table.</div>
 					</dd>
 		</dl>
 	<a name="f"></a>
@@ -235,6 +256,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_Libraries/Messages.html#methodflash_messages_to_smarty">Messages::flash_messages_to_smarty()</a> in messages.php</div>
 							<div class="index-item-description">Inject flash messages to smarty template as $list_flash_messages template variable.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">floatpoint</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Libraries/LIST_Form_validation.html#methodfloatpoint">LIST_Form_validation::floatpoint()</a> in LIST_Form_validation.php</div>
+							<div class="index-item-description">Evaluate text if contains numeric value with floating point.</div>
 					</dd>
 		</dl>
 	<a name="g"></a>
@@ -321,6 +349,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_Libraries/Configurator.html#methodinject_config_array">Configurator::inject_config_array()</a> in configurator.php</div>
 							<div class="index-item-description">Inject config data to active codeigniter configuration.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">is_login_attempts_exceeded</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Libraries/Usermanager.html#methodis_login_attempts_exceeded">Usermanager::is_login_attempts_exceeded()</a> in usermanager.php</div>
+							<div class="index-item-description">Check if login attemts exceed allowed number of attempts.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">is_student_session_valid</span>
@@ -548,7 +583,7 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_Libraries/Usermanager.html#methodset_student_data_to_smarty">Usermanager::set_student_data_to_smarty()</a> in usermanager.php</div>
-							<div class="index-item-description">This function will send data from student session to smarty template variable called 'list_student_account'.</div>
+							<div class="index-item-description">This function will send data from student session to smarty template variable called 'list_student_account' and create variable 'list_student_account_model' with student model.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">set_teacher_data_to_smarty</span>

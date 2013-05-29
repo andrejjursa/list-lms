@@ -66,8 +66,37 @@
 		
 	
 </div>
-<a name="functioncreate_internal_url" id="functioncreate_internal_url"><!-- --></a>
+<a name="functioncompute_size_with_unit" id="functioncompute_size_with_unit"><!-- --></a>
 <div class="oddrow">
+	
+	<div>
+		<span class="method-title">compute_size_with_unit</span> (line <span class="line-number">182</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Compute size with units from given value in bytes.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> size with unit.</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			compute_size_with_unit
+		</span>
+					(<span class="var-type">integer</span>&nbsp;<span class="var-name">$size_bytes</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">integer</span>
+				<span class="var-name">$size_bytes</span><span class="var-description">: size in bytes.</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functioncreate_internal_url" id="functioncreate_internal_url"><!-- --></a>
+<div class="evenrow">
 	
 	<div>
 		<span class="method-title">create_internal_url</span> (line <span class="line-number">26</span>)
@@ -97,7 +126,7 @@
 	
 </div>
 <a name="functiondb_is_mysql" id="functiondb_is_mysql"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div>
 		<span class="method-title">db_is_mysql</span> (line <span class="line-number">78</span>)
@@ -121,7 +150,7 @@
 	
 </div>
 <a name="functiondecode_from_url" id="functiondecode_from_url"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div>
 		<span class="method-title">decode_from_url</span> (line <span class="line-number">50</span>)
@@ -150,7 +179,7 @@
 	
 </div>
 <a name="functionencode_for_url" id="functionencode_for_url"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div>
 		<span class="method-title">encode_for_url</span> (line <span class="line-number">40</span>)
@@ -179,7 +208,7 @@
 	
 </div>
 <a name="functionget_days" id="functionget_days"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div>
 		<span class="method-title">get_days</span> (line <span class="line-number">99</span>)
@@ -199,6 +228,35 @@
 				()
 			</div>
 
+		
+	
+</div>
+<a name="functionget_file_size" id="functionget_file_size"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">get_file_size</span> (line <span class="line-number">169</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Compute file capacity and return value with unit.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> capacity of file in bytes, KiB, MiB or GiB.</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			get_file_size
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$filename</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$filename</span><span class="var-description">: path and file name.</span>			</li>
+				</ul>
 		
 	
 </div>
@@ -255,15 +313,45 @@
 		
 	
 </div>
-<a name="functionsmarty_inject_days" id="functionsmarty_inject_days"><!-- --></a>
+<a name="functionnormalize" id="functionnormalize"><!-- --></a>
 <div class="evenrow">
 	
 	<div>
-		<span class="method-title">smarty_inject_days</span> (line <span class="line-number">115</span>)
+		<span class="method-title">normalize</span> (line <span class="line-number">149</span>)
+	</div> 
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Normalizes characters in string.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> string with normalized characters.</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			normalize
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$string</span>)
+			</div>
+
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$string</span><span class="var-description">: to normalize.</span>			</li>
+				</ul>
+		
+	
+</div>
+<a name="functionsmarty_inject_days" id="functionsmarty_inject_days"><!-- --></a>
+<div class="oddrow">
+	
+	<div>
+		<span class="method-title">smarty_inject_days</span> (line <span class="line-number">116</span>)
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">This function will construct days array and assign them to template parser.</p>
+<p class="description"><p>Days array is called $list_days inside template.</p></p>
 	
 	<div class="method-signature">
 		<span class="method-result">void</span>
@@ -277,10 +365,10 @@
 	
 </div>
 <a name="functionunlink_recursive" id="functionunlink_recursive"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div>
-		<span class="method-title">unlink_recursive</span> (line <span class="line-number">125</span>)
+		<span class="method-title">unlink_recursive</span> (line <span class="line-number">126</span>)
 	</div> 
 
 	<!-- ========== Info from phpDoc block ========= -->
@@ -309,7 +397,7 @@
 	</div>
 	
 	<p class="notes" id="credit">
-		Documentation generated on Sat, 18 May 2013 19:29:28 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Wed, 29 May 2013 15:37:48 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

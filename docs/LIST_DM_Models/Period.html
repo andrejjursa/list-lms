@@ -76,7 +76,7 @@
 												<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#delete" title="details" class="method-name">delete</a>
-											([<span class="var-type"></span>&nbsp;<span class="var-name">$object</span> = <span class="var-default">''</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$related_field</span> = <span class="var-default">''</span>])
+											([<span class="var-type">DataMapper|string</span>&nbsp;<span class="var-name">$object</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$related_field</span> = <span class="var-default">''</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -106,7 +106,7 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$has_many" id="$has_many"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -241,13 +241,15 @@
 			<A NAME='method_detail'></A>
 
 <a name="methoddelete" id="delete"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsperiod.php.html#a56">56</a></span>)
+		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsperiod.php.html#a68">68</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Delete this period or related object.</p>
+<p class="description"><p>If no parameters are set, this method deletes current period and re-sort all other periods.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -257,16 +259,16 @@
 		<span class="method-name">
 			delete
 		</span>
-					([<span class="var-type"></span>&nbsp;<span class="var-name">$object</span> = <span class="var-default">''</span>], [<span class="var-type"></span>&nbsp;<span class="var-name">$related_field</span> = <span class="var-default">''</span>])
+					([<span class="var-type">DataMapper|string</span>&nbsp;<span class="var-name">$object</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$related_field</span> = <span class="var-default">''</span>])
 			</div>
 	
 			<ul class="parameters">
 					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$object</span>			</li>
+				<span class="var-type">DataMapper|string</span>
+				<span class="var-name">$object</span><span class="var-description">: related object to delete from relation.</span>			</li>
 					<li>
-				<span class="var-type"></span>
-				<span class="var-name">$related_field</span>			</li>
+				<span class="var-type">string</span>
+				<span class="var-name">$related_field</span><span class="var-description">: relation internal name.</span>			</li>
 				</ul>
 		
 			<hr class="separator" />
@@ -278,13 +280,14 @@
 			
 	</div>
 <a name="methodmove_down" id="move_down"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">move_down</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsperiod.php.html#a35">35</a></span>)
+		<span class="method-title">move_down</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsperiod.php.html#a41">41</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This method will move current period down in sorting order.</p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -301,13 +304,14 @@
 			
 	</div>
 <a name="methodmove_up" id="move_up"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">move_up</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsperiod.php.html#a14">14</a></span>)
+		<span class="method-title">move_up</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsperiod.php.html#a17">17</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This method will move current period up in sorting order.</p>
 	<ul class="tags">
 				<li><span class="field">access:</span> public</li>
 			</ul>
@@ -439,7 +443,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Sat, 18 May 2013 19:29:36 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Wed, 29 May 2013 15:37:58 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>
