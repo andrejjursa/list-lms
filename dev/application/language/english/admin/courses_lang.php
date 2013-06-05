@@ -32,6 +32,7 @@ $lang['admin_courses_message_delete_question'] = 'Are you sure you want to delet
 $lang['admin_courses_error_course_not_found'] = 'Course not found.';
 $lang['admin_course_task_set_types_editor_page_header'] = 'Types of task set for course %s';
 $lang['admin_courses_fieldset_legend_add_task_set_type'] = 'Add type of task set';
+$lang['admin_courses_fieldset_legend_all_task_set_types'] = 'All types of task set';
 $lang['admin_courses_form_label_task_set_type_name'] = 'Type of task set';
 $lang['admin_courses_form_label_upload_solution'] = 'Enable solutions uploading';
 $lang['admin_courses_form_select_option_upload_solution_yes'] = 'Yes';

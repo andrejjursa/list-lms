@@ -170,7 +170,7 @@ class Courses extends LIST_Controller {
         $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
         $course = new Course();
         $course->get_by_id($course_id);
-        $course->task_set_type->order_by('name', 'asc')->include_join_fields()->get_iterated();
+        $course->task_set_type->order_by_with_constant('name', 'asc')->include_join_fields()->get_iterated();
         $this->parser->parse('backend/courses/task_set_types_content.tpl', array('task_set_types' => $course->task_set_type, 'course' => $course));
     }
     

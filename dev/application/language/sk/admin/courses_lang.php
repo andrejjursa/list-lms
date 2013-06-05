@@ -32,6 +32,7 @@ $lang['admin_courses_message_delete_question'] = 'Ste si istý, že chcete vymaz
 $lang['admin_courses_error_course_not_found'] = 'Kurz nebol nájdený.';
 $lang['admin_course_task_set_types_editor_page_header'] = 'Typy zostáv úloh pre kurz %s';
 $lang['admin_courses_fieldset_legend_add_task_set_type'] = 'Pridať typ zostavy úloh';
+$lang['admin_courses_fieldset_legend_all_task_set_types'] = 'Všetky typy zostáv úloh';
 $lang['admin_courses_form_label_task_set_type_name'] = 'Typ zostavy úloh';
 $lang['admin_courses_form_label_upload_solution'] = 'Povoliť upload riešení';
 $lang['admin_courses_form_select_option_upload_solution_yes'] = 'Áno';

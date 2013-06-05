@@ -15,6 +15,7 @@
         <table class="task_set_types_table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>{translate line='admin_courses_table_header_task_set_type'}</th>
                     <th>{translate line='admin_courses_table_header_upload_solution'}</th>
                     <th colspan="2" class="controlls">{translate line='admin_courses_table_header_controlls'}</th>
