@@ -71,12 +71,10 @@ class Migration_tasks_task_sets_table1 extends CI_Migration {
                 'publish_start_time' => array(
                     'type' => 'timestamp',
                     'null' => TRUE,
-                    'default' => NULL,
                 ),
                 'upload_end_time' => array(
                     'type' => 'timestamp',
                     'null' => TRUE,
-                    'default' => NULL,
                 ),
                 'group_id' => array(
                     'type' => 'INT',
