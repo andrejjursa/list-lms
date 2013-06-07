@@ -1,3 +1,16 @@
+<?php require_once(BASEPATH . 'core/Input.php'); ?>
+<?php $local_input = new CI_Input(); ?>
+<?php if ($local_input->is_cli_request()): ?>
+
+Exception "<?php echo strip_tags($exception->getMessage()); ?>"
+--------------------
+File: <?php echo strip_tags($exception->getFile()) . "\n"; ?>
+Line: <?php echo strip_tags($exception->getLine()) . "\n"; ?>
+Code: <?php echo strip_tags($exception->getCode()) . "\n"; ?>
+<?php foreach(explode("\n", $exception->getTraceAsString()) as $line): ?>
+<?php echo '- ' . strip_tags(trim($line)) . "\n"; ?>
+<?php endforeach; ?>
+<?php else: ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,17 +70,18 @@ p {
 </head>
 <body>
 	<div id="container">
-		<h1>Exception "<?php echo $exception->getMessage(); ?>"</h1>
-		<?php $trace = explode("\n", $exception->getTraceAsString()); ?>
-        <p><strong>File:</strong> <?php echo $exception->getFile(); ?></p>
-        <p><strong>Line:</strong> <?php echo $exception->getLine(); ?></p>
-        <p><strong>Code:</strong> <?php echo $exception->getCode(); ?></p>
-        <p><strong>Trace:</strong></p>
-        <ul>
-            <?php foreach ($trace as $line): ?>
-            <li><?php echo htmlspecialchars(trim($line)); ?></li>
-            <?php endforeach; ?>
-        </ul>
+            <h1>Exception "<?php echo $exception->getMessage(); ?>"</h1>
+            <?php $trace = explode("\n", $exception->getTraceAsString()); ?>
+            <p><strong>File:</strong> <?php echo $exception->getFile(); ?></p>
+            <p><strong>Line:</strong> <?php echo $exception->getLine(); ?></p>
+            <p><strong>Code:</strong> <?php echo $exception->getCode(); ?></p>
+            <p><strong>Trace:</strong></p>
+            <ul>
+                <?php foreach ($trace as $line): ?>
+                <li><?php echo htmlspecialchars(trim($line)); ?></li>
+                <?php endforeach; ?>
+            </ul>
 	</div>
 </body>
 </html>
+<?php endif; ?>
