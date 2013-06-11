@@ -71,7 +71,7 @@ class Solutions extends LIST_Controller {
                 $solution->revalidate = 0;
                 $solution->save(array($teacher, $task_set));
                 
-                $solution->where($task_set);
+                $solution->where('task_set_id', $task_set_id);
                 $solution->where('student_id', intval($solution_data['student_id']));
                 if ($solution->count() == 1) {
                     $this->db->trans_commit();
