@@ -93,3 +93,5 @@ div.custom_translations_selector li { transition: all 0.3s ease-in-out; -moz-tra
 div.custom_translations_selector li.mouseover { background-color: #B6FBA6; }
 div.custom_translations_selector li.selected { background-color: #FFC1C1; }
 div.custom_translations_selector li.selected.mouseover { background-color: #FDFF83; }
+
+.ui-datepicker.ui-widget { z-index: 100 !important; }

@@ -6,7 +6,7 @@ var translation_selector = function(jquerySelector) {
             cache: true,
             dataType: 'json',
             success: function(json_data) {
-                var selectorHTML = jQuery('<div class="custom_translations_selector" style="position: absolute; z-index: 100; display: none; border: 1px solid black; background-color: white;"></div>');
+                var selectorHTML = jQuery('<div class="custom_translations_selector" style="position: absolute; z-index: 50; display: none; border: 1px solid black; background-color: white;"></div>');
                 
                 selectorHTML.html(render_content(json_data));
                 $(element[0]).after(selectorHTML);
