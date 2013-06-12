@@ -57,7 +57,7 @@ class Cli extends CI_Controller {
         if (is_null($name) && is_null($email) && is_null($password) && is_null($language)) {
             echo 'Create new teacher' . "\n\n";
             echo ' - param 1: teacher name' . "\n";
-            echo ' - param 2: teacher e-mail' . "\n";
+            echo ' - param 2: teacher e-mail (use _AT_ as @)' . "\n";
             echo ' - param 3: teacher password' . "\n";
             echo ' - param 4: teacher language' . "\n";
             if (count($languages)) {
