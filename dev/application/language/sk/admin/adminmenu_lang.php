@@ -10,7 +10,6 @@ $lang['adminmenu_title_teacher_account'] = 'Môj účet';
 $lang['adminmenu_title_application'] = 'Aplikácia';
 $lang['adminmenu_title_translations_editor'] = 'Editor prekladov';
 $lang['adminmenu_title_application_settings'] = 'Nastavenia aplikácie';
-$lang['adminmenu_title_teaching'] = 'Výučba';
 $lang['adminmenu_title_organisation'] = 'Organizácia';
 $lang['adminmenu_title_periods'] = 'Obdobia';
 $lang['adminmenu_title_courses'] = 'Kurzy';
