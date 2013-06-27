@@ -60,6 +60,11 @@
                 <p class="input"><em>{translate line='admin_settings_form_label_readable_file_extensions_hint'}</em></p>
                 {form_error field='config[readable_file_extensions]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
+            <hr />
+            <div class="field">
+                <label for="config_student_registration_enabled_id">{translate line='admin_settings_form_label_student_registration_enabled'}:</label>
+                <p class="input"><input type="checkbox" name="config[student_registration][enabled]" value="1"{if $smarty.post.config.student_registration.enabled|default:$config.student_registration.enabled} checked="checked"{/if} id="config_student_registration_enabled_id" /></p>
+            </div>
             <div class="buttons">
                 <input type="submit" class="button" name="save_settings" value="{translate line='admin_settings_form_save_button_text'}" />
             </div>

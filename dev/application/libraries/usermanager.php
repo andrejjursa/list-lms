@@ -240,6 +240,7 @@ class Usermanager {
             $current_url = encode_for_url($this->clear_current_url());
             $redirects = $this->CI->config->item('login_redirects');
             $redirect_student = $send_current_url ? ('/' . trim($redirects['student'], '/') . '/current_url/' . $current_url . '/') : '/' . trim($redirects['student'], '/') . '/';
+            $this->CI->messages->keep_messages();
             redirect(create_internal_url($redirect_student));
             die();
         }
@@ -254,6 +255,7 @@ class Usermanager {
             $current_url = encode_for_url($this->clear_current_url());
             $redirects = $this->CI->config->item('login_redirects');
             $redirect_student = $send_current_url ? ('/' . trim($redirects['teacher'], '/') . '/current_url/' . $current_url . '/') : '/' . trim($redirects['teacher'], '/') . '/';
+            $this->CI->messages->keep_messages();
             redirect(create_internal_url($redirect_student));
             die();
         }

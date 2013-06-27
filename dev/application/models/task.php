@@ -91,4 +91,20 @@ class Task extends DataMapper {
         return $files;
     }
     
+    /**
+     * Deletes relations (if parameters are set) or this object from database.
+     * @param DataMapper|string $object related object to delete from relation.
+     * @param string $related_field relation internal name.
+     */
+    public function delete($object = '', $related_field = '') {
+        $this_id = $this->id;
+        parent::delete($object, $related_field);
+        if (empty($object) && !is_array($object) && !empty($this_id)) {
+            $path = 'private/uploads/task_files/task_' . intval($this_id) . '/';
+            if (file_exists($path)) {
+                unlink_recursive($path, TRUE);
+            }
+        }
+    }
+    
 }

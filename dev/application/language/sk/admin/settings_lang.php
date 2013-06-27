@@ -14,6 +14,7 @@ $lang['admin_settings_form_label_maximum_solition_filesize'] = 'Maximálna velko
 $lang['admin_settings_form_label_maximum_solition_filesize_hint'] = 'Hodnota je v KiB, 1 KiB = 1024 bajtov, 1024 KiB = 1 MiB.';
 $lang['admin_settings_form_label_readable_file_extensions'] = 'Čitateľné súbory';
 $lang['admin_settings_form_label_readable_file_extensions_hint'] = 'Čiarkov oddelovaný zoznam prípon súborov, ktoré sú čitateľné (napr. v hodnotení študentských riešení).';
+$lang['admin_settings_form_label_student_registration_enabled'] = 'Povoliť funkciu registrácie študentov';
 $lang['admin_settings_form_save_button_text'] = 'Uložiť nastavenia';
 $lang['admin_settings_form_rewrite_option_true'] = 'Áno';
 $lang['admin_settings_form_rewrite_option_false'] = 'Nie';

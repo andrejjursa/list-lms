@@ -53,6 +53,7 @@ class Settings extends LIST_Controller {
             $config['teacher_login_security_allowed_attempts'] = intval($config['teacher_login_security_allowed_attempts']);
             $config['student_login_security_allowed_attempts'] = intval($config['student_login_security_allowed_attempts']);
             $config['maximum_solition_filesize'] = intval($config['maximum_solition_filesize']);
+            $config['student_registration']['enabled'] = $this->bool_val($config['student_registration']['enabled']);
             $this->configurator->set_config_array('config', $config);
             redirect(create_internal_url('admin_settings/index'));
         } else {
@@ -67,7 +68,7 @@ class Settings extends LIST_Controller {
     private function bool_val($value) {
         if (is_numeric($value)) { return (bool)$value; }
         if (is_string($value)) { return strtolower($value) == 'true'; }
-        return false;
+        return FALSE;
     }
     
     private function protect_config_array($config) {
@@ -81,6 +82,7 @@ class Settings extends LIST_Controller {
             'student_login_security_allowed_attempts',
             'maximum_solition_filesize',
             'readable_file_extensions',
+            'student_registration',
         );
         
         $output = array();

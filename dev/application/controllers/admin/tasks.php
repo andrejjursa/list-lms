@@ -175,10 +175,6 @@ class Tasks extends LIST_Controller {
             $task->delete();
             $this->lang->delete_overlays('tasks', intval($task_id));
             if ($this->db->trans_status()) {
-                $files_dir = 'public/uploads/task_files/task_' . intval($task_id) . '/';
-                if (file_exists($files_dir)) {
-                    unlink_recursive($files_dir, TRUE);
-                }
                 $this->db->trans_commit();
                 $this->output->set_output(json_encode(TRUE));    
             } else {

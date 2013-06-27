@@ -14,6 +14,7 @@ $lang['admin_settings_form_label_maximum_solition_filesize'] = 'Maximum file siz
 $lang['admin_settings_form_label_maximum_solition_filesize_hint'] = 'Value is in KiB, 1 KiB = 1024 bytes, 1024 KiB = 1 MiB.';
 $lang['admin_settings_form_label_readable_file_extensions'] = 'Readable files';
 $lang['admin_settings_form_label_readable_file_extensions_hint'] = 'Comma separated list of file extensions, which are readable (i.e. in student solutions valuation).';
+$lang['admin_settings_form_label_student_registration_enabled'] = 'Enable student registration feature';
 $lang['admin_settings_form_save_button_text'] = 'Save settings';
 $lang['admin_settings_form_rewrite_option_true'] = 'Yes';
 $lang['admin_settings_form_rewrite_option_false'] = 'No';

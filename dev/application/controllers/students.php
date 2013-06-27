@@ -7,17 +7,21 @@
  */
 class Students extends LIST_Controller {
     
+    private $student_registration_config = array();
+    
     public function __construct() {
         parent::__construct();
         $this->_init_language_for_student();
         $this->_load_student_langfile();
         $this->_initialize_student_menu();
+        $this->student_registration_config = $this->config->item('student_registration');
     }
-    
+        
+    /**
+     * Simple redirect to application default controller.
+     */
     public function index() {
-        $this->usermanager->student_login_protected_redirect(TRUE);
-        echo 'OK, si prihlaseny!!!<br />';
-        echo '<a href="' . create_internal_url('students/logout') . '">Odhlasit sa</a>';
+        redirect('/');
     }
     
     /**
@@ -96,50 +100,65 @@ class Students extends LIST_Controller {
      * Display registration form for student account registration.
      */
     public function registration() {
-        if ($this->usermanager->is_student_session_valid()) {
-            $redirects = $this->config->item('after_login_redirects');
-            redirect(create_internal_url($redirects['student']));
+        if ($this->student_registration_config['enabled']) {
+            if ($this->usermanager->is_student_session_valid()) {
+                $redirects = $this->config->item('after_login_redirects');
+                redirect(create_internal_url($redirects['student']));
+            }
+            $this->parser->parse('frontend/students/registration.tpl');
+        } else {
+            $this->messages->add_message('lang:students_registration_disabled', Messages::MESSAGE_TYPE_ERROR);
+            redirect('/');
         }
-        $this->parser->parse('frontend/students/registration.tpl');
     }
     
     /**
      * Performs student account registration and redirects him to students/registered controller action.
      */
     public function do_registration() {
-        if ($this->usermanager->is_student_session_valid()) {
-            $redirects = $this->config->item('after_login_redirects');
-            redirect(create_internal_url($redirects['student']));
-        }
-        $this->load->library('form_validation');
-        
-        $this->form_validation->set_rules('student[fullname]', 'lang:students_registration_validation_field_fullname', 'required');
-        $this->form_validation->set_rules('student[email]', 'lang:students_registration_validation_field_email', 'required|valid_email|is_unique[students.email]');
-        $this->form_validation->set_rules('student[password]', 'lang:students_registration_validation_field_password', 'required|min_length[6]|max_length[20]');
-        $this->form_validation->set_rules('student[password_verification]', 'lang:students_registration_validation_field_password_verification', 'required|matches[student[password]]');
-        if ($this->form_validation->run()) {
-            $student_array = $this->input->post('student');
-            $student_array['password'] = sha1($student_array['password']);
-            $student = new Student();
-            $student->from_array($student_array, array('fullname', 'email', 'password'));
-            $student->language = $this->config->item('language');
-            $student->trans_begin();
-            $student->save();
-            if ($student->trans_status()) {
-                $student->trans_commit();
-                redirect(create_internal_url('students/registered'));
+        if ($this->student_registration_config['enabled']) {
+            if ($this->usermanager->is_student_session_valid()) {
+                $redirects = $this->config->item('after_login_redirects');
+                redirect(create_internal_url($redirects['student']));
+            }
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('student[fullname]', 'lang:students_registration_validation_field_fullname', 'required');
+            $this->form_validation->set_rules('student[email]', 'lang:students_registration_validation_field_email', 'required|valid_email|is_unique[students.email]');
+            $this->form_validation->set_rules('student[password]', 'lang:students_registration_validation_field_password', 'required|min_length[6]|max_length[20]');
+            $this->form_validation->set_rules('student[password_verification]', 'lang:students_registration_validation_field_password_verification', 'required|matches[student[password]]');
+            if ($this->form_validation->run()) {
+                $student_array = $this->input->post('student');
+                $student_array['password'] = sha1($student_array['password']);
+                $student = new Student();
+                $student->from_array($student_array, array('fullname', 'email', 'password'));
+                $student->language = $this->config->item('language');
+                $student->trans_begin();
+                $student->save();
+                if ($student->trans_status()) {
+                    $student->trans_commit();
+                    redirect(create_internal_url('students/registered'));
+                } else {
+                    $student->trans_rollback();
+                    $this->parser->assign('save_error', TRUE);
+                    $this->registration();
+                }
             } else {
-                $student->trans_rollback();
-                $this->parser->assign('save_error', TRUE);
                 $this->registration();
             }
         } else {
-            $this->registration();
+            $this->messages->add_message('lang:students_registration_disabled', Messages::MESSAGE_TYPE_ERROR);
+            redirect('/');
         }
     }
     
     public function registered() {
-        
+        if ($this->student_registration_config['enabled']) {
+            $this->parser->parse('frontend/students/registered.tpl');
+        } else {
+            $this->messages->add_message('lang:students_registration_disabled', Messages::MESSAGE_TYPE_ERROR);
+            redirect('/');
+        }
     }
     
     public function my_account() {
