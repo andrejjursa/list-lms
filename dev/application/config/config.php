@@ -417,6 +417,13 @@ $config['maximum_solition_filesize'] = 10240;
 */
 $config['readable_file_extensions'] = 'txt,html,php,js,css,hs,java,c,cpp,h,pas';
 
+/**
+|--------------------------------------------------------------------------
+| Student registration settings.
+|--------------------------------------------------------------------------
+*/
+$config['student_registration']['enabled'] = true;
+
 /* End of file config.php */
 
 /* Location: ./application/config/config.php */
