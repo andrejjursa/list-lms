@@ -24,13 +24,15 @@ class Cli extends CI_Controller {
         $this->output->set_content_type('text/plain');
         $this->load->database();
         $this->load->library('migration');
+        $cleared = $this->_clear_production_cache();
         if (is_null($migration)) {
             $this->migration->latest();
             if ($this->migration->error_string()) {
                 echo 'Error occured:' . "\n\n";
                 echo $this->migration->error_string();
             } else {
-                echo 'SUCCESS!';
+                echo 'SUCCESS!' . "\n";
+                echo 'Cache cleared, ' . $cleared . ' files deleted.';
             }
         } elseif (is_numeric($migration) && intval($migration) > 0) {
             $this->migration->version(intval($migration));
@@ -38,7 +40,8 @@ class Cli extends CI_Controller {
                 echo 'Error occured:' . "\n\n";
                 echo $this->migration->error_string();
             } else {
-                echo 'SUCCESS!';
+                echo 'SUCCESS!' . "\n";
+                echo 'Cache cleared, ' . $cleared . ' files deleted.';
             }
         } else {
             echo 'Can\'t execute command!';
@@ -109,6 +112,26 @@ class Cli extends CI_Controller {
                 }
             }
         }
+    }
+    
+    /**
+     * Clear production cache for DataMapper if it is enabled.
+     * @return integer number of deleted cache files.
+     */
+    private function _clear_production_cache() {
+        $count = 0;
+        $this->config->load('datamapper', TRUE);
+        $production_cache = $this->config->item('production_cache', 'datamapper');
+        if (!empty($production_cache) && file_exists($production_cache) && is_dir($production_cache)) {
+            $production_cache = rtrim($production_cache, '/\\') . DIRECTORY_SEPARATOR;
+            $dir_content = scandir($production_cache);
+            foreach($dir_content as $item) {
+                if (is_file($production_cache . $item) && substr($item, -4) == '.php') {
+                    if (@unlink($production_cache . $item)) { $count++; }
+                }
+            }
+        }
+        return $count;
     }
     
 }

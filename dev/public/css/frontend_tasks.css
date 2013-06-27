@@ -18,6 +18,7 @@ table.task_sets_table tbody tr:nth-child(2n) a { color: darkgreen; }
 table.task_sets_table tbody td a:hover { color: blue; }
 div.points_total { padding: 5px 13px; margin: 15px 0 5px 0; background-color: #99ff99; border-radius: 3px; }
 
+div.instructions_text { padding: 4px; border-bottom: 1px solid gray; }
 div.task_text { padding: 4px; border-bottom: 1px solid gray; }
 div.task_points { padding: 4px; border-bottom: 1px solid gray; margin-bottom: 4px; }
 div.task_files { padding: 4px; border-bottom: 1px solid gray; }

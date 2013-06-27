@@ -14,6 +14,7 @@ $cache = array (
     8 => 'upload_end_time',
     9 => 'group_id',
     10 => 'room_id',
+    11 => 'instructions',
   ),
   'validation' => 
   array (
@@ -91,6 +92,13 @@ $cache = array (
     'room_id' => 
     array (
       'field' => 'room_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'instructions' => 
+    array (
+      'field' => 'instructions',
       'rules' => 
       array (
       ),

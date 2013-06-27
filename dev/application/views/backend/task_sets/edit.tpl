@@ -9,6 +9,7 @@
                 <ul>
                     <li><a href="#tabs-about_task_set">{translate line='admin_task_sets_tabs_label_about_task_set'}</a></li>
                     <li><a href="#tabs-tasks">{translate line='admin_task_sets_tabs_label_tasks'}</a></li>
+                    <li><a href="#tabs-instructions">{translate line='admin_task_sets_tabs_label_instructions'}</a></li>
                 </ul>
                 <div id="tabs-about_task_set">
                     <div class="field">
@@ -84,6 +85,13 @@
                         </li>
                         {/foreach}
                     </ul>
+                </div>
+                <div id="tabs-instructions">
+                    <div class="field">
+                        <label for="task_set_instructions_id">{translate line='admin_task_sets_form_label_instructions'}:</label>
+                        <p class="input"><textarea name="task_set[instructions]" class="tinymce">{$smarty.post.task_set.instructions|default:$task_set->instructions|escape:'html'}</textarea></p>
+                        {include file='partials/backend_general/overlay_editor.tpl' table='task_sets' column='instructions' table_id=$task_set->id|intval editor_type='textarea' class='tinymce' inline}
+                    </div>
                 </div>
             </div>
                     <fieldset class="basefieldset">

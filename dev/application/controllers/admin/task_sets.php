@@ -166,6 +166,7 @@ class Task_sets extends LIST_Controller {
         $task_set_id = isset($url['task_set_id']) ? intval($url['task_set_id']) : 0;
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
+        $this->_add_tinymce();
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_task_sets/edit.js');
         $this->parser->add_js_file('admin_task_sets/form.js');
@@ -198,7 +199,7 @@ class Task_sets extends LIST_Controller {
         if ($this->form_validation->run()) {    
             if ($task_set->exists()) {
                 $task_set_data = $this->input->post('task_set');
-                $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published'));
+                $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'instructions'));
                 $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
                 $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
                 $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;

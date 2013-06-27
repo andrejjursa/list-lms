@@ -30,3 +30,4 @@ $lang['tasks_task_solution_table_header_file'] = 'File';
 $lang['tasks_task_solution_table_header_size'] = 'Size';
 $lang['tasks_task_solution_table_header_modified'] = 'Last modified';
 $lang['tasks_task_no_solutions_yet'] = 'There are no solutions yet.';
+$lang['tasks_instructions_header'] = 'Instructions';

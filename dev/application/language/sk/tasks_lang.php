@@ -30,3 +30,4 @@ $lang['tasks_task_solution_table_header_file'] = 'Súbor';
 $lang['tasks_task_solution_table_header_size'] = 'Veľkosť';
 $lang['tasks_task_solution_table_header_modified'] = 'Posledná zmena';
 $lang['tasks_task_no_solutions_yet'] = 'Zatiaľ tu nie sú žiadne riešenia.';
+$lang['tasks_instructions_header'] = 'Inštrukcie';

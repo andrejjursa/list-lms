@@ -12,6 +12,13 @@
                     <li><a href="#tabs-solution">{translate line='tasks_task_tabs_solutions'}</a></li>
                 </ul>
                 <div id="tabs-task">
+                    {$instructions_text = {overlay table='task_sets' table_id=$task_set->id|intval column='instructions' default=$task_set->instructions}}
+                    {if $instructions_text}
+                    <h3>{translate line='tasks_instructions_header'}</h3>
+                    <div class="instructions_text">
+                        {$instructions_text}
+                    </div>
+                    {/if}
                     {foreach $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get_iterated() as $task}
                     <h3>{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}</h3>
                     <div class="task_text">
