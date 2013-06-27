@@ -72,11 +72,16 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																				
+																																												
 												<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#add_categories_filter" title="details" class="method-name">add_categories_filter</a>
 											(<span class="var-type">array<mixed></span>&nbsp;<span class="var-name">$filter</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#delete" title="details" class="method-name">delete</a>
+											([<span class="var-type">DataMapper|string</span>&nbsp;<span class="var-name">$object</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$related_field</span> = <span class="var-default">''</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">array<mixed></span>
@@ -274,8 +279,46 @@
 		
 			
 	</div>
-<a name="methodget_files" id="get_files"><!-- --></a>
+<a name="methoddelete" id="delete"><!-- --></a>
 <div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a99">99</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Deletes relations (if parameters are set) or this object from database.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			delete
+		</span>
+					([<span class="var-type">DataMapper|string</span>&nbsp;<span class="var-name">$object</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$related_field</span> = <span class="var-default">''</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">DataMapper|string</span>
+				<span class="var-name">$object</span><span class="var-description">: related object to delete from relation.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$related_field</span><span class="var-description">: relation internal name.</span>			</li>
+				</ul>
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../DataMapper/DataMapper.html#methoddelete">DataMapper::delete()</a></dt>
+						<dd>Delete</dd>
+					</dl>
+			
+	</div>
+<a name="methodget_files" id="get_files"><!-- --></a>
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">get_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a74">74</a></span>)
@@ -305,7 +348,7 @@
 			
 	</div>
 <a name="methodget_task_files" id="get_task_files"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">get_task_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a47">47</a></span>)
@@ -330,7 +373,7 @@
 			
 	</div>
 <a name="methodget_task_hidden_files" id="get_task_hidden_files"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">get_task_hidden_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a60">60</a></span>)
@@ -470,7 +513,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Wed, 29 May 2013 18:12:21 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 27 Jun 2013 13:08:02 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

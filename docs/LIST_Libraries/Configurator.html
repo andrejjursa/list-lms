@@ -48,7 +48,7 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																												
+																																																																																																				
 												<div class="method-definition">
 											<span class="method-result">string</span>
 										<a href="#config_item_by_path" title="details" class="method-name">config_item_by_path</a>
@@ -104,6 +104,11 @@
 										<a href="#set_config_array_custom" title="details" class="method-name">set_config_array_custom</a>
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$config</span>, <span class="var-type">array<mixed></span>&nbsp;<span class="var-name">$data</span>, <span class="var-type">array<mixed></span>&nbsp;<span class="var-name">$arangement</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$config_variable</span> = <span class="var-default">'$config'</span>])
 									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#var_export" title="details" class="method-name">var_export</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">&$var</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$var</span>)
+									</div>
 								</div>
 		</div>
 	</div>		
@@ -124,7 +129,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">config_item_by_path</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesconfigurator.php.html#a259">259</a></span>)
+		<span class="method-title">config_item_by_path</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesconfigurator.php.html#a273">273</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -157,7 +162,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">config_item_value_by_path</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesconfigurator.php.html#a276">276</a></span>)
+		<span class="method-title">config_item_value_by_path</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesconfigurator.php.html#a290">290</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -220,7 +225,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_config_file_arangement_from_tokens</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesconfigurator.php.html#a197">197</a></span>)
+		<span class="method-title">get_config_file_arangement_from_tokens</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesconfigurator.php.html#a211">211</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -253,7 +258,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_config_file_tokens</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesconfigurator.php.html#a174">174</a></span>)
+		<span class="method-title">get_config_file_tokens</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesconfigurator.php.html#a188">188</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -283,7 +288,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_config_variable_path</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesconfigurator.php.html#a226">226</a></span>)
+		<span class="method-title">get_config_variable_path</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesconfigurator.php.html#a240">240</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -494,13 +499,46 @@
 		
 			
 	</div>
+<a name="methodvar_export" id="var_export"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">var_export</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesconfigurator.php.html#a173">173</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Does variable content export with respect to TRUE, FALSE and NULL in uppercase.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> exported variable.</li>
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			var_export
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">&$var</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$var</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$var</span><span class="var-description">: variable to be exported.</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">&$var</span>			</li>
+				</ul>
+		
+			
+	</div>
 						
 		</div>
 	</div>
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Wed, 29 May 2013 18:12:07 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 27 Jun 2013 13:07:47 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>
