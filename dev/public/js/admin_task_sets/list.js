@@ -50,7 +50,7 @@ jQuery(document).ready(function($) {
         if (confirm(messages.delete_question)) {
             api_ajax_update($(this).attr('href'), 'get', {}, function(output) {
                 if (output == true) {
-                    reload_all_students();
+                    reload_all_task_sets();
                     show_notification(messages.after_delete, 'success');    
                 }
             });

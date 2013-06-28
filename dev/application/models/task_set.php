@@ -268,4 +268,23 @@ class Task_set extends DataMapper {
         }}
         return $array;
     }
+    
+    /**
+     * Deletes relations (if parameters are set) or this object from database.
+     * All solutions related to this task set will be deleted as well.
+     * @param DataMapper|string $object related object to delete from relation.
+     * @param string $related_field relation internal name.
+     */
+    public function delete($object = '', $related_field = '') {
+        $this_id = $this->id;
+        if (empty($object) && !is_array($object) && !empty($this_id)) {
+            $solutions = new Solution();
+            $solutions->get_by_related('task_set', 'id', $this_id);
+            foreach($solutions as $solution) {
+                set_time_limit(ini_get('max_execution_time'));
+                $solution->delete();
+            }
+        }
+        parent::delete($object, $related_field);
+    }
 }
