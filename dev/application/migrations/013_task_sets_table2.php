@@ -8,10 +8,13 @@ class Migration_task_sets_table2 extends CI_Migration {
                 'type' => 'text',
             ),
         ));
+        
+        $this->db->query('ALTER TABLE  `task_sets` ADD  `points_override` DOUBLE NULL DEFAULT NULL');
     }
     
     public function down() {
         $this->dbforge->drop_column('task_sets', 'instructions');
+        $this->dbforge->drop_column('task_sets', 'points_override');
     }
     
 }

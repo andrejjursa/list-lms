@@ -15,6 +15,7 @@ $cache = array (
     9 => 'group_id',
     10 => 'room_id',
     11 => 'instructions',
+    12 => 'points_override',
   ),
   'validation' => 
   array (
@@ -99,6 +100,13 @@ $cache = array (
     'instructions' => 
     array (
       'field' => 'instructions',
+      'rules' => 
+      array (
+      ),
+    ),
+    'points_override' => 
+    array (
+      'field' => 'points_override',
       'rules' => 
       array (
       ),
