@@ -278,7 +278,7 @@ class Tasks extends LIST_Controller {
         
         $this->form_validation->set_rules('task_id', 'task_id', 'required');
         $this->form_validation->set_rules('task_set_id', 'task_set_id', 'required');
-        $this->form_validation->set_rules('points_total', 'lang:admin_tasks_add_to_task_set_form_field_points_total', 'required|number|greater_than[0]');
+        $this->form_validation->set_rules('points_total', 'lang:admin_tasks_add_to_task_set_form_field_points_total', 'required|number|greater_than_equal[0]');
         
         if ($this->form_validation->run()) {
             $task_id = intval($this->input->post('task_id'));

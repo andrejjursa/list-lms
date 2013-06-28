@@ -163,7 +163,7 @@ class Task_sets extends LIST_Controller {
     public function edit() {
         $this->_select_teacher_menu_pagetag('task_sets');
         $url = $this->uri->ruri_to_assoc(3);
-        $task_set_id = isset($url['task_set_id']) ? intval($url['task_set_id']) : 0;
+        $task_set_id = isset($url['task_set_id']) ? intval($url['task_set_id']) : intval($this->input->post('task_set_id'));
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         $this->_add_tinymce();
@@ -191,7 +191,7 @@ class Task_sets extends LIST_Controller {
         if ($tasks->exists()) { foreach ($tasks->all as $task) {
             if (isset($tasks_join_fields_data[$task->id])) {
                 if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
-                    $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][points_total]', 'lang:admin_task_sets_form_field_task_points_total', 'required|number|greater_than[0]');
+                    $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][points_total]', 'lang:admin_task_sets_form_field_task_points_total', 'required|number|greater_than_equal[0]');
                 }
             }
         }}

@@ -90,4 +90,30 @@ class LIST_Form_validation extends CI_Form_validation {
         }
         return FALSE;
     }
+    
+    /**
+     * Test if string is number and is greater or equal to given minimum.
+     * @param string $str string to evaluate.
+     * @param double $min minimum value.
+     * @return boolean TRUE on success.
+     */
+    public function greater_than_equal($str, $min) {
+        if (!is_numeric($str)) {
+            return FALSE;
+        }
+        return $str >= $min;
+    }
+    
+    /**
+     * Test if string is number and is less or equal to given maximum.
+     * @param string $str string to evaluate.
+     * @param double $max maximum value.
+     * @return boolean TRUE on success.
+     */
+    public function less_than_equal($str, $max) {
+        if (!is_numeric($str)) {
+            return FALSE;
+        }
+        return $str <= $max;
+    }
 }
