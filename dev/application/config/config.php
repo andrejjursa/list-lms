@@ -424,6 +424,32 @@ $config['readable_file_extensions'] = 'txt,html,php,js,css,hs,java,c,cpp,h,pas';
 */
 $config['student_registration']['enabled'] = TRUE;
 
+/**
+|--------------------------------------------------------------------------
+| E-mail default settings.
+|--------------------------------------------------------------------------
+*/
+$config['email']['useragent'] = 'LIST E-mail';
+$config['email']['protocol'] = 'mail';
+$config['email']['mailpath'] = '/usr/sbin/sendmail';
+$config['email']['smtp_host'] = '';
+$config['email']['smtp_user'] = '';
+$config['email']['smtp_pass'] = '';
+$config['email']['smtp_port'] = '';
+$config['email']['smtp_timeout'] = '';
+$config['email']['wordwrap'] = TRUE;
+$config['email']['wrapchars'] = 76;
+$config['email']['mailtype'] = 'html';
+$config['email']['charset'] = 'utf-8';
+$config['email']['validate'] = TRUE;
+$config['email']['priority'] = 3;
+$config['email']['crlf'] = "\r\n";
+$config['email']['newline'] = "\r\n";
+$config['email']['bcc_batch_mode'] = FALSE;
+$config['email']['bcc_batch_size'] = 200;
+$config['email_address']['system']['name'] = 'LIST';
+$config['email_address']['system']['email'] = 'noreply@list.sk';
+
 /* End of file config.php */
 
 /* Location: ./application/config/config.php */
