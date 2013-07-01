@@ -49,7 +49,7 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																												
+																																																												
 												<div class="method-definition">
 											<span class="method-result">boolean</span>
 										<a href="#exists_in_table" title="details" class="method-name">exists_in_table</a>
@@ -59,6 +59,16 @@
 											<span class="method-result">boolean</span>
 										<a href="#floatpoint" title="details" class="method-name">floatpoint</a>
 											(<span class="var-type">string</span>&nbsp;<span class="var-name">$str</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#greater_than_equal" title="details" class="method-name">greater_than_equal</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$str</span>, <span class="var-type">double</span>&nbsp;<span class="var-name">$min</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#less_than_equal" title="details" class="method-name">less_than_equal</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$str</span>, <span class="var-type">double</span>&nbsp;<span class="var-name">$max</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">boolean</span>
@@ -92,7 +102,7 @@
 			<A NAME='method_detail'></A>
 
 <a name="methodexists_in_table" id="exists_in_table"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">exists_in_table</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesLIST_Form_validation.php.html#a67">67</a></span>)
@@ -125,7 +135,7 @@
 			
 	</div>
 <a name="methodfloatpoint" id="floatpoint"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">floatpoint</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesLIST_Form_validation.php.html#a86">86</a></span>)
@@ -154,8 +164,74 @@
 		
 			
 	</div>
-<a name="methodmatches" id="matches"><!-- --></a>
+<a name="methodgreater_than_equal" id="greater_than_equal"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">greater_than_equal</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesLIST_Form_validation.php.html#a100">100</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Test if string is number and is greater or equal to given minimum.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE on success.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			greater_than_equal
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$str</span>, <span class="var-type">double</span>&nbsp;<span class="var-name">$min</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$str</span><span class="var-description">: string to evaluate.</span>			</li>
+					<li>
+				<span class="var-type">double</span>
+				<span class="var-name">$min</span><span class="var-description">: minimum value.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodless_than_equal" id="less_than_equal"><!-- --></a>
 <div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">less_than_equal</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesLIST_Form_validation.php.html#a113">113</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Test if string is number and is less or equal to given maximum.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE on success.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			less_than_equal
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$str</span>, <span class="var-type">double</span>&nbsp;<span class="var-name">$max</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$str</span><span class="var-description">: string to evaluate.</span>			</li>
+					<li>
+				<span class="var-type">double</span>
+				<span class="var-name">$max</span><span class="var-description">: maximum value.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodmatches" id="matches"><!-- --></a>
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">matches</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesLIST_Form_validation.php.html#a16">16</a></span>)
@@ -188,7 +264,7 @@
 			
 	</div>
 <a name="methodmax_length_optional" id="max_length_optional"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">max_length_optional</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesLIST_Form_validation.php.html#a55">55</a></span>)
@@ -221,7 +297,7 @@
 			
 	</div>
 <a name="methodmin_length_optional" id="min_length_optional"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">min_length_optional</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Libraries__librariesLIST_Form_validation.php.html#a43">43</a></span>)
@@ -259,7 +335,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Thu, 27 Jun 2013 13:07:53 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Mon, 01 Jul 2013 14:10:55 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>
