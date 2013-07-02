@@ -8,7 +8,7 @@
  * @property CI_Cart $cart
  * @property CI_Config $config
  * @property LIST_Controller $controller
- * @property CI_Email $email
+ * @property LIST_Email $email
  * @property CI_Encrypt $encrypt
  * @property CI_Exceptions $exceptions
  * @property LIST_Form_validation $form_validation
