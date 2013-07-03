@@ -97,6 +97,132 @@ class Students extends LIST_Controller {
     }
     
     /**
+     * Displays password recovery form.
+     */
+    public function password_recovery() {
+        $uri_params = $this->uri->uri_to_assoc(3);
+        $this->parser->parse('frontend/students/password_recovery.tpl', array('uri_params' => $uri_params));
+    }
+    
+    /**
+     * Sends password recovery e-mail to student.
+     */
+    public function do_password_recovery() {
+        $uri_params = $this->uri->uri_to_assoc(3);
+        
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('student[email]', 'lang:student_password_recovery_form_field_email', 'required|valid_email');
+        
+        if ($this->form_validation->run()) {
+            $student_post = $this->input->post('student');
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $student = new Student();
+            $student->get_by_email($student_post['email']);
+            if ($student->exists()) {
+                $student->password_token = sha1(time() . '-' . $this->config->item('encryption_key') . '-' . $_SERVER['SCRIPT_FILENAME'] . '-' . rand(1000000, 9999999));
+                if ($student->save()) {
+                    $this->db->trans_commit();
+                    $this->load->library('email');
+                    $this->email->from_system();
+                    $this->email->reply_to_system();
+                    $this->email->to($student->email);
+                    $this->email->build_message_body('file:emails/frontend/students/password_recovery.tpl', array('student' => $student));
+                    $this->email->subject('LIST - ' . $this->lang->line('students_password_recovery_email_body_subject'));
+                    if ($this->email->send()) {
+                        $this->messages->add_message('lang:students_password_recovery_email_sent', Messages::MESSAGE_TYPE_SUCCESS);
+                    } else {
+                        $this->messages->add_message('lang:students_password_recovery_email_sent_error', Messages::MESSAGE_TYPE_ERROR);
+                    }
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:students_password_recovery_email_sent', Messages::MESSAGE_TYPE_SUCCESS);
+                }
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:students_password_recovery_email_sent', Messages::MESSAGE_TYPE_SUCCESS);
+            }
+            
+            redirect(create_internal_url('students/login/' . implode_uri_params($uri_params)));
+        } else {
+            $this->password_recovery();
+        }
+    }
+    
+    /**
+     * This method will verify token and email and then displays form for password change.
+     * @param string $token 40 characters length security token.
+     * @param string $encoded_email encoded email address.
+     */
+    public function change_password($token, $encoded_email) {
+        if ($this->usermanager->is_student_session_valid()) {
+            $this->messages->add_message('lang:students_change_password_student_loged_in', Messages::MESSAGE_TYPE_ERROR);
+            redirect('/');
+        }
+        $this->load->library('form_validation');
+        $email = decode_from_url($encoded_email);
+        if ($this->form_validation->valid_email($email) && preg_match('/^[0-9a-f]{40}$/', $token)) {
+            $student = new Student();
+            $student->where('password_token', $token);
+            $student->where('email', $email);
+            $student->get();
+            if ($student->exists()) {
+                $this->parser->parse('frontend/students/change_password.tpl', array('student' => $student, 'token' => $token, 'encoded_email' => $encoded_email));
+            } else {
+                $this->messages->add_message('lang:students_change_password_invalid_token_email', Messages::MESSAGE_TYPE_ERROR);
+                redirect(create_internal_url('students/login'));
+            }
+        } else {
+            $this->messages->add_message('lang:students_change_password_invalid_token_email', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('students/login'));
+        }
+    }
+    
+    public function do_change_password($token, $encoded_email) {
+        if ($this->usermanager->is_student_session_valid()) {
+            $this->messages->add_message('lang:students_change_password_student_loged_in', Messages::MESSAGE_TYPE_ERROR);
+            redirect('/');
+        }
+        $this->load->library('form_validation');
+        $email = decode_from_url($encoded_email);
+        if ($this->form_validation->valid_email($email) && preg_match('/^[0-9a-f]{40}$/', $token)) {
+            $this->form_validation->set_rules('student[password]', 'lang:students_change_password_form_field_password', 'required|min_length[6]|max_length[20]');
+            $this->form_validation->set_rules('student[verify]', 'lang:students_change_password_form_field_verify', 'required|matches[student[password]]');
+            if ($this->form_validation->run()) {
+                $this->_transaction_isolation();
+                $this->db->trans_begin();
+                $student = new Student();
+                $student->where('password_token', $token);
+                $student->where('email', $email);
+                $student->get();
+                if ($student->exists()) {
+                    $student_post = $this->input->post('student');
+                    $student->password = sha1($student_post['password']);
+                    $student->password_token = NULL;
+                    if ($student->save()) {
+                        $this->db->trans_commit();
+                        $this->messages->add_message('lang:students_change_password_success', Messages::MESSAGE_TYPE_SUCCESS);
+                        redirect(create_internal_url('students/login'));
+                    } else {
+                        $this->db->trans_rollback();
+                        $this->messages->add_message('lang:students_change_password_failed', Messages::MESSAGE_TYPE_ERROR);
+                        redirect(create_internal_url('students/login'));
+                    }
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:students_change_password_invalid_token_email', Messages::MESSAGE_TYPE_ERROR);
+                    redirect(create_internal_url('students/login'));
+                }
+            } else {
+                $this->change_password($token, $encoded_email);
+            }
+        } else {
+            $this->messages->add_message('lang:students_change_password_invalid_token_email', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('students/login'));
+        }
+    }
+
+    /**
      * Display registration form for student account registration.
      */
     public function registration() {

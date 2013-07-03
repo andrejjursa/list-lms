@@ -118,6 +118,16 @@ class Courses extends LIST_Controller {
         $this->parser->add_css_file('frontend_courses.css');
         $this->parser->parse('frontend/courses/course_details.tpl', array('course' => $course));
     }
+    
+    public function quick_course_change($course_id, $current_url) {
+        $this->activate_course($course_id);
+        $output = $this->output->get_output();
+        $output_object = json_decode($output);
+        $this->messages->add_message($output_object->message, $output_object->status ? Messages::MESSAGE_TYPE_SUCCESS : Messages::MESSAGE_TYPE_ERROR);
+        
+        $decoded_current_url = decode_from_url($current_url);
+        redirect($decoded_current_url);
+    }
 
     private function inject_period_options() {
         $periods = new Period();

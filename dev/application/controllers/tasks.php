@@ -42,15 +42,20 @@ class Tasks extends LIST_Controller {
         
         $this->_select_student_menu_pagetag('tasks');
         
-        $task_set = $this->get_task_sets($course, $group, $student, $task_set_id);
+        $task_set = $this->get_task_set_by_id($course, $group, $student, $task_set_id);
         if ($course->exists()) {
             $task_sets = $this->filter_valid_task_sets($task_set);
             $this->lang->init_overlays('task_sets', $task_sets, array('name'));
             $filtered_task_set = count($task_sets) == 1 ? $task_sets[0] : new Task_set();
-            $this->parser->assign('task_set', $filtered_task_set);
-            $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set, $course));
-            $this->parser->assign('solution_files', $filtered_task_set->get_student_files($student->id));
-            $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
+            if ($filtered_task_set->exists()) {
+                $this->parser->assign('task_set', $filtered_task_set);
+                $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set, $course));
+                $this->parser->assign('solution_files', $filtered_task_set->get_student_files($student->id));
+                $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
+            } else {
+                $this->messages->add_message('lang:tasks_task_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+                redirect(create_internal_url('tasks/index'));
+            }
         }
                 
         $this->parser->add_css_file('frontend_tasks.css');
@@ -62,7 +67,7 @@ class Tasks extends LIST_Controller {
     public function upload_solution($task_set_id = 0) {
         $this->usermanager->student_login_protected_redirect();
         
-        $task_set = $this->get_task_sets($course, $group, $student, $task_set_id);
+        $task_set = $this->get_task_set_by_id($course, $group, $student, $task_set_id);
         $task_sets = $this->filter_valid_task_sets($task_set);
         $filtered_task_set = count($task_sets) == 1 ? $task_sets[0] : new Task_set();
         if ($filtered_task_set->id == intval($task_set_id) && $this->can_upload_file($filtered_task_set, $course)) {
@@ -189,7 +194,7 @@ class Tasks extends LIST_Controller {
         return $output;
     }
         
-    private function get_task_sets(&$course, &$group, &$student, $task_set_id = NULL) {
+    private function get_task_sets(&$course, &$group, &$student) {
         $student = new Student();
         $student->get_by_id($this->usermanager->get_student_id());
         
@@ -219,16 +224,44 @@ class Tasks extends LIST_Controller {
             $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id`)', 'total_points');
             $task_set->order_by_related_with_constant('task_set_type', 'name', 'asc');
             $task_set->order_by_with_overlay('name', 'asc');
-            if (is_null($task_set_id)) {
-                $task_set->get();
-            } else {
-                $task_set->get_by_id($task_set_id);
-            }
+            $task_set->get();
         }
         
         return $task_set;
     }
     
+    private function get_task_set_by_id(&$course, &$group, &$student, $task_set_id) {
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        
+        $course = new Course();
+        $group = new Group();
+        
+        $task_set = new Task_set();
+        $task_set->where('published', 1);
+        $task_set->get_by_id($task_set_id);
+        
+        if ($task_set->exists()) {
+            $course->where_related_participant('student_id', $student->id);
+            $course->where_related_participant('allowed', 1);
+            $course->get_by_id($task_set->course_id);
+            if (!$course->exists()) {
+                return new Task_set();
+            }
+            
+            if (!is_null($task_set->group_id)) {
+                $group->where_related_participant('student_id', $student->id);
+                $group->where_related_participant('course_id', $course->id);
+                $group->get_by_id($task_set->group_id);
+                if (!$group->exists()) {
+                    return new Task_set();
+                }
+            }
+        }
+        
+        return $task_set;
+    }
+
     private function can_upload_file($task_set, $course) {
         if ($task_set->exists() && $course->exists()) {
             $task_set_type = $course->task_set_type->where('id', $task_set->task_set_type_id)->include_join_fields()->get();

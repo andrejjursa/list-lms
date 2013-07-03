@@ -11,6 +11,7 @@ $cache = array (
     5 => 'password',
     6 => 'language',
     7 => 'active_course_id',
+    8 => 'password_token',
   ),
   'validation' => 
   array (
@@ -67,6 +68,13 @@ $cache = array (
     'active_course_id' => 
     array (
       'field' => 'active_course_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'password_token' => 
+    array (
+      'field' => 'password_token',
       'rules' => 
       array (
       ),

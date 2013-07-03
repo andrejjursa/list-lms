@@ -34,8 +34,10 @@
                         <td class="td_points">{$solution->points|default:0|floatval} / {$task_set->total_points|default:0|floatval}</td>
                         <td class="td_comment">
                             {if $solution->exists() AND !is_null($solution->points)}
-                                {$solution->comment|nl2br}
-                                <hr />
+                                {if trim($solution->comment)}
+                                    {$solution->comment|nl2br}
+                                    <hr />
+                                {/if}
                                 <em>{$solution->teacher_fullname}</em>
                             {else}
                                 {translate line='tasks_table_not_valuated'}

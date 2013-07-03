@@ -22,6 +22,7 @@
                     </div>
                     <div class="buttons">
                         <input type="submit" name="button_submit" value="{translate line='students_login_submit_button_label'}" class="button" />
+                        <a href="{internal_url url="students/password_recovery/{$uri_params|implode_uri_params}"}" class="button special">{translate line='students_login_forgoten_password'}</a>
                     </div>
                 </form>
             </div>

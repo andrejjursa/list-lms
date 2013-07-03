@@ -160,12 +160,23 @@ class LIST_Controller extends CI_Controller {
     
     /**
      * Loads and injects page navigation for student's frontend.
+     * Also loads all courses, in which current student is participating.
      * Smarty template variable $list_pagemenu will be created.
      */
     protected function _initialize_student_menu() {
         $this->config->load('pagemenu');
         $this->parser->assign('list_pagemenu', $this->config->item('pagemenu'));
         $this->_load_student_langfile('pagemenu');
+        if ($this->usermanager->is_student_session_valid()) {
+            $courses = new Course();
+            $courses->where_related('participant', 'student_id', $this->usermanager->get_student_id());
+            $courses->where_related('participant', 'allowed', 1);
+            $courses->include_related('period', 'name');
+            $courses->order_by_related_with_constant('period', 'sorting', 'asc');
+            $courses->order_by_with_constant('name', 'asc');
+            $courses->get_iterated();
+            $this->parser->assign('list_student_courses', $courses);
+        }
     }
     
     /**
