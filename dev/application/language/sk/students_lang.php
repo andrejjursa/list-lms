@@ -13,6 +13,7 @@ $lang['students_login_error_attempts_exceeded'] = 'Počet pokusov o prihlásenie
 $lang['students_login_successful'] = 'Ste úspešne prihlásený(á) do systému.';
 $lang['students_logout_logout_message'] = 'Bol(a) ste úspešne odhlásený(á).';
 $lang['students_login_forgoten_password'] = 'Zabudol som heslo ...';
+$lang['students_login_link'] = 'Prihlásiť sa';
 $lang['students_registration_welcome_text'] = 'Registrácia študenta';
 $lang['students_registration_label_fullname'] = 'Vaše celé meno';
 $lang['students_registration_label_email'] = 'Vaša e-mailová adresa';

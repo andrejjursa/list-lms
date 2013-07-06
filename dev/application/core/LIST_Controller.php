@@ -36,12 +36,33 @@ class LIST_Controller extends CI_Controller {
     
     /**
      * Perform initialisation of student language settings.
+     * @param Students|integer student, for which language hawe to be set, accept Students model or integer with student id, default is NULL (use currently loged in student).
      */
-    protected function _init_language_for_student() {
-        $this->lang->reinitialize_for_idiom($this->usermanager->get_student_language());
-        $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
-        $this->lang->add_custom_translations($translations);
-        $this->_init_lang_js_messages();
+    protected function _init_language_for_student($student = NULL) {
+        if (is_null($student)) {
+            $this->lang->reinitialize_for_idiom($this->usermanager->get_student_language());
+            $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
+            $this->lang->add_custom_translations($translations);
+            $this->_init_lang_js_messages();
+        } else {
+            if (!(is_object($student) && $student instanceof Student) && !(is_numeric($student) && intval($student) > 0)) {
+                $this->_init_language_for_student();
+            } else {
+                if (!is_object($student)) {
+                    $student = new Students($student);
+                }
+                if ($student->exists()) {
+                    if ($this->lang->get_current_idiom() != $student->language) {
+                        $this->lang->reinitialize_for_idiom($student->language);
+                        $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
+                        $this->lang->add_custom_translations($translations);
+                        $this->_init_lang_js_messages();
+                    }
+                } else {
+                    $this->_init_language_for_student();
+                }
+            }
+        }
     }
     
     /**

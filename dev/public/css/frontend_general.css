@@ -11,6 +11,7 @@ body { background-color: silver; font-size: 14px; font-family: Verdana, Arial; }
 
 #mainwrap { min-width: 900px; max-width: 1200px; margin: 0 auto; margin-top: 50px; text-align: center; background-color: white; border: 1px solid black; border-radius: 4px; box-shadow: 0px 0px 50px 20px gray; }
 #loginboxwrap { text-align: left; }
+#registrationboxwrap { padding: 20px; }
 #leftwrap { text-align: left; float: left; width: 200px; }
 #leftwrap > div.internal_padding { padding: 3px; }
 #leftwrap > div.title { padding: 3px; background-color: #444444; color: white; border-top-left-radius: 3px; border-top-right-radius: 3px; text-align: center; }

@@ -13,6 +13,7 @@ $lang['students_login_error_attempts_exceeded'] = 'Number of login attempts exce
 $lang['students_login_successful'] = 'You are logged into to system sucessfully.';
 $lang['students_logout_logout_message'] = 'You were loged out successfuly.';
 $lang['students_login_forgoten_password'] = 'I forgot my password ...';
+$lang['students_login_link'] = 'Login';
 $lang['students_registration_welcome_text'] = 'Student registration';
 $lang['students_registration_label_fullname'] = 'Your full name';
 $lang['students_registration_label_email'] = 'Your e-mail address';

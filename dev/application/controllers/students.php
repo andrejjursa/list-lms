@@ -167,6 +167,7 @@ class Students extends LIST_Controller {
             $student->where('email', $email);
             $student->get();
             if ($student->exists()) {
+                $this->_init_language_for_student($student);
                 $this->parser->parse('frontend/students/change_password.tpl', array('student' => $student, 'token' => $token, 'encoded_email' => $encoded_email));
             } else {
                 $this->messages->add_message('lang:students_change_password_invalid_token_email', Messages::MESSAGE_TYPE_ERROR);
@@ -186,34 +187,36 @@ class Students extends LIST_Controller {
         $this->load->library('form_validation');
         $email = decode_from_url($encoded_email);
         if ($this->form_validation->valid_email($email) && preg_match('/^[0-9a-f]{40}$/', $token)) {
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $student = new Student();
+            $student->where('password_token', $token);
+            $student->where('email', $email);
+            $student->get();
+            if ($student->exists()) {
+                $this->_init_language_for_student($student);
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:students_change_password_invalid_token_email', Messages::MESSAGE_TYPE_ERROR);
+                redirect(create_internal_url('students/login'));
+            }
             $this->form_validation->set_rules('student[password]', 'lang:students_change_password_form_field_password', 'required|min_length[6]|max_length[20]');
             $this->form_validation->set_rules('student[verify]', 'lang:students_change_password_form_field_verify', 'required|matches[student[password]]');
             if ($this->form_validation->run()) {
-                $this->_transaction_isolation();
-                $this->db->trans_begin();
-                $student = new Student();
-                $student->where('password_token', $token);
-                $student->where('email', $email);
-                $student->get();
-                if ($student->exists()) {
-                    $student_post = $this->input->post('student');
-                    $student->password = sha1($student_post['password']);
-                    $student->password_token = NULL;
-                    if ($student->save()) {
-                        $this->db->trans_commit();
-                        $this->messages->add_message('lang:students_change_password_success', Messages::MESSAGE_TYPE_SUCCESS);
-                        redirect(create_internal_url('students/login'));
-                    } else {
-                        $this->db->trans_rollback();
-                        $this->messages->add_message('lang:students_change_password_failed', Messages::MESSAGE_TYPE_ERROR);
-                        redirect(create_internal_url('students/login'));
-                    }
+                $student_post = $this->input->post('student');
+                $student->password = sha1($student_post['password']);
+                $student->password_token = NULL;
+                if ($student->save()) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message('lang:students_change_password_success', Messages::MESSAGE_TYPE_SUCCESS);
+                    redirect(create_internal_url('students/login'));
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:students_change_password_invalid_token_email', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message('lang:students_change_password_failed', Messages::MESSAGE_TYPE_ERROR);
                     redirect(create_internal_url('students/login'));
                 }
             } else {
+                $this->db->trans_rollback();
                 $this->change_password($token, $encoded_email);
             }
         } else {

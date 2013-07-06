@@ -16,7 +16,12 @@
     
 {else}
     {$student_registration = $this->config->item('student_registration')}
+    <span id="not_loged_in_links_id">
     {if $student_registration.enabled}
-        <span><a href="{internal_url url='students/registration'}">{translate line='students_registration_link'}</a></span>
+        <a href="{internal_url url='students/registration'}">{translate line='students_registration_link'}</a>
     {/if}
+    {if $this->router->class eq 'students' and $this->router->method neq 'login' and $this->router->method neq 'do_login'}
+        <a href="{internal_url url='students/login'}">{translate line='students_login_link'}</a>
+    {/if}
+    </span>
 {/if}
