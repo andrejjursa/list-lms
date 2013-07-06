@@ -123,6 +123,7 @@ class Students extends LIST_Controller {
                 $student->password_token = sha1(time() . '-' . $this->config->item('encryption_key') . '-' . $_SERVER['SCRIPT_FILENAME'] . '-' . rand(1000000, 9999999));
                 if ($student->save()) {
                     $this->db->trans_commit();
+                    $this->_init_language_for_student($student);
                     $this->load->library('email');
                     $this->email->from_system();
                     $this->email->reply_to_system();
@@ -134,6 +135,7 @@ class Students extends LIST_Controller {
                     } else {
                         $this->messages->add_message('lang:students_password_recovery_email_sent_error', Messages::MESSAGE_TYPE_ERROR);
                     }
+                    $this->_init_language_for_student();
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:students_password_recovery_email_sent', Messages::MESSAGE_TYPE_SUCCESS);
