@@ -11,22 +11,19 @@
     </fieldset>
     <fieldset>
         <legend>{translate line='admin_courses_fieldset_legend_all_courses'}</legend>
-        <table class="courses_table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>{translate line='admin_courses_table_header_course_name'}</th>
-                    <th>{translate line='admin_courses_table_header_course_description'}</th>
-                    <th>{translate line='admin_courses_table_header_course_period'}</th>
-                    <th>{translate line='admin_courses_table_header_course_groups'}</th>
-                    <th>{translate line='admin_courses_table_header_course_task_set_types'}</th>
-                    <th>{translate line='admin_courses_table_header_course_capacity'}</th>
-                    <th colspan="3" class="controlls">{translate line='admin_courses_table_header_controlls'}</th>
-                </tr>
-            </thead>
-            <tbody id="table_content">
-            </tbody>
-        </table>
+        <div class="filter_wrap">
+            <form action="{internal_url url='admin_groups/get_table_content'}" method="post" id="filter_form_id">
+                <input type="hidden" name="filter[fields][created]" value="{$filter.fields.created|default:0}" />
+                <input type="hidden" name="filter[fields][updated]" value="{$filter.fields.updated|default:0}" />
+                <input type="hidden" name="filter[fields][name]" value="{$filter.fields.name|default:1}" />
+                <input type="hidden" name="filter[fields][description]" value="{$filter.fields.description|default:1}" />
+                <input type="hidden" name="filter[fields][period]" value="{$filter.fields.period|default:1}" />
+                <input type="hidden" name="filter[fields][groups]" value="{$filter.fields.groups|default:1}" />
+                <input type="hidden" name="filter[fields][task_set_types]" value="{$filter.fields.task_set_types|default:1}" />
+                <input type="hidden" name="filter[fields][capacity]" value="{$filter.fields.capacity|default:1}" />
+            </form>
+        </div>
+        <div id="table_content"></div>
     </fieldset>
 {/block}
 {block custom_head}<script type="text/javascript">

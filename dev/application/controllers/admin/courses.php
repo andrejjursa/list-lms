@@ -8,6 +8,7 @@
 class Courses extends LIST_Controller {
     
     const REGEXP_PATTERN_DATETYME = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
+    const STORED_FILTER_SESSION_NAME = 'admin_courses_filter_data';
     
     public function __construct() {
         parent::__construct();
@@ -27,10 +28,27 @@ class Courses extends LIST_Controller {
         $this->parser->add_js_file('admin_courses/form.js');
         $this->parser->add_css_file('admin_courses.css');
         $this->_add_tinymce();
+        
+        $this->inject_stored_filter();
         $this->parser->parse('backend/courses/index.tpl');
     }
     
     public function get_table_content() {
+        $fields_config = array(
+            array('name' => 'created', 'caption' => 'lang:common_table_header_created'),
+            array('name' => 'updated', 'caption' => 'lang:common_table_header_updated'),
+            array('name' => 'name', 'caption' => 'lang:admin_courses_table_header_course_name'),
+            array('name' => 'description', 'caption' => 'lang:admin_courses_table_header_course_description'),
+            array('name' => 'period', 'caption' => 'lang:admin_courses_table_header_course_period'),
+            array('name' => 'groups', 'caption' => 'lang:admin_courses_table_header_course_groups'),
+            array('name' => 'task_set_types', 'caption' => 'lang:admin_courses_table_header_course_task_set_types'),
+            array('name' => 'capacity', 'caption' => 'lang:admin_courses_table_header_course_capacity'),
+        );
+        
+        $filter = $this->input->post('filter');
+        $this->store_filter($filter);
+        $this->inject_stored_filter();
+        
         $courses = new Course();
         $courses->include_related_count('group');
         $courses->include_related_count('task_set_type');
@@ -38,7 +56,7 @@ class Courses extends LIST_Controller {
         $courses->order_by_with_constant('name', 'asc');
         $courses->get_iterated();
         $this->lang->init_overlays('courses', $courses->all_to_array(), array('description'));
-        $this->parser->parse('backend/courses/table_content.tpl', array('courses' => $courses));
+        $this->parser->parse('backend/courses/table_content.tpl', array('courses' => $courses, 'fields_config' => $fields_config));
     }
     
     public function create() {
@@ -330,6 +348,19 @@ class Courses extends LIST_Controller {
         }}
         $this->parser->assign('task_set_types', $data);
         $query->free_result();
+    }
+    
+    private function store_filter($filter) {
+        if (is_array($filter)) {
+            $old_filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
+            $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
+            $this->session->set_userdata(self::STORED_FILTER_SESSION_NAME, $new_filter);
+        }
+    }
+    
+    private function inject_stored_filter() {
+        $filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
+        $this->parser->assign('filter', $filter);
     }
     
 }
