@@ -37,6 +37,14 @@ class Groups extends LIST_Controller {
     }
     
     public function get_table_content() {
+        $fields_config = array(
+            array('name' => 'created', 'caption' => 'lang:common_table_header_created'),
+            array('name' => 'updated', 'caption' => 'lang:common_table_header_updated'),
+            array('name' => 'name', 'caption' => 'lang:admin_groups_table_header_group_name'),
+            array('name' => 'course', 'caption' => 'lang:admin_groups_table_header_group_course'),
+            array('name' => 'rooms', 'caption' => 'lang:admin_groups_table_header_group_rooms'),
+            array('name' => 'capacity', 'caption' => 'lang:admin_groups_table_header_group_capacity'),
+        );
         smarty_inject_days();
         $groups = new Group();
         $rooms = $groups->room;
@@ -47,6 +55,7 @@ class Groups extends LIST_Controller {
         $groups->order_by_with_constant('name', 'asc');
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
+        $this->inject_stored_filter();
         if (isset($filter['course_id']) && intval($filter['course_id']) > 0) {
             $groups->where_related_course('id', intval($filter['course_id']));
         }
@@ -54,7 +63,7 @@ class Groups extends LIST_Controller {
         $groups->include_related('course/period', 'name', TRUE);
         $groups->select_subquery($rooms, 'group_capacity');
         $groups->get_iterated();
-        $this->parser->parse('backend/groups/table_content.tpl', array('groups' => $groups));
+        $this->parser->parse('backend/groups/table_content.tpl', array('groups' => $groups, 'fields_config' => $fields_config));
     }
     
     public function create() {

@@ -6,8 +6,16 @@ jQuery(document).ready(function($) {
     var reload_all_groups = function() {
         var data = $('#filter_form_id').serializeArray();
         var url = global_base_url + 'index.php/admin_groups/get_table_content';
-        api_ajax_load(url, '#table_of_groups_container_id', 'post', data);
-    }
+        api_ajax_load(url, '#table_of_groups_container_id', 'post', data, function() {
+            fields_filter('#open_fields_config_id', reload_all_groups);
+            field_filter_checkbox('#fields_config_created_checkbox_id', '#filter_form_id', 'created');
+            field_filter_checkbox('#fields_config_updated_checkbox_id', '#filter_form_id', 'updated');
+            field_filter_checkbox('#fields_config_name_checkbox_id', '#filter_form_id', 'name');
+            field_filter_checkbox('#fields_config_course_checkbox_id', '#filter_form_id', 'course');
+            field_filter_checkbox('#fields_config_rooms_checkbox_id', '#filter_form_id', 'rooms');
+            field_filter_checkbox('#fields_config_capacity_checkbox_id', '#filter_form_id', 'capacity');
+        });
+    };
     
     reload_all_groups();
     

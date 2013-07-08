@@ -59,8 +59,7 @@ var field_filter_checkbox = function(checkbox_selector, filter_form_selector, fi
             var filter_form_input = jQuery(filter_form).find('input[name="filter[fields][' + field_name + ']"]');
             if (filter_form_input.lenght !== 0) {
                 filter_form_input = filter_form_input[0];
-                jQuery(checkbox).change(function(event) {
-                    console.log(event);
+                jQuery(checkbox).change(function() {
                     if (jQuery(this).is(':checked')) {
                         jQuery(filter_form_input).val('1');
                     } else {
