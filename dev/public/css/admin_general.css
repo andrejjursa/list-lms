@@ -95,3 +95,10 @@ div.custom_translations_selector li.selected { background-color: #FFC1C1; }
 div.custom_translations_selector li.selected.mouseover { background-color: #FDFF83; }
 
 .ui-datepicker.ui-widget { z-index: 100 !important; }
+
+table#fields_filter_table_id { background-color: #cccccc; border: 1px solid black; margin-top: 4px; border-collapse: collapse; }
+table#fields_filter_table_id thead tr td { text-align: right; background-color: #cccccc; }
+table#fields_filter_table_id thead tr td.caption { font-weight: bold; text-align: left; padding: 5px; }
+table#fields_filter_table_id tbody tr td { text-align: left; background-color: #cccccc; padding: 1px 5px; font-weight: normal; }
+
+div.fields_config_open_button { text-decoration: underline; cursor: pointer; }

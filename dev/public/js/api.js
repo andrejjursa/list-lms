@@ -27,6 +27,51 @@ jQuery(document).ajaxStart(function () {
     jQuery.unblockUI();
 });
 
+var fields_filter = function(open_selector, reload_callback) {
+    var open_button = jQuery(open_selector);
+    if (open_button.length !== 0) {
+        open_button = open_button[0];
+        jQuery(open_button).click(function() {
+            jQuery('#fields_filter_table_id').css({
+                'position': 'absolute'
+            }).show().position({
+                of: jQuery(open_button),
+                my: 'right top',
+                at: 'right bottom',
+                collision: 'flip flip'
+            });
+        }).addClass('fields_config_open_button');
+        jQuery('#fields_filter_table_id a.close_button').click(function(event) {
+            event.preventDefault();
+            jQuery('#fields_filter_table_id').hide();
+            reload_callback();
+        });
+    }
+};
+
+var field_filter_checkbox = function(checkbox_selector, filter_form_selector, field_name) {
+    var checkbox = jQuery(checkbox_selector);
+    if (checkbox.length !== 0) {
+        checkbox = checkbox[0];
+        var filter_form = jQuery(filter_form_selector);
+        if (filter_form.length !== 0) {
+            filter_form = filter_form[0];
+            var filter_form_input = jQuery(filter_form).find('input[name="filter[fields][' + field_name + ']"]');
+            if (filter_form_input.lenght !== 0) {
+                filter_form_input = filter_form_input[0];
+                jQuery(checkbox).change(function(event) {
+                    console.log(event);
+                    if (jQuery(this).is(':checked')) {
+                        jQuery(filter_form_input).val('1');
+                    } else {
+                        jQuery(filter_form_input).val('0');
+                    }
+                });
+            }
+        }
+    }
+};
+
 var make_switchable_form = function(selector) {
     if (typeof(selector) == 'string') {
         var filter = jQuery(selector);
@@ -53,7 +98,7 @@ var make_switchable_form = function(selector) {
             });
         }
     }
-}
+};
 
 var make_filter_form = function(selector) {
     if (typeof(selector) == 'string') {
@@ -81,7 +126,7 @@ var make_filter_form = function(selector) {
             });
         }
     }
-}
+};
 
 var show_notification = function(text, notif_type) {
   if (text == undefined) { return; }
@@ -92,7 +137,7 @@ var show_notification = function(text, notif_type) {
     autoClose: true,
     duration: 5
   });
-}
+};
 
 var api_make_tabs = function(structure_id_attr_value, options) {
     var structure = jQuery('#' + structure_id_attr_value);
@@ -105,7 +150,7 @@ var api_make_tabs = function(structure_id_attr_value, options) {
         }
         tab_num++;
     });
-}
+};
 
 var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
     method = method == undefined ? 'post' : method;
@@ -128,7 +173,7 @@ var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
         },
         error: onError
     });
-}
+};
 
 var api_ajax_update = function(url, method, data, onSuccess, onError, dataType) {
     method = method == undefined ? 'post' : method;
@@ -145,7 +190,7 @@ var api_ajax_update = function(url, method, data, onSuccess, onError, dataType) 
         success: onSuccess,
         error: onError
     });
-}
+};
 
 /**
 *
