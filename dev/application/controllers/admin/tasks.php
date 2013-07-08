@@ -33,10 +33,18 @@ class Tasks extends LIST_Controller {
     }
     
     public function get_all_tasks() {
+        $fields_config = array(
+            array('name' => 'created', 'caption' => 'lang:common_table_header_created'),
+            array('name' => 'updated', 'caption' => 'lang:common_table_header_updated'),
+            array('name' => 'name', 'caption' => 'lang:admin_tasks_table_header_name'),
+            array('name' => 'categories', 'caption' => 'lang:admin_tasks_table_header_categories'),
+            array('name' => 'task_sets', 'caption' => 'lang:admin_tasks_table_header_task_sets'),
+        );
         $tasks = new Task();
         $tasks->order_by_with_overlay('name', 'asc');
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
+        $this->inject_stored_filter();
         if (isset($filter['categories']['clauses']) && count($filter['categories']['clauses']) > 0) {
             $tasks->add_categories_filter($filter['categories']['clauses']);
         }
@@ -53,7 +61,7 @@ class Tasks extends LIST_Controller {
         $tasks->include_related_count('task_set');
         $tasks->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('tasks', $tasks->all_to_array(), array('name'));
-        $this->parser->parse('backend/tasks/all_tasks.tpl', array('tasks' => $tasks));
+        $this->parser->parse('backend/tasks/all_tasks.tpl', array('tasks' => $tasks, 'fields_config' => $fields_config));
     }
     
     public function new_task() {

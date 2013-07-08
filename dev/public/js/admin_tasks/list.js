@@ -7,8 +7,12 @@ jQuery(document).ready(function($) {
         var url = global_base_url + 'index.php/admin_tasks/get_all_tasks';
         var data = $('#filter_form_id').serializeArray();
         var onSuccess = function() {
-            $('#table_pagination_footer_id').html('');
-            $('#table_content_id #pagination_row_id').appendTo($('#table_pagination_footer_id'));
+            fields_filter('#open_fields_config_id', reload_all_tasks);
+            field_filter_checkbox('#fields_config_created_checkbox_id', '#filter_form_id', 'created');
+            field_filter_checkbox('#fields_config_updated_checkbox_id', '#filter_form_id', 'updated');
+            field_filter_checkbox('#fields_config_name_checkbox_id', '#filter_form_id', 'name');
+            field_filter_checkbox('#fields_config_categories_checkbox_id', '#filter_form_id', 'categories');
+            field_filter_checkbox('#fields_config_task_sets_checkbox_id', '#filter_form_id', 'task_sets');
         };
         api_ajax_load(url, '#table_content_id', 'post', data, onSuccess);
     }
