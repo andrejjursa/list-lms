@@ -15,7 +15,7 @@ jQuery(document).ready(function($) {
             field_filter_checkbox('#fields_config_task_sets_checkbox_id', '#filter_form_id', 'task_sets');
         };
         api_ajax_load(url, '#table_content_id', 'post', data, onSuccess);
-    }
+    };
     
     reload_all_tasks();
     
@@ -57,7 +57,7 @@ jQuery(document).ready(function($) {
             autoSize: false,
             autoHeight: false,
             autoWidth: false
-        })
+        });
     });
     
     $(document).on('click', '#table_content_id a.add_to_task_set', function(event) {
@@ -75,7 +75,7 @@ jQuery(document).ready(function($) {
                 api_ajax_load(url, '#header_open_task_set_id');
                 return true;
             }
-        })
+        });
     });
     
 });
