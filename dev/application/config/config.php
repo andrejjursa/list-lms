@@ -443,8 +443,10 @@ $config['email']['mailtype'] = 'html';
 $config['email']['charset'] = 'utf-8';
 $config['email']['validate'] = TRUE;
 $config['email']['priority'] = 3;
-$config['email']['crlf'] = "\r\n";
-$config['email']['newline'] = "\r\n";
+$config['email']['crlf'] = '
+';
+$config['email']['newline'] = '
+';
 $config['email']['bcc_batch_mode'] = FALSE;
 $config['email']['bcc_batch_size'] = 200;
 $config['email_address']['system']['name'] = 'LIST';
