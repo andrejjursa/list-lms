@@ -17,6 +17,8 @@
                 <thead>
                     <tr>
                         <th rowspan="2" class="left_corner">ID</th>
+                        <th rowspan="2">{translate line='common_table_header_created'}</th>
+                        <th rowspan="2">{translate line='common_table_header_updated'}</th>
                         <th rowspan="2">{translate line='admin_solutions_list_table_header_student'}</th>
                         <th rowspan="2">{translate line='admin_solutions_list_table_header_files_count'}</th>
                         <th colspan="3" class="valuation">{translate line='admin_solutions_list_table_header_valuation'}</th>

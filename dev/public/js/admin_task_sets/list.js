@@ -7,8 +7,15 @@ jQuery(document).ready(function($) {
         var url = global_base_url + 'index.php/admin_task_sets/get_all_task_sets';
         var data = $('#filter_form_id').serializeArray();
         var onSuccess = function() {
-            $('#table_pagination_footer_id').html('');
-            $('#table_content_id #pagination_row_id').appendTo($('#table_pagination_footer_id'));
+            fields_filter('#open_fields_config_id', reload_all_task_sets);
+            field_filter_checkbox('#fields_config_created_checkbox_id', '#filter_form_id', 'created');
+            field_filter_checkbox('#fields_config_updated_checkbox_id', '#filter_form_id', 'updated');
+            field_filter_checkbox('#fields_config_name_checkbox_id', '#filter_form_id', 'name');
+            field_filter_checkbox('#fields_config_course_checkbox_id', '#filter_form_id', 'course');
+            field_filter_checkbox('#fields_config_group_checkbox_id', '#filter_form_id', 'group');
+            field_filter_checkbox('#fields_config_task_set_type_checkbox_id', '#filter_form_id', 'task_set_type');
+            field_filter_checkbox('#fields_config_tasks_checkbox_id', '#filter_form_id', 'tasks');
+            field_filter_checkbox('#fields_config_published_checkbox_id', '#filter_form_id', 'published');
         };
         api_ajax_load(url, '#table_content_id', 'post', data, onSuccess);
     };

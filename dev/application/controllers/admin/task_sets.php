@@ -98,8 +98,19 @@ class Task_sets extends LIST_Controller {
     }
     
     public function get_all_task_sets() {
+        $fields_config = array(
+            array('name' => 'created', 'caption' => 'lang:common_table_header_created'),
+            array('name' => 'updated', 'caption' => 'lang:common_table_header_updated'),
+            array('name' => 'name', 'caption' => 'lang:admin_task_sets_table_header_name'),
+            array('name' => 'course', 'caption' => 'lang:admin_task_sets_table_header_course'),
+            array('name' => 'group', 'caption' => 'lang:admin_task_sets_table_header_group'),
+            array('name' => 'task_set_type', 'caption' => 'lang:admin_task_sets_table_header_task_set_type'),
+            array('name' => 'tasks', 'caption' => 'lang:admin_task_sets_table_header_tasks'),
+            array('name' => 'published', 'caption' => 'lang:admin_task_sets_table_header_published'),
+        );
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
+        $this->inject_stored_filter();
         $task_sets = new Task_set();
         $task_sets->order_by_with_overlay('name', 'asc');
         $task_sets->include_related('course', 'name', TRUE);
@@ -126,7 +137,7 @@ class Task_sets extends LIST_Controller {
         $this->lang->init_overlays('task_sets', $task_sets->all_to_array(), array('name'));
         $opened_task_set = new Task_set();
         $opened_task_set->get_as_open();
-        $this->parser->parse('backend/task_sets/table_content.tpl', array('task_sets' => $task_sets, 'opened_task_set' => $opened_task_set));
+        $this->parser->parse('backend/task_sets/table_content.tpl', array('task_sets' => $task_sets, 'opened_task_set' => $opened_task_set, 'fields_config' => $fields_config));
     }
 
     public function create() {
