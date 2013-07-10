@@ -148,6 +148,199 @@ class Students extends LIST_Controller {
         }
     }
     
+    public function csv_import() {
+        $this->_select_teacher_menu_pagetag('students_manager');
+        $this->parser->parse('backend/students/csv_import.tpl');
+    }
+    
+    public function upload_csv_file() {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('csv_data[delimiter]', 'lang:admin_students_csv_import_form_field_delimiter', 'required|exact_length[1]');
+        $this->form_validation->set_rules('csv_data[enclosure]', 'lang:admin_students_csv_import_form_field_enclosure', 'required|exact_length[1]');
+        $this->form_validation->set_rules('csv_data[escape]', 'lang:admin_students_csv_import_form_field_escape', 'required|exact_length[1]');
+        if ($this->form_validation->run()) {
+            $config = array(
+                'upload_path' => './private/uploads/csv_imports',
+                'file_name' => 'students_import_' . date('U') . '_' . rand(10000, 99999) . '.csv',
+                'allowed_types' => 'csv',
+                'overwrite' => FALSE,
+            );
+            $this->load->library('upload', $config);
+            if ($this->upload->do_upload('csv_file')) {
+                $upload_data = $this->upload->data();
+                $post_data = $this->input->post('csv_data');
+                $data = array(
+                    'f' => $upload_data['file_name'],
+                    'd' => $post_data['delimiter'],
+                    'c' => $post_data['enclosure'],
+                    'e' => $post_data['escape'],
+                );
+                redirect(create_internal_url('admin_students/show_csv_content/' . encode_for_url(serialize($data))));
+            } else {
+                $this->parser->assign('error_message', $this->upload->display_errors('', ''));
+                $this->csv_import();
+            }
+        } else {
+            $this->csv_import();
+        }
+    }
+    
+    public function show_csv_content($config) {
+        $this->_select_teacher_menu_pagetag('students_manager');
+        $this->parser->assign('url_config', $config);
+        $csv_data = unserialize(decode_from_url($config));
+        $file_path = './private/uploads/csv_imports/' . $csv_data['f'];
+        if (is_readable($file_path)) {
+            $f = fopen($file_path, 'r');
+            $csv_array = array();
+            $csv_cols = 0;
+            while (($line_data = fgetcsv($f, 0, $csv_data['d'], $csv_data['c'], $csv_data['e'])) !== FALSE) {
+                $csv_array[] = $line_data;
+                $csv_cols = max(array($csv_cols, count($line_data)));
+            }
+            fclose($f);
+            $this->parser->add_css_file('admin_students.css');
+            $this->parser->add_js_file('admin_students/csv_content_list.js');
+            $this->parser->parse('backend/students/show_csv_content.tpl', array('csv_array' => $csv_array, 'csv_cols' => $csv_cols));
+        } else {
+            $this->messages->add_message('lang:admin_students_csv_import_error_file_not_exist_or_is_unreadable', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('admin_students/csv_import'));
+        }
+    }
+    
+    public function csv_import_screen($config) {
+        $this->_select_teacher_menu_pagetag('students_manager');
+        $this->parser->assign('url_config', $config);
+        $csv_data = unserialize(decode_from_url($config));
+        $cols = $this->input->post('col');
+        $rows = $this->input->post('row');
+        $file_path = './private/uploads/csv_imports/' . $csv_data['f'];
+        if (is_readable($file_path)) {
+            if ($this->test_csv_import_cols($cols)) {
+                $this->parser->add_css_file('admin_students.css');
+                $this->parser->add_js_file('admin_students/csv_import.js');
+                $this->parser->assign('csv_content', $this->get_csv_content($csv_data, $cols, $rows));
+                $this->parser->parse('backend/students/csv_import_screen.tpl');
+            } else {
+                $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_invalid_cols_config');
+                $this->show_csv_content($config);
+            }
+        } else {
+            $this->messages->add_message('lang:admin_students_csv_import_error_file_not_exist_or_is_unreadable', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('admin_students/csv_import'));
+        }
+    }
+    
+    public function import_single_line() {
+        $this->output->set_content_type('application/json');
+        $firstname = $this->input->post('firstname');
+        $lastname = $this->input->post('lastname');
+        $fullname = $this->input->post('fullname');
+        $email = $this->input->post('email');
+        $this->parser->assign('firstname', $firstname);
+        $this->parser->assign('lastname', $lastname);
+        $this->parser->assign('fullname', $fullname);
+        $this->parser->assign('email', $email);
+        $this->parser->assign('password', $this->config->item('student_import_default_password'));
+        if (((trim($firstname) != '' && trim($lastname) != '') || trim($fullname) != '') && trim($email) != '') {
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $student = new Student();
+            $student->where('email', trim($email));
+            $student->get();
+            if ($student->exists()) {
+                $this->db->trans_rollback();
+                $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_message_student_exists');
+            } else {
+                $this->load->library('form_validation');
+                if ($this->form_validation->valid_email(trim($email))) {
+                    $student->email = trim($email);
+                    $student->fullname = (trim($fullname) != '') ? trim($fullname) : trim($firstname) . ' ' . trim($lastname);
+                    $student->password = sha1($this->config->item('student_import_default_password'));
+                    $student->language = $this->config->item('language');
+                    if ($student->save()) {
+                        $this->db->trans_commit();
+                        $this->parser->assign('success_message', 'lang:admin_students_csv_import_successfully_imported');
+                    } else {
+                        $this->db->trans_rollback();
+                        $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_message_student_save_error');
+                    }
+                } else {
+                    $this->db->trans_rollback();
+                    $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_message_student_email_invalid');
+                }
+            }
+        } else {
+            $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_message_nothing_to_import');
+        }
+        $html = $this->parser->parse('backend/students/import_single_line.tpl', array(), TRUE);
+        $this->output->set_output(json_encode($html));
+    }
+    
+    public function delete_csv_file($config) {
+        $csv_data = unserialize(decode_from_url($config));
+        $file_path = './private/uploads/csv_imports/' . $csv_data['f'];
+        @unlink($file_path);
+    }
+    
+    private function test_csv_import_cols($cols) {
+        $is_firstname = 0;
+        $is_lastname = 0;
+        $is_fullname = 0;
+        $is_email = 0;
+        
+        if (is_array($cols) && count($cols) > 0) { foreach ($cols as $col) {
+            if ($col == 'is_firstname') { $is_firstname++; }
+            if ($col == 'is_lastname') { $is_lastname++; }
+            if ($col == 'is_fullname') { $is_fullname++; }
+            if ($col == 'is_email') { $is_email++; }
+        }}
+        
+        return (($is_firstname == 1 && $is_lastname == 1) || $is_fullname == 1) && $is_email == 1;
+    }
+    
+    private function convert_csv_import_cols_config($cols) {
+        $config = array(
+            'firstname' => NULL,
+            'lastname' => NULL,
+            'fullname' => NULL,
+            'email' => NULL,
+        );
+        if ($this->test_csv_import_cols($cols)) {
+            if (is_array($cols) && count($cols) > 0) { foreach ($cols as $key => $col) {
+                if ($col == 'is_firstname') { $config['firstname'] = $key-1; }
+                if ($col == 'is_lastname') { $config['lastname'] = $key-1; }
+                if ($col == 'is_fullname') { $config['fullname'] = $key-1; }
+                if ($col == 'is_email') { $config['email'] = $key-1; }
+            }}
+        }
+        return $config;
+    }
+    
+    private function get_csv_content($config, $cols, $rows) {
+        $output = array();
+        $file_path = './private/uploads/csv_imports/' . $config['f'];
+        if (is_readable($file_path)) {
+            $cols_config = $this->convert_csv_import_cols_config($cols);
+            if (is_array($rows) && count($rows) > 0 && array_sum($rows) > 0) {
+                $f = fopen($file_path, 'r');
+                $line = 0;
+                while (($line_data = fgetcsv($f, 0, $config['d'], $config['c'], $config['e'])) !== FALSE) {
+                    if (isset($rows[$line++])) {
+                        $output[] = array(
+                            'firstname' => isset($line_data[$cols_config['firstname']]) ? $line_data[$cols_config['firstname']] : '',
+                            'lastname' => isset($line_data[$cols_config['lastname']]) ? $line_data[$cols_config['lastname']] : '',
+                            'fullname' => isset($line_data[$cols_config['fullname']]) ? $line_data[$cols_config['fullname']] : '',
+                            'email' => isset($line_data[$cols_config['email']]) ? $line_data[$cols_config['email']] : '',
+                        );
+                    }
+                }
+                fclose($f);
+            } 
+        }
+        return $output;
+    }
+
     private function store_filter($filter) {
         if (is_array($filter)) {
             $old_filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);

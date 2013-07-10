@@ -382,6 +382,15 @@ $config['rewrite_engine_enabled'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
+| Student default password added during import.
+|--------------------------------------------------------------------------
+| This password must meet the password validation criteria, i.e. length
+| from 6 to 20 characters.
+*/
+$config['student_import_default_password'] = 'heslo123';
+
+/*
+|--------------------------------------------------------------------------
 | Login timeouts (in minutes)
 |--------------------------------------------------------------------------
 | Set this values to number of minutes you want to be student or teacher

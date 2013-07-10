@@ -17,6 +17,7 @@
                 <input type="hidden" name="filter[rows_per_page]" value="{$filter.rows_per_page|default:25|intval}" />
             </div>
         </form>
+        <a href="{internal_url url='admin_students/csv_import'}" class="button">{translate line='admin_students_button_csv_import'}</a>
         <table class="students_table">
             <thead>
                 <tr>
