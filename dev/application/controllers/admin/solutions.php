@@ -165,7 +165,7 @@ class Solutions extends LIST_Controller {
         $this->parser->parse('backend/solutions/list_of_file_content.tpl', array('files' => $files));
     }
     
-    public function show_file_content($task_set_id, $solution_id, $solution_file, $zip_index) {
+    public function show_file_content($task_set_id, $solution_id, $solution_file, $zip_index, $no_highlight = 'no') {
         $this->output->set_content_type('text/plain');
         $task_set = new Task_set();
         $task_set->where_related('solution', 'id', $solution_id);
@@ -178,11 +178,16 @@ class Solutions extends LIST_Controller {
                 $this->config->load('geshi');
                 $highlight_extensions = $this->config->item('file_extension_highlight');
                 if (isset($highlight_extensions[$output['extension']])) {
-                    include(APPPATH . 'third_party/geshi/geshi.php');
-                    $geshi = new GeSHi($output['content'], $highlight_extensions[$output['extension']]);
-                    $geshi->set_header_type(GESHI_HEADER_PRE_VALID);
-                    $geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
-                    $this->output->set_output($geshi->parse_code());
+                    if ($no_highlight == 'no') {
+                        include(APPPATH . 'third_party/geshi/geshi.php');
+                        $geshi = new GeSHi($output['content'], $highlight_extensions[$output['extension']]);
+                        $geshi->set_header_type(GESHI_HEADER_PRE_VALID);
+                        $geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+                        $geshi->enable_strict_mode();
+                        $this->output->set_output($geshi->parse_code());
+                    } else {
+                        $this->output->set_output('<pre>' . htmlspecialchars($output['content']) . '</pre>');
+                    }
                 } else {
                     $this->output->set_output('<pre>' . htmlspecialchars($output['content']) . '</pre>');
                 }
