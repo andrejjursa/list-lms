@@ -10,8 +10,9 @@ table.students_table thead tr th { padding: 2px; background-color: rgba(192,192,
 table.students_table thead tr th:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
 table.students_table thead tr th:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
 
-#csv_table_content_id { width: 100%; margin: 0; padding: 0; overflow-x: auto; }
-#csv_table_content_id table.csv_table { border-collapse: collapse; margin: 5px 0 0 0; min-width: 100%; }
+#csv_table_content_id { margin: 5px 0 0 0; padding: 0; }
+#csv_table_content_id div.overflow { overflow: auto; }
+#csv_table_content_id table.csv_table { border-collapse: collapse; min-width: 100%; }
 #csv_table_content_id table.csv_table thead tr th { background-color: rgba(192,192,192,128); padding: 3px; text-align: left; }
 #csv_table_content_id table.csv_table thead tr th:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
 #csv_table_content_id table.csv_table thead tr th:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
