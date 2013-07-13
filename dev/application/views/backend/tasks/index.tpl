@@ -48,6 +48,7 @@
                     <input type="hidden" name="filter[fields][name]" value="{$filter.fields.name|default:1}" />
                     <input type="hidden" name="filter[fields][categories]" value="{$filter.fields.categories|default:1}" />
                     <input type="hidden" name="filter[fields][task_sets]" value="{$filter.fields.task_sets|default:1}" />
+                    <input type="hidden" name="filter[fields][author]" value="{$filter.fields.author|default:0}" />
                 </div>
             </form>
         </div>

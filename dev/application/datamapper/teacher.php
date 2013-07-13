@@ -70,12 +70,30 @@ $cache = array (
       array (
       ),
     ),
+    'task' => 
+    array (
+      'field' => 'task',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
   ),
   'has_many' => 
   array (
+    'task' => 
+    array (
+      'other_field' => 'author',
+      'join_self_as' => 'author',
+      'join_other_as' => 'task',
+      'class' => 'task',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
     'solution' => 
     array (
       'class' => 'solution',

@@ -35,6 +35,7 @@
                     </div>
                     {/if}
                     <div class="task_points">{translate|sprintf:{$task->join_points_total|floatval} line='tasks_task_points_for_task'}</div>
+                    <div class="task_author">{translate|sprintf:{$task->author->get()->fullname|default:{translate line='tasks_task_author_unknown'}} line='tasks_task_author'}</div>
                     {/foreach}
                     {if $task_set_can_upload}
                     <div class="upload_solution">

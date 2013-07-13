@@ -39,12 +39,16 @@ class Tasks extends LIST_Controller {
             array('name' => 'name', 'caption' => 'lang:admin_tasks_table_header_name'),
             array('name' => 'categories', 'caption' => 'lang:admin_tasks_table_header_categories'),
             array('name' => 'task_sets', 'caption' => 'lang:admin_tasks_table_header_task_sets'),
+            array('name' => 'author', 'caption' => 'lang:admin_tasks_table_header_author'),
         );
-        $tasks = new Task();
-        $tasks->order_by_with_overlay('name', 'asc');
+        
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
         $this->inject_stored_filter();
+        
+        $tasks = new Task();
+        $tasks->order_by_with_overlay('name', 'asc');
+        $tasks->include_related('author', 'fullname');
         if (isset($filter['categories']['clauses']) && count($filter['categories']['clauses']) > 0) {
             $tasks->add_categories_filter($filter['categories']['clauses']);
         }
@@ -93,6 +97,7 @@ class Tasks extends LIST_Controller {
             
             $task = new Task();
             $task->from_array($task_data, array('name', 'text'));
+            $task->author_id = $this->usermanager->get_teacher_id();
             if ($task->save($categories->all) && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_tasks_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);

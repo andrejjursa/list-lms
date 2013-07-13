@@ -20,7 +20,8 @@ div.points_total { padding: 5px 13px; margin: 15px 0 5px 0; background-color: #9
 
 div.instructions_text { padding: 4px; border-bottom: 1px solid gray; }
 div.task_text { padding: 4px; border-bottom: 1px solid gray; }
-div.task_points { padding: 4px; border-bottom: 1px solid gray; margin-bottom: 4px; }
+div.task_points { padding: 4px; border-bottom: 1px solid gray; }
+div.task_author { padding: 4px; border-bottom: 1px solid gray; margin-bottom: 4px; }
 div.task_files { padding: 4px; border-bottom: 1px solid gray; }
 div.task_files div.task_file { padding-left: 5px; }
 div.task_files div.task_file a { text-decoration: none; line-height: 1.5em; }

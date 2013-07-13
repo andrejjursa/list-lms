@@ -8,6 +8,7 @@ $cache = array (
     2 => 'created',
     3 => 'name',
     4 => 'text',
+    5 => 'author_id',
   ),
   'validation' => 
   array (
@@ -47,6 +48,20 @@ $cache = array (
       array (
       ),
     ),
+    'author_id' => 
+    array (
+      'field' => 'author_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'author' => 
+    array (
+      'field' => 'author',
+      'rules' => 
+      array (
+      ),
+    ),
     'category' => 
     array (
       'field' => 'category',
@@ -64,6 +79,17 @@ $cache = array (
   ),
   'has_one' => 
   array (
+    'author' => 
+    array (
+      'class' => 'teacher',
+      'other_field' => 'task',
+      'join_self_as' => 'task',
+      'join_other_as' => 'author',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
   ),
   'has_many' => 
   array (
