@@ -12,7 +12,7 @@
                 {form_error field='task_set_type[name]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="buttons">
-                <input type="submit" value="{translate line='admin_task_set_types_form_button_submit'}" name="submit_button" class="button" />
+                <input type="submit" value="{translate line='admin_task_set_types_form_button_submit'}" name="submit_button" class="button" /> <a href="{internal_url url='admin_task_set_types'}" class="button special">{translate line='common_button_back'}</a>
                 <input type="hidden" name="task_set_type_id" value="{$smarty.post.task_set_type_id|default:$task_set_type->id|intval}" />
             </div>
         </form>

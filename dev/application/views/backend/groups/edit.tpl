@@ -19,7 +19,7 @@
                 {form_error field='group[course_id]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="buttons">
-                <input type="submit" name="submit_button" value="{translate line='admin_groups_form_button_save'}" class="button" />
+                <input type="submit" name="submit_button" value="{translate line='admin_groups_form_button_save'}" class="button" /> <a href="{internal_url url='admin_groups'}" class="button special">{translate line='common_button_back'}</a>
             </div>
             <input type="hidden" name="group_id" value="{$smarty.post.group_id|default:$group->id|intval}" />
         </form>

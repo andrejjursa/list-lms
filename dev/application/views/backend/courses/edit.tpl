@@ -35,7 +35,7 @@
                     <p class="input"><em>{translate line='admin_courses_form_label_course_groups_change_deadline_hint'}</em></p>
                 </div>
                 <div class="buttons">
-                    <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" />
+                    <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" /> <a href="{internal_url url='admin_courses'}" class="button special">{translate line='common_button_back'}</a>
                 </div>
                 <input type="hidden" name="course_id" value="{$smarty.post.course_id|default:$course->id|intval}" />
             </form>

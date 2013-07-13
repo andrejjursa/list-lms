@@ -22,3 +22,5 @@ $lang['common_datetime_format'] = '%m/%d/%Y %I:%M:%S %p';
 
 $lang['common_table_header_created'] = 'Created';
 $lang['common_table_header_updated'] = 'Updated';
+
+$lang['common_button_back'] = 'Back';

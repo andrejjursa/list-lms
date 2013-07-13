@@ -22,3 +22,5 @@ $lang['common_datetime_format'] = '%d.%m.%Y %H:%M:%S';
 
 $lang['common_table_header_created'] = 'Vytvorené';
 $lang['common_table_header_updated'] = 'Upravené';
+
+$lang['common_button_back'] = 'Nazad';

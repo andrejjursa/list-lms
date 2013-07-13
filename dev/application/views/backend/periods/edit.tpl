@@ -12,7 +12,7 @@
                     {form_error field='period[name]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>
                 <div class="buttons">
-                    <input type="submit" name="save_button" value="{translate line='admin_periods_form_save_button'}" class="button" />
+                    <input type="submit" name="save_button" value="{translate line='admin_periods_form_save_button'}" class="button" /> <a href="{internal_url url='admin_periods'}" class="button special">{translate line='common_button_back'}</a>
                 </div>
                 <input type="hidden" name="period_id" value="{$smarty.post.period_id|default:$period->id|intval}" />
             </form>

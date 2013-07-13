@@ -23,7 +23,7 @@
                 <p class="input"><em>{translate line='admin_teachers_list_form_label_password_hint'}</em></p>
             </div>
             <div class="buttons">
-                <input type="submit" class="button" name="submit_button" value="{translate line='admin_teachers_list_form_button_save'}" />
+                <input type="submit" class="button" name="submit_button" value="{translate line='admin_teachers_list_form_button_save'}" /> <a href="{internal_url url='admin_teachers/list_index'}" class="button special">{translate line='common_button_back'}</a>
                 <input type="hidden" name="teacher_id" value="{$smarty.post.teacher_id|default:$teacher->id|intval}" />
             </div>
         </form>

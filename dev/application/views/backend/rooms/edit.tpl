@@ -32,7 +32,7 @@
                     {form_error field='room[capacity]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>
                 <div class="buttons">
-                    <input type="submit" name="submit_button" value="{translate line='admin_rooms_form_button_save'}" class="button" />
+                    <input type="submit" name="submit_button" value="{translate line='admin_rooms_form_button_save'}" class="button" /> <a href="{internal_url url="admin_rooms/index/{$group_id}"}" class="button special">{translate line='common_button_back'}</a>
                 </div>
                 <input type="hidden" name="room_id" value="{$smarty.post.room_id|default:$room->id|intval}" />
             </form>

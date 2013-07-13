@@ -37,6 +37,7 @@ $lang['admin_tasks_javascript_message_delete_question'] = 'Are you sure you want
 $lang['admin_tasks_javascript_message_after_delete'] = 'Task was successfully deleted.';
 $lang['admin_tasks_edit_tabs_basic'] = 'Basic data';
 $lang['admin_tasks_edit_tabs_files'] = 'Files';
+$lang['admin_tasks_edit_tabs_usages'] = 'Usages';
 $lang['admin_tasks_javascript_text_select_files'] = 'Select files';
 $lang['admin_tasks_file_upload_message_upload_error'] = 'File upload error: %s';
 $lang['admin_tasks_edit_files_delete_file'] = 'Delete&nbsp;file';

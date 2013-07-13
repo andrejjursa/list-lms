@@ -37,6 +37,7 @@ $lang['admin_tasks_javascript_message_delete_question'] = 'Naozaj chcete vymaza�
 $lang['admin_tasks_javascript_message_after_delete'] = 'Úloha bola úspešne vymazaná.';
 $lang['admin_tasks_edit_tabs_basic'] = 'Základné dáta';
 $lang['admin_tasks_edit_tabs_files'] = 'Súbory';
+$lang['admin_tasks_edit_tabs_usages'] = 'Použitia';
 $lang['admin_tasks_javascript_text_select_files'] = 'Vybrať súbory';
 $lang['admin_tasks_file_upload_message_upload_error'] = 'Chyba uploadu súboru: %s';
 $lang['admin_tasks_edit_files_delete_file'] = 'Vymazať&nbsp;súbor';

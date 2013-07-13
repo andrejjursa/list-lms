@@ -96,7 +96,7 @@
             </div>
                     <fieldset class="basefieldset">
                 <div class="buttons">
-                    <input type="submit" name="submit_button" value="{translate line='admin_task_sets_form_button_submit'}" class="button" />
+                    <input type="submit" name="submit_button" value="{translate line='admin_task_sets_form_button_submit'}" class="button" /> <a href="{internal_url url='admin_task_sets'}" class="button special">{translate line='common_button_back'}</a>
                     <input type="hidden" name="post_selected_task_set_type_id" value="{$smarty.post.task_set.task_set_type_id|default:$task_set->task_set_type_id|intval}" />
                     <input type="hidden" name="post_selected_group_id_id" value="{$smarty.post.task_set.group_id|default:$task_set->group_id|intval}" />
                     <input type="hidden" name="post_selected_room_id_id" value="{$smarty.post.task_set.room_id|default:$task_set->room_id|intval}" />
