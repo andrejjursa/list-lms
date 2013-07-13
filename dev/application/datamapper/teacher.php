@@ -70,6 +70,13 @@ $cache = array (
       array (
       ),
     ),
+    'comment' => 
+    array (
+      'field' => 'comment',
+      'rules' => 
+      array (
+      ),
+    ),
     'task' => 
     array (
       'field' => 'task',
@@ -83,6 +90,17 @@ $cache = array (
   ),
   'has_many' => 
   array (
+    'comment' => 
+    array (
+      'cascade_delete' => false,
+      'class' => 'comment',
+      'other_field' => 'teacher',
+      'join_self_as' => 'teacher',
+      'join_other_as' => 'comment',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+    ),
     'task' => 
     array (
       'other_field' => 'author',

@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Migration_Solutions_table1 extends CI_Migration {
     

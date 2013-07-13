@@ -1,17 +1,17 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 $cache = array (
-  'table' => 'students',
+  'table' => 'comments',
   'fields' => 
   array (
     0 => 'id',
     1 => 'updated',
     2 => 'created',
-    3 => 'fullname',
-    4 => 'email',
-    5 => 'password',
-    6 => 'language',
-    7 => 'active_course_id',
-    8 => 'password_token',
+    3 => 'text',
+    4 => 'task_set_id',
+    5 => 'reply_at_id',
+    6 => 'student_id',
+    7 => 'teacher_id',
+    8 => 'approved',
   ),
   'validation' => 
   array (
@@ -37,65 +37,72 @@ $cache = array (
       array (
       ),
     ),
-    'fullname' => 
+    'text' => 
     array (
-      'field' => 'fullname',
+      'field' => 'text',
       'rules' => 
       array (
       ),
     ),
-    'email' => 
+    'task_set_id' => 
     array (
-      'field' => 'email',
+      'field' => 'task_set_id',
       'rules' => 
       array (
       ),
     ),
-    'password' => 
+    'reply_at_id' => 
     array (
-      'field' => 'password',
+      'field' => 'reply_at_id',
       'rules' => 
       array (
       ),
     ),
-    'language' => 
+    'student_id' => 
     array (
-      'field' => 'language',
+      'field' => 'student_id',
       'rules' => 
       array (
       ),
     ),
-    'active_course_id' => 
+    'teacher_id' => 
     array (
-      'field' => 'active_course_id',
+      'field' => 'teacher_id',
       'rules' => 
       array (
       ),
     ),
-    'password_token' => 
+    'approved' => 
     array (
-      'field' => 'password_token',
+      'field' => 'approved',
       'rules' => 
       array (
       ),
     ),
-    'active_course' => 
+    'student' => 
     array (
-      'field' => 'active_course',
+      'field' => 'student',
       'rules' => 
       array (
       ),
     ),
-    'participant' => 
+    'teacher' => 
     array (
-      'field' => 'participant',
+      'field' => 'teacher',
       'rules' => 
       array (
       ),
     ),
-    'solution' => 
+    'task_set' => 
     array (
-      'field' => 'solution',
+      'field' => 'task_set',
+      'rules' => 
+      array (
+      ),
+    ),
+    'reply_at' => 
+    array (
+      'field' => 'reply_at',
       'rules' => 
       array (
       ),
@@ -110,12 +117,45 @@ $cache = array (
   ),
   'has_one' => 
   array (
-    'active_course' => 
+    'student' => 
     array (
-      'class' => 'course',
-      'other_field' => 'active_for_student',
-      'join_self_as' => 'active_for_student',
-      'join_other_as' => 'active_course',
+      'cascade_delete' => false,
+      'class' => 'student',
+      'other_field' => 'comment',
+      'join_self_as' => 'comment',
+      'join_other_as' => 'student',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+    ),
+    'teacher' => 
+    array (
+      'cascade_delete' => false,
+      'class' => 'teacher',
+      'other_field' => 'comment',
+      'join_self_as' => 'comment',
+      'join_other_as' => 'teacher',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+    ),
+    'reply_at' => 
+    array (
+      'class' => 'comment',
+      'other_field' => 'comment',
+      'join_self_as' => 'comment',
+      'join_other_as' => 'reply_at',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'task_set' => 
+    array (
+      'class' => 'task_set',
+      'other_field' => 'comment',
+      'join_self_as' => 'comment',
+      'join_other_as' => 'task_set',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
@@ -126,32 +166,10 @@ $cache = array (
   array (
     'comment' => 
     array (
-      'cascade_delete' => false,
-      'class' => 'comment',
-      'other_field' => 'student',
-      'join_self_as' => 'student',
+      'other_field' => 'reply_at',
+      'join_self_as' => 'reply_at',
       'join_other_as' => 'comment',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-    ),
-    'participant' => 
-    array (
-      'class' => 'participant',
-      'other_field' => 'student',
-      'join_self_as' => 'student',
-      'join_other_as' => 'participant',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
-    'solution' => 
-    array (
-      'class' => 'solution',
-      'other_field' => 'student',
-      'join_self_as' => 'student',
-      'join_other_as' => 'solution',
+      'class' => 'comment',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

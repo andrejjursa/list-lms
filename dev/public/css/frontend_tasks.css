@@ -36,3 +36,15 @@ table.solutions_table thead th.version { width: 45px; }
 table.solutions_table thead th.size { width: 100px; }
 table.solutions_table thead th.modified { width: 200px; }
 table.solutions_table tbody td { padding: 4px; border-bottom: 1px dashed silver; }
+
+ul.comments_list { list-style-type: none; margin-left: 5px; }
+ul.comments_list.level_1 { margin-left: 0; }
+ul.comments_list li div.comment_body { border: 1px solid black; border-radius: 3px; margin-top: 3px;margin-top: 3px; padding: 3px; }
+ul.comments_list li div.comment_body.teacher_comment { background-color: #deffea; }
+ul.comments_list li div.comment_body.student_comment { background-color: #e0deff; }
+ul.comments_list li div.comment_body.student_comment.preview_comment { background-color: #edecf0; }
+ul.comments_list li div.comment_body div.comment_header { padding-bottom: 3px; border-bottom: 1px solid black; }
+ul.comments_list li div.comment_body div.comment_text { padding: 3px 0; }
+ul.comments_list li div.comment_body div.comment_buttons { padding-top: 3px; border-top: 1px solid black; }
+ul.comments_list li:first-child div.comment_body { margin-top: 0; }
+ul.comments_list.level_1 li ul.comments_list li div.comment_body { margin-top: 3px; }

@@ -153,6 +153,13 @@ $cache = array (
       array (
       ),
     ),
+    'comment' => 
+    array (
+      'field' => 'comment',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -220,6 +227,17 @@ $cache = array (
       'other_field' => 'task_set',
       'join_self_as' => 'task_set',
       'join_other_as' => 'solution',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'comment' => 
+    array (
+      'class' => 'comment',
+      'other_field' => 'task_set',
+      'join_self_as' => 'task_set',
+      'join_other_as' => 'comment',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

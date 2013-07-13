@@ -10,6 +10,9 @@ class Student extends DataMapper {
     public $has_many = array(
         'participant',
         'solution',
+        'comment' => array(
+            'cascade_delete' => FALSE,
+        ),
     );
     
     public $has_one = array(

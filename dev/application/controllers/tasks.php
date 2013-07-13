@@ -182,6 +182,22 @@ class Tasks extends LIST_Controller {
         }
     }
     
+    public function show_comments($task_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_id));
+        
+        if ($task_set->exists()) {
+            $comments = new Comment();
+            $comments->where_related_task_set($task_set);
+            $comments->where('reply_at_id', NULL);
+            $comments->get();
+        }
+        
+        $this->parser->parse('frontend/tasks/show_comments.tpl', array('comments' =>  $comments));
+    }
+
     private function normalize_student_name($student) {
         $normalized = normalize($student->fullname);
         $output = '';

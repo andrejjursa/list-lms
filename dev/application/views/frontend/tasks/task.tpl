@@ -10,6 +10,7 @@
                 <ul style="height: 37px;">
                     <li><a href="#tabs-task">{translate line='tasks_task_tabs_task'}</a></li>
                     <li><a href="#tabs-solution">{translate line='tasks_task_tabs_solutions'}</a></li>
+                    <li><a href="{internal_url url="tasks/show_comments/{$task_set->id}"}">{translate line='tasks_task_tabs_comments'}</a></li>
                 </ul>
                 <div id="tabs-task">
                     {$instructions_text = {overlay table='task_sets' table_id=$task_set->id|intval column='instructions' default=$task_set->instructions}}
