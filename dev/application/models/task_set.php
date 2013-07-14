@@ -19,6 +19,20 @@ class Task_set extends DataMapper {
         ),
         'solution',
         'comment',
+        'comment_subscriber_student' => array(
+            'class' => 'student',
+            'other_field' => 'comment_subscription',
+            'join_self_as' => 'comment_subscription',
+            'join_other_as' => 'comment_subscriber_student',
+            'join_table' => 'task_set_comment_subscription_rel',
+        ),
+        'comment_subscriber_teacher' => array(
+            'class' => 'teacher',
+            'other_field' => 'comment_subscription',
+            'join_self_as' => 'comment_subscription',
+            'join_other_as' => 'comment_subscriber_teacher',
+            'join_table' => 'task_set_comment_subscription_rel',
+        ),
     );
     
     public $has_one = array(

@@ -16,6 +16,8 @@ $cache = array (
     10 => 'room_id',
     11 => 'instructions',
     12 => 'points_override',
+    13 => 'comments_enabled',
+    14 => 'comments_moderated',
   ),
   'validation' => 
   array (
@@ -111,6 +113,20 @@ $cache = array (
       array (
       ),
     ),
+    'comments_enabled' => 
+    array (
+      'field' => 'comments_enabled',
+      'rules' => 
+      array (
+      ),
+    ),
+    'comments_moderated' => 
+    array (
+      'field' => 'comments_moderated',
+      'rules' => 
+      array (
+      ),
+    ),
     'task_set_type' => 
     array (
       'field' => 'task_set_type',
@@ -156,6 +172,20 @@ $cache = array (
     'comment' => 
     array (
       'field' => 'comment',
+      'rules' => 
+      array (
+      ),
+    ),
+    'comment_subscriber_student' => 
+    array (
+      'field' => 'comment_subscriber_student',
+      'rules' => 
+      array (
+      ),
+    ),
+    'comment_subscriber_teacher' => 
+    array (
+      'field' => 'comment_subscriber_teacher',
       'rules' => 
       array (
       ),
@@ -217,6 +247,28 @@ $cache = array (
       'other_field' => 'task_set',
       'join_self_as' => 'task_set',
       'join_other_as' => 'task',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'comment_subscriber_student' => 
+    array (
+      'class' => 'student',
+      'other_field' => 'comment_subscription',
+      'join_self_as' => 'comment_subscription',
+      'join_other_as' => 'comment_subscriber_student',
+      'join_table' => 'task_set_comment_subscription_rel',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'comment_subscriber_teacher' => 
+    array (
+      'class' => 'teacher',
+      'other_field' => 'comment_subscription',
+      'join_self_as' => 'comment_subscription',
+      'join_other_as' => 'comment_subscriber_teacher',
+      'join_table' => 'task_set_comment_subscription_rel',
       'reciprocal' => false,
       'auto_populate' => NULL,
       'cascade_delete' => true,

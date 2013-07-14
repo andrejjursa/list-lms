@@ -187,15 +187,133 @@ class Tasks extends LIST_Controller {
         
         $task_set = new Task_set();
         $task_set->get_by_id(intval($task_id));
+        $comments = new Comment();
         
-        if ($task_set->exists()) {
-            $comments = new Comment();
+        if ($task_set->exists() && (bool)$task_set->comments_enabled) {
             $comments->where_related_task_set($task_set);
             $comments->where('reply_at_id', NULL);
+            $comments->include_related('student', '*', true, true);
+            $comments->include_related('teacher', '*', true, true);
             $comments->get();
         }
         
-        $this->parser->parse('frontend/tasks/show_comments.tpl', array('comments' =>  $comments));
+        $this->parser->parse('frontend/tasks/show_comments.tpl', array('comments' =>  $comments, 'task_set' => $task_set));
+    }
+    
+    public function subscribe_to_task_comments($task_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_id));
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        if ($task_set->exists() && $student->exists() && $student->save(array('comment_subscription' => $task_set))) {
+            $this->db->trans_commit();
+            $this->messages->add_message('lang:tasks_comments_message_subscription_successful', Messages::MESSAGE_TYPE_SUCCESS);
+        } else {
+            $this->db->trans_rollback();
+            $this->messages->add_message('lang:tasks_comments_message_subscription_error', Messages::MESSAGE_TYPE_ERROR);
+        }
+        redirect(create_internal_url('tasks/show_comments/' . $task_id));
+    }
+    
+    public function unsubscribe_to_task_comments($task_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_id));
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        if ($task_set->exists() && $student->exists() && $student->is_related_to('comment_subscription', $task_set->id)) {
+            $student->delete_comment_subscription($task_set);
+            if ($this->db->trans_status()) {
+                $this->db->trans_commit();
+                $this->messages->add_message('lang:tasks_comments_message_subscription_cancel_successful', Messages::MESSAGE_TYPE_SUCCESS);
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:tasks_comments_message_subscription_cancel_error', Messages::MESSAGE_TYPE_ERROR);
+            }
+        } else {
+            $this->db->trans_rollback();
+            $this->messages->add_message('lang:tasks_comments_message_subscription_cancel_error', Messages::MESSAGE_TYPE_ERROR);
+        }
+        redirect(create_internal_url('tasks/show_comments/' . $task_id));
+    }
+    
+    public function reply_at_comment($task_id, $comment_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $task_set = new Task_set();
+        $task_set->get_by_id((int)$task_id);
+        $comment = new Comment();
+        if ($task_set->exists() && (bool)$task_set->comments_enabled) {
+            $comment->include_related('student', '*', true, true);
+            $comment->include_related('teacher', '*', true, true);
+            $comment->get_by_id((int)$comment_id);
+        } 
+        
+        $this->parser->add_css_file('frontend_tasks.css');
+        $this->parser->parse('frontend/tasks/reply_at_comment.tpl', array('task_set' => $task_set, 'comment' => $comment));
+    }
+
+    public function post_comment($task_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $this->create_comment();
+        
+        redirect(create_internal_url('tasks/show_comments/' . $task_id));
+    }
+    
+    public function post_comment_reply($task_id, $comment_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $this->create_comment();
+        
+        redirect(create_internal_url('tasks/reply_at_comment/' . $task_id . '/' . $comment_id));
+    }
+
+    private function create_comment() {
+        $post_data = $this->input->post('comment');
+        if (array_key_exists('text', $post_data) && array_key_exists('task_set_id', $post_data) && array_key_exists('reply_at_id', $post_data)) {
+            $task_set = new Task_set();
+            $task_set->get_by_id(intval($post_data['task_set_id']));
+            $student = new Student();
+            $student->get_by_id($this->usermanager->get_student_id());
+            if ($task_set->exists() && $student->exists() && (bool)$task_set->comments_enabled) {
+                if (trim(strip_tags($post_data['text'])) != '') {
+                    $text = strip_tags($post_data['text'], '<a><strong><em><span>');
+                    $comment = new Comment();
+                    $comment->text = $text;
+                    $comment->approved = (bool)$task_set->comments_moderated ? 0 : 1;
+                    $comment->reply_at_id = empty($post_data['reply_at_id']) ? NULL : intval($post_data['reply_at_id']);
+                    
+                    $this->_transaction_isolation();
+                    $this->db->trans_begin();
+                    if ($comment->save(array($task_set, $student))) {
+                        $this->db->trans_commit();
+                        $this->messages->add_message('lang:tasks_comments_message_comment_post_success_save', Messages::MESSAGE_TYPE_SUCCESS);
+                        return TRUE;
+                    } else {
+                        $this->db->trans_rollback();
+                        $this->messages->add_message('lang:tasks_comments_message_comment_post_error_save', Messages::MESSAGE_TYPE_ERROR);
+                        return FALSE;
+                    }
+                } else {
+                    $this->messages->add_message('lang:tasks_comments_message_comment_post_error_empty', Messages::MESSAGE_TYPE_ERROR);
+                    return FALSE;
+                }
+            } else {
+                $this->messages->add_message('lang:tasks_comments_message_not_found_or_disabled', Messages::MESSAGE_TYPE_ERROR);
+                return FALSE;
+            }
+        } else {
+            $this->messages->add_message('lang:tasks_comments_message_comment_post_error_data', Messages::MESSAGE_TYPE_ERROR);
+            return FALSE;
+        }
     }
 
     private function normalize_student_name($student) {

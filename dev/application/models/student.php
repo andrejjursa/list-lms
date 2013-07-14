@@ -13,6 +13,13 @@ class Student extends DataMapper {
         'comment' => array(
             'cascade_delete' => FALSE,
         ),
+        'comment_subscription' => array(
+            'class' => 'task_set',
+            'other_field' => 'comment_subscriber_student',
+            'join_self_as' => 'comment_subscriber_student',
+            'join_other_as' => 'comment_subscription',
+            'join_table' => 'task_set_comment_subscription_rel',
+        ),
     );
     
     public $has_one = array(
