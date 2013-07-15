@@ -63,6 +63,16 @@ jQuery(document).ready(function($) {
     $('form div.field.task_set_room_field_else').setActiveFormDisplayCondition(function() {
         return !this.isDisplayed('div.field.task_set_room_field');
     });
+    $('form div.task_set_comments_moderated').setActiveFormDisplayCondition(function() {
+        var comments_enabled_checkbox = $('#task_set_comments_enabled_id');
+        if (comments_enabled_checkbox.is(':checked')) {
+            return true;
+        }
+        return false;
+    });
+    $('form div.field.task_set_comments_moderated_else').setActiveFormDisplayCondition(function() {
+        return !this.isDisplayed('div.task_set_comments_moderated');
+    });
     $('form').activeForm().applyConditions();
     
     $('#task_set_publish_start_time_id').datetimepicker({

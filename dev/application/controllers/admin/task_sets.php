@@ -157,6 +157,8 @@ class Task_sets extends LIST_Controller {
             $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
             $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
             $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
+            $task_set->comments_enabled = isset($task_set_data['comments_enabled']) ? (bool)intval($task_set_data['comments_enabled']) : FALSE;
+            $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
             if ($task_set->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
@@ -215,6 +217,8 @@ class Task_sets extends LIST_Controller {
                 $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
                 $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
                 $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
+                $task_set->comments_enabled = isset($task_set_data['comments_enabled']) ? (bool)intval($task_set_data['comments_enabled']) : FALSE;
+                $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
                 
                 $overlay = $this->input->post('overlay');
                 
