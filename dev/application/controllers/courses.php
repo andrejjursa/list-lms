@@ -9,7 +9,9 @@ class Courses extends LIST_Controller {
     
     public function __construct() {
         parent::__construct();
-        $this->usermanager->student_login_protected_redirect();
+        if ($this->router->method != 'show_details') {
+            $this->usermanager->student_login_protected_redirect();
+        }
         $this->_init_language_for_student();
         $this->_load_student_langfile();
         $this->_initialize_student_menu();
@@ -111,7 +113,10 @@ class Courses extends LIST_Controller {
         $this->output->set_output(json_encode($output));
     }
     
-    public function show_details($course_id) {
+    public function show_details($course_id, $lang = NULL) {
+        if (!is_null($lang)) {
+            $this->_init_specific_language($lang);
+        }
         $course = new Course();
         $course->get_by_id($course_id);
         smarty_inject_days();

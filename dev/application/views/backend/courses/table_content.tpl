@@ -10,7 +10,7 @@
             {if $filter.fields.groups}<th>{translate line='admin_courses_table_header_course_groups'}</th>{/if}
             {if $filter.fields.task_set_types}<th>{translate line='admin_courses_table_header_course_task_set_types'}</th>{/if}
             {if $filter.fields.capacity}<th>{translate line='admin_courses_table_header_course_capacity'}</th>{/if}
-            <th colspan="3" class="controlls"><div id="open_fields_config_id">{translate line='admin_courses_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
+            <th colspan="4" class="controlls"><div id="open_fields_config_id">{translate line='admin_courses_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +28,7 @@
             <td class="controlls"><a href="{internal_url url="admin_courses/task_set_types/course_id/{$course->id}"}" class="button special task_set_types_editor">{translate line='admin_courses_table_controlls_task_set_types'}</a></td>
             <td class="controlls"><a href="{internal_url url="admin_courses/edit/course_id/{$course->id}"}" class="button edit">{translate line='admin_courses_table_controlls_edit'}</a></td>
             <td class="controlls"><a href="{internal_url url="admin_courses/delete/course_id/{$course->id}"}" class="button delete">{translate line='admin_courses_table_controlls_delete'}</a></td>
+            <td class="controlls"><a href="{internal_url url="courses/show_details/{$course->id}/{$this->lang->get_current_idiom()}"}" target="_blank" class="button special" title="{translate|escape:'html' line='admin_courses_table_controlls_details_hint'}">{translate line='admin_courses_table_controlls_details'}</a></td>
         </tr>
         {foreachelse}
         <tr>
