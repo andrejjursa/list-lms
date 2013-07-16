@@ -44,4 +44,25 @@ class Student extends DataMapper {
         }
         parent::delete($object, $related_field);
     }
+    
+    /**
+     * Create random password token for student.
+     * If student is exists, it will be automaticaly updated (only password token information).
+     */
+    public function generate_random_password_token() {
+        $this->load->library('form_validation');
+        
+        do {
+            $this->password_token = sha1(time() . '-' . $this->config->item('encryption_key') . '-' . $_SERVER['SCRIPT_FILENAME'] . '-' . rand(1000000, 9999999));
+        } while(!$this->form_validation->is_unique($this->password_token, 'students.password_token'));
+        
+        if (!is_null($this->id) && is_numeric($this->id) && intval($this->id) > 0) {
+            $student = new Student(intval($this->id));
+            if ($student->exists()) {
+                $student->password_token = $this->password_token;
+                $student->save();
+            }
+            unset($student);
+        }
+    }
 }

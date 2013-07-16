@@ -120,7 +120,7 @@ class Students extends LIST_Controller {
             $student = new Student();
             $student->get_by_email($student_post['email']);
             if ($student->exists()) {
-                $student->password_token = sha1(time() . '-' . $this->config->item('encryption_key') . '-' . $_SERVER['SCRIPT_FILENAME'] . '-' . rand(1000000, 9999999));
+                $student->generate_random_password_token();
                 if ($student->save()) {
                     $this->db->trans_commit();
                     $this->_init_language_for_student($student);

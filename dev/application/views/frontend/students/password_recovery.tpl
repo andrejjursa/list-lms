@@ -9,7 +9,7 @@
                 <form action="{internal_url url="students/do_password_recovery/{$uri_params|implode_uri_params}"}" method="post">
                     <div class="field_login">
                         <label for="id_students_email">{translate line='students_password_recovery_label_email'}:</label>
-                        <p class="input"><input type="text" name="student[email]" value="{$smarty.post.student.email|escape:'html'}" id="id_students_email" /></p>
+                        <p class="input"><input type="text" name="student[email]" value="{$smarty.post.student.email|default:{$uri_params.email|decode_from_url}|escape:'html'}" id="id_students_email" /></p>
                         {form_error field='student[email]' left_delimiter = '<p class="error"><span class="message">' right_delimiter='</span></p>'}
                     </div>
                     <div class="buttons">

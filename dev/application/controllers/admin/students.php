@@ -236,7 +236,6 @@ class Students extends LIST_Controller {
     }
     
     public function import_single_line() {
-        // TODO: Mailing option ((bool)$options['send_mail'] == true)
         $this->output->set_content_type('application/json');
         $firstname = $this->input->post('firstname');
         $lastname = $this->input->post('lastname');
@@ -274,6 +273,32 @@ class Students extends LIST_Controller {
                         $this->parser->assign('password', $password);
                         $this->db->trans_commit();
                         $this->parser->assign('success_message', 'lang:admin_students_csv_import_successfully_imported');
+                        
+                        if ((bool)$options['send_mail']) {
+                            if ($password == '') {
+                                $this->_transaction_isolation();
+                                $this->db->trans_begin();
+                                $student->generate_random_password_token();
+                                $this->db->trans_commit();
+                            }
+
+                            $this->_init_language_for_student($student);
+                            $this->load->library('email');
+                            $this->email->from_system();
+                            $this->email->to($student->email);
+                            $this->email->subject($this->lang->line('admin_students_csv_import_email_subject'));
+                            $this->email->build_message_body('file:emails/backend/students/csv_import_email.tpl', array(
+                                'student' => $student,
+                                'password' => $password,
+                            ));
+                            $sent = $this->email->send();
+                            $this->_init_language_for_teacher();
+                            if ($sent) {
+                                $this->parser->assign('email_success_message', 'lang:admin_students_csv_import_email_sent_successfully');
+                            } else {
+                                $this->parser->assign('email_error_message', 'lang:admin_students_csv_import_email_sent_failed');
+                            }
+                        }
                     } else {
                         $this->db->trans_rollback();
                         $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_message_student_save_error');
