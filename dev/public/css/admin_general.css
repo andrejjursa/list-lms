@@ -81,8 +81,11 @@ form div.field > label { font-weight: bold; width: 20%; display: block; float: l
 form div.field > label.required:after { content: ' *'; }
 form div.field p.input,
 form div.field div.input { width: 80%; margin-left: 20%; padding: 3px 0 0 0; }
+form div.field div.input input[type=text], form div.field div.input input[type=password], form div.field div.input textarea,
 form div.field p.input input[type=text], form div.field p.input input[type=password], form div.field p.input textarea { width: 98%; }
+form div.field div.input textarea,
 form div.field p.input textarea { height: 100px; }
+form div.field div.input select
 form div.field p.input select { max-width: 98%; }
 form div.field p.error { width: 80%; margin-left: 20%; } 
 form div.field p.error span.message { padding: 2px; border: 1px solid red; color: red; border-radius: 3px; width: 98%; margin: 2px 0; display: block; background-color: #FFAFAF; }

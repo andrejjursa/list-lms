@@ -33,4 +33,33 @@ class Comment extends DataMapper {
         ),
     );
     
+    /**
+     * Returns structured comments for given task set.
+     * @param Task_set|integer $task_set task set object or id.
+     * @return array<Comment> structured array of comments (parent => key => Comment).
+     */
+    public static function get_comments_for_task_set($task_set) {
+        if (!($task_set instanceof DataMapper) && !is_numeric($task_set)) { return array(); }
+        if (!($task_set instanceof Task_set)) {
+            $task_set = new Task_set(is_numeric($task_set) ? intval($task_set) : $task_set->id);
+        }
+        if ($task_set->exists()) {
+            $comments = $task_set->comment;
+            $comments->include_related('student', '*', true, true);
+            $comments->include_related('teacher', '*', true, true);
+            $comments->order_by('created');
+            $comments->get();
+            
+            $output = array();
+            
+            if ($comments->exists()) { foreach ($comments->all as $comment) {
+                $output[intval($comment->reply_at_id)][] = $comment;
+            }}
+            
+            return $output;
+        } else {
+            return array();
+        }
+    }
+    
 }

@@ -187,14 +187,10 @@ class Tasks extends LIST_Controller {
         
         $task_set = new Task_set();
         $task_set->get_by_id(intval($task_id));
-        $comments = new Comment();
+        $comments = array();
         
         if ($task_set->exists() && (bool)$task_set->comments_enabled) {
-            $comments->where_related_task_set($task_set);
-            $comments->where('reply_at_id', NULL);
-            $comments->include_related('student', '*', true, true);
-            $comments->include_related('teacher', '*', true, true);
-            $comments->get();
+            $comments = Comment::get_comments_for_task_set($task_set);
         }
         
         $this->parser->parse('frontend/tasks/show_comments.tpl', array('comments' =>  $comments, 'task_set' => $task_set));

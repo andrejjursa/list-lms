@@ -118,6 +118,7 @@ class Task_sets extends LIST_Controller {
         $task_sets->include_related('group', 'name', TRUE);
         $task_sets->include_related('task_set_type', 'name', TRUE);
         $task_sets->include_related_count('task');
+        $task_sets->include_related_count('comment');
         if (isset($filter['course']) && intval($filter['course']) > 0) {
             $task_sets->where_related_course('id', intval($filter['course']));
         }
@@ -291,7 +292,34 @@ class Task_sets extends LIST_Controller {
         $this->_initialize_open_task_set();
         $this->parser->parse('partials/backend_general/open_task_set.tpl');
     }
-	
+    
+    public function comments($task_set_id) {
+        $this->_select_teacher_menu_pagetag('task_sets');
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_set_id));
+        if ($task_set->exists()) {
+            if ((bool)$task_set->comments_enabled) {
+                $this->parser->parse('backend/task_sets/comments.tpl', array('task_set' => $task_set));
+            } else {
+                $this->messages->add_message('lang:admin_task_sets_comments_error_comments_disabled', Messages::MESSAGE_TYPE_ERROR);
+                redirect(create_internal_url('admin_task_sets'));
+            }
+        } else {
+            $this->messages->add_message('lang:admin_task_sets_error_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('admin_task_sets'));
+        }
+    }
+    
+    public function all_comments($task_set_id) {
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_set_id));
+        $comments = array();
+        if ($task_set->exists() && (bool)$task_set->comments_enabled) {
+            $comments = Comment::get_comments_for_task_set($task_set);
+        }
+        $this->parser->parse('backend/task_sets/all_comments.tpl', array('task_set' => $task_set, 'comments' => $comments));
+    }
+
     private function inject_courses() {
         $periods = new Period();
         $periods->order_by('sorting', 'asc');

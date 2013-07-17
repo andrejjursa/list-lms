@@ -1,7 +1,7 @@
-{function name='comments' level=1}
-    {if $comments->exists()}
-    <ul class="comments_list level_{$level}">
-        {foreach $comments->all as $comment}{if $comment->teacher_id}{$teacher = $comment->teacher}{else}{$student = $comment->student}{/if}
+{function name='comments' level=1 parent=0}
+    {if isset($comments[$parent])}
+        <ul class="comments_list level_{$level}">
+        {foreach $comments[$parent] as $comment}{if $comment->teacher_id}{$teacher = $comment->teacher}{else}{$student = $comment->student}{/if}
             {if $comment->teacher_id or ($comment->approved eq 1) or ($comment->approved eq 0 and $comment->student_id eq $list_student_account_model->id)}
             <li>
                 <div class="comment_body{if $comment->teacher_id} teacher_comment{else} student_comment{/if}{if $comment->approved eq 0 and $comment->student_id eq $list_student_account_model->id} preview_comment{/if}">
@@ -15,11 +15,11 @@
                         {if $comment->teacher_id or $comment->approved eq 1}<a href="{internal_url url="tasks/reply_at_comment/{$task_set->id}/{$comment->id}"}" class="button reply_at">{translate line='tasks_comments_button_reply_at'}</a>{else}<span class="unapproved">{translate line='tasks_comments_message_waiting_for_approval'}</span>{/if}
                     </div>
                 </div>
-                {comments comments=$comment->comment->order_by('created', 'asc')->include_related('student', '*', true, true)->include_related('teacher', '*', true, true)->get() level=$level+1}
+                {comments comments=$comments level=$level+1 parent=$comment->id}
             </li>
             {/if}
         {/foreach}
-    </ul>
+        </ul>
     {elseif $level eq 1}
         {include file='partials/frontend_general/error_box.tpl' message='lang:tasks_comments_message_no_comments_here' inline}
     {/if}
