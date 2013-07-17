@@ -46,6 +46,7 @@
                 <nav>{make_adminmenu menu=$list_adminmenu current=$list_adminmenu_current}</nav>
             </div>
             <div class="backend_body header_margin">{block name='main_content'}{/block}</div>
+            <div class="backend_footer">{translate|sprintf:'Andrej Jursa':2013:{translate line='common_copyright_faculty'} line='commont_copyright_text'}</div>
         </div>
     </body>
 </html>

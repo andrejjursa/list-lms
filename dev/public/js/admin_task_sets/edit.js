@@ -11,7 +11,9 @@ jQuery(document).ready(function($) {
         theme_advanced_toolbar_location : 'top',
         theme_advanced_toolbar_align : 'left',
         theme_advanced_statusbar_location : 'bottom',
-        entity_encoding: 'raw'
+        entity_encoding: 'raw',
+        document_base_url: global_base_url,
+        relative_urls: false
     });
     
     $('#course_groups_change_deadline_id').datetimepicker({

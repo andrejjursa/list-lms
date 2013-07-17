@@ -24,3 +24,6 @@ $lang['common_table_header_created'] = 'Created';
 $lang['common_table_header_updated'] = 'Updated';
 
 $lang['common_button_back'] = 'Back';
+
+$lang['commont_copyright_text'] = 'Originaly designed and created by %s in %s as bachelor work on %s.';
+$lang['common_copyright_faculty'] = 'Comenius University in Bratislava, Faculty of mathematics, physics and informatics';

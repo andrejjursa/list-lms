@@ -4,6 +4,7 @@ include_once(APPPATH . 'third_party/geshi/geshi.php');
 include_once(APPPATH . 'third_party/simplehtmldom/simple_html_dom.php');
 
 function smarty_modifier_task($string) {
+    if (empty($string)) { return $string; }
     return task_modifier_scan_text($string);
 }
 

@@ -11,6 +11,8 @@ jQuery(document).ready(function($) {
         theme_advanced_toolbar_align : 'left',
         theme_advanced_statusbar_location : 'bottom',
         entity_encoding: 'raw',
+        document_base_url: global_base_url,
+        relative_urls: false,
 
         style_formats: [
             {title: 'Highlight - Java', selector: 'pre', attributes: { 'lang': 'java', 'class': 'highlight' }},

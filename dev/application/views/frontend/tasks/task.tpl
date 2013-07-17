@@ -17,13 +17,13 @@
                     {if $instructions_text}
                     <h3>{translate line='tasks_instructions_header'}</h3>
                     <div class="instructions_text">
-                        {$instructions_text}
+                        {$instructions_text|add_base_url}
                     </div>
                     {/if}
                     {foreach $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get_iterated() as $task}
                     <h3>{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}</h3>
                     <div class="task_text">
-                    {overlay|task table='tasks' table_id=$task->id column='text' default=$task->text}
+                    {overlay|task|add_base_url table='tasks' table_id=$task->id column='text' default=$task->text}
                     </div>{$files = $task->get_task_files()}
                     {if count($files) > 0}
                     <div class="task_files">

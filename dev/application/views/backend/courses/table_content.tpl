@@ -20,7 +20,7 @@
             {if $filter.fields.created}<td>{$course->created|date_format:{translate line='common_datetime_format'}}</td>{/if}
             {if $filter.fields.updated}<td>{$course->updated|date_format:{translate line='common_datetime_format'}}</td>{/if}
             {if $filter.fields.name}<td>{translate_text|escape:'html' text=$course->name}</td>{/if}
-            {if $filter.fields.description}<td><div class="course_description">{overlay table='courses' table_id=$course->id column='description' default=$course->description}</div></td>{/if}
+            {if $filter.fields.description}<td><div class="course_description">{overlay|add_base_url table='courses' table_id=$course->id column='description' default=$course->description}</div></td>{/if}
             {if $filter.fields.period}<td>{translate_text|default:{translate line='admin_courses_table_content_no_period'}|escape:'html' text=$course->period_name}</td>{/if}
             {if $filter.fields.groups}<td>{$course->group_count}</td>{/if}
             {if $filter.fields.task_set_types}<td>{$course->task_set_type_count}</td>{/if}

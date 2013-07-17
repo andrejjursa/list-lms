@@ -24,3 +24,6 @@ $lang['common_table_header_created'] = 'Vytvorené';
 $lang['common_table_header_updated'] = 'Upravené';
 
 $lang['common_button_back'] = 'Nazad';
+
+$lang['commont_copyright_text'] = 'Pôvodne navrhol a vytvoril %s v %s ako bakalársku prácu na škole %s.';
+$lang['common_copyright_faculty'] = 'Univerzita Komenského v Bratislave, Fakulta matematiky, fyziky a informatiky';
