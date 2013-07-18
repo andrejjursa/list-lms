@@ -8,6 +8,19 @@
 class LIST_Form_validation extends CI_Form_validation {
     
     /**
+     * Validates entry string or array if it is empty (without html tags).
+     * @param string|array $str string to evaluate.
+     * @return boolean validation result.
+     */
+    public function required_no_html($str) {
+        if (!is_array($str)) {
+            return (trim(strip_tags($str)) == '') ? FALSE : TRUE;
+        } else {
+            return $this->required($str);
+        }
+    }
+
+    /**
      * Better version of standard matches method, this one will check if field is array and find appropriate value of this field.
      * @param string $str current value of form field.
      * @param string $field form field name, can be array.

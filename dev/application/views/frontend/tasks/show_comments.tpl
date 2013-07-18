@@ -9,7 +9,7 @@
                         <strong class="author">{if $comment->teacher_id}{$teacher->fullname}{else}{$student->fullname}{/if}</strong> | <span class="created">{$comment->created|date_format:{translate line='common_datetime_format'}}</span>
                     </div>
                     <div class="comment_text">
-                        {$comment->text|strip_tags:'<a><strong><em><span>'|nl2br}
+                        {$comment->text|php_strip_tags:'<a><strong><em><span>'|nl2br}
                     </div>
                     <div class="comment_buttons">
                         {if $comment->teacher_id or $comment->approved eq 1}<a href="{internal_url url="tasks/reply_at_comment/{$task_set->id}/{$comment->id}"}" class="button reply_at">{translate line='tasks_comments_button_reply_at'}</a>{else}<span class="unapproved">{translate line='tasks_comments_message_waiting_for_approval'}</span>{/if}

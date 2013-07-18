@@ -8,7 +8,7 @@
                         <strong class="author">{if $comment->teacher_id}{$teacher->fullname}{else}{$student->fullname}{/if}</strong> | {if $comment->teacher_id}{$teacher->email}{else}{$student->email}{/if} | <span class="created">{$comment->created|date_format:{translate line='common_datetime_format'}}</span>
                     </div>
                     <div class="comment_text">
-                        {$comment->text|strip_tags:'<a><strong><em><span>'|nl2br}
+                        {$comment->text|php_strip_tags:'<a><strong><em><span>'|nl2br}
                     </div>
                     <div class="comment_buttons">
                         {if $comment->teacher_id or $comment->approved eq 1}

@@ -7,3 +7,4 @@ $lang['exists_in_table'] = 'The <strong>%s</strong> field value does not exists 
 $lang['floatpoint'] = 'The <strong>%s</strong> field must contain numeric value with floating point.';
 $lang['greater_than_equal'] = 'The <strong>%s</strong> field must contain a number greater than or equal to <strong>%s</strong>.';
 $lang['less_than_equal'] = 'The <strong>%s</strong> field must contain a number less than or equal to <strong>%s</strong>.';
+$lang['required_no_html'] = $lang['required'];

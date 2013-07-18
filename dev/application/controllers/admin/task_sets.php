@@ -448,7 +448,7 @@ class Task_sets extends LIST_Controller {
 
     public function post_comment($task_set_id) {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('comment[text]', 'lang:admin_task_sets_comments_form_field_text', 'required');
+        $this->form_validation->set_rules('comment[text]', 'lang:admin_task_sets_comments_form_field_text', 'required_no_html');
         if ($this->form_validation->run()) {
             $this->add_comment($task_set_id);
             redirect(create_internal_url('admin_task_sets/new_comment_form/' . $task_set_id));

@@ -51,6 +51,8 @@ class LIST_Parser extends CI_Parser {
 
         // Update theme paths
         $this->_update_theme_paths();
+        
+        $this->CI->smarty->registerPlugin('modifier', 'php_strip_tags', 'strip_tags');
     }
     
     /**
