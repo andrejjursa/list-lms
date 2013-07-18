@@ -21,7 +21,7 @@
                     </div>
                     {/if}
                     {$tasks = $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get()}
-                    {$this->lang->init_overlays('tasks', $tasks->all, ['name', 'text']}
+                    {$this->lang->init_overlays('tasks', $tasks->all, ['name', 'text'])}
                     {foreach $tasks->all as $task}
                     <h3>{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}</h3>
                     <div class="task_text">
