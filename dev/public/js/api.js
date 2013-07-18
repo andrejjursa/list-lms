@@ -1,15 +1,15 @@
 jQuery(document).ready(function($) {
-    if (jQuery.datepicker != undefined) {
+    if (jQuery.datepicker !== undefined) {
         jQuery.datepicker.setDefaults(jQuery.datepicker.regional[jqueryui_datepicker_region]);
     }
-    if (jQuery.timepicker != undefined) {
+    if (jQuery.timepicker !== undefined) {
         jQuery.timepicker.setDefaults(jQuery.timepicker.regional[jqueryui_datepicker_region]);
     }
 
     jQuery('[title]').tooltip();
 });
 
-var block_ui_message = lang != undefined && lang.messages != undefined && lang.messages.ajax_standby != undefined ? lang.messages.ajax_standby : 'Please wait ...';
+var block_ui_message = lang !== undefined && lang.messages !== undefined && lang.messages.ajax_standby !== undefined ? lang.messages.ajax_standby : 'Please wait ...';
 jQuery(document).ajaxStart(function () {
   jQuery.blockUI({
     message: '<h1>' + block_ui_message + '</h1>',
@@ -72,9 +72,9 @@ var field_filter_checkbox = function(checkbox_selector, filter_form_selector, fi
 };
 
 var make_switchable_form = function(selector) {
-    if (typeof(selector) == 'string') {
+    if (typeof(selector) === 'string') {
         var filter = jQuery(selector);
-        if (filter.length == 1 && filter.is('form')) {
+        if (filter.length === 1 && filter.is('form')) {
             var filter_header = jQuery('<div></div>');
             var filter_content = jQuery('<div></div>');
             filter.after(filter_content);
@@ -85,7 +85,7 @@ var make_switchable_form = function(selector) {
                 'cursor': 'pointer'
             }).addClass('ui-widget-header');
             var filter_text = '';
-            if (lang != undefined && lang.messages != undefined && lang.messages.form_header != undefined) { filter_text = lang.messages.form_header; }
+            if (lang !== undefined && lang.messages !== undefined && lang.messages.form_header !== undefined) { filter_text = lang.messages.form_header; }
             filter_header.html('<span class="ui-icon ui-icon-plusthick" style="float: left;"></span> ' + filter_text);
             filter_content.css({
                 'display': 'none'
@@ -100,9 +100,9 @@ var make_switchable_form = function(selector) {
 };
 
 var make_filter_form = function(selector) {
-    if (typeof(selector) == 'string') {
+    if (typeof(selector) === 'string') {
         var filter = jQuery(selector);
-        if (filter.length == 1 && filter.is('form')) {
+        if (filter.length === 1 && filter.is('form')) {
             var filter_header = jQuery('<div></div>');
             var filter_content = jQuery('<div></div>');
             filter.after(filter_content);
@@ -113,7 +113,7 @@ var make_filter_form = function(selector) {
                 'cursor': 'pointer'
             }).addClass('ui-widget-header');
             var filter_text = '';
-            if (lang != undefined && lang.messages != undefined && lang.messages.filter_header != undefined) { filter_text = lang.messages.filter_header; }
+            if (lang !== undefined && lang.messages !== undefined && lang.messages.filter_header !== undefined) { filter_text = lang.messages.filter_header; }
             filter_header.html('<span class="ui-icon ui-icon-plusthick" style="float: left;"></span> ' + filter_text);
             filter_content.css({
                 'display': 'none'
@@ -128,8 +128,8 @@ var make_filter_form = function(selector) {
 };
 
 var show_notification = function(text, notif_type) {
-  if (text == undefined) { return; }
-  if (notif_type == undefined || notif_type == null) { notif_type = 'information'; }
+  if (text === undefined) { return; }
+  if (notif_type === undefined || notif_type === null) { notif_type = 'information'; }
   showNotification({
     message: text,
     type: notif_type,
@@ -140,7 +140,7 @@ var show_notification = function(text, notif_type) {
 
 var api_make_tabs = function(structure_id_attr_value, options) {
     var structure = jQuery('#' + structure_id_attr_value);
-    if (options == undefined) { options = {}; }
+    if (options === undefined) { options = {}; }
     structure.tabs(options);
     var tab_num = 1;
     jQuery(structure).find('> div').each(function() {
@@ -152,10 +152,10 @@ var api_make_tabs = function(structure_id_attr_value, options) {
 };
 
 var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
-    method = method == undefined ? 'post' : method;
-    data = data == undefined ? {} : data;
-    onError = onError == undefined ? function() {} : onError;
-    onSuccess = onSuccess == undefined ? function() {}: onSuccess;
+    method = method === undefined ? 'post' : method;
+    data = data === undefined ? {} : data;
+    onError = onError === undefined ? function() {} : onError;
+    onSuccess = onSuccess === undefined ? function() {}: onSuccess;
     
     jQuery.ajax(url, {
         cache: false,
@@ -163,9 +163,9 @@ var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
         data: data,
         method: method,
         success: function(html) {
-            if (typeof(target) == 'string') {
+            if (typeof(target) === 'string') {
                 jQuery(target).html(html);
-            } else if (typeof(target) == 'object') {
+            } else if (typeof(target) === 'object') {
                 target.html(html);
             }
             onSuccess(html);
@@ -175,11 +175,11 @@ var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
 };
 
 var api_ajax_update = function(url, method, data, onSuccess, onError, dataType) {
-    method = method == undefined ? 'post' : method;
-    data = data == undefined ? {} : data;
-    onError = onError == undefined ? function() {} : onError;
-    onSuccess = onSuccess == undefined ? function() {}: onSuccess;
-    dataType = dataType == undefined ? 'json' : dataType;
+    method = method === undefined ? 'post' : method;
+    data = data === undefined ? {} : data;
+    onError = onError === undefined ? function() {} : onError;
+    onSuccess = onSuccess === undefined ? function() {}: onSuccess;
+    dataType = dataType === undefined ? 'json' : dataType;
     
     jQuery.ajax(url, {
         cache: false,
@@ -259,10 +259,10 @@ var Base64 = {
  
 			output = output + String.fromCharCode(chr1);
  
-			if (enc3 != 64) {
+			if (enc3 !== 64) {
 				output = output + String.fromCharCode(chr2);
 			}
-			if (enc4 != 64) {
+			if (enc4 !== 64) {
 				output = output + String.fromCharCode(chr3);
 			}
  
@@ -332,7 +332,7 @@ var Base64 = {
 		return string;
 	}
  
-}
+};
 
 /**
 * Updated version to work with my replaced characters to support transport via url segments.
@@ -352,7 +352,7 @@ var Base64url = {
         transformed_input = transformed_input.replace(/\_/g, '=');
         return Base64.decode(transformed_input);
     }
-}
+};
 
 /**
  * Javascript functions to show top nitification
@@ -369,7 +369,7 @@ var Base64url = {
  showNotification(params);
  **/
 
-function showNotification(params){
+function showNotification(params) {
     // options array
     var options = { 
         'showAfter': 0, // number of sec to wait after page loads
@@ -384,11 +384,11 @@ function showNotification(params){
     jQuery.extend(true, options, params);
     
     var msgclass = 'succ_bg'; // default success message will shown
-    if(options['type'] == 'error'){
+    if(options['type'] === 'error'){
         msgclass = 'error_bg'; // over write the message to error message
-    } else if(options['type'] == 'information'){
+    } else if(options['type'] === 'information'){
         msgclass = 'info_bg'; // over write the message to information message
-    } else if(options['type'] == 'warning'){
+    } else if(options['type'] === 'warning'){
         msgclass = 'warn_bg'; // over write the message to warning message
     } 
     
@@ -422,7 +422,7 @@ function showNotification(params){
 }
 // function to close notification message
 // slideUp the message
-function closeNotification(duration){
+function closeNotification(duration) {
     var divHeight = jQuery('div#info_message').height();
     setTimeout(function(){
         jQuery('div#info_message').animate({
@@ -439,7 +439,7 @@ function closeNotification(duration){
 }
 
 // sliding down the notification
-function slideDownNotification(startAfter, autoClose, duration){    
+function slideDownNotification(startAfter, autoClose, duration) {    
     setTimeout(function(){
         jQuery('div#info_message').animate({
             top: 0

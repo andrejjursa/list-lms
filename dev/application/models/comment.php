@@ -62,4 +62,21 @@ class Comment extends DataMapper {
         }
     }
     
+    /**
+     * Deletes relations (if parameters are set) or this object from database.
+     * All comments which replies to this one will be deleted as well.
+     * @param DataMapper|string $object related object to delete from relation.
+     * @param string $related_field relation internal name.
+     */
+    public function delete($object = '', $related_field = '') {
+        $this_id = $this->id;
+        if (empty($object) && !is_array($object) && !empty($this_id)) {
+            $comments = $this->comment->get_iterated();
+            foreach($comments as $comment) {
+                $comment->delete();
+            }
+        }
+        parent::delete($object, $related_field);
+    }
+    
 }

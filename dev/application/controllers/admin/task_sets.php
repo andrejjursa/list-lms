@@ -299,6 +299,8 @@ class Task_sets extends LIST_Controller {
         $task_set->get_by_id(intval($task_set_id));
         if ($task_set->exists()) {
             if ((bool)$task_set->comments_enabled) {
+                $this->parser->add_js_file('admin_task_sets/comments_list.js');
+                $this->parser->add_css_file('admin_task_sets.css');
                 $this->parser->parse('backend/task_sets/comments.tpl', array('task_set' => $task_set));
             } else {
                 $this->messages->add_message('lang:admin_task_sets_comments_error_comments_disabled', Messages::MESSAGE_TYPE_ERROR);
@@ -318,6 +320,196 @@ class Task_sets extends LIST_Controller {
             $comments = Comment::get_comments_for_task_set($task_set);
         }
         $this->parser->parse('backend/task_sets/all_comments.tpl', array('task_set' => $task_set, 'comments' => $comments));
+    }
+    
+    public function new_comment_form($task_set_id) {
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_set_id));
+        $this->parser->parse('backend/task_sets/new_comment_form.tpl', array('task_set' => $task_set));
+    }
+    
+    public function my_comments_settings($task_set_id) {
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_set_id));
+        $teacher = new Teacher();
+        $teacher->get_by_id($this->usermanager->get_teacher_id());
+        if ($teacher->exists() && $task_set->exists()) {
+            $this->parser->assign('subscribed', $teacher->is_related_to('comment_subscription', $task_set->id));
+        }
+        $this->parser->parse('backend/task_sets/my_comments_settings.tpl', array('task_set' => $task_set, 'teacher' => $teacher));
+    }
+    
+    public function comments_unsubscribe($task_set_id) {
+        $output = new stdClass();
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_set_id));
+        $teacher = new Teacher();
+        $teacher->get_by_id($this->usermanager->get_teacher_id());
+        if ($teacher->exists() && $task_set->exists() && $teacher->is_related_to('comment_subscription', $task_set->id)) {
+            $teacher->delete_comment_subscription($task_set);
+            if ($this->db->trans_status()) {
+                $this->db->trans_commit();
+                $output->message = $this->lang->line('admin_task_sets_comments_my_settings_unsubscribe_success');
+                $output->result = TRUE;
+            } else {
+                $this->db->trans_rollback();
+                $output->message = $this->lang->line('admin_task_sets_comments_my_settings_unsubscribe_error');
+                $output->result = FALSE;
+            }
+        } else {
+            $this->db->trans_rollback();
+            $output->message = $this->lang->line('admin_task_sets_comments_my_settings_unsubscribe_error');
+            $output->result = FALSE;
+        }
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+    
+    public function comments_subscribe($task_set_id) {
+        $output = new stdClass();
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_set_id));
+        $teacher = new Teacher();
+        $teacher->get_by_id($this->usermanager->get_teacher_id());
+        if ($teacher->exists() && $task_set->exists() && $teacher->save(array('comment_subscription' => $task_set))) {
+            $this->db->trans_commit();
+            $output->message = $this->lang->line('admin_task_sets_comments_my_settings_subscribe_success');
+            $output->result = TRUE;
+        } else {
+            $this->db->trans_rollback();
+            $output->message = $this->lang->line('admin_task_sets_comments_my_settings_subscribe_error');
+            $output->result = FALSE;
+        }
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+    
+    public function delete_comment($task_set_id, $comment_id) {
+        $output = new stdClass();
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_set_id));
+        $comment = new Comment();
+        $comment->get_by_id($comment_id);
+        if ($comment->exists() && $task_set->exists() && $comment->is_related_to($task_set)) {
+            $comment->delete();
+            if ($this->db->trans_status()) {
+                $this->db->trans_commit();
+                $output->message = $this->lang->line('admin_task_sets_comments_success_delete_comment');
+                $output->result = TRUE;
+            } else {
+                $this->db->trans_rollback();
+                $output->message = $this->lang->line('admin_task_sets_comments_error_delete_comment');
+                $output->result = FALSE;
+            }
+        } else {
+            $this->db->trans_rollback();
+            $output->message = $this->lang->line('admin_task_sets_comments_error_delete_comment');
+            $output->result = FALSE;
+        }
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+    
+    public function approve_comment($task_set_id, $comment_id) {
+        $output = new stdClass();
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_set_id));
+        $comment = new Comment();
+        $comment->include_related('student', '*', TRUE, TRUE);
+        $comment->include_related('teacher', '*', TRUE, TRUE);
+        $comment->get_by_id($comment_id);
+        if ($comment->exists() && $task_set->exists() && $comment->is_related_to($task_set) && !is_null($comment->student->id) && is_null($comment->teacher->id) && !(bool)$comment->approved) {
+            $comment->approved = 1;
+            if ($comment->save()) {
+                $this->db->trans_commit();
+                $output->message = $this->lang->line('admin_task_sets_comments_success_approve_comment');
+                $output->result = TRUE;
+            } else {
+                $this->db->trans_rollback();
+                $output->message = $this->lang->line('admin_task_sets_comments_error_approve_comment');
+                $output->result = FALSE;
+            }
+        } else {
+            $this->db->trans_rollback();
+            $output->message = $this->lang->line('admin_task_sets_comments_error_approve_comment');
+            $output->result = FALSE;
+        }
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+
+    public function post_comment($task_set_id) {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('comment[text]', 'lang:admin_task_sets_comments_form_field_text', 'required');
+        if ($this->form_validation->run()) {
+            $this->add_comment($task_set_id);
+            redirect(create_internal_url('admin_task_sets/new_comment_form/' . $task_set_id));
+        } else {
+            $this->new_comment_form($task_set_id);
+        }
+    }
+    
+    private function add_comment($task_set_id, $reply_at_id = NULL) {
+        $comment_data = $this->input->post('comment');
+        if (isset($comment_data['task_set_id']) && $comment_data['task_set_id'] == $task_set_id) {
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $task_set = new Task_set();
+            $task_set->get_by_id($task_set_id);
+            if ($task_set->exists()) {
+                if ((bool)$task_set->comments_enabled) {
+                    $save_array = array();
+                    $save_array['task_set'] = $task_set;
+                    if (isset($comment_data['reply_at_id']) && $comment_data['reply_at_id'] == $reply_at_id) {
+                        $reply_at = new Comment();
+                        $reply_at->get_by_id($reply_at_id);
+                        if ($reply_at->exists()) {
+                            if ($reply_at->task_set_id == $task_set_id) {
+                                $save_array['reply_at'] = $reply_at;
+                            } else {
+                                $this->db->trans_rollback();
+                                $this->messages->add_message('lang:admin_task_sets_comments_error_reply_at_comment_from_different_task_set', Messages::MESSAGE_TYPE_ERROR);
+                                return;
+                            }
+                        } else {
+                            $this->db->trans_rollback();
+                            $this->messages->add_message('lang:admin_task_sets_comments_error_reply_at_comment_not_exists', Messages::MESSAGE_TYPE_ERROR);
+                            return;
+                        }
+                    }
+                    $teacher = new Teacher();
+                    $teacher->get_by_id($this->usermanager->get_teacher_id());
+                    $save_array['teacher'] = $teacher;
+                    
+                    $comment = new Comment();
+                    $comment->text = strip_tags($comment_data['text'], '<a><strong><em><span>');
+                    $comment->approved = 1;
+                    if ($comment->save($save_array)) {
+                        $this->db->trans_commit();
+                        $this->messages->add_message('lang:admin_task_sets_comments_save_successfully', Messages::MESSAGE_TYPE_SUCCESS);
+                    } else {
+                        $this->db->trans_rollback();
+                        $this->messages->add_message('lang:admin_task_sets_comments_error_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    }
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_task_sets_comments_error_comments_disabled', Messages::MESSAGE_TYPE_ERROR);
+                }
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_task_sets_error_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+            }
+        } else {
+            $this->messages->add_message('lang:admin_task_sets_error_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+        }
     }
 
     private function inject_courses() {

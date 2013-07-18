@@ -5,13 +5,18 @@
             <li>
                 <div class="comment_body{if $comment->teacher_id} teacher_comment{else} student_comment{/if}{if $comment->approved eq 0} preview_comment{/if}">
                     <div class="comment_header">
-                        <strong class="author">{if $comment->teacher_id}{$teacher->fullname}{else}{$student->fullname}{/if}</strong> | <span class="created">{$comment->created|date_format:{translate line='common_datetime_format'}}</span>
+                        <strong class="author">{if $comment->teacher_id}{$teacher->fullname}{else}{$student->fullname}{/if}</strong> | {if $comment->teacher_id}{$teacher->email}{else}{$student->email}{/if} | <span class="created">{$comment->created|date_format:{translate line='common_datetime_format'}}</span>
                     </div>
                     <div class="comment_text">
                         {$comment->text|strip_tags:'<a><strong><em><span>'|nl2br}
                     </div>
                     <div class="comment_buttons">
-                        {if $comment->teacher_id or $comment->approved eq 1}<a href="{internal_url url="tasks/reply_at_comment/{$task_set->id}/{$comment->id}"}" class="button reply_at">{translate line='tasks_comments_button_reply_at'}</a>{else}{/if}
+                        {if $comment->teacher_id or $comment->approved eq 1}
+                            <a href="{internal_url url="admin_task_sets/reply_at_comment/{$task_set->id}/{$comment->id}"}" class="button reply_at">{translate line='admin_task_sets_comments_button_reply_at'}</a>
+                        {else}
+                            <a href="{internal_url url="admin_task_sets/approve_comment/{$task_set->id}/{$comment->id}"}" class="button special approve_comment">{translate line='admin_task_sets_comments_button_approve_comment'}</a>
+                        {/if}
+                        <a href="{internal_url url="admin_task_sets/delete_comment/{$task_set->id}/{$comment->id}"}" class="button delete delete_comment">{translate line='admin_task_sets_comments_button_delete_comment'}</a>
                     </div>
                 </div>
                 {comments comments=$comments level=$level+1 parent=$comment->id}
