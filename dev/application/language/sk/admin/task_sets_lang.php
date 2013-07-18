@@ -84,3 +84,4 @@ $lang['admin_task_sets_comments_button_approve_comment'] = 'Schváliť tento kom
 $lang['admin_task_sets_comments_button_delete_comment'] = 'Vymazať tento komentár';
 $lang['admin_task_sets_comments_js_message_question_delete'] = 'Naozaj chcete vymazať tento komentár? Všetky odpovede naň, ak existujú, budú tiež zmazané.';
 $lang['admin_task_sets_comments_js_message_question_approve'] = 'Naozaj chcete schváliť tento komentár a zobraziť ho tým pre všetkých?';
+$lang['admin_task_sets_comments_reply_at_page_title'] = 'Odpoveď na predchodzí komentár';

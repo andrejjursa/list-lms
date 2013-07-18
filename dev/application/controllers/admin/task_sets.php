@@ -457,6 +457,28 @@ class Task_sets extends LIST_Controller {
         }
     }
     
+    public function reply_at_comment($task_set_id, $reply_at_id) {
+        $task_set = new Task_set();
+        $task_set->get_by_id($task_set_id);
+        $comment = new Comment();
+        $comment->include_related('teacher', '*', TRUE, TRUE);
+        $comment->include_related('student', '*', TRUE, TRUE);
+        $comment->get_by_id($reply_at_id);
+        $this->parser->add_css_file('admin_task_sets.css');
+        $this->parser->parse('backend/task_sets/reply_at_comment.tpl', array('task_set' => $task_set, 'comment' => $comment));
+    }
+    
+    public function post_comment_reply($task_set_id, $reply_at_id) {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('comment[text]', 'lang:admin_task_sets_comments_form_field_text', 'required_no_html');
+        if ($this->form_validation->run()) {
+            $this->add_comment($task_set_id, $reply_at_id);
+            redirect(create_internal_url('admin_task_sets/reply_at_comment/' . $task_set_id . '/' . $reply_at_id));
+        } else {
+            $this->reply_at_comment($task_set_id, $reply_at_id);
+        }
+    }
+
     private function add_comment($task_set_id, $reply_at_id = NULL) {
         $comment_data = $this->input->post('comment');
         if (isset($comment_data['task_set_id']) && $comment_data['task_set_id'] == $task_set_id) {

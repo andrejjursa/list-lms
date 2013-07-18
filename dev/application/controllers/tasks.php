@@ -48,6 +48,7 @@ class Tasks extends LIST_Controller {
             $this->lang->init_overlays('task_sets', $task_sets, array('name'));
             $filtered_task_set = count($task_sets) == 1 ? $task_sets[0] : new Task_set();
             if ($filtered_task_set->exists()) {
+                $this->lang->init_overlays('task_sets', $filtered_task_set, array('name', 'instructions'));
                 $this->parser->assign('task_set', $filtered_task_set);
                 $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set, $course));
                 $this->parser->assign('solution_files', $filtered_task_set->get_student_files($student->id));

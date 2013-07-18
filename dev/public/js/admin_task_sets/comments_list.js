@@ -80,6 +80,23 @@ jQuery(document).ready(function($) {
         }
     });
     
+    $(document).on('click', '#comments_content_id a.reply_at', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        $.fancybox(url, {
+            type: 'iframe',
+            width: '100%',
+            height: '100%',
+            autoSize: false,
+            autoHeight: false,
+            autoWidth: false,
+            beforeClose: function() {
+                reload_all_comments();
+                return true;
+            }
+        });
+    });
+    
 });
 
 
