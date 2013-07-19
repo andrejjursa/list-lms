@@ -14,7 +14,12 @@ jQuery(document).ready(function($) {
         var url = $(this).attr('action');
         var data = $(this).serializeArray();
         var target = $(this).parents('div.comments_wrap').parent();
-        api_ajax_load(url, target, 'post', data);
+        var success = function() {
+            if (target.find('.flash_message.message_error').length > 0) {
+                $.scrollTo(target.find('.flash_message.message_error'), 0, { margin: true, offset: { top: -30 } });
+            }
+        };
+        api_ajax_load(url, target, 'post', data, success);
     });
     
     $(document).on('click', 'a.button.reply_at', function(event) {
@@ -35,5 +40,20 @@ jQuery(document).ready(function($) {
             }
         });
     });
+    
+    var url_anchor = api_read_url_anchor();
+    if (url_anchor.substring(0, 8) === 'comments') {
+        var comment_id = url_anchor.substring(9);
+        if (comment_id !== '') {
+            $(document).ajaxSuccess(function(event, xhr, settings) {
+                if (settings.url.indexOf('show_comments') !== -1) {
+                    setTimeout(function() {
+                        $.scrollTo($('div.comments_wrap li.comment_id_' + comment_id), 0, { margin: true, offset: { top: -30 } });
+                    }, 100);
+                }
+            });
+        }
+        $('#tabs li.comments_tab a').trigger('click');
+    }
     
 });

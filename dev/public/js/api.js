@@ -138,6 +138,13 @@ var show_notification = function(text, notif_type) {
   });
 };
 
+var api_read_url_anchor = function() {
+    var url = document.URL;
+    var idx = url.indexOf('#');
+    var anchor = idx !== -1 ? url.substring(idx + 1) : '';
+    return anchor;
+}; 
+
 var api_make_tabs = function(structure_id_attr_value, options) {
     var structure = jQuery('#' + structure_id_attr_value);
     if (options === undefined) { options = {}; }

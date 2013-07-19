@@ -51,7 +51,7 @@ class LIST_Controller extends CI_Controller {
 
         /**
      * Perform initialisation of student language settings.
-     * @param Students|integer student, for which language hawe to be set, accept Students model or integer with student id, default is NULL (use currently loged in student).
+     * @param Student|integer $student, for which language have to be set, accept Student model or integer with student id, default is NULL (use currently loged in student).
      */
     protected function _init_language_for_student($student = NULL) {
         if (is_null($student)) {
@@ -64,7 +64,7 @@ class LIST_Controller extends CI_Controller {
                 $this->_init_language_for_student();
             } else {
                 if (!is_object($student)) {
-                    $student = new Students($student);
+                    $student = new Student($student);
                 }
                 if ($student->exists()) {
                     if ($this->lang->get_current_idiom() != $student->language) {
@@ -94,13 +94,35 @@ class LIST_Controller extends CI_Controller {
     
     /**
      * Perform initialisation of teacher language settings.
+     * @param Teacher|integer $teacher, for which language have to be set, accept Teacher model or integer with teacher id, default is NULL (use currently loged in teacher).
      */
-    protected function _init_language_for_teacher() {
-        $this->lang->reinitialize_for_idiom($this->usermanager->get_teacher_language());
-        $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
-        $this->lang->add_custom_translations($translations);
-        $this->_init_lang_js_messages();
-        $this->_init_teacher_quick_langmenu();
+    protected function _init_language_for_teacher($teacher = NULL) {
+        if (is_null($teacher)) {
+            $this->lang->reinitialize_for_idiom($this->usermanager->get_teacher_language());
+            $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
+            $this->lang->add_custom_translations($translations);
+            $this->_init_lang_js_messages();
+            $this->_init_teacher_quick_langmenu();
+        } else {
+            if (!(is_object($teacher) && $teacher instanceof Teacher) && !(is_numeric($teacher) && intval($teacher) > 0)) {
+                $this->_init_language_for_teacher();
+            } else {
+                if (!is_object($teacher)) {
+                    $teacher = new Teacher($teacher);
+                }
+                if ($teacher->exists()) {
+                    if ($this->lang->get_current_idiom() != $teacher->language) {
+                        $this->lang->reinitialize_for_idiom($teacher->language);
+                        $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
+                        $this->lang->add_custom_translations($translations);
+                        $this->_init_lang_js_messages();
+                        $this->_init_teacher_quick_langmenu();
+                    }
+                } else {
+                    $this->_init_language_for_teacher();
+                }
+            }
+        }
     }
     
     /**
@@ -185,6 +207,13 @@ class LIST_Controller extends CI_Controller {
         }
         $this->parser->add_css_file('jquery.ui.plupload.css');
     }
+    
+    /**
+     * This method add jquery scrollTo plugin to template.
+     */
+    protected function _add_scrollTo() {
+        $this->parser->add_js_file('jquery.scrollTo-1.4.3.1-min.js');
+    }
 
     /**
      * Injects all possible languages to smarty parser.
@@ -216,10 +245,70 @@ class LIST_Controller extends CI_Controller {
     }
     
     /**
-     * TODO
-     * @param string $tag
+     * Set the active menu item in student menu.
+     * Smarty template variable list_pagemenu_current will be created.
+     * @param string $tag page tag to be set as active item in menu.
      */
     protected function _select_student_menu_pagetag($tag = '') {
         $this->parser->assign('list_pagemenu_current', $tag);
+    }
+    
+    /**
+     * Sends message to all students or teachers. Do not use get_iterated() to execute select query!
+     * @param Student|Teacher $recipients list of students or teachers.
+     * @param string $subject email subject (accepts lang: prefix).
+     * @param string $template template body or file:path/to/template.tpl.
+     * @param string $template_variables array of template variables.
+     * @param string $from email addres of sender or NULL to use system address.
+     * @param string $from_name name of sender.
+     * @return boolean TRUE, if all emails are sent, or FALSE if all or some emails failed to be send.
+     */
+    protected function _send_multiple_emails($recipients, $subject, $template, $template_variables = array(), $from = NULL, $from_name = '') {
+        if ($recipients instanceof Teacher || $recipients instanceof Student) {
+            $email_by_languages = array();
+            if ($recipients->exists()) { foreach ($recipients->all as $recipient) {
+                $email_by_languages[$recipient->language][] = $recipient;
+            }}
+            if (count($email_by_languages) == 0) { return FALSE; }
+            $this->load->library('email');
+            if (is_null($from)) {
+                $this->email->from_system();
+                $this->email->reply_to_system();
+            } else {
+                $this->email->from($from, $from_name);
+                $this->email->reply_to($from, $from_name);
+            }
+            $result = TRUE;
+            $lang_clone = clone $this->lang;
+            set_time_limit(0);
+            foreach($email_by_languages as $language => $subrecipients) {
+                if (count($subrecipients) == 0) { continue; }
+                $this->_init_specific_language($language);
+                $this->email->build_message_body($template, $template_variables);
+                $email_subject = 'LIST' . ($subject ? ' - ' . $this->lang->text($subject) : '');
+                if ($this->config->item('email_multirecipient_batch_mode')) {
+                    $to_list = array();
+                    foreach ($subrecipients as $recipient) {
+                        $to_list[] = $recipient->email;
+                    }
+                    $this->email->to($to_list);
+                    $this->email->subject($email_subject);
+                    $partial_result = $this->email->send();
+                    $result = $result && $partial_result;
+                } else {
+                    foreach($subrecipients as $recipient) {
+                        $this->email->to($recipient->email);
+                        $this->email->subject($email_subject);
+                        $partial_result = $this->email->send();
+                        $result = $result && $partial_result;
+                    }
+                }
+            }
+            $this->lang = $lang_clone;
+            set_time_limit((int)ini_get('max_execution_time'));
+            return $result;
+        } else {
+            return FALSE;
+        }
     }
 }

@@ -3,7 +3,7 @@
         <ul class="comments_list level_{$level}">
         {foreach $comments[$parent] as $comment}{if $comment->teacher_id}{$teacher = $comment->teacher}{else}{$student = $comment->student}{/if}
             {if $comment->teacher_id or ($comment->approved eq 1) or ($comment->approved eq 0 and $comment->student_id eq $list_student_account_model->id)}
-            <li>
+            <li class="comment_id_{$comment->id}">
                 <div class="comment_body{if $comment->teacher_id} teacher_comment{else} student_comment{/if}{if $comment->approved eq 0 and $comment->student_id eq $list_student_account_model->id} preview_comment{/if}">
                     <div class="comment_header">
                         <strong class="author">{if $comment->teacher_id}{$teacher->fullname}{else}{$student->fullname}{/if}</strong> | <span class="created">{$comment->created|date_format:{translate line='common_datetime_format'}}</span>

@@ -61,6 +61,7 @@ class Tasks extends LIST_Controller {
                 
         $this->parser->add_css_file('frontend_tasks.css');
         $this->parser->add_js_file('tasks\task.js');
+        $this->_add_scrollTo();
         
         $this->parser->parse('frontend\tasks\task.tpl', array('course' => $course));
     }
@@ -293,6 +294,15 @@ class Tasks extends LIST_Controller {
                     if ($comment->save(array($task_set, $student))) {
                         $this->db->trans_commit();
                         $this->messages->add_message('lang:tasks_comments_message_comment_post_success_save', Messages::MESSAGE_TYPE_SUCCESS);
+                        if ((bool)$comment->approved) {
+                            $all_students = $task_set->comment_subscriber_student;
+                            $all_students->where('id !=', $this->usermanager->get_student_id());
+                            $all_students->get();
+                            $this->_send_multiple_emails($all_students, 'lang:tasks_comments_email_subject_new_post', 'file:emails/frontend/comments/new_comment_student.tpl', array('task_set' => $task_set, 'student' => $student, 'comment' => $comment));
+                            $all_teachers = $task_set->comment_subscriber_teacher;
+                            $all_teachers->get();
+                            $this->_send_multiple_emails($all_teachers, 'lang:tasks_comments_email_subject_new_post', 'file:emails/frontend/comments/new_comment_teacher.tpl', array('task_set' => $task_set, 'student' => $student, 'comment' => $comment));
+                        }
                         return TRUE;
                     } else {
                         $this->db->trans_rollback();

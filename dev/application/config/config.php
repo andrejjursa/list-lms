@@ -458,6 +458,7 @@ $config['email']['newline'] = '
 ';
 $config['email']['bcc_batch_mode'] = FALSE;
 $config['email']['bcc_batch_size'] = 200;
+$config['email_multirecipient_batch_mode'] = TRUE;
 $config['email_address']['system']['name'] = 'LIST';
 $config['email_address']['system']['email'] = 'noreply@list.sk';
 

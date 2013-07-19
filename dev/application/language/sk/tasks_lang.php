@@ -52,3 +52,6 @@ $lang['tasks_comments_form_button_submit'] = 'Odoslať komentár';
 $lang['tasks_comments_button_subscribe'] = 'Odoberať komentáre e-mailom';
 $lang['tasks_comments_button_unsubscribe'] = 'Zrušiť odber komentárov';
 $lang['tasks_comments_reply_unable_to_reply'] = 'Nemožno odpovedať. Úloha alebo komentár sa nenašli, alebo úloha nemá povolené komentáre.';
+$lang['tasks_comments_email_subject_new_post'] = 'Nový komentár!';
+$lang['tasks_comments_email_new_post_body_from'] = 'Študent(ka) <strong>%s</strong> práve poslal(a) nový komentár do diskusie k úlohe <strong>%s</strong>.';
+$lang['tasks_comments_email_new_post_body_text'] = 'Text nového komentára';

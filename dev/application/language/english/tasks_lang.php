@@ -52,3 +52,6 @@ $lang['tasks_comments_form_button_submit'] = 'Submit comment';
 $lang['tasks_comments_button_subscribe'] = 'Subscribe comments by e-mail';
 $lang['tasks_comments_button_unsubscribe'] = 'Cancel subscription of comments';
 $lang['tasks_comments_reply_unable_to_reply'] = 'Unable to reply. Task or comment not found, or comments are disabled for this task.';
+$lang['tasks_comments_email_subject_new_post'] = 'New comment!';
+$lang['tasks_comments_email_new_post_body_from'] = 'Student <strong>%s</strong> just posted new comment into discussion of task <strong>%s</strong>.';
+$lang['tasks_comments_email_new_post_body_text'] = 'Text of new comment';
