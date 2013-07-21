@@ -8,7 +8,7 @@
         <p>{translate|sprintf:$student->fullname:$task_set_name line='tasks_comments_email_new_post_body_from'}</p>
         <p><strong>{translate line='tasks_comments_email_new_post_body_text'}:</strong></p>
         <p>{$comment->text|php_strip_tags:'<a><strong><span><em>'|nl2br}</p>
-        <p><a href="{internal_url url="admin_task_sets/comments/{$task_set->id}"}">{internal_url url="admin_task_sets/comments/{$task_set->id}"}</a></p>
+        <p><a href="{internal_url url="admin_task_sets/comments/{$task_set->id}"}#comments-{$comment->id|intval}">{internal_url url="admin_task_sets/comments/{$task_set->id}"}</a></p>
         <p><em>LIST</em></p>
     </body>
 </html>

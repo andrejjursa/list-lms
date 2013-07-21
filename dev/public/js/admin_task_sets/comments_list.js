@@ -2,10 +2,23 @@ jQuery(document).ready(function($) {
     
     make_switchable_form('#new_comment_form_id');
     
+    var autoscroll = true;
+    var url_anchor = api_read_url_anchor();
+        
     var reload_all_comments = function() {
         var url = global_base_url + 'index.php/admin_task_sets/all_comments/' + task_set_id;
         var target = '#comments_content_id';
-        api_ajax_load(url, target);
+        api_ajax_load(url, target, 'post', {}, function() {
+            if (url_anchor.substring(0, 8) === 'comments') {
+                var comment_id = url_anchor.substring(9);
+                if (comment_id !== '' && autoscroll) {
+                    autoscroll = false;
+                    setTimeout(function() {
+                        $.scrollTo($('#comments_content_id li.comment_id_' + comment_id), 0, { margin: true, offset: { top: -30 } });
+                    }, 100);
+                }
+            }
+        });
     };
     
     reload_all_comments();

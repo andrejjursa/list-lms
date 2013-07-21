@@ -41,12 +41,14 @@ jQuery(document).ready(function($) {
         });
     });
     
+    var autoscroll = true;
     var url_anchor = api_read_url_anchor();
     if (url_anchor.substring(0, 8) === 'comments') {
         var comment_id = url_anchor.substring(9);
         if (comment_id !== '') {
-            $(document).ajaxSuccess(function(event, xhr, settings) {
-                if (settings.url.indexOf('show_comments') !== -1) {
+            $(document).ajaxSuccess(function() {
+                if (autoscroll) {
+                    autoscroll = false;
                     setTimeout(function() {
                         $.scrollTo($('div.comments_wrap li.comment_id_' + comment_id), 0, { margin: true, offset: { top: -30 } });
                     }, 100);

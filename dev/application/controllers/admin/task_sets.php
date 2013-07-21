@@ -299,6 +299,7 @@ class Task_sets extends LIST_Controller {
         $task_set->get_by_id(intval($task_set_id));
         if ($task_set->exists()) {
             if ((bool)$task_set->comments_enabled) {
+                $this->_add_scrollTo();
                 $this->parser->add_js_file('admin_task_sets/comments_list.js');
                 $this->parser->add_css_file('admin_task_sets.css');
                 $this->parser->parse('backend/task_sets/comments.tpl', array('task_set' => $task_set));
@@ -432,6 +433,16 @@ class Task_sets extends LIST_Controller {
                 $this->db->trans_commit();
                 $output->message = $this->lang->line('admin_task_sets_comments_success_approve_comment');
                 $output->result = TRUE;
+                
+                $this->_load_student_langfile('tasks');
+                $all_students = $task_set->comment_subscriber_student;
+                $all_students->where('id !=', $comment->student->id);
+                $all_students->get();
+                $this->_send_multiple_emails($all_students, 'lang:tasks_comments_email_subject_new_post', 'file:emails/frontend/comments/new_comment_student.tpl', array('task_set' => $task_set, 'student' => $comment->student, 'comment' => $comment));
+                $all_teachers = $task_set->comment_subscriber_teacher;
+                $all_teachers->where('id !=', $this->usermanager->get_teacher_id());
+                $all_teachers->get();
+                $this->_send_multiple_emails($all_teachers, 'lang:tasks_comments_email_subject_new_post', 'file:emails/frontend/comments/new_comment_teacher.tpl', array('task_set' => $task_set, 'student' => $comment->student, 'comment' => $comment));
             } else {
                 $this->db->trans_rollback();
                 $output->message = $this->lang->line('admin_task_sets_comments_error_approve_comment');
@@ -517,6 +528,14 @@ class Task_sets extends LIST_Controller {
                     if ($comment->save($save_array)) {
                         $this->db->trans_commit();
                         $this->messages->add_message('lang:admin_task_sets_comments_save_successfully', Messages::MESSAGE_TYPE_SUCCESS);
+                        
+                        $all_students = $task_set->comment_subscriber_student;
+                        $all_students->get();
+                        $this->_send_multiple_emails($all_students, 'lang:admin_task_sets_comments_email_subject_new_post', 'file:emails/backend/comments/new_comment_student.tpl', array('task_set' => $task_set, 'teacher' => $teacher, 'comment' => $comment));
+                        $all_teachers = $task_set->comment_subscriber_teacher;
+                        $all_teachers->where('id !=', $this->usermanager->get_teacher_id());
+                        $all_teachers->get();
+                        $this->_send_multiple_emails($all_teachers, 'lang:admin_task_sets_comments_email_subject_new_post', 'file:emails/backend/comments/new_comment_teacher.tpl', array('task_set' => $task_set, 'teacher' => $teacher, 'comment' => $comment));
                     } else {
                         $this->db->trans_rollback();
                         $this->messages->add_message('lang:admin_task_sets_comments_error_save_failed', Messages::MESSAGE_TYPE_ERROR);

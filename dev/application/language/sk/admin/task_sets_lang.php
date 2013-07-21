@@ -85,3 +85,6 @@ $lang['admin_task_sets_comments_button_delete_comment'] = 'Vymazať tento koment
 $lang['admin_task_sets_comments_js_message_question_delete'] = 'Naozaj chcete vymazať tento komentár? Všetky odpovede naň, ak existujú, budú tiež zmazané.';
 $lang['admin_task_sets_comments_js_message_question_approve'] = 'Naozaj chcete schváliť tento komentár a zobraziť ho tým pre všetkých?';
 $lang['admin_task_sets_comments_reply_at_page_title'] = 'Odpoveď na predchodzí komentár';
+$lang['admin_task_sets_comments_email_subject_new_post'] = 'Nový komentár!';
+$lang['admin_task_sets_comments_email_new_post_body_from'] = 'Učiteľ(ka) <strong>%s</strong> práve poslal(a) nový komentár do diskusie k úlohe <strong>%s</strong>.';
+$lang['admin_task_sets_comments_email_new_post_body_text'] = 'Text nového komentára';

@@ -2,7 +2,7 @@
     {if isset($comments[$parent])}
         <ul class="comments_list level_{$level}">
         {foreach $comments[$parent] as $comment}{if $comment->teacher_id}{$teacher = $comment->teacher}{else}{$student = $comment->student}{/if}
-            <li>
+            <li class="comment_id_{$comment->id|intval}">
                 <div class="comment_body{if $comment->teacher_id} teacher_comment{else} student_comment{/if}{if $comment->approved eq 0} preview_comment{/if}">
                     <div class="comment_header">
                         <strong class="author">{if $comment->teacher_id}{$teacher->fullname}{else}{$student->fullname}{/if}</strong> | {if $comment->teacher_id}{$teacher->email}{else}{$student->email}{/if} | <span class="created">{$comment->created|date_format:{translate line='common_datetime_format'}}</span>

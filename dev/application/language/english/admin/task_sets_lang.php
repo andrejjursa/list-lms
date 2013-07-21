@@ -85,3 +85,6 @@ $lang['admin_task_sets_comments_button_delete_comment'] = 'Delete this comment';
 $lang['admin_task_sets_comments_js_message_question_delete'] = 'Are you sure you want to delete this comment? All replies to this comment, if they are exists, will be deleted as well.';
 $lang['admin_task_sets_comments_js_message_question_approve'] = 'Are you sure you want to approve this comment and display it for all?';
 $lang['admin_task_sets_comments_reply_at_page_title'] = 'Reply to previous comment';
+$lang['admin_task_sets_comments_email_subject_new_post'] = 'New comment!';
+$lang['admin_task_sets_comments_email_new_post_body_from'] = 'Teacher <strong>%s</strong> just posted new comment into discussion of task <strong>%s</strong>.';
+$lang['admin_task_sets_comments_email_new_post_body_text'] = 'Text of new comment';
