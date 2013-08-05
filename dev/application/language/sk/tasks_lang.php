@@ -33,6 +33,7 @@ $lang['tasks_task_solution_table_header_modified'] = 'Posledná zmena';
 $lang['tasks_task_no_solutions_yet'] = 'Zatiaľ tu nie sú žiadne riešenia.';
 $lang['tasks_task_author'] = 'Autor: %s';
 $lang['tasks_task_author_unknown'] = 'Neznámi';
+$lang['tasks_task_is_bonus_task'] = 'Bonusová úloha';
 $lang['tasks_instructions_header'] = 'Inštrukcie';
 $lang['tasks_comments_button_reply_at'] = 'Odpovedať na tento komentár';
 $lang['tasks_comments_message_waiting_for_approval'] = 'Čaká sa na schválenie.';

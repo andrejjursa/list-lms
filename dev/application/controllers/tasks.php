@@ -362,7 +362,7 @@ class Tasks extends LIST_Controller {
             $task_set->group_end();
             $task_set->include_related('room', '*', TRUE, TRUE);
             $task_set->include_related_count('task', 'total_tasks');
-            $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id`)', 'total_points');
+            $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set->order_by_related_with_constant('task_set_type', 'name', 'asc');
             $task_set->order_by_with_overlay('name', 'asc');
             $task_set->get();
@@ -476,9 +476,9 @@ class Tasks extends LIST_Controller {
         
         if (count($task_sets) > 0) { foreach($task_sets as $task_set) {
             $output['total'] += (isset($points[$task_set->id]) ? $points[$task_set->id] : 0);
-            $output['max'] += $task_set->total_points;
+            $output['max'] += (!is_null($task_set->points_override) ? $task_set->points_override : $task_set->total_points);
             $output[$task_set->task_set_type_id]['total'] = (isset($output[$task_set->task_set_type_id]['total']) ? $output[$task_set->task_set_type_id]['total'] : 0) + (isset($points[$task_set->id]) ? $points[$task_set->id] : 0);
-            $output[$task_set->task_set_type_id]['max'] = (isset($output[$task_set->task_set_type_id]['max']) ? $output[$task_set->task_set_type_id]['max'] : 0) + $task_set->total_points;
+            $output[$task_set->task_set_type_id]['max'] = (isset($output[$task_set->task_set_type_id]['max']) ? $output[$task_set->task_set_type_id]['max'] : 0) + (!is_null($task_set->points_override) ? $task_set->points_override : $task_set->total_points);
         }}
         
         return $output;

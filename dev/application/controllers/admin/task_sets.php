@@ -147,6 +147,7 @@ class Task_sets extends LIST_Controller {
         $this->form_validation->set_rules('task_set[name]', 'lang:admin_task_sets_form_field_name', 'required');
         $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
         $this->form_validation->set_rules('task_set[task_set_type_id]', 'lang:admin_task_sets_form_field_task_set_type_id', 'required|exists_in_table[task_set_types.id]');
+        $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'greater_than_equal[0]');
         
         $this->_transaction_isolation();
         $this->db->trans_begin();
@@ -160,6 +161,7 @@ class Task_sets extends LIST_Controller {
             $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
             $task_set->comments_enabled = isset($task_set_data['comments_enabled']) ? (bool)intval($task_set_data['comments_enabled']) : FALSE;
             $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
+            $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
             if ($task_set->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
@@ -196,6 +198,7 @@ class Task_sets extends LIST_Controller {
         $this->form_validation->set_rules('task_set[name]', 'lang:admin_task_sets_form_field_name', 'required');
         $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
         $this->form_validation->set_rules('task_set[task_set_type_id]', 'lang:admin_task_sets_form_field_task_set_type_id', 'required|exists_in_table[task_set_types.id]');
+        $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'greater_than_equal[0]');
         
         $task_set_id = intval($this->input->post('task_set_id'));
         $task_set = new Task_set();
@@ -220,6 +223,7 @@ class Task_sets extends LIST_Controller {
                 $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
                 $task_set->comments_enabled = isset($task_set_data['comments_enabled']) ? (bool)intval($task_set_data['comments_enabled']) : FALSE;
                 $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
+                $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
                 
                 $overlay = $this->input->post('overlay');
                 
@@ -233,6 +237,7 @@ class Task_sets extends LIST_Controller {
                             if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
                                 $task->set_join_field($task_set, 'sorting', $tasks_sorting[$task->id] + 1);
                                 $task->set_join_field($task_set, 'points_total', floatval($tasks_join_fields_data[$task->id]['points_total']));
+                                $task->set_join_field($task_set, 'bonus_task', (int)(bool)@$tasks_join_fields_data[$task->id]['bonus_task']);
                             } else {
                                 $task_set->delete($task);
                             }

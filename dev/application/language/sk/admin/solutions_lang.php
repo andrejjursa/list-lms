@@ -47,6 +47,7 @@ $lang['admin_solutions_list_new_solution_error_student_not_in_course_or_group'] 
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Formulár';
 $lang['admin_solutions_valuation_tabs_label_files'] = 'Súbory';
+$lang['admin_solutions_valuation_tabs_label_tasks'] = 'Úlohy';
 $lang['admin_solutions_valuation_form_label_points'] = 'Body';
 $lang['admin_solutions_valuation_form_label_points_hint'] = 'Suma bodov za úlohy v tejto zostave úloh je <strong>%s</strong>.';
 $lang['admin_solutions_valuation_form_label_comment'] = 'Komentár';
@@ -61,3 +62,7 @@ $lang['admin_solutions_valuation_file_content_error_cant_read_file'] = 'Nemôže
 $lang['admin_solutions_valuation_solution_not_found'] = 'Riešenie sa nenašlo.';
 $lang['admin_solutions_valuation_solution_saved'] = 'Riešenie uložené úspešne.';
 $lang['admin_solutions_valuation_solution_not_saved'] = 'Zlyhanie pri ukladaní riešenia.';
+
+$lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
+$lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámi autor';
+$lang['admin_solutions_task_list_is_bonus_task'] = 'Bonusová úloha';

@@ -32,7 +32,7 @@ class Solutions extends LIST_Controller {
         $this->_select_teacher_menu_pagetag('solutions');
         $task_set = new Task_set();
         $task_set->select('`task_sets`.*');
-        $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id`)', 'task_set_total_points');
+        $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'task_set_total_points');
         $task_set->include_related('course', 'name');
         $task_set->include_related('course/period', 'name');
         $task_set->include_related('group', 'name');
@@ -93,16 +93,31 @@ class Solutions extends LIST_Controller {
     public function new_solution_form($task_set_id) {
         $task_set = new Task_set();
         $task_set->select('`task_sets`.*');
-        $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id`)', 'task_set_total_points');
+        $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'task_set_total_points');
         $task_set->get_by_id($task_set_id);
         $this->inject_students($task_set_id);
         $this->parser->parse('backend/solutions/new_solution_form.tpl', array('task_set' => $task_set));
     }
     
+    public function display_tasks_list($solution_id) {
+        $solution = new Solution();
+        $solution->get_by_id($solution_id);
+        if ($solution->exists()) {
+            $task_set = $solution->task_set->get();
+            if ($task_set->exists()) {
+                $tasks = $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get();
+                $this->lang->init_overlays('tasks', $tasks, array('name', 'text'));
+                $this->parser->assign('tasks', $tasks);
+                $this->parser->assign('task_set', $task_set);
+            }
+        }
+        $this->parser->parse('backend/solutions/display_tasks_list.tpl');
+    }
+
     public function valuation($task_set_id, $solution_id) {
         $solution = new Solution();
         $solution->select('`solutions`.*');
-        $solution->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `task_sets`.`id`)', 'task_set_total_points');
+        $solution->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `task_sets`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'task_set_total_points');
         $solution->include_related('task_set', '*', TRUE, TRUE);
         $solution->include_related('task_set/course', 'name');
         $solution->include_related('task_set/course/period', 'name');

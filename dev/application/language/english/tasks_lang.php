@@ -33,6 +33,7 @@ $lang['tasks_task_solution_table_header_modified'] = 'Last modified';
 $lang['tasks_task_no_solutions_yet'] = 'There are no solutions yet.';
 $lang['tasks_task_author'] = 'Author: %s';
 $lang['tasks_task_author_unknown'] = 'Unknown';
+$lang['tasks_task_is_bonus_task'] = 'Bonus task';
 $lang['tasks_instructions_header'] = 'Instructions';
 $lang['tasks_comments_button_reply_at'] = 'Reply at this comment';
 $lang['tasks_comments_message_waiting_for_approval'] = 'Waiting for approval.';

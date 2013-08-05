@@ -29,3 +29,14 @@ table.solutions_table thead tr th.right_corner { border-top-right-radius: 4px; b
 #file_content_id ol { background-color: #99ff99; }
 #file_content_id ol li { margin-left: 75px; padding-left: 5px; background-color: white; }
 #file_content_id ol li pre { display: block; }
+
+div.task_wrap { margin-bottom: 5px; }
+div.task_wrap:last-child { margin-bottom: 0px; }
+div.task_wrap h5 { font-size: 1.1em; margin-bottom: 5px; }
+div.task_wrap h5 span { color: green; font-weight: normal; }
+div.task_wrap h5 span.bonus_task { color: red; }
+div.task_wrap div.task_text { margin-left: 3px; }
+
+div.instructions_wrap { margin-bottom: 5px; }
+div.instructions_wrap h5 { font-size: 1.1em; margin-bottom: 5px; }
+div.instructions_wrap div.instructions_text { margin-left: 3px; }

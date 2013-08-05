@@ -52,6 +52,15 @@
     <input type="hidden" name="task_set[room_id]" value="" />
 </div>
 <div class="field">
+    <label for="task_set_points_override_enabled_id">{translate line='admin_task_sets_form_label_points_override_enabled'}:</label>
+    <p class="input"><input type="checkbox" name="task_set[points_override_enabled]" value="1"{if $smarty.post.task_set.points_override_enabled} checked="checked"{/if} id="task_set_points_override_enabled_id" /></p>
+</div>
+<div class="field task_set_points_override" style="display: none;">
+    <label for="task_set_points_override_id">{translate line='admin_task_sets_form_label_points_override'}:</label>
+    <p class="input"><input type="text" name="task_set[points_override]" value="{$smarty.post.task_set.points_override|escape:'html'}" id="task_set_points_override_id" /></p>
+    {form_error field='task_set[points_override]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+</div>
+<div class="field">
     <label for="task_set_comments_enabled_id">{translate line='admin_task_sets_form_label_comments_enabled'}:</label>
     <p class="input"><input type="checkbox" name="task_set[comments_enabled]" value="1" id="task_set_comments_enabled_id"{if !$smarty.post.task_set or $smarty.post.task_set.comments_enabled} checked="checked"{/if} /></p>
     {form_error field='task_set[comments_enabled]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}

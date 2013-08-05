@@ -66,6 +66,15 @@
                         <input type="hidden" name="task_set[room_id]" value="" />
                     </div>
                     <div class="field">
+                        <label for="task_set_points_override_enabled_id">{translate line='admin_task_sets_form_label_points_override_enabled'}:</label>
+                        <p class="input"><input type="checkbox" name="task_set[points_override_enabled]" value="1"{if $smarty.post.task_set.points_override_enabled or (!$smarty.post and !is_null($task_set->points_override))} checked="checked"{/if} id="task_set_points_override_enabled_id" /></p>
+                    </div>
+                    <div class="field task_set_points_override" style="display: none;">
+                        <label for="task_set_points_override_id">{translate line='admin_task_sets_form_label_points_override'}:</label>
+                        <p class="input"><input type="text" name="task_set[points_override]" value="{$smarty.post.task_set.points_override|default:$task_set->points_override|escape:'html'}" id="task_set_points_override_id" /></p>
+                        {form_error field='task_set[points_override]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                    </div>
+                    <div class="field">
                         <label for="task_set_comments_enabled_id">{translate line='admin_task_sets_form_label_comments_enabled'}:</label>
                         <p class="input"><input type="checkbox" name="task_set[comments_enabled]" value="1" id="task_set_comments_enabled_id"{if $smarty.post.task_set.comments_enabled|default:$task_set->comments_enabled} checked="checked"{/if} /></p>
                         {form_error field='task_set[comments_enabled]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
@@ -90,6 +99,10 @@
                                 <label for="task_join_field_{$task->id|intval}_points_total_id" class="required">{translate line='admin_task_sets_form_label_task_points_total'}:</label>
                                 <p class="input"><input type="text" name="task_join_field[{$task->id|intval}][points_total]" value="{$smarty.post.task_join_field[$task->id|intval].points_total|default:$task->join_points_total|floatval}" id="task_join_field_{$task->id|intval}_points_total_id" /></p>
                                 {form_error field="task_join_field[{$task->id|intval}][points_total]" left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                            </div>
+                            <div class="field">
+                                <label for="task_join_field_{$task->id|intval}_bonus_task_id">{translate line='admin_task_sets_form_label_task_bonus_task'}:</label>
+                                <p class="input"><input type="checkbox" name="task_join_field[{$task->id|intval}][bonus_task]" value="1" id="task_join_field_{$task->id|intval}_bonus_task_id"{if $smarty.post.task_join_field[$task->id|intval].bonus_task|default:$task->join_bonus_task} checked="checked"{/if} /></p>
                             </div>
                             <div class="field">
                                 <label for="task_join_field_{$task->id|intval}_delete_id">{translate line='admin_task_sets_form_label_delete_task'}:</label>

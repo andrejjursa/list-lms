@@ -47,6 +47,7 @@ $lang['admin_solutions_list_new_solution_error_student_not_in_course_or_group'] 
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Form';
 $lang['admin_solutions_valuation_tabs_label_files'] = 'Files';
+$lang['admin_solutions_valuation_tabs_label_tasks'] = 'Tasks';
 $lang['admin_solutions_valuation_form_label_points'] = 'Points';
 $lang['admin_solutions_valuation_form_label_points_hint'] = 'Sum of points for tasks in this task set is <strong>%s</strong>.';
 $lang['admin_solutions_valuation_form_label_comment'] = 'Comment';
@@ -61,3 +62,7 @@ $lang['admin_solutions_valuation_file_content_error_cant_read_file'] = 'Can\'t r
 $lang['admin_solutions_valuation_solution_not_found'] = 'Solution not found.';
 $lang['admin_solutions_valuation_solution_saved'] = 'Solution saved successfully.';
 $lang['admin_solutions_valuation_solution_not_saved'] = 'Failed to save solution.';
+
+$lang['admin_solutions_tasks_list_instructions_header'] = 'Instructions for student';
+$lang['admin_solutions_tasks_list_task_unknown_author'] = 'Unknown author';
+$lang['admin_solutions_task_list_is_bonus_task'] = 'Bonus task';
