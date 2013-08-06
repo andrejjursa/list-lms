@@ -28,6 +28,73 @@ class Solutions extends LIST_Controller {
         $this->parser->parse('backend/solutions/index.tpl');
     }
     
+    public function batch_valuation($task_set_id) {
+        $this->_select_teacher_menu_pagetag('solutions');
+        $task_set = new Task_set();
+        $task_set->include_related('course', 'name', TRUE);
+        $task_set->include_related('course/period', 'name', TRUE);
+        $task_set->include_related('group', 'name', TRUE);
+        $task_set->get_by_id($task_set_id);
+        $this->parser->add_js_file('admin_solutions/batch_valuation_list.js');
+        $this->parser->add_css_file('admin_solutions.css');
+        $this->parser->parse('backend/solutions/batch_valuation.tpl', array('task_set' => $task_set));
+    }
+    
+    public function batch_valuation_list($task_set_id) {
+        $this->inject_batch_valuation($task_set_id);
+        $task_set = new Task_set();
+        $task_set->get_by_id($task_set_id);
+        $this->parser->parse('backend/solutions/batch_valuation_list.tpl', array('task_set' => $task_set));
+    }
+    
+    public function batch_save_solutions($task_set_id) {
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->get_by_id($task_set_id);
+        if ($task_set->exists()) {
+            $data = $this->input->post('batch_valuation');
+            $saved_count = 0;
+            $save_status = TRUE;
+            if (is_array($data) && count($data) > 0) { foreach ($data as $student_id => $solution_data) {
+                $student = new Student();
+                $student->get_by_id($student_id);
+                $task_set_check = new Task_set();
+                $task_set_check->where_related('course/participant/student', 'id', intval($student_id));
+                $task_set_check->where_related('course/participant', 'allowed', 1);
+                $task_set_check->group_start();
+                    $task_set_check->or_where('group_id', NULL);
+                    $task_set_check->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+                $task_set_check->group_end();
+                $task_set_check->get_by_id($task_set_id);
+                if ($student->exists() && $task_set_check->exists() && array_key_exists('points', $solution_data) && is_numeric($solution_data['points'])) {
+                    $solution = new Solution();
+                    $solution->where_related_student('id', $student->id);
+                    $solution->where_related_task_set('id', $task_set->id);
+                    $solution->get();
+                    if (!$solution->exists()) {
+                        $solution->teacher_id = $this->usermanager->get_teacher_id();
+                    }
+                    $solution->points = floatval($solution_data['points']);
+                    $solution->revalidate = 0;
+                    $save_status = $save_status & $solution->save(array($task_set, $student));
+                    $saved_count++;
+                }
+            }}
+            if ($this->db->trans_status() && $save_status && $saved_count > 0) {
+                $this->db->trans_commit();
+                $this->messages->add_message('lang:admin_solutions_batch_valuation_success_message_save_ok', Messages::MESSAGE_TYPE_SUCCESS);
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_solutions_batch_valuation_error_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+            }
+        } else {
+            $this->db->trans_rollback();
+            $this->messages->add_message('lang:admin_solutions_batch_valuation_error_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+        }
+        redirect(create_internal_url('admin_solutions/batch_valuation_list/' . $task_set_id));
+    }
+
     public function solutions_list($task_set_id = NULL) {
         $this->_select_teacher_menu_pagetag('solutions');
         $task_set = new Task_set();
@@ -99,17 +166,14 @@ class Solutions extends LIST_Controller {
         $this->parser->parse('backend/solutions/new_solution_form.tpl', array('task_set' => $task_set));
     }
     
-    public function display_tasks_list($solution_id) {
-        $solution = new Solution();
-        $solution->get_by_id($solution_id);
-        if ($solution->exists()) {
-            $task_set = $solution->task_set->get();
-            if ($task_set->exists()) {
-                $tasks = $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get();
-                $this->lang->init_overlays('tasks', $tasks, array('name', 'text'));
-                $this->parser->assign('tasks', $tasks);
-                $this->parser->assign('task_set', $task_set);
-            }
+    public function display_tasks_list($task_set_id) {
+        $task_set = new Task_set();
+        $task_set->get_by_id($task_set_id);
+        if ($task_set->exists()) {
+            $tasks = $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get();
+            $this->lang->init_overlays('tasks', $tasks, array('name', 'text'));
+            $this->parser->assign('tasks', $tasks);
+            $this->parser->assign('task_set', $task_set);
         }
         $this->parser->parse('backend/solutions/display_tasks_list.tpl');
     }
@@ -324,5 +388,30 @@ class Solutions extends LIST_Controller {
             }
         }
         $this->parser->assign('students', $data);
+    }
+    
+    private function inject_batch_valuation($task_set_id) {
+        $task_set = new Task_set();
+        $task_set->get_by_id($task_set_id);
+        $data = array();
+        if ($task_set->exists()) {
+            $students = new Student();
+            $students->where_related('participant', 'allowed', 1);
+            $students->where_related('participant/course/task_set', 'id', intval($task_set_id));
+            if (!is_null($task_set->group_id)) {
+                $students->where_related('participant/group', 'id', intval($task_set->group_id));
+            }
+            $students->select_subquery('(SELECT `solutions`.`points` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_points');
+            $students->select_subquery('(SELECT `solutions`.`id` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_id');
+            $students->group_by('id');
+            $students->order_by('fullname', 'asc');
+            $students->order_by('email', 'asc');
+            $students->get_iterated();
+
+            foreach ($students as $student) {
+                $data[$student->id] = clone $student;
+            }
+        }
+        $this->parser->assign('batch_valuation_students', $data);
     }
 }

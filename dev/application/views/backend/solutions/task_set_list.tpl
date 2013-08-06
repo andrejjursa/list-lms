@@ -15,8 +15,9 @@
             {/if}
         </td>
         <td class="controlls"><a href="{internal_url url="admin_solutions/solutions_list/{$task_set->id}"}" class="button special">{translate line='admin_solutions_table_button_select_task_set'}</a></td>
+        <td class="controlls"><a href="{internal_url url="admin_solutions/batch_valuation/{$task_set->id}"}" class="button special">{translate line='admin_solutions_table_button_batch_valuation'}</a></td>
     </tr>
 {/foreach}
 <tr id="pagination_row_id">
-    <td colspan="9">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
+    <td colspan="10">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
 </tr>

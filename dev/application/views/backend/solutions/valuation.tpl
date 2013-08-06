@@ -9,7 +9,7 @@
             <ul>
                 <li><a href="#tabs-form">{translate line='admin_solutions_valuation_tabs_label_form'}</a></li>
                 <li><a href="#tabs-files">{translate line='admin_solutions_valuation_tabs_label_files'}</a></li>
-                <li><a href="{internal_url url="admin_solutions/display_tasks_list/{$solution->id}"}">{translate line='admin_solutions_valuation_tabs_label_tasks'}</a></li>
+                <li><a href="{internal_url url="admin_solutions/display_tasks_list/{$solution->task_set->id}"}">{translate line='admin_solutions_valuation_tabs_label_tasks'}</a></li>
             </ul>
             <div id="tabs-form">
                 <form action="{internal_url url="admin_solutions/update_valuation/{$solution->task_set->id|intval}/{$solution->id|intval}"}" method="post">
