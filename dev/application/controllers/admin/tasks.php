@@ -274,7 +274,7 @@ class Tasks extends LIST_Controller {
         $task = new Task();
         $task->get_by_id($task_id);
         $task_set = new Task_set();
-        $task_set_id = intval($this->input->post('task_id'));
+        $task_set_id = intval($this->input->post('task_set_id'));
         if ($task_set_id == 0) {
             $task_set->get_as_open();
         } else {
@@ -297,6 +297,7 @@ class Tasks extends LIST_Controller {
             $task_id = intval($this->input->post('task_id'));
             $task_set_id = intval($this->input->post('task_set_id'));
             $points_total = floatval($this->input->post('points_total'));
+            $bonus_task = (int)(bool)intval($this->input->post('bonus_task'));
             $this->_transaction_isolation();
             $this->db->trans_begin();
             $task = new Task();
@@ -318,6 +319,7 @@ class Tasks extends LIST_Controller {
                 $task_set->save($task);
                 $task_set->set_join_field($task, 'points_total', $points_total);
                 $task_set->set_join_field($task, 'sorting', $new_sorting);
+                $task_set->set_join_field($task, 'bonus_task', $bonus_task);
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_tasks_add_to_task_set_save_success', Messages::MESSAGE_TYPE_SUCCESS);

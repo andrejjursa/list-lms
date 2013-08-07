@@ -19,6 +19,11 @@
                 <p class="input"><input type="text" name="points_total" value="{$smarty.post.points_total|floatval}" id="points_total_id" /></p>
                 {form_error field='points_total' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
+            <div class="field">
+                <label for="bonus_task_id">{translate line='admin_tasks_add_to_task_set_form_label_bonus_task'}:</label>
+                <p class="input"><input type="checkbox" name="bonus_task" value="1" id="bonus_task_id"{if $smarty.post.bonus_task} checked="checked"{/if} /></p>
+                <p class="input"><em>{translate line='admin_tasks_add_to_task_set_form_label_bonus_task_hint'}</em></p>
+            </div>
             <div class="buttons">
                 <input type="submit" name="submit_button" value="{translate line='admin_tasks_add_to_task_set_form_button_submit'}" class="button" />
                 <input type="hidden" name="task_id" value="{$task->id|intval}" />
