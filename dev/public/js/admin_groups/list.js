@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
         reload_all_groups();
     });
     
-    $(document).on('click', '#table_of_groups_container_id a.rooms_editor', function(event) {
+    $(document).on('click', '#table_of_groups_container_id a.rooms_editor, #table_of_groups_container_id a.group_mail', function(event) {
         event.preventDefault();
         var url = $(this).attr('href');
         $.fancybox(url, {

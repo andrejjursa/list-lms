@@ -14,7 +14,8 @@ class LIST_Form_validation extends CI_Form_validation {
      */
     public function required_no_html($str) {
         if (!is_array($str)) {
-            return (trim(strip_tags($str)) == '') ? FALSE : TRUE;
+            $striped = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', str_replace('&nbsp;', ' ', html_entity_decode(strip_tags($str))));
+            return (trim($striped) == '') ? FALSE : TRUE;
         } else {
             return $this->required($str);
         }

@@ -168,6 +168,65 @@ class Groups extends LIST_Controller {
         }
     }
     
+    public function group_mail($group_id) {
+        $group = new Group();
+        $group->include_related('course', 'name');
+        $group->include_related('course/period', 'name');
+        $group->get_by_id($group_id);
+        $students = new Student();
+        $students->where_related('participant/group', 'id', $group->id);
+        $students->where_related('participant/course', 'id', $group->course_id);
+        $students->where_related('participant', 'allowed', 1);
+        $students->get_iterated();
+        $this->_add_tinymce();
+        $this->parser->add_js_file('admin_groups/group_mail.js');
+        $this->parser->parse('backend/groups/group_mail.tpl', array('group' => $group, 'students' => $students));
+    }
+    
+    public function send_group_mail($group_id) {
+        $group = new Group();
+        $group->get_by_id($group_id);
+        if ($group->exists()) {
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('group_mail[subject]', 'lang:admin_groups_group_email_form_field_subject', 'required');
+            $this->form_validation->set_rules('group_mail[body]', 'lang:admin_groups_group_email_form_field_body', 'required_no_html');
+            $this->form_validation->set_rules('group_mail[from]', 'lang:admin_groups_group_email_form_field_from', 'required');
+            $this->form_validation->set_rules('group_mail[student][]', 'lang:admin_groups_group_email_form_field_students', 'required');
+            if ($this->form_validation->run()) {
+                $data = $this->input->post('group_mail');
+                $students = new Student();
+                $students->where_related('participant/group', 'id', $group->id);
+                $students->where_related('participant/course', 'id', $group->course_id);
+                $students->where_related('participant', 'allowed', 1);
+                $students->where_in('id', $data['student']);
+                $students->get();
+                if ($students->exists()) {
+                    $from = NULL;
+                    $from_name = '';
+                    if ($data['from'] == 'me') {
+                        $teacher = new Teacher();
+                        $teacher->get_by_id($this->usermanager->get_teacher_id());
+                        $from = $teacher->email;
+                        $from_name = $teacher->fullname;
+                    }
+                    if ($this->_send_multiple_emails($students, $data['subject'], '{$data.body|add_base_url}', array('data' => $data), $from, $from_name)) {
+                        $this->messages->add_message('lang:admin_groups_group_email_success_sent', Messages::MESSAGE_TYPE_SUCCESS);
+                    } else {
+                        $this->messages->add_message('lang:admin_groups_group_email_error_send_failed', Messages::MESSAGE_TYPE_ERROR);
+                    }
+                } else {
+                    $this->messages->add_message('lang:admin_groups_group_email_error_no_students_selected', Messages::MESSAGE_TYPE_ERROR);
+                }
+                redirect(create_internal_url('admin_groups/group_mail/' . $group_id));
+            } else {
+                $this->group_mail($group_id);
+            }
+        } else {
+            $this->messages->add_message('lang:admin_groups_group_email_error_group_not_found', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('admin_groups/group_mail/' . $group_id));
+        }
+    }
+
     private function inject_courses() {
         $periods = new Period();
         $periods->order_by('sorting', 'asc');

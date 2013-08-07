@@ -1,5 +1,9 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+if (!class_exists('simple_html_dom_node')) {
+    include_once APPPATH . 'third_party/simplehtmldom/simple_html_dom.php';
+}
+
 /**
  * This extended CI_Email library provides new functions to handle emails with smarty templates.
  * @package LIST_Libraries
@@ -77,6 +81,35 @@ class LIST_Email extends CI_Email {
         }
         $this->message($message);
         return $this;
+    }
+    
+    protected function _get_alt_message() {
+        $generate_alt_message = empty($this->alt_message);
+        if ($generate_alt_message) {
+            $protect_body = $this->_body;
+            
+            $html = str_get_html($this->_body, true, true, DEFAULT_TARGET_CHARSET, false);
+            foreach ($html->find('a') as $a_tag) {
+                if ($a_tag->plaintext != $a_tag->href) {
+                    $a_tag_clone = clone $a_tag;
+                    $a_tag_clone->innertext = $a_tag_clone->href;
+                    $new_a_tag = $a_tag->innertext . '[' . $a_tag_clone . ']';
+                    $a_tag->outertext = $new_a_tag;
+                    unset($a_tag_clone);
+                }
+            }
+            
+            $this->_body = $html->__toString();
+        }    
+        
+        $output = parent::_get_alt_message();
+        
+        if ($generate_alt_message) {    
+            $output = html_entity_decode($output);
+            $this->_body = $protect_body;
+        }
+        
+        return $output;
     }
 }
 
