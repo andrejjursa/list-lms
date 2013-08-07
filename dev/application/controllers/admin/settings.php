@@ -61,6 +61,7 @@ class Settings extends LIST_Controller {
             $config['email']['smtp_port'] = intval($config['email']['smtp_port']);
             $config['email']['smtp_timeout'] = intval($config['email']['smtp_timeout']);
             $config['email']['priority'] = intval($config['email']['priority']);
+            $config['email_multirecipient_batch_mode'] = $this->bool_val($config['email_multirecipient_batch_mode']);
             $this->configurator->set_config_array('config', $config);
             redirect(create_internal_url('admin_settings/index'));
         } else {
@@ -91,6 +92,7 @@ class Settings extends LIST_Controller {
             'readable_file_extensions',
             'student_registration',
             'email',
+            'email_multirecipient_batch_mode',
         );
         
         $output = array();

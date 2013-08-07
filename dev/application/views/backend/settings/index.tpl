@@ -110,6 +110,14 @@
                 </p>
                 {form_error field='config[email][priority]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
+            <div class="field">
+                <label for="email_multirecipient_batch_mode_id" class="required">{translate line='admin_settings_form_label_email_multirecipient_batch_mode'}:</label>
+                <p class="input">{$email_multirecipient_batch_mode_options=['0'=>'lang:admin_settings_form_email_multirecipient_batch_mode_false', '1'=>'lang:admin_settings_form_email_multirecipient_batch_mode_true']}
+                    <select name="config[email_multirecipient_batch_mode]" size="1" id="email_multirecipient_batch_mode_id">
+                        {list_html_options options=$email_multirecipient_batch_mode_options selected=$smarty.post.config.email_multirecipient_batch_mode|default:$config.email_multirecipient_batch_mode}
+                    </select>
+                </p>
+            </div>
             <hr />
             <div class="buttons">
                 <input type="submit" class="button" name="save_settings" value="{translate line='admin_settings_form_save_button_text'}" />
