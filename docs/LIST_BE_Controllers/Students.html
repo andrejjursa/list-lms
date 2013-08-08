@@ -74,11 +74,16 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																												
+																																																																																																																																																																												
 												<div class="method-definition">
 											<span class="method-result">Students</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
 										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#convert_csv_import_cols_config" title="details" class="method-name">convert_csv_import_cols_config</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$cols</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -87,8 +92,23 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
+										<a href="#csv_import" title="details" class="method-name">csv_import</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#csv_import_screen" title="details" class="method-name">csv_import_screen</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$config</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
 										<a href="#delete" title="details" class="method-name">delete</a>
 										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#delete_csv_file" title="details" class="method-name">delete_csv_file</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$config</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -97,7 +117,22 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
+										<a href="#get_csv_content" title="details" class="method-name">get_csv_content</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$config</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$cols</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$rows</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#import_single_line" title="details" class="method-name">import_single_line</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
 										<a href="#index" title="details" class="method-name">index</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#inject_courses" title="details" class="method-name">inject_courses</a>
 										()
 									</div>
 																<div class="method-definition">
@@ -112,6 +147,11 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
+										<a href="#show_csv_content" title="details" class="method-name">show_csv_content</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$config</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
 										<a href="#store_filter" title="details" class="method-name">store_filter</a>
 											(<span class="var-type"></span>&nbsp;<span class="var-name">$filter</span>)
 									</div>
@@ -122,7 +162,17 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
+										<a href="#test_csv_import_cols" title="details" class="method-name">test_csv_import_cols</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$cols</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
 										<a href="#update" title="details" class="method-name">update</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#upload_csv_file" title="details" class="method-name">upload_csv_file</a>
 										()
 									</div>
 																<div class="method-definition">
@@ -149,7 +199,7 @@
 			<A NAME='method_detail'></A>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a12">12</a></span>)
@@ -177,11 +227,39 @@
 					</dl>
 			
 	</div>
+<a name="methodconvert_csv_import_cols_config" id="convert_csv_import_cols_config"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">convert_csv_import_cols_config</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a372">372</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			convert_csv_import_cols_config
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$cols</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$cols</span>			</li>
+				</ul>
+		
+			
+	</div>
 <a name="methodcreate" id="create"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">create</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a42">42</a></span>)
+		<span class="method-title">create</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a43">43</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -200,11 +278,62 @@
 		
 			
 	</div>
+<a name="methodcsv_import" id="csv_import"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">csv_import</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a152">152</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			csv_import
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodcsv_import_screen" id="csv_import_screen"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">csv_import_screen</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a213">213</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			csv_import_screen
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$config</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$config</span>			</li>
+				</ul>
+		
+			
+	</div>
 <a name="methoddelete" id="delete"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a128">128</a></span>)
+		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a129">129</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -223,11 +352,39 @@
 		
 			
 	</div>
-<a name="methodedit" id="edit"><!-- --></a>
+<a name="methoddelete_csv_file" id="delete_csv_file"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">edit</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a70">70</a></span>)
+		<span class="method-title">delete_csv_file</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a350">350</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			delete_csv_file
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$config</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$config</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodedit" id="edit"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">edit</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a71">71</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -246,11 +403,68 @@
 		
 			
 	</div>
-<a name="methodindex" id="index"><!-- --></a>
+<a name="methodget_csv_content" id="get_csv_content"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_csv_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a390">390</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			get_csv_content
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$config</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$cols</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$rows</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$config</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$cols</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$rows</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodimport_single_line" id="import_single_line"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a21">21</a></span>)
+		<span class="method-title">import_single_line</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a239">239</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			import_single_line
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodindex" id="index"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a22">22</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -269,11 +483,34 @@
 		
 			
 	</div>
+<a name="methodinject_courses" id="inject_courses"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">inject_courses</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a414">414</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			inject_courses
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
 <a name="methodinject_stored_filter" id="inject_stored_filter"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_stored_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a159">159</a></span>)
+		<span class="method-title">inject_stored_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a437">437</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -296,7 +533,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">new_student_form</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a29">29</a></span>)
+		<span class="method-title">new_student_form</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a30">30</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -315,11 +552,39 @@
 		
 			
 	</div>
-<a name="methodstore_filter" id="store_filter"><!-- --></a>
+<a name="methodshow_csv_content" id="show_csv_content"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">store_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a151">151</a></span>)
+		<span class="method-title">show_csv_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a189">189</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			show_csv_content
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$config</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$config</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodstore_filter" id="store_filter"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">store_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a428">428</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -344,10 +609,10 @@
 			
 	</div>
 <a name="methodtable_content" id="table_content"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">table_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a33">33</a></span>)
+		<span class="method-title">table_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a34">34</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -366,11 +631,39 @@
 		
 			
 	</div>
+<a name="methodtest_csv_import_cols" id="test_csv_import_cols"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">test_csv_import_cols</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a356">356</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			test_csv_import_cols
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$cols</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$cols</span>			</li>
+				</ul>
+		
+			
+	</div>
 <a name="methodupdate" id="update"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">update</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a81">81</a></span>)
+		<span class="method-title">update</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a82">82</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -389,11 +682,34 @@
 		
 			
 	</div>
-<a name="method_email_available" id="_email_available"><!-- --></a>
+<a name="methodupload_csv_file" id="upload_csv_file"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_email_available</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a121">121</a></span>)
+		<span class="method-title">upload_csv_file</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a157">157</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			upload_csv_file
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method_email_available" id="_email_available"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_email_available</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminstudents.php.html#a122">122</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -427,6 +743,7 @@
 					<blockquote>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_plupload">LIST_Controller::_add_plupload()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_scrollTo">LIST_Controller::_add_scrollTo()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_tinymce">LIST_Controller::_add_tinymce()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_open_task_set">LIST_Controller::_initialize_open_task_set()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_student_menu">LIST_Controller::_initialize_student_menu()</a></span><br>
@@ -434,11 +751,14 @@
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_student">LIST_Controller::_init_language_for_student()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_teacher">LIST_Controller::_init_language_for_teacher()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_lang_js_messages">LIST_Controller::_init_lang_js_messages()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_specific_language">LIST_Controller::_init_specific_language()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_teacher_quick_langmenu">LIST_Controller::_init_teacher_quick_langmenu()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_teacher_quick_prefered_course_menu">LIST_Controller::_init_teacher_quick_prefered_course_menu()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_student_langfile">LIST_Controller::_load_student_langfile()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_teacher_langfile">LIST_Controller::_load_teacher_langfile()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_student_menu_pagetag">LIST_Controller::_select_student_menu_pagetag()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_teacher_menu_pagetag">LIST_Controller::_select_teacher_menu_pagetag()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_send_multiple_emails">LIST_Controller::_send_multiple_emails()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_transaction_isolation">LIST_Controller::_transaction_isolation()</a></span><br>
 											</blockquote>
 										
@@ -459,7 +779,7 @@
 					</div>
 		<div class="info-box-body">
 			<a name="constSTORED_FILTER_SESSION_NAME" id="STORED_FILTER_SESSION_NAME"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
@@ -501,7 +821,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 01 Jul 2013 14:11:03 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 08 Aug 2013 18:09:58 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

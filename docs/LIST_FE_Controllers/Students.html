@@ -80,7 +80,7 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																																												
+																																																																																																																																												
 												<div class="method-definition">
 											<span class="method-result">Students</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
@@ -88,7 +88,22 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
+										<a href="#change_password" title="details" class="method-name">change_password</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$token</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$encoded_email</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#do_change_password" title="details" class="method-name">do_change_password</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$token</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$encoded_email</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
 										<a href="#do_login" title="details" class="method-name">do_login</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#do_password_recovery" title="details" class="method-name">do_password_recovery</a>
 										()
 									</div>
 																<div class="method-definition">
@@ -114,6 +129,11 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#my_account" title="details" class="method-name">my_account</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#password_recovery" title="details" class="method-name">password_recovery</a>
 										()
 									</div>
 																<div class="method-definition">
@@ -166,7 +186,7 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$student_registration_config" id="$student_registration_config"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -205,7 +225,7 @@
 			<A NAME='method_detail'></A>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a12">12</a></span>)
@@ -233,8 +253,71 @@
 					</dl>
 			
 	</div>
-<a name="methoddo_login" id="do_login"><!-- --></a>
+<a name="methodchange_password" id="change_password"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">change_password</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a159">159</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This method will verify token and email and then displays form for password change.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			change_password
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$token</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$encoded_email</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$token</span><span class="var-description">: 40 characters length security token.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$encoded_email</span><span class="var-description">: encoded email address.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddo_change_password" id="do_change_password"><!-- --></a>
 <div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">do_change_password</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a184">184</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			do_change_password
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$token</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$encoded_email</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$token</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$encoded_email</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methoddo_login" id="do_login"><!-- --></a>
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">do_login</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a49">49</a></span>)
@@ -257,11 +340,35 @@
 		
 			
 	</div>
+<a name="methoddo_password_recovery" id="do_password_recovery"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">do_password_recovery</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a110">110</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sends password recovery e-mail to student.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			do_password_recovery
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
 <a name="methoddo_registration" id="do_registration"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">do_registration</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a118">118</a></span>)
+		<span class="method-title">do_registration</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a249">249</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -357,7 +464,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">my_account</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a164">164</a></span>)
+		<span class="method-title">my_account</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a295">295</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -376,11 +483,35 @@
 		
 			
 	</div>
-<a name="methodregistered" id="registered"><!-- --></a>
+<a name="methodpassword_recovery" id="password_recovery"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">registered</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a155">155</a></span>)
+		<span class="method-title">password_recovery</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a102">102</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Displays password recovery form.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			password_recovery
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodregistered" id="registered"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">registered</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a286">286</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -400,10 +531,10 @@
 			
 	</div>
 <a name="methodregistration" id="registration"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">registration</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a102">102</a></span>)
+		<span class="method-title">registration</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a233">233</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -424,10 +555,10 @@
 			
 	</div>
 <a name="methodsave_basic_information" id="save_basic_information"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">save_basic_information</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a176">176</a></span>)
+		<span class="method-title">save_basic_information</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a307">307</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -447,10 +578,10 @@
 			
 	</div>
 <a name="methodsave_email" id="save_email"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">save_email</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a261">261</a></span>)
+		<span class="method-title">save_email</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a392">392</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -470,10 +601,10 @@
 			
 	</div>
 <a name="methodsave_password" id="save_password"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">save_password</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a214">214</a></span>)
+		<span class="method-title">save_password</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a345">345</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -493,10 +624,10 @@
 			
 	</div>
 <a name="method_validate_old_password" id="_validate_old_password"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_validate_old_password</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a254">254</a></span>)
+		<span class="method-title">_validate_old_password</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllersstudents.php.html#a385">385</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -530,6 +661,7 @@
 					<blockquote>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_plupload">LIST_Controller::_add_plupload()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_scrollTo">LIST_Controller::_add_scrollTo()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_tinymce">LIST_Controller::_add_tinymce()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_open_task_set">LIST_Controller::_initialize_open_task_set()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_student_menu">LIST_Controller::_initialize_student_menu()</a></span><br>
@@ -537,11 +669,14 @@
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_student">LIST_Controller::_init_language_for_student()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_teacher">LIST_Controller::_init_language_for_teacher()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_lang_js_messages">LIST_Controller::_init_lang_js_messages()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_specific_language">LIST_Controller::_init_specific_language()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_teacher_quick_langmenu">LIST_Controller::_init_teacher_quick_langmenu()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_teacher_quick_prefered_course_menu">LIST_Controller::_init_teacher_quick_prefered_course_menu()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_student_langfile">LIST_Controller::_load_student_langfile()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_teacher_langfile">LIST_Controller::_load_teacher_langfile()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_student_menu_pagetag">LIST_Controller::_select_student_menu_pagetag()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_teacher_menu_pagetag">LIST_Controller::_select_teacher_menu_pagetag()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_send_multiple_emails">LIST_Controller::_send_multiple_emails()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_transaction_isolation">LIST_Controller::_transaction_isolation()</a></span><br>
 											</blockquote>
 										
@@ -590,7 +725,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 01 Jul 2013 14:11:03 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 08 Aug 2013 18:09:57 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

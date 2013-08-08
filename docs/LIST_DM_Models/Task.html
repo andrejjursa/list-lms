@@ -52,9 +52,13 @@
 								</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																								<div class="var-title">
+																																<div class="var-title">
 					<span class="var-type">mixed</span>
 					<a href="#$has_many" title="details" class="var-name">$has_many</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$has_one" title="details" class="var-name">$has_one</a>
 				</div>
 											</div>
 		</div>
@@ -116,7 +120,7 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$has_many" id="$has_many"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -137,6 +141,33 @@
 		<dl>
 			<dt><a href="../DataMapper/DataMapper.html#var$has_many">DataMapper::$has_many</a></dt>
 						<dd>Contains any related objects of which this model is related one or more times.</dd>
+					</dl>
+		
+		
+
+</div>
+<a name="var$has_one" id="$has_one"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$has_one</span>
+			 = <span class="var-default">array(<br />        'author' =&gt; array(<br />            'class' =&gt; 'teacher',<br />            'other_field' =&gt; 'task',<br />            'join_self_as' =&gt; 'task',<br />            'join_other_as' =&gt; 'author',<br />        ),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a19">19</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../DataMapper/DataMapper.html#var$has_one">DataMapper::$has_one</a></dt>
+						<dd>Contains any related objects of which this model is singularly related.</dd>
 					</dl>
 		
 		
@@ -172,9 +203,6 @@
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$global_extensions">DataMapper::$global_extensions</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$has_one">DataMapper::$has_one</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$model">DataMapper::$model</a></span><br>
@@ -254,7 +282,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">add_categories_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a23">23</a></span>)
+		<span class="method-title">add_categories_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a33">33</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -283,7 +311,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a99">99</a></span>)
+		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a109">109</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -321,7 +349,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a74">74</a></span>)
+		<span class="method-title">get_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a84">84</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -351,7 +379,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_task_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a47">47</a></span>)
+		<span class="method-title">get_task_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a57">57</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -376,7 +404,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_task_hidden_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a60">60</a></span>)
+		<span class="method-title">get_task_hidden_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask.php.html#a70">70</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -513,7 +541,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 01 Jul 2013 14:11:04 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 08 Aug 2013 18:09:58 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

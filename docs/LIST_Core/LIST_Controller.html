@@ -205,7 +205,7 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																																																												
+																																																																																																																																																												
 												<div class="method-definition">
 											<span class="method-result">LIST_Controller</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
@@ -214,6 +214,11 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#_add_plupload" title="details" class="method-name">_add_plupload</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_add_scrollTo" title="details" class="method-name">_add_scrollTo</a>
 										()
 									</div>
 																<div class="method-definition">
@@ -239,12 +244,12 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#_init_language_for_student" title="details" class="method-name">_init_language_for_student</a>
-										()
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$student</span> = <span class="var-default">NULL</span>], <span class="var-type"><a href="../LIST_DM_Models/Student.html">Student</a>|integer</span>&nbsp;<span class="var-name">$student,</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#_init_language_for_teacher" title="details" class="method-name">_init_language_for_teacher</a>
-										()
+											([<span class="var-type"></span>&nbsp;<span class="var-name">$teacher</span> = <span class="var-default">NULL</span>], <span class="var-type"><a href="../LIST_DM_Models/Teacher.html">Teacher</a>|integer</span>&nbsp;<span class="var-name">$teacher,</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -253,7 +258,17 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
+										<a href="#_init_specific_language" title="details" class="method-name">_init_specific_language</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$lang_idiom</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
 										<a href="#_init_teacher_quick_langmenu" title="details" class="method-name">_init_teacher_quick_langmenu</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#_init_teacher_quick_prefered_course_menu" title="details" class="method-name">_init_teacher_quick_prefered_course_menu</a>
 										()
 									</div>
 																<div class="method-definition">
@@ -275,6 +290,11 @@
 											<span class="method-result">void</span>
 										<a href="#_select_teacher_menu_pagetag" title="details" class="method-name">_select_teacher_menu_pagetag</a>
 											([<span class="var-type">string</span>&nbsp;<span class="var-name">$tag</span> = <span class="var-default">''</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#_send_multiple_emails" title="details" class="method-name">_send_multiple_emails</a>
+											(<span class="var-type"><a href="../LIST_DM_Models/Student.html">Student</a>|<a href="../LIST_DM_Models/Teacher.html">Teacher</a></span>&nbsp;<span class="var-name">$recipients</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$subject</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$template</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$template_variables</span> = <span class="var-default">array()</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$from</span> = <span class="var-default">NULL</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$from_name</span> = <span class="var-default">''</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -301,7 +321,7 @@
 			<A NAME='method_detail'></A>
 
 <a name="method__construct" id="__construct"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
 		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a23">23</a></span>)
@@ -375,10 +395,10 @@
 				</ul>
 	</div>
 <a name="method_add_plupload" id="_add_plupload"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_add_plupload</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a140">140</a></span>)
+		<span class="method-title">_add_plupload</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a198">198</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -398,11 +418,35 @@
 		
 			
 	</div>
+<a name="method_add_scrollTo" id="_add_scrollTo"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_add_scrollTo</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a214">214</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">This method add jquery scrollTo plugin to template.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_add_scrollTo
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
 <a name="method_add_tinymce" id="_add_tinymce"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_add_tinymce</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a131">131</a></span>)
+		<span class="method-title">_add_tinymce</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a189">189</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -426,7 +470,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_initialize_open_task_set</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a96">96</a></span>)
+		<span class="method-title">_initialize_open_task_set</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a154">154</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -451,12 +495,12 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_initialize_student_menu</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a165">165</a></span>)
+		<span class="method-title">_initialize_student_menu</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a260">260</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
 <p class="short-description">Loads and injects page navigation for student's frontend.</p>
-<p class="description"><p>Smarty template variable $list_pagemenu will be created.</p></p>
+<p class="description"><p>Also loads all courses, in which current student is participating.  Smarty template variable $list_pagemenu will be created.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> protected</li>
 			</ul>
@@ -476,7 +520,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_initialize_teacher_menu</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a86">86</a></span>)
+		<span class="method-title">_initialize_teacher_menu</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a144">144</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -501,7 +545,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_init_language_for_student</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a40">40</a></span>)
+		<span class="method-title">_init_language_for_student</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a56">56</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -515,9 +559,17 @@
 		<span class="method-name">
 			_init_language_for_student
 		</span>
-				()
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$student</span> = <span class="var-default">NULL</span>], <span class="var-type"><a href="../LIST_DM_Models/Student.html">Student</a>|integer</span>&nbsp;<span class="var-name">$student,</span>)
 			</div>
 	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../LIST_DM_Models/Student.html">Student</a>|integer</span>
+				<span class="var-name">$student,</span><span class="var-description">: for which language have to be set, accept Student model or integer with student id, default is NULL (use currently loged in student).</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$student</span>			</li>
+				</ul>
 		
 			
 	</div>
@@ -525,7 +577,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_init_language_for_teacher</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a62">62</a></span>)
+		<span class="method-title">_init_language_for_teacher</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a99">99</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -539,9 +591,17 @@
 		<span class="method-name">
 			_init_language_for_teacher
 		</span>
-				()
+					([<span class="var-type"></span>&nbsp;<span class="var-name">$teacher</span> = <span class="var-default">NULL</span>], <span class="var-type"><a href="../LIST_DM_Models/Teacher.html">Teacher</a>|integer</span>&nbsp;<span class="var-name">$teacher,</span>)
 			</div>
 	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../LIST_DM_Models/Teacher.html">Teacher</a>|integer</span>
+				<span class="var-name">$teacher,</span><span class="var-description">: for which language have to be set, accept Teacher model or integer with teacher id, default is NULL (use currently loged in teacher).</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$teacher</span>			</li>
+				</ul>
 		
 			
 	</div>
@@ -549,7 +609,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_init_lang_js_messages</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a123">123</a></span>)
+		<span class="method-title">_init_lang_js_messages</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a181">181</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -569,11 +629,41 @@
 		
 			
 	</div>
-<a name="method_init_teacher_quick_langmenu" id="_init_teacher_quick_langmenu"><!-- --></a>
+<a name="method_init_specific_language" id="_init_specific_language"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_init_teacher_quick_langmenu</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a156">156</a></span>)
+		<span class="method-title">_init_specific_language</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a42">42</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Perform initialisation of language for specific language idiom.</p>
+<p class="description"><p>Language idiom must exist in system/application languages.</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_init_specific_language
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$lang_idiom</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$lang_idiom</span><span class="var-description">: language idiom.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_init_teacher_quick_langmenu" id="_init_teacher_quick_langmenu"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">_init_teacher_quick_langmenu</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a221">221</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -593,11 +683,34 @@
 		
 			
 	</div>
+<a name="method_init_teacher_quick_prefered_course_menu" id="_init_teacher_quick_prefered_course_menu"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_init_teacher_quick_prefered_course_menu</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a226">226</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			_init_teacher_quick_prefered_course_menu
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
 <a name="method_load_student_langfile" id="_load_student_langfile"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_load_student_langfile</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a51">51</a></span>)
+		<span class="method-title">_load_student_langfile</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a87">87</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -626,7 +739,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_load_teacher_langfile</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a74">74</a></span>)
+		<span class="method-title">_load_teacher_langfile</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a132">132</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -655,11 +768,12 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_select_student_menu_pagetag</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a175">175</a></span>)
+		<span class="method-title">_select_student_menu_pagetag</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a281">281</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
-<p class="short-description">TODO</p>
+<p class="short-description">Set the active menu item in student menu.</p>
+<p class="description"><p>Smarty template variable list_pagemenu_current will be created.</p></p>
 	<ul class="tags">
 				<li><span class="field">access:</span> protected</li>
 			</ul>
@@ -675,7 +789,7 @@
 			<ul class="parameters">
 					<li>
 				<span class="var-type">string</span>
-				<span class="var-name">$tag</span>			</li>
+				<span class="var-name">$tag</span><span class="var-description">: page tag to be set as active item in menu.</span>			</li>
 				</ul>
 		
 			
@@ -684,7 +798,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">_select_teacher_menu_pagetag</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a107">107</a></span>)
+		<span class="method-title">_select_teacher_menu_pagetag</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a165">165</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -710,11 +824,56 @@
 		
 			
 	</div>
-<a name="method_transaction_isolation" id="_transaction_isolation"><!-- --></a>
+<a name="method_send_multiple_emails" id="_send_multiple_emails"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">_transaction_isolation</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a116">116</a></span>)
+		<span class="method-title">_send_multiple_emails</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a295">295</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sends message to all students or teachers. Do not use get_iterated() to execute select query!</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE, if all emails are sent, or FALSE if all or some emails failed to be send.</li>
+				<li><span class="field">access:</span> protected</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			_send_multiple_emails
+		</span>
+					(<span class="var-type"><a href="../LIST_DM_Models/Student.html">Student</a>|<a href="../LIST_DM_Models/Teacher.html">Teacher</a></span>&nbsp;<span class="var-name">$recipients</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$subject</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$template</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$template_variables</span> = <span class="var-default">array()</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$from</span> = <span class="var-default">NULL</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$from_name</span> = <span class="var-default">''</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"><a href="../LIST_DM_Models/Student.html">Student</a>|<a href="../LIST_DM_Models/Teacher.html">Teacher</a></span>
+				<span class="var-name">$recipients</span><span class="var-description">: list of students or teachers.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$subject</span><span class="var-description">: email subject (accepts lang: prefix).</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$template</span><span class="var-description">: template body or file:path/to/template.tpl.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$template_variables</span><span class="var-description">: array of template variables.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$from</span><span class="var-description">: email addres of sender or NULL to use system address.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$from_name</span><span class="var-description">: name of sender.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="method_transaction_isolation" id="_transaction_isolation"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">_transaction_isolation</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_Core__coreLIST_Controller.php.html#a174">174</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -761,7 +920,7 @@
 					</div>
 		<div class="info-box-body">
 			<a name="constTRANSACTION_AREA_GLOBAL" id="TRANSACTION_AREA_GLOBAL"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="const-header">
 		<span class="const-title">
@@ -776,7 +935,7 @@
 	
 </div>
 <a name="constTRANSACTION_AREA_SESSION" id="TRANSACTION_AREA_SESSION"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
@@ -791,7 +950,7 @@
 	
 </div>
 <a name="constTRANSACTION_ISOLATION_READ_COMMITTED" id="TRANSACTION_ISOLATION_READ_COMMITTED"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="const-header">
 		<span class="const-title">
@@ -806,7 +965,7 @@
 	
 </div>
 <a name="constTRANSACTION_ISOLATION_READ_UNCOMMITTED" id="TRANSACTION_ISOLATION_READ_UNCOMMITTED"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
@@ -821,7 +980,7 @@
 	
 </div>
 <a name="constTRANSACTION_ISOLATION_REPEATABLE_READ" id="TRANSACTION_ISOLATION_REPEATABLE_READ"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="const-header">
 		<span class="const-title">
@@ -836,7 +995,7 @@
 	
 </div>
 <a name="constTRANSACTION_ISOLATION_SERIALIZABLE" id="TRANSACTION_ISOLATION_SERIALIZABLE"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
@@ -855,7 +1014,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 01 Jul 2013 14:10:55 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 08 Aug 2013 18:09:48 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

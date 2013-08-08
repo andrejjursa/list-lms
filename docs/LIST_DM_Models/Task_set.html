@@ -229,7 +229,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$has_many</span>
-			 = <span class="var-default">array(<br />        'task' =&gt; array(<br />            'join_table' =&gt; 'task_task_set_rel',<br />        ),'solution',)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a16">16</a></span>)
+			 = <span class="var-default">array(<br />        'task' =&gt; array(<br />            'join_table' =&gt; 'task_task_set_rel',<br />        ),'solution','comment','comment_subscriber_student'=&gt;array('class'=&gt;'student','other_field'=&gt;'comment_subscription','join_self_as'=&gt;'comment_subscription','join_other_as'=&gt;'comment_subscriber_student','join_table'=&gt;'task_set_comment_subscription_rel',),'comment_subscriber_teacher'=&gt;array('class'=&gt;'teacher','other_field'=&gt;'comment_subscription','join_self_as'=&gt;'comment_subscription','join_other_as'=&gt;'comment_subscriber_teacher','join_table'=&gt;'task_set_comment_subscription_rel',),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a16">16</a></span>)
 		</span>
 	</div>
 
@@ -256,7 +256,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$has_one</span>
-			 = <span class="var-default">array(<br />    	'task_set_type',<br />    	'course',<br />        'room',<br />        'group',<br />    )</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a23">23</a></span>)
+			 = <span class="var-default">array(<br />    	'task_set_type',<br />    	'course',<br />        'room',<br />        'group',<br />    )</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a38">38</a></span>)
 		</span>
 	</div>
 
@@ -408,7 +408,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a278">278</a></span>)
+		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a293">293</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -447,7 +447,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">extract_student_file_by_index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a219">219</a></span>)
+		<span class="method-title">extract_student_file_by_index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a234">234</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -480,7 +480,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_as_open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a70">70</a></span>)
+		<span class="method-title">get_as_open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a85">85</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -505,7 +505,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_open_task_set_id</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a86">86</a></span>)
+		<span class="method-title">get_open_task_set_id</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a101">101</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -530,7 +530,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_specific_file_info</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a165">165</a></span>)
+		<span class="method-title">get_specific_file_info</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a180">180</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -560,7 +560,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_student_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a99">99</a></span>)
+		<span class="method-title">get_student_files</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a114">114</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -590,7 +590,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_student_files_count</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a131">131</a></span>)
+		<span class="method-title">get_student_files_count</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a146">146</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -620,7 +620,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_student_file_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a192">192</a></span>)
+		<span class="method-title">get_student_file_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a207">207</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -650,7 +650,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_student_file_next_version</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a155">155</a></span>)
+		<span class="method-title">get_student_file_next_version</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a170">170</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -680,7 +680,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">set_as_open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a52">52</a></span>)
+		<span class="method-title">set_as_open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a67">67</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -705,7 +705,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">trim_explode</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a264">264</a></span>)
+		<span class="method-title">trim_explode</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a279">279</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -738,7 +738,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">where_has_no_tasks</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a43">43</a></span>)
+		<span class="method-title">where_has_no_tasks</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a58">58</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -763,7 +763,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">where_has_tasks</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a34">34</a></span>)
+		<span class="method-title">where_has_tasks</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelstask_set.php.html#a49">49</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -947,7 +947,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 01 Jul 2013 14:11:06 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 08 Aug 2013 18:10:02 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

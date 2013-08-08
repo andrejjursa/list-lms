@@ -52,9 +52,13 @@
 								</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																								<div class="var-title">
+																																<div class="var-title">
 					<span class="var-type">mixed</span>
 					<a href="#$has_many" title="details" class="var-name">$has_many</a>
+				</div>
+																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$has_one" title="details" class="var-name">$has_one</a>
 				</div>
 											</div>
 		</div>
@@ -75,13 +79,13 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$has_many" id="$has_many"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$has_many</span>
-			 = <span class="var-default">array(<br />        'solution',<br />    )</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsteacher.php.html#a10">10</a></span>)
+			 = <span class="var-default">array(<br />        'solution',<br />        'comment' =&gt; array(<br />            'cascade_delete' =&gt; FALSE,<br />        ),'task'=&gt;array('other_field'=&gt;'author','join_self_as'=&gt;'author','join_other_as'=&gt;'task'),'comment_subscription'=&gt;array('class'=&gt;'task_set','other_field'=&gt;'comment_subscriber_teacher','join_self_as'=&gt;'comment_subscriber_teacher','join_other_as'=&gt;'comment_subscription','join_table'=&gt;'task_set_comment_subscription_rel',),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsteacher.php.html#a10">10</a></span>)
 		</span>
 	</div>
 
@@ -96,6 +100,33 @@
 		<dl>
 			<dt><a href="../DataMapper/DataMapper.html#var$has_many">DataMapper::$has_many</a></dt>
 						<dd>Contains any related objects of which this model is related one or more times.</dd>
+					</dl>
+		
+		
+
+</div>
+<a name="var$has_one" id="$has_one"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$has_one</span>
+			 = <span class="var-default">array(<br />        'prefered_course' =&gt; array(<br />            'class' =&gt; 'course',<br />            'other_field' =&gt; 'prefered_for_teacher',<br />            'join_self_as' =&gt; 'prefered_for_teacher',<br />            'joint_other_as' =&gt; 'prefered_course',<br />        ),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsteacher.php.html#a28">28</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../DataMapper/DataMapper.html#var$has_one">DataMapper::$has_one</a></dt>
+						<dd>Contains any related objects of which this model is singularly related.</dd>
 					</dl>
 		
 		
@@ -131,9 +162,6 @@
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$global_extensions">DataMapper::$global_extensions</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$has_one">DataMapper::$has_one</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$model">DataMapper::$model</a></span><br>
@@ -325,7 +353,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 01 Jul 2013 14:11:08 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 08 Aug 2013 18:10:04 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

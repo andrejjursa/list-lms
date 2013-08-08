@@ -78,11 +78,46 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																																																																												
+																																																																																																																																																																																																																																																				
 												<div class="method-definition">
 											<span class="method-result">Task_sets</span>
 										<a href="#__construct" title="details" class="method-name">__construct</a>
 										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#add_comment" title="details" class="method-name">add_comment</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$reply_at_id</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#all_comments" title="details" class="method-name">all_comments</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#approve_comment" title="details" class="method-name">approve_comment</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$comment_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#clone_task_set" title="details" class="method-name">clone_task_set</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#comments" title="details" class="method-name">comments</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#comments_subscribe" title="details" class="method-name">comments_subscribe</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#comments_unsubscribe" title="details" class="method-name">comments_unsubscribe</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -93,6 +128,11 @@
 											<span class="method-result">void</span>
 										<a href="#delete" title="details" class="method-name">delete</a>
 										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#delete_comment" title="details" class="method-name">delete_comment</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$comment_id</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -146,6 +186,16 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
+										<a href="#my_comments_settings" title="details" class="method-name">my_comments_settings</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#new_comment_form" title="details" class="method-name">new_comment_form</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
 										<a href="#new_task_set_form" title="details" class="method-name">new_task_set_form</a>
 										()
 									</div>
@@ -153,6 +203,21 @@
 											<span class="method-result">void</span>
 										<a href="#open" title="details" class="method-name">open</a>
 										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#post_comment" title="details" class="method-name">post_comment</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#post_comment_reply" title="details" class="method-name">post_comment_reply</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$reply_at_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#reply_at_comment" title="details" class="method-name">reply_at_comment</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$reply_at_id</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -211,11 +276,208 @@
 					</dl>
 			
 	</div>
-<a name="methodcreate" id="create"><!-- --></a>
+<a name="methodadd_comment" id="add_comment"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">create</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a132">132</a></span>)
+		<span class="method-title">add_comment</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a545">545</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			add_comment
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$reply_at_id</span> = <span class="var-default">NULL</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$reply_at_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodall_comments" id="all_comments"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">all_comments</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a368">368</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			all_comments
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodapprove_comment" id="approve_comment"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">approve_comment</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a472">472</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			approve_comment
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$comment_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$comment_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodclone_task_set" id="clone_task_set"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">clone_task_set</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a302">302</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			clone_task_set
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodcomments" id="comments"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">comments</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a348">348</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			comments
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcomments_subscribe" id="comments_subscribe"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">comments_subscribe</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a423">423</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			comments_subscribe
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcomments_unsubscribe" id="comments_unsubscribe"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">comments_unsubscribe</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a395">395</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			comments_unsubscribe
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcreate" id="create"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">create</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a145">145</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -235,10 +497,10 @@
 			
 	</div>
 <a name="methoddelete" id="delete"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a243">243</a></span>)
+		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a265">265</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -257,11 +519,42 @@
 		
 			
 	</div>
+<a name="methoddelete_comment" id="delete_comment"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">delete_comment</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a444">444</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			delete_comment
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$comment_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$comment_id</span>			</li>
+				</ul>
+		
+			
+	</div>
 <a name="methodedit" id="edit"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">edit</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a163">163</a></span>)
+		<span class="method-title">edit</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a180">180</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -284,7 +577,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_all_task_sets</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a100">100</a></span>)
+		<span class="method-title">get_all_task_sets</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a101">101</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -307,7 +600,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_task_set_groups</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a58">58</a></span>)
+		<span class="method-title">get_task_set_groups</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a59">59</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -341,7 +634,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_task_set_group_rooms</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a77">77</a></span>)
+		<span class="method-title">get_task_set_group_rooms</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a78">78</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -378,7 +671,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_task_set_types</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a39">39</a></span>)
+		<span class="method-title">get_task_set_types</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a40">40</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -412,7 +705,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a22">22</a></span>)
+		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a23">23</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -435,7 +728,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_courses</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a280">280</a></span>)
+		<span class="method-title">inject_courses</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a608">608</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -458,7 +751,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_languages</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a318">318</a></span>)
+		<span class="method-title">inject_languages</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a649">649</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -481,7 +774,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_stored_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a313">313</a></span>)
+		<span class="method-title">inject_stored_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a643">643</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -504,7 +797,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_task_set_types</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a294">294</a></span>)
+		<span class="method-title">inject_task_set_types</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a622">622</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -523,11 +816,67 @@
 		
 			
 	</div>
+<a name="methodmy_comments_settings" id="my_comments_settings"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">my_comments_settings</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a384">384</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			my_comments_settings
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodnew_comment_form" id="new_comment_form"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">new_comment_form</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a378">378</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			new_comment_form
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
 <a name="methodnew_task_set_form" id="new_task_set_form"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">new_task_set_form</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a34">34</a></span>)
+		<span class="method-title">new_task_set_form</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a35">35</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -550,7 +899,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a266">266</a></span>)
+		<span class="method-title">open</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a288">288</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -569,11 +918,101 @@
 		
 			
 	</div>
-<a name="methodstore_filter" id="store_filter"><!-- --></a>
+<a name="methodpost_comment" id="post_comment"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">store_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a305">305</a></span>)
+		<span class="method-title">post_comment</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a512">512</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			post_comment
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodpost_comment_reply" id="post_comment_reply"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">post_comment_reply</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a534">534</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			post_comment_reply
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$reply_at_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$reply_at_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodreply_at_comment" id="reply_at_comment"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">reply_at_comment</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a523">523</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			reply_at_comment
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$reply_at_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$reply_at_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodstore_filter" id="store_filter"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">store_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a633">633</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -598,10 +1037,10 @@
 			
 	</div>
 <a name="methodupdate" id="update"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">update</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a179">179</a></span>)
+		<span class="method-title">update</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadmintask_sets.php.html#a196">196</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -627,6 +1066,7 @@
 					<blockquote>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_plupload">LIST_Controller::_add_plupload()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_scrollTo">LIST_Controller::_add_scrollTo()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_tinymce">LIST_Controller::_add_tinymce()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_open_task_set">LIST_Controller::_initialize_open_task_set()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_student_menu">LIST_Controller::_initialize_student_menu()</a></span><br>
@@ -634,11 +1074,14 @@
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_student">LIST_Controller::_init_language_for_student()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_teacher">LIST_Controller::_init_language_for_teacher()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_lang_js_messages">LIST_Controller::_init_lang_js_messages()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_specific_language">LIST_Controller::_init_specific_language()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_teacher_quick_langmenu">LIST_Controller::_init_teacher_quick_langmenu()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_teacher_quick_prefered_course_menu">LIST_Controller::_init_teacher_quick_prefered_course_menu()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_student_langfile">LIST_Controller::_load_student_langfile()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_teacher_langfile">LIST_Controller::_load_teacher_langfile()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_student_menu_pagetag">LIST_Controller::_select_student_menu_pagetag()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_teacher_menu_pagetag">LIST_Controller::_select_teacher_menu_pagetag()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_send_multiple_emails">LIST_Controller::_send_multiple_emails()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_transaction_isolation">LIST_Controller::_transaction_isolation()</a></span><br>
 											</blockquote>
 										
@@ -659,7 +1102,7 @@
 					</div>
 		<div class="info-box-body">
 			<a name="constREGEXP_PATTERN_DATETYME" id="REGEXP_PATTERN_DATETYME"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="const-header">
 		<span class="const-title">
@@ -674,7 +1117,7 @@
 	
 </div>
 <a name="constSTORED_FILTER_SESSION_NAME" id="STORED_FILTER_SESSION_NAME"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="const-header">
 		<span class="const-title">
@@ -716,7 +1159,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 01 Jul 2013 14:11:07 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 08 Aug 2013 18:10:04 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

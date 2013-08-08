@@ -74,15 +74,30 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																																																																																																				
+																																																																																																																																																																												
 												<div class="method-definition">
-											<span class="method-result">Solutions</span>
-										<a href="#__construct" title="details" class="method-name">__construct</a>
-										()
+											<span class="method-result">void</span>
+										<a href="#batch_save_solutions" title="details" class="method-name">batch_save_solutions</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#batch_valuation" title="details" class="method-name">batch_valuation</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#batch_valuation_list" title="details" class="method-name">batch_valuation_list</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#create_solution" title="details" class="method-name">create_solution</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#display_tasks_list" title="details" class="method-name">display_tasks_list</a>
 											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
 									</div>
 																<div class="method-definition">
@@ -112,6 +127,11 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
+										<a href="#inject_batch_valuation" title="details" class="method-name">inject_batch_valuation</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
 										<a href="#inject_courses" title="details" class="method-name">inject_courses</a>
 										()
 									</div>
@@ -133,12 +153,17 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#show_file_content" title="details" class="method-name">show_file_content</a>
-											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$solution_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$solution_file</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$zip_index</span>)
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$solution_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$solution_file</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$zip_index</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$no_highlight</span> = <span class="var-default">'no'</span>])
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#solutions_list" title="details" class="method-name">solutions_list</a>
 											([<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span> = <span class="var-default">NULL</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Solutions</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+										()
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
@@ -173,11 +198,11 @@
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 
-<a name="method__construct" id="__construct"><!-- --></a>
-<div class="oddrow">
+<a name="methodbatch_save_solutions" id="batch_save_solutions"><!-- --></a>
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a12">12</a></span>)
+		<span class="method-title">batch_save_solutions</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a51">51</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -186,27 +211,82 @@
 			</ul>
 	
 	<div class="method-signature">
-		<span class="method-result">Solutions</span>
+		<span class="method-result">void</span>
 		<span class="method-name">
-			__construct
+			batch_save_solutions
 		</span>
-				()
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
 			</div>
 	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
 		
-			<hr class="separator" />
-		<div class="notes">Redefinition of:</div>
-		<dl>
-			<dt><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></dt>
-						<dd>Main constructor, initialise controller.</dd>
-					</dl>
 			
 	</div>
-<a name="methodcreate_solution" id="create_solution"><!-- --></a>
+<a name="methodbatch_valuation" id="batch_valuation"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">batch_valuation</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a32">32</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			batch_valuation
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodbatch_valuation_list" id="batch_valuation_list"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">create_solution</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a47">47</a></span>)
+		<span class="method-title">batch_valuation_list</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a44">44</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			batch_valuation_list
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodcreate_solution" id="create_solution"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">create_solution</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a115">115</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -230,11 +310,39 @@
 		
 			
 	</div>
+<a name="methoddisplay_tasks_list" id="display_tasks_list"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">display_tasks_list</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a170">170</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			display_tasks_list
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
 <a name="methodget_groups_from_course" id="get_groups_from_course"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_groups_from_course</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a241">241</a></span>)
+		<span class="method-title">get_groups_from_course</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a326">326</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -265,7 +373,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_solutions_list_for_task_set</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a226">226</a></span>)
+		<span class="method-title">get_solutions_list_for_task_set</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a311">311</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -293,7 +401,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_student_file_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a155">155</a></span>)
+		<span class="method-title">get_student_file_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a235">235</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -327,7 +435,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">get_task_set_list</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a197">197</a></span>)
+		<span class="method-title">get_task_set_list</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a282">282</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -350,7 +458,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a21">21</a></span>)
+		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a22">22</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -369,11 +477,39 @@
 		
 			
 	</div>
-<a name="methodinject_courses" id="inject_courses"><!-- --></a>
+<a name="methodinject_batch_valuation" id="inject_batch_valuation"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_courses</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a270">270</a></span>)
+		<span class="method-title">inject_batch_valuation</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a398">398</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			inject_batch_valuation
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$task_set_id</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodinject_courses" id="inject_courses"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">inject_courses</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a359">359</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -393,10 +529,10 @@
 			
 	</div>
 <a name="methodinject_stored_filter" id="inject_stored_filter"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_stored_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a265">265</a></span>)
+		<span class="method-title">inject_stored_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a353">353</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -416,10 +552,10 @@
 			
 	</div>
 <a name="methodinject_students" id="inject_students"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_students</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a284">284</a></span>)
+		<span class="method-title">inject_students</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a373">373</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -444,10 +580,10 @@
 			
 	</div>
 <a name="methodnew_solution_form" id="new_solution_form"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">new_solution_form</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a93">93</a></span>)
+		<span class="method-title">new_solution_form</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a161">161</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -472,10 +608,10 @@
 			
 	</div>
 <a name="methodshow_file_content" id="show_file_content"><!-- --></a>
-<div class="evenrow">
+<div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">show_file_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a168">168</a></span>)
+		<span class="method-title">show_file_content</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a248">248</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -488,7 +624,7 @@
 		<span class="method-name">
 			show_file_content
 		</span>
-					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$solution_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$solution_file</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$zip_index</span>)
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$task_set_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$solution_id</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$solution_file</span>, <span class="var-type"></span>&nbsp;<span class="var-name">$zip_index</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$no_highlight</span> = <span class="var-default">'no'</span>])
 			</div>
 	
 			<ul class="parameters">
@@ -504,15 +640,18 @@
 					<li>
 				<span class="var-type"></span>
 				<span class="var-name">$zip_index</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$no_highlight</span>			</li>
 				</ul>
 		
 			
 	</div>
 <a name="methodsolutions_list" id="solutions_list"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">solutions_list</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a31">31</a></span>)
+		<span class="method-title">solutions_list</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a99">99</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -536,11 +675,40 @@
 		
 			
 	</div>
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a12">12</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Solutions</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></dt>
+						<dd>Main constructor, initialise controller.</dd>
+					</dl>
+			
+	</div>
 <a name="methodstore_filter" id="store_filter"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">store_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a257">257</a></span>)
+		<span class="method-title">store_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a342">342</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -568,7 +736,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">update_valuation</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a122">122</a></span>)
+		<span class="method-title">update_valuation</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a202">202</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -599,7 +767,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">valuation</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a102">102</a></span>)
+		<span class="method-title">valuation</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_BE_Controllers__controllersadminsolutions.php.html#a182">182</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -633,6 +801,7 @@
 					<blockquote>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_plupload">LIST_Controller::_add_plupload()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_scrollTo">LIST_Controller::_add_scrollTo()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_tinymce">LIST_Controller::_add_tinymce()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_open_task_set">LIST_Controller::_initialize_open_task_set()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_student_menu">LIST_Controller::_initialize_student_menu()</a></span><br>
@@ -640,11 +809,14 @@
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_student">LIST_Controller::_init_language_for_student()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_language_for_teacher">LIST_Controller::_init_language_for_teacher()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_lang_js_messages">LIST_Controller::_init_lang_js_messages()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_specific_language">LIST_Controller::_init_specific_language()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_teacher_quick_langmenu">LIST_Controller::_init_teacher_quick_langmenu()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_init_teacher_quick_prefered_course_menu">LIST_Controller::_init_teacher_quick_prefered_course_menu()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_student_langfile">LIST_Controller::_load_student_langfile()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_load_teacher_langfile">LIST_Controller::_load_teacher_langfile()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_student_menu_pagetag">LIST_Controller::_select_student_menu_pagetag()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_select_teacher_menu_pagetag">LIST_Controller::_select_teacher_menu_pagetag()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_send_multiple_emails">LIST_Controller::_send_multiple_emails()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_transaction_isolation">LIST_Controller::_transaction_isolation()</a></span><br>
 											</blockquote>
 										
@@ -707,7 +879,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 01 Jul 2013 14:11:02 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 08 Aug 2013 18:09:55 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

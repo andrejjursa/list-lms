@@ -76,11 +76,16 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-												
+																				
 												<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#delete" title="details" class="method-name">delete</a>
 											([<span class="var-type">DataMapper|string</span>&nbsp;<span class="var-name">$object</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$related_field</span> = <span class="var-default">''</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#generate_random_password_token" title="details" class="method-name">generate_random_password_token</a>
+										()
 									</div>
 								</div>
 		</div>
@@ -106,7 +111,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$has_many</span>
-			 = <span class="var-default">array(<br />        'participant',<br />        'solution',<br />    )</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a10">10</a></span>)
+			 = <span class="var-default">array(<br />        'participant',<br />        'solution',<br />        'comment' =&gt; array(<br />            'cascade_delete' =&gt; FALSE,<br />        ),'comment_subscription'=&gt;array('class'=&gt;'task_set','other_field'=&gt;'comment_subscriber_student','join_self_as'=&gt;'comment_subscriber_student','join_other_as'=&gt;'comment_subscription','join_table'=&gt;'task_set_comment_subscription_rel',),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a10">10</a></span>)
 		</span>
 	</div>
 
@@ -133,7 +138,7 @@
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$has_one</span>
-			 = <span class="var-default">array(<br />        'active_course' =&gt; array(<br />            'class' =&gt; 'course',<br />            'other_field' =&gt; 'active_for_student',<br />        ),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a15">15</a></span>)
+			 = <span class="var-default">array(<br />        'active_course' =&gt; array(<br />            'class' =&gt; 'course',<br />            'other_field' =&gt; 'active_for_student',<br />        ),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a25">25</a></span>)
 		</span>
 	</div>
 
@@ -262,7 +267,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a28">28</a></span>)
+		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a38">38</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -295,6 +300,31 @@
 			<dt><a href="../DataMapper/DataMapper.html#methoddelete">DataMapper::delete()</a></dt>
 						<dd>Delete</dd>
 					</dl>
+			
+	</div>
+<a name="methodgenerate_random_password_token" id="generate_random_password_token"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">generate_random_password_token</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a52">52</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Create random password token for student.</p>
+<p class="description"><p>If student is exists, it will be automaticaly updated (only password token information).</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			generate_random_password_token
+		</span>
+				()
+			</div>
+	
+		
 			
 	</div>
 							<h4>Inherited Methods</h4>
@@ -413,7 +443,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Mon, 01 Jul 2013 14:11:02 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Thu, 08 Aug 2013 18:09:55 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>
