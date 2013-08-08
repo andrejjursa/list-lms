@@ -201,14 +201,16 @@ class Periods extends LIST_Controller  {
     
     private function store_filter($filter) {
         if (is_array($filter)) {
-            $old_filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
+            $this->load->library('filter');
+            $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
-            $this->session->set_userdata(self::STORED_FILTER_SESSION_NAME, $new_filter);
+            $this->filter->store_filter(self::STORED_FILTER_SESSION_NAME, $new_filter);
         }
     }
     
     private function inject_stored_filter() {
-        $filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
+        $this->load->library('filter');
+        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
         $this->parser->assign('filter', $filter);
     }
 }

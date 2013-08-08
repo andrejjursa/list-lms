@@ -43,6 +43,7 @@
  * @property Messages $messages
  * @property Pluplopad $plupload
  * @property Usermanager $usermanager
+ * @property Filter $filter
  * 
  * @property Index $index
  */
