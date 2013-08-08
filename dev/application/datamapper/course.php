@@ -113,6 +113,13 @@ $cache = array (
       array (
       ),
     ),
+    'prefered_for_teacher' => 
+    array (
+      'field' => 'prefered_for_teacher',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -147,6 +154,18 @@ $cache = array (
       'other_field' => 'active_course',
       'join_self_as' => 'active_course',
       'join_other_as' => 'active_for_student',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'prefered_for_teacher' => 
+    array (
+      'class' => 'teacher',
+      'other_field' => 'prefered_course',
+      'join_self_as' => 'prefered_course',
+      'joint_other_as' => 'prefered_for_teacher',
+      'join_other_as' => 'prefered_for_teacher',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

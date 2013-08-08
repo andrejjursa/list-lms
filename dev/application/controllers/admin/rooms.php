@@ -11,6 +11,7 @@ class Rooms extends LIST_Controller {
         parent::__construct();
         $this->_init_language_for_teacher();
         $this->_load_teacher_langfile();
+        $this->_init_teacher_quick_prefered_course_menu();
         $this->usermanager->teacher_login_protected_redirect();
     }
     

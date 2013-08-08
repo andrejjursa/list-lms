@@ -223,6 +223,35 @@ class LIST_Controller extends CI_Controller {
         $this->parser->assign('list_quicklang_menu', $languages);
     }
     
+    protected function _init_teacher_quick_prefered_course_menu() {
+        $menu = array();
+        
+        $courses = new Course();
+        $courses->include_related('period', 'name');
+        $courses->order_by_related('period', 'sorting', 'desc');
+        $courses->order_by_with_constant('name', 'asc');
+        $courses->get_iterated();
+        
+        foreach($courses as $course) {
+            $menu[$course->period_name][$course->id] = $course->name;
+        }
+        
+        $teacher = new Teacher();
+        $teacher->get_by_id($this->usermanager->get_teacher_id());
+        $current_course_name = $this->lang->line('admin_teachers_no_prefered_course');
+        $current_course_id = NULL;
+        if ($teacher->exists()) {
+            $prefered_course = $teacher->prefered_course->get();
+            if ($prefered_course->exists()) {
+                $current_course_name = $this->lang->text($prefered_course->name);
+                $current_course_id = $prefered_course->id;
+            }
+        }
+        $this->parser->assign('list_teacher_prefered_course_name', $current_course_name);
+        $this->parser->assign('list_teacher_prefered_course_id', $current_course_id);
+        $this->parser->assign('list_teacher_prefered_course_menu', $menu);
+    }
+    
     /**
      * Loads and injects page navigation for student's frontend.
      * Also loads all courses, in which current student is participating.

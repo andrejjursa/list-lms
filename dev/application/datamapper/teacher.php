@@ -10,6 +10,7 @@ $cache = array (
     4 => 'email',
     5 => 'password',
     6 => 'language',
+    7 => 'prefered_course_id',
   ),
   'validation' => 
   array (
@@ -63,6 +64,20 @@ $cache = array (
       array (
       ),
     ),
+    'prefered_course_id' => 
+    array (
+      'field' => 'prefered_course_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'prefered_course' => 
+    array (
+      'field' => 'prefered_course',
+      'rules' => 
+      array (
+      ),
+    ),
     'solution' => 
     array (
       'field' => 'solution',
@@ -94,6 +109,18 @@ $cache = array (
   ),
   'has_one' => 
   array (
+    'prefered_course' => 
+    array (
+      'class' => 'course',
+      'other_field' => 'prefered_for_teacher',
+      'join_self_as' => 'prefered_for_teacher',
+      'joint_other_as' => 'prefered_course',
+      'join_other_as' => 'prefered_course',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
   ),
   'has_many' => 
   array (

@@ -15,6 +15,7 @@ class Solutions extends LIST_Controller {
         $this->_load_teacher_langfile();
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
+        $this->_init_teacher_quick_prefered_course_menu();
         $this->usermanager->teacher_login_protected_redirect();
     }
     
@@ -351,7 +352,7 @@ class Solutions extends LIST_Controller {
     
     private function inject_stored_filter() {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
+        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
         $this->parser->assign('filter', $filter);
     }
     

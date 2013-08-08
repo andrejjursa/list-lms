@@ -31,6 +31,8 @@ ul.ui-menu li a { color: green !important; }
 
 #teacher_quick_langmenu { display: none; position: absolute; }
 #top_meta_informations div.teacher_quick_langmenu { display: inline-block; }
+#teacher_quick_prefered_course_menu { display: none; position: absolute; }
+#top_meta_informations div.teacher_quick_prefered_course_menu { display: inline-block; }
 
 #jMenu { display:table; margin:0; padding:0; position: relative; z-index: 1000; }
 /********************/

@@ -27,10 +27,21 @@ class Filter {
         }
     }
     
-    public function restore_filter($filter_name) {
+    public function restore_filter($filter_name, $teacher = NULL, $course_field = NULL) {
         $filters = $this->CI->session->userdata(self::FILTERS_ARRAY);
         $filters = empty($filters) || is_null($filters) || !is_array($filters) ? array() : $filters; 
-        return array_key_exists($filter_name, $filters) ? $filters[$filter_name] : array();
+        $filter = array_key_exists($filter_name, $filters) ? $filters[$filter_name] : array();
+        if (!is_null($teacher) && !is_null($course_field) && is_string($course_field)) {
+            if (!is_object($teacher) || !$teacher instanceof Teacher) {
+                $teacher_id = $teacher;
+                $teacher = new Teacher();
+                $teacher->get_by_id(intval($teacher_id));
+            }
+            if ($teacher->exists()) {
+                $filter[$course_field] = $teacher->prefered_course_id;
+            }
+        }
+        return $filter;
     }
 
     public function set_filter_course_name_field($filter_name, $field_name) {

@@ -13,6 +13,7 @@ class Settings extends LIST_Controller {
         $this->_load_teacher_langfile();
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
+        $this->_init_teacher_quick_prefered_course_menu();
         $this->usermanager->teacher_login_protected_redirect();
         $this->load->library('configurator');
     }

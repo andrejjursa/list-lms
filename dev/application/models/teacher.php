@@ -25,5 +25,13 @@ class Teacher extends DataMapper {
             'join_table' => 'task_set_comment_subscription_rel',
         ),
     );
+    public $has_one = array(
+        'prefered_course' => array(
+            'class' => 'course',
+            'other_field' => 'prefered_for_teacher',
+            'join_self_as' => 'prefered_for_teacher',
+            'joint_other_as' => 'prefered_course',
+        ),
+    );
     
 }

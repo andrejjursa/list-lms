@@ -21,6 +21,7 @@ $lang['admin_teachers_my_account_label_email'] = 'E-mail';
 $lang['admin_teachers_my_account_label_language'] = 'Jazyk';
 $lang['admin_teachers_my_account_label_email_validation'] = 'Validácia e-mailu';
 $lang['admin_teachers_my_account_label_email_current'] = 'Súčasný e-mail';
+$lang['admin_teachers_my_account_label_prefered_course'] = 'Preferovaný kurz';
 $lang['admin_teachers_my_account_button_submit'] = 'Uložiť';
 $lang['admin_teachers_my_account_error_invalid_account'] = 'Chyba účtu, nemôžem uložiť zmeny.';
 $lang['admin_teachers_my_account_error_save'] = 'Na účte neboli vykonané žiadne zmeny.';
@@ -62,3 +63,6 @@ $lang['admin_teachers_list_message_delete_question'] = 'Ste si istý, že chcete
 $lang['admin_teachers_list_message_after_delete'] = 'Učiteľský účet bol vymazaný.';
 
 $lang['admin_teachers_teacher_language_quick_changed'] = 'Jazyk bol zmenený.';
+$lang['admin_teachers_no_prefered_course'] = 'Žiaden preferovaný kurz';
+$lang['admin_teachers_prefered_course_quickchange_success'] = 'Preferovaný kurz bol úspešne zmenený.';
+$lang['admin_teachers_prefered_course_quickchange_failed'] = 'Preferovaný kurz sa nepodarilo zmeniť.';
