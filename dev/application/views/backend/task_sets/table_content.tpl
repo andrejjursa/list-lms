@@ -10,12 +10,12 @@
             {if $filter.fields.task_set_type}<th>{translate line='admin_task_sets_table_header_task_set_type'}</th>{/if}
             {if $filter.fields.tasks}<th>{translate line='admin_task_sets_table_header_tasks'}</th>{/if}
             {if $filter.fields.published}<th>{translate line='admin_task_sets_table_header_published'}</th>{/if}
-            <th colspan="4" class="controlls"><div id="open_fields_config_id">{translate line='admin_task_sets_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
+            <th colspan="5" class="controlls"><div id="open_fields_config_id">{translate line='admin_task_sets_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
     </thead>
     <tfoot id="table_pagination_footer_id">
         <tr>
-            <td colspan="{5 + $filter.fields|sum_array}">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
+            <td colspan="{6 + $filter.fields|sum_array}">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
         </tr>
     </tfoot>
     <tbody>
@@ -30,6 +30,7 @@
             {if $filter.fields.task_set_type}<td>{translate_text text=$task_set->task_set_type_name}</td>{/if}
             {if $filter.fields.tasks}<td>{$task_set->task_count}</td>{/if}
             {if $filter.fields.published}<td>{if $task_set->published eq 1}{translate line='admin_task_sets_table_field_published_yes'}{else}{translate line='admin_task_sets_table_field_published_no'}{/if}</td>{/if}
+            <td class="controlls"><a href="{internal_url url="admin_task_sets/clone_task_set/task_set_id/{$task_set->id}"}" class="button special clone_task_set">{translate line='admin_task_sets_table_button_clone_task_set'}</a></td>
             <td class="controlls">{if $task_set->comments_enabled}<a href="{internal_url url="admin_task_sets/comments/{$task_set->id}"}" class="button special">{translate line='admin_task_sets_table_button_discussion'}&nbsp;[{$task_set->comment_count}]</a>{/if}</td>
             <td class="controlls"><a href="{internal_url url="admin_task_sets/open/task_set_id/{$task_set->id}"}" class="button special open_task_set_button">{translate line='admin_task_sets_table_button_open'}</a></td>
             <td class="controlls"><a href="{internal_url url="admin_task_sets/edit/task_set_id/{$task_set->id}"}" class="button">{translate line='admin_task_sets_table_button_edit'}</a></td>

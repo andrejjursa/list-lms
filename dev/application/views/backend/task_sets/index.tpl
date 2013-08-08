@@ -52,6 +52,7 @@
 {block custom_head}<script type="text/javascript">
     var messages = {
         delete_question: '{translate line="admin_task_set_javascript_message_delete_question"}',
+        clone_question: '{translate line="admin_task_set_javascript_message_clone_question"}',
         after_delete: '{translate line="admin_task_set_javascript_message_after_delete"}',
         after_open: '{translate line="admin_task_set_javascript_message_after_open"}'
     }; 

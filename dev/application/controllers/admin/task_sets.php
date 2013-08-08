@@ -298,6 +298,52 @@ class Task_sets extends LIST_Controller {
         $this->parser->parse('partials/backend_general/open_task_set.tpl');
     }
     
+    public function clone_task_set() {
+        $url = $this->uri->ruri_to_assoc(3);
+        $task_set_id = isset($url['task_set_id']) ? intval($url['task_set_id']) : 0;
+        $result = new stdClass();
+        $result->result = FALSE;
+        $result->message = $this->lang->line('admin_task_sets_error_task_set_not_found');
+        if ($task_set_id !== 0) {
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $task_set = new Task_set();
+            $task_set->get_by_id($task_set_id);
+            if ($task_set->exists()) {
+                $new_task_set = $task_set->get_copy();
+                $new_task_set->published = 0;
+                if ($new_task_set->save()) {
+                    $this->lang->clone_overlays('task_sets', $task_set->id, $new_task_set->id);
+                    $tasks = new Task();
+                    $tasks->include_join_fields();
+                    $tasks->where_related_task_set($task_set);
+                    $tasks->get_iterated();
+                    foreach ($tasks as $task) {
+                        $new_task_set->save_task($task);
+                        $task->set_join_field($new_task_set, 'sorting', $task->join_sorting);
+                        $task->set_join_field($new_task_set, 'points_total', $task->join_points_total);
+                        $task->set_join_field($new_task_set, 'bonus_task', $task->join_bonus_task);
+                    }
+                    if ($this->db->trans_status()) {
+                        $this->db->trans_commit();
+                        $result->result = TRUE;
+                        $result->message = $this->lang->line('admin_task_sets_success_task_set_cloned');
+                    } else {
+                        $this->db->trans_rollback();
+                        $result->message = $this->lang->line('admin_task_sets_error_task_set_cant_be_cloned');
+                    }
+                } else {
+                    $this->db->trans_rollback();
+                    $result->message = $this->lang->line('admin_task_sets_error_task_set_cant_be_cloned');
+                }
+            } else {
+                $this->db->trans_rollback();
+            }
+        }
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($result));
+    }
+
     public function comments($task_set_id) {
         $this->_select_teacher_menu_pagetag('task_sets');
         $task_set = new Task_set();

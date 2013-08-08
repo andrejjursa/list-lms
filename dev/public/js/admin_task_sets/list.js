@@ -56,7 +56,7 @@ jQuery(document).ready(function($) {
         event.preventDefault();
         if (confirm(messages.delete_question)) {
             api_ajax_update($(this).attr('href'), 'get', {}, function(output) {
-                if (output == true) {
+                if (output === true) {
                     reload_all_task_sets();
                     show_notification(messages.after_delete, 'success');    
                 }
@@ -71,5 +71,21 @@ jQuery(document).ready(function($) {
             reload_all_task_sets();
             show_notification(messages.after_open, 'success');
         });
+    });
+    
+    $(document).on('click', '#table_content_id a.clone_task_set', function(event) {
+        event.preventDefault();
+        if (confirm(messages.clone_question)) {
+            var url = $(this).attr('href');
+            api_ajax_update(url, 'post', {}, function(output) {
+                console.log(output);
+                if (output.result !== undefined && output.message !== undefined) {
+                    show_notification(output.message, output.result ? 'success' : 'error');
+                    if (output.result === true) {
+                        reload_all_task_sets();
+                    }
+                }
+            });
+        }
     });
 });
