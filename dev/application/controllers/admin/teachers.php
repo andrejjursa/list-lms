@@ -375,6 +375,7 @@ class Teachers extends LIST_Controller {
             $course->get_by_id($course_id);
             if ($teacher->save(array('prefered_course' => $course))) {
                 $this->db->trans_commit();
+                $this->usermanager->refresh_teacher_userdata();
                 $this->messages->add_message('lang:admin_teachers_prefered_course_quickchange_success', Messages::MESSAGE_TYPE_DEFAULT);
                 $this->load->library('filter');
                 $this->filter->set_all_filters_course($teacher->prefered_course_id);
