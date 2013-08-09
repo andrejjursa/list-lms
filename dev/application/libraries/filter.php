@@ -31,7 +31,7 @@ class Filter {
         $filters = $this->CI->session->userdata(self::FILTERS_ARRAY);
         $filters = empty($filters) || is_null($filters) || !is_array($filters) ? array() : $filters; 
         $filter = array_key_exists($filter_name, $filters) ? $filters[$filter_name] : array();
-        if (!is_null($teacher) && !is_null($course_field) && is_string($course_field)) {
+        if (!is_null($teacher) && !is_null($course_field) && is_string($course_field) && empty($filter)) {
             if (!is_object($teacher) || !$teacher instanceof Teacher) {
                 $teacher_id = $teacher;
                 $teacher = new Teacher();
