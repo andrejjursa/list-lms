@@ -2,34 +2,21 @@ jQuery(document).ready(function($) {
     
     make_filter_form('#filter_form_id');
     
-    var reload_all_task_sets = function() {
-        var url = global_base_url + 'index.php/admin_solutions/get_task_set_list';
+    var reload_valuation_table = function() {
+        var url = global_base_url + 'index.php/admin_solutions/get_valuation_table';
         var target = '#table_content_id';
         var data = $('#filter_form_id').serializeArray();
         var onSuccess = function() {
-            $('#table_pagination_footer_id').html('');
-            $('#table_content_id #pagination_row_id').appendTo($('#table_pagination_footer_id'));
+            update_content_width();
         };
         api_ajax_load(url, target, 'post', data, onSuccess);
     };
     
-    reload_all_task_sets();
+    reload_valuation_table();
     
     $('#filter_form_id').submit(function(event) {
         event.preventDefault();
-        reload_all_task_sets();
-    });
-    
-    $(document).on('change', '#table_pagination_footer_id select[name=paging_page]', function() {
-        var value = $(this).val();
-        $('#filter_form_id input[name="filter[page]"]').val(value);
-        reload_all_task_sets();
-    });
-    
-    $(document).on('change', '#table_pagination_footer_id select[name=paging_rows_per_page]', function() {
-        var value = $(this).val();
-        $('#filter_form_id input[name="filter[rows_per_page]"]').val(value);
-        reload_all_task_sets();
+        reload_valuation_table();
     });
     
     var filter_last_course_id = '';
@@ -45,6 +32,7 @@ jQuery(document).ready(function($) {
                 var url = global_base_url + 'index.php/admin_solutions/get_groups_from_course/' + filter_course_id + '/' + selected_id;
                 var target = $('#filter_group_id');
                 api_ajax_load(url, target, 'post', {}, function() {
+                    target.find('option[value=NULL]').remove();
                     update_filter_group();
                 });
                 filter_last_course_id = filter_course_id;
@@ -62,5 +50,22 @@ jQuery(document).ready(function($) {
     };
     
     $(document).on('change', '#filter_group_id', update_filter_group);
+    
+    var update_content_width = function() {
+        $('#table_content_id div.valuation_table_outer_wrap').hide();
+        var width = $('#table_content_id div.valuation_table_outer_wrap').parents('fieldset').width();
+        $('#table_content_id div.valuation_table_outer_wrap').css('width', width - 10).show();
+        $('#table_content_id div.valuation_table_wrap').hide();
+        width = $('#table_content_id div.valuation_table_outer_wrap').width();
+        $('#table_content_id div.valuation_table_wrap').css('width', width).show();
+    };
+    
+    $(window).resize(function() {
+        update_content_width();
+    });
+    
+    $(document).on('click', '#table_content_id table.valuation_table tbody tr td', function() {
+        $(this).parent().toggleClass('marked');
+    });
     
 });

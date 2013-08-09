@@ -87,6 +87,13 @@ $config['adminmenu'] = array(
                 'sub' => NULL,
             ),
             array(
+                'title' => 'lang:adminmenu_title_valuation_tables',
+                'pagetag' => 'valuation_tables',
+                'link' => 'admin_solutions/valuation_tables',
+                'class' => '',
+                'sub' => NULL,
+            ),
+            array(
                 'title' => 'lang:adminmenu_title_participants',
                 'pagetag' => 'participants',
                 'link' => 'admin_participants',

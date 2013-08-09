@@ -7,7 +7,8 @@
  */
 class Solutions extends LIST_Controller {
     
-    const STORED_FILTER_SESSION_NAME = 'admin_solutions_filter_data';
+    const STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME = 'admin_solutions_filter_data_task_set_selection';
+    const STORED_VALUATION_TABLES_FILTER_SESSION_NAME = 'admin_solutions_filter_data_valuation_tables';
     
     public function __construct() {
         parent::__construct();
@@ -21,7 +22,7 @@ class Solutions extends LIST_Controller {
     
     public function index() {
         $this->_select_teacher_menu_pagetag('solutions');
-        $this->inject_stored_filter();
+        $this->inject_stored_task_set_selection_filter();
         $this->inject_courses();
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_solutions/list.js');
@@ -281,7 +282,7 @@ class Solutions extends LIST_Controller {
 
     public function get_task_set_list() {
         $filter = $this->input->post('filter');
-        $this->store_filter($filter);
+        $this->store_task_set_selection_filter($filter);
         $task_sets = new Task_set();
         $task_sets->select('`task_sets`.*, `course_course_task_set_type_rel`.`upload_solution` AS `join_upload_solution`');
         $task_sets->include_related_count('solution');
@@ -339,23 +340,155 @@ class Solutions extends LIST_Controller {
         $this->parser->parse('backend/solutions/groups_from_course.tpl', array('groups' => $options, 'selected' => $selected_id));
     }
     
-    private function store_filter($filter) {
+    public function valuation_tables() {
+        $this->_select_teacher_menu_pagetag('valuation_tables');
+        $this->inject_stored_valuation_tables_filter();
+        $this->inject_courses();
+        $this->parser->add_js_file('jquery.activeform.js');
+        $this->parser->add_js_file('admin_solutions/valuation_tables.js');
+        $this->parser->add_css_file('admin_solutions.css');
+        $this->parser->parse('backend/solutions/valuation_tables.tpl');
+    }
+    
+    public function get_valuation_table() {
+        $filter = $this->input->post('filter');
+        $this->store_valuation_tables_filter($filter);
+        $this->inject_stored_valuation_tables_filter();
+        
+        $course = new Course();
+        $course->include_related('period', 'name');
+        $course->get_by_id(intval(@$filter['course']));
+        
+        $group = new Group();
+        $group->get_by_id(@$filter['group']);
+        
+        if ($course->exists()) {
+            $task_set_types = new Task_set_type();
+            $task_set_types->where_related_course($course);
+            $task_set_types->order_by_with_constant('name', 'asc');
+            $task_set_types->get_iterated();
+                        
+            $students = new Student();
+            $students->include_related('participant/group', 'id');
+            $students->where_related('participant/course', 'id', $course->id);
+            if ($group->exists()) {
+                $students->where_related('participant/group', 'id', $group->id);
+            }
+            $students->where_related('participant', 'allowed', 1);
+            $students->get_iterated();
+            
+            $student_ids = array(0);
+            
+            $points_table = array();
+            
+            foreach($students as $student) { 
+                $student_ids[] = $student->id;
+                $points_table[$student->id]['student']['fullname'] = $student->fullname;
+                $points_table[$student->id]['student']['email'] = $student->email;
+                $points_table[$student->id]['student']['group'] = $student->participant_group_id;
+            }
+            
+            $task_sets = new Task_set();
+            $task_sets->select('*');
+            $task_sets->select_subquery('(SELECT SUM(`points_total`) FROM `task_task_set_rel` WHERE `task_task_set_rel`.`task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'counted_points_sum');
+            $task_sets->include_related('group', 'name');
+            $task_sets->where_related('course', 'id', $course->id);
+            if ($group->exists()) {
+                $task_sets->group_start();
+                    $task_sets->or_where_related('group', 'id', $group->id);
+                    $task_sets->or_where_related('group', 'id', NULL);
+                $task_sets->group_end();
+            }
+            $task_sets->where('published', 1);
+            $task_sets->order_by_related_with_constant('task_set_type', 'name', 'asc');
+            $task_sets->order_by_with_overlay('name', 'asc');
+            $task_sets->get_iterated();
+            
+            $task_set_ids = array(0);
+            $task_set_types_points_max = array();
+            $header = array();
+            
+            foreach ($task_set_types as $task_set_type) {
+                $header[$task_set_type->id] = array(
+                    'name' => $task_set_type->name,
+                    'task_sets' => array(),
+                );
+            }
+            
+            foreach($task_sets as $task_set) { 
+                $task_set_ids[] = $task_set->id;
+                $points = floatval(!is_null($task_set->points_override) ? $task_set->points_override : $task_set->counted_points_sum);
+                $task_set_types_points_max[$task_set->task_set_type_id] = isset($task_set_types_points_max[$task_set->task_set_type_id]) ? $task_set_types_points_max[$task_set->task_set_type_id] + $points : $points;
+                $header[$task_set->task_set_type_id]['task_sets'][$task_set->id] = array(
+                    'name' => $task_set->name,
+                    'group_name' => $task_set->group_name,
+                    'group_id' => $task_set->group_id,
+                    'points' => $points,
+                );
+            }
+            $total_points = array_sum($task_set_types_points_max);
+            
+            $solutions = new Solution();
+            $solutions->include_related('task_set/task_set_type', 'id');
+            $solutions->where_in_related('task_set', 'id', $task_set_ids);
+            $solutions->where_in_related('student', 'id', $student_ids);
+            $solutions->order_by_related('student', 'fullname', 'asc');
+            $solutions->order_by_related('student', 'email', 'asc');
+            $solutions->order_by_related_with_constant('task_set/task_set_type', 'name', 'asc');
+            $solutions->order_by_related_with_overlay('task_set', 'name', 'asc');
+            $solutions->get_iterated();
+            
+            foreach ($solutions as $solution) {
+                $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id][$solution->task_set_id] = $solution->points;
+                $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total'] = isset($points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total']) ? $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total'] + floatval($solution->points) : floatval($solution->points);
+                $points_table[$solution->student_id]['points']['total'] = isset($points_table[$solution->student_id]['points']['total']) ? $points_table[$solution->student_id]['points']['total'] + floatval($solution->points) : floatval($solution->points);
+            }
+            
+            $this->parser->assign('task_set_types_points_max', $task_set_types_points_max);
+            $this->parser->assign('total_points', $total_points);
+            $this->parser->assign('header', $header);
+            $this->parser->assign('points_table', $points_table);
+        }
+        
+        $this->parser->parse('backend/solutions/valuation_table_content.tpl', array('course' => $course, 'group' => $group));
+    }
+
+    private function store_task_set_selection_filter($filter) {
         if (is_array($filter)) {
             $this->load->library('filter');
-            $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
+            $old_filter = $this->filter->restore_filter(self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME);
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
-            $this->filter->store_filter(self::STORED_FILTER_SESSION_NAME, $new_filter);
-            $this->filter->set_filter_course_name_field(self::STORED_FILTER_SESSION_NAME, 'course');
-            $this->filter->set_filter_delete_on_course_change(self::STORED_FILTER_SESSION_NAME, array('group'));
+            $this->filter->store_filter(self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME, $new_filter);
+            $this->filter->set_filter_course_name_field(self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME, 'course');
+            $this->filter->set_filter_delete_on_course_change(self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME, array('group'));
         }
     }
     
-    private function inject_stored_filter() {
+    private function inject_stored_task_set_selection_filter() {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
+        $filter = $this->filter->restore_filter(self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
         $this->parser->assign('filter', $filter);
     }
     
+    private function store_valuation_tables_filter($filter) {
+        if (is_array($filter)) {
+            $this->load->library('filter');
+            $old_filter = $this->filter->restore_filter(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME);
+            $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
+            $new_filter['simple'] = isset($filter['simple']) && $filter['simple'] == 1 ? 1 : 0;
+            $this->filter->store_filter(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME, $new_filter);
+            $this->filter->set_filter_course_name_field(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME, 'course');
+            $this->filter->set_filter_delete_on_course_change(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME, array('group'));
+        }
+    }
+    
+    private function inject_stored_valuation_tables_filter() {
+        $this->load->library('filter');
+        $filter = $this->filter->restore_filter(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
+        $this->parser->assign('filter', $filter);
+    }
+
+
     private function inject_courses() {
         $periods = new Period();
         $periods->order_by('sorting', 'asc');

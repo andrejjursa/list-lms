@@ -77,3 +77,15 @@ $lang['admin_solutions_batch_valuation_table_header_solution_points'] = 'Body';
 $lang['admin_solutions_batch_valuation_form_submit_batch_save'] = 'Hromadne uložiť';
 $lang['admin_solutions_batch_valuation_success_message_save_ok'] = 'Hromadné uloženie úspešné.';
 $lang['admin_solutions_batch_valuation_error_message_save_failed'] = 'Hromadné uloženie zlyhalo, nič nebolo uložené.';
+
+$lang['admin_solutions_valuation_tables_page_title'] = 'Tabuľky hodnotení';
+$lang['admin_solutions_valuation_tables_filter_label_course'] = 'Kurz';
+$lang['admin_solutions_valuation_tables_filter_label_group'] = 'Skupina';
+$lang['admin_solutions_valuation_tables_filter_label_simple'] = 'Zjednodušená tabuľka';
+$lang['admin_solutions_valuation_tables_error_no_course_selected'] = 'Nemáte vybraný žiaden kurz. Prosím, vyberte jeden z filtra.';
+$lang['admin_solutions_valuation_tables_table_header_student'] = 'Študent';
+$lang['admin_solutions_valuation_tables_table_header_total'] = 'Spolu';
+$lang['admin_solutions_valuation_tables_table_header_for_all_groups'] = 'Pre&nbsp;každú&nbsp;skupinu';
+$lang['admin_solutions_valuation_tables_solution_not_valuated'] = 'Nehodnotené';
+$lang['admin_solutions_valuation_tables_solution_not_submited'] = 'Neodovzdané';
+$lang['admin_solutions_valuation_tables_solution_not_this_group'] = 'Nie je členom';

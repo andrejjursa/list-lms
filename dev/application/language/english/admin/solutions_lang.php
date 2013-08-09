@@ -77,3 +77,15 @@ $lang['admin_solutions_batch_valuation_table_header_solution_points'] = 'Points'
 $lang['admin_solutions_batch_valuation_form_submit_batch_save'] = 'Batch save';
 $lang['admin_solutions_batch_valuation_success_message_save_ok'] = 'Batch saved successfully.';
 $lang['admin_solutions_batch_valuation_error_message_save_failed'] = 'Batch save failed, nothing were saved.';
+
+$lang['admin_solutions_valuation_tables_page_title'] = 'Valuation tables';
+$lang['admin_solutions_valuation_tables_filter_label_course'] = 'Course';
+$lang['admin_solutions_valuation_tables_filter_label_group'] = 'Group';
+$lang['admin_solutions_valuation_tables_filter_label_simple'] = 'Simplified table';
+$lang['admin_solutions_valuation_tables_error_no_course_selected'] = 'You do not have selected course. Please, select one from filter.';
+$lang['admin_solutions_valuation_tables_table_header_student'] = 'Student';
+$lang['admin_solutions_valuation_tables_table_header_total'] = 'Sum';
+$lang['admin_solutions_valuation_tables_table_header_for_all_groups'] = 'For&nbsp;all&nbsp;groups';
+$lang['admin_solutions_valuation_tables_solution_not_valuated'] = 'Not valuated';
+$lang['admin_solutions_valuation_tables_solution_not_submited'] = 'Not submited';
+$lang['admin_solutions_valuation_tables_solution_not_this_group'] = 'Not member';
