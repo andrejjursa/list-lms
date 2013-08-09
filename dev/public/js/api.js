@@ -458,3 +458,13 @@ function slideDownNotification(startAfter, autoClose, duration) {
         }
     }, parseInt(startAfter * 1000));    
 }
+
+var test_window_maximized = function() {
+    if ( screen.height === window.innerHeight ) { // FullScreen Mode
+        return true;
+    }
+    else if ( screen.availHeight === window.outerHeight ) { // Maximized
+        return true;
+    }
+    return false;
+}

@@ -54,6 +54,10 @@ jQuery(document).ready(function($) {
     var update_content_width = function() {
         $('#table_content_id div.valuation_table_outer_wrap').hide();
         var width = $('#table_content_id div.valuation_table_outer_wrap').parents('fieldset').width();
+        if (!test_window_maximized() && window.innerWidth > 815) {
+            width -= 20;
+        }
+        console.log(window.innerWidth);
         $('#table_content_id div.valuation_table_outer_wrap').css('width', width - 10).show();
         $('#table_content_id div.valuation_table_wrap').hide();
         width = $('#table_content_id div.valuation_table_outer_wrap').width();
