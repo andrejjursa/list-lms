@@ -68,4 +68,12 @@ jQuery(document).ready(function($) {
         $(this).parent().toggleClass('marked');
     });
     
+    $(document).on('mousedown', '#table_content_id table.valuation_table tbody tr td', function() {
+        $(this).parent().addClass('clicked');
+    });
+    
+    $(document).on('mouseup', '#table_content_id table.valuation_table tbody tr td', function() {
+        $(this).parent().removeClass('clicked');
+    });
+    
 });

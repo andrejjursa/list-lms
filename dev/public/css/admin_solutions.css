@@ -107,3 +107,18 @@ table.valuation_table tbody tr:hover:nth-child(even) td.task_set_row.not_this_gr
 table.valuation_table tbody tr.marked:nth-child(even) td.task_set_row.not_valuated,
 table.valuation_table tbody tr:hover:nth-child(even) td.task_set_row.not_valuated { background-color: #7699ff !important; }
 table.valuation_table tbody tr td { transition: all 0.5s; -moz-transition: all 0.5s; -webkit-transition: all 0.5s; -o-transition: all 0.5s; }
+table.valuation_table tbody tr.clicked td { 
+    -moz-box-shadow: 0 4px 2px -3px red inset;
+    -webkit-box-shadow: 0 4px 2px -3px red inset;
+    box-shadow: 0 4px 2px -3px red inset; 
+}
+table.valuation_table tbody tr.clicked td:first-child { 
+    -moz-box-shadow: 4px 4px 2px -3px red inset;
+    -webkit-box-shadow: 4px 4px 2px -3px red inset;
+    box-shadow: 4px 4px 2px -3px red inset;
+}
+table.valuation_table tbody tr.clicked td:last-child {
+    -moz-box-shadow: 0 4px 2px -3px red inset;
+    -webkit-box-shadow: 0 4px 2px -3px red inset;
+    box-shadow: 0 4px 2px -3px red inset;
+}
