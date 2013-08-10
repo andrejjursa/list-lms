@@ -379,6 +379,7 @@ class Tasks extends LIST_Controller {
         $group = new Group();
         
         $task_set = new Task_set();
+        $task_set->include_related('room', '*', TRUE, TRUE);
         $task_set->where('published', 1);
         $task_set->get_by_id($task_set_id);
         
@@ -427,7 +428,7 @@ class Tasks extends LIST_Controller {
                         $add = FALSE;
                     } else {
                         $current_day = intval(strftime('%w', strtotime($task_set->publish_start_time)));
-                        $current_day > 0 ? $current_day : 7;
+                        $current_day = $current_day > 0 ? $current_day : 7;
                         if ($task_set->room->time_day == $current_day) {
                             list($year, $month, $day) = explode(',', strftime('%Y,%m,%d', strtotime($task_set->publish_start_time)));
                             $time = mktime(0, 0, 0, intval($month), intval($day), intval($year)) + intval($task_set->room->time_begin);
