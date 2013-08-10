@@ -6,10 +6,14 @@ jQuery(document).ready(function($) {
         jQuery.timepicker.setDefaults(jQuery.timepicker.regional[jqueryui_datepicker_region]);
     }
 
-    jQuery('[title]').tooltip();
+    try {
+        jQuery('[title]').tooltip();
+    } catch (e) {
+        console.log(e);
+    }
 });
 
-var block_ui_message = lang !== undefined && lang.messages !== undefined && lang.messages.ajax_standby !== undefined ? lang.messages.ajax_standby : 'Please wait ...';
+var block_ui_message = (lang !== undefined && lang.messages !== undefined && lang.messages.ajax_standby !== undefined) ? lang.messages.ajax_standby : 'Please wait ...';
 jQuery(document).ajaxStart(function () {
   jQuery.blockUI({
     message: '<h1>' + block_ui_message + '</h1>',
@@ -23,8 +27,12 @@ jQuery(document).ajaxStart(function () {
     }
   });
 }).ajaxStop(function() {
-    jQuery('[title]').tooltip();
-    jQuery.unblockUI();
+    try {
+        jQuery('[title]').tooltip();
+        jQuery.unblockUI();
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 var fields_filter = function(open_selector, reload_callback) {
