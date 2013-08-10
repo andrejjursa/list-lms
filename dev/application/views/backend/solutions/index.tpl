@@ -18,6 +18,10 @@
                     <label>{translate line='admin_solutions_filter_label_group'}:</label>
                     <p class="input"><select name="filter_group" size="1" id="filter_group_id"></select><input type="hidden" name="filter[group]" value="{$filter.group|intval}" /></p>
                 </div>
+                <div class="field">
+                    <label>{translate line='admin_solutions_filter_label_task_set_type'}:</label>
+                    <p class="input"><select name="filter[task_set_type]">{list_html_options options=$task_set_types selected=$filter.task_set_type}</select></p>
+                </div>
                 <div class="buttons">
                     <input type="submit" name="filter_submit" value="{translate line='admin_solutions_filter_submit'}" class="button" />
                     <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />

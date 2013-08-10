@@ -12,6 +12,7 @@ table.task_sets_table thead th.th_time_limit { width: 190px; }
 table.task_sets_table thead th.th_points { width: 90px; text-align: center; }
 table.task_sets_table thead th.th_comment { width: 35%; }
 table.task_sets_table tbody td.td_points { text-align: center; }
+table.task_sets_table tbody td.td_points.not_considered { color: gray; text-decoration: line-through; }
 table.task_sets_table tbody tr.tr_background_even { background-color: rgba(220,220,220,64); }
 table.task_sets_table tbody td a { text-decoration: none; color: green; transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; }
 table.task_sets_table tbody tr.tr_background_even a { color: darkgreen; }

@@ -24,6 +24,7 @@ class Solutions extends LIST_Controller {
         $this->_select_teacher_menu_pagetag('solutions');
         $this->inject_stored_task_set_selection_filter();
         $this->inject_courses();
+        $this->inject_all_task_set_types();
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_solutions/list.js');
         $this->parser->add_css_file('admin_solutions.css');
@@ -79,6 +80,7 @@ class Solutions extends LIST_Controller {
                     }
                     $solution->points = floatval($solution_data['points']);
                     $solution->revalidate = 0;
+                    $solution->not_considered = intval(@$solution_data['not_considered']);
                     $save_status = $save_status & $solution->save(array($task_set, $student));
                     $saved_count++;
                 }
@@ -213,7 +215,7 @@ class Solutions extends LIST_Controller {
             $solution->get_by_id($solution_id);
             if ($solution->exists()) {
                 $solution_data = $this->input->post('solution');
-                $solution->from_array($solution_data, array('points', 'comment'));
+                $solution->from_array($solution_data, array('points', 'comment', 'not_considered'));
                 if (is_null($solution->teacher_id)) { $solution->teacher_id = $this->usermanager->get_teacher_id(); }
                 $solution->revalidate = 0;
                 if ($solution->save() && $this->db->trans_status()) {
@@ -300,6 +302,9 @@ class Solutions extends LIST_Controller {
             $task_sets->where_related_group('id', NULL);
         } else if (isset($filter['group']) && intval($filter['group']) > 0) {
             $task_sets->where_related_group('id', intval($filter['group']));
+        }
+        if (isset($filter['task_set_type']) && intval($filter['task_set_type']) > 0) {
+            $task_sets->where_related_task_set_type('id', intval($filter['task_set_type']));
         }
         $task_sets->order_by_related('course/period', 'sorting', 'asc');
         $task_sets->order_by_related_with_constant('course', 'name', 'asc');
@@ -439,9 +444,15 @@ class Solutions extends LIST_Controller {
             $solutions->get_iterated();
             
             foreach ($solutions as $solution) {
-                $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id][$solution->task_set_id] = $solution->points;
-                $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total'] = isset($points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total']) ? $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total'] + floatval($solution->points) : floatval($solution->points);
-                $points_table[$solution->student_id]['points']['total'] = isset($points_table[$solution->student_id]['points']['total']) ? $points_table[$solution->student_id]['points']['total'] + floatval($solution->points) : floatval($solution->points);
+                $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id][$solution->task_set_id] = array(
+                    'points' => $solution->points,
+                    'revalidate' => $solution->revalidate,
+                    'not_considered' => $solution->not_considered,
+                );
+                if (!(bool)$solution->not_considered) {
+                    $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total'] = isset($points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total']) ? $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total'] + floatval($solution->points) : floatval($solution->points);
+                    $points_table[$solution->student_id]['points']['total'] = isset($points_table[$solution->student_id]['points']['total']) ? $points_table[$solution->student_id]['points']['total'] + floatval($solution->points) : floatval($solution->points);
+                }
             }
             
             $this->parser->assign('task_set_types_points_max', $task_set_types_points_max);
@@ -541,6 +552,7 @@ class Solutions extends LIST_Controller {
             }
             $students->select_subquery('(SELECT `solutions`.`points` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_points');
             $students->select_subquery('(SELECT `solutions`.`id` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_id');
+            $students->select_subquery('(SELECT `solutions`.`not_considered` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_not_considered');
             $students->group_by('id');
             $students->order_by('fullname', 'asc');
             $students->order_by('email', 'asc');
@@ -551,5 +563,18 @@ class Solutions extends LIST_Controller {
             }
         }
         $this->parser->assign('batch_valuation_students', $data);
+    }
+    
+    private function inject_all_task_set_types() {
+        $task_set_types = new Task_set_type();
+        $task_set_types->order_by_with_constant('name', 'asc');
+        $task_set_types->get_iterated();
+        
+        $data = array('' => '');
+        foreach($task_set_types as $task_set_type) {
+            $data[$task_set_type->id] = $task_set_type->name;
+        }
+        
+        $this->parser->assign('task_set_types', $data);
     }
 }

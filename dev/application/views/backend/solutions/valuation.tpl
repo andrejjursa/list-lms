@@ -24,6 +24,10 @@
                         <p class="input"><textarea name="solution[comment]" id="solution_comment_id">{$smarty.post.solution.comment|default:$solution->comment|escape:'html'}</textarea></p>
                         {form_error field='solution[comment]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                     </div>
+                    <div class="field">
+                        <label for="solution_not_considered_id">{translate line='admin_solutions_valuation_form_label_not_considered'}:</label>
+                        <p class="input"><input type="checkbox" value="1" name="solution[not_considered]" id="solution_not_considered_id"{if $smarty.post.solution.not_considered|default:$solution->not_considered} checked="checked"{/if} /></p>
+                    </div>
                     <div class="buttons">
                         <input type="submit" name="submit_button" value="{translate line='admin_solutions_valuation_form_button_submit'}" class="button" />
                     </div>

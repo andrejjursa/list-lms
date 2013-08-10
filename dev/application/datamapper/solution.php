@@ -12,6 +12,7 @@ $cache = array (
     6 => 'comment',
     7 => 'points',
     8 => 'revalidate',
+    9 => 'not_considered',
   ),
   'validation' => 
   array (
@@ -75,6 +76,13 @@ $cache = array (
     'revalidate' => 
     array (
       'field' => 'revalidate',
+      'rules' => 
+      array (
+      ),
+    ),
+    'not_considered' => 
+    array (
+      'field' => 'not_considered',
       'rules' => 
       array (
       ),

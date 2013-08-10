@@ -1,5 +1,5 @@
 {foreach $solutions as $solution}
-<tr{if $solution->revalidate eq 1} class="revalidate_this"{/if}>
+<tr class="{if $solution->revalidate eq 1}revalidate_this{/if} {if $solution->not_considered}not_considered{/if}">
     <td>{$solution->id|intval}</td>
     <td>{$solution->created|date_format:{translate line='common_datetime_format'}}</td>
     <td>{$solution->updated|date_format:{translate line='common_datetime_format'}}</td>
