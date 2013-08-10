@@ -32,7 +32,9 @@ jQuery(document).ready(function($) {
                 var selected_id = $('form input[name=post_selected_group_id_id]').val() !== undefined ? $('form input[name=post_selected_group_id_id]').val() : '';
                 var url = global_base_url + 'index.php/admin_task_sets/get_task_set_groups/' + course_id + '/' + selected_id + '/' + task_set_id;
                 var target = '#taks_set_group_id_id';
-                api_ajax_load(url, target);
+                api_ajax_load(url, target, 'post', {}, function() {
+                    $('form').activeForm().applyConditions();
+                });
                 last_course_id2 = course_id;
             }
             return true;
