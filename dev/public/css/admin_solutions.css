@@ -64,59 +64,59 @@ table.valuation_table th { text-align: left; }
 table.valuation_table thead tr th { padding: 2px; background-color: rgba(192,192,192,128); white-space: nowrap; }
 table.valuation_table thead tr th:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
 table.valuation_table thead tr th:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
-table.valuation_table thead tr th.student_row,
-table.valuation_table thead tr th.task_set_type_row,
-table.valuation_table thead tr th.total_row { font-size: 1.2em; }
-table.valuation_table thead tr th.task_set_type_row, 
-table.valuation_table thead tr th.total_row { text-align: right; padding-right: 10px; }
-table.valuation_table thead tr th.task_set_row sub { font-size: 0.7em; }
+table.valuation_table thead tr th.student_col,
+table.valuation_table thead tr th.task_set_type_col,
+table.valuation_table thead tr th.total_col { font-size: 1.2em; }
+table.valuation_table thead tr th.task_set_type_col, 
+table.valuation_table thead tr th.total_col { text-align: right; padding-right: 10px; }
+table.valuation_table thead tr th.task_set_col sub { font-size: 0.7em; }
 table.valuation_table tbody tr td { padding: 2px; white-space: nowrap; }
-table.valuation_table tbody tr td.task_set_type_row,
-table.valuation_table tbody tr td.task_set_row,
-table.valuation_table tbody tr td.total_row { text-align: right; padding-right: 10px; }
-table.valuation_table tbody tr td.task_set_type_row,
-table.valuation_table tbody tr td.total_row { background-color: #aaffaa; }
-table.valuation_table tbody tr td.task_set_row.not_submited { background-color: #ffc6c6; }
-table.valuation_table tbody tr td.task_set_row.not_this_group { background-color: #f4ffc4; }
-table.valuation_table tbody tr td.task_set_row.not_valuated { background-color: #d1f4ff; }
-table.valuation_table tbody tr td.task_set_row.not_considered { background-color: #fad6ff; }
+table.valuation_table tbody tr td.task_set_type_col,
+table.valuation_table tbody tr td.task_set_col,
+table.valuation_table tbody tr td.total_col { text-align: right; padding-right: 10px; }
+table.valuation_table tbody tr td.task_set_type_col,
+table.valuation_table tbody tr td.total_col { background-color: #aaffaa; }
+table.valuation_table tbody tr td.task_set_col.not_submited { background-color: #ffc6c6; }
+table.valuation_table tbody tr td.task_set_col.not_this_group { background-color: #f4ffc4; }
+table.valuation_table tbody tr td.task_set_col.not_valuated { background-color: #d1f4ff; }
+table.valuation_table tbody tr td.task_set_col.not_considered { background-color: #fad6ff; }
 table.valuation_table tbody tr td:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
 table.valuation_table tbody tr td:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
 table.valuation_table tbody tr:nth-child(even) td { background-color: #dbdbdb; }
-table.valuation_table tbody tr:nth-child(even) td.task_set_type_row,
-table.valuation_table tbody tr:nth-child(even) td.total_row { background-color: #99ff99; }
-table.valuation_table tbody tr:nth-child(even) td.task_set_row.not_submited { background-color: #ffa6a6; }
-table.valuation_table tbody tr:nth-child(even) td.task_set_row.not_this_group { background-color: #f4ffa4; }
-table.valuation_table tbody tr:nth-child(even) td.task_set_row.not_valuated { background-color: #b6d9ff; }
-table.valuation_table tbody tr:nth-child(even) td.task_set_row.not_considered { background-color: #fab6ff; }
+table.valuation_table tbody tr:nth-child(even) td.task_set_type_col,
+table.valuation_table tbody tr:nth-child(even) td.total_col { background-color: #99ff99; }
+table.valuation_table tbody tr:nth-child(even) td.task_set_col.not_submited { background-color: #ffa6a6; }
+table.valuation_table tbody tr:nth-child(even) td.task_set_col.not_this_group { background-color: #f4ffa4; }
+table.valuation_table tbody tr:nth-child(even) td.task_set_col.not_valuated { background-color: #b6d9ff; }
+table.valuation_table tbody tr:nth-child(even) td.task_set_col.not_considered { background-color: #fab6ff; }
 table.valuation_table tbody tr.marked td,
 table.valuation_table tbody tr:hover td { background-color: #cbcbcb !important; }
-table.valuation_table tbody tr.marked td.task_set_type_row,
-table.valuation_table tbody tr:hover td.task_set_type_row,
-table.valuation_table tbody tr.marked td.total_row,
-table.valuation_table tbody tr:hover td.total_row { background-color: #77ff77 !important; }
-table.valuation_table tbody tr.marked td.task_set_row.not_submited,
-table.valuation_table tbody tr:hover td.task_set_row.not_submited { background-color: #ff9696 !important; }
-table.valuation_table tbody tr.marked td.task_set_row.not_this_group,
-table.valuation_table tbody tr:hover td.task_set_row.not_this_group { background-color: #f4ff84 !important; }
-table.valuation_table tbody tr.marked td.task_set_row.not_valuated,
-table.valuation_table tbody tr:hover td.task_set_row.not_valuated { background-color: #96b9ff !important; }
-table.valuation_table tbody tr.marked td.task_set_row.not_considered, 
-table.valuation_table tbody tr:hover td.task_set_row.not_considered { background-color: #fa96ff !important; }
+table.valuation_table tbody tr.marked td.task_set_type_col,
+table.valuation_table tbody tr:hover td.task_set_type_col,
+table.valuation_table tbody tr.marked td.total_col,
+table.valuation_table tbody tr:hover td.total_col { background-color: #77ff77 !important; }
+table.valuation_table tbody tr.marked td.task_set_col.not_submited,
+table.valuation_table tbody tr:hover td.task_set_col.not_submited { background-color: #ff9696 !important; }
+table.valuation_table tbody tr.marked td.task_set_col.not_this_group,
+table.valuation_table tbody tr:hover td.task_set_col.not_this_group { background-color: #f4ff84 !important; }
+table.valuation_table tbody tr.marked td.task_set_col.not_valuated,
+table.valuation_table tbody tr:hover td.task_set_col.not_valuated { background-color: #96b9ff !important; }
+table.valuation_table tbody tr.marked td.task_set_col.not_considered, 
+table.valuation_table tbody tr:hover td.task_set_col.not_considered { background-color: #fa96ff !important; }
 table.valuation_table tbody tr.marked:nth-child(even) td,
 table.valuation_table tbody tr:hover:nth-child(even) td { background-color: #ababab !important; }
-table.valuation_table tbody tr.marked:nth-child(even) td.task_set_type_row,
-table.valuation_table tbody tr:hover:nth-child(even) td.task_set_type_row,
-table.valuation_table tbody tr.marked:nth-child(even) td.total_row,
-table.valuation_table tbody tr:hover:nth-child(even) td.total_row { background-color: #55ff55 !important; }
-table.valuation_table tbody tr.marked:nth-child(even) td.task_set_row.not_submited,
-table.valuation_table tbody tr:hover:nth-child(even) td.task_set_row.not_submited { background-color: #ff7676 !important; }
-table.valuation_table tbody tr.marked:nth-child(even) td.task_set_row.not_this_group,
-table.valuation_table tbody tr:hover:nth-child(even) td.task_set_row.not_this_group { background-color: #f4ff64 !important; }
-table.valuation_table tbody tr.marked:nth-child(even) td.task_set_row.not_valuated,
-table.valuation_table tbody tr:hover:nth-child(even) td.task_set_row.not_valuated { background-color: #7699ff !important; }
-table.valuation_table tbody tr.marked:nth-child(even) td.task_set_row.not_considered, 
-table.valuation_table tbody tr:hover:nth-child(even) td.task_set_row.not_considered { background-color: #fa76ff !important; }
+table.valuation_table tbody tr.marked:nth-child(even) td.task_set_type_col,
+table.valuation_table tbody tr:hover:nth-child(even) td.task_set_type_col,
+table.valuation_table tbody tr.marked:nth-child(even) td.total_col,
+table.valuation_table tbody tr:hover:nth-child(even) td.total_col { background-color: #55ff55 !important; }
+table.valuation_table tbody tr.marked:nth-child(even) td.task_set_col.not_submited,
+table.valuation_table tbody tr:hover:nth-child(even) td.task_set_col.not_submited { background-color: #ff7676 !important; }
+table.valuation_table tbody tr.marked:nth-child(even) td.task_set_col.not_this_group,
+table.valuation_table tbody tr:hover:nth-child(even) td.task_set_col.not_this_group { background-color: #f4ff64 !important; }
+table.valuation_table tbody tr.marked:nth-child(even) td.task_set_col.not_valuated,
+table.valuation_table tbody tr:hover:nth-child(even) td.task_set_col.not_valuated { background-color: #7699ff !important; }
+table.valuation_table tbody tr.marked:nth-child(even) td.task_set_col.not_considered, 
+table.valuation_table tbody tr:hover:nth-child(even) td.task_set_col.not_considered { background-color: #fa76ff !important; }
 table.valuation_table tbody tr td { transition: background 0.5s; -moz-transition: background 0.5s; -webkit-transition: background 0.5s; -o-transition: background 0.5s; }
 table.valuation_table tbody tr.clicked td { 
     -moz-box-shadow: 0 4px 2px -3px red inset;
