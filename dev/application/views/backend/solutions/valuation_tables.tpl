@@ -23,6 +23,8 @@
             <div class="buttons">
                 <input type="submit" name="filter_submit" value="{translate line='admin_solutions_filter_submit'}" class="button" />
                 <input type="hidden" name="filter_selected_group_id" value="{$filter.group|intval}" />
+                <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'students'}" />
+                <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />
             </div>
         </form>
         <div id="table_content_id"></div>

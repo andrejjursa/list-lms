@@ -380,6 +380,9 @@ class Solutions extends LIST_Controller {
                 $students->where_related('participant/group', 'id', $group->id);
             }
             $students->where_related('participant', 'allowed', 1);
+            if ($filter['order_by_field'] == 'students') {
+                $students->order_by('fullname', $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc');
+            }
             $students->get_iterated();
             
             $student_ids = array(0);
@@ -452,6 +455,51 @@ class Solutions extends LIST_Controller {
                 if (!(bool)$solution->not_considered) {
                     $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total'] = isset($points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total']) ? $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total'] + floatval($solution->points) : floatval($solution->points);
                     $points_table[$solution->student_id]['points']['total'] = isset($points_table[$solution->student_id]['points']['total']) ? $points_table[$solution->student_id]['points']['total'] + floatval($solution->points) : floatval($solution->points);
+                }
+            }
+            
+            if (count($points_table) > 0) {
+                if (substr($filter['order_by_field'], 0, 14) == 'task_set_type_') {
+                    $task_set_type_id = intval(substr($filter['order_by_field'], 14));
+                    $order_array = array();
+                    foreach ($points_table as $key => $line) {
+                        $order_array[$key] = @$line['points'][$task_set_type_id]['total'];
+                    }
+                    $direction = $filter['order_by_direction'] == 'desc' ? SORT_DESC : SORT_ASC;
+                    array_multisort($order_array, $direction, SORT_NUMERIC, $points_table);
+                } elseif ($filter['order_by_field'] == 'total') {
+                    $order_array = array();
+                    foreach ($points_table as $key => $line) {
+                        $order_array[$key] = @$line['points']['total'];
+                    }
+                    $direction = $filter['order_by_direction'] == 'desc' ? SORT_DESC : SORT_ASC;
+                    array_multisort($order_array, $direction, SORT_NUMERIC, $points_table);
+                } elseif (substr($filter['order_by_field'], 0, 9) == 'task_set_') {
+                    list($task_set_type_id, $task_set_id) = explode('_', substr($filter['order_by_field'], 9));
+                    $order_array = array();
+                    $category_order_array = array();
+                    foreach ($points_table as $key => $line) {
+                        if (isset($line['points'][$task_set_type_id]) && array_key_exists($task_set_id, $line['points'][$task_set_type_id])) {
+                            if (is_null(@$line['points'][$task_set_type_id][$task_set_id]['points'])) {
+                                $category_order_array[$key] = 2;
+                            } else {
+                                if (@$line['points'][$task_set_type_id][$task_set_id]['not_considered']) {
+                                    $category_order_array[$key] = 3;
+                                } else {
+                                    $category_order_array[$key] = 4;
+                                }
+                            }
+                        } else {
+                            if (!is_null($header[$task_set_type_id]['task_sets'][$task_set_id]['group_id']) && $line['student']['group'] != $header[$task_set_type_id]['task_sets'][$task_set_id]['group_id']) {
+                                $category_order_array[$key] = 1;
+                            } else {
+                                $category_order_array[$key] = 0;
+                            }
+                        }
+                        $order_array[$key] = @$line['points'][$task_set_type_id][$task_set_id]['points'];
+                    }
+                    $direction = $filter['order_by_direction'] == 'desc' ? SORT_DESC : SORT_ASC;
+                    array_multisort($category_order_array, $direction, SORT_NUMERIC, $order_array, $direction, SORT_NUMERIC, $points_table);
                 }
             }
             

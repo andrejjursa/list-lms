@@ -6,11 +6,11 @@
             <table class="valuation_table">
                 <thead>
                     <tr>
-                        <th class="student_row">{translate line='admin_solutions_valuation_tables_table_header_student'}</th>
+                        <th class="student_row sort:students">{translate line='admin_solutions_valuation_tables_table_header_student'}</th>
                         {foreach $header as $header_item}
-                        <th class="task_set_type_row">{translate_text text=$header_item.name}:</th>
+                        <th class="task_set_type_row sort:task_set_type_{$header_item@key}:desc">{translate_text text=$header_item.name}:</th>
                             {if $filter.simple ne 1}{foreach $header_item.task_sets as $task_set}
-                            <th class="task_set_row">
+                            <th class="task_set_row sort:task_set_{$header_item@key}_{$task_set@key}:desc">
                                 {overlay table='task_sets' column='name' table_id=$task_set@key default=$task_set.name}
                                 {if !$group->exists()}<br />
                                 <sub>{translate_text text=$task_set.group_name|default:'lang:admin_solutions_valuation_tables_table_header_for_all_groups'}</sub>
@@ -18,7 +18,7 @@
                             </th>
                             {/foreach}{/if}
                         {/foreach}
-                        <th class="total_row">{translate line='admin_solutions_valuation_tables_table_header_total'}</th>
+                        <th class="total_row sort:total:desc">{translate line='admin_solutions_valuation_tables_table_header_total'}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +39,7 @@
                                         {/if}
                                     {/if}
                                 {else}
-                                    {if $points_row.student.group ne $task_set.group_id and !is_null($task_set.group_id)}
+                                    {if !is_null($task_set.group_id) and $points_row.student.group ne $task_set.group_id}
                                     <td class="task_set_row not_this_group">{translate line='admin_solutions_valuation_tables_solution_not_this_group'}</td>
                                     {else}
                                     <td class="task_set_row not_submited">{translate line='admin_solutions_valuation_tables_solution_not_submited'}</td>

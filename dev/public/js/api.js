@@ -135,6 +135,87 @@ var make_filter_form = function(selector) {
     }
 };
 
+var sort_table = function(table_selector, filter_selector) {
+    var table = table_selector;
+    if (typeof table_selector === 'string') {
+        table = jQuery(table_selector);
+    } 
+    if (typeof table === 'object') {
+        try {
+            if ($(table[0]).is('table')) {
+                table = table[0];
+            } else {
+                return;
+            }
+        } catch(e) {
+            return;
+        }
+    }
+    var filter = filter_selector;
+    if (typeof filter_selector === 'string') {
+        filter = jQuery(filter_selector);
+    }
+    if (typeof filter === 'object') {
+        try {
+            if ($(filter[0]).is('form')) {
+                filter = filter[0];
+            } else {
+                return;
+            }
+        } catch(e) {
+            return;
+        }
+    }
+    var filter_field = jQuery(filter).find('input[type=hidden][name="filter[order_by_field]"]');
+    var filter_direction = jQuery(filter).find('input[type=hidden][name="filter[order_by_direction]"]');
+    if (filter_field.length === undefined || filter_field.length === 0 || filter_direction.length === undefined || filter_direction.length === 0) {
+        try {
+            console.log('Filter missing inputs of type hidden with names filter[order_by_field] or filter[order_by_direction]!');
+        } catch (e) {
+            alert('Filter missing inputs of type hidden with names filter[order_by_field] or filter[order_by_direction]!');    
+        }
+        return;
+    }
+    
+    var regex_sort = /\bsort\:[a-z0-9_]+(:desc)?\b/i;
+    
+    var default_direction = filter_direction.val().toLowerCase();
+    var default_field = filter_field.val();
+    
+    jQuery(table).find('thead tr th').each(function() {
+        var field_config = regex_sort.exec(jQuery(this).attr('class'));
+        if (field_config !== null) {
+            var parts = field_config.toString().split(':');
+            var field = parts[1];
+            var direction = parts[2] === undefined ? 'asc' : 'desc';
+            var icon = jQuery('<div></div>');
+            icon.attr('class', 'ui-icon ' + (default_field === field ? (default_direction === '' || default_direction === 'asc' ? 'ui-icon-circle-triangle-n' : 'ui-icon-circle-triangle-s') : 'ui-icon-circle-plus'));
+            icon.css('float', 'right').css('margin-top', '3px');
+            var content = jQuery('<div></div>');
+            content.html(jQuery(this).html());
+            content.css('margin-right', '21px');
+            jQuery(this).html('');
+            jQuery(this).prepend(content);
+            jQuery(this).prepend(icon);
+            jQuery(this).click(function() {
+                var old_field = filter_field.val();
+                filter_field.val(field);
+                if (old_field !== field) {
+                    filter_direction.val(direction);
+                } else {
+                    var old_direction = filter_direction.val();
+                    if (old_direction === '' || old_direction === 'asc') {
+                        filter_direction.val('desc');
+                    } else {
+                        filter_direction.val('asc');
+                    }
+                }
+                $(filter).submit();
+            }).css('cursor', 'pointer');
+        }
+    });
+};
+
 var show_notification = function(text, notif_type) {
   if (text === undefined) { return; }
   if (notif_type === undefined || notif_type === null) { notif_type = 'information'; }

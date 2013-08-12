@@ -8,6 +8,7 @@ jQuery(document).ready(function($) {
         var data = $('#filter_form_id').serializeArray();
         var onSuccess = function() {
             update_content_width();
+            sort_table('#table_content_id table.valuation_table', '#filter_form_id');
         };
         api_ajax_load(url, target, 'post', data, onSuccess);
     };
