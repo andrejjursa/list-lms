@@ -490,7 +490,7 @@ class Solutions extends LIST_Controller {
                                 }
                             }
                         } else {
-                            if (!is_null($header[$task_set_type_id]['task_sets'][$task_set_id]['group_id']) && $line['student']['group'] != $header[$task_set_type_id]['task_sets'][$task_set_id]['group_id']) {
+                            if (!is_null(@$header[$task_set_type_id]['task_sets'][$task_set_id]['group_id']) && $line['student']['group'] != @$header[$task_set_type_id]['task_sets'][$task_set_id]['group_id']) {
                                 $category_order_array[$key] = 1;
                             } else {
                                 $category_order_array[$key] = 0;
