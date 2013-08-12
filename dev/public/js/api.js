@@ -185,7 +185,7 @@ var sort_table = function(table_selector, filter_selector) {
     jQuery(table).find('thead tr th').each(function() {
         var field_config = regex_sort.exec(jQuery(this).attr('class'));
         if (field_config !== null) {
-            var parts = field_config.toString().split(':');
+            var parts = field_config[0].split(':');
             var field = parts[1];
             var direction = parts[2] === undefined ? 'asc' : 'desc';
             var icon = jQuery('<div></div>');
