@@ -14,6 +14,7 @@ jQuery(document).ready(function($) {
             field_filter_checkbox('#fields_config_course_checkbox_id', '#filter_form_id', 'course');
             field_filter_checkbox('#fields_config_rooms_checkbox_id', '#filter_form_id', 'rooms');
             field_filter_checkbox('#fields_config_capacity_checkbox_id', '#filter_form_id', 'capacity');
+            sort_table('table.groups_table', '#filter_form_id');
         });
     };
     
@@ -59,12 +60,24 @@ jQuery(document).ready(function($) {
         event.preventDefault();
         if (confirm(messages.delete_question)) {
             api_ajax_update($(this).attr('href'), 'get', {}, function(output) {
-                if (output == true) {
+                if (output === true) {
                     reload_all_groups();
                     show_notification(messages.after_delete, 'success');
                 }
             });
         }
+    });
+    
+    $(document).on('change', '#table_pagination_footer_id select[name=paging_page]', function() {
+        var value = $(this).val();
+        $('#filter_form_id input[name="filter[page]"]').val(value);
+        reload_all_groups();
+    });
+    
+    $(document).on('change', '#table_pagination_footer_id select[name=paging_rows_per_page]', function() {
+        var value = $(this).val();
+        $('#filter_form_id input[name="filter[rows_per_page]"]').val(value);
+        reload_all_groups();
     });
     
 });

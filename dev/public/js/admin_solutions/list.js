@@ -63,4 +63,6 @@ jQuery(document).ready(function($) {
     
     $(document).on('change', '#filter_group_id', update_filter_group);
     
+    sort_table('table.task_sets_table', '#filter_form_id');
+    
 });

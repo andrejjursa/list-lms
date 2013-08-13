@@ -130,4 +130,6 @@ jQuery(document).ready(function($) {
         api_ajax_load(url, parent_td, 'post', data);
     });
     
+    sort_table('table.participants_table', '#filter_form_id');
+    
 });

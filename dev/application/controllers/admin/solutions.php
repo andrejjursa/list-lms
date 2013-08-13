@@ -306,9 +306,23 @@ class Solutions extends LIST_Controller {
         if (isset($filter['task_set_type']) && intval($filter['task_set_type']) > 0) {
             $task_sets->where_related_task_set_type('id', intval($filter['task_set_type']));
         }
-        $task_sets->order_by_related('course/period', 'sorting', 'asc');
-        $task_sets->order_by_related_with_constant('course', 'name', 'asc');
-        $task_sets->order_by_with_overlay('name', 'asc');
+        $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
+        if ($filter['order_by_field'] == 'course') {
+            $task_sets->order_by_related('course/period', 'sorting', $order_by_direction);
+            $task_sets->order_by_related_with_constant('course', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'task_set_name') {
+            $task_sets->order_by_with_overlay('name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'course_group') {
+            $task_sets->order_by_related_with_constant('group', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'task_set_type') {
+            $task_sets->order_by_related_with_constant('task_set_type', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'solution_count') {
+            $task_sets->order_by('solution_count', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'task_count') {
+            $task_sets->order_by('task_count', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'upload_end_time') {
+            $task_sets->order_by('upload_end_time', $order_by_direction);
+        }
         $task_sets->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('task_sets', $task_sets->all_to_array(), array('name'));
         $this->parser->parse('backend/solutions/task_set_list', array('task_sets' => $task_sets));

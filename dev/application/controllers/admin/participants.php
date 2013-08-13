@@ -58,6 +58,18 @@ class Participants extends LIST_Controller {
                 $participants->group_end();
             }
         }
+        $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
+        if ($filter['order_by_field'] == 'student') {
+            $participants->order_by_related('student', 'fullname', $order_by_direction);
+            $participants->order_by_related('student', 'email', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'course') {
+            $participants->order_by_related('course/period', 'sorting', $order_by_direction);
+            $participants->order_by_related_with_constant('course', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'group') {
+            $participants->order_by_related_with_constant('group', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'status') {
+            $participants->order_by('allowed', $order_by_direction);
+        }
         $participants->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->parser->parse('backend/participants/table_content.tpl', array('participants' => $participants));
     }

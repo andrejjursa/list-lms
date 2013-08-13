@@ -2,14 +2,14 @@
     <thead>
         <tr>
             <th>ID</th>
-            {if $filter.fields.created}<th>{translate line='common_table_header_created'}</th>{/if}
-            {if $filter.fields.updated}<th>{translate line='common_table_header_updated'}</th>{/if}
-            {if $filter.fields.name}<th>{translate line='admin_task_sets_table_header_name'}</th>{/if}
-            {if $filter.fields.course}<th>{translate line='admin_task_sets_table_header_course'}</th>{/if}
-            {if $filter.fields.group}<th>{translate line='admin_task_sets_table_header_group'}</th>{/if}
-            {if $filter.fields.task_set_type}<th>{translate line='admin_task_sets_table_header_task_set_type'}</th>{/if}
-            {if $filter.fields.tasks}<th>{translate line='admin_task_sets_table_header_tasks'}</th>{/if}
-            {if $filter.fields.published}<th>{translate line='admin_task_sets_table_header_published'}</th>{/if}
+            {if $filter.fields.created}<th class="sort:created">{translate line='common_table_header_created'}</th>{/if}
+            {if $filter.fields.updated}<th class="sort:updated">{translate line='common_table_header_updated'}</th>{/if}
+            {if $filter.fields.name}<th class="sort:name">{translate line='admin_task_sets_table_header_name'}</th>{/if}
+            {if $filter.fields.course}<th class="sort:course">{translate line='admin_task_sets_table_header_course'}</th>{/if}
+            {if $filter.fields.group}<th class="sort:group">{translate line='admin_task_sets_table_header_group'}</th>{/if}
+            {if $filter.fields.task_set_type}<th class="sort:task_set_type">{translate line='admin_task_sets_table_header_task_set_type'}</th>{/if}
+            {if $filter.fields.tasks}<th class="sort:tasks:desc">{translate line='admin_task_sets_table_header_tasks'}</th>{/if}
+            {if $filter.fields.published}<th class="sort:published:desc">{translate line='admin_task_sets_table_header_published'}</th>{/if}
             <th colspan="5" class="controlls"><div id="open_fields_config_id">{translate line='admin_task_sets_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
     </thead>

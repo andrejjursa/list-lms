@@ -48,7 +48,6 @@ class Tasks extends LIST_Controller {
         $this->inject_stored_filter();
         
         $tasks = new Task();
-        $tasks->order_by_with_overlay('name', 'asc');
         $tasks->include_related('author', 'fullname');
         if (isset($filter['categories']['clauses']) && count($filter['categories']['clauses']) > 0) {
             $tasks->add_categories_filter($filter['categories']['clauses']);
@@ -64,6 +63,18 @@ class Tasks extends LIST_Controller {
             $tasks->group_end();
         }
         $tasks->include_related_count('task_set');
+        $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
+        if ($filter['order_by_field'] == 'created') {
+            $tasks->order_by('created', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'updated') {
+            $tasks->order_by('updated', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'name') {
+            $tasks->order_by_with_overlay('name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'task_sets') {
+            $tasks->order_by('task_set_count', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'author') {
+            $tasks->order_by_related('author', 'fullname', $order_by_direction);
+        }
         $tasks->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('tasks', $tasks->all_to_array(), array('name'));
         $this->parser->parse('backend/tasks/all_tasks.tpl', array('tasks' => $tasks, 'fields_config' => $fields_config));

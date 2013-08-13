@@ -39,6 +39,8 @@
                     <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />
                     <input type="hidden" name="filter[rows_per_page]" value="{$filter.rows_per_page|default:25|intval}" />
                     <input type="hidden" name="filter_selected_group_id" value="{$filter.group|intval}" />
+                    <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'student'}" />
+                    <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />
                 </div>
             </form>
         </div>
@@ -46,10 +48,10 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>{translate line='admin_participants_table_header_student_name_email'}</th>
-                    <th>{translate line='admin_participants_table_header_course_name'}</th>
-                    <th>{translate line='admin_participants_table_header_group_name'}</th>
-                    <th>{translate line='admin_participants_table_header_allowed_status'}</th>
+                    <th class="sort:student">{translate line='admin_participants_table_header_student_name_email'}</th>
+                    <th class="sort:course">{translate line='admin_participants_table_header_course_name'}</th>
+                    <th class="sort:group">{translate line='admin_participants_table_header_group_name'}</th>
+                    <th class="sort:status">{translate line='admin_participants_table_header_allowed_status'}</th>
                     <th class="controlls" colspan="7">{translate line='admin_participants_table_header_controlls'}</th>
                 </tr>
             </thead>

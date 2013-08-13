@@ -2,15 +2,20 @@
     <thead>
         <tr>
             <th>ID</th>
-            {if $filter.fields.created}<th>{translate line='common_table_header_created'}</th>{/if}
-            {if $filter.fields.updated}<th>{translate line='common_table_header_updated'}</th>{/if}
-            {if $filter.fields.name}<th>{translate line='admin_groups_table_header_group_name'}</th>{/if}
-            {if $filter.fields.course}<th>{translate line='admin_groups_table_header_group_course'}</th>{/if}
+            {if $filter.fields.created}<th class="sort:created">{translate line='common_table_header_created'}</th>{/if}
+            {if $filter.fields.updated}<th class="sort:updated">{translate line='common_table_header_updated'}</th>{/if}
+            {if $filter.fields.name}<th class="sort:name">{translate line='admin_groups_table_header_group_name'}</th>{/if}
+            {if $filter.fields.course}<th class="sort:course">{translate line='admin_groups_table_header_group_course'}</th>{/if}
             {if $filter.fields.rooms}<th>{translate line='admin_groups_table_header_group_rooms'}</th>{/if}
-            {if $filter.fields.capacity}<th>{translate line='admin_groups_table_header_group_capacity'}</th>{/if}
+            {if $filter.fields.capacity}<th class="sort:capacity:desc">{translate line='admin_groups_table_header_group_capacity'}</th>{/if}
             <th colspan="4" class="controlls"><div id="open_fields_config_id">{translate line='admin_groups_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
     </thead>
+    <tfoot id="table_pagination_footer_id">
+        <tr>
+            <td colspan="{5 + $filter.fields|sum_array}">{include file='partials/backend_general/pagination.tpl' paged=$groups->paged inline}</td>
+        </tr>
+    </tfoot>
     <tbody>
         {foreach $groups as $group}
         <tr>

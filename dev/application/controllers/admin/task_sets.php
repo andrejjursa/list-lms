@@ -113,7 +113,6 @@ class Task_sets extends LIST_Controller {
         $this->store_filter($filter);
         $this->inject_stored_filter();
         $task_sets = new Task_set();
-        $task_sets->order_by_with_overlay('name', 'asc');
         $task_sets->include_related('course', 'name', TRUE);
         $task_sets->include_related('course/period', 'name', TRUE);
         $task_sets->include_related('group', 'name', TRUE);
@@ -134,6 +133,25 @@ class Task_sets extends LIST_Controller {
         if (isset($filter['name']) && trim($filter['name']) != '') {
             $name_value = trim($filter['name']);
             $task_sets->like_with_overlay('name', $name_value);
+        }
+        $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
+        if ($filter['order_by_field'] == 'created') {
+            $task_sets->order_by('created', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'updated') {
+            $task_sets->order_by('updated', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'name') {
+            $task_sets->order_by_with_overlay('name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'course') {
+            $task_sets->order_by_related('course/period', 'sorting', $order_by_direction);
+            $task_sets->order_by_related_with_constant('course', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'group') {
+            $task_sets->order_by_related_with_constant('group', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'task_set_type') {
+            $task_sets->order_by_related_with_constant('task_set_type', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'tasks') {
+            $task_sets->order_by('task_count', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'published') {
+            $task_sets->order_by('published', $order_by_direction);
         }
         $task_sets->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('task_sets', $task_sets->all_to_array(), array('name'));

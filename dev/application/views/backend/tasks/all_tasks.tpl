@@ -2,12 +2,12 @@
     <thead>
         <tr>
             <th>ID</th>
-            {if $filter.fields.created}<th>{translate line='common_table_header_created'}</th>{/if}
-            {if $filter.fields.updated}<th>{translate line='common_table_header_updated'}</th>{/if}
-            {if $filter.fields.name}<th>{translate line='admin_tasks_table_header_name'}</th>{/if}
+            {if $filter.fields.created}<th class="sort:created">{translate line='common_table_header_created'}</th>{/if}
+            {if $filter.fields.updated}<th class="sort:updated">{translate line='common_table_header_updated'}</th>{/if}
+            {if $filter.fields.name}<th class="sort:name">{translate line='admin_tasks_table_header_name'}</th>{/if}
             {if $filter.fields.categories}<th>{translate line='admin_tasks_table_header_categories'}</th>{/if}
-            {if $filter.fields.task_sets}<th>{translate line='admin_tasks_table_header_task_sets'}</th>{/if}
-            {if $filter.fields.author}<th>{translate line='admin_tasks_table_header_author'}</th>{/if}
+            {if $filter.fields.task_sets}<th class="sort:task_sets:desc">{translate line='admin_tasks_table_header_task_sets'}</th>{/if}
+            {if $filter.fields.author}<th class="sort:author">{translate line='admin_tasks_table_header_author'}</th>{/if}
             <th colspan="4" class="controlls"><div id="open_fields_config_id">{translate line='admin_tasks_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
     </thead>

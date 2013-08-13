@@ -182,6 +182,20 @@ var sort_table = function(table_selector, filter_selector) {
     var default_direction = filter_direction.val().toLowerCase();
     var default_field = filter_field.val();
     
+    var replace_icons = function() {
+        var default_direction = filter_direction.val().toLowerCase();
+        var default_field = filter_field.val();
+        jQuery(table).find('thead tr th').each(function() {
+            var field_config = regex_sort.exec(jQuery(this).attr('class'));
+            if (field_config !== null) {
+                var parts = field_config[0].split(':');
+                var field = parts[1];
+                var icon = $(this).find('div.ui-icon');
+                icon.attr('class', 'ui-icon ' + (default_field === field ? (default_direction === '' || default_direction === 'asc' ? 'ui-icon-circle-triangle-n' : 'ui-icon-circle-triangle-s') : 'ui-icon-circle-plus'));
+            }
+        });
+    };
+    
     jQuery(table).find('thead tr th').each(function() {
         var field_config = regex_sort.exec(jQuery(this).attr('class'));
         if (field_config !== null) {
@@ -210,6 +224,7 @@ var sort_table = function(table_selector, filter_selector) {
                         filter_direction.val('asc');
                     }
                 }
+                replace_icons();
                 $(filter).submit();
             }).css('cursor', 'pointer');
         }

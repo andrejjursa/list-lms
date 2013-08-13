@@ -51,9 +51,6 @@ class Groups extends LIST_Controller {
         $rooms = $groups->room;
         $rooms->select_min('capacity');
         $rooms->where('group_id', '${parent}.id', FALSE);
-        $groups->order_by_related('course/period', 'sorting', 'asc');
-        $groups->order_by_related_with_constant('course', 'name', 'asc');
-        $groups->order_by_with_constant('name', 'asc');
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
         $this->inject_stored_filter();
@@ -63,7 +60,20 @@ class Groups extends LIST_Controller {
         $groups->include_related('course', 'name', TRUE);
         $groups->include_related('course/period', 'name', TRUE);
         $groups->select_subquery($rooms, 'group_capacity');
-        $groups->get_iterated();
+        $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
+        if ($filter['order_by_field'] == 'course') {
+            $groups->order_by_related('course/period', 'sorting', $order_by_direction);
+            $groups->order_by_related_with_constant('course', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'created') {
+            $groups->order_by('created', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'updated') {
+            $groups->order_by('updated', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'capacity') {
+            $groups->order_by('group_capacity', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'name') {
+            $groups->order_by_with_constant('name', $order_by_direction);
+        }
+        $groups->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->parser->parse('backend/groups/table_content.tpl', array('groups' => $groups, 'fields_config' => $fields_config));
     }
     

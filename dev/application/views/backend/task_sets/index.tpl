@@ -43,6 +43,8 @@
                         <input type="hidden" name="filter[fields][task_set_type]" value="{$filter.fields.task_set_type|default:1}" />
                         <input type="hidden" name="filter[fields][tasks]" value="{$filter.fields.tasks|default:1}" />
                         <input type="hidden" name="filter[fields][published]" value="{$filter.fields.published|default:1}" />
+                        <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'name'}" />
+                        <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />
                     </div>
                 </form>
             </div>

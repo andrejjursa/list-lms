@@ -14,6 +14,7 @@ jQuery(document).ready(function($) {
             field_filter_checkbox('#fields_config_categories_checkbox_id', '#filter_form_id', 'categories');
             field_filter_checkbox('#fields_config_task_sets_checkbox_id', '#filter_form_id', 'task_sets');
             field_filter_checkbox('#fields_config_author_checkbox_id', '#filter_form_id', 'author');
+            sort_table('table.tasks_table', '#filter_form_id');
         };
         api_ajax_load(url, '#table_content_id', 'post', data, onSuccess);
     };

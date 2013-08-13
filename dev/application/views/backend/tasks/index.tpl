@@ -49,6 +49,8 @@
                     <input type="hidden" name="filter[fields][categories]" value="{$filter.fields.categories|default:1}" />
                     <input type="hidden" name="filter[fields][task_sets]" value="{$filter.fields.task_sets|default:1}" />
                     <input type="hidden" name="filter[fields][author]" value="{$filter.fields.author|default:0}" />
+                    <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'name'}" />
+                    <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />
                 </div>
             </form>
         </div>

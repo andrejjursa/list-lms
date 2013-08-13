@@ -27,6 +27,8 @@
                     <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />
                     <input type="hidden" name="filter[rows_per_page]" value="{$filter.rows_per_page|default:25|intval}" />
                     <input type="hidden" name="filter_selected_group_id" value="{$filter.group|intval}" />
+                    <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'task_set_name'}" />
+                    <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />
                 </div>
             </form>
         </div>
@@ -34,13 +36,13 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>{translate line='admin_solutions_table_header_task_set_name'}</th>
-                    <th>{translate line='admin_solutions_table_header_task_set_course'}</th>
-                    <th>{translate line='admin_solutions_table_header_task_set_course_group'}</th>
-                    <th>{translate line='admin_solutions_table_header_task_set_task_set_type'}</th>
-                    <th>{translate line='admin_solutions_table_header_task_set_solution_count'}</th>
-                    <th>{translate line='admin_solutions_table_header_task_set_task_count'}</th>
-                    <th>{translate line='admin_solutions_table_header_task_set_task_upload_end_time'}</th>
+                    <th class="sort:task_set_name">{translate line='admin_solutions_table_header_task_set_name'}</th>
+                    <th class="sort:course">{translate line='admin_solutions_table_header_task_set_course'}</th>
+                    <th class="sort:course_group">{translate line='admin_solutions_table_header_task_set_course_group'}</th>
+                    <th class="sort:task_set_type">{translate line='admin_solutions_table_header_task_set_task_set_type'}</th>
+                    <th class="sort:solution_count:desc">{translate line='admin_solutions_table_header_task_set_solution_count'}</th>
+                    <th class="sort:task_count:desc">{translate line='admin_solutions_table_header_task_set_task_count'}</th>
+                    <th class="sort:upload_end_time">{translate line='admin_solutions_table_header_task_set_task_upload_end_time'}</th>
                     <th colspan="2" class="controlls">{translate line='admin_solutions_table_header_controlls'}</th>
                 </tr>
             </thead>
