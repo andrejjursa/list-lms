@@ -18,10 +18,24 @@ $lang['admin_solutions_table_header_task_set_task_upload_end_time'] = 'End of so
 $lang['admin_solutions_table_header_controlls'] = 'Controlls';
 $lang['admin_solutions_table_button_select_task_set'] = 'Select&nbsp;task&nbsp;set';
 $lang['admin_solutions_table_button_batch_valuation'] = 'Batch&nbsp;valuation';
+$lang['admin_solutions_table_button_remove_points'] = 'Remove&nbsp;points';
 $lang['admin_solutions_datetime_format'] = 'm/d/Y H:i:s';
 $lang['admin_solutions_no_time_information'] = 'No time information.';
 $lang['admin_solutions_no_solution_uploading'] = 'Solution uploading is disabled.';
 $lang['admin_solutions_group_no_group'] = 'No group';
+
+$lang['admin_solutions_remove_points_error_task_set_upload_limit_not_reached'] = 'Time limit for solution uploading have not been reached yet.';
+$lang['admin_solutions_remove_points_error_task_set_upload_not_limited'] = 'This task set does not have set limit for solution uploading.';
+$lang['admin_solutions_remove_points_error_unknown'] = 'Points were not removed due to unknown error.';
+$lang['admin_solutions_remove_points_form_field_points'] = 'points to remove';
+$lang['admin_solutions_remove_points_success'] = 'Successfully removed points for this task set for %s students.';
+$lang['admin_solutions_remove_points_dialog_title'] = 'Remove points';
+$lang['admin_solutions_remove_points_dialog_message'] = 'If you want to remove points for all student which does not submit solution for this task set, enter points here and press Ok.';
+$lang['admin_solutions_remove_points_form_label_points'] = 'Points to remove';
+$lang['admin_solutions_remove_points_dialog_ok_button'] = 'Ok';
+$lang['admin_solutions_remove_points_dialog_cancel_button'] = 'Cancel';
+$lang['admin_solutions_remove_points_notification_subject'] = 'You have lost some points!';
+$lang['admin_solutions_remove_points_notification_text'] = 'You have just lost %s points from task %s, where you do not have submited any solution until %s.';
 
 $lang['admin_solutions_list_page_title'] = 'Solutions for task set %s';
 $lang['admin_solutions_list_h3_all_groups'] = 'All groups';

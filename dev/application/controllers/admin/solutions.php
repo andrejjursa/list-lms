@@ -99,6 +99,81 @@ class Solutions extends LIST_Controller {
         redirect(create_internal_url('admin_solutions/batch_valuation_list/' . $task_set_id));
     }
 
+    public function remove_points($task_set_id = NULL) {
+        //TODO: Chceck for settings for solution uploading for given task set from given course
+        $this->output->set_content_type('application/json');
+        $result = new stdClass();
+        $result->result = FALSE;
+        $result->message = '';
+        
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('points', 'lang:admin_solutions_remove_points_form_field_points', 'required|numeric|greater_than[0]');
+        if ($this->form_validation->run()) {
+            $points_to_remove = floatval($this->input->post('points'));
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
+            $task_set = new Task_set();
+            $task_set->include_related('course', '*', TRUE, TRUE);
+            $task_set->include_related('group', '*', TRUE, TRUE);
+            $task_set->get_by_id($task_set_id);
+            if ($task_set->exists()) {
+                if (!is_null($task_set->upload_end_time)) {
+                    $timestamp_end = strtotime($task_set->upload_end_time);
+                    if(time() > $timestamp_end) {
+                        $participants = new Participant();
+                        $participants->select('*');
+                        $participants->select_subquery('(SELECT `solutions`.`id` FROM `solutions` WHERE `solutions`.`task_set_id` = ' . $task_set->id . ' AND `solutions`.`student_id` = `${parent}`.`student_id`)', 'solution_id');
+                        $participants->where_related_course($task_set->course);
+                        if ($task_set->group->exists()) {
+                            $participants->where_related_group($task_set->group);
+                        }
+                        $participants->where('allowed', 1);
+                        $participants->get_iterated();
+                        $notify_students = array(0);
+                        foreach ($participants as $participant) {
+                            if (is_null($participant->solution_id) && !is_null($participant->student_id)) {
+                                $solution = new Solution();
+                                $solution->task_set_id = $task_set->id;
+                                $solution->student_id = $participant->student_id;
+                                $solution->teacher_id = $this->usermanager->get_teacher_id();
+                                $solution->points = - $points_to_remove;
+                                $solution->revalidate = 0;
+                                if ($solution->save()) {
+                                    $notify_students[] = $participant->student_id;
+                                }
+                            }
+                        }
+                        if ($this->db->trans_status()) {
+                            $this->db->trans_commit();
+                            $result->result = TRUE;
+                            $result->message = sprintf($this->lang->line('admin_solutions_remove_points_success'), count($notify_students) - 1);
+                            
+                            $students = new Student();
+                            $students->where_in('id', $notify_students);
+                            $students->get();
+                            $result->mail_sent = $this->_send_multiple_emails($students, 'lang:admin_solutions_remove_points_notification_subject', 'file:emails/backend/solutions/remove_points_notify.tpl', array('task_set' => $task_set, 'points_to_remove' => $points_to_remove));
+                        } else {
+                            $this->db->trans_rollback();
+                            $result->message = $this->lang->line('admin_solutions_remove_points_error_unknown');
+                        }
+                    } else {
+                        $this->db->trans_rollback();
+                        $result->message = $this->lang->line('admin_solutions_remove_points_error_task_set_upload_limit_not_reached');
+                    }
+                } else {
+                    $this->db->trans_rollback();
+                    $result->message = $this->lang->line('admin_solutions_remove_points_error_task_set_upload_not_limited');
+                }
+            } else {
+                $this->db->trans_rollback();
+                $result->message = $this->lang->line('admin_solutions_list_task_set_not_found');
+            }
+        } else {
+            $result->message = $this->form_validation->error_string();
+        }
+        $this->output->set_output(json_encode($result));
+    }
+    
     public function solutions_list($task_set_id = NULL) {
         $this->_select_teacher_menu_pagetag('solutions');
         $task_set = new Task_set();

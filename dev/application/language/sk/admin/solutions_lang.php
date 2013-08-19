@@ -18,10 +18,24 @@ $lang['admin_solutions_table_header_task_set_task_upload_end_time'] = 'Koniec od
 $lang['admin_solutions_table_header_controlls'] = 'Ovládanie';
 $lang['admin_solutions_table_button_select_task_set'] = 'Vybrať&nbsp;zostavu&nbsp;úloh';
 $lang['admin_solutions_table_button_batch_valuation'] = 'Hromadné&nbsp;hodnotenie';
+$lang['admin_solutions_table_button_remove_points'] = 'Odobrať&nbsp;body';
 $lang['admin_solutions_datetime_format'] = 'd.m.Y H:i:s';
 $lang['admin_solutions_no_time_information'] = 'Časová informácia neexistuje.';
 $lang['admin_solutions_no_solution_uploading'] = 'Odosielanie riešení je zakázané.';
 $lang['admin_solutions_group_no_group'] = 'Bez skupiny';
+
+$lang['admin_solutions_remove_points_error_task_set_upload_limit_not_reached'] = 'Časový limit pre odosielanie riešení do tejto zostavy úloh nebol ešte dosiahnutý.';
+$lang['admin_solutions_remove_points_error_task_set_upload_not_limited'] = 'Táto zostava úloh nemá nastavený časový limit odosielania riešení.';
+$lang['admin_solutions_remove_points_error_unknown'] = 'Body sa nepodarilo odobrať kvôli neznámej chybe';
+$lang['admin_solutions_remove_points_form_field_points'] = 'body na odobranie';
+$lang['admin_solutions_remove_points_success'] = 'Body úspešne odobrané za túto zostavu úloh %s študentom.';
+$lang['admin_solutions_remove_points_dialog_title'] = 'Odobranie bodov';
+$lang['admin_solutions_remove_points_dialog_message'] = 'Ak chcete odobrať študentom body za túto zostavu úloh, zadajte počet bodov a kliknite na Ok.';
+$lang['admin_solutions_remove_points_form_label_points'] = 'Body na odobranie';
+$lang['admin_solutions_remove_points_dialog_ok_button'] = 'Ok';
+$lang['admin_solutions_remove_points_dialog_cancel_button'] = 'Zrušiť';
+$lang['admin_solutions_remove_points_notification_subject'] = 'Stratil si body!';
+$lang['admin_solutions_remove_points_notification_text'] = 'Práve si stratil %s bodov za úlohu %s, kedže si neodovzdal žiadne riešenie do %s.';
 
 $lang['admin_solutions_list_page_title'] = 'Riešenia pre zostavu úloh %s';
 $lang['admin_solutions_list_h3_all_groups'] = 'Všetky skupiny';

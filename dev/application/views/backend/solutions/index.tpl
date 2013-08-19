@@ -43,7 +43,7 @@
                     <th class="sort:solution_count:desc">{translate line='admin_solutions_table_header_task_set_solution_count'}</th>
                     <th class="sort:task_count:desc">{translate line='admin_solutions_table_header_task_set_task_count'}</th>
                     <th class="sort:upload_end_time">{translate line='admin_solutions_table_header_task_set_task_upload_end_time'}</th>
-                    <th colspan="2" class="controlls">{translate line='admin_solutions_table_header_controlls'}</th>
+                    <th colspan="3" class="controlls">{translate line='admin_solutions_table_header_controlls'}</th>
                 </tr>
             </thead>
             <tfoot id="table_pagination_footer_id">
@@ -51,4 +51,17 @@
             <tbody id="table_content_id"></tbody>
         </table>
     </fieldset>
+    <div id="remove_points_dialog_id" title="{translate line='admin_solutions_remove_points_dialog_title'}" style="display: none;">
+        <form method="post">
+            <p class="info">{translate line='admin_solutions_remove_points_dialog_message'}</p>
+            <div class="field">
+                <label for="remove_points_points_id">{translate line='admin_solutions_remove_points_form_label_points'}:</label>
+                <p class="input"><input type="text" name="points" value="" id="remove_points_points_id" /></p>
+            </div>
+        </form>
+    </div>
 {/block}
+{block custom_head}<script type="text/javascript">
+    var remove_points_dialog_ok_button = '{translate line='admin_solutions_remove_points_dialog_ok_button'}';
+    var remove_points_dialog_cancel_button = '{translate line='admin_solutions_remove_points_dialog_cancel_button'}';
+</script>{/block}

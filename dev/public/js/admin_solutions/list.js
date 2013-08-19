@@ -65,4 +65,68 @@ jQuery(document).ready(function($) {
     
     sort_table('table.task_sets_table', '#filter_form_id');
     
+    var remove_points_dialog_submit_to_url = '';
+    var remove_points_dialog = $('#remove_points_dialog_id');
+    
+    $(document).on('click', 'table.task_sets_table a.button.remove_points', function(event) {
+        event.preventDefault();
+        var regexp = /points\:([0-9]+)/i;
+        var data = regexp.exec($(this).attr('class'));
+        var default_points = 3;
+        if (data !== null) {
+            default_points = data[1];
+        }
+        remove_points_dialog_submit_to_url = $(this).attr('href');
+        create_remove_points_dialog(default_points);
+    });
+    
+    var submit_and_close_dialog = function() {
+        var data = remove_points_dialog.find('form').serializeArray();
+        api_ajax_update(remove_points_dialog_submit_to_url, 'post', data, function(output) {
+            if (output.result !== undefined && output.message !== undefined) {
+                if (output.result === true) {
+                    show_notification(output.message, 'success');
+                    remove_points_dialog.find('form').each(function() {
+                        this.reset();
+                    });
+                    remove_points_dialog.dialog('close');
+                    reload_all_task_sets();
+                } else {
+                    show_notification(output.message, 'error');
+                }
+            }
+        });
+    };
+    
+    var create_remove_points_dialog = function(default_points) {
+        remove_points_dialog.dialog({
+            modal: true,
+            autoOpen: true,
+            width: 500,
+            buttons: [
+                {
+                    text: remove_points_dialog_ok_button,
+                    click: submit_and_close_dialog
+                },
+                {
+                    text: remove_points_dialog_cancel_button,
+                    click: function() { 
+                        $(this).find('form').each(function() {
+                            this.reset();
+                        });
+                        $(this).dialog('close');
+                    }
+                }
+            ],
+            close: function() {
+                $(this).find('form').each(function() {
+                    this.reset();
+                });
+            }
+        }).submit(function(event){
+            event.preventDefault();
+            submit_and_close_dialog();
+        }).find('input[name=points]').val(default_points);
+    };
+    
 });
