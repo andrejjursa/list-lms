@@ -70,7 +70,7 @@ jQuery(document).ready(function($) {
     
     $(document).on('click', 'table.task_sets_table a.button.remove_points', function(event) {
         event.preventDefault();
-        var regexp = /points\:([0-9]+)/i;
+        var regexp = /points\:([0-9]+(\.[0-9]+)?)/i;
         var data = regexp.exec($(this).attr('class'));
         var default_points = 3;
         if (data !== null) {

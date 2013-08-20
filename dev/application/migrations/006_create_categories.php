@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Migration_teachers_table1 extends CI_Migration {
+class Migration_create_categories extends CI_Migration {
     
     public function up() {
         $this->dbforge->add_field(
@@ -17,34 +17,29 @@ class Migration_teachers_table1 extends CI_Migration {
                 'created' => array(
                     'type' => 'timestamp',
                 ),
-                'fullname' => array(
+                'name' => array(
                     'type' => 'VARCHAR',
                     'constraint' => 255,
                 ),
-                'email' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 255,
-                ),
-                'password' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 40,
-                ),
-                'language' => array(
-                    'type' => 'VARCHAR',
-                    'constraint' => 32,
+                'parent_id' => array(
+                    'type' => 'INT',
+                    'constraint' => '11',
+                    'null' => TRUE,
+                    'unsigned' => TRUE,
                 ),
             )
         );
         
         $this->dbforge->add_key('id', TRUE);
+        $this->dbforge->add_key('parent_id');
         
-        $this->dbforge->create_table('teachers');
+        $this->dbforge->create_table('categories');
         
-        change_mysql_table_to_InnoDB('teachers');
+        change_mysql_table_to_InnoDB('categories');
     }
     
     public function down() {
-        $this->dbforge->drop_table('teachers');
+        $this->dbforge->drop_table('categories');
     }
     
 }

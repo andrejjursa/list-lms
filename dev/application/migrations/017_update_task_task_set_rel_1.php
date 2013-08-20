@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Migration_task_task_set_rel_table2 extends CI_Migration {
+class Migration_update_task_task_set_rel_1 extends CI_Migration {
     
     public function up() {
         $this->dbforge->add_column('task_task_set_rel', array(

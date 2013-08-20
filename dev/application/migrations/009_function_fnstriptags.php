@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Migration_fnstriptags_function1 extends CI_Migration {
+class Migration_function_fnstriptags extends CI_Migration {
 
     public function up() {
         $this->db->query('DROP FUNCTION IF EXISTS fnStripTags');

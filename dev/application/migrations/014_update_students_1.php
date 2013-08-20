@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Migration_students_table2 extends CI_Migration {
+class Migration_update_students_1 extends CI_Migration {
     
     public function up() {
         $this->dbforge->add_column('students', array(

@@ -11,6 +11,7 @@ $cache = array (
     5 => 'description',
     6 => 'capacity',
     7 => 'groups_change_deadline',
+    8 => 'default_points_to_remove',
   ),
   'validation' => 
   array (
@@ -67,6 +68,13 @@ $cache = array (
     'groups_change_deadline' => 
     array (
       'field' => 'groups_change_deadline',
+      'rules' => 
+      array (
+      ),
+    ),
+    'default_points_to_remove' => 
+    array (
+      'field' => 'default_points_to_remove',
       'rules' => 
       array (
       ),

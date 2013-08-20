@@ -1,6 +1,6 @@
 <?php
 
-class Migration_Sessions_security_table1 extends CI_Migration {
+class Migration_create_sessions_security extends CI_Migration {
     
     public function up() {
         

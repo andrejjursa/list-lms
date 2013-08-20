@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Migration_comments_task_sets_table1 extends CI_Migration {
+class Migration_create_comments_update_task_sets extends CI_Migration {
     
     public function up() {
         $this->dbforge->add_field(

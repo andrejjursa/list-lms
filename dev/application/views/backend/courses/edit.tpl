@@ -34,6 +34,12 @@
                     <p class="input"><input type="text" name="course[groups_change_deadline]" value="{$smarty.post.course.groups_change_deadline|default:$course->groups_change_deadline|escape:'html'}" id="course_groups_change_deadline_id" /></p>
                     <p class="input"><em>{translate line='admin_courses_form_label_course_groups_change_deadline_hint'}</em></p>
                 </div>
+                <div class="field">
+                    <label for="course_default_points_to_remove_id" class="required">{translate line='admin_courses_form_label_course_default_points_to_remove'}:</label>
+                    <p class="input"><input type="text" name="course[default_points_to_remove]" value="{$smarty.post.course.default_points_to_remove|default:$course->default_points_to_remove}" id="course_default_points_to_remove_id" /></p>
+                    <p class="input"><em>{translate line='admin_courses_form_label_course_default_points_to_remove_hint'}</em></p>
+                    {form_error field='course[default_points_to_remove]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                </div>
                 <div class="buttons">
                     <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" /> <a href="{internal_url url='admin_courses'}" class="button special">{translate line='common_button_back'}</a>
                 </div>

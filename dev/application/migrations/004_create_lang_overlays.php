@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Migration_lang_overlays_table1 extends CI_Migration {
+class Migration_create_lang_overlays extends CI_Migration {
     
     public function up() {
         $this->dbforge->add_field(

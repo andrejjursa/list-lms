@@ -27,6 +27,7 @@ $lang['admin_solutions_group_no_group'] = 'No group';
 $lang['admin_solutions_remove_points_error_task_set_upload_limit_not_reached'] = 'Time limit for solution uploading have not been reached yet.';
 $lang['admin_solutions_remove_points_error_task_set_upload_not_limited'] = 'This task set does not have set limit for solution uploading.';
 $lang['admin_solutions_remove_points_error_unknown'] = 'Points were not removed due to unknown error.';
+$lang['admin_solutions_remove_points_error_task_set_solution_uploading_disabled'] = 'Solution uploading is disabled for this task set.';
 $lang['admin_solutions_remove_points_form_field_points'] = 'points to remove';
 $lang['admin_solutions_remove_points_success'] = 'Successfully removed points for this task set for %s students.';
 $lang['admin_solutions_remove_points_dialog_title'] = 'Remove points';

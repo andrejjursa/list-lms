@@ -65,11 +65,12 @@ class Courses extends LIST_Controller {
         $this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
         $this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
         $this->form_validation->set_rules('course[capacity]', 'lang:admin_courses_form_field_capacity', 'required|integer|greater_than[0]');
+        $this->form_validation->set_rules('course[default_points_to_remove]', 'lang:admin_courses_form_field_default_points_to_remove', 'required|numeric|greater_than[0]');
         
         if ($this->form_validation->run()) {
             $course = new Course();
             $course_data = $this->input->post('course');
-            $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity'));
+            $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity', 'default_points_to_remove'));
             $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
             
             $this->_transaction_isolation();
@@ -142,6 +143,7 @@ class Courses extends LIST_Controller {
         $this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
         $this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
         $this->form_validation->set_rules('course[capacity]', 'lang:admin_courses_form_field_capacity', 'required|integer|greater_than[0]');
+        $this->form_validation->set_rules('course[default_points_to_remove]', 'lang:admin_courses_form_field_default_points_to_remove', 'required|numeric|greater_than[0]');
         
         if ($this->form_validation->run()) {
             $course_id = intval($this->input->post('course_id'));
@@ -149,7 +151,7 @@ class Courses extends LIST_Controller {
             $course->get_by_id($course_id);
             if ($course->exists()) {
                 $course_data = $this->input->post('course');
-                $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity'));
+                $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity', 'default_points_to_remove'));
                 $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
                 
                 $overlay = $this->input->post('overlay');

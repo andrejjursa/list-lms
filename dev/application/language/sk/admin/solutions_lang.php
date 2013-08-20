@@ -27,6 +27,7 @@ $lang['admin_solutions_group_no_group'] = 'Bez skupiny';
 $lang['admin_solutions_remove_points_error_task_set_upload_limit_not_reached'] = 'Časový limit pre odosielanie riešení do tejto zostavy úloh nebol ešte dosiahnutý.';
 $lang['admin_solutions_remove_points_error_task_set_upload_not_limited'] = 'Táto zostava úloh nemá nastavený časový limit odosielania riešení.';
 $lang['admin_solutions_remove_points_error_unknown'] = 'Body sa nepodarilo odobrať kvôli neznámej chybe';
+$lang['admin_solutions_remove_points_error_task_set_solution_uploading_disabled'] = 'Odosielanie riešení je pre túto zostavu úloh zakázané.';
 $lang['admin_solutions_remove_points_form_field_points'] = 'body na odobranie';
 $lang['admin_solutions_remove_points_success'] = 'Body úspešne odobrané za túto zostavu úloh %s študentom.';
 $lang['admin_solutions_remove_points_dialog_title'] = 'Odobranie bodov';

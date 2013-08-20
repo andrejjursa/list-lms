@@ -1,10 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Migration_groups_rooms_table1 extends CI_Migration {
+class Migration_create_periods_courses_translations extends CI_Migration {
     
     public function up() {
-        change_mysql_table_to_InnoDB('lang_overlays');
-        
         $this->dbforge->add_field(
             array(
                 'id' => array(
@@ -23,21 +21,19 @@ class Migration_groups_rooms_table1 extends CI_Migration {
                     'type' => 'VARCHAR',
                     'constraint' => 255,
                 ),
-                'course_id' => array(
+                'sorting' => array(
                     'type' => 'INT',
                     'constraint' => '11',
-                    'null' => TRUE,
                     'unsigned' => TRUE,
                 ),
             )
         );
         
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->add_key('course_id');
         
-        $this->dbforge->create_table('groups');
+        $this->dbforge->create_table('periods');
         
-        change_mysql_table_to_InnoDB('groups');
+        change_mysql_table_to_InnoDB('periods');
         
         $this->dbforge->add_field(
             array(
@@ -57,46 +53,64 @@ class Migration_groups_rooms_table1 extends CI_Migration {
                     'type' => 'VARCHAR',
                     'constraint' => 255,
                 ),
-                'group_id' => array(
+                'period_id' => array(
                     'type' => 'INT',
                     'constraint' => '11',
-                    'null' => TRUE,
                     'unsigned' => TRUE,
+                    'null' => TRUE
                 ),
-                'time_begin' => array(
-                    'type' => 'INT',
-                    'constraint' => 6,
-                    'unsigned' => TRUE,
-                ),
-                'time_end' => array(
-                    'type' => 'INT',
-                    'constraint' => 6,
-                    'unsigned' => TRUE,
-                ),
-                'time_day' => array(
-                    'type' => 'INT',
-                    'constraint' => 2,
-                    'unsigned' => TRUE,
+                'description' => array(
+                    'type' => 'TEXT'
                 ),
                 'capacity' => array(
                     'type' => 'INT',
-                    'constraint' => 4,
                     'unsigned' => TRUE,
+                    'constraint' => 4,
+                ),
+                'groups_change_deadline' => array(
+                    'type' => 'timestamp',
+                    'null' => TRUE,
                 ),
             )
         );
         
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->add_key('group_id');
+        $this->dbforge->add_key('period_id');
         
-        $this->dbforge->create_table('rooms');
+        $this->dbforge->create_table('courses');
         
-        change_mysql_table_to_InnoDB('rooms');
+        change_mysql_table_to_InnoDB('courses');
+        
+        $this->dbforge->add_field(
+            array(
+                'idiom' => array(
+                    'type' => 'VARCHAR',
+                    'constraint' => 32,
+                ),
+                'constant' => array(
+                    'type' => 'VARCHAR',
+                    'constraint' => 255,
+                ),
+                'text' => array(
+                    'type' => 'TEXT',
+                ),
+            )
+        );
+        
+        $this->dbforge->add_key('idiom', TRUE);
+        $this->dbforge->add_key('constant', TRUE);
+        $this->dbforge->add_key('idiom');
+        $this->dbforge->add_key('constant');
+        
+        $this->dbforge->create_table('translations');
+        
+        change_mysql_table_to_InnoDB('translations');
     }
     
     public function down() {
-        $this->dbforge->drop_table('groups');
-        $this->dbforge->drop_table('rooms');
+        $this->dbforge->drop_table('periods');
+        $this->dbforge->drop_table('courses');
+        $this->dbforge->drop_table('translations');
     }
     
 }
