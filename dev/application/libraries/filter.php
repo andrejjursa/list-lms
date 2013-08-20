@@ -19,6 +19,11 @@ class Filter {
         $this->CI->load->library('session');
     }
     
+    /**
+     * This method will store filter data under filter name into session.
+     * @param string $filter_name name of filter.
+     * @param array<mixed> $filter_data data of filter.
+     */
     public function store_filter($filter_name, $filter_data) {
         if (is_array($filter_data) && !empty($filter_data)) {
             $filters = $this->CI->session->userdata(self::FILTERS_ARRAY);
@@ -27,6 +32,15 @@ class Filter {
         }
     }
     
+    /**
+     * This method will return data by filter name.
+     * If the second and third parameters are set, it will check teacher data for his prefered course and
+     * inject this value into filter by specified conditions, only if these filter data are empty.
+     * @param string $filter_name name of filter.
+     * @param integer|Teacher $teacher teacher id or teacher object.
+     * @param string $course_field field in filter which contain course id in filter.
+     * @return array<midex> filter data.
+     */
     public function restore_filter($filter_name, $teacher = NULL, $course_field = NULL) {
         $filters = $this->CI->session->userdata(self::FILTERS_ARRAY);
         $filters = empty($filters) || is_null($filters) || !is_array($filters) ? array() : $filters; 
@@ -44,6 +58,11 @@ class Filter {
         return $filter;
     }
 
+    /**
+     * This method will store name of field containing course id inside filter identified by filter name.
+     * @param string $filter_name name of filter.
+     * @param string $field_name name of field containing course id.
+     */
     public function set_filter_course_name_field($filter_name, $field_name) {
         if (is_null($field_name) || (is_string($field_name) && !empty($field_name))) {
             $filter_settings = $this->CI->session->userdata(self::FILTERS_SETTINGS);
@@ -52,6 +71,11 @@ class Filter {
         }
     }
     
+    /**
+     * This method will store array of field names which have to be deleted, when filter is forced to change course id.
+     * @param string $filter_name name of filter.
+     * @param array<string> $fields array of field names.
+     */
     public function set_filter_delete_on_course_change($filter_name, $fields) {
         if ($this->is_array_of_strings($fields)) {
             $filter_settings = $this->CI->session->userdata(self::FILTERS_SETTINGS);
@@ -60,18 +84,33 @@ class Filter {
         }
     }
     
+    /**
+     * This method will return name of field which contain course id.
+     * @param string $filter_name name of filter.
+     * @return string name of field or NULL if not set.
+     */
     public function get_filter_course_name_field($filter_name) {
         $filter_settings = $this->CI->session->userdata(self::FILTERS_SETTINGS);
         if (!isset($filter_settings[$filter_name]) || !isset($filter_settings[$filter_name][self::FILTER_SETTINGS_COURSE_FIELD])) { return NULL; }
         return $filter_settings[$filter_name][self::FILTER_SETTINGS_COURSE_FIELD];
     }
     
+    /**
+     * This method will return name of fields which will be deleted from filter when course id forced to be changed.
+     * @param string $filter_name name of filter.
+     * @return array<string> array of field names or NULL if not set.
+     */
     public function get_filter_delete_on_course_change($filter_name) {
         $filter_settings = $this->CI->session->userdata(self::FILTERS_SETTINGS);
         if (!isset($filter_settings[$filter_name]) || !isset($filter_settings[$filter_name][self::FILTER_SETTINGS_FIELDS_DELETED_ON_COURSE_CHANGE])) { return NULL; }
         return $filter_settings[$filter_name][self::FILTER_SETTINGS_FIELDS_DELETED_ON_COURSE_CHANGE];
     }
     
+    /**
+     * This method will force all filters which have field for course id to set this field to id specified in parameter.
+     * @param Course|integer $course course id, existing course object or NULL.
+     * @return boolean TRUE on success, FALSE otherwise.
+     */
     public function set_all_filters_course($course) {
         $course_id = 0;
         if (is_numeric($course) && intval($course) > 0) {
@@ -105,6 +144,11 @@ class Filter {
         return TRUE;
     }
     
+    /**
+     * This method will verify if the array passed by parameter is array of strings.
+     * @param array<mixed> $array array to verify.
+     * @return boolean TRUE, if parameter is array of strings, FALSE otherwise.
+     */
     private function is_array_of_strings($array) {
         if (!is_array($array)) { return FALSE; }
         if (empty($array)) { return TRUE; }
