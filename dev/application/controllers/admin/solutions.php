@@ -132,7 +132,6 @@ class Solutions extends LIST_Controller {
                             }
                             $participants->where('allowed', 1);
                             $participants->get_iterated();
-                            $result->participants_sql = $participants->check_last_query(['', ''], TRUE);
                             $notify_students = array(0);
                             foreach ($participants as $participant) {
                                 if (is_null($participant->solution_id) && !is_null($participant->student_id)) {
