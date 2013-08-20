@@ -127,11 +127,12 @@ class Solutions extends LIST_Controller {
                             $participants->select('*');
                             $participants->select_subquery('(SELECT `solutions`.`id` FROM `solutions` WHERE `solutions`.`task_set_id` = ' . $task_set->id . ' AND `solutions`.`student_id` = `${parent}`.`student_id`)', 'solution_id');
                             $participants->where_related_course($task_set->course);
-                            if ($task_set->group->exists()) {
+                            if ($task_set->group->exists() && !is_null($task_set->group->id)) {
                                 $participants->where_related_group($task_set->group);
                             }
                             $participants->where('allowed', 1);
                             $participants->get_iterated();
+                            $result->participants_sql = $participants->check_last_query(['', ''], TRUE);
                             $notify_students = array(0);
                             foreach ($participants as $participant) {
                                 if (is_null($participant->solution_id) && !is_null($participant->student_id)) {
