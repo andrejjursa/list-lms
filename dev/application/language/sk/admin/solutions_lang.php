@@ -36,7 +36,7 @@ $lang['admin_solutions_remove_points_form_label_points'] = 'Body na odobranie';
 $lang['admin_solutions_remove_points_dialog_ok_button'] = 'Ok';
 $lang['admin_solutions_remove_points_dialog_cancel_button'] = 'Zrušiť';
 $lang['admin_solutions_remove_points_notification_subject'] = 'Stratil si body!';
-$lang['admin_solutions_remove_points_notification_text'] = 'Práve si stratil %s bodov za úlohu %s, kedže si neodovzdal žiadne riešenie do %s.';
+$lang['admin_solutions_remove_points_notification_text'] = 'Práve si stratil %s bodov za úlohu %s z kurzu %s / %s, kedže si neodovzdal žiadne riešenie do %s.';
 
 $lang['admin_solutions_list_page_title'] = 'Riešenia pre zostavu úloh %s';
 $lang['admin_solutions_list_h3_all_groups'] = 'Všetky skupiny';

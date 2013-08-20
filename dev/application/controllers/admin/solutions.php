@@ -115,6 +115,7 @@ class Solutions extends LIST_Controller {
             $task_set->select('*');
             $task_set->select_subquery('(SELECT `upload_solution` FROM `course_task_set_type_rel` ctst WHERE `ctst`.`course_id` = `${parent}`.`course_id` AND `ctst`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
             $task_set->include_related('course', '*', TRUE, TRUE);
+            $task_set->include_related('course/period', 'name');
             $task_set->include_related('group', '*', TRUE, TRUE);
             $task_set->get_by_id($task_set_id);
             if ($task_set->exists()) {

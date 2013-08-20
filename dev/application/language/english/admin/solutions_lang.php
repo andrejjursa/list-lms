@@ -36,7 +36,7 @@ $lang['admin_solutions_remove_points_form_label_points'] = 'Points to remove';
 $lang['admin_solutions_remove_points_dialog_ok_button'] = 'Ok';
 $lang['admin_solutions_remove_points_dialog_cancel_button'] = 'Cancel';
 $lang['admin_solutions_remove_points_notification_subject'] = 'You have lost some points!';
-$lang['admin_solutions_remove_points_notification_text'] = 'You have just lost %s points from task %s, where you do not have submited any solution until %s.';
+$lang['admin_solutions_remove_points_notification_text'] = 'You have just lost %s points from task %s from course %s / %s, because you does not have submited any solution until %s.';
 
 $lang['admin_solutions_list_page_title'] = 'Solutions for task set %s';
 $lang['admin_solutions_list_h3_all_groups'] = 'All groups';
