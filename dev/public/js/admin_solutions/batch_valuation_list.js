@@ -4,7 +4,9 @@ jQuery(document).ready(function($) {
         if (task_set_id === 0) { return; }
         var url = global_base_url + 'index.php/admin_solutions/display_tasks_list/' + task_set_id;
         var target = '#task_set_content_id';
-        api_ajax_load(url, target);
+        api_ajax_load(url, target, 'post', {}, function() {
+            prettyPrint();
+        });
     };
     
     refresh_tasks_list();

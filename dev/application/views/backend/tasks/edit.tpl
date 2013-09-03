@@ -95,4 +95,5 @@
         delete_question: '{translate line="admin_tasks_javascript_message_file_delete_question"}',
         after_delete: '{translate line="admin_tasks_javascript_message_file_after_delete"}'
     };
+    var highlighters = {$highlighters|json_encode};    
 </script>{/block}

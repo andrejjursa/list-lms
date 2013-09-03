@@ -40,6 +40,7 @@ class Solutions extends LIST_Controller {
         $task_set->get_by_id($task_set_id);
         $this->parser->add_js_file('admin_solutions/batch_valuation_list.js');
         $this->parser->add_css_file('admin_solutions.css');
+        $this->_add_prettify();
         $this->parser->parse('backend/solutions/batch_valuation.tpl', array('task_set' => $task_set));
     }
     
@@ -281,6 +282,7 @@ class Solutions extends LIST_Controller {
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_solutions/valuation.js');
         $this->parser->add_css_file('admin_solutions.css');
+        $this->_add_prettify();
         $this->parser->parse('backend/solutions/valuation.tpl', array('solution' => $solution));
     }
     
@@ -330,7 +332,7 @@ class Solutions extends LIST_Controller {
         $this->parser->parse('backend/solutions/list_of_file_content.tpl', array('files' => $files));
     }
     
-    public function show_file_content($task_set_id, $solution_id, $solution_file, $zip_index, $no_highlight = 'no') {
+    public function show_file_content($task_set_id, $solution_id, $solution_file, $zip_index) {
         $this->output->set_content_type('text/plain');
         $task_set = new Task_set();
         $task_set->where_related('solution', 'id', $solution_id);
@@ -340,22 +342,7 @@ class Solutions extends LIST_Controller {
             $file_name = decode_from_url($solution_file);
             $output = $task_set->extract_student_file_by_index($file_name, $zip_index);
             if ($output !== FALSE) {
-                $this->config->load('geshi');
-                $highlight_extensions = $this->config->item('file_extension_highlight');
-                if (isset($highlight_extensions[$output['extension']])) {
-                    if ($no_highlight == 'no') {
-                        include(APPPATH . 'third_party/geshi/geshi.php');
-                        $geshi = new GeSHi($output['content'], $highlight_extensions[$output['extension']]);
-                        $geshi->set_header_type(GESHI_HEADER_PRE_VALID);
-                        $geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
-                        $geshi->enable_strict_mode();
-                        $this->output->set_output($geshi->parse_code());
-                    } else {
-                        $this->output->set_output('<pre>' . htmlspecialchars($output['content']) . '</pre>');
-                    }
-                } else {
-                    $this->output->set_output('<pre>' . htmlspecialchars($output['content']) . '</pre>');
-                }
+                $this->output->set_output('<pre class="prettyprint linenums lang-' . $output['extension'] . '">' . htmlspecialchars($output['content']) . '</pre>');
             } else {
                 $this->output->set_output($this->lang->line('admin_solutions_valuation_file_content_error_cant_read_file'));
             }

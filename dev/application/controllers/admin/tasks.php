@@ -84,6 +84,7 @@ class Tasks extends LIST_Controller {
         $this->_select_teacher_menu_pagetag('tasks');
         $category = new Category();
         $structure = $category->get_all_structured();
+        $this->inject_prettify_config();
         $this->_add_tinymce();
         $this->parser->add_js_file('admin_tasks/form.js');
         $this->parser->add_css_file('admin_tasks.css');
@@ -136,6 +137,7 @@ class Tasks extends LIST_Controller {
         $structure = $category->get_all_structured();
         $this->_add_tinymce();
         $this->_add_plupload();
+        $this->inject_prettify_config();
         $this->parser->add_js_file('admin_tasks/form.js');
         $this->parser->add_js_file('admin_tasks/form_edit.js');
         $this->parser->add_css_file('admin_tasks.css');
@@ -218,6 +220,8 @@ class Tasks extends LIST_Controller {
         $task->get_by_id($task_id);
         $this->inject_files($task_id);
         $this->parser->add_css_file('admin_tasks.css');
+        $this->_add_prettify();
+        $this->parser->add_js_file('admin_tasks/preview.js');
         $this->parser->parse('backend/tasks/preview.tpl', array('task' => $task));
     }
     
@@ -382,6 +386,19 @@ class Tasks extends LIST_Controller {
             $files = $task->get_task_hidden_files();
         }
         $this->parser->assign('files', $files);
+    }
+    
+    private function inject_prettify_config() {
+        $this->config->load('prettify');
+        $prettify = $this->config->item('prettify');
+        $highlighters = $prettify['highlighters'];
+        $output = array();
+        if (is_array($highlighters) && count($highlighters)) {
+            foreach ($highlighters as $lang => $config) {
+                $output[] = array('lang' => $lang, 'name' => $this->lang->text($config['name']));
+            }
+        }
+        $this->parser->assign('highlighters', $output);
     }
     
 }

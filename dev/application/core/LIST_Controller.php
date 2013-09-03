@@ -214,6 +214,14 @@ class LIST_Controller extends CI_Controller {
     protected function _add_scrollTo() {
         $this->parser->add_js_file('jquery.scrollTo-1.4.3.1-min.js');
     }
+    
+    /**
+     * This method add google prettify syntax highlighter to template.
+     */
+    protected function _add_prettify() {
+        $this->parser->add_js_file('prettify/prettify.js');
+        $this->parser->add_css_file('prettify.css');
+    }
 
     /**
      * Injects all possible languages to smarty parser.

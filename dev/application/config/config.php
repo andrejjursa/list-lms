@@ -424,7 +424,7 @@ $config['maximum_solition_filesize'] = 10240;
 |--------------------------------------------------------------------------
 | Comma separated list of extensions.
 */
-$config['readable_file_extensions'] = 'txt,html,php,js,css,hs,java,c,cpp,h,pas';
+$config['readable_file_extensions'] = 'txt,html,php,js,css,hs,java,c,cpp,cs,h,pas,py,pl,xml,xhtml,htm,bsh,sh,perl';
 
 /**
 |--------------------------------------------------------------------------

@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    prettyPrint();
+    
     api_make_tabs('tabs');
     
     $(document).on('click', 'a.button.subscribe, a.button.unsubscribe', function(event) {

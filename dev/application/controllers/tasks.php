@@ -61,6 +61,7 @@ class Tasks extends LIST_Controller {
                 
         $this->parser->add_css_file('frontend_tasks.css');
         $this->parser->add_js_file('tasks\task.js');
+        $this->_add_prettify();
         $this->_add_scrollTo();
         
         $this->parser->parse('frontend\tasks\task.tpl', array('course' => $course));

@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) { 
-    $('textarea.tinymce').tinymce({
+    var config = {
         script_url : global_base_url + 'public/js/tinymce/tiny_mce.js',
         theme: 'advanced',
         plugins : 'autolink,lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist',
@@ -24,5 +24,20 @@ jQuery(document).ready(function($) {
             {title: 'Highlight - CSS', selector: 'pre', attributes: { 'lang': 'css', 'class': 'highlight' }},
             {title: 'Highlight - Haskell', selector: 'pre', attributes: { 'lang': 'haskell', 'class': 'highlight' }},
         ]
-    });
+    };
+    
+    if (typeof highlighters !== 'undefined') {
+        for(var i in highlighters) {
+            var item = {
+                title: 'Prettify - ' + highlighters[i].name,
+                selector: 'pre',
+                attributes: {
+                    'class': 'prettyprint lang-' + highlighters[i].lang
+                }
+            };
+            config.style_formats.push(item);
+        }
+    }
+    
+    $('textarea.tinymce').tinymce(config);
 });

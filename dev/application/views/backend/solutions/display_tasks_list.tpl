@@ -13,3 +13,10 @@
         <div class="task_text">{overlay|task|add_base_url table='tasks' column='text' table_id=$task->id default=$task->text}</div>
     </div>
 {/foreach}
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    if (typeof prettyPrint !== 'undefined') {
+        prettyPrint();
+    }
+});
+</script>

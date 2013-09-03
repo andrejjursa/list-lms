@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * This modifier is deprecated;
+ */
+
 include_once(APPPATH . 'third_party/geshi/geshi.php');
 include_once(APPPATH . 'third_party/simplehtmldom/simple_html_dom.php');
 
 function smarty_modifier_task($string) {
+    return $string;
+    
+    // Deprecated, GeSHi was removed from project.
+    
     if (empty($string)) { return $string; }
     return task_modifier_scan_text($string);
 }
