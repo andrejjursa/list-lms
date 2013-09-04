@@ -10,12 +10,22 @@
                 <ul style="height: 37px;">
                     <li><a href="#tabs-task">{translate line='tasks_task_tabs_task'}</a></li>
                     <li><a href="#tabs-solution">{translate line='tasks_task_tabs_solutions'}</a></li>
+                    {if $task_set->comments_enabled}<li class="comments_tab"><a href="{internal_url url="tasks/show_comments/{$task_set->id}"}">{translate line='tasks_task_tabs_comments'}</a></li>{/if}
                 </ul>
                 <div id="tabs-task">
-                    {foreach $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get_iterated() as $task}
-                    <h3>{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}</h3>
+                    {$instructions_text = {overlay table='task_sets' table_id=$task_set->id|intval column='instructions' default=$task_set->instructions}}
+                    {if $instructions_text}
+                    <h3>{translate line='tasks_instructions_header'}</h3>
+                    <div class="instructions_text">
+                        {$instructions_text|add_base_url}
+                    </div>
+                    {/if}
+                    {$tasks = $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get()}
+                    {$this->lang->init_overlays('tasks', $tasks->all, ['name', 'text'])}
+                    {foreach $tasks->all as $task}
+                    <h3>{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}{if $task->join_bonus_task} <span class="bonus_task">({translate line='tasks_task_is_bonus_task'})</span>{/if}</h3>
                     <div class="task_text">
-                    {overlay|task table='tasks' table_id=$task->id column='text' default=$task->text}
+                    {overlay|add_base_url table='tasks' table_id=$task->id column='text' default=$task->text}
                     </div>{$files = $task->get_task_files()}
                     {if count($files) > 0}
                     <div class="task_files">
@@ -28,6 +38,7 @@
                     </div>
                     {/if}
                     <div class="task_points">{translate|sprintf:{$task->join_points_total|floatval} line='tasks_task_points_for_task'}</div>
+                    <div class="task_author">{translate|sprintf:{$task->author->get()->fullname|default:{translate line='tasks_task_author_unknown'}} line='tasks_task_author'}</div>
                     {/foreach}
                     {if $task_set_can_upload}
                     <div class="upload_solution">
@@ -85,4 +96,9 @@
         {include file='partials/frontend_general/flash_messages.tpl' inline}
         {include file='partials/frontend_general/error_box.tpl' message='lang:tasks_no_active_course' inline}
     {/if}
+{/block}
+{block custom_head}
+<script type="text/javascript">
+    var task_id = {$task_set->id|intval};
+</script>
 {/block}

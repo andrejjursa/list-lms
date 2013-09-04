@@ -15,6 +15,7 @@ class Participants extends LIST_Controller {
         $this->_load_teacher_langfile();
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
+        $this->_init_teacher_quick_prefered_course_menu();
         $this->usermanager->teacher_login_protected_redirect();
     }
     
@@ -56,6 +57,18 @@ class Participants extends LIST_Controller {
                 $participants->where('group_id', NULL);
                 $participants->group_end();
             }
+        }
+        $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
+        if ($filter['order_by_field'] == 'student') {
+            $participants->order_by_related('student', 'fullname', $order_by_direction);
+            $participants->order_by_related('student', 'email', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'course') {
+            $participants->order_by_related('course/period', 'sorting', $order_by_direction);
+            $participants->order_by_related_with_constant('course', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'group') {
+            $participants->order_by_related_with_constant('group', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'status') {
+            $participants->order_by('allowed', $order_by_direction);
         }
         $participants->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->parser->parse('backend/participants/table_content.tpl', array('participants' => $participants));
@@ -410,14 +423,18 @@ class Participants extends LIST_Controller {
 
     private function store_filter($filter) {
         if (is_array($filter)) {
-            $old_filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
+            $this->load->library('filter');
+            $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
-            $this->session->set_userdata(self::STORED_FILTER_SESSION_NAME, $new_filter);
+            $this->filter->store_filter(self::STORED_FILTER_SESSION_NAME, $new_filter);
+            $this->filter->set_filter_course_name_field(self::STORED_FILTER_SESSION_NAME, 'course');
+            $this->filter->set_filter_delete_on_course_change(self::STORED_FILTER_SESSION_NAME, array('group'));
         }
     }
     
     private function inject_stored_filter() {
-        $filter = $this->session->userdata(self::STORED_FILTER_SESSION_NAME);
+        $this->load->library('filter');
+        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
         $this->parser->assign('filter', $filter);
     }
     

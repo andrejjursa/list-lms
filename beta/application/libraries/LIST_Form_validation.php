@@ -8,6 +8,20 @@
 class LIST_Form_validation extends CI_Form_validation {
     
     /**
+     * Validates entry string or array if it is empty (without html tags).
+     * @param string|array $str string to evaluate.
+     * @return boolean validation result.
+     */
+    public function required_no_html($str) {
+        if (!is_array($str)) {
+            $striped = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', str_replace('&nbsp;', ' ', html_entity_decode(strip_tags($str))));
+            return (trim($striped) == '') ? FALSE : TRUE;
+        } else {
+            return $this->required($str);
+        }
+    }
+
+    /**
      * Better version of standard matches method, this one will check if field is array and find appropriate value of this field.
      * @param string $str current value of form field.
      * @param string $field form field name, can be array.
@@ -89,5 +103,31 @@ class LIST_Form_validation extends CI_Form_validation {
             return TRUE;
         }
         return FALSE;
+    }
+    
+    /**
+     * Test if string is number and is greater or equal to given minimum.
+     * @param string $str string to evaluate.
+     * @param double $min minimum value.
+     * @return boolean TRUE on success.
+     */
+    public function greater_than_equal($str, $min) {
+        if (!is_numeric($str)) {
+            return FALSE;
+        }
+        return $str >= $min;
+    }
+    
+    /**
+     * Test if string is number and is less or equal to given maximum.
+     * @param string $str string to evaluate.
+     * @param double $max maximum value.
+     * @return boolean TRUE on success.
+     */
+    public function less_than_equal($str, $max) {
+        if (!is_numeric($str)) {
+            return FALSE;
+        }
+        return $str <= $max;
     }
 }

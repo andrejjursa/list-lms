@@ -9,6 +9,7 @@
                 <ul>
                     <li><a href="#tabs-about_task_set">{translate line='admin_task_sets_tabs_label_about_task_set'}</a></li>
                     <li><a href="#tabs-tasks">{translate line='admin_task_sets_tabs_label_tasks'}</a></li>
+                    <li><a href="#tabs-instructions">{translate line='admin_task_sets_tabs_label_instructions'}</a></li>
                 </ul>
                 <div id="tabs-about_task_set">
                     <div class="field">
@@ -64,6 +65,28 @@
                     <div class="field task_set_room_field_else">
                         <input type="hidden" name="task_set[room_id]" value="" />
                     </div>
+                    <div class="field">
+                        <label for="task_set_points_override_enabled_id">{translate line='admin_task_sets_form_label_points_override_enabled'}:</label>
+                        <p class="input"><input type="checkbox" name="task_set[points_override_enabled]" value="1"{if $smarty.post.task_set.points_override_enabled or (!$smarty.post and !is_null($task_set->points_override))} checked="checked"{/if} id="task_set_points_override_enabled_id" /></p>
+                    </div>
+                    <div class="field task_set_points_override" style="display: none;">
+                        <label for="task_set_points_override_id">{translate line='admin_task_sets_form_label_points_override'}:</label>
+                        <p class="input"><input type="text" name="task_set[points_override]" value="{$smarty.post.task_set.points_override|default:$task_set->points_override|escape:'html'}" id="task_set_points_override_id" /></p>
+                        {form_error field='task_set[points_override]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                    </div>
+                    <div class="field">
+                        <label for="task_set_comments_enabled_id">{translate line='admin_task_sets_form_label_comments_enabled'}:</label>
+                        <p class="input"><input type="checkbox" name="task_set[comments_enabled]" value="1" id="task_set_comments_enabled_id"{if $smarty.post.task_set.comments_enabled|default:$task_set->comments_enabled} checked="checked"{/if} /></p>
+                        {form_error field='task_set[comments_enabled]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                    </div>
+                    <div class="field task_set_comments_moderated" style="display: none;">
+                        <label for="task_set_comments_moderated_id">{translate line='admin_task_sets_form_label_comments_moderated'}:</label>
+                        <p class="input"><input type="checkbox" name="task_set[comments_moderated]" value="1" id="task_set_comments_moderated_id"{if $smarty.post.task_set.comments_moderated|default:$task_set->comments_moderated} checked="checked"{/if} /></p>
+                        {form_error field='task_set[comments_moderated]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                    </div>
+                    <div class="field task_set_comments_moderated_else">
+                        <input type="hidden" name="task_set[comments_moderated]" value="0" /> 
+                    </div>
                 </div>
                 <div id="tabs-tasks">
                     <ul id="tasks_sortable">
@@ -78,6 +101,10 @@
                                 {form_error field="task_join_field[{$task->id|intval}][points_total]" left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                             </div>
                             <div class="field">
+                                <label for="task_join_field_{$task->id|intval}_bonus_task_id">{translate line='admin_task_sets_form_label_task_bonus_task'}:</label>
+                                <p class="input"><input type="checkbox" name="task_join_field[{$task->id|intval}][bonus_task]" value="1" id="task_join_field_{$task->id|intval}_bonus_task_id"{if $smarty.post.task_join_field[$task->id|intval].bonus_task|default:$task->join_bonus_task} checked="checked"{/if} /></p>
+                            </div>
+                            <div class="field">
                                 <label for="task_join_field_{$task->id|intval}_delete_id">{translate line='admin_task_sets_form_label_delete_task'}:</label>
                                 <p class="input"><input type="checkbox" name="task_join_field[{$task->id|intval}][delete]" value="1"{if $smarty.post.task_join_field[$task->id|intval].delete eq 1} checked="checked"{/if} class="delete_checkbox" id="task_join_field_{$task->id|intval}_delete_id" /></p>
                             </div>
@@ -85,10 +112,17 @@
                         {/foreach}
                     </ul>
                 </div>
+                <div id="tabs-instructions">
+                    <div class="field">
+                        <label for="task_set_instructions_id">{translate line='admin_task_sets_form_label_instructions'}:</label>
+                        <p class="input"><textarea name="task_set[instructions]" class="tinymce">{$smarty.post.task_set.instructions|default:$task_set->instructions|escape:'html'}</textarea></p>
+                        {include file='partials/backend_general/overlay_editor.tpl' table='task_sets' column='instructions' table_id=$task_set->id|intval editor_type='textarea' class='tinymce' inline}
+                    </div>
+                </div>
             </div>
                     <fieldset class="basefieldset">
                 <div class="buttons">
-                    <input type="submit" name="submit_button" value="{translate line='admin_task_sets_form_button_submit'}" class="button" />
+                    <input type="submit" name="submit_button" value="{translate line='admin_task_sets_form_button_submit'}" class="button" /> <a href="{internal_url url='admin_task_sets'}" class="button special">{translate line='common_button_back'}</a>
                     <input type="hidden" name="post_selected_task_set_type_id" value="{$smarty.post.task_set.task_set_type_id|default:$task_set->task_set_type_id|intval}" />
                     <input type="hidden" name="post_selected_group_id_id" value="{$smarty.post.task_set.group_id|default:$task_set->group_id|intval}" />
                     <input type="hidden" name="post_selected_room_id_id" value="{$smarty.post.task_set.room_id|default:$task_set->room_id|intval}" />

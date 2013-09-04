@@ -28,3 +28,6 @@
         </form>
     </fieldset>
 {/block}
+{block custom_head}<script type="text/javascript">
+    var highlighters = {$highlighters|json_encode};
+</script>{/block}

@@ -22,7 +22,7 @@
                     {form_error field='student[password]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>
                 <div class="buttons">
-                    <input type="submit" class="button" name="submit_button" value="{translate line='admin_students_form_button_save'}" />
+                    <input type="submit" class="button" name="submit_button" value="{translate line='admin_students_form_button_save'}" /> <a href="{internal_url url='admin_students'}" class="button special">{translate line='common_button_back'}</a>
                     <input type="hidden" name="student_id" value="{$smarty.post.student_id|default:$student->id|intval}" />
                 </div>
             </form>

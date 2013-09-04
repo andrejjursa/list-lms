@@ -21,14 +21,15 @@ function is_mod_rewrite_enabled() {
  * Creates internal url from relative url.
  * Function respects setting of rewrite engine from application/config/config.php.
  * @param string $relative_url relative url as controller/action/[parameters].
+ * @param boolean $force_simple_link if set to TRUE, link will not use rewrite engine and url suffix, even if they are configured.
  * @return string internal url.
  */
-function create_internal_url($relative_url) {
+function create_internal_url($relative_url, $force_simple_link = FALSE) {
     $CI =& get_instance();
-    if ($CI->config->item('rewrite_engine_enabled') && is_mod_rewrite_enabled()) {
+    if (!$force_simple_link && $CI->config->item('rewrite_engine_enabled') && is_mod_rewrite_enabled()) {
         return base_url('/' . trim($relative_url, '/')) . $CI->config->item('url_suffix');
     } else {
-        return base_url($CI->config->item('index_page') . '/' . trim($relative_url, '/')) . $CI->config->item('url_suffix');
+        return base_url($CI->config->item('index_page') . '/' . trim($relative_url, '/')) . (!$force_simple_link ? $CI->config->item('url_suffix') : '');
     }
 }
 

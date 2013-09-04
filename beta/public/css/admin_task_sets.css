@@ -15,3 +15,15 @@ div.filter_wrap { margin-bottom: 10px; border-bottom: 1px solid silver; padding-
 #tasks_sortable { list-style-type: none; }
 #tasks_sortable li { margin: 3px 0; padding: 5px; border-radius: 5px; }
 #tasks_sortable li.placeholder { height: 20px; }
+
+ul.comments_list { list-style-type: none; margin-left: 5px; }
+ul.comments_list.level_1 { margin-left: 0; }
+ul.comments_list li div.comment_body { border: 1px solid black; border-radius: 3px; margin-top: 3px;margin-top: 3px; padding: 3px; }
+ul.comments_list li div.comment_body.teacher_comment { background-color: #deffea; }
+ul.comments_list li div.comment_body.student_comment { background-color: #e0deff; }
+ul.comments_list li div.comment_body.student_comment.preview_comment { background-color: #ffdede; }
+ul.comments_list li div.comment_body div.comment_header { padding-bottom: 3px; border-bottom: 1px solid black; }
+ul.comments_list li div.comment_body div.comment_text { padding: 3px 0; }
+ul.comments_list li div.comment_body div.comment_buttons { padding-top: 3px; border-top: 1px solid black; text-align: right; }
+ul.comments_list li:first-child div.comment_body { margin-top: 0; }
+ul.comments_list.level_1 li ul.comments_list li div.comment_body { margin-top: 3px; }

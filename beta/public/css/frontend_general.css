@@ -6,11 +6,14 @@ body { background-color: silver; font-size: 14px; font-family: Verdana, Arial; }
 #top_meta_informations div.left { float: left; padding: 5px 4px 3px 4px; }
 #top_meta_informations div.right { float: right; padding: 5px 4px 3px 4px; }
 #top_meta_informations div.clear { clear: both; }
-#top_meta_informations a { text-decoration: none; color: green; transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; }
+#top_meta_informations a { text-decoration: none; color: #00cc00; transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; }
 #top_meta_informations a:hover { color: #B6FBA6; }
 
 #mainwrap { min-width: 900px; max-width: 1200px; margin: 0 auto; margin-top: 50px; text-align: center; background-color: white; border: 1px solid black; border-radius: 4px; box-shadow: 0px 0px 50px 20px gray; }
+#footer { min-width: 900px; max-width: 1200px; margin: 0 auto; margin-top: 20px; text-align: center; background-color: white; border: 1px solid black; border-radius: 4px; box-shadow: 0px 0px 50px 20px gray; }
+#footer span { margin: 5px; display: inline-block; }
 #loginboxwrap { text-align: left; }
+#registrationboxwrap { padding: 20px; }
 #leftwrap { text-align: left; float: left; width: 200px; }
 #leftwrap > div.internal_padding { padding: 3px; }
 #leftwrap > div.title { padding: 3px; background-color: #444444; color: white; border-top-left-radius: 3px; border-top-right-radius: 3px; text-align: center; }
@@ -49,10 +52,10 @@ body { background-color: silver; font-size: 14px; font-family: Verdana, Arial; }
 }
 #pagemenu > li > a, 
 #pagemenu > li > ul > li > a, 
-#pagemenu > li > ul > li > ul > li > a { padding: 3px 2px; text-decoration: none; display: block; color: green; }
+#pagemenu > li > ul > li > ul > li > a { padding: 3px 2px; text-decoration: none; display: block; color: #00cc00; }
 #pagemenu > li:hover > a, 
 #pagemenu > li > ul > li:hover > a, 
-#pagemenu > li > ul > li > ul > li:hover > a { color: darkgreen; }
+#pagemenu > li > ul > li > ul > li:hover > a { color: #00bb00; }
 #pagemenu > li.selected, 
 #pagemenu > li > ul > li.selected, 
 #pagemenu > li > ul > li > ul > li.selected {
@@ -65,7 +68,7 @@ body { background-color: silver; font-size: 14px; font-family: Verdana, Arial; }
 }
 #pagemenu > li.selected > a, 
 #pagemenu > li > ul > li.selected > a, 
-#pagemenu > li > ul > li > ul > li.selected > a { color: black; }
+#pagemenu > li > ul > li > ul > li.selected > a { color: white; }
 #pagemenu > li.selected:hover, 
 #pagemenu > li > ul > li.selected:hover, 
 #pagemenu > li > ul > li > ul > li.selected:hover {
@@ -76,6 +79,8 @@ body { background-color: silver; font-size: 14px; font-family: Verdana, Arial; }
     background: -ms-linear-gradient(top, #00ff00, #208800, #00bb00);
     background: -o-linear-gradient(top, #00ff00, #208800, #00bb00);
 }
+
+ul.ui-menu li a { color: green !important; }
 
 div.clear { clear: both; }
 
@@ -120,3 +125,5 @@ form div.field p.caption > label { font-weight: bold; cursor: pointer; }
 div.flash_message { color: blue; margin: 5px; padding: 5px; border: 1px solid blue; background-color: #d0d8ff; border-radius: 5px; box-shadow: 0px 0px 2px 2px blue inset; }
 div.flash_message.message_success { border-color: green; box-shadow: 0px 0px 2px 2px green inset; background-color: #ADFF9A; color: green; }
 div.flash_message.message_error { border-color: red; box-shadow: 0px 0px 2px 2px red inset; background-color: #FFAFAF; color: red; }
+
+div.text ul { padding-left: 23px; }

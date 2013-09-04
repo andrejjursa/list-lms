@@ -157,12 +157,26 @@ class Configurator {
             if ($item['type'] == 'comment') {
                 $content .= "\n" . $item['value'] . "\n";
             } elseif ($item['type'] == 'config') {
-                $content .= $this->config_item_by_path($item['value'], $config_variable) . ' = ' . var_export($this->config_item_value_by_path($data, $item['value']), TRUE) . ';' . "\n";
+                $content .= $this->config_item_by_path($item['value'], $config_variable) . ' = ' . $this->var_export($this->config_item_value_by_path($data, $item['value'])) . ';' . "\n";
             } elseif ($item['type'] == 'custom') {
                 $content .= $item['value'] . "\n";
             }
         }
         return trim($content);
+    }
+    
+    /**
+     * Does variable content export with respect to TRUE, FALSE and NULL in uppercase.
+     * @param mixed $var variable to be exported.
+     * @return string exported variable.
+     */
+    private function var_export(&$var) {
+        $exported = var_export($var, TRUE);
+        $exported_lower = strtolower($exported);
+        if ($exported_lower == 'false' || $exported_lower == 'true' || $exported_lower == 'null') {
+            $exported = strtoupper($exported);
+        }
+        return $exported;
     }
     
     /**

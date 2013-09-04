@@ -20,7 +20,7 @@
                     {form_error field='category[parent_id]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>
                 <div class="buttons">
-                    <input type="submit" value="{translate line='admin_categories_form_button_save'}" name="save_button" class="button" />
+                    <input type="submit" value="{translate line='admin_categories_form_button_save'}" name="save_button" class="button" /> <a href="{internal_url url='admin_categories'}" class="button special">{translate line='common_button_back'}</a>
                     <input type="hidden" value="{$smarty.post.category_id|default:$category->id}" name="category_id" />
                 </div>
             </form>

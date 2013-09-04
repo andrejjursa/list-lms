@@ -1,5 +1,6 @@
 {foreach $task_set_types as $task_set_type}
 <tr class="task_set_types_table_row">
+    <td>{$task_set_type->id|intval}</td>
     <td>{translate_text|escape:'html' text=$task_set_type->name}</td>
     <td><select name="upload_solution" size="1">
         {list_html_options options=[1 => {translate line='admin_courses_form_select_option_upload_solution_yes'}, 0 => {translate line='admin_courses_form_select_option_upload_solution_no'}]

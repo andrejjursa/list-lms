@@ -35,30 +35,26 @@
                         <input type="submit" name="filter_submit" value="{translate line='admin_task_sets_filter_form_submit_button'}" class="button" />
                         <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />
                         <input type="hidden" name="filter[rows_per_page]" value="{$filter.rows_per_page|default:25|intval}" />
+                        <input type="hidden" name="filter[fields][created]" value="{$filter.fields.created|default:0}" />
+                        <input type="hidden" name="filter[fields][updated]" value="{$filter.fields.updated|default:0}" />
+                        <input type="hidden" name="filter[fields][name]" value="{$filter.fields.name|default:1}" />
+                        <input type="hidden" name="filter[fields][course]" value="{$filter.fields.course|default:1}" />
+                        <input type="hidden" name="filter[fields][group]" value="{$filter.fields.group|default:1}" />
+                        <input type="hidden" name="filter[fields][task_set_type]" value="{$filter.fields.task_set_type|default:1}" />
+                        <input type="hidden" name="filter[fields][tasks]" value="{$filter.fields.tasks|default:1}" />
+                        <input type="hidden" name="filter[fields][published]" value="{$filter.fields.published|default:1}" />
+                        <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'name'}" />
+                        <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />
                     </div>
                 </form>
             </div>
-            <table class="task_sets_table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>{translate line='admin_task_sets_table_header_name'}</th>
-                        <th>{translate line='admin_task_sets_table_header_course'}</th>
-                        <th>{translate line='admin_task_sets_table_header_group'}</th>
-                        <th>{translate line='admin_task_sets_table_header_task_set_type'}</th>
-                        <th>{translate line='admin_task_sets_table_header_tasks'}</th>
-                        <th>{translate line='admin_task_sets_table_header_published'}</th>
-                        <th colspan="3" class="controlls">{translate line='admin_task_sets_table_header_controlls'}</th>
-                    </tr>
-                </thead>
-                <tfoot id="table_pagination_footer_id"></tfoot>
-                <tbody id="table_content_id"></tbody>
-            </table>
+            <div id="table_content_id"></div>
 	</fieldset>
 {/block}
 {block custom_head}<script type="text/javascript">
     var messages = {
         delete_question: '{translate line="admin_task_set_javascript_message_delete_question"}',
+        clone_question: '{translate line="admin_task_set_javascript_message_clone_question"}',
         after_delete: '{translate line="admin_task_set_javascript_message_after_delete"}',
         after_open: '{translate line="admin_task_set_javascript_message_after_open"}'
     }; 

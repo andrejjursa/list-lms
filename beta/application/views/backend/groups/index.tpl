@@ -21,23 +21,20 @@
                 </div>
                 <div class="buttons">
                     <input type="submit" name="filter_submit" value="{translate line='admin_groups_filter_submit_button'}" class="button" />
+                    <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />
+                    <input type="hidden" name="filter[rows_per_page]" value="{$filter.rows_per_page|default:25|intval}" />
+                    <input type="hidden" name="filter[fields][created]" value="{$filter.fields.created|default:0}" />
+                    <input type="hidden" name="filter[fields][updated]" value="{$filter.fields.updated|default:0}" />
+                    <input type="hidden" name="filter[fields][name]" value="{$filter.fields.name|default:1}" />
+                    <input type="hidden" name="filter[fields][course]" value="{$filter.fields.course|default:1}" />
+                    <input type="hidden" name="filter[fields][rooms]" value="{$filter.fields.rooms|default:1}" />
+                    <input type="hidden" name="filter[fields][capacity]" value="{$filter.fields.capacity|default:1}" />
+                    <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'name'}" />
+                    <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />
                 </div>
             </form>
         </div>
-        <table class="groups_table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>{translate line='admin_groups_table_header_group_name'}</th>
-                    <th>{translate line='admin_groups_table_header_group_course'}</th>
-                    <th>{translate line='admin_groups_table_header_group_rooms'}</th>
-                    <th>{translate line='admin_groups_table_header_group_capacity'}</th>
-                    <th colspan="3" class="controlls">{translate line='admin_groups_table_header_controlls'}</th>
-                </tr>
-            </thead>
-            <tbody id="table_of_groups_container_id">
-            </tbody>
-        </table>
+        <div id="table_of_groups_container_id"></div>
     </fieldset>
 {/block}
 {block custom_head}<script type="text/javascript">

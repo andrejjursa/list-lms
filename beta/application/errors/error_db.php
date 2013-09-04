@@ -1,3 +1,12 @@
+<?php require_once(BASEPATH . 'core/Input.php'); ?>
+<?php $local_input = new CI_Input(); ?>
+<?php if ($local_input->is_cli_request()): ?>
+
+<?php echo strip_tags($heading) . "\n"; ?>
+--------------------
+<?php echo strip_tags($message); ?>
+
+<?php else: ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,3 +71,4 @@ p {
 	</div>
 </body>
 </html>
+<?php endif; ?>

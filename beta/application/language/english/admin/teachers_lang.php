@@ -21,6 +21,7 @@ $lang['admin_teachers_my_account_label_email'] = 'E-mail';
 $lang['admin_teachers_my_account_label_language'] = 'Language';
 $lang['admin_teachers_my_account_label_email_validation'] = 'E-mail validation';
 $lang['admin_teachers_my_account_label_email_current'] = 'Current e-mail';
+$lang['admin_teachers_my_account_label_prefered_course'] = 'Prefered course';
 $lang['admin_teachers_my_account_button_submit'] = 'Save';
 $lang['admin_teachers_my_account_error_invalid_account'] = 'Invalid account, can\'t save changes.';
 $lang['admin_teachers_my_account_error_save'] = 'No changes was made to account.';
@@ -62,3 +63,6 @@ $lang['admin_teachers_list_message_delete_question'] = 'Are you sure you want to
 $lang['admin_teachers_list_message_after_delete'] = 'Teacher account was deleted.';
 
 $lang['admin_teachers_teacher_language_quick_changed'] = 'Language was changed.';
+$lang['admin_teachers_no_prefered_course'] = 'No prefered course';
+$lang['admin_teachers_prefered_course_quickchange_success'] = 'Prefered course changed successfully.';
+$lang['admin_teachers_prefered_course_quickchange_failed'] = 'Failed to change prefered course.';

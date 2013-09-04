@@ -7,12 +7,15 @@
  */
 class Periods extends LIST_Controller  {
     
+    const STORED_FILTER_SESSION_NAME = 'admin_periods_filter_data';
+    
     public function __construct() {
         parent::__construct();
         $this->_init_language_for_teacher();
         $this->_load_teacher_langfile();
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
+        $this->_init_teacher_quick_prefered_course_menu();
         $this->usermanager->teacher_login_protected_redirect();
     }
     
@@ -22,15 +25,27 @@ class Periods extends LIST_Controller  {
         $this->parser->add_js_file('admin_periods/list.js');
         $this->parser->add_js_file('admin_periods/form.js');
         $this->parser->add_css_file('admin_periods.css');
+        $this->inject_stored_filter();
         $this->parser->parse('backend/periods/index.tpl');
     }
     
     public function ajax_periods_list() {
+        $fields_config = array(
+            array('name' => 'created', 'caption' => 'lang:common_table_header_created'),
+            array('name' => 'updated', 'caption' => 'lang:common_table_header_updated'),
+            array('name' => 'name', 'caption' => 'lang:admin_periods_table_header_name'),
+            array('name' => 'related_courses', 'caption' => 'lang:admin_periods_table_header_relations_courses'),
+        );
+        
+        $filter = $this->input->post('filter');
+        $this->store_filter($filter);
+        $this->inject_stored_filter();
+        
         $periods = new Period();
         $periods->order_by('sorting', 'asc');
         $periods->include_related_count('course');
         $periods->get_iterated();
-        $this->parser->parse('backend/periods/ajax_periods_list.tpl', array('periods' => $periods));
+        $this->parser->parse('backend/periods/ajax_periods_list.tpl', array('periods' => $periods, 'fields_config' => $fields_config));
     }
     
     public function create() {
@@ -183,5 +198,20 @@ class Periods extends LIST_Controller  {
         } else {
             $this->output->set_output(json_encode(FALSE));
         }
+    }
+    
+    private function store_filter($filter) {
+        if (is_array($filter)) {
+            $this->load->library('filter');
+            $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
+            $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
+            $this->filter->store_filter(self::STORED_FILTER_SESSION_NAME, $new_filter);
+        }
+    }
+    
+    private function inject_stored_filter() {
+        $this->load->library('filter');
+        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
+        $this->parser->assign('filter', $filter);
     }
 }

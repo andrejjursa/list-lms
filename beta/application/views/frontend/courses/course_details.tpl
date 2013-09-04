@@ -5,11 +5,13 @@
     {include file='partials/frontend_general/flash_messages.tpl' inline}
     <fieldset>
         <legend>{translate_text text=$course->name}</legend>
+        <div class="text">
         {if {overlay table='courses' table_id=$course->id column='description' default=$course->description}}
-            {overlay table='courses' table_id=$course->id column='description' default=$course->description}
+            {overlay|add_base_url table='courses' table_id=$course->id column='description' default=$course->description}
         {else}
             <p>{translate line='courses_detail_description_missing'}</p>
         {/if}
+        </div>
     </fieldset>
     <fieldset>
         <legend>{translate line='courses_detail_fieldset_legend_groups'}</legend>

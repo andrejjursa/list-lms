@@ -90,7 +90,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = false;
+$config['enable_hooks'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -150,8 +150,8 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\\-';
 | use segment based URLs.
 |
 */
-$config['allow_get_array'] = true;
-$config['enable_query_strings'] = false;
+$config['allow_get_array'] = TRUE;
+$config['enable_query_strings'] = FALSE;
 $config['controller_trigger'] = 'c';
 $config['function_trigger'] = 'm';
 $config['directory_trigger'] = 'd';
@@ -244,12 +244,12 @@ $config['encryption_key'] = '0123456789ABCDEF0123456789ABCDEF01';
 */
 $config['sess_cookie_name'] = 'list_session';
 $config['sess_expiration'] = 7200;
-$config['sess_expire_on_close'] = true;
-$config['sess_encrypt_cookie'] = false;
-$config['sess_use_database'] = true;
+$config['sess_expire_on_close'] = TRUE;
+$config['sess_encrypt_cookie'] = FALSE;
+$config['sess_use_database'] = TRUE;
 $config['sess_table_name'] = 'sessions';
-$config['sess_match_ip'] = true;
-$config['sess_match_useragent'] = true;
+$config['sess_match_ip'] = TRUE;
+$config['sess_match_useragent'] = TRUE;
 $config['sess_time_to_update'] = 300;
 
 /*
@@ -266,7 +266,7 @@ $config['sess_time_to_update'] = 300;
 $config['cookie_prefix'] = '';
 $config['cookie_domain'] = '';
 $config['cookie_path'] = '/';
-$config['cookie_secure'] = false;
+$config['cookie_secure'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -277,7 +277,7 @@ $config['cookie_secure'] = false;
 | COOKIE data is encountered
 |
 */
-$config['global_xss_filtering'] = false;
+$config['global_xss_filtering'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -291,7 +291,7 @@ $config['global_xss_filtering'] = false;
 | 'csrf_cookie_name' = The cookie name
 | 'csrf_expire' = The number in seconds the token should expire.
 */
-$config['csrf_protection'] = false;
+$config['csrf_protection'] = FALSE;
 $config['csrf_token_name'] = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
@@ -313,7 +313,7 @@ $config['csrf_expire'] = 7200;
 | by the output class.  Do not 'echo' any values with compression enabled.
 |
 */
-$config['compress_output'] = false;
+$config['compress_output'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -338,7 +338,7 @@ $config['time_reference'] = 'local';
 | in your view files.  Options are TRUE or FALSE (boolean)
 |
 */
-$config['rewrite_short_tags'] = false;
+$config['rewrite_short_tags'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -378,7 +378,16 @@ $config['after_login_redirects']['teacher'] = 'admin_dashboard/index';
 | Boolean value, if set to TRUE, links will be generated without index.php.
 | Set to FALSE to turn off rewrite engine support.
 */
-$config['rewrite_engine_enabled'] = true;
+$config['rewrite_engine_enabled'] = TRUE;
+
+/*
+|--------------------------------------------------------------------------
+| Student default password added during import.
+|--------------------------------------------------------------------------
+| This password must meet the password validation criteria, i.e. length
+| from 6 to 20 characters.
+*/
+$config['student_import_default_password'] = 'heslo123';
 
 /*
 |--------------------------------------------------------------------------
@@ -415,7 +424,43 @@ $config['maximum_solition_filesize'] = 10240;
 |--------------------------------------------------------------------------
 | Comma separated list of extensions.
 */
-$config['readable_file_extensions'] = 'txt,html,php,js,css,hs,java,c,cpp,h,pas';
+$config['readable_file_extensions'] = 'txt,html,php,js,css,hs,java,c,cpp,cs,h,pas,py,pl,xml,xhtml,htm,bsh,sh,perl';
+
+/**
+|--------------------------------------------------------------------------
+| Student registration settings.
+|--------------------------------------------------------------------------
+*/
+$config['student_registration']['enabled'] = TRUE;
+
+/**
+|--------------------------------------------------------------------------
+| E-mail default settings.
+|--------------------------------------------------------------------------
+*/
+$config['email']['useragent'] = 'LIST E-mail';
+$config['email']['protocol'] = 'mail';
+$config['email']['mailpath'] = '/usr/sbin/sendmail';
+$config['email']['smtp_host'] = '';
+$config['email']['smtp_user'] = '';
+$config['email']['smtp_pass'] = '';
+$config['email']['smtp_port'] = 25;
+$config['email']['smtp_timeout'] = 5;
+$config['email']['wordwrap'] = TRUE;
+$config['email']['wrapchars'] = 76;
+$config['email']['mailtype'] = 'html';
+$config['email']['charset'] = 'utf-8';
+$config['email']['validate'] = TRUE;
+$config['email']['priority'] = 3;
+$config['email']['crlf'] = '
+';
+$config['email']['newline'] = '
+';
+$config['email']['bcc_batch_mode'] = FALSE;
+$config['email']['bcc_batch_size'] = 200;
+$config['email_multirecipient_batch_mode'] = TRUE;
+$config['email_address']['system']['name'] = 'LIST';
+$config['email_address']['system']['email'] = 'noreply@list.sk';
 
 /* End of file config.php */
 

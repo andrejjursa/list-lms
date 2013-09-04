@@ -11,6 +11,9 @@ class Teachers extends LIST_Controller {
         parent::__construct();
         $this->_init_language_for_teacher();
         $this->_load_teacher_langfile();
+        if ($this->usermanager->is_teacher_session_valid()) {
+            $this->_init_teacher_quick_prefered_course_menu();
+        }
     }
     
     public function login() {
@@ -84,6 +87,7 @@ class Teachers extends LIST_Controller {
         $teacher->get_by_id($this->usermanager->get_teacher_id());
         
         $languages_available = $this->lang->get_list_of_languages();
+        $this->inject_courses();
         
         $this->parser->parse('backend/teachers/my_account.tpl', array('teacher' => $teacher, 'languages' => $languages_available));
     }
@@ -104,11 +108,16 @@ class Teachers extends LIST_Controller {
                 $teacher = new Teacher();
                 $teacher->get_by_id($teacher_id);
                 if ($teacher->exists()) {
-                    $teacher->from_array($this->input->post('teacher'), array('fullname', 'language'));
-                    if ($teacher->save() && $this->db->trans_status()) {
+                    $teacher_data = $this->input->post('teacher');
+                    $teacher->from_array($teacher_data, array('fullname', 'language'));
+                    $course = new Course();
+                    $course->get_by_id(@$teacher_data['prefered_course_id']);
+                    if ($teacher->save(array('prefered_course' => $course)) && $this->db->trans_status()) {
                         $this->db->trans_commit();
                         $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                         $this->usermanager->refresh_teacher_userdata();
+                        $this->load->library('filter');
+                        $this->filter->set_all_filters_course($teacher->prefered_course_id);
                     } else {
                         $this->db->trans_rollback();
                         $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
@@ -353,5 +362,48 @@ class Teachers extends LIST_Controller {
             $this->messages->add_message('lang:admin_teachers_teacher_language_quick_changed', Messages::MESSAGE_TYPE_DEFAULT);
         }
         redirect(decode_from_url($current_url));
+    }
+    
+    public function switch_prefered_course($course_id, $current_url) {
+        $this->usermanager->teacher_login_protected_redirect();
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $teacher = new Teacher();
+        $teacher->get_by_id($this->usermanager->get_teacher_id());
+        if ($teacher->exists()) {
+            $course = new Course();
+            $course->get_by_id($course_id);
+            if ($teacher->save(array('prefered_course' => $course))) {
+                $this->db->trans_commit();
+                $this->usermanager->refresh_teacher_userdata();
+                $this->messages->add_message('lang:admin_teachers_prefered_course_quickchange_success', Messages::MESSAGE_TYPE_DEFAULT);
+                $this->load->library('filter');
+                $this->filter->set_all_filters_course($teacher->prefered_course_id);
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_teachers_prefered_course_quickchange_failed', Messages::MESSAGE_TYPE_ERROR);
+            }
+        } else {
+            $this->db->trans_rollback();
+            $this->messages->add_message('lang:admin_teachers_prefered_course_quickchange_failed', Messages::MESSAGE_TYPE_ERROR);
+        }
+        redirect(decode_from_url($current_url));
+    }
+
+
+    private function inject_courses() {
+        $courses = new Course();
+        $courses->include_related('period', 'name');
+        $courses->order_by_related('period', 'sorting', 'desc');
+        $courses->order_by_with_constant('name', 'asc');
+        $courses->get_iterated();
+        
+        $data = array('' => '');
+        
+        foreach($courses as $course) {
+            $data[$course->period_name][$course->id] = $course->name;
+        }
+        
+        $this->parser->assign('courses', $data);
     }
 }

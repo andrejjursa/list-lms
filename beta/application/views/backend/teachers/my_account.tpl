@@ -13,10 +13,16 @@
             </div>
             <div class="field">
                 <label for="teacher_language_id">{translate line='admin_teachers_my_account_label_language'}:</label>
-                <p class="input"><select name="teacher[language]" size="1">
-                    {html_options options=$languages selected=$smarty.post.teacher.language|default:$teacher->language }
+                <p class="input"><select name="teacher[language]" size="1" id="teacher_language_id">
+                    {html_options options=$languages selected=$smarty.post.teacher.language|default:$teacher->language}
                 </select></p>
                 {form_error field='teacher[language]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
+                <label for="teacher_prefered_course_id_id">{translate line='admin_teachers_my_account_label_prefered_course'}:</label>
+                <p class="input"><select name="teacher[prefered_course_id]" size="1" id="teacher_prefered_course_id_id">
+                    {list_html_options options=$courses selected=$smarty.post.teacher.prefered_course_id|default:$teacher->prefered_course_id}
+                </select></p>
             </div>
             <div class="buttons">
                 <input type="submit" name="button_submit" value="{translate line='admin_teachers_my_account_button_submit'}" class="button" />

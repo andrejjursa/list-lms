@@ -24,6 +24,12 @@ class Course extends DataMapper {
             'class' => 'student',
             'other_field' => 'active_course',
         ),
+        'prefered_for_teacher' => array(
+            'class' => 'teacher',
+            'other_field' => 'prefered_course',
+            'join_self_as' => 'prefered_course',
+            'joint_other_as' => 'prefered_for_teacher',
+        ),
     );
     
 }

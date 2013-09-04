@@ -47,7 +47,9 @@ jQuery(document).ready(function($) {
         event.preventDefault();
         var url = global_base_url + 'index.php/admin_solutions/show_file_content/' + task_set_id + '/' + solution_id + '/' + last_zip_file + '/' + last_index;
         var target = '#file_content_id';
-        api_ajax_load(url, target);
+        api_ajax_load(url, target, 'post', {}, function() {
+            prettyPrint();
+        });
     });
     
 });

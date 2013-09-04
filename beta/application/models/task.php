@@ -16,6 +16,16 @@ class Task extends DataMapper {
         ),
     );
     
+    public $has_one = array(
+        'author' => array(
+            'class' => 'teacher',
+            'other_field' => 'task',
+            'join_self_as' => 'task',
+            'join_other_as' => 'author',
+        ),
+    );
+
+
     /**
      * Add special filtering of tasks by categories.
      * @param array<mixed> $filter two dimensional array of category IDs, it is represented as logic formula in conjunctive normal form, where first dimension is clause and second is disjunct inside clause.
@@ -89,6 +99,22 @@ class Task extends DataMapper {
             }
         }
         return $files;
+    }
+    
+    /**
+     * Deletes relations (if parameters are set) or this object from database.
+     * @param DataMapper|string $object related object to delete from relation.
+     * @param string $related_field relation internal name.
+     */
+    public function delete($object = '', $related_field = '') {
+        $this_id = $this->id;
+        parent::delete($object, $related_field);
+        if (empty($object) && !is_array($object) && !empty($this_id)) {
+            $path = 'private/uploads/task_files/task_' . intval($this_id) . '/';
+            if (file_exists($path)) {
+                unlink_recursive($path, TRUE);
+            }
+        }
     }
     
 }

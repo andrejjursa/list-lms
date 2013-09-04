@@ -11,18 +11,15 @@
     </fieldset>
     <fieldset>
         <legend>{translate line='admin_periods_fieldset_legend_periods'}</legend>
-        <table class="periods_table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>{translate line='admin_periods_table_header_name'}</th>
-                    <th>{translate line='admin_periods_table_header_relations_courses'}</th>
-                    <th colspan="4" class="controlls">{translate line='admin_periods_table_header_controlls'}</th>
-                </tr>
-            </thead>
-            <tbody id="periods_container_id">
-            </tbody>
-        </table>
+        <div class="filter_wrap">
+            <form action="{internal_url url='admin_groups/get_table_content'}" method="post" id="filter_form_id">
+                <input type="hidden" name="filter[fields][created]" value="{$filter.fields.created|default:0}" />
+                <input type="hidden" name="filter[fields][updated]" value="{$filter.fields.updated|default:0}" />
+                <input type="hidden" name="filter[fields][name]" value="{$filter.fields.name|default:1}" />
+                <input type="hidden" name="filter[fields][related_courses]" value="{$filter.fields.related_courses|default:1}" />
+            </form>
+        </div>
+        <div id="periods_container_id"></div>
     </fieldset>
 {/block}
 {block custom_head}<script type="text/javascript">

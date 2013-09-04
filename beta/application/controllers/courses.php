@@ -9,7 +9,9 @@ class Courses extends LIST_Controller {
     
     public function __construct() {
         parent::__construct();
-        $this->usermanager->student_login_protected_redirect();
+        if ($this->router->method != 'show_details') {
+            $this->usermanager->student_login_protected_redirect();
+        }
         $this->_init_language_for_student();
         $this->_load_student_langfile();
         $this->_initialize_student_menu();
@@ -111,12 +113,25 @@ class Courses extends LIST_Controller {
         $this->output->set_output(json_encode($output));
     }
     
-    public function show_details($course_id) {
+    public function show_details($course_id, $lang = NULL) {
+        if (!is_null($lang)) {
+            $this->_init_specific_language($lang);
+        }
         $course = new Course();
         $course->get_by_id($course_id);
         smarty_inject_days();
         $this->parser->add_css_file('frontend_courses.css');
         $this->parser->parse('frontend/courses/course_details.tpl', array('course' => $course));
+    }
+    
+    public function quick_course_change($course_id, $current_url) {
+        $this->activate_course($course_id);
+        $output = $this->output->get_output();
+        $output_object = json_decode($output);
+        $this->messages->add_message($output_object->message, $output_object->status ? Messages::MESSAGE_TYPE_SUCCESS : Messages::MESSAGE_TYPE_ERROR);
+        
+        $decoded_current_url = decode_from_url($current_url);
+        redirect($decoded_current_url);
     }
 
     private function inject_period_options() {

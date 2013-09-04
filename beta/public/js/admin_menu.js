@@ -34,4 +34,12 @@ jQuery(document).ready(function($){
     }).mouseout(function() {
         $('#teacher_quick_langmenu').hide();
     });
+    
+    $('#teacher_quick_prefered_course_menu').menu();
+    
+    $('div.teacher_quick_prefered_course_menu').mouseover(function() {
+        $('#teacher_quick_prefered_course_menu').show();
+    }).mouseout(function() {
+        $('#teacher_quick_prefered_course_menu').hide();
+    });
 });

@@ -14,7 +14,7 @@
             <div class="field">
                 <label for="student_language_id">{translate line='students_my_account_label_language'}:</label>
                 <p class="input"><select name="student[language]" size="1">
-                    {html_options options=$languages selected=$smarty.post.student.language|default:$student->language }
+                    {html_options options=$languages selected=$smarty.post.student.language|default:$student->language}
                 </select></p>
                 {form_error field='student[language]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
@@ -71,4 +71,22 @@
             <input type="hidden" name="student_id" value="{$smarty.post.student_id|default:$student->id|intval}" />
         </form>
     </fieldset>
+    <fieldset>
+        <legend>{translate line='students_my_account_legend_avatar'}</legend>
+        <form action="" method="post">
+            <div class="field">
+                <label>{translate line='students_my_account_label_avatar'}:</label>
+                <p class="input"><img src="{$student->get_avatar()}" alt="" /></p>
+                <p class="input">
+                    <a href="{internal_url url='students/upload_avatar'}" class="button upload_avatar">{translate line='students_my_account_button_upload_avatar'}</a>
+                    {if $student->has_avatar()}<a href="{internal_url url='students/delete_avatar'}" class="button delete delete_avatar">{translate line='students_my_account_button_delete_avatar'}</a>{/if}
+                </p>
+            </div>
+        </form>
+    </fieldset>
 {/block}
+{block custom_head}<script type="text/javascript">
+    var messages = {
+        delete_avatar: '{translate line='students_my_account_delete_avatar_question'}'
+    };
+</script>{/block}

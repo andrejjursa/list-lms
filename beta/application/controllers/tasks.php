@@ -42,19 +42,27 @@ class Tasks extends LIST_Controller {
         
         $this->_select_student_menu_pagetag('tasks');
         
-        $task_set = $this->get_task_sets($course, $group, $student, $task_set_id);
+        $task_set = $this->get_task_set_by_id($course, $group, $student, $task_set_id);
         if ($course->exists()) {
             $task_sets = $this->filter_valid_task_sets($task_set);
             $this->lang->init_overlays('task_sets', $task_sets, array('name'));
             $filtered_task_set = count($task_sets) == 1 ? $task_sets[0] : new Task_set();
-            $this->parser->assign('task_set', $filtered_task_set);
-            $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set, $course));
-            $this->parser->assign('solution_files', $filtered_task_set->get_student_files($student->id));
-            $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
+            if ($filtered_task_set->exists()) {
+                $this->lang->init_overlays('task_sets', $filtered_task_set, array('name', 'instructions'));
+                $this->parser->assign('task_set', $filtered_task_set);
+                $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set, $course));
+                $this->parser->assign('solution_files', $filtered_task_set->get_student_files($student->id));
+                $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
+            } else {
+                $this->messages->add_message('lang:tasks_task_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+                redirect(create_internal_url('tasks/index'));
+            }
         }
                 
         $this->parser->add_css_file('frontend_tasks.css');
         $this->parser->add_js_file('tasks\task.js');
+        $this->_add_prettify();
+        $this->_add_scrollTo();
         
         $this->parser->parse('frontend\tasks\task.tpl', array('course' => $course));
     }
@@ -62,7 +70,7 @@ class Tasks extends LIST_Controller {
     public function upload_solution($task_set_id = 0) {
         $this->usermanager->student_login_protected_redirect();
         
-        $task_set = $this->get_task_sets($course, $group, $student, $task_set_id);
+        $task_set = $this->get_task_set_by_id($course, $group, $student, $task_set_id);
         $task_sets = $this->filter_valid_task_sets($task_set);
         $filtered_task_set = count($task_sets) == 1 ? $task_sets[0] : new Task_set();
         if ($filtered_task_set->id == intval($task_set_id) && $this->can_upload_file($filtered_task_set, $course)) {
@@ -177,6 +185,145 @@ class Tasks extends LIST_Controller {
         }
     }
     
+    public function show_comments($task_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_id));
+        $comments = array();
+        
+        if ($task_set->exists() && (bool)$task_set->comments_enabled) {
+            $comments = Comment::get_comments_for_task_set($task_set);
+        }
+        
+        $this->parser->parse('frontend/tasks/show_comments.tpl', array('comments' =>  $comments, 'task_set' => $task_set));
+    }
+    
+    public function subscribe_to_task_comments($task_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_id));
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        if ($task_set->exists() && $student->exists() && $student->save(array('comment_subscription' => $task_set))) {
+            $this->db->trans_commit();
+            $this->messages->add_message('lang:tasks_comments_message_subscription_successful', Messages::MESSAGE_TYPE_SUCCESS);
+        } else {
+            $this->db->trans_rollback();
+            $this->messages->add_message('lang:tasks_comments_message_subscription_error', Messages::MESSAGE_TYPE_ERROR);
+        }
+        redirect(create_internal_url('tasks/show_comments/' . $task_id));
+    }
+    
+    public function unsubscribe_to_task_comments($task_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_id));
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        if ($task_set->exists() && $student->exists() && $student->is_related_to('comment_subscription', $task_set->id)) {
+            $student->delete_comment_subscription($task_set);
+            if ($this->db->trans_status()) {
+                $this->db->trans_commit();
+                $this->messages->add_message('lang:tasks_comments_message_subscription_cancel_successful', Messages::MESSAGE_TYPE_SUCCESS);
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:tasks_comments_message_subscription_cancel_error', Messages::MESSAGE_TYPE_ERROR);
+            }
+        } else {
+            $this->db->trans_rollback();
+            $this->messages->add_message('lang:tasks_comments_message_subscription_cancel_error', Messages::MESSAGE_TYPE_ERROR);
+        }
+        redirect(create_internal_url('tasks/show_comments/' . $task_id));
+    }
+    
+    public function reply_at_comment($task_id, $comment_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $task_set = new Task_set();
+        $task_set->get_by_id((int)$task_id);
+        $comment = new Comment();
+        if ($task_set->exists() && (bool)$task_set->comments_enabled) {
+            $comment->include_related('student', '*', true, true);
+            $comment->include_related('teacher', '*', true, true);
+            $comment->get_by_id((int)$comment_id);
+        } 
+        
+        $this->parser->add_css_file('frontend_tasks.css');
+        $this->parser->parse('frontend/tasks/reply_at_comment.tpl', array('task_set' => $task_set, 'comment' => $comment));
+    }
+
+    public function post_comment($task_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $this->create_comment();
+        
+        redirect(create_internal_url('tasks/show_comments/' . $task_id));
+    }
+    
+    public function post_comment_reply($task_id, $comment_id) {
+        $this->usermanager->student_login_protected_redirect();
+        
+        $this->create_comment();
+        
+        redirect(create_internal_url('tasks/reply_at_comment/' . $task_id . '/' . $comment_id));
+    }
+
+    private function create_comment() {
+        $post_data = $this->input->post('comment');
+        if (array_key_exists('text', $post_data) && array_key_exists('task_set_id', $post_data) && array_key_exists('reply_at_id', $post_data)) {
+            $task_set = new Task_set();
+            $task_set->get_by_id(intval($post_data['task_set_id']));
+            $student = new Student();
+            $student->get_by_id($this->usermanager->get_student_id());
+            if ($task_set->exists() && $student->exists() && (bool)$task_set->comments_enabled) {
+                if (trim(strip_tags($post_data['text'])) != '') {
+                    $text = strip_tags($post_data['text'], '<a><strong><em><span>');
+                    $comment = new Comment();
+                    $comment->text = $text;
+                    $comment->approved = (bool)$task_set->comments_moderated ? 0 : 1;
+                    $comment->reply_at_id = empty($post_data['reply_at_id']) ? NULL : intval($post_data['reply_at_id']);
+                    
+                    $this->_transaction_isolation();
+                    $this->db->trans_begin();
+                    if ($comment->save(array($task_set, $student))) {
+                        $this->db->trans_commit();
+                        $this->messages->add_message('lang:tasks_comments_message_comment_post_success_save', Messages::MESSAGE_TYPE_SUCCESS);
+                        if ((bool)$comment->approved) {
+                            $all_students = $task_set->comment_subscriber_student;
+                            $all_students->where('id !=', $this->usermanager->get_student_id());
+                            $all_students->get();
+                            $this->_send_multiple_emails($all_students, 'lang:tasks_comments_email_subject_new_post', 'file:emails/frontend/comments/new_comment_student.tpl', array('task_set' => $task_set, 'student' => $student, 'comment' => $comment));
+                            $all_teachers = $task_set->comment_subscriber_teacher;
+                            $all_teachers->get();
+                            $this->_send_multiple_emails($all_teachers, 'lang:tasks_comments_email_subject_new_post', 'file:emails/frontend/comments/new_comment_teacher.tpl', array('task_set' => $task_set, 'student' => $student, 'comment' => $comment));
+                        }
+                        return TRUE;
+                    } else {
+                        $this->db->trans_rollback();
+                        $this->messages->add_message('lang:tasks_comments_message_comment_post_error_save', Messages::MESSAGE_TYPE_ERROR);
+                        return FALSE;
+                    }
+                } else {
+                    $this->messages->add_message('lang:tasks_comments_message_comment_post_error_empty', Messages::MESSAGE_TYPE_ERROR);
+                    return FALSE;
+                }
+            } else {
+                $this->messages->add_message('lang:tasks_comments_message_not_found_or_disabled', Messages::MESSAGE_TYPE_ERROR);
+                return FALSE;
+            }
+        } else {
+            $this->messages->add_message('lang:tasks_comments_message_comment_post_error_data', Messages::MESSAGE_TYPE_ERROR);
+            return FALSE;
+        }
+    }
+
     private function normalize_student_name($student) {
         $normalized = normalize($student->fullname);
         $output = '';
@@ -189,7 +336,7 @@ class Tasks extends LIST_Controller {
         return $output;
     }
         
-    private function get_task_sets(&$course, &$group, &$student, $task_set_id = NULL) {
+    private function get_task_sets(&$course, &$group, &$student) {
         $student = new Student();
         $student->get_by_id($this->usermanager->get_student_id());
         
@@ -216,19 +363,48 @@ class Tasks extends LIST_Controller {
             $task_set->group_end();
             $task_set->include_related('room', '*', TRUE, TRUE);
             $task_set->include_related_count('task', 'total_tasks');
-            $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id`)', 'total_points');
+            $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set->order_by_related_with_constant('task_set_type', 'name', 'asc');
             $task_set->order_by_with_overlay('name', 'asc');
-            if (is_null($task_set_id)) {
-                $task_set->get();
-            } else {
-                $task_set->get_by_id($task_set_id);
-            }
+            $task_set->get();
         }
         
         return $task_set;
     }
     
+    private function get_task_set_by_id(&$course, &$group, &$student, $task_set_id) {
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        
+        $course = new Course();
+        $group = new Group();
+        
+        $task_set = new Task_set();
+        $task_set->include_related('room', '*', TRUE, TRUE);
+        $task_set->where('published', 1);
+        $task_set->get_by_id($task_set_id);
+        
+        if ($task_set->exists()) {
+            $course->where_related_participant('student_id', $student->id);
+            $course->where_related_participant('allowed', 1);
+            $course->get_by_id($task_set->course_id);
+            if (!$course->exists()) {
+                return new Task_set();
+            }
+            
+            if (!is_null($task_set->group_id)) {
+                $group->where_related_participant('student_id', $student->id);
+                $group->where_related_participant('course_id', $course->id);
+                $group->get_by_id($task_set->group_id);
+                if (!$group->exists()) {
+                    return new Task_set();
+                }
+            }
+        }
+        
+        return $task_set;
+    }
+
     private function can_upload_file($task_set, $course) {
         if ($task_set->exists() && $course->exists()) {
             $task_set_type = $course->task_set_type->where('id', $task_set->task_set_type_id)->include_join_fields()->get();
@@ -253,7 +429,7 @@ class Tasks extends LIST_Controller {
                         $add = FALSE;
                     } else {
                         $current_day = intval(strftime('%w', strtotime($task_set->publish_start_time)));
-                        $current_day > 0 ? $current_day : 7;
+                        $current_day = $current_day > 0 ? $current_day : 7;
                         if ($task_set->room->time_day == $current_day) {
                             list($year, $month, $day) = explode(',', strftime('%Y,%m,%d', strtotime($task_set->publish_start_time)));
                             $time = mktime(0, 0, 0, intval($month), intval($day), intval($year)) + intval($task_set->room->time_begin);
@@ -292,7 +468,10 @@ class Tasks extends LIST_Controller {
         $points = array();
         
         foreach ($solutions as $solution) {
-            $points[$solution->task_set_id] = $solution->points;
+            $points[$solution->task_set_id] = array(
+                'points' => $solution->points,
+                'considered' => !(bool)$solution->not_considered,
+            );
         }
         
         $output = array(
@@ -301,10 +480,10 @@ class Tasks extends LIST_Controller {
         );
         
         if (count($task_sets) > 0) { foreach($task_sets as $task_set) {
-            $output['total'] += (isset($points[$task_set->id]) ? $points[$task_set->id] : 0);
-            $output['max'] += $task_set->total_points;
-            $output[$task_set->task_set_type_id]['total'] = (isset($output[$task_set->task_set_type_id]['total']) ? $output[$task_set->task_set_type_id]['total'] : 0) + (isset($points[$task_set->id]) ? $points[$task_set->id] : 0);
-            $output[$task_set->task_set_type_id]['max'] = (isset($output[$task_set->task_set_type_id]['max']) ? $output[$task_set->task_set_type_id]['max'] : 0) + $task_set->total_points;
+            $output['total'] += ((isset($points[$task_set->id]) && $points[$task_set->id]['considered']) ? $points[$task_set->id]['points'] : 0);
+            $output['max'] += (!is_null($task_set->points_override) ? $task_set->points_override : $task_set->total_points);
+            $output[$task_set->task_set_type_id]['total'] = (isset($output[$task_set->task_set_type_id]['total']) ? $output[$task_set->task_set_type_id]['total'] : 0) + (isset($points[$task_set->id]) && $points[$task_set->id]['considered'] ? $points[$task_set->id]['points'] : 0);
+            $output[$task_set->task_set_type_id]['max'] = (isset($output[$task_set->task_set_type_id]['max']) ? $output[$task_set->task_set_type_id]['max'] : 0) + (!is_null($task_set->points_override) ? $task_set->points_override : $task_set->total_points);
         }}
         
         return $output;

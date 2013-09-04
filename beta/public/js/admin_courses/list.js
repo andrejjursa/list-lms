@@ -1,11 +1,22 @@
 jQuery(document).ready(function($) {
     
-    if ($('#new_course_form_id').length != 0) {
+    if ($('#new_course_form_id').length !== 0) {
         make_switchable_form('#new_course_form_id');
         
         var reload_table_content = function() {
-            api_ajax_load(global_base_url + 'index.php/admin_courses/get_table_content', '#table_content');
-        }
+            var filter_data = $('#filter_form_id').serializeArray();
+            api_ajax_load(global_base_url + 'index.php/admin_courses/get_table_content', '#table_content', 'post', filter_data, function() {
+                fields_filter('#open_fields_config_id', reload_table_content);
+                field_filter_checkbox('#fields_config_created_checkbox_id', '#filter_form_id', 'created');
+                field_filter_checkbox('#fields_config_updated_checkbox_id', '#filter_form_id', 'updated');
+                field_filter_checkbox('#fields_config_name_checkbox_id', '#filter_form_id', 'name');
+                field_filter_checkbox('#fields_config_description_checkbox_id', '#filter_form_id', 'description');
+                field_filter_checkbox('#fields_config_period_checkbox_id', '#filter_form_id', 'period');
+                field_filter_checkbox('#fields_config_groups_checkbox_id', '#filter_form_id', 'groups');
+                field_filter_checkbox('#fields_config_task_set_types_checkbox_id', '#filter_form_id', 'task_set_types');
+                field_filter_checkbox('#fields_config_capacity_checkbox_id', '#filter_form_id', 'capacity');
+            });
+        };
         
         reload_table_content();
         

@@ -24,11 +24,15 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus
 #top_meta_informations div.left { float: left; }
 #top_meta_informations div.right { float: right; }
 #top_meta_informations div.clear { clear: both; }
-#top_meta_informations a { text-decoration: none; color: green; transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; }
+#top_meta_informations a { text-decoration: none; color: #00cc00; transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; }
 #top_meta_informations a:hover { color: #B6FBA6; }
+
+ul.ui-menu li a { color: green !important; }
 
 #teacher_quick_langmenu { display: none; position: absolute; }
 #top_meta_informations div.teacher_quick_langmenu { display: inline-block; }
+#teacher_quick_prefered_course_menu { display: none; position: absolute; }
+#top_meta_informations div.teacher_quick_prefered_course_menu { display: inline-block; }
 
 #jMenu { display:table; margin:0; padding:0; position: relative; z-index: 1000; }
 /********************/
@@ -63,6 +67,8 @@ div.backend_body > fieldset, fieldset.basefieldset { margin: 5px; border: 1px so
 div.backend_body > fieldset > legend, fieldset.basefieldset > legend { border: 1px solid gray; margin-left: 5px; width: 50%; padding: 4px; border-radius: 5px; background-color: #E8E8E8; font-weight: bold; }
 div.backend_body > h4, div.backend_body > h3, div.backend_body > h2 { margin: 5px; text-shadow: 0 0 4px gray; color: black; }
 
+div.backend_footer { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; }
+
 form div.field_login,
 form div.buttons_login { margin: 4px 0; clear: both; }
 form div.field_login > label { font-weight: bold; width: 175px; display: block; float: left; cursor: pointer; }
@@ -77,8 +83,11 @@ form div.field > label { font-weight: bold; width: 20%; display: block; float: l
 form div.field > label.required:after { content: ' *'; }
 form div.field p.input,
 form div.field div.input { width: 80%; margin-left: 20%; padding: 3px 0 0 0; }
+form div.field div.input input[type=text], form div.field div.input input[type=password], form div.field div.input textarea,
 form div.field p.input input[type=text], form div.field p.input input[type=password], form div.field p.input textarea { width: 98%; }
+form div.field div.input textarea,
 form div.field p.input textarea { height: 100px; }
+form div.field div.input select
 form div.field p.input select { max-width: 98%; }
 form div.field p.error { width: 80%; margin-left: 20%; } 
 form div.field p.error span.message { padding: 2px; border: 1px solid red; color: red; border-radius: 3px; width: 98%; margin: 2px 0; display: block; background-color: #FFAFAF; }
@@ -93,3 +102,12 @@ div.custom_translations_selector li { transition: all 0.3s ease-in-out; -moz-tra
 div.custom_translations_selector li.mouseover { background-color: #B6FBA6; }
 div.custom_translations_selector li.selected { background-color: #FFC1C1; }
 div.custom_translations_selector li.selected.mouseover { background-color: #FDFF83; }
+
+.ui-datepicker.ui-widget { z-index: 100 !important; }
+
+table#fields_filter_table_id { background-color: #cccccc; border: 1px solid black; margin-top: 4px; border-collapse: collapse; }
+table#fields_filter_table_id thead tr td { text-align: right; background-color: #cccccc; }
+table#fields_filter_table_id thead tr td.caption { font-weight: bold; text-align: left; padding: 5px; }
+table#fields_filter_table_id tbody tr td { text-align: left; background-color: #cccccc; padding: 1px 5px; font-weight: normal; }
+
+div.fields_config_open_button { text-decoration: underline; cursor: pointer; }

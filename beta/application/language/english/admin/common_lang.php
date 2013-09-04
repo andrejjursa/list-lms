@@ -15,3 +15,15 @@ $lang['common_pagination_page_of_pages'] = 'Page <strong>%d</strong> / <strong>%
 $lang['common_pagination_records'] = 'Record <strong>%d</strong> to <strong>%d</strong> out of <strong>%d</strong>';
 $lang['common_pagination_page'] = 'Page';
 $lang['common_pagination_rows_per_page'] = 'Records per page'; 
+
+$lang['common_fields_filter_caption'] = 'Select fields';
+
+$lang['common_datetime_format'] = '%m/%d/%Y %I:%M:%S %p';
+
+$lang['common_table_header_created'] = 'Created';
+$lang['common_table_header_updated'] = 'Updated';
+
+$lang['common_button_back'] = 'Back';
+
+$lang['commont_copyright_text'] = 'Originaly designed and created by %s in %s as bachelor work on %s.';
+$lang['common_copyright_faculty'] = 'Comenius University in Bratislava, Faculty of mathematics, physics and informatics';

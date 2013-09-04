@@ -19,7 +19,7 @@
                 {foreach $course->group->order_by_with_constant('name', 'asc')->get_iterated() as $group}
                     {capture name='capture_group' assign='captured_group'}
                     <div class="group_wrap">
-                        <div class="group_name">{if $can_change_group}<input type="radio" name="group_id" value="{$group->id}" /> {/if}{translate_text text=$group->name} ({$group->participant->where_related($course)->where('allowed', 1)->count()}&nbsp;/&nbsp;{$group->room->order_by('capacity', 'asc')->limit(1)->get()->capacity})</div>
+                        <div class="group_name">{if $can_change_group}<input type="radio" name="group_id" value="{$group->id}" /> {/if}{translate_text text=$group->name} ({$group->participant->where_related($course)->where('allowed', 1)->count()}&nbsp;/&nbsp;{$group->room->order_by('capacity', 'asc')->limit(1)->get()->capacity|intval})</div>
                         <ul class="group_students">
                         {foreach $group->participant->include_related('student', ['fullname','id'])->where_related($course)->where('allowed', 1)->order_by_related('student', 'fullname', 'asc')->get_iterated() as $participant}
                             <li{if $participant->student_id eq $list_student_account.id} class="me"{/if}>{$participant->student_fullname}</li>

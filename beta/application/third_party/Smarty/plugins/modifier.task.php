@@ -1,9 +1,18 @@
 <?php
 
-include_once(APPPATH . 'third_party/geshi/geshi.php');
+/**
+ * This modifier is deprecated;
+ */
+
+//include_once(APPPATH . 'third_party/geshi/geshi.php');
 include_once(APPPATH . 'third_party/simplehtmldom/simple_html_dom.php');
 
 function smarty_modifier_task($string) {
+    return $string;
+    
+    // Deprecated, GeSHi was removed from project.
+    
+    if (empty($string)) { return $string; }
     return task_modifier_scan_text($string);
 }
 
@@ -18,8 +27,7 @@ function task_modifier_scan_text($string) {
     foreach ($html->find('pre.highlight') as $highlighted_code) {
         $lang = $highlighted_code->lang;
         if (isset($highlight_map[$lang])) {
-            $content = htmlspecialchars_decode(strip_tags($highlighted_code->innertext), ENT_HTML5 | ENT_QUOTES);
-            $content = str_replace('&nbsp;', ' ', $content);
+            $content = str_replace('&nbsp;', ' ', htmlspecialchars_decode(strip_tags($highlighted_code->innertext), ENT_HTML5 | ENT_QUOTES));
             $geshi = new GeSHi($content, $highlight_map[$lang]);
             $geshi->set_header_type(GESHI_HEADER_PRE_VALID);
             $geshi->enable_line_numbers(GESHI_NO_LINE_NUMBERS);

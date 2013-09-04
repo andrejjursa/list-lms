@@ -13,6 +13,7 @@ class Settings extends LIST_Controller {
         $this->_load_teacher_langfile();
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
+        $this->_init_teacher_quick_prefered_course_menu();
         $this->usermanager->teacher_login_protected_redirect();
         $this->load->library('configurator');
     }
@@ -40,6 +41,10 @@ class Settings extends LIST_Controller {
         $this->form_validation->set_rules('config[student_login_security_allowed_attempts]', 'lang:admin_settings_form_field_student_login_security_allowed_attempts', 'required|integer|greater_than[0]');
         $this->form_validation->set_rules('config[maximum_solition_filesize]', 'lang:admin_settings_form_field_maximum_solition_filesize', 'required|integer|greater_than[0]');
         $this->form_validation->set_rules('config[readable_file_extensions]', 'lang:admin_settings_form_field_readable_file_extensions', 'required|min_length[0]|regex_match[/^[a-z]+[0-9]*(\,[a-z]+[0-9]*)*$/]');
+        $this->form_validation->set_rules('config[email][protocol]', 'lang:admin_settings_form_field_email_protocol', 'required');
+        $this->form_validation->set_rules('config[email][priority]', 'lang:admin_settings_form_field_email_priority', 'required|integer|greater_than[0]|lower_than[6]');
+        $this->form_validation->set_rules('config[email][smtp_port]', 'lang:admin_settings_form_field_email_smtp_port', 'integer|greater_than[0]');
+        $this->form_validation->set_rules('config[email][smtp_timeout]', 'lang:admin_settings_form_field_email_smtp_timeout', 'integer|greater_than[0]');
         
         if ($this->form_validation->run()) {
             $config = $this->protect_config_array($this->input->post('config'));
@@ -53,6 +58,11 @@ class Settings extends LIST_Controller {
             $config['teacher_login_security_allowed_attempts'] = intval($config['teacher_login_security_allowed_attempts']);
             $config['student_login_security_allowed_attempts'] = intval($config['student_login_security_allowed_attempts']);
             $config['maximum_solition_filesize'] = intval($config['maximum_solition_filesize']);
+            $config['student_registration']['enabled'] = $this->bool_val($config['student_registration']['enabled']);
+            $config['email']['smtp_port'] = intval($config['email']['smtp_port']);
+            $config['email']['smtp_timeout'] = intval($config['email']['smtp_timeout']);
+            $config['email']['priority'] = intval($config['email']['priority']);
+            $config['email_multirecipient_batch_mode'] = $this->bool_val($config['email_multirecipient_batch_mode']);
             $this->configurator->set_config_array('config', $config);
             redirect(create_internal_url('admin_settings/index'));
         } else {
@@ -67,7 +77,7 @@ class Settings extends LIST_Controller {
     private function bool_val($value) {
         if (is_numeric($value)) { return (bool)$value; }
         if (is_string($value)) { return strtolower($value) == 'true'; }
-        return false;
+        return FALSE;
     }
     
     private function protect_config_array($config) {
@@ -81,6 +91,9 @@ class Settings extends LIST_Controller {
             'student_login_security_allowed_attempts',
             'maximum_solition_filesize',
             'readable_file_extensions',
+            'student_registration',
+            'email',
+            'email_multirecipient_batch_mode',
         );
         
         $output = array();

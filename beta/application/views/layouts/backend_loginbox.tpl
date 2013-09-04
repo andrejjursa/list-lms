@@ -2,8 +2,10 @@
 <html>
     <head>
         <meta charset="utf-8" />
+        <meta name="robots" content="noindex, follow" />
         <title>{block name='title'}{/block}</title>
         <link href="{'/public/css/admin_general.css'|base_url}" rel="stylesheet" type="text/css" media="screen" />
+        <link rel="shortcut icon" href="{'favicon.ico'|base_url}" />
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";
             var login_form_url = "{internal_url url='admin_teachers/login/current_url/###URL###'}";

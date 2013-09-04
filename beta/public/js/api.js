@@ -1,15 +1,19 @@
 jQuery(document).ready(function($) {
-    if (jQuery.datepicker != undefined) {
+    if (jQuery.datepicker !== undefined) {
         jQuery.datepicker.setDefaults(jQuery.datepicker.regional[jqueryui_datepicker_region]);
     }
-    if (jQuery.timepicker != undefined) {
+    if (jQuery.timepicker !== undefined) {
         jQuery.timepicker.setDefaults(jQuery.timepicker.regional[jqueryui_datepicker_region]);
     }
 
-    jQuery('[title]').tooltip();
+    try {
+        jQuery('[title]').tooltip();
+    } catch (e) {
+        console.log(e);
+    }
 });
 
-var block_ui_message = lang != undefined && lang.messages != undefined && lang.messages.ajax_standby != undefined ? lang.messages.ajax_standby : 'Please wait ...';
+var block_ui_message = (lang !== undefined && lang.messages !== undefined && lang.messages.ajax_standby !== undefined) ? lang.messages.ajax_standby : 'Please wait ...';
 jQuery(document).ajaxStart(function () {
   jQuery.blockUI({
     message: '<h1>' + block_ui_message + '</h1>',
@@ -23,14 +27,62 @@ jQuery(document).ajaxStart(function () {
     }
   });
 }).ajaxStop(function() {
-    jQuery('[title]').tooltip();
-    jQuery.unblockUI();
+    try {
+        jQuery('[title]').tooltip();
+        jQuery.unblockUI();
+    } catch (e) {
+        console.log(e);
+    }
 });
 
+var fields_filter = function(open_selector, reload_callback) {
+    var open_button = jQuery(open_selector);
+    if (open_button.length !== 0) {
+        open_button = open_button[0];
+        jQuery(open_button).click(function() {
+            jQuery('#fields_filter_table_id').css({
+                'position': 'absolute'
+            }).show().position({
+                of: jQuery(open_button),
+                my: 'right top',
+                at: 'right bottom',
+                collision: 'flip flip'
+            });
+        }).addClass('fields_config_open_button');
+        jQuery('#fields_filter_table_id a.close_button').click(function(event) {
+            event.preventDefault();
+            jQuery('#fields_filter_table_id').hide();
+            reload_callback();
+        });
+    }
+};
+
+var field_filter_checkbox = function(checkbox_selector, filter_form_selector, field_name) {
+    var checkbox = jQuery(checkbox_selector);
+    if (checkbox.length !== 0) {
+        checkbox = checkbox[0];
+        var filter_form = jQuery(filter_form_selector);
+        if (filter_form.length !== 0) {
+            filter_form = filter_form[0];
+            var filter_form_input = jQuery(filter_form).find('input[name="filter[fields][' + field_name + ']"]');
+            if (filter_form_input.lenght !== 0) {
+                filter_form_input = filter_form_input[0];
+                jQuery(checkbox).change(function() {
+                    if (jQuery(this).is(':checked')) {
+                        jQuery(filter_form_input).val('1');
+                    } else {
+                        jQuery(filter_form_input).val('0');
+                    }
+                });
+            }
+        }
+    }
+};
+
 var make_switchable_form = function(selector) {
-    if (typeof(selector) == 'string') {
+    if (typeof(selector) === 'string') {
         var filter = jQuery(selector);
-        if (filter.length == 1 && filter.is('form')) {
+        if (filter.length === 1 && filter.is('form')) {
             var filter_header = jQuery('<div></div>');
             var filter_content = jQuery('<div></div>');
             filter.after(filter_content);
@@ -41,7 +93,7 @@ var make_switchable_form = function(selector) {
                 'cursor': 'pointer'
             }).addClass('ui-widget-header');
             var filter_text = '';
-            if (lang != undefined && lang.messages != undefined && lang.messages.form_header != undefined) { filter_text = lang.messages.form_header; }
+            if (lang !== undefined && lang.messages !== undefined && lang.messages.form_header !== undefined) { filter_text = lang.messages.form_header; }
             filter_header.html('<span class="ui-icon ui-icon-plusthick" style="float: left;"></span> ' + filter_text);
             filter_content.css({
                 'display': 'none'
@@ -53,12 +105,12 @@ var make_switchable_form = function(selector) {
             });
         }
     }
-}
+};
 
 var make_filter_form = function(selector) {
-    if (typeof(selector) == 'string') {
+    if (typeof(selector) === 'string') {
         var filter = jQuery(selector);
-        if (filter.length == 1 && filter.is('form')) {
+        if (filter.length === 1 && filter.is('form')) {
             var filter_header = jQuery('<div></div>');
             var filter_content = jQuery('<div></div>');
             filter.after(filter_content);
@@ -69,7 +121,7 @@ var make_filter_form = function(selector) {
                 'cursor': 'pointer'
             }).addClass('ui-widget-header');
             var filter_text = '';
-            if (lang != undefined && lang.messages != undefined && lang.messages.filter_header != undefined) { filter_text = lang.messages.filter_header; }
+            if (lang !== undefined && lang.messages !== undefined && lang.messages.filter_header !== undefined) { filter_text = lang.messages.filter_header; }
             filter_header.html('<span class="ui-icon ui-icon-plusthick" style="float: left;"></span> ' + filter_text);
             filter_content.css({
                 'display': 'none'
@@ -81,22 +133,125 @@ var make_filter_form = function(selector) {
             });
         }
     }
-}
+};
+
+var sort_table = function(table_selector, filter_selector) {
+    var table = table_selector;
+    if (typeof table_selector === 'string') {
+        table = jQuery(table_selector);
+    } 
+    if (typeof table === 'object') {
+        try {
+            if ($(table[0]).is('table')) {
+                table = table[0];
+            } else {
+                return;
+            }
+        } catch(e) {
+            return;
+        }
+    }
+    var filter = filter_selector;
+    if (typeof filter_selector === 'string') {
+        filter = jQuery(filter_selector);
+    }
+    if (typeof filter === 'object') {
+        try {
+            if ($(filter[0]).is('form')) {
+                filter = filter[0];
+            } else {
+                return;
+            }
+        } catch(e) {
+            return;
+        }
+    }
+    var filter_field = jQuery(filter).find('input[type=hidden][name="filter[order_by_field]"]');
+    var filter_direction = jQuery(filter).find('input[type=hidden][name="filter[order_by_direction]"]');
+    if (filter_field.length === undefined || filter_field.length === 0 || filter_direction.length === undefined || filter_direction.length === 0) {
+        try {
+            console.log('Filter missing inputs of type hidden with names filter[order_by_field] or filter[order_by_direction]!');
+        } catch (e) {
+            alert('Filter missing inputs of type hidden with names filter[order_by_field] or filter[order_by_direction]!');    
+        }
+        return;
+    }
+    
+    var regex_sort = /\bsort\:[a-z0-9_]+(:desc)?\b/i;
+    
+    var default_direction = filter_direction.val().toLowerCase();
+    var default_field = filter_field.val();
+    
+    var replace_icons = function() {
+        var default_direction = filter_direction.val().toLowerCase();
+        var default_field = filter_field.val();
+        jQuery(table).find('thead tr th').each(function() {
+            var field_config = regex_sort.exec(jQuery(this).attr('class'));
+            if (field_config !== null) {
+                var parts = field_config[0].split(':');
+                var field = parts[1];
+                var icon = $(this).find('div.ui-icon');
+                icon.attr('class', 'ui-icon ' + (default_field === field ? (default_direction === '' || default_direction === 'asc' ? 'ui-icon-circle-triangle-n' : 'ui-icon-circle-triangle-s') : 'ui-icon-circle-plus'));
+            }
+        });
+    };
+    
+    jQuery(table).find('thead tr th').each(function() {
+        var field_config = regex_sort.exec(jQuery(this).attr('class'));
+        if (field_config !== null) {
+            var parts = field_config[0].split(':');
+            var field = parts[1];
+            var direction = parts[2] === undefined ? 'asc' : 'desc';
+            var icon = jQuery('<div></div>');
+            icon.attr('class', 'ui-icon ' + (default_field === field ? (default_direction === '' || default_direction === 'asc' ? 'ui-icon-circle-triangle-n' : 'ui-icon-circle-triangle-s') : 'ui-icon-circle-plus'));
+            icon.css('float', 'right').css('margin-top', '3px');
+            var content = jQuery('<div></div>');
+            content.html(jQuery(this).html());
+            content.css('margin-right', '21px');
+            jQuery(this).html('');
+            jQuery(this).prepend(content);
+            jQuery(this).prepend(icon);
+            jQuery(this).click(function() {
+                var old_field = filter_field.val();
+                filter_field.val(field);
+                if (old_field !== field) {
+                    filter_direction.val(direction);
+                } else {
+                    var old_direction = filter_direction.val();
+                    if (old_direction === '' || old_direction === 'asc') {
+                        filter_direction.val('desc');
+                    } else {
+                        filter_direction.val('asc');
+                    }
+                }
+                replace_icons();
+                $(filter).submit();
+            }).css('cursor', 'pointer');
+        }
+    });
+};
 
 var show_notification = function(text, notif_type) {
-  if (text == undefined) { return; }
-  if (notif_type == undefined || notif_type == null) { notif_type = 'information'; }
+  if (text === undefined) { return; }
+  if (notif_type === undefined || notif_type === null) { notif_type = 'information'; }
   showNotification({
     message: text,
     type: notif_type,
     autoClose: true,
     duration: 5
   });
-}
+};
+
+var api_read_url_anchor = function() {
+    var url = document.URL;
+    var idx = url.indexOf('#');
+    var anchor = idx !== -1 ? url.substring(idx + 1) : '';
+    return anchor;
+}; 
 
 var api_make_tabs = function(structure_id_attr_value, options) {
     var structure = jQuery('#' + structure_id_attr_value);
-    if (options == undefined) { options = {}; }
+    if (options === undefined) { options = {}; }
     structure.tabs(options);
     var tab_num = 1;
     jQuery(structure).find('> div').each(function() {
@@ -105,13 +260,13 @@ var api_make_tabs = function(structure_id_attr_value, options) {
         }
         tab_num++;
     });
-}
+};
 
 var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
-    method = method == undefined ? 'post' : method;
-    data = data == undefined ? {} : data;
-    onError = onError == undefined ? function() {} : onError;
-    onSuccess = onSuccess == undefined ? function() {}: onSuccess;
+    method = method === undefined ? 'post' : method;
+    data = data === undefined ? {} : data;
+    onError = onError === undefined ? function() {} : onError;
+    onSuccess = onSuccess === undefined ? function() {}: onSuccess;
     
     jQuery.ajax(url, {
         cache: false,
@@ -119,23 +274,23 @@ var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
         data: data,
         method: method,
         success: function(html) {
-            if (typeof(target) == 'string') {
+            if (typeof(target) === 'string') {
                 jQuery(target).html(html);
-            } else if (typeof(target) == 'object') {
+            } else if (typeof(target) === 'object') {
                 target.html(html);
             }
             onSuccess(html);
         },
         error: onError
     });
-}
+};
 
 var api_ajax_update = function(url, method, data, onSuccess, onError, dataType) {
-    method = method == undefined ? 'post' : method;
-    data = data == undefined ? {} : data;
-    onError = onError == undefined ? function() {} : onError;
-    onSuccess = onSuccess == undefined ? function() {}: onSuccess;
-    dataType = dataType == undefined ? 'json' : dataType;
+    method = method === undefined ? 'post' : method;
+    data = data === undefined ? {} : data;
+    onError = onError === undefined ? function() {} : onError;
+    onSuccess = onSuccess === undefined ? function() {}: onSuccess;
+    dataType = dataType === undefined ? 'json' : dataType;
     
     jQuery.ajax(url, {
         cache: false,
@@ -145,7 +300,7 @@ var api_ajax_update = function(url, method, data, onSuccess, onError, dataType) 
         success: onSuccess,
         error: onError
     });
-}
+};
 
 /**
 *
@@ -215,10 +370,10 @@ var Base64 = {
  
 			output = output + String.fromCharCode(chr1);
  
-			if (enc3 != 64) {
+			if (enc3 !== 64) {
 				output = output + String.fromCharCode(chr2);
 			}
-			if (enc4 != 64) {
+			if (enc4 !== 64) {
 				output = output + String.fromCharCode(chr3);
 			}
  
@@ -288,7 +443,7 @@ var Base64 = {
 		return string;
 	}
  
-}
+};
 
 /**
 * Updated version to work with my replaced characters to support transport via url segments.
@@ -308,7 +463,7 @@ var Base64url = {
         transformed_input = transformed_input.replace(/\_/g, '=');
         return Base64.decode(transformed_input);
     }
-}
+};
 
 /**
  * Javascript functions to show top nitification
@@ -325,7 +480,7 @@ var Base64url = {
  showNotification(params);
  **/
 
-function showNotification(params){
+function showNotification(params) {
     // options array
     var options = { 
         'showAfter': 0, // number of sec to wait after page loads
@@ -340,11 +495,11 @@ function showNotification(params){
     jQuery.extend(true, options, params);
     
     var msgclass = 'succ_bg'; // default success message will shown
-    if(options['type'] == 'error'){
+    if(options['type'] === 'error'){
         msgclass = 'error_bg'; // over write the message to error message
-    } else if(options['type'] == 'information'){
+    } else if(options['type'] === 'information'){
         msgclass = 'info_bg'; // over write the message to information message
-    } else if(options['type'] == 'warning'){
+    } else if(options['type'] === 'warning'){
         msgclass = 'warn_bg'; // over write the message to warning message
     } 
     
@@ -378,7 +533,7 @@ function showNotification(params){
 }
 // function to close notification message
 // slideUp the message
-function closeNotification(duration){
+function closeNotification(duration) {
     var divHeight = jQuery('div#info_message').height();
     setTimeout(function(){
         jQuery('div#info_message').animate({
@@ -395,7 +550,7 @@ function closeNotification(duration){
 }
 
 // sliding down the notification
-function slideDownNotification(startAfter, autoClose, duration){    
+function slideDownNotification(startAfter, autoClose, duration) {    
     setTimeout(function(){
         jQuery('div#info_message').animate({
             top: 0
@@ -406,4 +561,14 @@ function slideDownNotification(startAfter, autoClose, duration){
             }, duration);
         }
     }, parseInt(startAfter * 1000));    
+}
+
+var test_window_maximized = function() {
+    if ( screen.height === window.innerHeight ) { // FullScreen Mode
+        return true;
+    }
+    else if ( screen.availHeight === window.outerHeight ) { // Maximized
+        return true;
+    }
+    return false;
 }

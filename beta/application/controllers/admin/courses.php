@@ -8,6 +8,7 @@
 class Courses extends LIST_Controller {
     
     const REGEXP_PATTERN_DATETYME = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
+    const STORED_FILTER_SESSION_NAME = 'admin_courses_filter_data';
     
     public function __construct() {
         parent::__construct();
@@ -15,6 +16,7 @@ class Courses extends LIST_Controller {
         $this->_load_teacher_langfile();
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
+        $this->_init_teacher_quick_prefered_course_menu();
         $this->usermanager->teacher_login_protected_redirect();
     }
     
@@ -27,10 +29,27 @@ class Courses extends LIST_Controller {
         $this->parser->add_js_file('admin_courses/form.js');
         $this->parser->add_css_file('admin_courses.css');
         $this->_add_tinymce();
+        
+        $this->inject_stored_filter();
         $this->parser->parse('backend/courses/index.tpl');
     }
     
     public function get_table_content() {
+        $fields_config = array(
+            array('name' => 'created', 'caption' => 'lang:common_table_header_created'),
+            array('name' => 'updated', 'caption' => 'lang:common_table_header_updated'),
+            array('name' => 'name', 'caption' => 'lang:admin_courses_table_header_course_name'),
+            array('name' => 'description', 'caption' => 'lang:admin_courses_table_header_course_description'),
+            array('name' => 'period', 'caption' => 'lang:admin_courses_table_header_course_period'),
+            array('name' => 'groups', 'caption' => 'lang:admin_courses_table_header_course_groups'),
+            array('name' => 'task_set_types', 'caption' => 'lang:admin_courses_table_header_course_task_set_types'),
+            array('name' => 'capacity', 'caption' => 'lang:admin_courses_table_header_course_capacity'),
+        );
+        
+        $filter = $this->input->post('filter');
+        $this->store_filter($filter);
+        $this->inject_stored_filter();
+        
         $courses = new Course();
         $courses->include_related_count('group');
         $courses->include_related_count('task_set_type');
@@ -38,7 +57,7 @@ class Courses extends LIST_Controller {
         $courses->order_by_with_constant('name', 'asc');
         $courses->get_iterated();
         $this->lang->init_overlays('courses', $courses->all_to_array(), array('description'));
-        $this->parser->parse('backend/courses/table_content.tpl', array('courses' => $courses));
+        $this->parser->parse('backend/courses/table_content.tpl', array('courses' => $courses, 'fields_config' => $fields_config));
     }
     
     public function create() {
@@ -46,11 +65,12 @@ class Courses extends LIST_Controller {
         $this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
         $this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
         $this->form_validation->set_rules('course[capacity]', 'lang:admin_courses_form_field_capacity', 'required|integer|greater_than[0]');
+        $this->form_validation->set_rules('course[default_points_to_remove]', 'lang:admin_courses_form_field_default_points_to_remove', 'required|numeric|greater_than[0]');
         
         if ($this->form_validation->run()) {
             $course = new Course();
             $course_data = $this->input->post('course');
-            $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity'));
+            $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity', 'default_points_to_remove'));
             $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
             
             $this->_transaction_isolation();
@@ -123,6 +143,7 @@ class Courses extends LIST_Controller {
         $this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
         $this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
         $this->form_validation->set_rules('course[capacity]', 'lang:admin_courses_form_field_capacity', 'required|integer|greater_than[0]');
+        $this->form_validation->set_rules('course[default_points_to_remove]', 'lang:admin_courses_form_field_default_points_to_remove', 'required|numeric|greater_than[0]');
         
         if ($this->form_validation->run()) {
             $course_id = intval($this->input->post('course_id'));
@@ -130,7 +151,7 @@ class Courses extends LIST_Controller {
             $course->get_by_id($course_id);
             if ($course->exists()) {
                 $course_data = $this->input->post('course');
-                $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity'));
+                $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity', 'default_points_to_remove'));
                 $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
                 
                 $overlay = $this->input->post('overlay');
@@ -170,7 +191,7 @@ class Courses extends LIST_Controller {
         $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
         $course = new Course();
         $course->get_by_id($course_id);
-        $course->task_set_type->order_by('name', 'asc')->include_join_fields()->get_iterated();
+        $course->task_set_type->order_by_with_constant('name', 'asc')->include_join_fields()->get_iterated();
         $this->parser->parse('backend/courses/task_set_types_content.tpl', array('task_set_types' => $course->task_set_type, 'course' => $course));
     }
     
@@ -330,6 +351,21 @@ class Courses extends LIST_Controller {
         }}
         $this->parser->assign('task_set_types', $data);
         $query->free_result();
+    }
+    
+    private function store_filter($filter) {
+        if (is_array($filter)) {
+            $this->load->library('filter');
+            $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
+            $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
+            $this->filter->store_filter(self::STORED_FILTER_SESSION_NAME, $new_filter);
+        }
+    }
+    
+    private function inject_stored_filter() {
+        $this->load->library('filter');
+        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
+        $this->parser->assign('filter', $filter);
     }
     
 }

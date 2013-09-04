@@ -60,6 +60,65 @@
                 <p class="input"><em>{translate line='admin_settings_form_label_readable_file_extensions_hint'}</em></p>
                 {form_error field='config[readable_file_extensions]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
+            <hr />
+            <div class="field">
+                <label for="config_student_registration_enabled_id">{translate line='admin_settings_form_label_student_registration_enabled'}:</label>
+                <p class="input"><input type="checkbox" name="config[student_registration][enabled]" value="1"{if $smarty.post.config.student_registration.enabled|default:$config.student_registration.enabled} checked="checked"{/if} id="config_student_registration_enabled_id" /></p>
+            </div>
+            <hr />
+            <div class="field">
+                <label for="config_email_protocol_id" class="required">{translate line='admin_settings_form_label_email_protocol'}:</label>
+                <p class="input">{$email_protocol_options=['mail'=>'lang:admin_settings_form_email_protocol_mail', 'sendmail'=>'lang:admin_settings_form_email_protocol_sendmail', 'smtp'=>'lang:admin_settings_form_email_protocol_smtp']}
+                    <select name="config[email][protocol]" size="1" id="config_email_protocol_id">
+                        {list_html_options options=$email_protocol_options selected=$smarty.post.config.email.protocol|default:$config.email.protocol}
+                    </select>
+                </p>
+                {form_error field='config[email][protocol]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
+                <label for="config_email_mailpath_id">{translate line='admin_settings_form_label_email_mailpath'}:</label>
+                <p class="input"><input type="text" name="config[email][mailpath]" value="{$smarty.post.config.email.mailpath|default:$config.email.mailpath|escape:'html'}" id="config_email_mailpath_id" /></p>
+            </div>
+            <div class="field">
+                <label for="config_email_smtp_host_id">{translate line='admin_settings_form_label_email_smtp_host'}:</label>
+                <p class="input"><input type="text" name="config[email][smtp_host]" value="{$smarty.post.config.email.smtp_host|default:$config.email.smtp_host|escape:'html'}" id="config_email_smtp_host_id" /></p>
+            </div>
+            <div class="field">
+                <label for="config_email_smtp_user_id">{translate line='admin_settings_form_label_email_smtp_user'}:</label>
+                <p class="input"><input type="text" name="config[email][smtp_user]" value="{$smarty.post.config.email.smtp_user|default:$config.email.smtp_user|escape:'html'}" id="config_email_smtp_user_id" /></p>
+            </div>
+            <div class="field">
+                <label for="config_email_smtp_pass_id">{translate line='admin_settings_form_label_email_smtp_pass'}:</label>
+                <p class="input"><input type="text" name="config[email][smtp_pass]" value="{$smarty.post.config.email.smtp_pass|default:$config.email.smtp_pass|escape:'html'}" id="config_email_smtp_pass_id" /></p>
+            </div>
+            <div class="field">
+                <label for="config_email_smtp_port_id">{translate line='admin_settings_form_label_email_smtp_port'}:</label>
+                <p class="input"><input type="text" name="config[email][smtp_port]" value="{$smarty.post.config.email.smtp_port|default:$config.email.smtp_port|escape:'html'}" id="config_email_smtp_port_id" /></p>
+                {form_error field='config[email][smtp_port]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
+                <label for="config_email_smtp_timeout_id">{translate line='admin_settings_form_label_email_smtp_timeout'}:</label>
+                <p class="input"><input type="text" name="config[email][smtp_timeout]" value="{$smarty.post.config.email.smtp_timeout|default:$config.email.smtp_timeout|escape:'html'}" id="config_email_smtp_timeout_id" /></p>
+                {form_error field='config[email][smtp_timeout]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
+                <label for="config_email_priority_id" class="required">{translate line='admin_settings_form_label_email_priority'}:</label>
+                <p class="input">{$email_priority_options=['1'=>'lang:admin_settings_form_email_priority_1', '2'=>'lang:admin_settings_form_email_priority_2', '3'=>'lang:admin_settings_form_email_priority_3', '4'=>'lang:admin_settings_form_email_priority_4', '5'=>'lang:admin_settings_form_email_priority_5']}
+                    <select name="config[email][priority]" size="1" id="config_email_priority_id">
+                        {list_html_options options=$email_priority_options selected=$smarty.post.config.email.priority|default:$config.email.priority}
+                    </select>
+                </p>
+                {form_error field='config[email][priority]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
+                <label for="email_multirecipient_batch_mode_id" class="required">{translate line='admin_settings_form_label_email_multirecipient_batch_mode'}:</label>
+                <p class="input">{$email_multirecipient_batch_mode_options=['0'=>'lang:admin_settings_form_email_multirecipient_batch_mode_false', '1'=>'lang:admin_settings_form_email_multirecipient_batch_mode_true']}
+                    <select name="config[email_multirecipient_batch_mode]" size="1" id="email_multirecipient_batch_mode_id">
+                        {list_html_options options=$email_multirecipient_batch_mode_options selected=$smarty.post.config.email_multirecipient_batch_mode|default:$config.email_multirecipient_batch_mode}
+                    </select>
+                </p>
+            </div>
+            <hr />
             <div class="buttons">
                 <input type="submit" class="button" name="save_settings" value="{translate line='admin_settings_form_save_button_text'}" />
             </div>
