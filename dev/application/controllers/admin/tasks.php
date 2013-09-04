@@ -296,6 +296,8 @@ class Tasks extends LIST_Controller {
         } else {
             $task_set->get_by_id($task_set_id);
         }
+        $this->_add_prettify();
+        $this->parser->add_js_file('admin_tasks/add_to_task_set.js');
         $this->parser->parse('backend/tasks/add_to_task_set.tpl', array(
             'task' => $task,
             'task_set' => $task_set,

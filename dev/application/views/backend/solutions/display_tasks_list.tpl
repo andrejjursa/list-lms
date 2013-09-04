@@ -10,7 +10,7 @@
 {foreach $tasks as $task}
     <div class="task_wrap">
         <h5>{$task@iteration}. {overlay table='tasks' column='name' table_id=$task->id default=$task->name} | <span class="task_points">{$task->join_points_total|floatval}</span> | <span class="task_author">{$task->author->get()->fullname|default:{translate line='admin_solutions_tasks_list_task_unknown_author'}}</span>{if $task->join_bonus_task} | <span class="bonus_task">{translate line='admin_solutions_task_list_is_bonus_task'}</span>{/if}</h5>
-        <div class="task_text">{overlay|task|add_base_url table='tasks' column='text' table_id=$task->id default=$task->text}</div>
+        <div class="task_text">{overlay|add_base_url table='tasks' column='text' table_id=$task->id default=$task->text}</div>
     </div>
 {/foreach}
 <script type="text/javascript">

@@ -25,7 +25,7 @@
                     {foreach $tasks->all as $task}
                     <h3>{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}{if $task->join_bonus_task} <span class="bonus_task">({translate line='tasks_task_is_bonus_task'})</span>{/if}</h3>
                     <div class="task_text">
-                    {overlay|task|add_base_url table='tasks' table_id=$task->id column='text' default=$task->text}
+                    {overlay|add_base_url table='tasks' table_id=$task->id column='text' default=$task->text}
                     </div>{$files = $task->get_task_files()}
                     {if count($files) > 0}
                     <div class="task_files">
