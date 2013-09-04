@@ -222,6 +222,14 @@ class LIST_Controller extends CI_Controller {
         $this->parser->add_js_file('prettify/prettify.js');
         $this->parser->add_css_file('prettify.css');
     }
+    
+    /**
+     * This method add Jcrop to template.
+     */
+    protected function _add_jCrop() {
+        $this->parser->add_js_file('jquery.Jcrop.js');
+        $this->parser->add_css_file('jquery.Jcrop.css');
+    }
 
     /**
      * Injects all possible languages to smarty parser.

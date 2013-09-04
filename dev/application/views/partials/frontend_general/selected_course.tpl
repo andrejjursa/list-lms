@@ -8,7 +8,7 @@
         {if $list_student_courses->exists()}
         <ul id="top_courses_selector_id">
             {foreach $list_student_courses as $course}
-            <li><a href="{internal_url url="courses/quick_course_change/{$course->id}/{current_url}"}">{translate_text text=$course->name} / {translate_text text=$course->period_name}</a></li>
+            <li><a href="{internal_url url="courses/quick_course_change/{$course->id}/-CURRENT_URL-"}">{translate_text text=$course->name} / {translate_text text=$course->period_name}</a></li>
             {/foreach}
         </ul>
         {/if}

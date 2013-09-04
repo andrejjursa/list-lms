@@ -65,4 +65,62 @@ class Student extends DataMapper {
             unset($student);
         }
     }
+    
+    /**
+     * Return full path of avatar (with base url) for this student.
+     * @return string path to avatar.
+     */
+    public function get_avatar() {
+        $avatar_path = 'public/images_users/no_avatar.jpg';
+        if (!is_null($this->id)) {
+            $student_path_big_image = 'public/images_users/students/' . $this->id . '/avatar/big_avatar.jpg';
+            $student_path_avatar = 'public/images_users/students/' . $this->id . '/avatar/avatar.jpg';
+            if (file_exists($student_path_big_image)) {
+                if (!file_exists($student_path_avatar)) {
+                    $CI =& get_instance();
+                    
+                    $CI->load->library('image_lib');
+                
+                    $config['image_library'] = 'gd2';
+                    $config['source_image'] = $student_path_big_image;
+                    $config['width'] = 64;
+                    $config['height'] = 96;
+                    $config['maintain_ratio'] = FALSE;
+                    $config['new_image'] = $student_path_avatar;
+
+                    $CI->image_lib->initialize($config);
+                    
+                    $CI->image_lib->resize();
+                }
+                $avatar_path = $student_path_avatar;
+            }
+        }
+        return base_url($avatar_path);
+    }
+    
+    /**
+     * Check if student has avatar image uploaded. It checks the big_avatar.jpg presence, not the small one.
+     * @return boolean TRUE when avatar is uploaded, FALSE otherwise.
+     */
+    public function has_avatar() {
+        if (!is_null($this->id)) {
+            $student_path_big_image = 'public/images_users/students/' . $this->id . '/avatar/big_avatar.jpg';
+            if (file_exists($student_path_big_image)) {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+    
+    /**
+     * Deletes student avatar.
+     */
+    public function delete_avatar() {
+        if (!is_null($this->id)) {
+            $student_path_big_image = 'public/images_users/students/' . $this->id . '/avatar/big_avatar.jpg';
+            $student_path_avatar = 'public/images_users/students/' . $this->id . '/avatar/avatar.jpg';
+            @unlink($student_path_big_image);
+            @unlink($student_path_avatar);
+        }
+    }
 }

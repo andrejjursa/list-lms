@@ -5,11 +5,12 @@ jQuery(document).ready(function($) {
         var url = $(this).attr('href');
         var container = $(this).parents('div.period_courses');
         api_ajax_update(url, 'post', {}, function(output) {
-            if (output.status != undefined) {
+            if (output.status !== undefined) {
                 if (output.status) {
                     show_notification(output.message, 'success');
                     container.html(output.content);
                     $('#top_meta_informations div.left').html(output.metainfo);
+                    $.getScript(global_base_url + 'public/js/courses/quick_change.js');
                 } else {
                     show_notification(output.message, 'error');
                 }
@@ -26,7 +27,7 @@ jQuery(document).ready(function($) {
         var url = $(this).attr('href');
         var container = $(this).parents('div.period_course');
         api_ajax_update(url, 'post', {}, function(output) {
-            if (output.status != undefined) {
+            if (output.status !== undefined) {
                 if (output.status) {
                     show_notification(output.message, 'success');
                     container.html(output.content);
@@ -51,7 +52,7 @@ jQuery(document).ready(function($) {
             autoSize: false,
             autoHeight: false,
             autoWidth: false
-        })
+        });
     });
     
 });

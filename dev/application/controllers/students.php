@@ -301,6 +301,8 @@ class Students extends LIST_Controller {
         
         $languages_available = $this->lang->get_list_of_languages();
         
+        $this->parser->add_js_file('students/my_account.js');
+        
         $this->parser->parse('frontend/students/my_account.tpl', array('student' => $student, 'languages' => $languages_available));
     }
     
@@ -425,5 +427,91 @@ class Students extends LIST_Controller {
         } else {
             $this->my_account();
         }
+    }
+    
+    public function upload_avatar() {
+        $this->usermanager->student_login_protected_redirect();
+        $this->parser->parse('frontend/students/upload_avatar.tpl');
+    }
+    
+    public function crop_avatar() {
+        $this->usermanager->student_login_protected_redirect();
+        $path = 'public/images_users/students/' . $this->usermanager->get_student_id() . '/';
+        $config['upload_path'] = $path . 'avatar/';
+        $config['allowed_types'] = 'jpg';
+        $config['encrypt_name'] = TRUE;
+        $config['max_width'] = 2048;
+        $config['max_height'] = 2048;
+        $config['max_size'] = 2048;
+        
+        $this->load->library('upload', $config);
+        
+        if (!file_exists($config['upload_path'])) {
+            @mkdir($path, 0777);
+            @mkdir($config['upload_path'], 0777);
+        }
+        
+        if ($this->upload->do_upload('file')) {
+            $this->parser->add_js_file('students/crop_avatar.js');
+            $this->_add_jCrop();
+            $this->parser->assign('file_data', $this->upload->data());
+            $this->parser->parse('frontend/students/crop_avatar.tpl');
+        } else {
+            $this->parser->assign('upload_error', $this->upload->display_errors());
+            $this->upload_avatar();
+        }
+    }
+    
+    public function save_avatar() {
+        $this->usermanager->student_login_protected_redirect();
+        $file_name = $this->input->post('file_name');
+        $crop = $this->input->post('crop');
+        
+        $path = 'public/images_users/students/' . $this->usermanager->get_student_id() . '/avatar/';
+        $full_path = $path . $file_name;
+        $big_path = $path . 'big_avatar.jpg';
+        $avatar_path = $path . 'avatar.jpg';
+        
+        if (file_exists($full_path)) {
+            if (is_array($crop) && array_key_exists('x', $crop) && array_key_exists('y', $crop) && array_key_exists('width', $crop) && array_key_exists('height', $crop)
+            && intval($crop['x']) >= 0 && intval($crop['y']) >= 0 && intval($crop['width']) > 0 && intval($crop['height']) > 0) {
+                @unlink($big_path);
+                @unlink($avatar_path);
+                
+                $this->load->library('image_lib');
+                
+                $config['image_library'] = 'gd2';
+                $config['source_image'] = $full_path;
+                $config['width'] = intval($crop['width']);
+                $config['height'] = intval($crop['height']);
+                $config['x_axis'] = intval($crop['x']);
+                $config['y_axis'] = intval($crop['y']);
+                $config['maintain_ratio'] = FALSE;
+                $config['new_image'] = $big_path;
+                
+                $this->image_lib->initialize($config);
+                
+                if ($this->image_lib->crop()) {
+                    $this->messages->add_message('lang:students_upload_avatar_messaeg_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                } else {
+                    $this->messages->add_message('lang:students_upload_avatar_messaeg_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                }
+            } else {
+                $this->messages->add_message('lang:students_upload_avatar_messaeg_invalid_crop_params', Messages::MESSAGE_TYPE_ERROR);
+            }
+            @unlink($full_path);
+        } else {
+            $this->messages->add_message('lang:students_upload_avatar_messaeg_file_not_found', Messages::MESSAGE_TYPE_ERROR);
+        }
+        
+        redirect(create_internal_url('students/upload_avatar'));
+    }
+    
+    public function delete_avatar() {
+        $this->usermanager->student_login_protected_redirect();
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        $student->delete_avatar();
+        redirect(create_internal_url('students/my_account'));
     }
 }

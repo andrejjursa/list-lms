@@ -10,9 +10,17 @@
                         <div class="comment_header">
                             <strong class="author">{if $comment->teacher_id}{$comment->teacher->fullname}{else}{$comment->student->fullname}{/if}</strong> | <span class="created">{$comment->created|date_format:{translate line='common_datetime_format'}}</span>
                         </div>
+                        <div class="comment_photo">
+                        {if $comment->teacher_id}
+                            <img src="{$comment->teacher->get_avatar()}" width="64" height="96" alt="" />
+                            {else}
+                            <img src="{$comment->student->get_avatar()}" width="64" height="96" alt="" />
+                            {/if}
+                        </div>
                         <div class="comment_text">
                             {$comment->text|strip_tags:'<a><strong><em><span>'|nl2br}
                         </div>
+                        <div class="comment_text_after"></div>
                     </div>
                 </li>
             </ul>
