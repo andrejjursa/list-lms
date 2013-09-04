@@ -359,7 +359,7 @@ class Usermanager {
      */
     public function clear_current_url() {
         $current_url = current_url();
-        if ($this->CI->config->item('rewrite_engine_enabled')) {
+        if ($this->CI->config->item('rewrite_engine_enabled') && is_mod_rewrite_enabled()) {
             $current_url = str_replace(array($this->CI->config->item('index_page') . '/', $this->CI->config->item('index_page')), array('', ''), $current_url);
         }
         return $current_url;
