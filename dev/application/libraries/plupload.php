@@ -40,7 +40,7 @@ class Plupload {
         $chunks = isset($_REQUEST["chunks"]) ? intval($_REQUEST["chunks"]) : 0;
         $fileName = preg_replace('/[^\w\._]+/', '_', (isset($_REQUEST["name"]) ? $_REQUEST["name"] : ''));
                 
-        $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
+        $filePath = rtrim($targetDir, '\\/') . DIRECTORY_SEPARATOR . $fileName;
         
         if (!file_exists($targetDir)) { @mkdir($targetDir); }
         
