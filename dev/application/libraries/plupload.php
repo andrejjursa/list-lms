@@ -46,7 +46,7 @@ class Plupload {
         
         if ($cleanupTargetDir) {
             if (!$this->remove_temporary_files($targetDir, $filePath)) {
-                die('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "' . htmlspecialchars($this->lang->line('plupload_error_message_temp_directory_open_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
+                die('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "' . htmlspecialchars($this->CI->lang->line('plupload_error_message_temp_directory_open_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
             }
         }	
         
@@ -65,15 +65,15 @@ class Plupload {
                     if ($in) {
                         while ($buff = fread($in, 4096)) { fwrite($out, $buff); }
                     } else
-                        die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "' . htmlspecialchars($this->lang->line('plupload_error_message_input_stream_open_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
+                        die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "' . htmlspecialchars($this->CI->lang->line('plupload_error_message_input_stream_open_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
                     @fclose($in);
                     @fclose($out);
                     @unlink($_FILES['file']['tmp_name']);
                 } else {
-                    die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "' . htmlspecialchars($this->lang->line('plupload_error_message_output_stream_open_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
+                    die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "' . htmlspecialchars($this->CI->lang->line('plupload_error_message_output_stream_open_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
                 }
             } else {
-                die('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "' . htmlspecialchars($this->lang->line('plupload_error_message_move_uploaded_file_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
+                die('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "' . htmlspecialchars($this->CI->lang->line('plupload_error_message_move_uploaded_file_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
             }
         } else {
             // Open temp file
@@ -85,12 +85,12 @@ class Plupload {
                 if ($in) {
                     while ($buff = fread($in, 4096)) { fwrite($out, $buff); }
                 } else {
-                    die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "' . htmlspecialchars($this->lang->line('plupload_error_message_input_stream_open_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
+                    die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "' . htmlspecialchars($this->CI->lang->line('plupload_error_message_input_stream_open_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
                 }
                 @fclose($in);
                 @fclose($out);
             } else {
-                die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "' . htmlspecialchars($this->lang->line('plupload_error_message_output_stream_open_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
+                die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "' . htmlspecialchars($this->CI->lang->line('plupload_error_message_output_stream_open_failed'), ENT_QUOTES) . '"}, "id" : "id"}');
             }
         }
         
