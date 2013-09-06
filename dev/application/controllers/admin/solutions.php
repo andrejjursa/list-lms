@@ -76,14 +76,14 @@ class Solutions extends LIST_Controller {
                     $solution->where_related_student('id', $student->id);
                     $solution->where_related_task_set('id', $task_set->id);
                     $solution->get();
-                    if (!$solution->exists()) {
+                    if ($solution->points != floatval($solution_data['points']) || $solution->not_considered != intval(@$solution_data['not_considered'])) {
                         $solution->teacher_id = $this->usermanager->get_teacher_id();
+                        $solution->points = floatval($solution_data['points']);
+                        $solution->revalidate = 0;
+                        $solution->not_considered = intval(@$solution_data['not_considered']);
+                        $save_status = $save_status & $solution->save(array($task_set, $student));
+                        $saved_count++;
                     }
-                    $solution->points = floatval($solution_data['points']);
-                    $solution->revalidate = 0;
-                    $solution->not_considered = intval(@$solution_data['not_considered']);
-                    $save_status = $save_status & $solution->save(array($task_set, $student));
-                    $saved_count++;
                 }
             }}
             if ($this->db->trans_status() && $save_status && $saved_count > 0) {
@@ -299,8 +299,10 @@ class Solutions extends LIST_Controller {
             $solution->get_by_id($solution_id);
             if ($solution->exists()) {
                 $solution_data = $this->input->post('solution');
+                if ($solution->comment != $solution_data['comment'] || $solution->points != floatval($solution_data['points']) || $solution->not_considered != intval($solution_data['not_considered'])) {
+                    $solution->teacher_id = $this->usermanager->get_teacher_id();
+                }
                 $solution->from_array($solution_data, array('points', 'comment', 'not_considered'));
-                if (is_null($solution->teacher_id)) { $solution->teacher_id = $this->usermanager->get_teacher_id(); }
                 $solution->revalidate = 0;
                 if ($solution->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
@@ -407,6 +409,7 @@ class Solutions extends LIST_Controller {
             $solutions->where_related($task_set);
             $solutions->include_related('student');
             $solutions->include_related('teacher');
+            $solutions->order_by_related_as_fullname('student', 'fullname', 'asc');
             $solutions->get_iterated();
         }
         
@@ -686,7 +689,7 @@ class Solutions extends LIST_Controller {
             $students->select_subquery('(SELECT `solutions`.`id` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_id');
             $students->select_subquery('(SELECT `solutions`.`not_considered` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_not_considered');
             $students->group_by('id');
-            $students->order_by('fullname', 'asc');
+            $students->order_by_as_fullname('fullname', 'asc');
             $students->order_by('email', 'asc');
             $students->get_iterated();
 

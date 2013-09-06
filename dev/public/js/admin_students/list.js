@@ -1,6 +1,10 @@
 jQuery(document).ready(function($) {
     
+    make_filter_form('#filter_form_id');
+    
     make_switchable_form('#new_student_form_id');
+    
+    sort_table('table.students_table', '#filter_form_id');
     
     var reload_all_students = function() {
         var url = global_base_url + 'index.php/admin_students/table_content';

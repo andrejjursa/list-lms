@@ -235,7 +235,7 @@ class Teachers extends LIST_Controller {
         $this->usermanager->teacher_login_protected_redirect();
         
         $teachers = new Teacher();
-        $teachers->order_by('fullname', 'asc')->where('id !=', $this->usermanager->get_teacher_id())->get_iterated();
+        $teachers->order_by_as_fullname('fullname', 'asc')->where('id !=', $this->usermanager->get_teacher_id())->get_iterated();
         $this->parser->parse('backend/teachers/list_teachers_table.tpl', array('teachers' => $teachers));
     }
     
