@@ -73,6 +73,11 @@
 <div class="field task_set_comments_moderated_else">
     <input type="hidden" name="task_set[comments_moderated]" value="0" /> 
 </div>
+<div class="field">
+    <label for="task_set_allowed_file_types_id">{translate line='admin_task_sets_form_label_allowed_file_types'}:</label>
+    <p class="input"><input type="text" name="task_set[allowed_file_types]" value="{$smarty.post.task_set.allowed_file_types|escape:'html'}" id="task_set_allowed_file_types_id" /></p>
+    <p class="input"><em>{translate line='admin_task_sets_form_label_allowed_file_types_hint'}</em></p>
+</div>
 <div class="buttons">
     <input type="submit" name="submit_button" value="{translate line='admin_task_sets_form_button_submit'}" class="button" />
     <input type="hidden" name="post_selected_task_set_type_id" value="{$smarty.post.task_set.task_set_type_id|intval}" />

@@ -74,14 +74,24 @@ class Tasks extends LIST_Controller {
         $task_sets = $this->filter_valid_task_sets($task_set);
         $filtered_task_set = count($task_sets) == 1 ? $task_sets[0] : new Task_set();
         if ($filtered_task_set->id == intval($task_set_id) && $this->can_upload_file($filtered_task_set, $course)) {
+            $allowed_file_types_array = trim($filtered_task_set->allowed_file_types) != '' ? array_map('trim', explode(',', $filtered_task_set->allowed_file_types)) : array();
             $config['upload_path'] = 'private/uploads/solutions/task_set_' . intval($task_set_id) . '/';
-            $config['allowed_types'] = 'zip';
+            $config['allowed_types'] = 'zip' . (count($allowed_file_types_array) ? '|' . implode('|', $allowed_file_types_array) : '');
             $config['max_size'] = intval($this->config->item('maximum_solition_filesize'));
             $config['file_name'] = $student->id . '_' . $this->normalize_student_name($student) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $filtered_task_set->get_student_file_next_version($student->id) . '.zip';
             @mkdir($config['upload_path']);
             $this->load->library('upload', $config);
             
             if ($this->upload->do_upload('file')) {
+                $upload_data = $this->upload->data();
+                $mimes = $this->upload->mimes_types('zip');
+                if ((is_array($mimes) && !in_array($upload_data['file_type'], $mimes)) || (is_string($mimes) && $upload_data['file_type'] != $mimes)) {
+                    if (!$this->zip_plain_file_to_archive($upload_data['full_path'], $upload_data['client_name'], $upload_data['file_path'])) {
+                        $this->messages->add_message('lang:tasks_task_error_cant_zip_file', Messages::MESSAGE_TYPE_ERROR);
+                        redirect(create_internal_url('tasks/task/' . intval($task_set_id)));
+                        die();
+                    }
+                }               
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
                 $solution = new Solution();
@@ -487,6 +497,23 @@ class Tasks extends LIST_Controller {
         }}
         
         return $output;
+    }
+    
+    private function zip_plain_file_to_archive($archive_name, $original_file_name, $file_path) {
+        if (file_exists($archive_name)) {
+            rename($archive_name, rtrim($file_path, '/\\') . '/' . $original_file_name);
+            $zip = new ZipArchive();
+            if ($zip->open($archive_name, ZipArchive::CREATE) === TRUE) {
+                $zip->addFile(rtrim($file_path, '/\\') . '/' . $original_file_name, $original_file_name);
+                $zip->close();
+                @unlink(rtrim($file_path, '/\\') . '/' . $original_file_name);
+                return TRUE;
+            } else {
+                @unlink(rtrim($file_path, '/\\') . '/' . $original_file_name);
+                return FALSE;
+            }
+        }
+        return FALSE;
     }
     
 }

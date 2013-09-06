@@ -9,6 +9,15 @@
 */
 
 $mimes = array(	'hqx'	=>	'application/mac-binhex40',
+                                'hs'    =>      'text/plain',
+                                'py'    =>      'text/plain',
+                                'pas'   =>      'text/plain',
+                                'java'  =>      'text/plain',
+                                'css'   =>      'text/plain',
+                                'h'     =>      'text/plain',
+                                'c'     =>      'text/plain',
+                                'cs'    =>      'text/plain',
+                                'cpp'   =>      'text/plain',
 				'cpt'	=>	'application/mac-compactpro',
 				'csv'	=>	array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain'),
 				'bin'	=>	'application/macbinary',

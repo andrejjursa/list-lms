@@ -49,6 +49,12 @@
                                     <label for="file_id">{translate line='tasks_task_form_label_file'}:</label>
                                     <p class="input"><input type="file" name="file" id="file_id" /></p>
                                     <p class="input"><em>{translate|sprintf:$max_filesize line='tasks_task_form_label_file_hint'}</em></p>
+                                    {if trim($task_set->allowed_file_types) ne ''}
+                                    {$exploded_allow_file_types = ','|explode:$task_set->allowed_file_types}
+                                    {$exploded_allow_file_types = 'trim'|array_map:$exploded_allow_file_types}   
+                                    {capture name='allowed_file_types' assign='allowed_file_types'}{', '|implode:$exploded_allow_file_types}{/capture}    
+                                    <p class="input"><em>{translate|sprintf:$allowed_file_types line='tasks_task_form_label_file_hint2'}</em></p>
+                                    {/if}
                                     {if $file_error_message}
                                     <p class="error"><span class="message">{translate_text text=$file_error_message}</span></p>
                                     {/if}
