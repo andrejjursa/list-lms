@@ -685,9 +685,7 @@ class Solutions extends LIST_Controller {
             if (!is_null($task_set->group_id)) {
                 $students->where_related('participant/group', 'id', intval($task_set->group_id));
             }
-            $students->select_subquery('(SELECT `solutions`.`points` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_points');
-            $students->select_subquery('(SELECT `solutions`.`id` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_id');
-            $students->select_subquery('(SELECT `solutions`.`not_considered` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_not_considered');
+            $students->include_related('solution');
             $students->group_by('id');
             $students->order_by_as_fullname('fullname', 'asc');
             $students->order_by('email', 'asc');
