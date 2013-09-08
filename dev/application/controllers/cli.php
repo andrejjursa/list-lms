@@ -114,6 +114,42 @@ class Cli extends CI_Controller {
         }
     }
     
+    public function lamsfet_import() {
+        $lamsfet_url = 'http://capek.ii.fmph.uniba.sk/lamsfet/';
+        
+        echo 'This script will import some database data and files from LaMSfET at ' . $lamsfet_url = 'http://capek.ii.fmph.uniba.sk/lamsfet/' . "\n\n";
+        echo 'WARNING: THIS SCRIPT WILL TRUNCATE CONTENT TABLES OF LIST AND DELETE ALL TASK FILES, TASK UNIT TEST FILES AND SOLUTION FILES FROM HARD DRIVE!' . "\n\n";
+        $answer = $this->get_cli_user_input('Do you want to execute this import script? (yes)');
+        if ($answer != 'yes') { 
+            echo 'Import canceled.' . "\n";
+            return;
+        }
+        $this->load->helper('lamsfet');
+        
+        $lamsfet_db = $this->load->database('lamsfet', TRUE, TRUE);
+        echo 'Starting LaMSfET data migration to LIST ...' . "\n\n";
+        
+        $labels = lamsfet_fetch_table('labels', $lamsfet_db);
+        $set_types = lamsfet_fetch_table('set_types', $lamsfet_db);
+        $sets = lamsfet_fetch_table('sets', $lamsfet_db);
+        $tasks = lamsfet_fetch_table('tasks', $lamsfet_db);
+        $tasks_labels = lamsfet_fetch_table('tasks_labels', $lamsfet_db);
+        $tasks_in_sets = lamsfet_fetch_table('tasks_in_sets', $lamsfet_db);
+        
+        $this->load->database();
+        
+        list_import_prepare();
+        
+        list_import_lamsfet_labels($labels);
+        list_import_lamsfet_tasks($tasks, $lamsfet_url);
+        list_import_lamsfet_tasks_labels_relations($tasks, $labels, $tasks_labels);
+        list_import_lamsfet_set_types($set_types);
+        list_import_lamsfet_sets($sets, $set_types);
+        list_import_lamsfet_tasks_in_sets_relation($sets, $tasks, $tasks_in_sets);
+        
+        echo "\n\n ... DONE!";
+    }
+
     /**
      * Clear production cache for DataMapper if it is enabled.
      * @return integer number of deleted cache files.
@@ -132,6 +168,12 @@ class Cli extends CI_Controller {
             }
         }
         return $count;
+    }
+    
+    private function get_cli_user_input($msg) {
+        fwrite(STDOUT, "$msg: ");
+        $varin = trim(fgets(STDIN));
+        return $varin;
     }
     
 }

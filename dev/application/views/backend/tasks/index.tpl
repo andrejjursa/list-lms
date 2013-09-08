@@ -5,6 +5,9 @@
     {include file='partials/backend_general/flash_messages.tpl' inline}
     {include file='backend/categories/categories_parent_selector.tpl' inline}
     <fieldset>
+        <a href="{internal_url url='admin_tasks/new_task'}" class="button">{translate line='admin_tasks_new_task_button_label'}</a>
+    </fieldset>
+    <fieldset>
         <legend>{translate line='admin_tasks_fieldset_legend_all_tasks'}</legend>
         <div class="filter_wrap">
             <form action="{internal_url url='admin_tasks/get_all_tasks'}" method="post" id="filter_form_id">
@@ -54,7 +57,6 @@
                 </div>
             </form>
         </div>
-        <a href="{internal_url url='admin_tasks/new_task'}" class="button">{translate line='admin_tasks_new_task_button_label'}</a>
         <div id="table_content_id"></div>
     </fieldset>
 {/block}

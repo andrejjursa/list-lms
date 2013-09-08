@@ -360,8 +360,7 @@ class Solutions extends LIST_Controller {
         $task_sets->select('`task_sets`.*, `course_course_task_set_type_rel`.`upload_solution` AS `join_upload_solution`');
         $task_sets->include_related_count('solution');
         $task_sets->include_related_count('task');
-        $task_sets->include_related('course', 'name');
-        $task_sets->include_related('course', 'default_points_to_remove');
+        $task_sets->include_related('course', array('name', 'default_points_to_remove'));
         $task_sets->include_related('course/period', 'name');
         $task_sets->include_related('group', 'name');
         $task_sets->include_related('task_set_type', 'name');

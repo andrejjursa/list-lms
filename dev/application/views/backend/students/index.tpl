@@ -4,13 +4,13 @@
     <h2>{translate line='admin_students_page_title'}</h2>
     {include file='partials/backend_general/flash_messages.tpl' inline}
     <fieldset>
+        <a href="{internal_url url='admin_students/csv_import'}" class="button">{translate line='admin_students_button_csv_import'}</a>
+    </fieldset>
+    <fieldset>
         <legend>{translate line='admin_students_fieldset_legend_new_student_account'}</legend>
         <form action="{internal_url url='admin_students/create'}" method="post" id="new_student_form_id">
             {include file='backend/students/new_student_form.tpl' inline}
         </form>
-    </fieldset>
-    <fieldset>
-        <a href="{internal_url url='admin_students/csv_import'}" class="button special">{translate line='admin_students_button_csv_import'}</a>
     </fieldset>
     <fieldset>
         <legend>{translate line='admin_students_fieldset_legend_all_students_accounts'}</legend>
