@@ -27,6 +27,7 @@ function is_mod_rewrite_enabled() {
 function create_internal_url($relative_url, $force_simple_link = FALSE) {
     $CI =& get_instance();
     if (!$force_simple_link && $CI->config->item('rewrite_engine_enabled') && is_mod_rewrite_enabled()) {
+        if (trim(trim($relative_url, '\\/')) == '') { return base_url('/'); }
         return base_url('/' . trim($relative_url, '/')) . $CI->config->item('url_suffix');
     } else {
         return base_url($CI->config->item('index_page') . '/' . trim($relative_url, '/')) . (!$force_simple_link ? $CI->config->item('url_suffix') : '');

@@ -34,6 +34,23 @@ function lamsfet_fetch_table($table, $db, $id = 'id') {
 
 function list_import_prepare() {
     $CI =& get_instance();
+    $periods = new Period();
+    $periods->truncate();
+    echo 'LIST periods table truncated ...' . "\n";
+    $courses = new Course();
+    $courses->truncate();
+    echo 'LIST courses table truncated ...' . "\n";
+    $groups = new Group();
+    $groups->truncate();
+    echo 'LIST groups table truncated ...' . "\n";
+    $rooms = new Room();
+    $rooms->truncate();
+    echo 'LIST rooms table truncated ...' . "\n";
+    $participants = new Participant();
+    $participants->truncate();
+    echo 'LIST participants table truncated ...' . "\n";
+    $CI->db->simple_query('TRUNCATE TABLE `course_task_set_type_rel`');
+    echo 'LIST course_task_set_type_rel table truncated ...' . "\n";
     $categories = new Category();
     $categories->truncate();
     echo 'LIST categories table truncated ...' . "\n";
@@ -58,6 +75,111 @@ function list_import_prepare() {
     echo 'LIST solutions table truncated ...' . "\n";
     $CI->db->simple_query('TRUNCATE TABLE `task_task_set_rel`');
     echo 'LIST task_task_set_rel table truncated ...' . "\n";
+}
+
+function list_import_lamsfet_courses_and_courses_terms(&$courses_terms, $courses) {
+    echo 'Starting courses import (' . count($courses_terms) . ') and periods import (' . count($courses) . ') ';
+    
+    $periods = array();
+    if (count($courses_terms)) { foreach ($courses_terms as $course_term) {
+        $periods[$course_term->year][$course_term->term] = isset($periods[$course_term->year][$course_term->term]) ? $periods[$course_term->year][$course_term->term] : new stdClass();
+        $periods[$course_term->year][$course_term->term]->name = (strtoupper($course_term->term) == 'Z' ? 'Zimný semester ' : 'Letný semester ') . $course_term->year;
+        $periods[$course_term->year][$course_term->term]->_list_id = NULL;
+        $periods[$course_term->year][$course_term->term]->ids[] = $course_term->id;
+    }}
+    reset($periods);
+    ksort($periods);
+    if (count($periods)) { foreach ($periods as $year => $data) {
+        reset($periods[$year]);
+        krsort($periods[$year]);
+        reset($periods[$year]);
+    }}
+    reset($periods);
+    
+    echo '... structure prepared ... [';
+    
+    $sorting = 1;
+    if (count($periods)) { foreach ($periods as $year => $year_row) { if (count($year_row)) { foreach ($year_row as $term => $period) {
+            $list_period = new Period();
+            $list_period->name = $period->name;
+            $list_period->sorting = $sorting;
+            $list_period->save();
+            $periods[$year][$term]->_list_id = $list_period->id;
+            $sorting++;
+            echo '.';
+    }}}}
+    if (count($courses_terms) && count($courses)) { foreach ($courses_terms as $course_term) {
+        $list_course = new Course();
+        $list_course->name = $courses[$course_term->course_id]->name;
+        $list_course->period_id = $periods[$course_term->year][$course_term->term]->_list_id;
+        $list_course->capacity = 0;
+        $list_course->groups_change_deadline = 0;
+        $list_course->save();
+        $courses_terms[$course_term->id]->_list_id = $list_course->id;
+        echo '.';
+    }}
+    
+    echo '] ... done' . "\n";
+}
+
+function list_import_lamsfet_courses_set_types_relation($courses_set_types, $courses_terms, $set_types) {
+    echo 'Starting course_task_set_type_rel import (' . count($courses_set_types) . ') ';
+    
+    if (count($courses_set_types)) { foreach ($courses_set_types as $course_set_type) {
+        $course_id = $courses_terms[$course_set_type->course_term_id]->_list_id;
+        $task_set_type_id = $set_types[$course_set_type->set_type_id]->_list_id;
+        $course = new Course();
+        $course->get_by_id(intval($course_id));
+        $task_set_type = new Task_set_type();
+        $task_set_type->get_by_id(intval($task_set_type_id));
+        if ($course->exists() && $task_set_type->exists()) {
+            $course->save($task_set_type);
+            $course->set_join_field($task_set_type, 'upload_solution', $course_set_type->submit_allowed == 't' ? 1 : 0);
+            echo '.';
+        } else {
+            echo ' ( TASK SET TYPE OR COURSE NOT FOUND ' . $task_set_type_id . '(' .  $course_set_type->set_type_id . ')/' . $course_id . '(' .  $course_set_type->course_term_id . ') ) ';
+        }
+    }}
+    
+    echo '] ... done' . "\n";
+}
+
+function list_import_lamsfet_excercise_groups(&$excercise_groups, $courses_terms) {
+    echo 'Starting groups import (' . count($excercise_groups) . ') ';
+    
+    $days = array(1 => 'Pondelok', 'Utorok', 'Streda', 'Štvrtok', 'Piatok', 'Sobora', 'Nedeľa');
+    
+    if (count($excercise_groups)) { foreach ($excercise_groups as $id => $excercise_group) {
+        $course_id = $courses_terms[$excercise_group->course_term_id]->_list_id;
+        $course = new Course();
+        $course->get_by_id(intval($course_id));
+        if ($course->exists()) {
+            $group = new Group();
+            list($h, $m, $s) = explode(':', $excercise_group->time);
+            $time_begin = (int)$s + (int)$m * 60 + (int)$h * 3600;
+            if ($time_begin >= 86400) {
+                $excercise_group->time = '00:00:00';
+                $time_begin = 0;
+            }
+            $group->name = 'Skupina ' . $excercise_group->place . ' ' . $days[$excercise_group->day] . ' ' . $excercise_group->time;
+            $group->save($course);
+            $excercise_groups[$id]->_list_id = $group->id;
+            $room = new Room();
+            $room->name = $excercise_group->place;
+            $room->time_day = $excercise_group->day;
+            $room->time_begin = $time_begin; 
+            $room->time_end = $room->time_begin + 5400;
+            $room->capacity = $excercise_group->capacity;
+            $room->save($group);
+            $course->capacity += $room->capacity;
+            $course->save();
+            echo '.';
+        } else {
+            echo ' ( COURSE NOT FOUND ' . $course_id . '(' . $excercise_group->course_term_id . ') ) ';
+        }
+    }}
+    
+    echo '] ... done' . "\n";
 }
 
 function list_import_lamsfet_labels(&$labels) {
@@ -108,12 +230,12 @@ function list_import_lamsfet_tasks(&$tasks, $lamsfet_url) {
         $text_html = str_get_html(lamsfet_task_get_formatted_text($task->text), true, true, DEFAULT_TARGET_CHARSET, false);
         foreach ($text_html->find('a') as $element) {
             if (!preg_match('/^[a-zA-Z]+\:\/\//', trim($element->href))) {
-                $element->href = lamsfet_import_task_file_to_local_list_storage(rtrim($lamsfet_url, '\\/') . '/' . trim($element->href), $element->href, $list_task->id);
+                $element->href = lamsfet_import_task_file_to_local_list_storage(rtrim($lamsfet_url, '\\/') . '/' . trim($element->href), $element->href, $list_task->id, $task->id);
             }
         }
         foreach ($text_html->find('img') as $element) {
             if (!preg_match('/^[a-zA-Z]+\:\/\//', trim($element->src))) {
-                $element->src = lamsfet_import_task_file_to_local_list_storage(rtrim($lamsfet_url, '\\/') . '/' . trim($element->src), $element->src, $list_task->id);
+                $element->src = lamsfet_import_task_file_to_local_list_storage(rtrim($lamsfet_url, '\\/') . '/' . trim($element->src), $element->src, $list_task->id, $task->id);
             }
         }
         $list_task->text = $text_html->__toString();
@@ -159,13 +281,21 @@ function list_import_lamsfet_set_types(&$set_types) {
     echo '] ... done' . "\n";
 }
 
-function list_import_lamsfet_sets(&$sets, $set_types) {
+function list_import_lamsfet_sets(&$sets, $set_types, $courses_terms, $excercise_groups) {
     echo 'Starting task_sets import (' . count($sets) . ') [';
     
     if (count($sets)) { foreach($sets as $id => $set) {
         $task_set_type_id = $set_types[$set->set_type_id]->_list_id;
         $task_set_type = new Task_set_type();
         $task_set_type->get_by_id(intval($task_set_type_id));
+        $course_id = $courses_terms[$set->course_term_id]->_list_id;
+        $course = new Course();
+        $course->get_by_id(intval($course_id));
+        $group_id = !is_null($set->excercise_group_id) ? $excercise_groups[$set->excercise_group_id]->_list_id : NULL;
+        $group = new Group();
+        if (!is_null($group_id)) {
+            $group->get_by_id(intval($group_id));
+        }
         $task_set = new Task_set();
         $task_set->name = $set->name;
         if (!is_null($set->comment)) {
@@ -177,7 +307,7 @@ function list_import_lamsfet_sets(&$sets, $set_types) {
         if (!empty($set->submit_to)) {
             $task_set->upload_end_time = strtotime($set->submit_to);
         }
-        $task_set->save($task_set_type);
+        $task_set->save(array($task_set_type, $group, $course));
         $sets[$id]->_list_id = $task_set->id;
         echo '.';
     }}
@@ -232,7 +362,7 @@ function lamsfet_task_break_lines($text) {
     return $formatted;
 }
 
-function lamsfet_import_task_file_to_local_list_storage($full_path, $original_path, $list_task_id) {
+function lamsfet_import_task_file_to_local_list_storage($full_path, $original_path, $list_task_id, $lamsfet_task_id) {
     $local_path = 'private/uploads/task_files/task_' . $list_task_id . '/hidden/';
     if (!file_exists($local_path)) {
         @mkdir('private/uploads/task_files/task_' . $list_task_id, 0744);
@@ -244,8 +374,8 @@ function lamsfet_import_task_file_to_local_list_storage($full_path, $original_pa
     if (lamsfet_download_file($full_path, $full_local_path)) {
         return 'index.php/tasks/download_hidden_file/' . $list_task_id . '/' . encode_for_url($file_name);
     } else {
-        echo ' ( FILE NOT FOUND ' . $full_path . ' ) ';
-        log_message('ERROR', 'FILE NOT FOUND ' . $full_path, FALSE);
+        echo ' ( FILE NOT FOUND ' . $full_path . ' FOR LaMSfET TASK ' . $lamsfet_task_id . ' [LIST ' . $list_task_id . '] ) ';
+        log_message('ERROR', 'FILE NOT FOUND ' . $full_path . ' FOR LaMSfET TASK ' . $lamsfet_task_id . ' [LIST ' . $list_task_id . ']', FALSE);
         return $original_path;
     }
 }

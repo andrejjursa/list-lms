@@ -22,6 +22,13 @@ class LIST_Controller extends CI_Controller {
      */
     public function __construct() {
         parent::__construct();
+        $this->load->config('lockdown');
+        if ($this->config->item('system_lockdown') === TRUE) {
+            if (!$this->input->is_ajax_request()) {
+                redirect(create_internal_url('maintenance', TRUE));
+            }
+            die();
+        }
         if ($this->input->is_cli_request()) {
             echo 'Error: You can\'t call this controller from CLI!';
             die();
