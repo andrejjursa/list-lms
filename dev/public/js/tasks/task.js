@@ -35,6 +35,13 @@ jQuery(document).ready(function($) {
             autoSize: false,
             autoHeight: false,
             autoWidth: false,
+            helpers: {
+                overlay: {
+                    css: {
+                        background: 'rgba(255,255,255,0)'
+                    }
+                }
+            },
             beforeClose: function() {
                 var url = global_base_url + 'index.php/tasks/show_comments/' + task_id;
                 api_ajax_load(url, target);

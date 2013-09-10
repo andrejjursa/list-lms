@@ -111,3 +111,5 @@ table#fields_filter_table_id thead tr td.caption { font-weight: bold; text-align
 table#fields_filter_table_id tbody tr td { text-align: left; background-color: #cccccc; padding: 1px 5px; font-weight: normal; }
 
 div.fields_config_open_button { text-decoration: underline; cursor: pointer; }
+
+div.fancybox-wrap div.fancybox-skin { background-color: #66df66; }

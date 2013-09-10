@@ -86,6 +86,13 @@ jQuery(document).ready(function($){
             width: '100%',
             height: '100%',
             autoSize: false,
+            helpers: {
+                overlay: {
+                    css: {
+                        background: 'rgba(255,255,255,0)'
+                    }
+                }
+            },
             beforeClose: function() {
                 $('#translations_table tbody tr td.controlls').html(get_working_text());
                 var table_body = $('#translations_table tbody');

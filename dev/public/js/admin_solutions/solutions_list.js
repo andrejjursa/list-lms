@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
         var url = global_base_url + 'index.php/admin_solutions/get_solutions_list_for_task_set/' + task_set_id;
         var target = '#table_content_id';
         api_ajax_load(url, target);
-    }
+    };
     
     refresh_all_solutions();
     
@@ -32,6 +32,13 @@ jQuery(document).ready(function($) {
             autoSize: false,
             autoHeight: false,
             autoWidth: false,
+            helpers: {
+                overlay: {
+                    css: {
+                        background: 'rgba(255,255,255,0)'
+                    }
+                }
+            },
             beforeClose: function() {
                 refresh_all_solutions();
                 return true;
