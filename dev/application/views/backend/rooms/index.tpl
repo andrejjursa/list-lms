@@ -18,6 +18,7 @@
                     <th>{translate line='admin_rooms_table_header_field_time_begin'}</th>
                     <th>{translate line='admin_rooms_table_header_field_time_end'}</th>
                     <th>{translate line='admin_rooms_table_header_field_capacity'}</th>
+                    <th>{translate line='admin_rooms_table_header_field_teachers'}</th>
                     <th class="controlls" colspan="2">{translate line='admin_rooms_table_header_controlls'}</th>
                 </tr>
             </thead>

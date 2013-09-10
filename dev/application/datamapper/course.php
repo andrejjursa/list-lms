@@ -12,6 +12,7 @@ $cache = array (
     6 => 'capacity',
     7 => 'groups_change_deadline',
     8 => 'default_points_to_remove',
+    9 => 'allow_subscription_to',
   ),
   'validation' => 
   array (
@@ -75,6 +76,13 @@ $cache = array (
     'default_points_to_remove' => 
     array (
       'field' => 'default_points_to_remove',
+      'rules' => 
+      array (
+      ),
+    ),
+    'allow_subscription_to' => 
+    array (
+      'field' => 'allow_subscription_to',
       'rules' => 
       array (
       ),

@@ -251,7 +251,7 @@ class LIST_Controller extends CI_Controller {
         
         $courses = new Course();
         $courses->include_related('period', 'name');
-        $courses->order_by_related('period', 'sorting', 'desc');
+        $courses->order_by_related('period', 'sorting', 'asc');
         $courses->order_by_with_constant('name', 'asc');
         $courses->get_iterated();
         

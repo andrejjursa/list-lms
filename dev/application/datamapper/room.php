@@ -12,6 +12,7 @@ $cache = array (
     6 => 'time_end',
     7 => 'time_day',
     8 => 'capacity',
+    9 => 'teachers_plain',
   ),
   'validation' => 
   array (
@@ -79,9 +80,23 @@ $cache = array (
       array (
       ),
     ),
+    'teachers_plain' => 
+    array (
+      'field' => 'teachers_plain',
+      'rules' => 
+      array (
+      ),
+    ),
     'group' => 
     array (
       'field' => 'group',
+      'rules' => 
+      array (
+      ),
+    ),
+    'teacher' => 
+    array (
+      'field' => 'teacher',
       'rules' => 
       array (
       ),
@@ -103,6 +118,17 @@ $cache = array (
   ),
   'has_many' => 
   array (
+    'teacher' => 
+    array (
+      'join_table' => 'rooms_teachers_rel',
+      'class' => 'teacher',
+      'other_field' => 'room',
+      'join_self_as' => 'room',
+      'join_other_as' => 'teacher',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
   ),
   '_field_tracking' => 
   array (

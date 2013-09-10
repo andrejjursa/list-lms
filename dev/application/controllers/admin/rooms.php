@@ -23,6 +23,7 @@ class Rooms extends LIST_Controller {
         $this->parser->add_js_file('admin_rooms/form.js');
         $this->parser->add_css_file('admin_rooms.css');
         smarty_inject_days();
+        $this->inject_teachers();
         $this->parser->parse('backend/rooms/index.tpl', array('group' => $group, 'group_id' => $group_id));
     }
     
@@ -64,7 +65,19 @@ class Rooms extends LIST_Controller {
                 $room->time_begin = $this->time_to_int($room_data['time_begin']);
                 $room->time_end = $this->time_to_int($room_data['time_end']);
                 $room->capacity = intval($room_data['capacity']);
-                if ($room->save() && $group->save($room) && $this->db->trans_status()) {
+                if (trim($room_data['teachers_plain']) != '') {
+                    $room->teachers_plain = trim($room_data['teachers_plain']);
+                } else {
+                    $room->teachers_plain = NULL;
+                }
+                $teachers = new Teacher();
+                if (is_array($room_data['teachers']) && count($room_data['teachers'])) {
+                    foreach ($room_data['teachers'] as $teacher_id) {
+                        $teachers->or_where('id', $teacher_id);
+                    }
+                    $teachers->get();
+                }
+                if ($room->save(array($teachers->all)) && $group->save($room) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_rooms_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 } else {
@@ -120,6 +133,7 @@ class Rooms extends LIST_Controller {
         $group = new Group();
         $group->get_by_id($group_id);
         smarty_inject_days();
+        $this->inject_teachers();
         $this->parser->parse('backend/rooms/new_room_form.tpl', array('group' => $group, 'group_id' => $group_id));
     }
     
@@ -154,6 +168,7 @@ class Rooms extends LIST_Controller {
         $room = new Room();
         $room->get_by_id($room_id);
         smarty_inject_days();
+        $this->inject_teachers();
         $this->parser->parse('backend/rooms/edit.tpl', array('room' => $room, 'group_id' => $group_id));
     }
     
@@ -184,7 +199,19 @@ class Rooms extends LIST_Controller {
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
                 
-                if ($room->save() && $this->db->trans_status()) {
+                if (trim($room_data['teachers_plain']) != '') {
+                    $room->teachers_plain = trim($room_data['teachers_plain']);
+                } else {
+                    $room->teachers_plain = NULL;
+                }
+                $teachers = new Teacher();
+                if (is_array($room_data['teachers']) && count($room_data['teachers'])) {
+                    foreach ($room_data['teachers'] as $teacher_id) {
+                        $teachers->or_where('id', $teacher_id);
+                    }
+                    $teachers->get();
+                }
+                if ($room->save(array($teachers->all)) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_rooms_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 } else {
@@ -210,5 +237,19 @@ class Rooms extends LIST_Controller {
             }
         }
         return 0;
+    }
+    
+    private function inject_teachers() {
+        $teachers = new Teacher();
+        $teachers->order_by_as_fullname('fullname', 'asc');
+        $teachers->get_iterated();
+        
+        $data = array();
+        
+        foreach($teachers as $teacher) {
+            $data[$teacher->id] = $teacher->fullname . ' (' . $teacher->email . ')';
+        }
+        
+        $this->parser->assign('teachers', $data);
     }
 }

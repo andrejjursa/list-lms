@@ -88,10 +88,10 @@ function list_import_lamsfet_courses_and_courses_terms(&$courses_terms, $courses
         $periods[$course_term->year][$course_term->term]->ids[] = $course_term->id;
     }}
     reset($periods);
-    ksort($periods);
+    krsort($periods);
     if (count($periods)) { foreach ($periods as $year => $data) {
         reset($periods[$year]);
-        krsort($periods[$year]);
+        ksort($periods[$year]);
         reset($periods[$year]);
     }}
     reset($periods);
@@ -114,6 +114,7 @@ function list_import_lamsfet_courses_and_courses_terms(&$courses_terms, $courses
         $list_course->period_id = $periods[$course_term->year][$course_term->term]->_list_id;
         $list_course->capacity = 0;
         $list_course->groups_change_deadline = 0;
+        $list_course->allow_subscription_to = '1970-01-01 00:00:00';
         $list_course->save();
         $courses_terms[$course_term->id]->_list_id = $list_course->id;
         echo '.';
@@ -170,6 +171,7 @@ function list_import_lamsfet_excercise_groups(&$excercise_groups, $courses_terms
             $room->time_begin = $time_begin; 
             $room->time_end = $room->time_begin + 5400;
             $room->capacity = $excercise_group->capacity;
+            $room->teachers_plain = trim($excercise_group->teacher) != '' ? trim($excercise_group->teacher) : NULL;
             $room->save($group);
             $course->capacity += $room->capacity;
             $course->save();
@@ -307,6 +309,7 @@ function list_import_lamsfet_sets(&$sets, $set_types, $courses_terms, $excercise
         if (!empty($set->submit_to)) {
             $task_set->upload_end_time = strtotime($set->submit_to);
         }
+        $task_set->published = 1;
         $task_set->save(array($task_set_type, $group, $course));
         $sets[$id]->_list_id = $task_set->id;
         echo '.';

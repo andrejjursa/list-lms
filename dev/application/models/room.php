@@ -10,5 +10,24 @@ class Room extends DataMapper {
     public $has_one = array(
         'group'
     );
+    public $has_many = array(
+        'teacher' => array(
+            'join_table' => 'rooms_teachers_rel',
+        ),
+    );
+    
+    public function selected_teachers() {
+        if (!is_null($this->id)) {
+            $teachers = new Teacher();
+            $teachers->where_related($this);
+            $teachers->get_iterated();
+            $output = array();
+            foreach($teachers as $teacher) {
+                $output[$teacher->id] = $teacher->id;
+            }
+            return $output;
+        }
+        return array();
+    }
     
 }
