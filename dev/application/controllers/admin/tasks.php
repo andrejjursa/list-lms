@@ -73,7 +73,7 @@ class Tasks extends LIST_Controller {
         } elseif ($filter['order_by_field'] == 'task_sets') {
             $tasks->order_by('task_set_count', $order_by_direction);
         } elseif ($filter['order_by_field'] == 'author') {
-            $tasks->order_by_related('author', 'fullname', $order_by_direction);
+            $tasks->order_by_related_as_fullname('author', 'fullname', $order_by_direction);
         }
         $tasks->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('tasks', $tasks->all_to_array(), array('name'));

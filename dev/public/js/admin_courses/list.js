@@ -15,10 +15,16 @@ jQuery(document).ready(function($) {
                 field_filter_checkbox('#fields_config_groups_checkbox_id', '#filter_form_id', 'groups');
                 field_filter_checkbox('#fields_config_task_set_types_checkbox_id', '#filter_form_id', 'task_set_types');
                 field_filter_checkbox('#fields_config_capacity_checkbox_id', '#filter_form_id', 'capacity');
+                sort_table('#table_content table', '#filter_form_id');
             });
         };
         
         reload_table_content();
+        
+        $('#filter_form_id').submit(function(event) {
+            event.preventDefault();
+            reload_table_content();
+        });
         
         $('#new_course_form_id').submit(function(event) {
             event.preventDefault();
@@ -40,7 +46,7 @@ jQuery(document).ready(function($) {
             var url = $(this).attr('href');
             
             api_ajax_update(url, 'post', {}, function(output) {
-                if (output == true) {
+                if (output === true) {
                     reload_table_content();
                     show_notification(messages.after_delete, 'success');
                 }
@@ -73,16 +79,16 @@ jQuery(document).ready(function($) {
             });
         });
         
-    } else if ($('#add_task_set_type_form_id').length != 0) {
+    } else if ($('#add_task_set_type_form_id').length !== 0) {
         make_switchable_form('#add_task_set_type_form_id');
         
         var reload_table_content = function() {
             api_ajax_load(global_base_url + 'index.php/admin_courses/get_task_set_types/course_id/' + current_course, '#table_content_id');
-        }
+        };
         
         var reload_form = function() {
             api_ajax_load(global_base_url + 'index.php/admin_courses/get_task_set_type_form/course_id/' + current_course, '#add_task_set_type_form_id');
-        }
+        };
         
         reload_table_content(); 
         
