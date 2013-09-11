@@ -7,6 +7,8 @@
  */
 class Courses extends LIST_Controller {
     
+    const LIST_OF_COURSES_FILTER_NAME = 'frontend_courses_list';
+    
     public function __construct() {
         parent::__construct();
         if ($this->router->method != 'show_details') {
@@ -21,14 +23,23 @@ class Courses extends LIST_Controller {
         $this->_select_student_menu_pagetag('courses');
         $this->parser->add_css_file('frontend_courses.css');
         $this->parser->add_js_file('courses/selection.js');
+        
+        $filter = $this->inject_stored_filter();
+        
         $period_id = $this->input->post('period_id');
         $periods = new Period();
         if (intval($period_id) == 0) {
-            $periods->limit(1);
+            if (isset($filter['period_id'])) {
+                $periods->where('id', $filter['period_id']);
+            } else {
+                $periods->limit(1);
+            }
         } else {
             $periods->where('id', $period_id);
         }
         $periods->order_by('sorting', 'asc')->get();
+        $filter['period_id'] = $periods->id;
+        $this->store_filter($filter);
         $this->inject_period_options();
         $this->parser->parse('frontend/courses/index.tpl', array('periods' => $periods));
     }
@@ -51,17 +62,22 @@ class Courses extends LIST_Controller {
         $course->get_by_id($course_id);
         
         if ($course->exists()) {
-            if ($student->participant->where_related($course)->count() == 0) {
-                $participant = new Participant();
-                $participant->allowed = 0;
-                $participant->save(array($student, $course));
-                $this->db->trans_commit();
-                $output->message = sprintf($this->lang->line('courses_message_signed_up_for_course'), $this->lang->text($course->name));
-                $this->parser->assign('course', $course);
-                $output->content = $this->parser->parse('frontend/courses/single_course.tpl', array(), TRUE);
-                $output->status = TRUE;
+            if ($course->is_subscription_allowed()) {
+                if ($student->participant->where_related($course)->count() == 0) {
+                    $participant = new Participant();
+                    $participant->allowed = 0;
+                    $participant->save(array($student, $course));
+                    $this->db->trans_commit();
+                    $output->message = sprintf($this->lang->line('courses_message_signed_up_for_course'), $this->lang->text($course->name));
+                    $this->parser->assign('course', $course);
+                    $output->content = $this->parser->parse('frontend/courses/single_course.tpl', array(), TRUE);
+                    $output->status = TRUE;
+                } else {
+                    $output->message = $this->lang->line('courses_message_already_in_course_or_waiting_for_approwal');
+                    $this->db->trans_rollback();
+                }
             } else {
-                $output->message = $this->lang->line('courses_message_already_in_course_or_waiting_for_approwal');
+                $output->message = $this->lang->line('courses_message_subscription_disallowed');
                 $this->db->trans_rollback();
             }
         } else {
@@ -118,6 +134,7 @@ class Courses extends LIST_Controller {
             $this->_init_specific_language($lang);
         }
         $course = new Course();
+        $course->include_related('period');
         $course->get_by_id($course_id);
         smarty_inject_days();
         $this->parser->add_css_file('frontend_courses.css');
@@ -145,5 +162,21 @@ class Courses extends LIST_Controller {
         }
         
         $this->parser->assign('period_options', $data);
+    }
+    
+    private function store_filter($filter) {
+        if (is_array($filter)) {
+            $this->load->library('filter');
+            $old_filter = $this->filter->restore_filter(self::LIST_OF_COURSES_FILTER_NAME);
+            $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
+            $this->filter->store_filter(self::LIST_OF_COURSES_FILTER_NAME, $new_filter);
+        }
+    }
+    
+    private function inject_stored_filter() {
+        $this->load->library('filter');
+        $filter = $this->filter->restore_filter(self::LIST_OF_COURSES_FILTER_NAME);
+        $this->parser->assign('filter', $filter);
+        return $filter;
     }
 }

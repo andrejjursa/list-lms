@@ -32,4 +32,15 @@ class Course extends DataMapper {
         ),
     );
     
+    /**
+     * Tests if this course have allowed subscription.
+     * @return boolean TRUE when subscription is allowed for this (existing) course, FALSE otherwise.
+     */
+    public function is_subscription_allowed() {
+        if (!is_null($this->id)) {
+            if (is_null($this->allow_subscription_to)) { return TRUE; }
+            if (time() <= strtotime($this->allow_subscription_to)) { return TRUE; }
+        }
+        return FALSE;
+    }
 }

@@ -69,6 +69,7 @@ class Solutions extends LIST_Controller {
                 $task_set_check->group_start();
                     $task_set_check->or_where('group_id', NULL);
                     $task_set_check->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+                    $task_set_check->or_where_related('solution', 'student_id', $student->id);
                 $task_set_check->group_end();
                 $task_set_check->get_by_id($task_set_id);
                 if ($student->exists() && $task_set_check->exists() && array_key_exists('points', $solution_data) && is_numeric($solution_data['points'])) {
@@ -676,6 +677,15 @@ class Solutions extends LIST_Controller {
     private function inject_batch_valuation($task_set_id) {
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
+        
+        $solutions = new Solution();
+        $solutions->where_related($task_set);
+        $solutions->group_by('student_id');
+        $solutions->get_iterated();
+        
+        $additional_student_ids = array( 0 );
+        foreach ($solutions as $solution) { $additional_student_ids[] = $solution->student_id; }
+        
         $data = array();
         if ($task_set->exists()) {
             $students = new Student();
@@ -685,7 +695,8 @@ class Solutions extends LIST_Controller {
                 $students->where_related('participant/group', 'id', intval($task_set->group_id));
             }
             $students->include_related('solution');
-            $students->group_by('id');
+            $students->add_join_condition('`solutions`.`task_set_id` = ?', array($task_set->id));
+            $students->or_where_in('id', $additional_student_ids);
             $students->order_by_as_fullname('fullname', 'asc');
             $students->order_by('email', 'asc');
             $students->get_iterated();

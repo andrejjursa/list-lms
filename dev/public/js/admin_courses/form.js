@@ -22,4 +22,10 @@ jQuery(document).ready(function($) {
         dateFormat: 'yy-mm-dd',
         timeFormat: 'HH:mm:ss'
     });
+    
+    $('#course_allow_subscription_to_id').datetimepicker({
+        showSecond: true,
+        dateFormat: 'yy-mm-dd',
+        timeFormat: 'HH:mm:ss'
+    });
 });

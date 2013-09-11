@@ -82,7 +82,7 @@ $lang['admin_solutions_valuation_solution_saved'] = 'Riešenie uložené úspeš
 $lang['admin_solutions_valuation_solution_not_saved'] = 'Zlyhanie pri ukladaní riešenia.';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
-$lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámi autor';
+$lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámy autor';
 $lang['admin_solutions_task_list_is_bonus_task'] = 'Bonusová úloha';
 
 $lang['admin_solutions_batch_valuation_page_title'] = 'Hromadné hodnotenie';

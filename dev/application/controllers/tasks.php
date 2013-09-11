@@ -370,6 +370,7 @@ class Tasks extends LIST_Controller {
             $task_set->group_start();
                 $task_set->or_where('group_id', NULL);
                 $task_set->or_where('group_id', $group->id);
+                $task_set->or_where_related('solution', 'student_id', $student->id);
             $task_set->group_end();
             $task_set->include_related('room', '*', TRUE, TRUE);
             $task_set->include_related_count('task', 'total_tasks');
@@ -400,6 +401,14 @@ class Tasks extends LIST_Controller {
             $course->get_by_id($task_set->course_id);
             if (!$course->exists()) {
                 return new Task_set();
+            }
+            
+            $solution = new Solution();
+            $solution->where('task_set_id', $task_set->id);
+            $solution->where('student_id', $student->id);
+            $solution->get();
+            if ($solution->exists()) {
+                return $task_set;
             }
             
             if (!is_null($task_set->group_id)) {

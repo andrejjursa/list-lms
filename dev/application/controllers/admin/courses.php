@@ -87,6 +87,7 @@ class Courses extends LIST_Controller {
             $course = new Course();
             $course_data = $this->input->post('course');
             $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity', 'default_points_to_remove'));
+            $course->allow_subscription_to = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : NULL;
             $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
             
             $this->_transaction_isolation();
@@ -168,6 +169,7 @@ class Courses extends LIST_Controller {
             if ($course->exists()) {
                 $course_data = $this->input->post('course');
                 $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity', 'default_points_to_remove'));
+                $course->allow_subscription_to = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : NULL;
                 $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
                 
                 $overlay = $this->input->post('overlay');
