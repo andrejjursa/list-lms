@@ -23,7 +23,8 @@ class Cli extends CI_Controller {
         echo '  new_teacher' . "\n";
         echo '  lamsfet_import - WARNING: do not execute on live installation' . "\n";
         echo '  clear_lockdown' . "\n";
-        echo '  generate_encryption_key';
+        echo '  generate_encryption_key' . "\n";
+        echo '  apply_lockdown';
     }
 
     /**
@@ -198,6 +199,16 @@ class Cli extends CI_Controller {
         } else {
             echo 'System lockdown is not set. Operation canceled.';
         }
+    }
+    
+    /**
+     * Apply new lockdown.
+     */
+    public function apply_lockdown() {
+        $this->config->load('lockdown');
+        $this->load->library('configurator');
+        $this->configurator->set_config_array('lockdown', array('system_lockdown' => TRUE));
+        echo 'System locked...';
     }
     
     /**

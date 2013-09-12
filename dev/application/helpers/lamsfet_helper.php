@@ -8,17 +8,17 @@
 
 function lamsfet_download_file($path, $download_to) {
     if (@file_exists($path) || @remote_file_exists($path)) {
-        $file = fopen($path, 'r');
+        $file = @fopen($path, 'r');
+        if ($file === FALSE) { return FALSE; }
         ob_start();
         fpassthru($file);
         $file_content = ob_get_clean();
         fclose($file);
-        if (is_writable($download_to)) {
-            $file_w = fopen($download_to, 'w');
-            fwrite($file_w, $file_content);
-            fclose($file_w);
-            return TRUE;
-        }
+        $file_w = @fopen($download_to, 'w');
+        if ($file_w === FALSE) { return FALSE; }
+        fwrite($file_w, $file_content);
+        fclose($file_w);
+        return TRUE;
     }
     return FALSE;
 }
