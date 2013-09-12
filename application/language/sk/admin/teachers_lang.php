@@ -1,0 +1,68 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+// Slovak language
+
+$lang['admin_teachers_login_page_title'] = 'Prihlásenie učiteľa do administrácie';
+$lang['admin_teachers_login_welcome_title'] = 'Prihlásenie učiteľa';
+$lang['admin_teachers_login_label_email'] = 'E-mailová adresa učiteľa';
+$lang['admin_teachers_login_label_password'] = 'Heslo učiteľa';
+$lang['admin_teachers_login_submit_button_text'] = 'Prihlásiť sa';
+$lang['admin_teachers_login_field_email'] = 'e-mail';
+$lang['admin_teachers_login_field_password'] = 'heslo';
+$lang['admin_teachers_login_error_bad_email_or_password'] = 'Nesprávny e-mail alebo heslo.';
+$lang['admin_teachers_login_error_attempts_exceeded'] = 'Počet pokusov o prihlásenie prekročil povolené maximum %s pokusov. Prosím, počkajte aspoň %s minút a skúste znova.';
+$lang['admin_teachers_login_success'] = 'Prihlásenie úspešné.';
+$lang['admin_teachers_logout_success'] = 'Odhlásenie prebehlo úspešne.';
+$lang['admin_teachers_my_account_welcome_title'] = 'Môj účet';
+$lang['admin_teachers_my_account_page_title'] = 'Účet učiteľa';
+$lang['admin_teachers_my_account_legend_basic_information'] = 'Základné informácie';
+$lang['admin_teachers_my_account_label_fullname'] = 'Celé meno';
+$lang['admin_teachers_my_account_label_email'] = 'E-mail';
+$lang['admin_teachers_my_account_label_language'] = 'Jazyk';
+$lang['admin_teachers_my_account_label_email_validation'] = 'Validácia e-mailu';
+$lang['admin_teachers_my_account_label_email_current'] = 'Súčasný e-mail';
+$lang['admin_teachers_my_account_label_prefered_course'] = 'Preferovaný kurz';
+$lang['admin_teachers_my_account_button_submit'] = 'Uložiť';
+$lang['admin_teachers_my_account_error_invalid_account'] = 'Chyba účtu, nemôžem uložiť zmeny.';
+$lang['admin_teachers_my_account_error_save'] = 'Na účte neboli vykonané žiadne zmeny.';
+$lang['admin_teachers_my_account_success_save'] = 'Zmeny na účte boli úspešne uložené.';
+$lang['admin_teachers_my_account_legent_change_password'] = 'Zmena hesla';
+$lang['admin_teachers_my_account_field_fullname'] = 'celé meno';
+$lang['admin_teachers_my_account_label_password_old'] = 'Staré heslo';
+$lang['admin_teachers_my_account_label_password_new'] = 'Nové heslo';
+$lang['admin_teachers_my_account_label_password_validation'] = 'Znovuzadanie hesla, kvôli potvrdeniu';
+$lang['admin_teachers_my_account_field_old_password'] = 'staré heslo';
+$lang['admin_teachers_my_account_field_password'] = 'nové heslo';
+$lang['admin_teachers_my_account_field_password_validation'] = 'potvrdenie hesla';
+$lang['admin_teachers_my_account_field_old_password_error_message'] = 'Pole <strong>%s</strong> sa musí zhodovať s učiteľovím starým heslom.';
+$lang['admin_teachers_my_account_legend_change_email'] = 'Zmena e-mailu';
+$lang['admin_teachers_my_account_field_email'] = 'e-mail';
+$lang['admin_teachers_my_account_field_email_validation'] = 'validácia e-mailu';
+
+$lang['admin_teachers_list_page_header'] = 'Správa učiteľov';
+$lang['admin_teachers_list_fieldset_legend_create_new_account'] = 'Vytvriť nový účeť učiteľa';
+$lang['admin_teachers_list_fieldset_legend_all_accounts'] = 'Všetky účty učiteľov';
+$lang['admin_teachers_list_form_label_fullname'] = 'Celé meno';
+$lang['admin_teachers_list_form_label_email'] = 'E-mail';
+$lang['admin_teachers_list_form_label_password'] = 'Heslo';
+$lang['admin_teachers_list_form_label_password_hint'] = 'Vložťe nové heslo ak ho chcete zmeniť, nechajte prázdne aby sa nezmenilo.';
+$lang['admin_teachers_list_form_button_save'] = 'Uložiť';
+$lang['admin_teachers_list_table_button_update'] = 'Upraviť';
+$lang['admin_teachers_list_table_button_delete'] = 'Vymazať';
+$lang['admin_teachers_list_form_field_fullname'] = 'celé meno';
+$lang['admin_teachers_list_form_field_email'] = 'e-mail';
+$lang['admin_teachers_list_form_field_password'] = 'heslo';
+$lang['admin_teachers_list_account_save_successful'] = 'Učiteľský účet bol úspešne uložený.';
+$lang['admin_teachers_list_account_save_fail'] = 'Učiteľský účet sa nepodarilo uložiť.';
+$lang['admin_teachers_list_table_header_fullname'] = 'Celé meno';
+$lang['admin_teachers_list_table_header_email'] = 'E-mail';
+$lang['admin_teachers_list_table_header_controlls'] = 'Ovládanie';
+$lang['admin_teachers_list_teacher_not_found'] = 'Požadovaný učiteľ sa v databáze nenašiel!';
+$lang['admin_teachers_list_form_error_email_not_available'] = 'Pole <strong>%s</strong> musí obsahovať unikátnu hodnotu.';
+$lang['admin_teachers_list_message_delete_question'] = 'Ste si istý, že chcete vymazať tento učiteľský účet?';
+$lang['admin_teachers_list_message_after_delete'] = 'Učiteľský účet bol vymazaný.';
+
+$lang['admin_teachers_teacher_language_quick_changed'] = 'Jazyk bol zmenený.';
+$lang['admin_teachers_no_prefered_course'] = 'Žiaden preferovaný kurz';
+$lang['admin_teachers_prefered_course_quickchange_success'] = 'Preferovaný kurz bol úspešne zmenený.';
+$lang['admin_teachers_prefered_course_quickchange_failed'] = 'Preferovaný kurz sa nepodarilo zmeniť.';
