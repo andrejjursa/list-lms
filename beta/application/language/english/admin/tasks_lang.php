@@ -26,6 +26,7 @@ $lang['admin_tasks_form_button_save'] = 'Save';
 $lang['admin_tasks_form_button_edit'] = 'Edit';
 $lang['admin_tasks_form_button_preview'] = 'Preview';
 $lang['admin_tasks_form_button_add_to_task_set'] = 'Add&nbsp;to&nbsp;task&nbsp;set';
+$lang['admin_tasks_form_button_add_to_task_set_button'] = 'Select';
 $lang['admin_tasks_form_button_delete'] = 'Delete';
 $lang['admin_tasks_form_field_name'] = 'task name';
 $lang['admin_tasks_form_field_text'] = 'task text';

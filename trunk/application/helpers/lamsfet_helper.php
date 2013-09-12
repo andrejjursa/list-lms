@@ -13,10 +13,12 @@ function lamsfet_download_file($path, $download_to) {
         fpassthru($file);
         $file_content = ob_get_clean();
         fclose($file);
-        $file_w = fopen($download_to, 'w');
-        fwrite($file_w, $file_content);
-        fclose($file_w);
-        return TRUE;
+        if (is_writable($download_to)) {
+            $file_w = fopen($download_to, 'w');
+            fwrite($file_w, $file_content);
+            fclose($file_w);
+            return TRUE;
+        }
     }
     return FALSE;
 }

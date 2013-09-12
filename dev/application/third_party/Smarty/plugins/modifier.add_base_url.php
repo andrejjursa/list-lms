@@ -13,7 +13,9 @@ function smarty_modifier_add_base_url($string) {
             $tag_with_link->setAttribute('src', add_base_url_base_url($tag_with_link->getAttribute('src')));
         } elseif ($tag_with_link->tag == 'a' && !preg_match($absolute_url_pattern, $tag_with_link->getAttribute('href'))) {
             $tag_with_link->setAttribute('href', add_base_url_base_url($tag_with_link->getAttribute('href')));
-        } 
+        } elseif ($tag_with_link->tag == 'a' && preg_match($absolute_url_pattern, $tag_with_link->getAttribute('href')) && trim((string)$tag_with_link->target) == '') {
+            $tag_with_link->target = '_blank';
+        }
     }
     
     ob_start();

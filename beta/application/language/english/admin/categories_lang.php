@@ -17,5 +17,5 @@ $lang['admin_categories_tree_controlls_edit'] = 'Edit';
 $lang['admin_categories_tree_controlls_delete'] = 'Delete';
 $lang['admin_categories_error_category_not_found'] = 'Desired category were not found in database.';
 $lang['admin_categories_message_delete_question'] = 'Are you sure to delete this category? All subcategories in next level will be redirected to root level.';
-$lang['admin_categories_category_used_info'] = 'Used in <strong>%d</strong> tasks.';
+$lang['admin_categories_category_used_info'] = 'Used in %d tasks.';
 $lang['admin_categories_message_after_delete'] = 'Category was successfully deleted.';

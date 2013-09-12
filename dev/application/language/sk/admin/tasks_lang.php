@@ -26,6 +26,7 @@ $lang['admin_tasks_form_button_save'] = 'Uložiť';
 $lang['admin_tasks_form_button_edit'] = 'Upraviť';
 $lang['admin_tasks_form_button_preview'] = 'Náhlad';
 $lang['admin_tasks_form_button_add_to_task_set'] = 'Vložiť&nbsp;do&nbsp;zostavy&nbsp;úloh';
+$lang['admin_tasks_form_button_add_to_task_set_button'] = 'Vybrať';
 $lang['admin_tasks_form_button_delete'] = 'Vymazať';
 $lang['admin_tasks_form_field_name'] = 'názov úlohy';
 $lang['admin_tasks_form_field_text'] = 'text úlohy';
