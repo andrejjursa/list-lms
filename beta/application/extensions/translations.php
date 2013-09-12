@@ -138,7 +138,7 @@ FROM `translations`
 WHERE `idiom` = "' . $object->db->escape_str($lang_idiom) . '" AND CONCAT("lang:", "' . $object->db->escape_str($constant_prefix) . '", `constant`) = ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . '
 UNION
 SELECT ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . ' AS `like_text`
-LIMIT 1)' . ($strip_html === TRUE ? ')' : '') . ' LIKE "' . $like . '"';
+LIMIT 1)' . ($strip_html === TRUE ? ') COLLATE ' . $object->db->dbcollat : '') . ' LIKE "' . $like . '"';
         
         $object->where($subquery);
         
@@ -167,7 +167,7 @@ FROM `translations`
 WHERE `idiom` = "' . $object->db->escape_str($lang_idiom) . '" AND CONCAT("lang:", "' . $object->db->escape_str($constant_prefix) . '", `constant`) = ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . '
 UNION
 SELECT ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . ' AS `like_text`
-LIMIT 1)' . ($strip_html === TRUE ? ')' : '') . ' LIKE "' . $like . '"';
+LIMIT 1)' . ($strip_html === TRUE ? ') COLLATE ' . $object->db->dbcollat : '') . ' LIKE "' . $like . '"';
         
         $object->or_where($subquery);
         
@@ -195,7 +195,7 @@ FROM `lang_overlays`
 WHERE `table` = "' . $object->db->escape_str($object->table) . '" AND `table_id` = ' . $object->db->protect_identifiers($object->table) . '.`id` AND `column` = "' . $object->db->escape_str($column) . '" AND `idiom` = "' . $object->db->escape_str($lang_idiom) . '"
 UNION
 SELECT ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . ' AS `like_text`
-LIMIT 1)' . ($strip_html === TRUE ? ')' : '') . ' LIKE "' . $like . '"';
+LIMIT 1)' . ($strip_html === TRUE ? ') COLLATE ' . $object->db->dbcollat : '') . ' LIKE "' . $like . '"';
         
         $object->where($subquery);
         
@@ -223,7 +223,7 @@ FROM `lang_overlays`
 WHERE `table` = "' . $object->db->escape_str($object->table) . '" AND `table_id` = ' . $object->db->protect_identifiers($object->table) . '.`id` AND `column` = "' . $object->db->escape_str($column) . '" AND `idiom` = "' . $object->db->escape_str($lang_idiom) . '"
 UNION
 SELECT ' . $object->db->protect_identifiers($object->table) . '.' . $object->db->protect_identifiers($column) . ' AS `like_text`
-LIMIT 1)' . ($strip_html === TRUE ? ')' : '') . ' LIKE "' . $like . '"';
+LIMIT 1)' . ($strip_html === TRUE ? ') COLLATE ' . $object->db->dbcollat : '') . ' LIKE "' . $like . '"';
         
         $object->or_where($subquery);
         
