@@ -22,7 +22,8 @@ class Cli extends CI_Controller {
         echo '  update_database [migration version]' . "\n";
         echo '  new_teacher' . "\n";
         echo '  lamsfet_import - WARNING: do not execute on live installation' . "\n";
-        echo '  clear_lockdown';
+        echo '  clear_lockdown' . "\n";
+        echo '  generate_encryption_key';
     }
 
     /**
@@ -197,6 +198,35 @@ class Cli extends CI_Controller {
         } else {
             echo 'System lockdown is not set. Operation canceled.';
         }
+    }
+    
+    /**
+     * Generate new encryption key.
+     */
+    public function generate_encryption_key() {
+        $encryption_key_data = '';
+        switch (rand(1, 5)) {
+            case 1:
+                $encryption_key_data = get_current_user() . rand(1, 1000000) . (time() + rand(-3600, 3600)) . ENVIRONMENT . get_include_path() . memory_get_peak_usage() . memory_get_usage();
+            break;
+            case 2:
+                $encryption_key_data = (time() + rand(-3600, 3600)) . get_current_user() . rand(1, 2000000) . memory_get_peak_usage() . get_include_path() . memory_get_usage() . ENVIRONMENT;
+            break;
+            case 3:
+                $encryption_key_data = (time() + rand(-3600, 3600)) . ENVIRONMENT . memory_get_peak_usage() . get_current_user() . get_include_path() . rand(1, 3000000) . memory_get_usage();
+            break;
+            case 4:
+                $encryption_key_data = memory_get_peak_usage() . (time() + rand(-3600, 3600)) . ENVIRONMENT . rand(1, 4000000) . get_include_path() . memory_get_usage() . get_current_user();
+            break;
+            case 5:
+                $encryption_key_data = rand(1, 5000000) . (time() + rand(-3600, 3600)) . get_include_path() . memory_get_peak_usage() . memory_get_usage() . get_current_user() . ENVIRONMENT;
+            break;
+        }
+        $config = array();
+        $config['encryption_key'] = md5($encryption_key_data);
+        $this->load->library('configurator');
+        $this->configurator->set_config_array('config', $config);
+        echo 'Encryption key set to: ' . $config['encryption_key'];
     }
 
     /**

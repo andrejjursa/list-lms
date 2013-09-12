@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url'] = 'http://localhost.bc.dev/';
+$config['base_url'] = 'http://list';
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ $config['uri_protocol'] = 'AUTO';
 |
 | http://codeigniter.com/user_guide/general/urls.html
 */
-$config['url_suffix'] = '.html';
+$config['url_suffix'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +68,7 @@ $config['url_suffix'] = '.html';
 | than english.
 |
 */
-$config['language'] = 'sk';
+$config['language'] = 'english';
 
 /*
 |--------------------------------------------------------------------------
@@ -378,7 +378,7 @@ $config['after_login_redirects']['teacher'] = 'admin_dashboard/index';
 | Boolean value, if set to TRUE, links will be generated without index.php.
 | Set to FALSE to turn off rewrite engine support.
 */
-$config['rewrite_engine_enabled'] = TRUE;
+$config['rewrite_engine_enabled'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -458,7 +458,7 @@ $config['email']['newline'] = '
 ';
 $config['email']['bcc_batch_mode'] = FALSE;
 $config['email']['bcc_batch_size'] = 200;
-$config['email_multirecipient_batch_mode'] = TRUE;
+$config['email_multirecipient_batch_mode'] = FALSE;
 $config['email_address']['system']['name'] = 'LIST';
 $config['email_address']['system']['email'] = 'noreply@list.sk';
 

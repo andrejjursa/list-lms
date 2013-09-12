@@ -18,7 +18,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'development');
+	define('ENVIRONMENT', getenv('ENVIRONMENT') !== FALSE ? getenv('ENVIRONMENT') : 'development');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
@@ -207,7 +207,7 @@ require_once APPPATH.'third_party/datamapper/bootstrap.php';
  */
 try {
     require_once BASEPATH.'core/CodeIgniter.php';
-} catch (exception $exception) {
+} catch (Exception $exception) {
     require_once APPPATH.'errors/error_exception.php';
 }
 
