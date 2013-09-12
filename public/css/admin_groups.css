@@ -3,6 +3,8 @@ table.groups_table th { text-align: left; }
 table.groups_table th.controlls { width: 1px; text-align: center; }
 table.groups_table td.controlls { width: 1px;}
 table.groups_table tbody td { padding: 2px; }
+table.groups_table tbody td:first-child { border-right: 1px dashed gray; }
+table.groups_table tbody td:nth-child(2) { padding-left: 5px; }
 table.groups_table tbody tr:nth-child(even) { background-color: rgba(255,255,255,128); }
 table.groups_table tbody td ul { margin-left: 20px; }
 table.groups_table thead tr th { padding: 2px; background-color: rgba(192,192,192,128); }
