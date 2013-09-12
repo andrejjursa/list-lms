@@ -7,7 +7,7 @@
  */
 
 function lamsfet_download_file($path, $download_to) {
-    if (remote_file_exists($path)) {
+    if (@file_exists($path) || @remote_file_exists($path)) {
         $file = fopen($path, 'r');
         ob_start();
         fpassthru($file);
