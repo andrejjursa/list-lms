@@ -18,7 +18,7 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', getenv('ENVIRONMENT') !== FALSE ? getenv('ENVIRONMENT') : 'development');
+	define('ENVIRONMENT', getenv('LIST_ENVIRONMENT') !== FALSE ? getenv('LIST_ENVIRONMENT') : 'development');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
