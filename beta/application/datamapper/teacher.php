@@ -106,6 +106,13 @@ $cache = array (
       array (
       ),
     ),
+    'room' => 
+    array (
+      'field' => 'room',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -153,6 +160,17 @@ $cache = array (
       'join_self_as' => 'comment_subscriber_teacher',
       'join_other_as' => 'comment_subscription',
       'join_table' => 'task_set_comment_subscription_rel',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'room' => 
+    array (
+      'join_table' => 'rooms_teachers_rel',
+      'class' => 'room',
+      'other_field' => 'teacher',
+      'join_self_as' => 'teacher',
+      'join_other_as' => 'room',
       'reciprocal' => false,
       'auto_populate' => NULL,
       'cascade_delete' => true,

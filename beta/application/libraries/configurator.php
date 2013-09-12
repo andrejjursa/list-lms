@@ -16,7 +16,7 @@ class Configurator {
      * @return array<mixed> values of config file.
      */
     public function get_config_array($config) {
-        if (file_exists(APPPATH . 'config/' . $config . '.php')) {
+        if (file_exists(APPPATH . 'config/' . $config . '.php') || file_exists(APPPATH . 'config/' . ENVIRONMENT . '/' . $config . '.php')) {
             $configObject = new CI_Config();
             $configObject->load($config, TRUE);
             return $configObject->config[$config];    
@@ -24,6 +24,25 @@ class Configurator {
         return NULL;
     }
     
+    /**
+     * Returns content of config file by config variable.
+     * @param string $config name of config file without extension.
+     * @param string $config_variable name of configuration array (variable name with dollar sign).
+     * @return array<mixed> config array.
+     */
+    public function get_config_array_custom($config, $config_variable = '$config') {
+        $file = APPPATH . 'config/' . ENVIRONMENT . '/' . $config . '.php';
+        if (!file_exists($file)) {
+            $file = APPPATH . 'config/' . $config . '.php';
+        }
+        if (file_exists($file)) {
+            include $file;
+            return eval('isset(' . $config_variable . ') ? ' . $config_variable . ' : array();');
+        }
+        return array();
+    }
+
+
     /**
      * Saves new data array to given config file and inject them to active configuration.
      * 
@@ -38,7 +57,10 @@ class Configurator {
         if (!is_null($original_config_options)) {
             $config_data = $this->merge_array($original_config_options, $data);
             
-            $file = APPPATH . 'config/' . $config . '.php';
+            $file = APPPATH . 'config/' . ENVIRONMENT . '/' . $config . '.php';
+            if (!file_exists($file)) {
+                $file = APPPATH . 'config/' . $config . '.php';
+            }
             $tokens = $this->get_config_file_tokens($file);
             if (is_null($tokens)) { return FALSE; }
             $arangement = $this->get_config_file_arangement_from_tokens($tokens);
@@ -57,6 +79,24 @@ class Configurator {
         return FALSE;
     }   
     
+    /**
+     * Determines and return config file arangement.
+     * @param string $config name of config file without extension.
+     * @param string $config_variable name of configuration array (variable name with dollar sign).
+     * @return array<mixed> determined arangement of config file.
+     */
+    public function get_config_file_arangement($config, $config_variable = '$config') {
+        $file = APPPATH . 'config/' . ENVIRONMENT . '/' . $config . '.php';
+        if (!file_exists($file)) {
+            $file = APPPATH . 'config/' . $config . '.php';
+        }
+        $tokens = $this->get_config_file_tokens($file);
+        if (is_null($tokens)) { return FALSE; }
+        $arangement = $this->get_config_file_arangement_from_tokens($tokens, $config_variable);
+        return $arangement;
+    }
+
+
     /**
      * Inject config data to active codeigniter configuration.
      * 
@@ -96,7 +136,10 @@ class Configurator {
      * @return boolean returns TRUE if file is writen, FALSE otherwise.
      */
     public function set_config_array_custom($config, $data, $arangement, $config_variable = '$config') {
-        $file = APPPATH . 'config/' . $config . '.php';
+        $file = APPPATH . 'config/' . ENVIRONMENT . '/' . $config . '.php';
+        if (!file_exists($file)) {
+            $file = APPPATH . 'config/' . $config . '.php';
+        }
         if (file_exists($file)) {
             try {
                 $content = $this->make_config_file_content($data, $arangement, $config_variable);
@@ -289,10 +332,10 @@ class Configurator {
      */
     private function config_item_value_by_path($data, $path) {
         if (count($path) == 1) {
-            if (!isset($data[$path[0]])) { throw new exception('NO SUCH PATH IN DATA ARRAY'); }
+            if (!isset($data[$path[0]])) { throw new Exception('NO SUCH PATH IN DATA ARRAY'); }
             return $data[$path[0]];
         } else {
-            if (!isset($data[$path[0]])) { throw new exception('NO SUCH PATH IN DATA ARRAY'); }
+            if (!isset($data[$path[0]])) { throw new Exception('NO SUCH PATH IN DATA ARRAY'); }
             $new_path = array();
             for($i=1;$i<count($path);$i++) {
                 $new_path[] = $path[$i];

@@ -17,6 +17,11 @@
                         <label>{translate line='admin_task_sets_filter_form_field_course'}:</label>
                         <p class="input"><select name="filter[course]" size="1">{list_html_options options=$courses selected=$filter.course|intval}</select></p>
                     </div>
+                    <div class="group_select_field_else"><input type="hidden" name="filter[group]" value="" /></div>
+                    <div class="field group_select_field" style="display: none;">
+                        <label>{translate line='admin_task_sets_filter_form_field_group'}:</label>
+                        <p class="input"><select name="filter[group]" size="1" id="filter_group_id"></select></p>
+                    </div>
                     <div class="field">
                         <label>{translate line='admin_task_sets_filter_form_field_task_set_type'}:</label>
                         <p class="input"><select name="filter[task_set_type]" size="1">{list_html_options options=$task_set_types selected=$filter.task_set_type|intval}</select></p>
@@ -45,6 +50,7 @@
                         <input type="hidden" name="filter[fields][published]" value="{$filter.fields.published|default:1}" />
                         <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'name'}" />
                         <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />
+                        <input type="hidden" name="filter_selected_group_id" value="{$filter.group|intval}" />
                     </div>
                 </form>
             </div>

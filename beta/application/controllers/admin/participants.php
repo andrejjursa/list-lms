@@ -60,7 +60,7 @@ class Participants extends LIST_Controller {
         }
         $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
         if ($filter['order_by_field'] == 'student') {
-            $participants->order_by_related('student', 'fullname', $order_by_direction);
+            $participants->order_by_related_as_fullname('student', 'fullname', $order_by_direction);
             $participants->order_by_related('student', 'email', $order_by_direction);
         } elseif ($filter['order_by_field'] == 'course') {
             $participants->order_by_related('course/period', 'sorting', $order_by_direction);

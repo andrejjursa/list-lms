@@ -127,3 +127,5 @@ div.flash_message.message_success { border-color: green; box-shadow: 0px 0px 2px
 div.flash_message.message_error { border-color: red; box-shadow: 0px 0px 2px 2px red inset; background-color: #FFAFAF; color: red; }
 
 div.text ul { padding-left: 23px; }
+
+div.fancybox-wrap div.fancybox-skin { background-color: #66df66; }

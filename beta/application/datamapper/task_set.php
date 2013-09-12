@@ -18,6 +18,7 @@ $cache = array (
     12 => 'points_override',
     13 => 'comments_enabled',
     14 => 'comments_moderated',
+    15 => 'allowed_file_types',
   ),
   'validation' => 
   array (
@@ -123,6 +124,13 @@ $cache = array (
     'comments_moderated' => 
     array (
       'field' => 'comments_moderated',
+      'rules' => 
+      array (
+      ),
+    ),
+    'allowed_file_types' => 
+    array (
+      'field' => 'allowed_file_types',
       'rules' => 
       array (
       ),

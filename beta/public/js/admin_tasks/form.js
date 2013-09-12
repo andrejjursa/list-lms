@@ -14,16 +14,7 @@ jQuery(document).ready(function($) {
         document_base_url: global_base_url,
         relative_urls: false,
 
-        style_formats: [
-            {title: 'Highlight - Java', selector: 'pre', attributes: { 'lang': 'java', 'class': 'highlight' }},
-            {title: 'Highlight - C++', selector: 'pre', attributes: { 'lang': 'cpp', 'class': 'highlight' }},
-            {title: 'Highlight - PHP', selector: 'pre', attributes: { 'lang': 'php', 'class': 'highlight' }},
-            {title: 'Highlight - HTML', selector: 'pre', attributes: { 'lang': 'html', 'class': 'highlight' }},
-            {title: 'Highlight - JavaScript', selector: 'pre', attributes: { 'lang': 'javascript', 'class': 'highlight' }},
-            {title: 'Highlight - jQuery', selector: 'pre', attributes: { 'lang': 'jquery', 'class': 'highlight' }},
-            {title: 'Highlight - CSS', selector: 'pre', attributes: { 'lang': 'css', 'class': 'highlight' }},
-            {title: 'Highlight - Haskell', selector: 'pre', attributes: { 'lang': 'haskell', 'class': 'highlight' }},
-        ]
+        style_formats: []
     };
     
     if (typeof highlighters !== 'undefined') {

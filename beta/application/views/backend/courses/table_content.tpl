@@ -2,14 +2,14 @@
     <thead>
         <tr>
             <th>ID</th>
-            {if $filter.fields.created}<th>{translate line='common_table_header_created'}</th>{/if}
-            {if $filter.fields.updated}<th>{translate line='common_table_header_updated'}</th>{/if}
-            {if $filter.fields.name}<th>{translate line='admin_courses_table_header_course_name'}</th>{/if}
+            {if $filter.fields.created}<th class="sort:created">{translate line='common_table_header_created'}</th>{/if}
+            {if $filter.fields.updated}<th class="sort:updated">{translate line='common_table_header_updated'}</th>{/if}
+            {if $filter.fields.name}<th class="sort:name">{translate line='admin_courses_table_header_course_name'}</th>{/if}
             {if $filter.fields.description}<th>{translate line='admin_courses_table_header_course_description'}</th>{/if}
-            {if $filter.fields.period}<th>{translate line='admin_courses_table_header_course_period'}</th>{/if}
-            {if $filter.fields.groups}<th>{translate line='admin_courses_table_header_course_groups'}</th>{/if}
-            {if $filter.fields.task_set_types}<th>{translate line='admin_courses_table_header_course_task_set_types'}</th>{/if}
-            {if $filter.fields.capacity}<th>{translate line='admin_courses_table_header_course_capacity'}</th>{/if}
+            {if $filter.fields.period}<th class="sort:period">{translate line='admin_courses_table_header_course_period'}</th>{/if}
+            {if $filter.fields.groups}<th class="sort:groups:desc">{translate line='admin_courses_table_header_course_groups'}</th>{/if}
+            {if $filter.fields.task_set_types}<th class="sort:task_set_types:desc">{translate line='admin_courses_table_header_course_task_set_types'}</th>{/if}
+            {if $filter.fields.capacity}<th class="sort:capacity:desc">{translate line='admin_courses_table_header_course_capacity'}</th>{/if}
             <th colspan="4" class="controlls"><div id="open_fields_config_id">{translate line='admin_courses_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
     </thead>

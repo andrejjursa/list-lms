@@ -69,6 +69,7 @@ class Solutions extends LIST_Controller {
                 $task_set_check->group_start();
                     $task_set_check->or_where('group_id', NULL);
                     $task_set_check->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+                    $task_set_check->or_where_related('solution', 'student_id', $student->id);
                 $task_set_check->group_end();
                 $task_set_check->get_by_id($task_set_id);
                 if ($student->exists() && $task_set_check->exists() && array_key_exists('points', $solution_data) && is_numeric($solution_data['points'])) {
@@ -76,14 +77,14 @@ class Solutions extends LIST_Controller {
                     $solution->where_related_student('id', $student->id);
                     $solution->where_related_task_set('id', $task_set->id);
                     $solution->get();
-                    if (!$solution->exists()) {
+                    if ($solution->points != floatval($solution_data['points']) || $solution->not_considered != intval(@$solution_data['not_considered'])) {
                         $solution->teacher_id = $this->usermanager->get_teacher_id();
+                        $solution->points = floatval($solution_data['points']);
+                        $solution->revalidate = 0;
+                        $solution->not_considered = intval(@$solution_data['not_considered']);
+                        $save_status = $save_status & $solution->save(array($task_set, $student));
+                        $saved_count++;
                     }
-                    $solution->points = floatval($solution_data['points']);
-                    $solution->revalidate = 0;
-                    $solution->not_considered = intval(@$solution_data['not_considered']);
-                    $save_status = $save_status & $solution->save(array($task_set, $student));
-                    $saved_count++;
                 }
             }}
             if ($this->db->trans_status() && $save_status && $saved_count > 0) {
@@ -299,8 +300,10 @@ class Solutions extends LIST_Controller {
             $solution->get_by_id($solution_id);
             if ($solution->exists()) {
                 $solution_data = $this->input->post('solution');
+                if ($solution->comment != $solution_data['comment'] || $solution->points != floatval($solution_data['points']) || $solution->not_considered != intval($solution_data['not_considered'])) {
+                    $solution->teacher_id = $this->usermanager->get_teacher_id();
+                }
                 $solution->from_array($solution_data, array('points', 'comment', 'not_considered'));
-                if (is_null($solution->teacher_id)) { $solution->teacher_id = $this->usermanager->get_teacher_id(); }
                 $solution->revalidate = 0;
                 if ($solution->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
@@ -358,8 +361,7 @@ class Solutions extends LIST_Controller {
         $task_sets->select('`task_sets`.*, `course_course_task_set_type_rel`.`upload_solution` AS `join_upload_solution`');
         $task_sets->include_related_count('solution');
         $task_sets->include_related_count('task');
-        $task_sets->include_related('course', 'name');
-        $task_sets->include_related('course', 'default_points_to_remove');
+        $task_sets->include_related('course', array('name', 'default_points_to_remove'));
         $task_sets->include_related('course/period', 'name');
         $task_sets->include_related('group', 'name');
         $task_sets->include_related('task_set_type', 'name');
@@ -407,6 +409,7 @@ class Solutions extends LIST_Controller {
             $solutions->where_related($task_set);
             $solutions->include_related('student');
             $solutions->include_related('teacher');
+            $solutions->order_by_related_as_fullname('student', 'fullname', 'asc');
             $solutions->get_iterated();
         }
         
@@ -674,6 +677,15 @@ class Solutions extends LIST_Controller {
     private function inject_batch_valuation($task_set_id) {
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
+        
+        $solutions = new Solution();
+        $solutions->where_related($task_set);
+        $solutions->group_by('student_id');
+        $solutions->get_iterated();
+        
+        $additional_student_ids = array( 0 );
+        foreach ($solutions as $solution) { $additional_student_ids[] = $solution->student_id; }
+        
         $data = array();
         if ($task_set->exists()) {
             $students = new Student();
@@ -682,11 +694,10 @@ class Solutions extends LIST_Controller {
             if (!is_null($task_set->group_id)) {
                 $students->where_related('participant/group', 'id', intval($task_set->group_id));
             }
-            $students->select_subquery('(SELECT `solutions`.`points` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_points');
-            $students->select_subquery('(SELECT `solutions`.`id` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_id');
-            $students->select_subquery('(SELECT `solutions`.`not_considered` FROM (`solutions`) WHERE `solutions`.`task_set_id` = ' . intval($task_set->id) . ' AND `solutions`.`student_id` = `${parent}`.`id`)', 'solution_not_considered');
-            $students->group_by('id');
-            $students->order_by('fullname', 'asc');
+            $students->include_related('solution');
+            $students->add_join_condition('`solutions`.`task_set_id` = ?', array($task_set->id));
+            $students->or_where_in('id', $additional_student_ids);
+            $students->order_by_as_fullname('fullname', 'asc');
             $students->order_by('email', 'asc');
             $students->get_iterated();
 

@@ -54,7 +54,23 @@ class Courses extends LIST_Controller {
         $courses->include_related_count('group');
         $courses->include_related_count('task_set_type');
         $courses->include_related('period', 'name', TRUE);
-        $courses->order_by_with_constant('name', 'asc');
+        $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
+        if ($filter['order_by_field'] == 'name') {
+            $courses->order_by_with_constant('name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'period') {
+            $courses->order_by_related('period', 'sorting', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'created') {
+            $courses->order_by('created', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'updated') {
+            $courses->order_by('updated', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'groups') {
+            $courses->order_by('group_count', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'task_set_types') {
+            $courses->order_by('task_set_type_count', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'capacity') {
+            $courses->order_by('capacity', $order_by_direction);
+        }
+        //$courses->order_by_with_constant('name', 'asc');
         $courses->get_iterated();
         $this->lang->init_overlays('courses', $courses->all_to_array(), array('description'));
         $this->parser->parse('backend/courses/table_content.tpl', array('courses' => $courses, 'fields_config' => $fields_config));
@@ -71,6 +87,7 @@ class Courses extends LIST_Controller {
             $course = new Course();
             $course_data = $this->input->post('course');
             $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity', 'default_points_to_remove'));
+            $course->allow_subscription_to = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : NULL;
             $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
             
             $this->_transaction_isolation();
@@ -152,6 +169,7 @@ class Courses extends LIST_Controller {
             if ($course->exists()) {
                 $course_data = $this->input->post('course');
                 $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity', 'default_points_to_remove'));
+                $course->allow_subscription_to = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : NULL;
                 $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
                 
                 $overlay = $this->input->post('overlay');

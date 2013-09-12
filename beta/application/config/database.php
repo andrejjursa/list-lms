@@ -64,6 +64,22 @@ $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
+$db['lamsfet']['hostname'] = '';
+$db['lamsfet']['username'] = '';
+$db['lamsfet']['password'] = '';
+$db['lamsfet']['database'] = '';
+$db['lamsfet']['dbdriver'] = 'postgre';
+$db['lamsfet']['dbprefix'] = '';
+$db['lamsfet']['pconnect'] = TRUE;
+$db['lamsfet']['db_debug'] = TRUE;
+$db['lamsfet']['cache_on'] = FALSE;
+$db['lamsfet']['cachedir'] = '';
+$db['lamsfet']['char_set'] = 'utf8';
+$db['lamsfet']['dbcollat'] = 'utf8_general_ci';
+$db['lamsfet']['swap_pre'] = '';
+$db['lamsfet']['autoinit'] = TRUE;
+$db['lamsfet']['stricton'] = FALSE;
+$db['lamsfet']['port'] = 5432;
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */

@@ -51,7 +51,14 @@ jQuery(document).ready(function($) {
             height: '100%',
             autoSize: false,
             autoHeight: false,
-            autoWidth: false
+            autoWidth: false,
+            helpers: {
+                overlay: {
+                    css: {
+                        background: 'rgba(255,255,255,0)'
+                    }
+                }
+            }
         });
     });
     

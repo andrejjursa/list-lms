@@ -4,8 +4,10 @@
     <h2>{translate line='adminmenu_title_translations_editor'}</h2>
     {include file='partials/backend_general/flash_messages.tpl' inline}
     <fieldset>
-        <legend>{translate line='admin_translationseditor_fieldset_table_legend'}</legend>
         <input type="button" name="button_new" value="{translate line='admin_translationseditor_new_translation_button_text'}" class="button" />
+    </fieldset>
+    <fieldset>
+        <legend>{translate line='admin_translationseditor_fieldset_table_legend'}</legend>
         <div class="translations_table_wrap">
             <table style="min-width: 100%;" id="translations_table">
                 <thead>

@@ -32,6 +32,11 @@
     <p class="input"><em>{translate line='admin_courses_form_label_course_default_points_to_remove_hint'}</em></p>
     {form_error field='course[default_points_to_remove]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
 </div>
+<div class="field">
+    <label for="course_allow_subscription_to_id">{translate line='admin_courses_form_label_allow_subscription_to'}:</label>
+    <p class="input"><input type="text" name="course[allow_subscription_to]" value="{$smarty.post.course.allow_subscription_to|escape:'html'}" id="course_allow_subscription_to_id" /></p>
+    <p class="input"><em>{translate line='admin_courses_form_label_allow_subscription_to_hint'}</em></p>
+</div>
 <div class="buttons">
     <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" />
 </div>

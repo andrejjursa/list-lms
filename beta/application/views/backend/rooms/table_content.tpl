@@ -6,6 +6,19 @@
     <td>{$room->time_begin|is_time|escape:'html'}</td>
     <td>{$room->time_end|is_time|escape:'html'}</td>
     <td>{$room->capacity|intval}</td>
+    <td>
+        <ul>
+        {foreach $room->teachers->get_iterated() as $teacher}
+            <li>{$teacher->fullname}</li>
+        {/foreach}
+        {if $room->teachers_plain}
+            {$teachers_plain_names = ','|explode:$room->teachers_plain}
+            {foreach $teachers_plain_names as $teacher_plain_name}
+            <li>{$teacher_plain_name|trim}</li>
+            {/foreach}
+        {/if}
+        </ul>
+    </td>
     <td class="controlls"><a href="{internal_url url="admin_rooms/edit/{$group_id}/room_id/{$room->id}"}" class="button">{translate line='admin_rooms_table_controlls_button_edit'}</a></td>
     <td class="controlls"><a href="{internal_url url="admin_rooms/delete/{$group_id}/room_id/{$room->id}"}" class="button delete">{translate line='admin_rooms_table_controlls_button_delete'}</a></td>
 </tr>

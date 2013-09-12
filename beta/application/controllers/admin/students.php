@@ -35,7 +35,18 @@ class Students extends LIST_Controller {
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
         $students = new Student();
-        $students->order_by('fullname', 'asc');
+        if (isset($filter['fullname']) && trim($filter['fullname']) != '') {
+            $students->like('fullname', trim($filter['fullname']));
+        }
+        if (isset($filter['email']) && trim($filter['email']) != '') {
+            $students->like('email', trim($filter['email']));
+        }
+        $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
+        if ($filter['order_by_field'] == 'fullname') {
+            $students->order_by_as_fullname('fullname', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'email') {
+            $students->order_by('email', $order_by_direction);
+        }
         $students->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->parser->parse('backend/students/table_content.tpl', array('students' => $students));
     }

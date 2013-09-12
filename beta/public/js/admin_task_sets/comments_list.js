@@ -103,6 +103,13 @@ jQuery(document).ready(function($) {
             autoSize: false,
             autoHeight: false,
             autoWidth: false,
+            helpers: {
+                overlay: {
+                    css: {
+                        background: 'rgba(255,255,255,0)'
+                    }
+                }
+            },
             beforeClose: function() {
                 reload_all_comments();
                 return true;

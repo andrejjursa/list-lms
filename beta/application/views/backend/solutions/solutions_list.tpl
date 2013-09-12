@@ -2,8 +2,11 @@
 {block title}{translate|sprintf:{overlay|default:'' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name} line='admin_solutions_list_page_title'}{/block}
 {block main_content}
     <h2>{translate|sprintf:{overlay|default:'' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name} line='admin_solutions_list_page_title'}</h2>
-    {if $task_set->exists()}<h3>{translate_text text=$task_set->course_name} / {translate_text text=$task_set->course_period_name} / {if $task_set->group_name}{translate_text text=$task_set->group_name}{else}{translate line='admin_solutions_list_h3_all_groups'}{/if} | <a href="{internal_url url='admin_solutions'}" class="button special">{translate line='common_button_back'}</a></h3>{/if}
+    {if $task_set->exists()}<h3>{translate_text text=$task_set->course_name} / {translate_text text=$task_set->course_period_name} / {if $task_set->group_name}{translate_text text=$task_set->group_name}{else}{translate line='admin_solutions_list_h3_all_groups'}{/if}</h3>{/if}
     {include file='partials/backend_general/flash_messages.tpl' inline}
+    <fieldset>
+        <a href="{internal_url url='admin_solutions'}" class="button special">{translate line='common_button_back'}</a>
+    </fieldset>
     {if $task_set->exists()}
         <fieldset>
             <legend>{translate line='admin_solutions_list_fieldset_legend_add_solution_record'}</legend>

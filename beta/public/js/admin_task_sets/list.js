@@ -89,4 +89,33 @@ jQuery(document).ready(function($) {
             });
         }
     });
+    
+    $('#filter_form_id').activeForm({
+        speed: 0
+    });
+    
+    var last_course_id = null;
+    
+    $('#filter_form_id div.field.group_select_field').setActiveFormDisplayCondition(function() {
+        var course_id = $('select[name="filter[course]"]').val();
+        if (course_id !== '') {
+            if (course_id !== last_course_id) {
+                var selected_id = $('#filter_form_id input[name=filter_selected_group_id]').val() !== undefined ? $('#filter_form_id input[name=filter_selected_group_id]').val() : '';
+                var url = global_base_url + 'index.php/admin_task_sets/get_course_groups/' + course_id + '/' + selected_id;
+                var target = '#filter_group_id';
+                api_ajax_load(url, target, 'post', {}, function() {
+                    $('#filter_form_id').activeForm().applyConditions();
+                });
+                last_course_id = course_id;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    });
+    $('form div.group_select_field_else').setActiveFormDisplayCondition(function() {
+        return !this.isDisplayed('div.field.group_select_field');
+    });
+    
+    $('#filter_form_id').activeForm().applyConditions();
 });

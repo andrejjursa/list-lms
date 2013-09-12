@@ -9,7 +9,9 @@
         {/if}
     {/if}
 {else}
+    {if $course->is_subscription_allowed()}
     <a href="{internal_url url="courses/signup_to_course/{$course->id}"}" class="button signup_to_course">{translate line='courses_button_signup_to_course'}</a>
+    {/if}
 {/if}
 <a href="{internal_url url="courses/show_details/{$course->id}"}" class="button special show_details">{translate line='courses_button_show_details'}</a>
 </p>

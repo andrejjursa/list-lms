@@ -235,7 +235,7 @@ class Teachers extends LIST_Controller {
         $this->usermanager->teacher_login_protected_redirect();
         
         $teachers = new Teacher();
-        $teachers->order_by('fullname', 'asc')->where('id !=', $this->usermanager->get_teacher_id())->get_iterated();
+        $teachers->order_by_as_fullname('fullname', 'asc')->where('id !=', $this->usermanager->get_teacher_id())->get_iterated();
         $this->parser->parse('backend/teachers/list_teachers_table.tpl', array('teachers' => $teachers));
     }
     
@@ -394,7 +394,7 @@ class Teachers extends LIST_Controller {
     private function inject_courses() {
         $courses = new Course();
         $courses->include_related('period', 'name');
-        $courses->order_by_related('period', 'sorting', 'desc');
+        $courses->order_by_related('period', 'sorting', 'asc');
         $courses->order_by_with_constant('name', 'asc');
         $courses->get_iterated();
         

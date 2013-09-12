@@ -75,6 +75,23 @@ class Task_sets extends LIST_Controller {
         $this->parser->parse('backend/task_sets/task_set_groups_options.tpl', array('groups' => $groups, 'task_set' => $task_set, 'selected_id' => $selected_id));
     }
     
+    public function get_course_groups($course_id, $selected_id = NULL) {
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $query = $course->group->order_by('name', 'asc')->get_raw();
+        
+        $groups = array('' => '', 'none' => 'lang:admin_task_sets_filter_option_without_group');
+        
+        if ($query->num_rows() > 0) { foreach ($query->result() as $row) {
+            $groups[$row->id] = $row->name;
+        }}
+        
+        $query->free_result();
+        
+        $this->parser->parse('backend/task_sets/task_set_groups_filter_options.tpl', array('groups' => $groups, 'selected_id' => $selected_id));
+    }
+
+
     public function get_task_set_group_rooms($course_id, $group_id, $selected_id = NULL, $task_set_id = NULL) {
         $course = new Course();
         $course->get_by_id($course_id);
@@ -121,6 +138,13 @@ class Task_sets extends LIST_Controller {
         $task_sets->include_related_count('comment');
         if (isset($filter['course']) && intval($filter['course']) > 0) {
             $task_sets->where_related_course('id', intval($filter['course']));
+            if (isset($filter['group'])) {
+                if ($filter['group'] == 'none') {
+                    $task_sets->where_related_group('id', NULL);
+                } elseif (intval($filter['group']) > 0) {
+                    $task_sets->where_related_group('id', intval($filter['group']));
+                }
+            }
         }
         if (isset($filter['task_set_type']) && intval($filter['task_set_type']) > 0) {
             $task_sets->where_related_task_set_type('id', intval($filter['task_set_type']));
@@ -173,7 +197,7 @@ class Task_sets extends LIST_Controller {
         if ($this->form_validation->run()) {
             $task_set = new Task_set();
             $task_set_data = $this->input->post('task_set');
-            $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published'));
+            $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types'));
             $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
             $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
             $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
@@ -235,7 +259,7 @@ class Task_sets extends LIST_Controller {
         if ($this->form_validation->run()) {    
             if ($task_set->exists()) {
                 $task_set_data = $this->input->post('task_set');
-                $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'instructions'));
+                $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'instructions', 'allowed_file_types'));
                 $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
                 $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
                 $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;

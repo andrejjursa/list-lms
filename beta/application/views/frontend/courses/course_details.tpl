@@ -4,7 +4,7 @@
     <h1>{translate line='courses_detail_page_title'}</h1>
     {include file='partials/frontend_general/flash_messages.tpl' inline}
     <fieldset>
-        <legend>{translate_text text=$course->name}</legend>
+        <legend>{translate_text text=$course->name} / {translate_text text=$course->period_name}</legend>
         <div class="text">
         {if {overlay table='courses' table_id=$course->id column='description' default=$course->description}}
             {overlay|add_base_url table='courses' table_id=$course->id column='description' default=$course->description}
@@ -30,7 +30,19 @@
                 <div class="group_teaching">{translate line='courses_detail_group_teaching'}:</div>
                 <ul class="group_rooms">
                     {foreach $group->room->order_by('time_day', 'asc')->order_by('time_begin', 'asc')->get_iterated() as $room}
-                        <li>{translate_text text=$room->name}: {$list_days[$room->time_day|intval]} ({$room->time_begin|is_time} - {$room->time_end|is_time})</li>
+                        <li>{translate_text text=$room->name}: {$list_days[$room->time_day|intval]} ({$room->time_begin|is_time} - {$room->time_end|is_time})
+                            <ul class="group_room_teachers">
+                            {foreach $room->teachers->get_iterated() as $teacher}
+                                <li>{$teacher->fullname}</li>
+                            {/foreach}
+                            {if $room->teachers_plain}
+                                {$teachers_plain_names = ','|explode:$room->teachers_plain}
+                                {foreach $teachers_plain_names as $teacher_plain_name}
+                                <li>{$teacher_plain_name|trim}</li>
+                                {/foreach}
+                            {/if}
+                            </ul>
+                        </li>
                     {foreachelse}
                         <li>{translate line='courses_detail_group_without_rooms'}</li>
                     {/foreach}

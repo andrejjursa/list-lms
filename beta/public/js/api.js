@@ -16,14 +16,20 @@ jQuery(document).ready(function($) {
 var block_ui_message = (lang !== undefined && lang.messages !== undefined && lang.messages.ajax_standby !== undefined) ? lang.messages.ajax_standby : 'Please wait ...';
 jQuery(document).ajaxStart(function () {
   jQuery.blockUI({
-    message: '<h1>' + block_ui_message + '</h1>',
+    message: '<img src="' + global_base_url + 'public/images_ui/loading.gif" alt="' + block_ui_message + '" width="48"/>',
+    showOverlay: false,
     css: {
-      borderRadius: '10px',
-      border: 'none',
-      padding: '15px',
-      backgroundColor: 'black',
-      color: 'white',
-      opacity: 0.5 
+      top: '25px',
+      left: '',
+      right: '20px',
+      borderRadius: '100px',
+      border: '3px solid black',
+      padding: '5px 5px 2px 5px',
+      backgroundColor: 'white',
+      color: 'black',
+      width: '48px',
+      'box-shadow': '3px 3px 3px black',
+      opacity: 0.65
     }
   });
 }).ajaxStop(function() {

@@ -10,3 +10,4 @@ div.group_wrap ul.group_rooms li,
 div.group_wrap ul.group_students li { padding: 3px 5px; }
 div.group_wrap ul.group_rooms li:nth-child(2n),
 div.group_wrap ul.group_students li:nth-child(2n) { background-color: #ececec; }
+div.group_wrap ul.group_room_teachers { list-style-type: square; margin-left: 25px; }

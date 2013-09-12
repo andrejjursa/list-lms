@@ -22,6 +22,13 @@ class LIST_Controller extends CI_Controller {
      */
     public function __construct() {
         parent::__construct();
+        $this->load->config('lockdown');
+        if ($this->config->item('system_lockdown') === TRUE) {
+            if (!$this->input->is_ajax_request()) {
+                redirect(create_internal_url('maintenance', TRUE));
+            }
+            die();
+        }
         if ($this->input->is_cli_request()) {
             echo 'Error: You can\'t call this controller from CLI!';
             die();
@@ -244,7 +251,7 @@ class LIST_Controller extends CI_Controller {
         
         $courses = new Course();
         $courses->include_related('period', 'name');
-        $courses->order_by_related('period', 'sorting', 'desc');
+        $courses->order_by_related('period', 'sorting', 'asc');
         $courses->order_by_with_constant('name', 'asc');
         $courses->get_iterated();
         
