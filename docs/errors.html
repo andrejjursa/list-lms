@@ -23,15 +23,19 @@
 <a href="#groups.php">groups.php</a><br>
 <a href="#htmlform.php">htmlform.php</a><br>
 <a href="#inflector_helper.php">inflector_helper.php</a><br>
+<a href="#joins.php">joins.php</a><br>
+<a href="#json.php">json.php</a><br>
+<a href="#lamsfet_helper.php">lamsfet_helper.php</a><br>
 <a href="#LIST_Controller.php">LIST_Controller.php</a><br>
 <a href="#LIST_Email.php">LIST_Email.php</a><br>
 <a href="#LIST_Form_validation.php">LIST_Form_validation.php</a><br>
 <a href="#LIST_Lang.php">LIST_Lang.php</a><br>
 <a href="#LIST_Output.php">LIST_Output.php</a><br>
 <a href="#LIST_Parser.php">LIST_Parser.php</a><br>
+<a href="#maintenance.php">maintenance.php</a><br>
 <a href="#messages.php">messages.php</a><br>
 <a href="#nestedsets.php">nestedsets.php</a><br>
-<a href="#parser_helper.php">parser_helper.php</a><br>
+<a href="#ordering.php">ordering.php</a><br>
 <a href="#participant.php">participant.php</a><br>
 <a href="#participants.php">participants.php</a><br>
 <a href="#period.php">period.php</a><br>
@@ -39,6 +43,7 @@
 <a href="#plupload.php">plupload.php</a><br>
 <a href="#room.php">room.php</a><br>
 <a href="#rooms.php">rooms.php</a><br>
+<a href="#rowindex.php">rowindex.php</a><br>
 <a href="#security.php">security.php</a><br>
 <a href="#settings.php">settings.php</a><br>
 <a href="#Smarty.php">Smarty.php</a><br>
@@ -60,31 +65,34 @@
 <a name="Post-parsing"></a>
 <h1>Post-parsing</h1>
 <h2>Warnings:</h2><br>
-<b>Warning</b> - Class LIST_Controller parent CI_Controller not found<br>
-<b>Warning</b> - Class Cli parent CI_Controller not found<br>
-<b>Warning</b> - Class LIST_Lang parent CI_Lang not found<br>
-<b>Warning</b> - Class LIST_Output parent CI_Output not found<br>
-<b>Warning</b> - Class LIST_Email parent CI_Email not found<br>
 <b>Warning</b> - class Cli in package LIST_CLI_Controllers parent not found in @see parent::__construct()<br>
 <b>Warning</b> - Class Translations parent CI_Model not found<br>
 <b>Warning</b> - class Cli in package LIST_CLI_Controllers parent not found in @see parent::__construct()<br>
 <b>Warning</b> - class LIST_Controller in package LIST_Core parent not found in @see parent::__construct()<br>
-<b>Warning</b> - Class LIST_Parser parent CI_Parser not found<br>
-<b>Warning</b> - Class CI_Smarty parent Smarty not found<br>
-<b>Warning</b> - Class LIST_Form_validation parent CI_Form_validation not found<br>
-<b>Warning</b> - class LIST_Output in package CodeIgniter parent not found in @see parent::_display()<br>
-<b>Warning</b> - class LIST_Form_validation in package LIST_Libraries parent not found in @see parent::matches()<br>
-<b>Warning</b> - class LIST_Email in package LIST_Libraries parent not found in @see parent::_get_alt_message()<br>
-<b>Warning</b> - class LIST_Email in package LIST_Libraries parent not found in @see parent::__construct()<br>
-<b>Warning</b> - class LIST_Email in package LIST_Libraries parent not found in @see parent::_get_alt_message()<br>
-<b>Warning</b> - class LIST_Form_validation in package LIST_Libraries parent not found in @see parent::matches()<br>
-<b>Warning</b> - class LIST_Lang in package LIST_Core parent not found in @see parent::__construct()<br>
-<b>Warning</b> - class LIST_Output in package CodeIgniter parent not found in @see parent::_display()<br>
-<b>Warning</b> - class LIST_Lang in package LIST_Core parent not found in @see parent::load()<br>
-<b>Warning</b> - class LIST_Lang in package LIST_Core parent not found in @see parent::__construct()<br>
-<b>Warning</b> - class LIST_Lang in package LIST_Core parent not found in @see parent::load()<br>
-<b>Warning</b> - class LIST_Email in package LIST_Libraries parent not found in @see parent::__construct()<br>
 <b>Warning</b> - class LIST_Controller in package LIST_Core parent not found in @see parent::__construct()<br>
+<b>Warning</b> - Class CI_Smarty parent Smarty not found<br>
+<b>Warning</b> - Class LIST_Parser parent CI_Parser not found<br>
+<b>Warning</b> - Class LIST_Controller parent CI_Controller not found<br>
+<b>Warning</b> - Class Maintenance parent CI_Controller not found<br>
+<b>Warning</b> - Class LIST_Lang parent CI_Lang not found<br>
+<b>Warning</b> - Class LIST_Output parent CI_Output not found<br>
+<b>Warning</b> - Class LIST_Email parent CI_Email not found<br>
+<b>Warning</b> - class LIST_Email in package LIST_Libraries parent not found in @see parent::__construct()<br>
+<b>Warning</b> - class LIST_Email in package LIST_Libraries parent not found in @see parent::_get_alt_message()<br>
+<b>Warning</b> - class LIST_Output in package CodeIgniter parent not found in @see parent::_display()<br>
+<b>Warning</b> - class LIST_Lang in package LIST_Core parent not found in @see parent::load()<br>
+<b>Warning</b> - class LIST_Output in package CodeIgniter parent not found in @see parent::_display()<br>
+<b>Warning</b> - class Maintenance in package LIST_MAINTENANCE_Controllers parent not found in @see parent::__construct()<br>
+<b>Warning</b> - class Maintenance in package LIST_MAINTENANCE_Controllers parent not found in @see parent::__construct()<br>
+<b>Warning</b> - class LIST_Lang in package LIST_Core parent not found in @see parent::__construct()<br>
+<b>Warning</b> - class LIST_Lang in package LIST_Core parent not found in @see parent::load()<br>
+<b>Warning</b> - class LIST_Email in package LIST_Libraries parent not found in @see parent::_get_alt_message()<br>
+<b>Warning</b> - class LIST_Email in package LIST_Libraries parent not found in @see parent::__construct()<br>
+<b>Warning</b> - class LIST_Form_validation in package LIST_Libraries parent not found in @see parent::matches()<br>
+<b>Warning</b> - class LIST_Form_validation in package LIST_Libraries parent not found in @see parent::matches()<br>
+<b>Warning</b> - class LIST_Lang in package LIST_Core parent not found in @see parent::__construct()<br>
+<b>Warning</b> - Class Cli parent CI_Controller not found<br>
+<b>Warning</b> - Class LIST_Form_validation parent CI_Form_validation not found<br>
 <a name="array.php"></a>
 <h1>array.php</h1>
 <h2>Warnings:</h2><br>
@@ -111,6 +119,7 @@
 <h2>Warnings:</h2><br>
 <b>Warning on line 7</b> - DocBlock would be page-level, but precedes class "Cli", use another DocBlock to document the file<br>
 <b>Warning on line 15</b> - Method "__construct" has no method-level DocBlock.<br>
+<b>Warning on line 27</b> - Method "index" has no method-level DocBlock.<br>
 <a name="comment.php"></a>
 <h1>comment.php</h1>
 <h2>Warnings:</h2><br>
@@ -128,32 +137,34 @@
 <h2>Warnings:</h2><br>
 <b>Warning on line 7</b> - DocBlock would be page-level, but precedes class "Courses", use another DocBlock to document the file<br>
 <b>Warning on line 7</b> - DocBlock would be page-level, but precedes class "Courses", use another DocBlock to document the file<br>
-<b>Warning on line 17</b> - Method "__construct" has no method-level DocBlock.<br>
+<b>Warning on line 19</b> - Method "__construct" has no method-level DocBlock.<br>
 <b>Warning on line 20</b> - Method "__construct" has no method-level DocBlock.<br>
-<b>Warning on line 33</b> - Method "index" has no method-level DocBlock.<br>
 <b>Warning on line 34</b> - Method "index" has no method-level DocBlock.<br>
-<b>Warning on line 60</b> - Method "get_table_content" has no method-level DocBlock.<br>
-<b>Warning on line 72</b> - Method "signup_to_course" has no method-level DocBlock.<br>
-<b>Warning on line 89</b> - Method "create" has no method-level DocBlock.<br>
-<b>Warning on line 94</b> - Method "new_course_form" has no method-level DocBlock.<br>
-<b>Warning on line 113</b> - Method "activate_course" has no method-level DocBlock.<br>
-<b>Warning on line 117</b> - Method "delete" has no method-level DocBlock.<br>
-<b>Warning on line 124</b> - Method "show_details" has no method-level DocBlock.<br>
-<b>Warning on line 134</b> - Method "quick_course_change" has no method-level DocBlock.<br>
-<b>Warning on line 136</b> - Method "edit" has no method-level DocBlock.<br>
-<b>Warning on line 147</b> - Method "inject_period_options" has no method-level DocBlock.<br>
-<b>Warning on line 175</b> - Method "update" has no method-level DocBlock.<br>
-<b>Warning on line 186</b> - Method "task_set_types" has no method-level DocBlock.<br>
-<b>Warning on line 195</b> - Method "get_task_set_types" has no method-level DocBlock.<br>
-<b>Warning on line 202</b> - Method "get_task_set_type_form" has no method-level DocBlock.<br>
-<b>Warning on line 239</b> - Method "add_task_set_type" has no method-level DocBlock.<br>
-<b>Warning on line 275</b> - Method "save_task_set_type" has no method-level DocBlock.<br>
-<b>Warning on line 316</b> - Method "delete_task_set_type" has no method-level DocBlock.<br>
-<b>Warning on line 330</b> - Method "inject_periods" has no method-level DocBlock.<br>
-<b>Warning on line 335</b> - Method "inject_languages" has no method-level DocBlock.<br>
-<b>Warning on line 353</b> - Method "inject_unused_task_set_types" has no method-level DocBlock.<br>
-<b>Warning on line 362</b> - Method "store_filter" has no method-level DocBlock.<br>
-<b>Warning on line 368</b> - Method "inject_stored_filter" has no method-level DocBlock.<br>
+<b>Warning on line 44</b> - Method "index" has no method-level DocBlock.<br>
+<b>Warning on line 76</b> - Method "get_table_content" has no method-level DocBlock.<br>
+<b>Warning on line 88</b> - Method "signup_to_course" has no method-level DocBlock.<br>
+<b>Warning on line 106</b> - Method "create" has no method-level DocBlock.<br>
+<b>Warning on line 111</b> - Method "new_course_form" has no method-level DocBlock.<br>
+<b>Warning on line 129</b> - Method "activate_course" has no method-level DocBlock.<br>
+<b>Warning on line 134</b> - Method "delete" has no method-level DocBlock.<br>
+<b>Warning on line 141</b> - Method "show_details" has no method-level DocBlock.<br>
+<b>Warning on line 151</b> - Method "quick_course_change" has no method-level DocBlock.<br>
+<b>Warning on line 153</b> - Method "edit" has no method-level DocBlock.<br>
+<b>Warning on line 164</b> - Method "inject_period_options" has no method-level DocBlock.<br>
+<b>Warning on line 173</b> - Method "store_filter" has no method-level DocBlock.<br>
+<b>Warning on line 180</b> - Method "inject_stored_filter" has no method-level DocBlock.<br>
+<b>Warning on line 193</b> - Method "update" has no method-level DocBlock.<br>
+<b>Warning on line 204</b> - Method "task_set_types" has no method-level DocBlock.<br>
+<b>Warning on line 213</b> - Method "get_task_set_types" has no method-level DocBlock.<br>
+<b>Warning on line 220</b> - Method "get_task_set_type_form" has no method-level DocBlock.<br>
+<b>Warning on line 257</b> - Method "add_task_set_type" has no method-level DocBlock.<br>
+<b>Warning on line 293</b> - Method "save_task_set_type" has no method-level DocBlock.<br>
+<b>Warning on line 334</b> - Method "delete_task_set_type" has no method-level DocBlock.<br>
+<b>Warning on line 348</b> - Method "inject_periods" has no method-level DocBlock.<br>
+<b>Warning on line 353</b> - Method "inject_languages" has no method-level DocBlock.<br>
+<b>Warning on line 371</b> - Method "inject_unused_task_set_types" has no method-level DocBlock.<br>
+<b>Warning on line 380</b> - Method "store_filter" has no method-level DocBlock.<br>
+<b>Warning on line 386</b> - Method "inject_stored_filter" has no method-level DocBlock.<br>
 <a name="dashboard.php"></a>
 <h1>dashboard.php</h1>
 <h2>Warnings:</h2><br>
@@ -226,11 +237,25 @@
 <h1>inflector_helper.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 17</b> - package default is already in category default, will now replace with category Helpers<br>
+<a name="joins.php"></a>
+<h1>joins.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 9</b> - package default is already in category DMZ, will now replace with category default<br>
+<b>Warning on line 9</b> - DocBlock would be page-level, but precedes class "DMZ_Joins", use another DocBlock to document the file<br>
+<a name="json.php"></a>
+<h1>json.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 16</b> - package default is already in category default, will now replace with category DMZ<br>
+<a name="lamsfet_helper.php"></a>
+<h1>lamsfet_helper.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 8</b> - package default is already in category Helpers, will now replace with category default<br>
+<b>Warning on line 23</b> - Page-level DocBlock precedes "function lamsfet_download_file", use another DocBlock to document the source element<br>
 <a name="LIST_Controller.php"></a>
 <h1>LIST_Controller.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 7</b> - DocBlock would be page-level, but precedes class "LIST_Controller", use another DocBlock to document the file<br>
-<b>Warning on line 252</b> - Method "_init_teacher_quick_prefered_course_menu" has no method-level DocBlock.<br>
+<b>Warning on line 275</b> - Method "_init_teacher_quick_prefered_course_menu" has no method-level DocBlock.<br>
 <a name="LIST_Email.php"></a>
 <h1>LIST_Email.php</h1>
 <h2>Warnings:</h2><br>
@@ -247,14 +272,20 @@
 <a name="LIST_Output.php"></a>
 <h1>LIST_Output.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 14</b> - Unknown tag "@hacked-by" used<br>
 <b>Warning on line 14</b> - DocBlock would be page-level, but precedes class "LIST_Output", use another DocBlock to document the file<br>
+<b>Warning on line 14</b> - Unknown tag "@hacked-by" used<br>
 <b>Warning on line 25</b> - Method "_display" has no method-level DocBlock.<br>
 <a name="LIST_Parser.php"></a>
 <h1>LIST_Parser.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 15</b> - DocBlock would be page-level, but precedes class "LIST_Parser", use another DocBlock to document the file<br>
 <b>Warning on line 55</b> - Method "__construct" has no method-level DocBlock.<br>
+<a name="maintenance.php"></a>
+<h1>maintenance.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 7</b> - DocBlock would be page-level, but precedes class "Maintenance", use another DocBlock to document the file<br>
+<b>Warning on line 12</b> - Method "__construct" has no method-level DocBlock.<br>
+<b>Warning on line 16</b> - Method "index" has no method-level DocBlock.<br>
 <a name="messages.php"></a>
 <h1>messages.php</h1>
 <h2>Warnings:</h2><br>
@@ -263,10 +294,11 @@
 <h1>nestedsets.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 17</b> - Unknown tag "@info" used<br>
-<a name="parser_helper.php"></a>
-<h1>parser_helper.php</h1>
+<a name="ordering.php"></a>
+<h1>ordering.php</h1>
 <h2>Warnings:</h2><br>
-<b>Warning on line 23</b> - package default is already in category Helpers, will now replace with category default<br>
+<b>Warning on line 9</b> - package default is already in category DMZ, will now replace with category default<br>
+<b>Warning on line 9</b> - DocBlock would be page-level, but precedes class "DMZ_Ordering", use another DocBlock to document the file<br>
 <a name="participant.php"></a>
 <h1>participant.php</h1>
 <h2>Warnings:</h2><br>
@@ -318,22 +350,28 @@
 <h1>room.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 7</b> - DocBlock would be page-level, but precedes class "Room", use another DocBlock to document the file<br>
+<b>Warning on line 30</b> - Method "selected_teachers" has no method-level DocBlock.<br>
 <a name="rooms.php"></a>
 <h1>rooms.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 7</b> - DocBlock would be page-level, but precedes class "Rooms", use another DocBlock to document the file<br>
 <b>Warning on line 15</b> - Method "__construct" has no method-level DocBlock.<br>
-<b>Warning on line 26</b> - Method "index" has no method-level DocBlock.<br>
-<b>Warning on line 35</b> - Method "get_table_content" has no method-level DocBlock.<br>
-<b>Warning on line 82</b> - Method "create" has no method-level DocBlock.<br>
-<b>Warning on line 94</b> - Method "_is_time" has no method-level DocBlock.<br>
-<b>Warning on line 106</b> - Method "_is_later_time" has no method-level DocBlock.<br>
-<b>Warning on line 116</b> - Method "_is_day" has no method-level DocBlock.<br>
-<b>Warning on line 123</b> - Method "new_room_form" has no method-level DocBlock.<br>
-<b>Warning on line 145</b> - Method "delete" has no method-level DocBlock.<br>
-<b>Warning on line 157</b> - Method "edit" has no method-level DocBlock.<br>
-<b>Warning on line 200</b> - Method "update" has no method-level DocBlock.<br>
-<b>Warning on line 212</b> - Method "time_to_int" has no method-level DocBlock.<br>
+<b>Warning on line 27</b> - Method "index" has no method-level DocBlock.<br>
+<b>Warning on line 36</b> - Method "get_table_content" has no method-level DocBlock.<br>
+<b>Warning on line 95</b> - Method "create" has no method-level DocBlock.<br>
+<b>Warning on line 107</b> - Method "_is_time" has no method-level DocBlock.<br>
+<b>Warning on line 119</b> - Method "_is_later_time" has no method-level DocBlock.<br>
+<b>Warning on line 129</b> - Method "_is_day" has no method-level DocBlock.<br>
+<b>Warning on line 137</b> - Method "new_room_form" has no method-level DocBlock.<br>
+<b>Warning on line 159</b> - Method "delete" has no method-level DocBlock.<br>
+<b>Warning on line 172</b> - Method "edit" has no method-level DocBlock.<br>
+<b>Warning on line 227</b> - Method "update" has no method-level DocBlock.<br>
+<b>Warning on line 239</b> - Method "time_to_int" has no method-level DocBlock.<br>
+<b>Warning on line 253</b> - Method "inject_teachers" has no method-level DocBlock.<br>
+<a name="rowindex.php"></a>
+<h1>rowindex.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 16</b> - package default is already in category default, will now replace with category DMZ<br>
 <a name="security.php"></a>
 <h1>security.php</h1>
 <h2>Warnings:</h2><br>
@@ -352,8 +390,8 @@
 <h1>Smarty.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 15</b> - Page-level DocBlock precedes "require_once APPPATH."third_party/Smarty/Smarty.class.php"", use another DocBlock to document the source element<br>
-<b>Warning on line 17</b> - no @package tag was used in a DocBlock for class CI_Smarty<br>
 <b>Warning on line 17</b> - Class "CI_Smarty" has no Class-level DocBlock.<br>
+<b>Warning on line 17</b> - no @package tag was used in a DocBlock for class CI_Smarty<br>
 <b>Warning on line 71</b> - Method "__construct" has no method-level DocBlock.<br>
 <b>Warning on line 79</b> - example file "$this->smarty->enable_caching(); then do your parse call" does not exist<br>
 <b>Warning on line 90</b> - example file "$this->smarty->disable_caching(); then do your parse call" does not exist<br>
@@ -367,31 +405,31 @@
 <b>Warning on line 7</b> - DocBlock would be page-level, but precedes class "Solutions", use another DocBlock to document the file<br>
 <b>Warning on line 20</b> - Method "__construct" has no method-level DocBlock.<br>
 <b>Warning on line 31</b> - Method "index" has no method-level DocBlock.<br>
-<b>Warning on line 43</b> - Method "batch_valuation" has no method-level DocBlock.<br>
-<b>Warning on line 50</b> - Method "batch_valuation_list" has no method-level DocBlock.<br>
-<b>Warning on line 99</b> - Method "batch_save_solutions" has no method-level DocBlock.<br>
-<b>Warning on line 181</b> - Method "remove_points" has no method-level DocBlock.<br>
-<b>Warning on line 197</b> - Method "solutions_list" has no method-level DocBlock.<br>
-<b>Warning on line 243</b> - Method "create_solution" has no method-level DocBlock.<br>
-<b>Warning on line 252</b> - Method "new_solution_form" has no method-level DocBlock.<br>
-<b>Warning on line 264</b> - Method "display_tasks_list" has no method-level DocBlock.<br>
-<b>Warning on line 284</b> - Method "valuation" has no method-level DocBlock.<br>
-<b>Warning on line 317</b> - Method "update_valuation" has no method-level DocBlock.<br>
-<b>Warning on line 330</b> - Method "get_student_file_content" has no method-level DocBlock.<br>
-<b>Warning on line 364</b> - Method "show_file_content" has no method-level DocBlock.<br>
-<b>Warning on line 411</b> - Method "get_task_set_list" has no method-level DocBlock.<br>
-<b>Warning on line 426</b> - Method "get_solutions_list_for_task_set" has no method-level DocBlock.<br>
-<b>Warning on line 442</b> - Method "get_groups_from_course" has no method-level DocBlock.<br>
-<b>Warning on line 452</b> - Method "valuation_tables" has no method-level DocBlock.<br>
-<b>Warning on line 609</b> - Method "get_valuation_table" has no method-level DocBlock.<br>
-<b>Warning on line 620</b> - Method "store_task_set_selection_filter" has no method-level DocBlock.<br>
-<b>Warning on line 626</b> - Method "inject_stored_task_set_selection_filter" has no method-level DocBlock.<br>
-<b>Warning on line 638</b> - Method "store_valuation_tables_filter" has no method-level DocBlock.<br>
-<b>Warning on line 644</b> - Method "inject_stored_valuation_tables_filter" has no method-level DocBlock.<br>
-<b>Warning on line 659</b> - Method "inject_courses" has no method-level DocBlock.<br>
-<b>Warning on line 684</b> - Method "inject_students" has no method-level DocBlock.<br>
-<b>Warning on line 710</b> - Method "inject_batch_valuation" has no method-level DocBlock.<br>
-<b>Warning on line 723</b> - Method "inject_all_task_set_types" has no method-level DocBlock.<br>
+<b>Warning on line 44</b> - Method "batch_valuation" has no method-level DocBlock.<br>
+<b>Warning on line 51</b> - Method "batch_valuation_list" has no method-level DocBlock.<br>
+<b>Warning on line 101</b> - Method "batch_save_solutions" has no method-level DocBlock.<br>
+<b>Warning on line 183</b> - Method "remove_points" has no method-level DocBlock.<br>
+<b>Warning on line 199</b> - Method "solutions_list" has no method-level DocBlock.<br>
+<b>Warning on line 245</b> - Method "create_solution" has no method-level DocBlock.<br>
+<b>Warning on line 254</b> - Method "new_solution_form" has no method-level DocBlock.<br>
+<b>Warning on line 266</b> - Method "display_tasks_list" has no method-level DocBlock.<br>
+<b>Warning on line 287</b> - Method "valuation" has no method-level DocBlock.<br>
+<b>Warning on line 322</b> - Method "update_valuation" has no method-level DocBlock.<br>
+<b>Warning on line 335</b> - Method "get_student_file_content" has no method-level DocBlock.<br>
+<b>Warning on line 354</b> - Method "show_file_content" has no method-level DocBlock.<br>
+<b>Warning on line 400</b> - Method "get_task_set_list" has no method-level DocBlock.<br>
+<b>Warning on line 416</b> - Method "get_solutions_list_for_task_set" has no method-level DocBlock.<br>
+<b>Warning on line 432</b> - Method "get_groups_from_course" has no method-level DocBlock.<br>
+<b>Warning on line 442</b> - Method "valuation_tables" has no method-level DocBlock.<br>
+<b>Warning on line 599</b> - Method "get_valuation_table" has no method-level DocBlock.<br>
+<b>Warning on line 610</b> - Method "store_task_set_selection_filter" has no method-level DocBlock.<br>
+<b>Warning on line 616</b> - Method "inject_stored_task_set_selection_filter" has no method-level DocBlock.<br>
+<b>Warning on line 628</b> - Method "store_valuation_tables_filter" has no method-level DocBlock.<br>
+<b>Warning on line 634</b> - Method "inject_stored_valuation_tables_filter" has no method-level DocBlock.<br>
+<b>Warning on line 649</b> - Method "inject_courses" has no method-level DocBlock.<br>
+<b>Warning on line 674</b> - Method "inject_students" has no method-level DocBlock.<br>
+<b>Warning on line 708</b> - Method "inject_batch_valuation" has no method-level DocBlock.<br>
+<b>Warning on line 721</b> - Method "inject_all_task_set_types" has no method-level DocBlock.<br>
 <a name="student.php"></a>
 <h1>student.php</h1>
 <h2>Warnings:</h2><br>
@@ -405,31 +443,35 @@
 <b>Warning on line 19</b> - Method "__construct" has no method-level DocBlock.<br>
 <b>Warning on line 27</b> - Method "index" has no method-level DocBlock.<br>
 <b>Warning on line 31</b> - Method "new_student_form" has no method-level DocBlock.<br>
-<b>Warning on line 40</b> - Method "table_content" has no method-level DocBlock.<br>
-<b>Warning on line 68</b> - Method "create" has no method-level DocBlock.<br>
-<b>Warning on line 79</b> - Method "edit" has no method-level DocBlock.<br>
-<b>Warning on line 119</b> - Method "update" has no method-level DocBlock.<br>
-<b>Warning on line 126</b> - Method "_email_available" has no method-level DocBlock.<br>
-<b>Warning on line 149</b> - Method "delete" has no method-level DocBlock.<br>
-<b>Warning on line 154</b> - Method "csv_import" has no method-level DocBlock.<br>
-<b>Warning on line 186</b> - Method "upload_csv_file" has no method-level DocBlock.<br>
-<b>Warning on line 210</b> - Method "show_csv_content" has no method-level DocBlock.<br>
+<b>Warning on line 51</b> - Method "table_content" has no method-level DocBlock.<br>
+<b>Warning on line 79</b> - Method "create" has no method-level DocBlock.<br>
+<b>Warning on line 90</b> - Method "edit" has no method-level DocBlock.<br>
+<b>Warning on line 130</b> - Method "update" has no method-level DocBlock.<br>
+<b>Warning on line 137</b> - Method "_email_available" has no method-level DocBlock.<br>
+<b>Warning on line 160</b> - Method "delete" has no method-level DocBlock.<br>
+<b>Warning on line 165</b> - Method "csv_import" has no method-level DocBlock.<br>
+<b>Warning on line 197</b> - Method "upload_csv_file" has no method-level DocBlock.<br>
+<b>Warning on line 221</b> - Method "show_csv_content" has no method-level DocBlock.<br>
 <b>Warning on line 227</b> - Method "do_change_password" has no method-level DocBlock.<br>
-<b>Warning on line 236</b> - Method "csv_import_screen" has no method-level DocBlock.<br>
+<b>Warning on line 247</b> - Method "csv_import_screen" has no method-level DocBlock.<br>
 <b>Warning on line 292</b> - Method "registered" has no method-level DocBlock.<br>
-<b>Warning on line 304</b> - Method "my_account" has no method-level DocBlock.<br>
-<b>Warning on line 342</b> - Method "save_basic_information" has no method-level DocBlock.<br>
-<b>Warning on line 347</b> - Method "import_single_line" has no method-level DocBlock.<br>
-<b>Warning on line 353</b> - Method "delete_csv_file" has no method-level DocBlock.<br>
-<b>Warning on line 369</b> - Method "test_csv_import_cols" has no method-level DocBlock.<br>
-<b>Warning on line 382</b> - Method "save_password" has no method-level DocBlock.<br>
-<b>Warning on line 387</b> - Method "convert_csv_import_cols_config" has no method-level DocBlock.<br>
-<b>Warning on line 389</b> - Method "_validate_old_password" has no method-level DocBlock.<br>
-<b>Warning on line 411</b> - Method "get_csv_content" has no method-level DocBlock.<br>
-<b>Warning on line 425</b> - Method "inject_courses" has no method-level DocBlock.<br>
-<b>Warning on line 427</b> - Method "save_email" has no method-level DocBlock.<br>
-<b>Warning on line 434</b> - Method "store_filter" has no method-level DocBlock.<br>
-<b>Warning on line 440</b> - Method "inject_stored_filter" has no method-level DocBlock.<br>
+<b>Warning on line 306</b> - Method "my_account" has no method-level DocBlock.<br>
+<b>Warning on line 344</b> - Method "save_basic_information" has no method-level DocBlock.<br>
+<b>Warning on line 358</b> - Method "import_single_line" has no method-level DocBlock.<br>
+<b>Warning on line 364</b> - Method "delete_csv_file" has no method-level DocBlock.<br>
+<b>Warning on line 380</b> - Method "test_csv_import_cols" has no method-level DocBlock.<br>
+<b>Warning on line 384</b> - Method "save_password" has no method-level DocBlock.<br>
+<b>Warning on line 391</b> - Method "_validate_old_password" has no method-level DocBlock.<br>
+<b>Warning on line 398</b> - Method "convert_csv_import_cols_config" has no method-level DocBlock.<br>
+<b>Warning on line 422</b> - Method "get_csv_content" has no method-level DocBlock.<br>
+<b>Warning on line 429</b> - Method "save_email" has no method-level DocBlock.<br>
+<b>Warning on line 434</b> - Method "upload_avatar" has no method-level DocBlock.<br>
+<b>Warning on line 436</b> - Method "inject_courses" has no method-level DocBlock.<br>
+<b>Warning on line 445</b> - Method "store_filter" has no method-level DocBlock.<br>
+<b>Warning on line 451</b> - Method "inject_stored_filter" has no method-level DocBlock.<br>
+<b>Warning on line 462</b> - Method "crop_avatar" has no method-level DocBlock.<br>
+<b>Warning on line 507</b> - Method "save_avatar" has no method-level DocBlock.<br>
+<b>Warning on line 515</b> - Method "delete_avatar" has no method-level DocBlock.<br>
 <a name="task.php"></a>
 <h1>task.php</h1>
 <h2>Warnings:</h2><br>
@@ -443,44 +485,46 @@
 <b>Warning on line 22</b> - Method "__construct" has no method-level DocBlock.<br>
 <b>Warning on line 33</b> - Method "index" has no method-level DocBlock.<br>
 <b>Warning on line 37</b> - Method "index" has no method-level DocBlock.<br>
-<b>Warning on line 66</b> - Method "task" has no method-level DocBlock.<br>
+<b>Warning on line 67</b> - Method "task" has no method-level DocBlock.<br>
 <b>Warning on line 80</b> - Method "get_all_tasks" has no method-level DocBlock.<br>
-<b>Warning on line 90</b> - Method "new_task" has no method-level DocBlock.<br>
-<b>Warning on line 117</b> - Method "upload_solution" has no method-level DocBlock.<br>
-<b>Warning on line 125</b> - Method "create" has no method-level DocBlock.<br>
-<b>Warning on line 142</b> - Method "download_solution" has no method-level DocBlock.<br>
-<b>Warning on line 144</b> - Method "edit" has no method-level DocBlock.<br>
-<b>Warning on line 163</b> - Method "download_file" has no method-level DocBlock.<br>
-<b>Warning on line 184</b> - Method "download_hidden_file" has no method-level DocBlock.<br>
-<b>Warning on line 188</b> - Method "update" has no method-level DocBlock.<br>
-<b>Warning on line 198</b> - Method "show_comments" has no method-level DocBlock.<br>
-<b>Warning on line 211</b> - Method "delete" has no method-level DocBlock.<br>
-<b>Warning on line 217</b> - Method "subscribe_to_task_comments" has no method-level DocBlock.<br>
-<b>Warning on line 221</b> - Method "preview" has no method-level DocBlock.<br>
-<b>Warning on line 231</b> - Method "plupload_file" has no method-level DocBlock.<br>
-<b>Warning on line 242</b> - Method "unsubscribe_to_task_comments" has no method-level DocBlock.<br>
-<b>Warning on line 246</b> - Method "plupload_hidden_file" has no method-level DocBlock.<br>
-<b>Warning on line 251</b> - Method "get_task_files" has no method-level DocBlock.<br>
-<b>Warning on line 256</b> - Method "get_hidden_task_files" has no method-level DocBlock.<br>
-<b>Warning on line 258</b> - Method "reply_at_comment" has no method-level DocBlock.<br>
-<b>Warning on line 266</b> - Method "post_comment" has no method-level DocBlock.<br>
-<b>Warning on line 268</b> - Method "delete_file" has no method-level DocBlock.<br>
-<b>Warning on line 274</b> - Method "post_comment_reply" has no method-level DocBlock.<br>
-<b>Warning on line 280</b> - Method "delete_hidden_file" has no method-level DocBlock.<br>
-<b>Warning on line 298</b> - Method "add_to_task_set" has no method-level DocBlock.<br>
-<b>Warning on line 323</b> - Method "create_comment" has no method-level DocBlock.<br>
-<b>Warning on line 335</b> - Method "normalize_student_name" has no method-level DocBlock.<br>
-<b>Warning on line 346</b> - Method "insert_to_task_set" has no method-level DocBlock.<br>
-<b>Warning on line 351</b> - Method "get_metainfo_open_task_set" has no method-level DocBlock.<br>
-<b>Warning on line 361</b> - Method "store_filter" has no method-level DocBlock.<br>
-<b>Warning on line 367</b> - Method "inject_stored_filter" has no method-level DocBlock.<br>
-<b>Warning on line 371</b> - Method "get_task_sets" has no method-level DocBlock.<br>
-<b>Warning on line 372</b> - Method "inject_languages" has no method-level DocBlock.<br>
-<b>Warning on line 384</b> - Method "inject_files" has no method-level DocBlock.<br>
-<b>Warning on line 404</b> - Method "get_task_set_by_id" has no method-level DocBlock.<br>
-<b>Warning on line 415</b> - Method "can_upload_file" has no method-level DocBlock.<br>
-<b>Warning on line 453</b> - Method "filter_valid_task_sets" has no method-level DocBlock.<br>
-<b>Warning on line 488</b> - Method "compute_points" has no method-level DocBlock.<br>
+<b>Warning on line 91</b> - Method "new_task" has no method-level DocBlock.<br>
+<b>Warning on line 126</b> - Method "create" has no method-level DocBlock.<br>
+<b>Warning on line 128</b> - Method "upload_solution" has no method-level DocBlock.<br>
+<b>Warning on line 146</b> - Method "edit" has no method-level DocBlock.<br>
+<b>Warning on line 153</b> - Method "download_solution" has no method-level DocBlock.<br>
+<b>Warning on line 174</b> - Method "download_file" has no method-level DocBlock.<br>
+<b>Warning on line 190</b> - Method "update" has no method-level DocBlock.<br>
+<b>Warning on line 195</b> - Method "download_hidden_file" has no method-level DocBlock.<br>
+<b>Warning on line 209</b> - Method "show_comments" has no method-level DocBlock.<br>
+<b>Warning on line 213</b> - Method "delete" has no method-level DocBlock.<br>
+<b>Warning on line 225</b> - Method "preview" has no method-level DocBlock.<br>
+<b>Warning on line 228</b> - Method "subscribe_to_task_comments" has no method-level DocBlock.<br>
+<b>Warning on line 235</b> - Method "plupload_file" has no method-level DocBlock.<br>
+<b>Warning on line 250</b> - Method "plupload_hidden_file" has no method-level DocBlock.<br>
+<b>Warning on line 253</b> - Method "unsubscribe_to_task_comments" has no method-level DocBlock.<br>
+<b>Warning on line 255</b> - Method "get_task_files" has no method-level DocBlock.<br>
+<b>Warning on line 260</b> - Method "get_hidden_task_files" has no method-level DocBlock.<br>
+<b>Warning on line 269</b> - Method "reply_at_comment" has no method-level DocBlock.<br>
+<b>Warning on line 272</b> - Method "delete_file" has no method-level DocBlock.<br>
+<b>Warning on line 277</b> - Method "post_comment" has no method-level DocBlock.<br>
+<b>Warning on line 284</b> - Method "delete_hidden_file" has no method-level DocBlock.<br>
+<b>Warning on line 285</b> - Method "post_comment_reply" has no method-level DocBlock.<br>
+<b>Warning on line 304</b> - Method "add_to_task_set" has no method-level DocBlock.<br>
+<b>Warning on line 334</b> - Method "create_comment" has no method-level DocBlock.<br>
+<b>Warning on line 346</b> - Method "normalize_student_name" has no method-level DocBlock.<br>
+<b>Warning on line 352</b> - Method "insert_to_task_set" has no method-level DocBlock.<br>
+<b>Warning on line 357</b> - Method "get_metainfo_open_task_set" has no method-level DocBlock.<br>
+<b>Warning on line 367</b> - Method "store_filter" has no method-level DocBlock.<br>
+<b>Warning on line 373</b> - Method "inject_stored_filter" has no method-level DocBlock.<br>
+<b>Warning on line 378</b> - Method "inject_languages" has no method-level DocBlock.<br>
+<b>Warning on line 383</b> - Method "get_task_sets" has no method-level DocBlock.<br>
+<b>Warning on line 390</b> - Method "inject_files" has no method-level DocBlock.<br>
+<b>Warning on line 403</b> - Method "inject_prettify_config" has no method-level DocBlock.<br>
+<b>Warning on line 424</b> - Method "get_task_set_by_id" has no method-level DocBlock.<br>
+<b>Warning on line 435</b> - Method "can_upload_file" has no method-level DocBlock.<br>
+<b>Warning on line 473</b> - Method "filter_valid_task_sets" has no method-level DocBlock.<br>
+<b>Warning on line 508</b> - Method "compute_points" has no method-level DocBlock.<br>
+<b>Warning on line 525</b> - Method "zip_plain_file_to_archive" has no method-level DocBlock.<br>
 <a name="task_set.php"></a>
 <h1>task_set.php</h1>
 <h2>Warnings:</h2><br>
@@ -494,31 +538,32 @@
 <b>Warning on line 37</b> - Method "new_task_set_form" has no method-level DocBlock.<br>
 <b>Warning on line 56</b> - Method "get_task_set_types" has no method-level DocBlock.<br>
 <b>Warning on line 75</b> - Method "get_task_set_groups" has no method-level DocBlock.<br>
-<b>Warning on line 98</b> - Method "get_task_set_group_rooms" has no method-level DocBlock.<br>
-<b>Warning on line 160</b> - Method "get_all_task_sets" has no method-level DocBlock.<br>
-<b>Warning on line 195</b> - Method "create" has no method-level DocBlock.<br>
-<b>Warning on line 211</b> - Method "edit" has no method-level DocBlock.<br>
-<b>Warning on line 280</b> - Method "update" has no method-level DocBlock.<br>
-<b>Warning on line 303</b> - Method "delete" has no method-level DocBlock.<br>
-<b>Warning on line 317</b> - Method "open" has no method-level DocBlock.<br>
-<b>Warning on line 363</b> - Method "clone_task_set" has no method-level DocBlock.<br>
-<b>Warning on line 383</b> - Method "comments" has no method-level DocBlock.<br>
-<b>Warning on line 393</b> - Method "all_comments" has no method-level DocBlock.<br>
-<b>Warning on line 399</b> - Method "new_comment_form" has no method-level DocBlock.<br>
-<b>Warning on line 410</b> - Method "my_comments_settings" has no method-level DocBlock.<br>
-<b>Warning on line 438</b> - Method "comments_unsubscribe" has no method-level DocBlock.<br>
-<b>Warning on line 459</b> - Method "comments_subscribe" has no method-level DocBlock.<br>
-<b>Warning on line 487</b> - Method "delete_comment" has no method-level DocBlock.<br>
-<b>Warning on line 527</b> - Method "approve_comment" has no method-level DocBlock.<br>
-<b>Warning on line 538</b> - Method "post_comment" has no method-level DocBlock.<br>
-<b>Warning on line 549</b> - Method "reply_at_comment" has no method-level DocBlock.<br>
-<b>Warning on line 560</b> - Method "post_comment_reply" has no method-level DocBlock.<br>
-<b>Warning on line 623</b> - Method "add_comment" has no method-level DocBlock.<br>
-<b>Warning on line 637</b> - Method "inject_courses" has no method-level DocBlock.<br>
-<b>Warning on line 648</b> - Method "inject_task_set_types" has no method-level DocBlock.<br>
-<b>Warning on line 658</b> - Method "store_filter" has no method-level DocBlock.<br>
-<b>Warning on line 664</b> - Method "inject_stored_filter" has no method-level DocBlock.<br>
-<b>Warning on line 669</b> - Method "inject_languages" has no method-level DocBlock.<br>
+<b>Warning on line 91</b> - Method "get_course_groups" has no method-level DocBlock.<br>
+<b>Warning on line 115</b> - Method "get_task_set_group_rooms" has no method-level DocBlock.<br>
+<b>Warning on line 184</b> - Method "get_all_task_sets" has no method-level DocBlock.<br>
+<b>Warning on line 219</b> - Method "create" has no method-level DocBlock.<br>
+<b>Warning on line 235</b> - Method "edit" has no method-level DocBlock.<br>
+<b>Warning on line 304</b> - Method "update" has no method-level DocBlock.<br>
+<b>Warning on line 327</b> - Method "delete" has no method-level DocBlock.<br>
+<b>Warning on line 341</b> - Method "open" has no method-level DocBlock.<br>
+<b>Warning on line 387</b> - Method "clone_task_set" has no method-level DocBlock.<br>
+<b>Warning on line 407</b> - Method "comments" has no method-level DocBlock.<br>
+<b>Warning on line 417</b> - Method "all_comments" has no method-level DocBlock.<br>
+<b>Warning on line 423</b> - Method "new_comment_form" has no method-level DocBlock.<br>
+<b>Warning on line 434</b> - Method "my_comments_settings" has no method-level DocBlock.<br>
+<b>Warning on line 462</b> - Method "comments_unsubscribe" has no method-level DocBlock.<br>
+<b>Warning on line 483</b> - Method "comments_subscribe" has no method-level DocBlock.<br>
+<b>Warning on line 511</b> - Method "delete_comment" has no method-level DocBlock.<br>
+<b>Warning on line 551</b> - Method "approve_comment" has no method-level DocBlock.<br>
+<b>Warning on line 562</b> - Method "post_comment" has no method-level DocBlock.<br>
+<b>Warning on line 573</b> - Method "reply_at_comment" has no method-level DocBlock.<br>
+<b>Warning on line 584</b> - Method "post_comment_reply" has no method-level DocBlock.<br>
+<b>Warning on line 647</b> - Method "add_comment" has no method-level DocBlock.<br>
+<b>Warning on line 661</b> - Method "inject_courses" has no method-level DocBlock.<br>
+<b>Warning on line 672</b> - Method "inject_task_set_types" has no method-level DocBlock.<br>
+<b>Warning on line 682</b> - Method "store_filter" has no method-level DocBlock.<br>
+<b>Warning on line 688</b> - Method "inject_stored_filter" has no method-level DocBlock.<br>
+<b>Warning on line 693</b> - Method "inject_languages" has no method-level DocBlock.<br>
 <a name="task_set_type.php"></a>
 <h1>task_set_type.php</h1>
 <h2>Warnings:</h2><br>
@@ -567,8 +612,8 @@
 <h1>translations.php</h1>
 <h2>Warnings:</h2><br>
 <b>Warning on line 7</b> - DocBlock would be page-level, but precedes class "Translations", use another DocBlock to document the file<br>
-<b>Warning on line 9</b> - DocBlock would be page-level, but precedes class "DMZ_Translations", use another DocBlock to document the file<br>
 <b>Warning on line 9</b> - package default is already in category DMZ, will now replace with category default<br>
+<b>Warning on line 9</b> - DocBlock would be page-level, but precedes class "DMZ_Translations", use another DocBlock to document the file<br>
 <a name="translationseditor.php"></a>
 <h1>translationseditor.php</h1>
 <h2>Warnings:</h2><br>
@@ -588,7 +633,7 @@
 <h2>Warnings:</h2><br>
 <b>Warning on line 387</b> - File "C:\xampp\htdocs\list-svn\dev\application\libraries\usermanager.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 20 Aug 2013 20:43:10 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Fri, 13 Sep 2013 12:33:00 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</body>
 </html>

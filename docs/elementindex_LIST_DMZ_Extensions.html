@@ -15,6 +15,7 @@
 				<li><a href="elementindex_LIST_BE_Controllers.html">LIST_BE_Controllers</a></li>
 					<li><a href="elementindex_LIST_CLI_Controllers.html">LIST_CLI_Controllers</a></li>
 					<li><a href="elementindex_LIST_FE_Controllers.html">LIST_FE_Controllers</a></li>
+					<li><a href="elementindex_LIST_MAINTENANCE_Controllers.html">LIST_MAINTENANCE_Controllers</a></li>
 					<li><a href="elementindex_LIST_Core.html">LIST_Core</a></li>
 					<li><a href="elementindex_CodeIgniter.html">CodeIgniter</a></li>
 					<li><a href="elementindex_DMZ-Included-Extensions.html">DMZ-Included-Extensions</a></li>
@@ -29,12 +30,30 @@
 <a href="elementindex.html">All elements</a>
 <br />
 <div class="index-letter-menu">
+	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#a">a</a>
 	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#d">d</a>
+	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#f">f</a>
+	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#j">j</a>
 	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#l">l</a>
 	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#o">o</a>
 	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#t">t</a>
 </div>
 
+	<a name="a"></a>
+	<div class="index-letter-section">
+		<div style="float: left" class="index-letter-title">a</div>
+		<div style="float: right"><a href="#top">top</a></div>
+		<div style="clear: both"></div>
+	</div>
+	<dl>
+			<dt class="field">
+						<span class="method-title">add_join_condition</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Joins.html#methodadd_join_condition">DMZ_Joins::add_join_condition()</a> in joins.php</div>
+							<div class="index-item-description">Adds custom condition to last build join clause. You can use question mark as wildcard character for value pased by $replace array.</div>
+					</dd>
+		</dl>
 	<a name="d"></a>
 	<div class="index-letter-section">
 		<div style="float: left" class="index-letter-title">d</div>
@@ -43,11 +62,54 @@
 	</div>
 	<dl>
 			<dt class="field">
+						DMZ_Joins
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Joins.html">DMZ_Joins</a> in joins.php</div>
+							<div class="index-item-description">This class adds join helper methods for datamapper.</div>
+					</dd>
+			<dt class="field">
+						DMZ_Ordering
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Ordering.html">DMZ_Ordering</a> in ordering.php</div>
+							<div class="index-item-description">This class adds additional ordering methods for datamapper.</div>
+					</dd>
+			<dt class="field">
 						DMZ_Translations
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Translations.html">DMZ_Translations</a> in translations.php</div>
 							<div class="index-item-description">This class adds posibility to set ordering of table for column using L.I.S.T. translations methods (constants and overlays).</div>
+					</dd>
+		</dl>
+	<a name="f"></a>
+	<div class="index-letter-section">
+		<div style="float: left" class="index-letter-title">f</div>
+		<div style="float: right"><a href="#top">top</a></div>
+		<div style="clear: both"></div>
+	</div>
+	<dl>
+			<dt class="field">
+						<span class="method-title">find_and_replace_position</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Joins.html#methodfind_and_replace_position">DMZ_Joins::find_and_replace_position()</a> in joins.php</div>
+							<div class="index-item-description">Replaces first found question mark from the left by $replace value.</div>
+					</dd>
+		</dl>
+	<a name="j"></a>
+	<div class="index-letter-section">
+		<div style="float: left" class="index-letter-title">j</div>
+		<div style="float: right"><a href="#top">top</a></div>
+		<div style="clear: both"></div>
+	</div>
+	<dl>
+			<dt class="field">
+						<span class="include-title">joins.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/_extensions---joins.php.html">joins.php</a> in joins.php</div>
 					</dd>
 		</dl>
 	<a name="l"></a>
@@ -79,6 +141,26 @@
 		<div style="clear: both"></div>
 	</div>
 	<dl>
+			<dt class="field">
+						<span class="include-title">ordering.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/_extensions---ordering.php.html">ordering.php</a> in ordering.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">order_by_as_fullname</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Ordering.html#methodorder_by_as_fullname">DMZ_Ordering::order_by_as_fullname()</a> in ordering.php</div>
+							<div class="index-item-description">Handle column as fullname (first name &lt;space&gt; last name) and create order by clause for this column by last name.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">order_by_related_as_fullname</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Ordering.html#methodorder_by_related_as_fullname">DMZ_Ordering::order_by_related_as_fullname()</a> in ordering.php</div>
+							<div class="index-item-description">Add sorting of table deepest level in related table field.</div>
+					</dd>
 			<dt class="field">
 						<span class="method-title">order_by_related_with_constant</span>
 					</dt>
@@ -138,7 +220,10 @@
 		</dl>
 
 <div class="index-letter-menu">
+	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#a">a</a>
 	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#d">d</a>
+	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#f">f</a>
+	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#j">j</a>
 	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#l">l</a>
 	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#o">o</a>
 	<a class="index-letter" href="elementindex_LIST_DMZ_Extensions.html#t">t</a>

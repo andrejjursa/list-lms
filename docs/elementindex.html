@@ -15,6 +15,7 @@
 	<li><a href="elementindex_LIST_BE_Controllers.html">LIST_BE_Controllers</a></li>
 	<li><a href="elementindex_LIST_CLI_Controllers.html">LIST_CLI_Controllers</a></li>
 	<li><a href="elementindex_LIST_FE_Controllers.html">LIST_FE_Controllers</a></li>
+	<li><a href="elementindex_LIST_MAINTENANCE_Controllers.html">LIST_MAINTENANCE_Controllers</a></li>
 	<li><a href="elementindex_LIST_Core.html">LIST_Core</a></li>
 	<li><a href="elementindex_CodeIgniter.html">CodeIgniter</a></li>
 	<li><a href="elementindex_DMZ-Included-Extensions.html">DMZ-Included-Extensions</a></li>
@@ -52,6 +53,7 @@
 	<a class="index-letter" href="elementindex.html#u">u</a>
 	<a class="index-letter" href="elementindex.html#v">v</a>
 	<a class="index-letter" href="elementindex.html#w">w</a>
+	<a class="index-letter" href="elementindex.html#z">z</a>
 	<a class="index-letter" href="elementindex.html#_">_</a>
 </div>
 
@@ -126,6 +128,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_Core/LIST_Lang.html#methodadd_custom_translations">LIST_Lang::add_custom_translations()</a> in LIST_Lang.php</div>
 							<div class="index-item-description">Add custom translations to languages.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">add_join_condition</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Joins.html#methodadd_join_condition">DMZ_Joins::add_join_condition()</a> in joins.php</div>
+							<div class="index-item-description">Adds custom condition to last build join clause. You can use question mark as wildcard character for value pased by $replace array.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">add_js_file</span>
@@ -230,6 +239,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="DMZ-Included-Extensions/DMZ_Array.html#methodall_to_single_array">DMZ_Array::all_to_single_array()</a> in array.php</div>
 							<div class="index-item-description">Convert a single field from the entire $object-&gt;all array result set into an a single array  with the objects' id field as key</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">apply_lockdown</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_CLI_Controllers/Cli.html#methodapply_lockdown">Cli::apply_lockdown()</a> in cli.php</div>
+							<div class="index-item-description">Apply new lockdown.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">approve_comment</span>
@@ -496,6 +512,13 @@
 							<div class="index-item-description">Clear the list of JS files attached to template</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">clear_lockdown</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_CLI_Controllers/Cli.html#methodclear_lockdown">Cli::clear_lockdown()</a> in cli.php</div>
+							<div class="index-item-description">Release system lockdown.</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">clear_temporary_files</span>
 					</dt>
 		<dd class="index-item-body">
@@ -670,7 +693,7 @@
 						<span class="method-title">create</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_set_types.html#methodcreate">Task_set_types::create()</a> in task_set_types.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#methodcreate">Students::create()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">create</span>
@@ -688,7 +711,7 @@
 						<span class="method-title">create</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#methodcreate">Students::create()</a> in students.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_set_types.html#methodcreate">Task_set_types::create()</a> in task_set_types.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">create</span>
@@ -706,6 +729,12 @@
 						<span class="method-title">create</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Rooms.html#methodcreate">Rooms::create()</a> in rooms.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">create</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methodcreate">Periods::create()</a> in periods.php</div>
 					</dd>
 			<dt class="field">
@@ -713,12 +742,6 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Categories.html#methodcreate">Categories::create()</a> in categories.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">create</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Rooms.html#methodcreate">Rooms::create()</a> in rooms.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">create_comment</span>
@@ -746,17 +769,23 @@
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Teachers.html#methodcreate_teacher">Teachers::create_teacher()</a> in teachers.php</div>
 					</dd>
 			<dt class="field">
-						<span class="method-title">css</span>
+						<span class="method-title">crop_avatar</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="CI/_helpers---parser_helper.php.html#functioncss">css()</a> in parser_helper.php</div>
-							<div class="index-item-description">CSS</div>
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#methodcrop_avatar">Students::crop_avatar()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">css</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="CI/LIST_Parser.html#methodcss">LIST_Parser::css()</a> in LIST_Parser.php</div>
+							<div class="index-item-description">CSS</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">css</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="CI/_helpers---parser_helper.php.html#functioncss">css()</a> in parser_helper.php</div>
 							<div class="index-item-description">CSS</div>
 					</dd>
 			<dt class="field">
@@ -770,14 +799,14 @@
 						<span class="method-title">csv_import</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#methodcsv_import">Students::csv_import()</a> in students.php</div>
+			<div class="index-item-details"><a href="DMZ-Included-Extensions/DMZ_CSV.html#methodcsv_import">DMZ_CSV::csv_import()</a> in csv.php</div>
+							<div class="index-item-description">Import objects from a CSV file.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">csv_import</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="DMZ-Included-Extensions/DMZ_CSV.html#methodcsv_import">DMZ_CSV::csv_import()</a> in csv.php</div>
-							<div class="index-item-description">Import objects from a CSV file.</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#methodcsv_import">Students::csv_import()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">csv_import_screen</span>
@@ -870,17 +899,17 @@
 							<div class="index-item-description">Dashboard controller for backend.</div>
 					</dd>
 			<dt class="field">
-						<span class="method-title">DataMapper</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methodDataMapper">DataMapper::DataMapper()</a> in datamapper.php</div>
-					</dd>
-			<dt class="field">
 						DataMapper
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="DataMapper/DataMapper.html">DataMapper</a> in datamapper.php</div>
 							<div class="index-item-description">Data Mapper Class</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">DataMapper</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methodDataMapper">DataMapper::DataMapper()</a> in datamapper.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">db_is_mysql</span>
@@ -900,19 +929,20 @@
 						<span class="method-title">delete</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methoddelete">Periods::delete()</a> in periods.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">delete</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Rooms.html#methoddelete">Rooms::delete()</a> in rooms.php</div>
+			<div class="index-item-details"><a href="LIST_DM_Models/Period.html#methoddelete">Period::delete()</a> in period.php</div>
+							<div class="index-item-description">Delete this period or related object.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">delete</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_set_types.html#methoddelete">Task_set_types::delete()</a> in task_set_types.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">delete</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Rooms.html#methoddelete">Rooms::delete()</a> in rooms.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">delete</span>
@@ -970,8 +1000,7 @@
 						<span class="method-title">delete</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Period.html#methoddelete">Period::delete()</a> in period.php</div>
-							<div class="index-item-description">Delete this period or related object.</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methoddelete">Periods::delete()</a> in periods.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">delete</span>
@@ -984,14 +1013,14 @@
 						<span class="method-title">delete</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Comment.html#methoddelete">Comment::delete()</a> in comment.php</div>
-							<div class="index-item-description">Deletes relations (if parameters are set) or this object from database.</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Courses.html#methoddelete">Courses::delete()</a> in courses.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">delete</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Courses.html#methoddelete">Courses::delete()</a> in courses.php</div>
+			<div class="index-item-details"><a href="LIST_DM_Models/Comment.html#methoddelete">Comment::delete()</a> in comment.php</div>
+							<div class="index-item-description">Deletes relations (if parameters are set) or this object from database.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">delete</span>
@@ -1005,6 +1034,26 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methoddelete_all">DataMapper::delete_all()</a> in datamapper.php</div>
 							<div class="index-item-description">Delete All</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">delete_avatar</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Teacher.html#methoddelete_avatar">Teacher::delete_avatar()</a> in teacher.php</div>
+							<div class="index-item-description">Deletes teacher avatar.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">delete_avatar</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Student.html#methoddelete_avatar">Student::delete_avatar()</a> in student.php</div>
+							<div class="index-item-description">Deletes student avatar.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">delete_avatar</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#methoddelete_avatar">Students::delete_avatar()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">delete_comment</span>
@@ -1117,6 +1166,13 @@
 							<div class="index-item-description">DMZ_HTMLForm Class</div>
 					</dd>
 			<dt class="field">
+						DMZ_Joins
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Joins.html">DMZ_Joins</a> in joins.php</div>
+							<div class="index-item-description">This class adds join helper methods for datamapper.</div>
+					</dd>
+			<dt class="field">
 						DMZ_Json
 					</dt>
 		<dd class="index-item-body">
@@ -1129,6 +1185,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="DMZ-Included-Extensions/DMZ_Nestedsets.html">DMZ_Nestedsets</a> in nestedsets.php</div>
 							<div class="index-item-description">DMZ_Nestedsets Class</div>
+					</dd>
+			<dt class="field">
+						DMZ_Ordering
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Ordering.html">DMZ_Ordering</a> in ordering.php</div>
+							<div class="index-item-description">This class adds additional ordering methods for datamapper.</div>
 					</dd>
 			<dt class="field">
 						DMZ_RowIndex
@@ -1478,6 +1541,13 @@
 			<div class="index-item-details"><a href="LIST_FE_Controllers/Tasks.html#methodfilter_valid_task_sets">Tasks::filter_valid_task_sets()</a> in tasks.php</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">find_and_replace_position</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Joins.html#methodfind_and_replace_position">DMZ_Joins::find_and_replace_position()</a> in joins.php</div>
+							<div class="index-item-description">Replaces first found question mark from the left by $replace value.</div>
+					</dd>
+			<dt class="field">
 						FLASH_MESSAGES_NAME
 					</dt>
 		<dd class="index-item-body">
@@ -1573,6 +1643,13 @@
 			<div class="index-item-details"><a href="LIST_FE_Controllers/_controllers---groups.php.html">groups.php</a> in groups.php</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">generate_encryption_key</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_CLI_Controllers/Cli.html#methodgenerate_encryption_key">Cli::generate_encryption_key()</a> in cli.php</div>
+							<div class="index-item-description">Generate new encryption key.</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">generate_random_password_token</span>
 					</dt>
 		<dd class="index-item-body">
@@ -1583,15 +1660,15 @@
 						<span class="method-title">get</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methodget">DataMapper::get()</a> in datamapper.php</div>
-							<div class="index-item-description">Get</div>
+			<div class="index-item-details"><a href="DMZ/DM_DatasetIterator.html#methodget">DM_DatasetIterator::get()</a> in datamapper.php</div>
+							<div class="index-item-description">Gets the item at index $index</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">get</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="DMZ/DM_DatasetIterator.html#methodget">DM_DatasetIterator::get()</a> in datamapper.php</div>
-							<div class="index-item-description">Gets the item at index $index</div>
+			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methodget">DataMapper::get()</a> in datamapper.php</div>
+							<div class="index-item-description">Get</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">getIterator</span>
@@ -1647,6 +1724,20 @@
 							<div class="index-item-description">Load record of opened task set from database table.</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">get_avatar</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Student.html#methodget_avatar">Student::get_avatar()</a> in student.php</div>
+							<div class="index-item-description">Return full path of avatar (with base url) for this student.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">get_avatar</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Teacher.html#methodget_avatar">Teacher::get_avatar()</a> in teacher.php</div>
+							<div class="index-item-description">Return full path of avatar (with base url) for this teacher.</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">get_cached</span>
 					</dt>
 		<dd class="index-item-body">
@@ -1673,6 +1764,20 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_Libraries/Configurator.html#methodget_config_array">Configurator::get_config_array()</a> in configurator.php</div>
 							<div class="index-item-description">Returns configuration array for given config file.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">get_config_array_custom</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Libraries/Configurator.html#methodget_config_array_custom">Configurator::get_config_array_custom()</a> in configurator.php</div>
+							<div class="index-item-description">Returns content of config file by config variable.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">get_config_file_arangement</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Libraries/Configurator.html#methodget_config_file_arangement">Configurator::get_config_file_arangement()</a> in configurator.php</div>
+							<div class="index-item-description">Determines and return config file arangement.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">get_config_file_arangement_from_tokens</span>
@@ -1708,6 +1813,12 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methodget_copy">DataMapper::get_copy()</a> in datamapper.php</div>
 							<div class="index-item-description">Get Copy</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">get_course_groups</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#methodget_course_groups">Task_sets::get_course_groups()</a> in task_sets.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">get_csv_content</span>
@@ -2016,14 +2127,14 @@
 						<span class="method-title">get_task_files</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Tasks.html#methodget_task_files">Tasks::get_task_files()</a> in tasks.php</div>
+			<div class="index-item-details"><a href="LIST_DM_Models/Task.html#methodget_task_files">Task::get_task_files()</a> in task.php</div>
+							<div class="index-item-description">Return list of files for this task.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">get_task_files</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Task.html#methodget_task_files">Task::get_task_files()</a> in task.php</div>
-							<div class="index-item-description">Return list of files for this task.</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Tasks.html#methodget_task_files">Tasks::get_task_files()</a> in tasks.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">get_task_hidden_files</span>
@@ -2194,19 +2305,7 @@
 						<span class="var-title">$has_many</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Category.html#var$has_many">Category::$has_many</a> in category.php</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$has_many</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_DM_Models/Task_set_type.html#var$has_many">Task_set_type::$has_many</a> in task_set_type.php</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$has_many</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Task_set.html#var$has_many">Task_set::$has_many</a> in task_set.php</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$has_many</span>
@@ -2224,13 +2323,31 @@
 						<span class="var-title">$has_many</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Period.html#var$has_many">Period::$has_many</a> in period.php</div>
+			<div class="index-item-details"><a href="LIST_DM_Models/Category.html#var$has_many">Category::$has_many</a> in category.php</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$has_many</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_DM_Models/Teacher.html#var$has_many">Teacher::$has_many</a> in teacher.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$has_many</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Room.html#var$has_many">Room::$has_many</a> in room.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$has_many</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Period.html#var$has_many">Period::$has_many</a> in period.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$has_many</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Task_set.html#var$has_many">Task_set::$has_many</a> in task_set.php</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$has_many</span>
@@ -2273,12 +2390,6 @@
 						<span class="var-title">$has_one</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Room.html#var$has_one">Room::$has_one</a> in room.php</div>
-					</dd>
-			<dt class="field">
-						<span class="var-title">$has_one</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_DM_Models/Category.html#var$has_one">Category::$has_one</a> in category.php</div>
 					</dd>
 			<dt class="field">
@@ -2291,13 +2402,20 @@
 						<span class="var-title">$has_one</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Room.html#var$has_one">Room::$has_one</a> in room.php</div>
+					</dd>
+			<dt class="field">
+						<span class="var-title">$has_one</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_DM_Models/Task.html#var$has_one">Task::$has_one</a> in task.php</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$has_one</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Course.html#var$has_one">Course::$has_one</a> in course.php</div>
+			<div class="index-item-details"><a href="DataMapper/DataMapper.html#var$has_one">DataMapper::$has_one</a> in datamapper.php</div>
+							<div class="index-item-description">Contains any related objects of which this model is singularly related.</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$has_one</span>
@@ -2321,20 +2439,33 @@
 						<span class="var-title">$has_one</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Task_set.html#var$has_one">Task_set::$has_one</a> in task_set.php</div>
+			<div class="index-item-details"><a href="LIST_DM_Models/Course.html#var$has_one">Course::$has_one</a> in course.php</div>
 					</dd>
 			<dt class="field">
 						<span class="var-title">$has_one</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="DataMapper/DataMapper.html#var$has_one">DataMapper::$has_one</a> in datamapper.php</div>
-							<div class="index-item-description">Contains any related objects of which this model is singularly related.</div>
+			<div class="index-item-details"><a href="LIST_DM_Models/Task_set.html#var$has_one">Task_set::$has_one</a> in task_set.php</div>
 					</dd>
 			<dt class="field">
 						<span class="include-title">htmlform.php</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="DMZ-Included-Extensions/_extensions---htmlform.php.html">htmlform.php</a> in htmlform.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">has_avatar</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Student.html#methodhas_avatar">Student::has_avatar()</a> in student.php</div>
+							<div class="index-item-description">Check if student has avatar image uploaded. It checks the big_avatar.jpg presence, not the small one.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">has_avatar</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Teacher.html#methodhas_avatar">Teacher::has_avatar()</a> in teacher.php</div>
+							<div class="index-item-description">Check if teacher has avatar image uploaded. It checks the big_avatar.jpg presence, not the small one.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">has_children</span>
@@ -2465,13 +2596,19 @@
 						<span class="method-title">index</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Categories.html#methodindex">Categories::index()</a> in categories.php</div>
+			<div class="index-item-details"><a href="LIST_MAINTENANCE_Controllers/Maintenance.html#methodindex">Maintenance::index()</a> in maintenance.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">index</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_FE_Controllers/Groups.html#methodindex">Groups::index()</a> in groups.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methodindex">Periods::index()</a> in periods.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">index</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Rooms.html#methodindex">Rooms::index()</a> in rooms.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">index</span>
@@ -2483,14 +2620,31 @@
 						<span class="method-title">index</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#methodindex">Task_sets::index()</a> in task_sets.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">index</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_set_types.html#methodindex">Task_set_types::index()</a> in task_set_types.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">index</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Translationseditor.html#methodindex">Translationseditor::index()</a> in translationseditor.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">index</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#methodindex">Students::index()</a> in students.php</div>
-							<div class="index-item-description">Simple redirect to application default controller.</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Tasks.html#methodindex">Tasks::index()</a> in tasks.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">index</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#methodindex">Students::index()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">index</span>
@@ -2508,13 +2662,20 @@
 						<span class="method-title">index</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Participants.html#methodindex">Participants::index()</a> in participants.php</div>
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#methodindex">Students::index()</a> in students.php</div>
+							<div class="index-item-description">Simple redirect to application default controller.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">index</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#methodindex">Students::index()</a> in students.php</div>
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Groups.html#methodindex">Groups::index()</a> in groups.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">index</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Participants.html#methodindex">Participants::index()</a> in participants.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">index</span>
@@ -2526,19 +2687,19 @@
 						<span class="method-title">index</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_CLI_Controllers/Cli.html#methodindex">Cli::index()</a> in cli.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">index</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Courses.html#methodindex">Courses::index()</a> in courses.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">index</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_set_types.html#methodindex">Task_set_types::index()</a> in task_set_types.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">index</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#methodindex">Task_sets::index()</a> in task_sets.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Categories.html#methodindex">Categories::index()</a> in categories.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">index</span>
@@ -2551,24 +2712,6 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Groups.html#methodindex">Groups::index()</a> in groups.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">index</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Rooms.html#methodindex">Rooms::index()</a> in rooms.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">index</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methodindex">Periods::index()</a> in periods.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">index</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Tasks.html#methodindex">Tasks::index()</a> in tasks.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">init_overlays</span>
@@ -2606,13 +2749,13 @@
 						<span class="method-title">inject_courses</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Teachers.html#methodinject_courses">Teachers::inject_courses()</a> in teachers.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Groups.html#methodinject_courses">Groups::inject_courses()</a> in groups.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">inject_courses</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#methodinject_courses">Task_sets::inject_courses()</a> in task_sets.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Teachers.html#methodinject_courses">Teachers::inject_courses()</a> in teachers.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">inject_courses</span>
@@ -2630,7 +2773,7 @@
 						<span class="method-title">inject_courses</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Groups.html#methodinject_courses">Groups::inject_courses()</a> in groups.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#methodinject_courses">Task_sets::inject_courses()</a> in task_sets.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">inject_files</span>
@@ -2642,13 +2785,13 @@
 						<span class="method-title">inject_languages</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Courses.html#methodinject_languages">Courses::inject_languages()</a> in courses.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#methodinject_languages">Task_sets::inject_languages()</a> in task_sets.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">inject_languages</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#methodinject_languages">Task_sets::inject_languages()</a> in task_sets.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Courses.html#methodinject_languages">Courses::inject_languages()</a> in courses.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">inject_languages</span>
@@ -2669,16 +2812,22 @@
 			<div class="index-item-details"><a href="LIST_FE_Controllers/Courses.html#methodinject_period_options">Courses::inject_period_options()</a> in courses.php</div>
 					</dd>
 			<dt class="field">
-						<span class="method-title">inject_stored_filter</span>
+						<span class="method-title">inject_prettify_config</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#methodinject_stored_filter">Students::inject_stored_filter()</a> in students.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Tasks.html#methodinject_prettify_config">Tasks::inject_prettify_config()</a> in tasks.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">inject_stored_filter</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methodinject_stored_filter">Periods::inject_stored_filter()</a> in periods.php</div>
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Courses.html#methodinject_stored_filter">Courses::inject_stored_filter()</a> in courses.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">inject_stored_filter</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#methodinject_stored_filter">Students::inject_stored_filter()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">inject_stored_filter</span>
@@ -2696,13 +2845,19 @@
 						<span class="method-title">inject_stored_filter</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Tasks.html#methodinject_stored_filter">Tasks::inject_stored_filter()</a> in tasks.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">inject_stored_filter</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Courses.html#methodinject_stored_filter">Courses::inject_stored_filter()</a> in courses.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">inject_stored_filter</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Tasks.html#methodinject_stored_filter">Tasks::inject_stored_filter()</a> in tasks.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methodinject_stored_filter">Periods::inject_stored_filter()</a> in periods.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">inject_stored_filter</span>
@@ -2733,6 +2888,12 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#methodinject_task_set_types">Task_sets::inject_task_set_types()</a> in task_sets.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">inject_teachers</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Rooms.html#methodinject_teachers">Rooms::inject_teachers()</a> in rooms.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">inject_unused_task_set_types</span>
@@ -2824,6 +2985,13 @@
 							<div class="index-item-description">Performs one-time check if student account is authenticated, then returns this value as boolean.</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">is_subscription_allowed</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Course.html#methodis_subscription_allowed">Course::is_subscription_allowed()</a> in course.php</div>
+							<div class="index-item-description">Tests if this course have allowed subscription.</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">is_teacher_session_valid</span>
 					</dt>
 		<dd class="index-item-body">
@@ -2850,6 +3018,12 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="CI/LIST_Parser.html#var$js_files">LIST_Parser::$js_files</a> in LIST_Parser.php</div>
+					</dd>
+			<dt class="field">
+						<span class="include-title">joins.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/_extensions---joins.php.html">joins.php</a> in joins.php</div>
 					</dd>
 			<dt class="field">
 						<span class="include-title">json.php</span>
@@ -2940,6 +3114,49 @@
 			<div class="index-item-details"><a href="CodeIgniter/Core/_core---LIST_Output.php.html">LIST_Output.php</a> in LIST_Output.php</div>
 					</dd>
 			<dt class="field">
+						<span class="include-title">lamsfet_helper.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html">lamsfet_helper.php</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">lamsfet_download_file</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlamsfet_download_file">lamsfet_download_file()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">lamsfet_fetch_table</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlamsfet_fetch_table">lamsfet_fetch_table()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">lamsfet_import</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_CLI_Controllers/Cli.html#methodlamsfet_import">Cli::lamsfet_import()</a> in cli.php</div>
+							<div class="index-item-description">Import LaMSfET data into this LIST installation.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">lamsfet_import_task_file_to_local_list_storage</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlamsfet_import_task_file_to_local_list_storage">lamsfet_import_task_file_to_local_list_storage()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">lamsfet_task_break_lines</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlamsfet_task_break_lines">lamsfet_task_break_lines()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">lamsfet_task_get_formatted_text</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlamsfet_task_get_formatted_text">lamsfet_task_get_formatted_text()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">less_than_equal</span>
 					</dt>
 		<dd class="index-item-body">
@@ -3021,6 +3238,66 @@
 							<div class="index-item-description">This extended CI_Form_validation library provides some new and better validation functions.</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">list_import_lamsfet_courses_and_courses_terms</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlist_import_lamsfet_courses_and_courses_terms">list_import_lamsfet_courses_and_courses_terms()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">list_import_lamsfet_courses_set_types_relation</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlist_import_lamsfet_courses_set_types_relation">list_import_lamsfet_courses_set_types_relation()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">list_import_lamsfet_excercise_groups</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlist_import_lamsfet_excercise_groups">list_import_lamsfet_excercise_groups()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">list_import_lamsfet_labels</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlist_import_lamsfet_labels">list_import_lamsfet_labels()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">list_import_lamsfet_sets</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlist_import_lamsfet_sets">list_import_lamsfet_sets()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">list_import_lamsfet_set_types</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlist_import_lamsfet_set_types">list_import_lamsfet_set_types()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">list_import_lamsfet_tasks</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlist_import_lamsfet_tasks">list_import_lamsfet_tasks()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">list_import_lamsfet_tasks_in_sets_relation</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlist_import_lamsfet_tasks_in_sets_relation">list_import_lamsfet_tasks_in_sets_relation()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">list_import_lamsfet_tasks_labels_relations</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlist_import_lamsfet_tasks_labels_relations">list_import_lamsfet_tasks_labels_relations()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">list_import_prepare</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionlist_import_prepare">list_import_prepare()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">list_index</span>
 					</dt>
 		<dd class="index-item-body">
@@ -3032,6 +3309,12 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_Core/LIST_Lang.html">LIST_Lang</a> in LIST_Lang.php</div>
 							<div class="index-item-description">Overriden language class with support for adding custom language tags and language overlays.</div>
+					</dd>
+			<dt class="field">
+						LIST_OF_COURSES_FILTER_NAME
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Courses.html#constLIST_OF_COURSES_FILTER_NAME">Courses::LIST_OF_COURSES_FILTER_NAME</a> in courses.php</div>
 					</dd>
 			<dt class="field">
 						LIST_Output
@@ -3119,14 +3402,14 @@
 						<span class="method-title">logout</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Teachers.html#methodlogout">Teachers::logout()</a> in teachers.php</div>
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#methodlogout">Students::logout()</a> in students.php</div>
+							<div class="index-item-description">Logs out student account.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">logout</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#methodlogout">Students::logout()</a> in students.php</div>
-							<div class="index-item-description">Logs out student account.</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Teachers.html#methodlogout">Teachers::logout()</a> in teachers.php</div>
 					</dd>
 		</dl>
 	<a name="m"></a>
@@ -3156,10 +3439,23 @@
 			<div class="index-item-details"><a href="DataMapper/DataMapper.html#var$model_paths">DataMapper::$model_paths</a> in datamapper.php</div>
 					</dd>
 			<dt class="field">
+						<span class="include-title">maintenance.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_MAINTENANCE_Controllers/_controllers---maintenance.php.html">maintenance.php</a> in maintenance.php</div>
+					</dd>
+			<dt class="field">
 						<span class="include-title">messages.php</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_Libraries/_libraries---messages.php.html">messages.php</a> in messages.php</div>
+					</dd>
+			<dt class="field">
+						Maintenance
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_MAINTENANCE_Controllers/Maintenance.html">Maintenance</a> in maintenance.php</div>
+							<div class="index-item-description">Controller for maintenance messages.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">make_config_file_content</span>
@@ -3280,26 +3576,26 @@
 						<span class="method-title">move_up</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methodmove_up">Periods::move_up()</a> in periods.php</div>
+			<div class="index-item-details"><a href="LIST_DM_Models/Period.html#methodmove_up">Period::move_up()</a> in period.php</div>
+							<div class="index-item-description">This method will move current period up in sorting order.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">move_up</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_DM_Models/Period.html#methodmove_up">Period::move_up()</a> in period.php</div>
-							<div class="index-item-description">This method will move current period up in sorting order.</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">my_account</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#methodmy_account">Students::my_account()</a> in students.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methodmove_up">Periods::move_up()</a> in periods.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">my_account</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Teachers.html#methodmy_account">Teachers::my_account()</a> in teachers.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">my_account</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#methodmy_account">Students::my_account()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">my_comments_settings</span>
@@ -3498,6 +3794,12 @@
 							<div class="index-item-description">The temporary DM object used in the loops.</div>
 					</dd>
 			<dt class="field">
+						<span class="include-title">ordering.php</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/_extensions---ordering.php.html">ordering.php</a> in ordering.php</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">offset</span>
 					</dt>
 		<dd class="index-item-body">
@@ -3522,6 +3824,20 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methodorder_by">DataMapper::order_by()</a> in datamapper.php</div>
 							<div class="index-item-description">Order By</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">order_by_as_fullname</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Ordering.html#methodorder_by_as_fullname">DMZ_Ordering::order_by_as_fullname()</a> in ordering.php</div>
+							<div class="index-item-description">Handle column as fullname (first name &lt;space&gt; last name) and create order by clause for this column by last name.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">order_by_related_as_fullname</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DMZ_Extensions/DMZ_Ordering.html#methodorder_by_related_as_fullname">DMZ_Ordering::order_by_related_as_fullname()</a> in ordering.php</div>
+							<div class="index-item-description">Add sorting of table deepest level in related table field.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">order_by_related_with_constant</span>
@@ -3994,6 +4310,12 @@
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Translationseditor.html#methodreload_table">Translationseditor::reload_table()</a> in translationseditor.php</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">remote_file_exists</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Helpers/_helpers---lamsfet_helper.php.html#functionremote_file_exists">remote_file_exists()</a> in lamsfet_helper.php</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">remove_node</span>
 					</dt>
 		<dd class="index-item-body">
@@ -4226,14 +4548,14 @@
 						<span class="method-title">save</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methodsave">DataMapper::save()</a> in datamapper.php</div>
-							<div class="index-item-description">Save</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Settings.html#methodsave">Settings::save()</a> in settings.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">save</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Settings.html#methodsave">Settings::save()</a> in settings.php</div>
+			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methodsave">DataMapper::save()</a> in datamapper.php</div>
+							<div class="index-item-description">Save</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">save_as_new</span>
@@ -4241,6 +4563,12 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methodsave_as_new">DataMapper::save_as_new()</a> in datamapper.php</div>
 							<div class="index-item-description">Forces this object to be INSERTed, even if it has an ID.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">save_avatar</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#methodsave_avatar">Students::save_avatar()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">save_basic_information</span>
@@ -4324,6 +4652,12 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methodselect">DataMapper::select()</a> in datamapper.php</div>
 							<div class="index-item-description">Select</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">selected_teachers</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_DM_Models/Room.html#methodselected_teachers">Room::selected_teachers()</a> in room.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">select_avg</span>
@@ -4618,19 +4952,31 @@
 						<span class="method-title">store_filter</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Courses.html#methodstore_filter">Courses::store_filter()</a> in courses.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">store_filter</span>
-					</dt>
-		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#methodstore_filter">Students::store_filter()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">store_filter</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methodstore_filter">Periods::store_filter()</a> in periods.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">store_filter</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Groups.html#methodstore_filter">Groups::store_filter()</a> in groups.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">store_filter</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Courses.html#methodstore_filter">Courses::store_filter()</a> in courses.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">store_filter</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Participants.html#methodstore_filter">Participants::store_filter()</a> in participants.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">store_filter</span>
@@ -4643,13 +4989,7 @@
 						<span class="method-title">store_filter</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methodstore_filter">Periods::store_filter()</a> in periods.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">store_filter</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Participants.html#methodstore_filter">Participants::store_filter()</a> in participants.php</div>
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Courses.html#methodstore_filter">Courses::store_filter()</a> in courses.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">store_filter</span>
@@ -5183,13 +5523,19 @@
 						<span class="method-title">update</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Tasks.html#methodupdate">Tasks::update()</a> in tasks.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">update</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_set_types.html#methodupdate">Task_set_types::update()</a> in task_set_types.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">update</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#methodupdate">Task_sets::update()</a> in task_sets.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Rooms.html#methodupdate">Rooms::update()</a> in rooms.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">update</span>
@@ -5201,13 +5547,7 @@
 						<span class="method-title">update</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Tasks.html#methodupdate">Tasks::update()</a> in tasks.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">update</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Rooms.html#methodupdate">Rooms::update()</a> in rooms.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methodupdate">Periods::update()</a> in periods.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">update</span>
@@ -5225,7 +5565,13 @@
 						<span class="method-title">update</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Periods.html#methodupdate">Periods::update()</a> in periods.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Groups.html#methodupdate">Groups::update()</a> in groups.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">update</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#methodupdate">Task_sets::update()</a> in task_sets.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">update</span>
@@ -5233,12 +5579,6 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="DataMapper/DataMapper.html#methodupdate">DataMapper::update()</a> in datamapper.php</div>
 							<div class="index-item-description">Update</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">update</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Groups.html#methodupdate">Groups::update()</a> in groups.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">update_all</span>
@@ -5265,6 +5605,12 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Solutions.html#methodupdate_valuation">Solutions::update_valuation()</a> in solutions.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">upload_avatar</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#methodupload_avatar">Students::upload_avatar()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">upload_csv_file</span>
@@ -5411,6 +5757,20 @@
 							<div class="index-item-description">Where Not In</div>
 					</dd>
 		</dl>
+	<a name="z"></a>
+	<div class="index-letter-section">
+		<div style="float: left" class="index-letter-title">z</div>
+		<div style="float: right"><a href="#top">top</a></div>
+		<div style="clear: both"></div>
+	</div>
+	<dl>
+			<dt class="field">
+						<span class="method-title">zip_plain_file_to_archive</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Tasks.html#methodzip_plain_file_to_archive">Tasks::zip_plain_file_to_archive()</a> in tasks.php</div>
+					</dd>
+		</dl>
 	<a name="_"></a>
 	<div class="index-letter-section">
 		<div style="float: left" class="index-letter-title">_</div>
@@ -5546,6 +5906,13 @@
 			<div class="index-item-details"><a href="DataMapper/DataMapper.html#var$_where_group_started">DataMapper::$_where_group_started</a> in datamapper.php</div>
 					</dd>
 			<dt class="field">
+						<span class="method-title">_add_jCrop</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Core/LIST_Controller.html#method_add_jCrop">LIST_Controller::_add_jCrop()</a> in LIST_Controller.php</div>
+							<div class="index-item-description">This method add Jcrop to template.</div>
+					</dd>
+			<dt class="field">
 						<span class="method-title">_add_paths</span>
 					</dt>
 		<dd class="index-item-body">
@@ -5558,6 +5925,13 @@
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_Core/LIST_Controller.html#method_add_plupload">LIST_Controller::_add_plupload()</a> in LIST_Controller.php</div>
 							<div class="index-item-description">This method adds plupload to template and load plupload library.</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">_add_prettify</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_Core/LIST_Controller.html#method_add_prettify">LIST_Controller::_add_prettify()</a> in LIST_Controller.php</div>
+							<div class="index-item-description">This method add google prettify syntax highlighter to template.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">_add_scrollTo</span>
@@ -5610,13 +5984,13 @@
 						<span class="method-title">_email_available</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#method_email_available">Students::_email_available()</a> in students.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Teachers.html#method_email_available">Teachers::_email_available()</a> in teachers.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">_email_available</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Teachers.html#method_email_available">Teachers::_email_available()</a> in teachers.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#method_email_available">Students::_email_available()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">_extension_method_exists</span>
@@ -5643,6 +6017,13 @@
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_Libraries/LIST_Email.html#method_get_alt_message">LIST_Email::_get_alt_message()</a> in LIST_Email.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">_get_cli_user_input</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_CLI_Controllers/Cli.html#method_get_cli_user_input">Cli::_get_cli_user_input()</a> in cli.php</div>
+							<div class="index-item-description">Displays standard input prompt with message and return answer.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">_get_generated_timestamp</span>
@@ -5994,7 +6375,7 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Solutions.html#method__construct">Solutions::__construct()</a> in solutions.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Settings.html#method__construct">Settings::__construct()</a> in settings.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
@@ -6006,13 +6387,19 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#method__construct">Students::__construct()</a> in students.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#method__construct">Students::__construct()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_BE_Controllers/Teachers.html#method__construct">Teachers::__construct()</a> in teachers.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_set_types.html#method__construct">Task_set_types::__construct()</a> in task_set_types.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
@@ -6036,20 +6423,25 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_Libraries/Usermanager.html#method__construct">Usermanager::__construct()</a> in usermanager.php</div>
-							<div class="index-item-description">Constructor ...</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#method__construct">Task_sets::__construct()</a> in task_sets.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Settings.html#method__construct">Settings::__construct()</a> in settings.php</div>
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Tasks.html#method__construct">Tasks::__construct()</a> in tasks.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_set_types.html#method__construct">Task_set_types::__construct()</a> in task_set_types.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Solutions.html#method__construct">Solutions::__construct()</a> in solutions.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_FE_Controllers/Students.html#method__construct">Students::__construct()</a> in students.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
@@ -6067,32 +6459,14 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_FE_Controllers/Tasks.html#method__construct">Tasks::__construct()</a> in tasks.php</div>
+			<div class="index-item-details"><a href="LIST_Libraries/Usermanager.html#method__construct">Usermanager::__construct()</a> in usermanager.php</div>
+							<div class="index-item-description">Constructor ...</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Task_sets.html#method__construct">Task_sets::__construct()</a> in task_sets.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Students.html#method__construct">Students::__construct()</a> in students.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="DataMapper/DataMapper.html#method__construct">DataMapper::__construct()</a> in datamapper.php</div>
-							<div class="index-item-description">Constructors (both PHP4 and PHP5 style, to stay compatible)</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Groups.html#method__construct">Groups::__construct()</a> in groups.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Participants.html#method__construct">Participants::__construct()</a> in participants.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
@@ -6110,19 +6484,19 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
+			<div class="index-item-details"><a href="DMZ/DM_DatasetIterator.html#method__construct">DM_DatasetIterator::__construct()</a> in datamapper.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Groups.html#method__construct">Groups::__construct()</a> in groups.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
 			<div class="index-item-details"><a href="LIST_FE_Controllers/Groups.html#method__construct">Groups::__construct()</a> in groups.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="DMZ-Included-Extensions/DMZ_HTMLForm.html#method__construct">DMZ_HTMLForm::__construct()</a> in htmlform.php</div>
-					</dd>
-			<dt class="field">
-						<span class="method-title">__construct</span>
-					</dt>
-		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Categories.html#method__construct">Categories::__construct()</a> in categories.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
@@ -6142,7 +6516,13 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="DMZ/DM_DatasetIterator.html#method__construct">DM_DatasetIterator::__construct()</a> in datamapper.php</div>
+			<div class="index-item-details"><a href="DMZ-Included-Extensions/DMZ_HTMLForm.html#method__construct">DMZ_HTMLForm::__construct()</a> in htmlform.php</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_MAINTENANCE_Controllers/Maintenance.html#method__construct">Maintenance::__construct()</a> in maintenance.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
@@ -6155,7 +6535,7 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Participants.html#method__construct">Participants::__construct()</a> in participants.php</div>
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Categories.html#method__construct">Categories::__construct()</a> in categories.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
@@ -6187,14 +6567,21 @@
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_BE_Controllers/Rooms.html#method__construct">Rooms::__construct()</a> in rooms.php</div>
+			<div class="index-item-details"><a href="LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a> in LIST_Controller.php</div>
+							<div class="index-item-description">Main constructor, initialise controller.</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__construct</span>
 					</dt>
 		<dd class="index-item-body">
-			<div class="index-item-details"><a href="LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a> in LIST_Controller.php</div>
-							<div class="index-item-description">Main constructor, initialise controller.</div>
+			<div class="index-item-details"><a href="DataMapper/DataMapper.html#method__construct">DataMapper::__construct()</a> in datamapper.php</div>
+							<div class="index-item-description">Constructors (both PHP4 and PHP5 style, to stay compatible)</div>
+					</dd>
+			<dt class="field">
+						<span class="method-title">__construct</span>
+					</dt>
+		<dd class="index-item-body">
+			<div class="index-item-details"><a href="LIST_BE_Controllers/Rooms.html#method__construct">Rooms::__construct()</a> in rooms.php</div>
 					</dd>
 			<dt class="field">
 						<span class="method-title">__toString</span>
@@ -6229,6 +6616,7 @@
 	<a class="index-letter" href="elementindex.html#u">u</a>
 	<a class="index-letter" href="elementindex.html#v">v</a>
 	<a class="index-letter" href="elementindex.html#w">w</a>
+	<a class="index-letter" href="elementindex.html#z">z</a>
 	<a class="index-letter" href="elementindex.html#_">_</a>
 </div>	</body>
 </html>

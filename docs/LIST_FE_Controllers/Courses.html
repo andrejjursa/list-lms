@@ -18,7 +18,7 @@
 					<span class="disabled">Description</span> |
 															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 						
-											<a href="#sec-consts">Constants</a>
+											<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
 						
 			</div>
 	<div class="info-box-body">
@@ -42,6 +42,25 @@
 </div>
 
 
+	<a name="sec-const-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Class Constant Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Constants</span> (<a href="#sec-consts">details</a>)
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<div class="const-summary">
+								<div class="const-title">
+					<a href="#LIST_OF_COURSES_FILTER_NAME" title="details" class="const-name">LIST_OF_COURSES_FILTER_NAME</a> = 					<span class="var-type"> 'frontend_courses_list'</span>
+
+				</div>
+							</div>
+		</div>
+	</div>
 
 
 	<a name="sec-method-summary"></a>
@@ -49,19 +68,14 @@
 		<div class="info-box-title">Method Summary</span></div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
-															<a href="#sec-consts">Constants</a>
+															<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
 							
 									<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																																																												
+																																																																												
 												<div class="method-definition">
-											<span class="method-result">Courses</span>
-										<a href="#__construct" title="details" class="method-name">__construct</a>
-										()
-									</div>
-																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#activate_course" title="details" class="method-name">activate_course</a>
 											(<span class="var-type"></span>&nbsp;<span class="var-name">$course_id</span>)
@@ -74,6 +88,16 @@
 																<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#inject_period_options" title="details" class="method-name">inject_period_options</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#inject_stored_filter" title="details" class="method-name">inject_stored_filter</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Courses</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
 										()
 									</div>
 																<div class="method-definition">
@@ -91,6 +115,11 @@
 										<a href="#signup_to_course" title="details" class="method-name">signup_to_course</a>
 											(<span class="var-type"></span>&nbsp;<span class="var-name">$course_id</span>)
 									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#store_filter" title="details" class="method-name">store_filter</a>
+											(<span class="var-type"></span>&nbsp;<span class="var-name">$filter</span>)
+									</div>
 								</div>
 		</div>
 	</div>		
@@ -101,7 +130,7 @@
 		<div class="info-box-title">Methods</div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
-																		<a href="#sec-consts">Constants</a>
+																		<a href="#sec-const-summary">Constants</a> (<a href="#sec-consts">details</a>)
 							
 										<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
 						
@@ -109,40 +138,11 @@
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 
-<a name="method__construct" id="__construct"><!-- --></a>
-<div class="evenrow">
-	
-	<div class="method-header">
-		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a10">10</a></span>)
-	</div> 
-	
-	<!-- ========== Info from phpDoc block ========= -->
-	<ul class="tags">
-				<li><span class="field">access:</span> public</li>
-			</ul>
-	
-	<div class="method-signature">
-		<span class="method-result">Courses</span>
-		<span class="method-name">
-			__construct
-		</span>
-				()
-			</div>
-	
-		
-			<hr class="separator" />
-		<div class="notes">Redefinition of:</div>
-		<dl>
-			<dt><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></dt>
-						<dd>Main constructor, initialise controller.</dd>
-					</dl>
-			
-	</div>
 <a name="methodactivate_course" id="activate_course"><!-- --></a>
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">activate_course</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a75">75</a></span>)
+		<span class="method-title">activate_course</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a91">91</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -170,7 +170,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a20">20</a></span>)
+		<span class="method-title">index</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a22">22</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -193,7 +193,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">inject_period_options</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a137">137</a></span>)
+		<span class="method-title">inject_period_options</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a154">154</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -212,11 +212,63 @@
 		
 			
 	</div>
+<a name="methodinject_stored_filter" id="inject_stored_filter"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">inject_stored_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a176">176</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			inject_stored_filter
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a12">12</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Courses</span>
+		<span class="method-name">
+			__construct
+		</span>
+				()
+			</div>
+	
+		
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></dt>
+						<dd>Main constructor, initialise controller.</dd>
+					</dl>
+			
+	</div>
 <a name="methodquick_course_change" id="quick_course_change"><!-- --></a>
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">quick_course_change</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a127">127</a></span>)
+		<span class="method-title">quick_course_change</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a144">144</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -247,7 +299,7 @@
 <div class="oddrow">
 	
 	<div class="method-header">
-		<span class="method-title">show_details</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a116">116</a></span>)
+		<span class="method-title">show_details</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a132">132</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -278,7 +330,7 @@
 <div class="evenrow">
 	
 	<div class="method-header">
-		<span class="method-title">signup_to_course</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a36">36</a></span>)
+		<span class="method-title">signup_to_course</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a47">47</a></span>)
 	</div> 
 	
 	<!-- ========== Info from phpDoc block ========= -->
@@ -302,13 +354,43 @@
 		
 			
 	</div>
+<a name="methodstore_filter" id="store_filter"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">store_filter</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a167">167</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> private</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			store_filter
+		</span>
+					(<span class="var-type"></span>&nbsp;<span class="var-name">$filter</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$filter</span>			</li>
+				</ul>
+		
+			
+	</div>
 							<h4>Inherited Methods</h4>
 				<a name='inherited_methods'><!-- --></a>	
 									<!-- =========== Summary =========== -->
 					<p>Inherited From <span class="classname"><a href="../LIST_Core/LIST_Controller.html">LIST_Controller</a></span></p>
 					<blockquote>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method__construct">LIST_Controller::__construct()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_jCrop">LIST_Controller::_add_jCrop()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_plupload">LIST_Controller::_add_plupload()</a></span><br>
+													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_prettify">LIST_Controller::_add_prettify()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_scrollTo">LIST_Controller::_add_scrollTo()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_add_tinymce">LIST_Controller::_add_tinymce()</a></span><br>
 													<span class="method-name"><a href="../LIST_Core/LIST_Controller.html#method_initialize_open_task_set">LIST_Controller::_initialize_open_task_set()</a></span><br>
@@ -344,7 +426,22 @@
 							
 					</div>
 		<div class="info-box-body">
-										<h4>Inherited Constants</h4>
+			<a name="constLIST_OF_COURSES_FILTER_NAME" id="LIST_OF_COURSES_FILTER_NAME"><!-- --></A>
+<div class="evenrow">
+
+	<div class="const-header">
+		<span class="const-title">
+			<span class="const-name">LIST_OF_COURSES_FILTER_NAME</span>
+			 = <span class="const-default"> 'frontend_courses_list'</span>
+			(line <span class="line-number"><a href="../__filesource/fsource_LIST_FE_Controllers__controllerscourses.php.html#a10">10</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+</div>
+							<h4>Inherited Constants</h4>
 				<A NAME='inherited_vars'><!-- --></A>
 									<p>Inherited from <span class="classname"><a href="../LIST_Core/LIST_Controller.html">LIST_Controller</a></span></p>
 					<blockquote>
@@ -372,7 +469,7 @@
 	</div>
 
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 20 Aug 2013 20:42:43 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Fri, 13 Sep 2013 12:32:32 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

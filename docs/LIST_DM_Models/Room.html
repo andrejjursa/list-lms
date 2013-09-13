@@ -17,7 +17,7 @@
 	<div class="nav-bar">
 					<span class="disabled">Description</span> |
 													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
-						|											<a href="#sec-methods">Methods</a>
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 						
 					</div>
 	<div class="info-box-body">
@@ -47,12 +47,16 @@
 			<a href="#sec-description">Description</a> |
 						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
 							| 
-									<a href="#sec-methods">Methods</a>
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 							
 								</div>
 		<div class="info-box-body">
 			<div class="var-summary">
-																								<div class="var-title">
+																																<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$has_many" title="details" class="var-name">$has_many</a>
+				</div>
+																<div class="var-title">
 					<span class="var-type">mixed</span>
 					<a href="#$has_one" title="details" class="var-name">$has_one</a>
 				</div>
@@ -60,22 +64,70 @@
 		</div>
 	</div>
 
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+												
+												<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#selected_teachers" title="details" class="method-name">selected_teachers</a>
+										()
+									</div>
+								</div>
+		</div>
+	</div>		
 
 	<a name="sec-vars"></a>
 	<div class="info-box">
 		<div class="info-box-title">Variables</div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
-										<span class="disabled">Vars</span>
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
 						
 			
 										| 
-									<a href="#sec-methods">Methods</a>
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 							
 					</div>
 		<div class="info-box-body">
-			<a name="var$has_one" id="$has_one"><!-- --></A>
+			<a name="var$has_many" id="$has_many"><!-- --></A>
 <div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$has_many</span>
+			 = <span class="var-default">array(<br />        'teacher' =&gt; array(<br />            'join_table' =&gt; 'rooms_teachers_rel',<br />        ),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsroom.php.html#a13">13</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	
+			<hr class="separator" />
+		<div class="notes">Redefinition of:</div>
+		<dl>
+			<dt><a href="../DataMapper/DataMapper.html#var$has_many">DataMapper::$has_many</a></dt>
+						<dd>Contains any related objects of which this model is related one or more times.</dd>
+					</dl>
+		
+		
+
+</div>
+<a name="var$has_one" id="$has_one"><!-- --></A>
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -131,9 +183,6 @@
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$global_extensions">DataMapper::$global_extensions</a></span><br>
-							</span>
-													<span class="var-title">
-								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$has_many">DataMapper::$has_many</a></span><br>
 							</span>
 													<span class="var-title">
 								<span class="var-name"><a href="../DataMapper/DataMapper.html#var$model">DataMapper::$model</a></span><br>
@@ -203,12 +252,35 @@
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
 															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
-																	<span class="disabled">Methods</span>
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
 						
 		</div>
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 
+<a name="methodselected_teachers" id="selected_teachers"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">selected_teachers</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsroom.php.html#a19">19</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			selected_teachers
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
 							<h4>Inherited Methods</h4>
 				<a name='inherited_methods'><!-- --></a>	
 									<!-- =========== Summary =========== -->
@@ -325,7 +397,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 20 Aug 2013 20:42:53 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Fri, 13 Sep 2013 12:32:42 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

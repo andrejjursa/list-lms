@@ -17,7 +17,7 @@
 	<div class="nav-bar">
 					<span class="disabled">Description</span> |
 													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
-						|											<a href="#sec-methods">Methods</a>
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 						
 					</div>
 	<div class="info-box-body">
@@ -47,7 +47,7 @@
 			<a href="#sec-description">Description</a> |
 						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
 							| 
-									<a href="#sec-methods">Methods</a>
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 							
 								</div>
 		<div class="info-box-body">
@@ -64,28 +64,59 @@
 		</div>
 	</div>
 
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																												
+												<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#delete_avatar" title="details" class="method-name">delete_avatar</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#get_avatar" title="details" class="method-name">get_avatar</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#has_avatar" title="details" class="method-name">has_avatar</a>
+										()
+									</div>
+								</div>
+		</div>
+	</div>		
 
 	<a name="sec-vars"></a>
 	<div class="info-box">
 		<div class="info-box-title">Variables</div>
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
-										<span class="disabled">Vars</span>
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
 						
 			
 										| 
-									<a href="#sec-methods">Methods</a>
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
 							
 					</div>
 		<div class="info-box-body">
 			<a name="var$has_many" id="$has_many"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$has_many</span>
-			 = <span class="var-default">array(<br />        'solution',<br />        'comment' =&gt; array(<br />            'cascade_delete' =&gt; FALSE,<br />        ),'task'=&gt;array('other_field'=&gt;'author','join_self_as'=&gt;'author','join_other_as'=&gt;'task'),'comment_subscription'=&gt;array('class'=&gt;'task_set','other_field'=&gt;'comment_subscriber_teacher','join_self_as'=&gt;'comment_subscriber_teacher','join_other_as'=&gt;'comment_subscription','join_table'=&gt;'task_set_comment_subscription_rel',),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsteacher.php.html#a10">10</a></span>)
+			 = <span class="var-default">array(<br />        'solution',<br />        'comment' =&gt; array(<br />            'cascade_delete' =&gt; FALSE,<br />        ),'task'=&gt;array('other_field'=&gt;'author','join_self_as'=&gt;'author','join_other_as'=&gt;'task'),'comment_subscription'=&gt;array('class'=&gt;'task_set','other_field'=&gt;'comment_subscriber_teacher','join_self_as'=&gt;'comment_subscriber_teacher','join_other_as'=&gt;'comment_subscription','join_table'=&gt;'task_set_comment_subscription_rel',),'room'=&gt;array('join_table'=&gt;'rooms_teachers_rel',),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsteacher.php.html#a10">10</a></span>)
 		</span>
 	</div>
 
@@ -106,13 +137,13 @@
 
 </div>
 <a name="var$has_one" id="$has_one"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
 			<span class="var-type">mixed</span>
 			<span class="var-name">$has_one</span>
-			 = <span class="var-default">array(<br />        'prefered_course' =&gt; array(<br />            'class' =&gt; 'course',<br />            'other_field' =&gt; 'prefered_for_teacher',<br />            'join_self_as' =&gt; 'prefered_for_teacher',<br />            'joint_other_as' =&gt; 'prefered_course',<br />        ),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsteacher.php.html#a28">28</a></span>)
+			 = <span class="var-default">array(<br />        'prefered_course' =&gt; array(<br />            'class' =&gt; 'course',<br />            'other_field' =&gt; 'prefered_for_teacher',<br />            'join_self_as' =&gt; 'prefered_for_teacher',<br />            'joint_other_as' =&gt; 'prefered_course',<br />        ),)</span>			(line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsteacher.php.html#a31">31</a></span>)
 		</span>
 	</div>
 
@@ -231,12 +262,86 @@
 		<div class="nav-bar">
 			<a href="#sec-description">Description</a> |
 															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
-																	<span class="disabled">Methods</span>
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
 						
 		</div>
 		<div class="info-box-body">
 			<A NAME='method_detail'></A>
 
+<a name="methoddelete_avatar" id="delete_avatar"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">delete_avatar</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsteacher.php.html#a89">89</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Deletes teacher avatar.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			delete_avatar
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodget_avatar" id="get_avatar"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_avatar</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsteacher.php.html#a44">44</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Return full path of avatar (with base url) for this teacher.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> path to avatar.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			get_avatar
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodhas_avatar" id="has_avatar"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">has_avatar</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsteacher.php.html#a76">76</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Check if teacher has avatar image uploaded. It checks the big_avatar.jpg presence, not the small one.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE when avatar is uploaded, FALSE otherwise.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			has_avatar
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
 							<h4>Inherited Methods</h4>
 				<a name='inherited_methods'><!-- --></a>	
 									<!-- =========== Summary =========== -->
@@ -353,7 +458,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 20 Aug 2013 20:43:07 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Fri, 13 Sep 2013 12:32:56 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>

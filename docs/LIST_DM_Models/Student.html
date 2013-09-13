@@ -76,7 +76,7 @@
 		</div>
 		<div class="info-box-body">			
 			<div class="method-summary">
-																				
+																																												
 												<div class="method-definition">
 											<span class="method-result">void</span>
 										<a href="#delete" title="details" class="method-name">delete</a>
@@ -84,7 +84,22 @@
 									</div>
 																<div class="method-definition">
 											<span class="method-result">void</span>
+										<a href="#delete_avatar" title="details" class="method-name">delete_avatar</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
 										<a href="#generate_random_password_token" title="details" class="method-name">generate_random_password_token</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#get_avatar" title="details" class="method-name">get_avatar</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#has_avatar" title="details" class="method-name">has_avatar</a>
 										()
 									</div>
 								</div>
@@ -105,7 +120,7 @@
 					</div>
 		<div class="info-box-body">
 			<a name="var$has_many" id="$has_many"><!-- --></A>
-<div class="oddrow">
+<div class="evenrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -132,7 +147,7 @@
 
 </div>
 <a name="var$has_one" id="$has_one"><!-- --></A>
-<div class="evenrow">
+<div class="oddrow">
 
 	<div class="var-header">
 		<span class="var-title">
@@ -264,7 +279,7 @@
 			<A NAME='method_detail'></A>
 
 <a name="methoddelete" id="delete"><!-- --></a>
-<div class="oddrow">
+<div class="evenrow">
 	
 	<div class="method-header">
 		<span class="method-title">delete</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a38">38</a></span>)
@@ -302,6 +317,30 @@
 					</dl>
 			
 	</div>
+<a name="methoddelete_avatar" id="delete_avatar"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">delete_avatar</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a118">118</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Deletes student avatar.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			delete_avatar
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
 <a name="methodgenerate_random_password_token" id="generate_random_password_token"><!-- --></a>
 <div class="evenrow">
 	
@@ -320,6 +359,56 @@
 		<span class="method-result">void</span>
 		<span class="method-name">
 			generate_random_password_token
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodget_avatar" id="get_avatar"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">get_avatar</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a73">73</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Return full path of avatar (with base url) for this student.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> path to avatar.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			get_avatar
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodhas_avatar" id="has_avatar"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">has_avatar</span> (line <span class="line-number"><a href="../__filesource/fsource_LIST_DM_Models__modelsstudent.php.html#a105">105</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Check if student has avatar image uploaded. It checks the big_avatar.jpg presence, not the small one.</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> TRUE when avatar is uploaded, FALSE otherwise.</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			has_avatar
 		</span>
 				()
 			</div>
@@ -443,7 +532,7 @@
 
 
 	<p class="notes" id="credit">
-		Documentation generated on Tue, 20 Aug 2013 20:42:57 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
+		Documentation generated on Fri, 13 Sep 2013 12:32:46 +0200 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.4</a>
 	</p>
 	</div></body>
 </html>
