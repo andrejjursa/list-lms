@@ -1,6 +1,7 @@
 = Installation instructions =
 
 This short manual helps you set up LIST installation.
+
 Please, check [requirements system requirements] before start.
 
 == Directory permissions ==
@@ -78,4 +79,23 @@ Set these two values (on the bottom of the config.php) to values you prefered.
 {{{
 $config['email_address']['system']['name'] = 'LIST e-mail';
 $config['email_address']['system']['email'] = 'list@mydomain.com';
+}}}
+
+=== .htacces in root ===
+
+In root directory, there is file names *_.htaccess*. Rename this file to *.htaccess* and make sure your server have allowed override files.
+
+If you have list installed in subdirectory of your document root, make sure you have changed this line in .htaccess file:
+{{{
+    RewriteBase /
+}}}
+to:
+{{{
+    RewriteBase /<PATH TO YOUR INSTALLATION IN DOCUMENT ROOT>/
+}}}
+Address here must start and end with */* character.
+
+*Example:*
+{{{
+    RewriteBase /list/
 }}}
