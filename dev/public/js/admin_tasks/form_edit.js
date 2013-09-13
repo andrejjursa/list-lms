@@ -1,4 +1,5 @@
 jQuery(document).ready(function($) { 
+    make_overlay_editors();
     api_make_tabs('tabs');
     var task_id = $('input[name=task_id]').val();
     

@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    make_overlay_editors();
+    
     $('textarea.tinymce').tinymce({
         script_url : global_base_url + 'public/js/tinymce/tiny_mce.js',
         theme: 'advanced',

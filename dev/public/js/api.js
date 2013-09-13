@@ -85,6 +85,35 @@ var field_filter_checkbox = function(checkbox_selector, filter_form_selector, fi
     }
 };
 
+var make_overlay_editors = function() {
+    jQuery('form div.overlay_block').each(function() {
+        var element = jQuery(this);
+        var overlay_header = jQuery('<div></div>');
+        var overlay_header_wrap = jQuery('<div></div>');
+        var overlay_wrapper = jQuery('<div></div>');
+        element.find('> *').appendTo(overlay_wrapper);
+        overlay_header_wrap.appendTo(element);
+        overlay_header.appendTo(overlay_header_wrap);
+        overlay_wrapper.appendTo(element);
+        overlay_header.css({
+            'font-weight': 'bold',
+            'line-height': '1.3em',
+            'cursor': 'pointer'
+        }).addClass('ui-widget-header');
+        overlay_header_wrap.addClass('overlay-editor-header');
+        var header_text = '';
+        if (lang !== undefined && lang.messages !== undefined && lang.messages.overlay_editor_header !== undefined) { header_text = lang.messages.overlay_editor_header; }
+        overlay_header.html('<span class="ui-icon ui-icon-plusthick" style="float: left;"></span> ' + header_text);
+        overlay_wrapper.css({
+            display: 'none'
+        });
+        overlay_header.click(function(){
+            overlay_wrapper.toggle();
+            overlay_header.find('span.ui-icon').toggleClass('ui-icon-minusthick').toggleClass('ui-icon-plusthick');
+        });
+    });
+};
+
 var make_switchable_form = function(selector) {
     if (typeof(selector) === 'string') {
         var filter = jQuery(selector);
