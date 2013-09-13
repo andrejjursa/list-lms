@@ -27,3 +27,55 @@ Please, check [requirements system requirements] before start.
     * images_users
       * *students* directory must be writable
       * *teachers* directory must be writable
+
+== Configuration ==
+
+=== application/config/production/database.php ===
+
+{{{
+$db['default']['hostname'] = <YOUR DATABASE HOST>;
+$db['default']['username'] = <YOUR DATABASE USER NAME>;
+$db['default']['password'] = <YOUR DATABASE PASSWORD>;
+$db['default']['database'] = <YOUR DATABASE NAME>;
+$db['default']['dbdriver'] = 'mysqli';
+$db['default']['dbprefix'] = '';
+$db['default']['pconnect'] = TRUE;
+$db['default']['db_debug'] = TRUE;
+$db['default']['cache_on'] = FALSE;
+$db['default']['cachedir'] = '';
+$db['default']['char_set'] = 'utf8';
+$db['default']['dbcollat'] = 'utf8_general_ci';
+$db['default']['swap_pre'] = '';
+$db['default']['autoinit'] = TRUE;
+$db['default']['stricton'] = FALSE;
+}}}
+
+Do not change anything else in this configuration, only first four fields.
+
+=== application/config/production/config.php ===
+
+{{{
+$config['base_url'] = <URL TO YOUR INSTALLATION>;
+}}}
+
+Here you can set the URL of your installation. Make sure it ends with character */*.
+
+*Example:*
+{{{
+$config['base_url'] = 'http://www.myserver.com/list/';
+}}}
+
+----
+
+{{{
+$config['email_address']['system']['name'] = <YOUR NAME IN SYSTEM E-MAIL>;
+$config['email_address']['system']['email'] = <YOUR SYSTEM E-MAIL ADDRESS>;
+}}}
+
+Set these two values (on the bottom of the config.php) to values you prefered.
+
+*Example:*
+{{{
+$config['email_address']['system']['name'] = 'LIST e-mail';
+$config['email_address']['system']['email'] = 'list@mydomain.com';
+}}}
