@@ -16,6 +16,8 @@ jQuery(document).ready(function($) {
             field_filter_checkbox('#fields_config_task_set_type_checkbox_id', '#filter_form_id', 'task_set_type');
             field_filter_checkbox('#fields_config_tasks_checkbox_id', '#filter_form_id', 'tasks');
             field_filter_checkbox('#fields_config_published_checkbox_id', '#filter_form_id', 'published');
+            field_filter_checkbox('#fields_config_publish_start_time_checkbox_id', '#filter_form_id', 'publish_start_time');
+            field_filter_checkbox('#fields_config_upload_end_time_checkbox_id', '#filter_form_id', 'upload_end_time');
             sort_table('table.task_sets_table', '#filter_form_id');
         };
         api_ajax_load(url, '#table_content_id', 'post', data, onSuccess);

@@ -22,7 +22,7 @@
             <td>{$task->id|intval}</td>
             {if $filter.fields.created}<td>{$task->created|date_format:{translate line='common_datetime_format'}}</td>{/if}
             {if $filter.fields.updated}<td>{$task->updated|date_format:{translate line='common_datetime_format'}}</td>{/if}
-            {if $filter.fields.name}<td>{overlay|escape:'html' table='tasks' table_id=$task->id column='name' default=$task->name}</td>{/if}
+            {if $filter.fields.name}<td><strong>{overlay|escape:'html' table='tasks' table_id=$task->id column='name' default=$task->name}</strong></td>{/if}
             {if $filter.fields.categories}<td>{foreach $task->category->order_by('name', 'asc')->get_iterated() as $category}{if !$category@first}, {/if}{translate_text|escape:'html' text=$category->name}{/foreach}</td>{/if}
             {if $filter.fields.task_sets}<td>{$task->task_set_count}</td>{/if}
             {if $filter.fields.author}<td>{$task->author_fullname|default:{translate line='admin_tasks_table_content_unknown_author'}}</td>{/if}

@@ -3,7 +3,7 @@
 $lang['admin_participants_page_title'] = 'Účastníci kurzov';
 $lang['admin_participants_fieldset_legend_add_participant'] = 'Pridať nového účastníka kurzu';
 $lang['admin_participants_fieldset_legend_all_participants'] = 'Všetci účastníci kurzov';
-$lang['admin_participants_message_no_participants_found'] = 'Nenašli sa žiadny účastníci kurzov zodpovedajúci Vašim filtrovacím kritériám.';
+$lang['admin_participants_message_no_participants_found'] = 'Nenašli sa žiadni účastníci kurzov zodpovedajúci Vašim filtrovacím kritériám.';
 $lang['admin_participants_message_participant_not_found'] = 'Účastník kurzu nebol nájdený!';
 $lang['admin_participants_message_course_not_set'] = 'Účastník kurzu nemá vybraný kurz!';
 $lang['admin_participants_message_course_is_full'] = 'Kurz zvolený účastníkom kurzu je plný!';

@@ -43,11 +43,13 @@
                         <input type="hidden" name="filter[fields][created]" value="{$filter.fields.created|default:0}" />
                         <input type="hidden" name="filter[fields][updated]" value="{$filter.fields.updated|default:0}" />
                         <input type="hidden" name="filter[fields][name]" value="{$filter.fields.name|default:1}" />
-                        <input type="hidden" name="filter[fields][course]" value="{$filter.fields.course|default:1}" />
+                        <input type="hidden" name="filter[fields][course]" value="{$filter.fields.course|default:0}" />
                         <input type="hidden" name="filter[fields][group]" value="{$filter.fields.group|default:1}" />
                         <input type="hidden" name="filter[fields][task_set_type]" value="{$filter.fields.task_set_type|default:1}" />
                         <input type="hidden" name="filter[fields][tasks]" value="{$filter.fields.tasks|default:1}" />
                         <input type="hidden" name="filter[fields][published]" value="{$filter.fields.published|default:1}" />
+                        <input type="hidden" name="filter[fields][publish_start_time]" value="{$filter.fields.publish_start_time|default:1}" />
+                        <input type="hidden" name="filter[fields][upload_end_time]" value="{$filter.fields.upload_end_time|default:1}" />
                         <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'name'}" />
                         <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />
                         <input type="hidden" name="filter_selected_group_id" value="{$filter.group|intval}" />

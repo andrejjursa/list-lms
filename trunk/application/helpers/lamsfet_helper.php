@@ -306,10 +306,10 @@ function list_import_lamsfet_sets(&$sets, $set_types, $courses_terms, $excercise
             $task_set->instructions = nl2br($set->comment);
         }
         if (!empty($set->date_from)) {
-            $task_set->publish_start_time = strtotime($set->date_from);
+            $task_set->publish_start_time = $set->date_from;
         }
         if (!empty($set->submit_to)) {
-            $task_set->upload_end_time = strtotime($set->submit_to);
+            $task_set->upload_end_time = $set->submit_to;
         }
         $task_set->published = 1;
         $task_set->save(array($task_set_type, $group, $course));

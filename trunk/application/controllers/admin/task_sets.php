@@ -125,6 +125,8 @@ class Task_sets extends LIST_Controller {
             array('name' => 'task_set_type', 'caption' => 'lang:admin_task_sets_table_header_task_set_type'),
             array('name' => 'tasks', 'caption' => 'lang:admin_task_sets_table_header_tasks'),
             array('name' => 'published', 'caption' => 'lang:admin_task_sets_table_header_published'),
+            array('name' => 'publish_start_time', 'caption' => 'lang:admin_task_sets_table_header_publish_start_time'),
+            array('name' => 'upload_end_time', 'caption' => 'lang:admin_task_sets_table_header_upload_end_time'),
         );
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
@@ -176,6 +178,10 @@ class Task_sets extends LIST_Controller {
             $task_sets->order_by('task_count', $order_by_direction);
         } elseif ($filter['order_by_field'] == 'published') {
             $task_sets->order_by('published', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'upload_end_time') {
+            $task_sets->order_by('upload_end_time', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'publish_start_time') {
+            $task_sets->order_by('publish_start_time', $order_by_direction);
         }
         $task_sets->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('task_sets', $task_sets->all_to_array(), array('name'));

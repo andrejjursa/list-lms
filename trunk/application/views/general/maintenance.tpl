@@ -56,7 +56,7 @@
     <body>
         <div id="container">
 		<h1>Maintenance!</h1>
-		<p>We are sorry, but LIST is currently in maintenance! Please, come back later.</p>
+		<p>We are sorry, but LIST is currently under maintenance! Please, come back later.</p>
                 <p><a href="{internal_url url='' simple=false}">Try to go back ...</a></p>
 	</div>
     </body>
