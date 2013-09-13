@@ -1,0 +1,5 @@
+= WELCOME =
+
+This wiki pages are online documentation about LIST. Select one of these pages:
+
+* [installation Installation instructions]
