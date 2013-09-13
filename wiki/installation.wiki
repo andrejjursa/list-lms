@@ -99,3 +99,19 @@ Address here must start and end with */* character.
 {{{
     RewriteBase /list/
 }}}
+
+== Database structure ==
+
+To create database structure, you need to use cli controller from command line interface. To do so, go to LIST root directory and use this command:
+{{{
+php index.php cli update_database
+}}}
+Make sure, you are loged in as www-data user or root (because this script will need to delete production cache from application/datamapper directory).
+
+----
+
+To create new teacher account (teachers are administrators of LIST), simple run this command from LIST root directory:
+{{{
+php index.php cli new_teacher
+}}}
+You will be prompted to enter all data needed for teacher account from command line.
