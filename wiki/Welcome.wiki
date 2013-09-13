@@ -2,4 +2,5 @@
 
 This wiki pages are online documentation about LIST. Select one of these pages:
 
-* [installation Installation instructions]
+  * [requirements System requirements]
+  * [installation Installation instructions]
