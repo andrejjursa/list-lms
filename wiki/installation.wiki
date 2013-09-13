@@ -1,0 +1,4 @@
+= Installation instructions =
+
+This short manual helps you set up LIST installation.
+Please, check [requirements system requirements] before start.
