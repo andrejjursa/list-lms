@@ -2,3 +2,17 @@
 
 This short manual helps you set up LIST installation.
 Please, check [requirements system requirements] before start.
+
+== Directory permissions ==
+
+  * application
+    * cache
+      * smarty
+        * *compiled* directory must be writable
+    * config
+      * production
+        * *config.php* must be writable
+        * *lockdown.php* must be writable
+        * *mimes.php* must be writable
+    * *datamapper* directory must be writable
+    * *logs* directory must be writable
