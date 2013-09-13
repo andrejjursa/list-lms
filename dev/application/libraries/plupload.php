@@ -42,7 +42,7 @@ class Plupload {
                 
         $filePath = rtrim($targetDir, '\\/') . DIRECTORY_SEPARATOR . $fileName;
         
-        if (!file_exists($targetDir)) { @mkdir($targetDir); }
+        if (!file_exists($targetDir)) { @mkdir($targetDir, DIR_READ_MODE); }
         
         if ($cleanupTargetDir) {
             if (!$this->remove_temporary_files($targetDir, $filePath)) {

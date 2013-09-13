@@ -447,8 +447,8 @@ class Students extends LIST_Controller {
         $this->load->library('upload', $config);
         
         if (!file_exists($config['upload_path'])) {
-            @mkdir($path, 0777);
-            @mkdir($config['upload_path'], 0777);
+            @mkdir($path, DIR_READ_MODE);
+            @mkdir($config['upload_path'], DIR_READ_MODE);
         }
         
         if ($this->upload->do_upload('file')) {

@@ -370,8 +370,8 @@ function lamsfet_task_break_lines($text) {
 function lamsfet_import_task_file_to_local_list_storage($full_path, $original_path, $list_task_id, $lamsfet_task_id) {
     $local_path = 'private/uploads/task_files/task_' . $list_task_id . '/hidden/';
     if (!file_exists($local_path)) {
-        @mkdir('private/uploads/task_files/task_' . $list_task_id, 0744);
-        @mkdir('private/uploads/task_files/task_' . $list_task_id . '/hidden', 0744);
+        @mkdir('private/uploads/task_files/task_' . $list_task_id, DIR_READ_MODE);
+        @mkdir('private/uploads/task_files/task_' . $list_task_id . '/hidden', DIR_READ_MODE);
     }
     $file_name = basename($full_path);
     $full_local_path = $local_path . $file_name;

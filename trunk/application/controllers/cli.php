@@ -163,14 +163,23 @@ class Cli extends CI_Controller {
         
         echo "\n";
         
+        $this->db->reconnect();
         list_import_lamsfet_set_types($set_types);
+        $this->db->reconnect();
         list_import_lamsfet_courses_and_courses_terms($courses_terms, $courses);
+        $this->db->reconnect();
         list_import_lamsfet_courses_set_types_relation($courses_set_types, $courses_terms, $set_types);
+        $this->db->reconnect();
         list_import_lamsfet_excercise_groups($excercise_groups, $courses_terms);
+        $this->db->reconnect();
         list_import_lamsfet_sets($sets, $set_types, $courses_terms, $excercise_groups);
+        $this->db->reconnect();
         list_import_lamsfet_labels($labels);
+        $this->db->reconnect();
         list_import_lamsfet_tasks($tasks, $lamsfet_url);
+        $this->db->reconnect();
         list_import_lamsfet_tasks_labels_relations($tasks, $labels, $tasks_labels);
+        $this->db->reconnect();
         list_import_lamsfet_tasks_in_sets_relation($sets, $tasks, $tasks_in_sets);
         
         echo "\n\n ... DONE!\n\n";

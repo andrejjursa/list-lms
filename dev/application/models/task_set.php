@@ -240,8 +240,8 @@ class Task_set extends DataMapper {
             $supported_extensions = $this->trim_explode(',', $CI->config->item('readable_file_extensions'));
             $all_userdata = $CI->session->all_userdata();
             $extract_path = 'private/extracted_solutions/task_set_' . intval($this->id) . '/' . $all_userdata['session_id'] . '/';
-            @mkdir('private/extracted_solutions/task_set_' . intval($this->id) . '/');
-            @mkdir($extract_path);
+            @mkdir('private/extracted_solutions/task_set_' . intval($this->id) . '/', DIR_READ_MODE);
+            @mkdir($extract_path, DIR_READ_MODE);
             $zip_file = new ZipArchive();
             $open = $zip_file->open($path . $real_filename);
             $content = '';
