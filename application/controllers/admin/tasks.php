@@ -230,7 +230,7 @@ class Tasks extends LIST_Controller {
         $path = 'private/uploads/task_files/task_' . intval($task_id) . '/';
         if (!file_exists($path)) {
             @mkdir($path);
-            @chmod($path, 0744);
+            @chmod($path, DIR_READ_MODE);
         }
         $this->plupload->do_upload($path);
     }
@@ -240,12 +240,12 @@ class Tasks extends LIST_Controller {
         $path_base = 'private/uploads/task_files/task_' . intval($task_id) . '/';
         if (!file_exists($path_base)) {
             @mkdir($path_base);
-            @chmod($path_base, 0744);
+            @chmod($path_base, DIR_READ_MODE);
         }
         $path = 'private/uploads/task_files/task_' . intval($task_id) . '/hidden/';
         if (!file_exists($path)) {
             @mkdir($path);
-            @chmod($path, 0744);
+            @chmod($path, DIR_READ_MODE);
         }
         $this->plupload->do_upload($path);
     }

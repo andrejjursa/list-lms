@@ -79,7 +79,7 @@ class Tasks extends LIST_Controller {
             $config['allowed_types'] = 'zip' . (count($allowed_file_types_array) ? '|' . implode('|', $allowed_file_types_array) : '');
             $config['max_size'] = intval($this->config->item('maximum_solition_filesize'));
             $config['file_name'] = $student->id . '_' . $this->normalize_student_name($student) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $filtered_task_set->get_student_file_next_version($student->id) . '.zip';
-            @mkdir($config['upload_path']);
+            @mkdir($config['upload_path'], DIR_READ_MODE);
             $this->load->library('upload', $config);
             
             if ($this->upload->do_upload('file')) {
