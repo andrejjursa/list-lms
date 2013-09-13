@@ -16,3 +16,14 @@ Please, check [requirements system requirements] before start.
         * *mimes.php* must be writable
     * *datamapper* directory must be writable
     * *logs* directory must be writable
+  * private
+    * *extracted_solutions* must be writable
+    * uploads
+      * *csv_imports* must be writable
+      * *solutions* must be writable
+      * *task_files* must be writable
+      * *unit_tests* must be writable
+  * public
+    * images_users
+      * *students* directory must be writable
+      * *teachers* directory must be writable
