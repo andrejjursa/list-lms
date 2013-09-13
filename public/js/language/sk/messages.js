@@ -41,6 +41,7 @@ var lang = {
   messages: {
     ajax_standby: 'Čakajte prosím ...',
     filter_header: 'Filter',
-    form_header: 'Zobraziť / skryť formulár'
+    form_header: 'Zobraziť / skryť formulár',
+    overlay_editor_header: 'Upraviť jazykové prekrytia'
   }
 };

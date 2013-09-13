@@ -28,4 +28,6 @@ jQuery(document).ready(function($) {
         dateFormat: 'yy-mm-dd',
         timeFormat: 'HH:mm:ss'
     });
+    
+    make_overlay_editors();
 });
