@@ -6,6 +6,8 @@
  * @author Andrej Jursa
  */
 
+include_once(APPPATH . 'third_party/simplehtmldom/simple_html_dom.php');
+
 /**
  * This function will check if there is server variable MOD_REWRITE_ENABLED, which is created in .htaccess.
  * @return boolean TRUE, if this variable exists and is set to yes, FALSE otherwise.
@@ -197,4 +199,58 @@ function compute_size_with_unit($size_bytes) {
         $unit = 'GiB';
     }
     return number_format($size, 2, '.', ' ') . ' ' . $unit;
+}
+
+/**
+ * This function will remove all base url from img and a tags.
+ * @param string $string html content.
+ * @return string updated html content.
+ */
+function remove_base_url($string) {
+    if (!is_string($string) || empty($string)) { return $string; }
+    $CI =& get_instance();
+    $base_url = $CI->config->item('base_url');
+    
+    $html = str_get_html($string, true, true, DEFAULT_TARGET_CHARSET, false);
+    
+    foreach ($html->find('img, a') as $element) {
+        if ($element->tag == 'img' && mb_strpos(trim($element->src), $base_url) === 0) {
+            $element->src = ltrim(mb_substr(trim($element->src), mb_strlen($base_url)), '\\/'); 
+        } elseif ($element->tag == 'a' && mb_strpos(trim($element->href), $base_url) === 0) {
+            $element->href = ltrim(mb_substr(trim($element->href), mb_strlen($base_url)), '\\/'); 
+        }
+    }
+    
+    return $html->__toString();
+}
+
+/**
+ * Apply remove_base_url() to overlay array.
+ * @param array<string> $overlay_array overlay array.
+ * @param string|array<string> $column_name name of column with html or array of columns with html.
+ * @return array<string> updated overlay array.
+ */
+function remove_base_url_from_overlay_array($overlay_array, $column_name) {
+    if (is_array($overlay_array) && count($overlay_array)) {
+        foreach ($overlay_array as $idiom => $idiom_array) {
+            if (is_array($idiom_array) && count($idiom_array)) {
+                foreach ($idiom_array as $table => $table_array) {
+                    if (is_array($table_array) && count($table_array)) {
+                        foreach ($table_array as $table_id => $table_id_array) {
+                            if (is_array($table_id_array) && count($table_id_array)) {
+                                foreach ($table_id_array as $column => $content) {
+                                    if ((is_string($column_name) && $column == $column_name) || (is_array($column_name) && in_array($column, $column_name))) {
+                                        if (!empty($content)) {
+                                            $overlay_array[$idiom][$table][$table_id][$column] = remove_base_url($content);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return $overlay_array;
 }

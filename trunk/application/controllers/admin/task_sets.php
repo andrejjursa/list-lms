@@ -265,7 +265,8 @@ class Task_sets extends LIST_Controller {
         if ($this->form_validation->run()) {    
             if ($task_set->exists()) {
                 $task_set_data = $this->input->post('task_set');
-                $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'instructions', 'allowed_file_types'));
+                $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types'));
+                $task_set->instructions = remove_base_url($task_set_data['instructions']);
                 $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
                 $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
                 $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
@@ -294,7 +295,7 @@ class Task_sets extends LIST_Controller {
                     }
                 }
                 
-                if ($task_set->save() && $this->lang->save_overlay_array($overlay) && $this->db->trans_status()) {
+                if ($task_set->save() && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'instructions')) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 } else {

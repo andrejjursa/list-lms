@@ -86,7 +86,8 @@ class Courses extends LIST_Controller {
         if ($this->form_validation->run()) {
             $course = new Course();
             $course_data = $this->input->post('course');
-            $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity', 'default_points_to_remove'));
+            $course->from_array($course_data, array('name', 'period_id', 'capacity', 'default_points_to_remove'));
+            $course->description = remove_base_url($course_data['description']);
             $course->allow_subscription_to = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : NULL;
             $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
             
@@ -168,7 +169,8 @@ class Courses extends LIST_Controller {
             $course->get_by_id($course_id);
             if ($course->exists()) {
                 $course_data = $this->input->post('course');
-                $course->from_array($course_data, array('name', 'period_id', 'description', 'capacity', 'default_points_to_remove'));
+                $course->from_array($course_data, array('name', 'period_id', 'capacity', 'default_points_to_remove'));
+                $course->description = remove_base_url($course_data['description']);
                 $course->allow_subscription_to = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : NULL;
                 $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
                 
@@ -177,7 +179,7 @@ class Courses extends LIST_Controller {
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
                 
-                if ($course->save() && $this->lang->save_overlay_array($overlay) && $this->db->trans_status()) {
+                if ($course->save() && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'description')) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_courses_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 } else {

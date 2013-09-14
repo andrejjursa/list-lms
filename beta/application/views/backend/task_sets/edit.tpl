@@ -120,7 +120,7 @@
                 <div id="tabs-instructions">
                     <div class="field">
                         <label for="task_set_instructions_id">{translate line='admin_task_sets_form_label_instructions'}:</label>
-                        <p class="input"><textarea name="task_set[instructions]" class="tinymce">{$smarty.post.task_set.instructions|default:$task_set->instructions|escape:'html'}</textarea></p>
+                        <p class="input"><textarea name="task_set[instructions]" class="tinymce">{$smarty.post.task_set.instructions|default:$task_set->instructions|add_base_url}</textarea></p>
                         {include file='partials/backend_general/overlay_editor.tpl' table='task_sets' column='instructions' table_id=$task_set->id|intval editor_type='textarea' class='tinymce' inline}
                     </div>
                 </div>

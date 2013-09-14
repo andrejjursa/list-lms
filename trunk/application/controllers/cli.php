@@ -14,6 +14,10 @@ class Cli extends CI_Controller {
             die();
         }
     }
+    
+    public function __destruct() {
+        echo "\n";
+    }
 
     public function index() {
         echo 'This is CLI controller for LIST' . "\n\n";
@@ -24,7 +28,8 @@ class Cli extends CI_Controller {
         echo '  lamsfet_import - WARNING: do not execute on live installation' . "\n";
         echo '  clear_lockdown' . "\n";
         echo '  generate_encryption_key' . "\n";
-        echo '  apply_lockdown';
+        echo '  apply_lockdown' . "\n";
+        echo '  fix_broken_link';
     }
 
     /**
@@ -184,7 +189,7 @@ class Cli extends CI_Controller {
         
         echo "\n\n ... DONE!\n\n";
         
-        echo 'Unlocking LIST ...';
+        echo 'Unlocking LIST ...' . "\n";
         $this->configurator->set_config_array('lockdown', array('system_lockdown' => FALSE));
     }
     
@@ -195,19 +200,8 @@ class Cli extends CI_Controller {
     public function clear_lockdown() {
         $this->config->load('lockdown');
         $this->load->library('configurator');
-        if ($this->config->item('system_lockdown') === TRUE) {
-            echo 'LIST is in system lockdown! Are you sure to release this lockdown?' . "\n";
-            echo 'If there is maintenance task in progress, releasing this lockdown you can damage system.' . "\n";
-            $answer = $this->_get_cli_user_input('Release lockdown? (yes)');
-            if ($answer !== 'yes') {
-                echo 'Canceled.';
-                return;
-            }
-            echo 'Releasing system lockdown.';
-            $this->configurator->set_config_array('lockdown', array('system_lockdown' => FALSE));
-        } else {
-            echo 'System lockdown is not set. Operation canceled.';
-        }
+        echo 'Releasing system lockdown...' . "\n";
+        $this->configurator->set_config_array('lockdown', array('system_lockdown' => FALSE));
     }
     
     /**
@@ -217,7 +211,7 @@ class Cli extends CI_Controller {
         $this->config->load('lockdown');
         $this->load->library('configurator');
         $this->configurator->set_config_array('lockdown', array('system_lockdown' => TRUE));
-        echo 'System locked...';
+        echo 'System locked...' . "\n";
     }
     
     /**
@@ -247,6 +241,23 @@ class Cli extends CI_Controller {
         $this->load->library('configurator');
         $this->configurator->set_config_array('config', $config);
         echo 'Encryption key set to: ' . $config['encryption_key'];
+    }
+    
+    public function fix_broken_link() {
+        $this->load->database();
+        $this->load->helper('lamsfet');
+        echo 'This script will repair all broken links in tasks.' . "\n\n";
+        echo 'Please specifi the broken prefix here.' . "\n\n";
+        echo 'Example:' . "\n";
+        echo 'Your installation is: http://www.domain.com/list/' . "\n";
+        echo 'Your links in tasks starts with: list/index.php/....' . "\n";
+        echo 'But they should be: index.php/...' . "\n";
+        echo 'Then the prefix is: list/' . "\n\n";
+        $broken_prefix = $this->_get_cli_user_input('Your broken prefix');
+        echo "\n\n";
+        $this->apply_lockdown();
+        fix_broken_tasks_links($broken_prefix);
+        $this->clear_lockdown();
     }
 
     /**
