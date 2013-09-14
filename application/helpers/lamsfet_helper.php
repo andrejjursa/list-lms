@@ -71,6 +71,9 @@ function list_import_prepare() {
     $task_sets->truncate();
     $CI->lang->delete_overlays('task_sets');
     echo 'LIST task_sets table truncated ...' . "\n";
+    $comments = new Comment();
+    $comments->truncate();
+    echo 'LIST comments table truncated ...' . "\n";
     $solutions = new Solution();
     $solutions->truncate();
     unlink_recursive('private/uploads/solutions/', FALSE);
@@ -409,4 +412,73 @@ function remote_file_exists($url) {
     curl_close($curl);
 
     return $ret;
+}
+
+function fix_broken_tasks_links($broken_prefix) {
+    include_once(APPPATH . 'third_party/simplehtmldom/simple_html_dom.php');
+    
+    $CI =& get_instance();
+    $CI->lang->load_all_overlays('tasks');
+    $languages = $CI->lang->get_list_of_languages();
+    
+    $tasks = new Task();
+    $tasks->get_iterated();
+    foreach ($tasks as $task) {
+        $text_html = str_get_html($task->text, true, true, DEFAULT_TARGET_CHARSET, false);
+        $save = FALSE;
+        echo 'TASK ' . $task->id . ":\n";
+        foreach ($text_html->find('img, a') as $element) {
+            if ($element->tag == 'a' && mb_strpos(trim($element->href), $broken_prefix) === 0) {
+                echo ' BROKEN a TAG' . "\n";
+                echo '  FOUND BROKEN LINK: ' . trim($element->href) . "\n";
+                $new_link = ltrim(mb_substr(trim($element->href), mb_strlen($broken_prefix)), '\\/');
+                echo '  REPAIR TO: ' . $new_link . "\n";
+                $element->href = $new_link;
+                $save = TRUE;
+            } elseif ($element->tag == 'img' && mb_strpos(trim($element->src), $broken_prefix) === 0) {
+                echo ' BROKEN img TAG' . "\n";
+                echo '  FOUND BROKEN LINK: ' . trim($element->src) . "\n";
+                $new_link = ltrim(mb_substr(trim($element->src), mb_strlen($broken_prefix)), '\\/');
+                echo '  REPAIR TO: ' . $new_link . "\n";
+                $element->src = $new_link;
+                $save = TRUE;
+            }
+        }
+        if ($save) {
+            $task->text = $text_html->__toString();
+            echo 'SAVING TASK' . "\n";
+            $task->save();
+        }
+        echo 'TESTING OVERLAYS' . "\n";
+        foreach ($languages as $idiom => $title) {
+            echo '  ' . $title . "\n";
+            $text = $CI->lang->get_overlay('tasks', $task->id, 'text', $idiom);
+            if (!empty($text)) {
+                $text_html = str_get_html($text, true, true, DEFAULT_TARGET_CHARSET, false);
+                $save = FALSE;
+                foreach ($text_html->find('img, a') as $element) {
+                    if ($element->tag == 'a' && mb_strpos(trim($element->href), $broken_prefix) === 0) {
+                        echo '   BROKEN a TAG' . "\n";
+                        echo '     FOUND BROKEN LINK: ' . trim($element->href) . "\n";
+                        $new_link = ltrim(mb_substr(trim($element->href), mb_strlen($broken_prefix)), '\\/');
+                        echo '     REPAIR TO: ' . $new_link . "\n";
+                        $element->href = $new_link;
+                        $save = TRUE;
+                    } elseif ($element->tag == 'img' && mb_strpos(trim($element->src), $broken_prefix) === 0) {
+                        echo '   BROKEN img TAG' . "\n";
+                        echo '    FOUND BROKEN LINK: ' . trim($element->src) . "\n";
+                        $new_link = ltrim(mb_substr(trim($element->src), mb_strlen($broken_prefix)), '\\/');
+                        echo '    REPAIR TO: ' . $new_link . "\n";
+                        $element->src = $new_link;
+                        $save = TRUE;
+                    }
+                }
+                if ($save) {
+                    $text = $text_html->__toString();
+                    echo '  SAVING OVERLAY' . "\n";
+                    $CI->lang->save_overlay('tasks', $task->id, 'text', $idiom, $text);
+                }
+            }
+        }
+    }
 }

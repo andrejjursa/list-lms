@@ -109,7 +109,8 @@ class Tasks extends LIST_Controller {
             $categories->get();
             
             $task = new Task();
-            $task->from_array($task_data, array('name', 'text'));
+            $task->from_array($task_data, array('name'));
+            $task->text = remove_base_url($task_data['text']);
             $task->author_id = $this->usermanager->get_teacher_id();
             if ($task->save($categories->all) && $this->db->trans_status()) {
                 $this->db->trans_commit();
@@ -161,7 +162,8 @@ class Tasks extends LIST_Controller {
             if ($task->exists()) {
                 $task_data = $this->input->post('task');
                 $overlay = $this->input->post('overlay');
-                $task->from_array($task_data, array('name', 'text'));
+                $task->from_array($task_data, array('name'));
+                $task->text = remove_base_url($task_data['text']);
                 
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
@@ -173,7 +175,7 @@ class Tasks extends LIST_Controller {
                 $task->category->get();
                 $task->delete($task->category->all);
                 
-                if ($task->save($categories->all) && $this->lang->save_overlay_array($overlay) && $this->db->trans_status()) {
+                if ($task->save($categories->all) && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'text')) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_tasks_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 } else {
