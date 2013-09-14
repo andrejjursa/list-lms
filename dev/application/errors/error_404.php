@@ -11,6 +11,7 @@
 <html lang="en">
 <head>
 <title>404 Page Not Found</title>
+<meta charset="utf-8" />
 <style type="text/css">
 
 ::selection{ background-color: #E13300; color: white; }

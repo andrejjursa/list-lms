@@ -44,6 +44,7 @@
  * @property Pluplopad $plupload
  * @property Usermanager $usermanager
  * @property Filter $filter
+ * @property abstract_test $abstract_test
  * 
  * @property Index $index
  */
@@ -87,6 +88,10 @@ class CI_Model {
 }
 
 class DMZ_Translations {
+    
+}
+
+class abstract_test {
     
 }
 
