@@ -1,0 +1,1 @@
+{include file='partials/tests_general/file_input.tpl' label_lang='java_tests_config_form_unit_test_zip_file' field_name='zip_file' inline}

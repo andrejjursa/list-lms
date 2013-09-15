@@ -11,7 +11,9 @@
         <div id="tabs">
             <ul>
                 <li><a href="#tabs-basic">{translate line='admin_tasks_edit_tabs_basic'}</a></li>
+                <li><a href="#tabs-categories">{translate line='admin_tasks_edit_tabs_categories'}</a></li>
                 <li><a href="#tabs-files">{translate line='admin_tasks_edit_tabs_files'}</a></li>
+                <li><a href="#tabs-tests">{translate line='admin_tasks_edit_tabs_tests'}</a></li>    
                 {if $task_sets->exists()}<li><a href="#tabs-usages">{translate line='admin_tasks_edit_tabs_usages'}</a></li>{/if}
             </ul>
             <div id="tabs-basic">
@@ -27,6 +29,8 @@
                     {form_error field='task[text]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                     {include file='partials/backend_general/overlay_editor.tpl' table='tasks' table_id=$smarty.post.task_id|default:$task->id column='text' editor_type='textarea' class='tinymce' inline}
                 </div>
+            </div>
+            <div id="tabs-categories">
                 <div class="field">
                     <label class="required">{translate line='admin_tasks_form_label_categories'}:</label>
                     <div class="input categories_structure">{category_checkboxes chbname='task[categories][]' structure=$structure selected=$smarty.post.task.categories|default:$task->category->get()->all_to_single_array('id')|default:[]}</div>
@@ -67,6 +71,16 @@
                     </div>
                 </div>                
             </div>
+            <div id="tabs-tests">
+                <fieldset class="basefieldset">
+                    <legend>{translate line='admin_tasks_edit_tests_fieldset_legend_new_test'}</legend>
+                    <a href="{internal_url url="admin_tests/new_test_form/{$task->id}"}" class="button new_test_button">{translate line='admin_tasks_edit_button_create_new_test'}</a>
+                </fieldset>
+                <fieldset class="basefieldset">
+                    <legend>{translate line='admin_tasks_edit_tests_fieldset_legend_all_tests'}</legend>
+                    <div id="tests_content_id"></div>
+                </fieldset>
+            </div>
             {if $task_sets->exists()}<div id="tabs-usages">{$this->lang->init_overlays('task_sets', $task_sets->all, ['name'])}
                 <ul>
                     {foreach $task_sets->all as $task_set}
@@ -96,4 +110,5 @@
         after_delete: '{translate line="admin_tasks_javascript_message_file_after_delete"}'
     };
     var highlighters = {$highlighters|json_encode};    
+    var all_tests_list_url = '{internal_url url="admin_tests/all_tests/{$task->id}"}';
 </script>{/block}

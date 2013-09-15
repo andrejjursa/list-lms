@@ -8,6 +8,9 @@ class java_test extends abstract_test {
         'unit_test' => array(
             'name' => 'lang:java_tests_subtype_unit_test_name',
             'method' => 'run_unit_test',
+            'configure_view' => 'tests/java/configure.tpl',
+            'configure_before_save' => 'save_unit_test_config',
+            'configure_validator' => 'validator_unit_test',
         ),
     );
 
@@ -16,6 +19,14 @@ class java_test extends abstract_test {
     }
     
     protected function run_unit_test() {
+        
+    }
+    
+    protected function save_unit_test_config() {
+        
+    }
+    
+    protected function configure_validator() {
         
     }
     

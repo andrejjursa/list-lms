@@ -141,10 +141,15 @@ class Tasks extends LIST_Controller {
         $this->inject_prettify_config();
         $this->parser->add_js_file('admin_tasks/form.js');
         $this->parser->add_js_file('admin_tasks/form_edit.js');
+        $this->parser->add_js_file('admin_tests/all_tests_list.js');
         $this->parser->add_css_file('admin_tasks.css');
+        $this->parser->add_css_file('admin_tests.css');
         $this->inject_languages();
         $this->lang->load_all_overlays('tasks', $task_id);
-        $this->parser->parse('backend/tasks/edit.tpl', array('task' => $task, 'structure' => $structure));
+        $this->parser->parse('backend/tasks/edit.tpl', array(
+            'task' => $task,
+            'structure' => $structure,
+        ));
     }
     
     public function update() {

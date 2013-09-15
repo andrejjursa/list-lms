@@ -25,7 +25,7 @@ abstract class abstract_test {
         $output = array();
         if (is_array($this->test_subtypes) && count($this->test_subtypes)) {
             foreach ($this->test_subtypes as $subtype => $config) {
-                $output[$subtype] = isset($config['name']) ? $config['name'] : $subtype;
+                $output[$subtype] = isset($config['name']) ? $this->CI->lang->text($config['name']) : $subtype;
             }
         }
         return $output;
@@ -90,6 +90,34 @@ abstract class abstract_test {
         }
         $this->zip_file_path = $input_zip_file;
         return $this->$method_name();
+    }
+    
+    public function get_configure_view() {
+        if (is_null($this->get_current_test_subtype())) {
+            throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1300001);
+        }
+        if (!isset($this->test_subtypes[$this->get_current_test_subtype()]['configure_view'])) {
+            throw new TestException($this->CI->lang->line('tests_general_error_configure_view_not_set'), 1300002);
+        }
+        return $this->test_subtypes[$this->get_current_test_subtype()]['configure_view'];
+    }
+
+    protected function create_directory($app_full_path) {
+        $trimmed_full_path = str_replace('\\', DIRECTORY_SEPARATOR, trim($app_full_path, '\\/'));
+        $path_segments = explode(DIRECTORY_SEPARATOR, $trimmed_full_path);
+        $path_to_create = rtrim(APPPATH, '\\/');
+        $old_path_to_create = $path_to_create;
+        foreach ($path_segments as $path_segment) {
+            $path_to_create .= DIRECTORY_SEPARATOR . $path_segment;
+            if (!file_exists($path_to_create)) {
+                if (is_writable($old_path_to_create)) {
+                    @mkdir($path_to_create, DIR_READ_MODE);
+                } else {
+                    throw new TestException(sprintf($this->CI->lang->line('tests_general_error_cant_create_path'), $path_to_create), 1200001);
+                }
+            }
+            $old_path_to_create = $path_to_create;
+        }
     }
 
     private function determine_test_type() {
