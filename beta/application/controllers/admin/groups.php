@@ -189,7 +189,7 @@ class Groups extends LIST_Controller {
         $students->where_related('participant/course', 'id', $group->course_id);
         $students->where_related('participant', 'allowed', 1);
         $students->get_iterated();
-        $this->_add_tinymce();
+        $this->_add_tinymce4();
         $this->parser->add_js_file('admin_groups/group_mail.js');
         $this->parser->parse('backend/groups/group_mail.tpl', array('group' => $group, 'students' => $students));
     }

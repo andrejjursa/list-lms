@@ -1,34 +1,43 @@
 jQuery(document).ready(function($) { 
     var config = {
-        script_url : global_base_url + 'public/js/tinymce/tiny_mce.js',
-        theme: 'advanced',
-        plugins : 'autolink,lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist',
-        theme_advanced_buttons1 : 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect',
-        theme_advanced_buttons2 : 'cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor',
-        theme_advanced_buttons3 : 'tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,ltr,rtl,|,fullscreen',
-        theme_advanced_buttons4 : 'insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak',
-        theme_advanced_toolbar_location : 'top',
-        theme_advanced_toolbar_align : 'left',
-        theme_advanced_statusbar_location : 'bottom',
+        plugins: [
+            "advlist autolink link image lists charmap preview hr anchor pagebreak autoresize",
+            "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+            "table contextmenu directionality emoticons textcolor paste textcolor"
+        ],
+
+        toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect highlights",
+        toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | inserttime preview | forecolor backcolor",
+        toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | fullscreen | ltr rtl | visualchars visualblocks nonbreaking pagebreak",
+
+        menubar: false,
+        toolbar_items_size: 'small',
         entity_encoding: 'raw',
         document_base_url: global_base_url,
         convert_urls: false,
         relative_urls: false,
-
-        style_formats: []
+        resize: false,
+        autoresize_max_height: 400,
+        autoresize_min_height: 150
     };
     
     if (typeof highlighters !== 'undefined') {
+        var menuitems = [];
         for(var i in highlighters) {
             var item = {
-                title: 'Prettify - ' + highlighters[i].name,
-                selector: 'pre',
-                attributes: {
-                    'class': 'prettyprint lang-' + highlighters[i].lang
-                }
+                text: highlighters[i].name,
+                onclick: function() { tinymce_switch_highlight(editor, 'lang-' + highlighters[i].lang); }
             };
-            config.style_formats.push(item);
+            menuitems.push(item);
         }
+        config.setup = function(editor) {
+            editor.addButton('highlights', {
+                type: 'menubutton',
+                text: 'Code highlighting',
+                icon: false,
+                menu: menuitems
+            });
+        };
     }
     
     $('textarea.tinymce').tinymce(config);

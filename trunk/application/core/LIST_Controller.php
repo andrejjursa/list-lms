@@ -199,6 +199,12 @@ class LIST_Controller extends CI_Controller {
         $this->parser->add_css_file('tinymce/common.css');
     }
     
+    protected function _add_tinymce4() {
+        $this->parser->add_js_file('tinymce4/jquery.tinymce.min.js');
+        $this->parser->add_js_file('tinymce4/tinymce.min.js');
+    }
+
+
     /**
      * This method adds plupload to template and load plupload library.
      */
