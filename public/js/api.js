@@ -606,4 +606,29 @@ var test_window_maximized = function() {
         return true;
     }
     return false;
-}
+};
+
+var tinymce_switch_highlight = function(editor, language) {
+    var element = editor.selection.getEnd();
+    if (editor.dom.is(element, 'pre')) {
+        var addClass = true;
+        if (editor.dom.hasClass(element, 'prettyprint')) {
+            if (editor.dom.hasClass(element, language)) {
+                editor.dom.removeClass(element, 'prettyprint');
+                editor.dom.removeClass(element, language);
+                addClass = false;
+            } else {
+                var classes = editor.dom.getAttrib(element, 'class', '').split(' ');
+                for (var i in classes) {
+                    if (classes[i].substr(0, 5) === 'lang-') {
+                        editor.dom.removeClass(element, classes[i]);
+                    }
+                }
+            }
+        }
+        if (addClass) {
+            editor.dom.addClass(element, 'prettyprint');
+            editor.dom.addClass(element, language);
+        }
+    }
+};

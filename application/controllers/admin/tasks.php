@@ -85,7 +85,7 @@ class Tasks extends LIST_Controller {
         $category = new Category();
         $structure = $category->get_all_structured();
         $this->inject_prettify_config();
-        $this->_add_tinymce();
+        $this->_add_tinymce4();
         $this->parser->add_js_file('admin_tasks/form.js');
         $this->parser->add_css_file('admin_tasks.css');
         $this->parser->parse('backend/tasks/new_task.tpl', array('structure' => $structure));
@@ -136,7 +136,7 @@ class Tasks extends LIST_Controller {
         $task->get_by_id($task_id);
         $category = new Category();
         $structure = $category->get_all_structured();
-        $this->_add_tinymce();
+        $this->_add_tinymce4();
         $this->_add_plupload();
         $this->inject_prettify_config();
         $this->parser->add_js_file('admin_tasks/form.js');
@@ -358,7 +358,7 @@ class Tasks extends LIST_Controller {
         $this->_initialize_open_task_set();
         $this->parser->parse('partials/backend_general/open_task_set.tpl');
     }
-
+    
     private function store_filter($filter) {
         if (is_array($filter)) {
             $this->load->library('filter');

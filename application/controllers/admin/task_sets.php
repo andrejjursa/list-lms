@@ -231,7 +231,7 @@ class Task_sets extends LIST_Controller {
         $task_set_id = isset($url['task_set_id']) ? intval($url['task_set_id']) : intval($this->input->post('task_set_id'));
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
-        $this->_add_tinymce();
+        $this->_add_tinymce4();
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_task_sets/edit.js');
         $this->parser->add_js_file('admin_task_sets/form.js');
