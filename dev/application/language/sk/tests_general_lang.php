@@ -9,3 +9,6 @@ $lang['tests_general_error_input_zip_file_not_found'] = 'Vstupný súbor sa nena
 $lang['tests_general_error_subtype_method_not_found'] = 'Spúšťacia metóda pod-typu testu sa v nenašla v tejto triede.';
 $lang['tests_general_error_cant_create_path'] = 'Nemožno vytvoriť cestu %s, nedá sa zapisovať do nadradeného adresára.';
 $lang['tests_general_error_configure_view_not_set'] = 'Konfiguračná šablóna sa nedá nájsť.';
+$lang['tests_general_error_configure_validator_not_exists'] = 'Validačná metóda je nastavená ale neexistuje.';
+$lang['tests_general_error_configure_before_save_not_exists'] = 'Metóda prípravy dát na uloženie je nastavená ale neexistuje.';
+$lang['tests_general_error_configure_uploader_not_exists'] = 'Správcovská metóda uploadu je nastavená ale neexistuje.';

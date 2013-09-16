@@ -9,3 +9,6 @@ $lang['tests_general_error_input_zip_file_not_found'] = 'Input file not found.';
 $lang['tests_general_error_subtype_method_not_found'] = 'Run method of test subtype not found in this class.';
 $lang['tests_general_error_cant_create_path'] = 'Can\'t create path %s, parent directory is not writable.';
 $lang['tests_general_error_configure_view_not_set'] = 'Configuration view file not set.';
+$lang['tests_general_error_configure_validator_not_exists'] = 'Validator method is set but does not exists.';
+$lang['tests_general_error_configure_before_save_not_exists'] = 'Before save method is set but does not exists.';
+$lang['tests_general_error_configure_uploader_not_exists'] = 'Upload handler method is set but does not exists.';

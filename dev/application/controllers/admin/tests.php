@@ -92,11 +92,72 @@ class Tests extends LIST_Controller {
         $this->parser->parse('backend/tests/configure_test.tpl', array(
             'test' => $test,
             'test_config_view' => $test_config_view,
-            'confuguration' => $configuration,
+            'configuration' => $configuration,
             'error_message' => $error_message,
         ));
     }
     
+    public function save_test_configuration($test_id) {
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $test = new Test();
+        $test->get_by_id($test_id);
+        if ($test->exists()) {
+            $this->load->library('form_validation');
+            
+            $this->form_validation->set_rules('test[name]', 'lang:admin_tests_test_form_field_name', 'required');
+            
+            $valid = TRUE;
+            
+            $test_object = $this->load->test($test->type);
+            try {
+                $test_object->initialize($test);
+                $valid = $test_object->validate_test_configuration();
+            } catch (TestException $e) {
+                $this->db->trans_rollback();
+                $this->messages->add_message($e->getMessage(), Messages::MESSAGE_TYPE_ERROR);
+                redirect(create_internal_url('admin_tests/configure_test/' . $test_id));
+                die();
+            }            
+            if ($this->form_validation->run() && $valid) {
+                $test_data = $this->input->post('test');
+                $test->name = $test_data['name'];
+                $can_save = TRUE;
+                try {
+                    $config_data = is_array($this->input->post('configuration')) ? $this->input->post('configuration') : array();
+                    $upload_data = array();
+                    $can_save = $test_object->handle_uploads($upload_data);
+                    $config_data = array_merge($config_data, $upload_data);
+                    $test->configuration = serialize($test_object->prepare_test_configuration($config_data));
+                } catch (TestException $e) {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message($e->getMessage(), Messages::MESSAGE_TYPE_ERROR);
+                    redirect(create_internal_url('admin_tests/configure_test/' . $test_id));
+                    die();
+                }
+                if ($can_save) {
+                    if ($test->save() && $this->db->trans_status()) {
+                        $this->db->trans_commit();
+                        $this->messages->add_message('lang:admin_tests_flash_message_configuration_saved', Messages::MESSAGE_TYPE_SUCCESS);
+                    } else {
+                        $this->db->trans_rollback();
+                        $this->messages->add_message('lang:admin_tests_flash_message_configuration_save_failed', Messages::MESSAGE_TYPE_SUCCESS);
+                    }
+                    redirect(create_internal_url('admin_tests/configure_test/' . $test_id));
+                } else {
+                    $this->db->trans_rollback();
+                    $this->configure_test($test_id);
+                }
+            } else {
+                $this->db->trans_rollback();
+                $this->configure_test($test_id);
+            }
+        } else {
+            $this->db->trans_rollback();
+            redirect(create_internal_url('admin_tests/configure_test/' . $test_id));
+        }
+    }
+
     public function all_tests($task_id) {
         $this->load->helper('tests');
         $tests_data = get_all_supported_test_types_and_subtypes();

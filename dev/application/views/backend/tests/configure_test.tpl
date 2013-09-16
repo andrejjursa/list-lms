@@ -6,8 +6,16 @@
     {include file='partials/backend_general/flash_messages.tpl' inline}
     {if !$error_message}
     <fieldset>
-        <form action="{internal_url url="admin_tests/save_test_configuration/{$test->id}"}" method="post">
+        <form action="{internal_url url="admin_tests/save_test_configuration/{$test->id}"}" method="post" enctype="multipart/form-data">
+            <div class="field">
+                <label for="test_name_id" class="required">{translate line='admin_tests_test_form_label_name'}:</label>
+                <p class="input"><input type="text" name="test[name]" value="{$smarty.post.test.name|default:$test->name|escape:'html'}" id="test_name_id" /></p>
+                {form_error field='test[name]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
             {include file=$test_config_view}
+            <div class="buttons">
+                <input type="submit" name="submit_button" value="{translate line='admin_tests_test_form_button_submit'}" class="button" />
+            </div>
         </form>
     </fieldset>
     {else}

@@ -38,6 +38,14 @@ abstract class abstract_test {
         return NULL;
     }
     
+    public function get_current_test_id() {
+        if (is_array($this->current_test)) {
+            return (int)$this->current_test['id'];
+        }
+        return NULL;
+    }
+
+
     public function get_current_test_configuration() {
         if (is_array($this->current_test)) {
             return $this->current_test['config'];
@@ -70,6 +78,7 @@ abstract class abstract_test {
             $current_test = array(
                 'subtype' => $test_model->subtype,
                 'config' => unserialize($test_model->configuration),
+                'id' => $test_model->id,
             );
             $this->current_test = $current_test;
         } else {
@@ -101,23 +110,90 @@ abstract class abstract_test {
         }
         return $this->test_subtypes[$this->get_current_test_subtype()]['configure_view'];
     }
+    
+    public function validate_test_configuration() {
+        if (is_null($this->get_current_test_subtype())) {
+            throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1400001);
+        }
+        if (isset($this->test_subtypes[$this->get_current_test_subtype()]['configure_validator'])) {
+            if (!method_exists($this, $this->test_subtypes[$this->get_current_test_subtype()]['configure_validator'])) {
+                throw new TestException($this->CI->lang->line('tests_general_error_configure_validator_not_exists'), 1400002);
+            }
+            $method_name = $this->test_subtypes[$this->get_current_test_subtype()]['configure_validator'];
+            return $this->$method_name();
+        }
+        return TRUE;
+    }
+    
+    public function handle_uploads(&$new_config) {
+        if (is_null($this->get_current_test_subtype())) {
+            throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1500001);
+        }
+        $new_config = array();
+        if (isset($this->test_subtypes[$this->get_current_test_subtype()]['configure_uploader'])) {
+            if (!method_exists($this, $this->test_subtypes[$this->get_current_test_subtype()]['configure_uploader'])) {
+                throw new TestException($this->CI->lang->line('tests_general_error_configure_uploader_not_exists'), 1600002);
+            }
+            $method_name = $this->test_subtypes[$this->get_current_test_subtype()]['configure_uploader'];
+            return $this->$method_name($new_config);
+        }
+        return TRUE;  
+    }
+
+    public function prepare_test_configuration($new_config) {
+        if (is_null($this->get_current_test_subtype())) {
+            throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1600001);
+        }
+        if (isset($this->test_subtypes[$this->get_current_test_subtype()]['configure_before_save'])) {
+            if (!method_exists($this, $this->test_subtypes[$this->get_current_test_subtype()]['configure_before_save'])) {
+                throw new TestException($this->CI->lang->line('tests_general_error_configure_before_save_not_exists'), 1600002);
+            }
+            $method_name = $this->test_subtypes[$this->get_current_test_subtype()]['configure_before_save'];
+            return $this->$method_name($new_config);
+        }
+        return $new_config;
+    }
 
     protected function create_directory($app_full_path) {
         $trimmed_full_path = str_replace('\\', DIRECTORY_SEPARATOR, trim($app_full_path, '\\/'));
         $path_segments = explode(DIRECTORY_SEPARATOR, $trimmed_full_path);
-        $path_to_create = rtrim(APPPATH, '\\/');
+        $path_to_create = '';
         $old_path_to_create = $path_to_create;
         foreach ($path_segments as $path_segment) {
-            $path_to_create .= DIRECTORY_SEPARATOR . $path_segment;
+            $path_to_create .= ($path_to_create != '' ? DIRECTORY_SEPARATOR : '') . $path_segment;
             if (!file_exists($path_to_create)) {
-                if (is_writable($old_path_to_create)) {
-                    @mkdir($path_to_create, DIR_READ_MODE);
-                } else {
+                if (!mkdir($path_to_create, DIR_READ_MODE)) {
                     throw new TestException(sprintf($this->CI->lang->line('tests_general_error_cant_create_path'), $path_to_create), 1200001);
                 }
             }
             $old_path_to_create = $path_to_create;
         }
+    }
+    
+    protected function upload_file($folder, $field_name, $allowed = 'zip', $additional_config = array()) {
+        if (array_key_exists('upload_path', $additional_config)) { unset($additional_config['upload_path']); }
+        if (array_key_exists('allowed_types', $additional_config)) { unset($additional_config['allowed_types']); }
+        $config = array_merge(array(
+            'upload_path' => 'private/uploads/unit_tests/test_' . $this->get_current_test_id() . '/' . trim($folder, '\\/') . '/',
+            'allowed_types' => $allowed,
+            'max_size' => 2048,
+        ), $additional_config);
+        $this->CI->load->library('upload');
+        $this->CI->upload->initialize($config);
+        $this->create_directory($config['upload_path']);
+        if ($this->CI->upload->do_upload('configuration_test_files_' . $field_name)) {
+            return $this->CI->upload->data();
+        } else {
+            $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->CI->upload->display_errors());
+            return FALSE;
+        }
+    }
+    
+    protected function was_file_sent($field_name) {
+        if (isset($_FILES['configuration_test_files_' . $field_name]['error'])) {
+            if ($_FILES['configuration_test_files_' . $field_name]['error'] != 4) { return TRUE; }
+        }
+        return FALSE;
     }
 
     private function determine_test_type() {
