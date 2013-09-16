@@ -11,7 +11,18 @@
                 <label for="test_name_id" class="required">{translate line='admin_tests_test_form_label_name'}:</label>
                 <p class="input"><input type="text" name="test[name]" value="{$smarty.post.test.name|default:$test->name|escape:'html'}" id="test_name_id" /></p>
                 {form_error field='test[name]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                {include file='partials/backend_general/overlay_editor.tpl' table='tests' table_id=$test->id column='name' editor_type='input' inline}
             </div>
+            <div class="field">
+                <label for="test_enabled_id">{translate line='admin_tests_test_form_label_enabled'}:</label>
+                <p class="input"><input type="checkbox" name="test[enabled]" value="1"{if $smarty.post.test.enabled|default:$test->enabled} checked="checked"{/if} id="test_enabled_id" /></p>
+            </div>
+            <div class="field">
+                <label for="test_instructions_id">{translate line='admin_tests_test_form_label_instructions'}:</label>
+                <p class="input"><textarea name="test[instructions]" class="tinymce" id="test_instructions_id">{$smarty.post.test.instructions|default:$test->instructions|add_base_url}</textarea></p>
+                {include file='partials/backend_general/overlay_editor.tpl' table='tests' table_id=$test->id column='instructions' editor_type='textarea' class='tinymce' inline}
+            </div>
+            <hr />
             {include file=$test_config_view}
             <div class="buttons">
                 <input type="submit" name="submit_button" value="{translate line='admin_tests_test_form_button_submit'}" class="button" />

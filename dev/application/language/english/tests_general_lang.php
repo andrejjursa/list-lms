@@ -12,3 +12,5 @@ $lang['tests_general_error_configure_view_not_set'] = 'Configuration view file n
 $lang['tests_general_error_configure_validator_not_exists'] = 'Validator method is set but does not exists.';
 $lang['tests_general_error_configure_before_save_not_exists'] = 'Before save method is set but does not exists.';
 $lang['tests_general_error_configure_uploader_not_exists'] = 'Upload handler method is set but does not exists.';
+$lang['tests_general_error_file_not_found'] = 'File not found: %s';
+$lang['tests_general_error_not_a_zip_file'] = 'File is not a zip archive: %s';

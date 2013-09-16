@@ -12,3 +12,5 @@ $lang['tests_general_error_configure_view_not_set'] = 'Konfiguračná šablóna 
 $lang['tests_general_error_configure_validator_not_exists'] = 'Validačná metóda je nastavená ale neexistuje.';
 $lang['tests_general_error_configure_before_save_not_exists'] = 'Metóda prípravy dát na uloženie je nastavená ale neexistuje.';
 $lang['tests_general_error_configure_uploader_not_exists'] = 'Správcovská metóda uploadu je nastavená ale neexistuje.';
+$lang['tests_general_error_file_not_found'] = 'Súbor sa nenašieľ: %s';
+$lang['tests_general_error_not_a_zip_file'] = 'Súbor nie je zip archív: %s';

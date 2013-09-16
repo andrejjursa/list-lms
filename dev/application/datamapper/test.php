@@ -12,6 +12,7 @@ $cache = array (
     6 => 'task_id',
     7 => 'configuration',
     8 => 'enabled',
+    9 => 'instructions',
   ),
   'validation' => 
   array (
@@ -75,6 +76,13 @@ $cache = array (
     'enabled' => 
     array (
       'field' => 'enabled',
+      'rules' => 
+      array (
+      ),
+    ),
+    'instructions' => 
+    array (
+      'field' => 'instructions',
       'rules' => 
       array (
       ),

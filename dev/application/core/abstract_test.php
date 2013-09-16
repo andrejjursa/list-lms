@@ -7,6 +7,7 @@ abstract class abstract_test {
     protected $test_subtypes = NULL;
     private $current_test = NULL;
     private $zip_file_path = NULL;
+    private $current_test_directory;
     
     public function __construct() {
         $this->CI =& get_instance();
@@ -58,6 +59,17 @@ abstract class abstract_test {
             return $this->current_test['config'][$constant];
         }
         return NULL;
+    }
+    
+    public function get_input_zip_file() {
+        return $this->zip_file_path;
+    }
+    
+    public function get_current_test_source_directory() {
+        if (is_null($this->get_current_test_subtype())) {
+            throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1900001);
+        }
+        return 'private/uploads/unit_tests/test_' . $this->get_current_test_id() . '/';
     }
 
     public function initialize($test_model) {
@@ -142,11 +154,11 @@ abstract class abstract_test {
 
     public function prepare_test_configuration($new_config) {
         if (is_null($this->get_current_test_subtype())) {
-            throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1600001);
+            throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1700001);
         }
         if (isset($this->test_subtypes[$this->get_current_test_subtype()]['configure_before_save'])) {
             if (!method_exists($this, $this->test_subtypes[$this->get_current_test_subtype()]['configure_before_save'])) {
-                throw new TestException($this->CI->lang->line('tests_general_error_configure_before_save_not_exists'), 1600002);
+                throw new TestException($this->CI->lang->line('tests_general_error_configure_before_save_not_exists'), 1700002);
             }
             $method_name = $this->test_subtypes[$this->get_current_test_subtype()]['configure_before_save'];
             return $this->$method_name($new_config);
@@ -194,6 +206,38 @@ abstract class abstract_test {
             if ($_FILES['configuration_test_files_' . $field_name]['error'] != 4) { return TRUE; }
         }
         return FALSE;
+    }
+    
+    protected function make_test_directory() {
+        $random_folder = '';
+        $tests_folder = 'private/tests_executed/';
+        do {
+            $random_folder = 'test_' . $this->get_current_test_id() . '_' . substr(md5(time() . rand(-99999999, 99999999)), rand(0, 19), 12);
+        } while (file_exists($tests_folder . $random_folder));
+        $this->create_directory($tests_folder . $random_folder);
+        $this->current_test_directory = $tests_folder . $random_folder . '/';
+        return $tests_folder . $random_folder . '/';
+    }
+    
+    protected function delete_test_directory() {
+        if (file_exists($this->current_test_directory)) {
+            unlink_recursive($this->current_test_directory, TRUE);
+        }
+    }
+    
+    protected function extract_zip_to($zip_file, $subdirectory='') {
+        if (file_exists($zip_file)) {
+            $this->create_directory(ltrim($this->current_test_directory . $subdirectory, '\\/'));
+            $zip = new ZipArchive();
+            if ($zip->open($zip_file) === TRUE) {
+                $zip->extractTo(ltrim($this->current_test_directory . $subdirectory, '\\/') . '/');
+                $zip->close();
+            } else {
+                throw new TestException(sprintf($this->CI->lang->line('tests_general_error_not_a_zip_file'), $zip_file), 1800002);
+            }
+        } else {
+            throw new TestException(sprintf($this->CI->lang->line('tests_general_error_file_not_found'), $zip_file), 1800001);
+        }
     }
 
     private function determine_test_type() {

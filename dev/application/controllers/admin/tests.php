@@ -86,14 +86,18 @@ class Tests extends LIST_Controller {
             } catch (Exception $e) {
                 $error_message = $e->getMessage();
             }
+            $this->lang->load_all_overlays('tests', $test->id);
         } else {
             $error_message = 'lang:admin_tasks_error_cant_find_test';
         }
+        $this->_add_tinymce4();
+        $this->parser->add_js_file('admin_tests/configure_test.js');
         $this->parser->parse('backend/tests/configure_test.tpl', array(
             'test' => $test,
             'test_config_view' => $test_config_view,
             'configuration' => $configuration,
             'error_message' => $error_message,
+            'languages' => $this->lang->get_list_of_languages(),
         ));
     }
     
@@ -122,6 +126,8 @@ class Tests extends LIST_Controller {
             if ($this->form_validation->run() && $valid) {
                 $test_data = $this->input->post('test');
                 $test->name = $test_data['name'];
+                $test->enabled = isset($test_data['enabled']) ? 1 : 0;
+                $test->instructions = isset($test_data['instructions']) ? remove_base_url($test_data['instructions']) : '';
                 $can_save = TRUE;
                 try {
                     $config_data = is_array($this->input->post('configuration')) ? $this->input->post('configuration') : array();
@@ -136,7 +142,8 @@ class Tests extends LIST_Controller {
                     die();
                 }
                 if ($can_save) {
-                    if ($test->save() && $this->db->trans_status()) {
+                    $overlay = $this->input->post('overlay');
+                    if ($test->save() && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'instructions')) && $this->db->trans_status()) {
                         $this->db->trans_commit();
                         $this->messages->add_message('lang:admin_tests_flash_message_configuration_saved', Messages::MESSAGE_TYPE_SUCCESS);
                     } else {

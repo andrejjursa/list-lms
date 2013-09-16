@@ -20,7 +20,16 @@ class java_test extends abstract_test {
     }
     
     protected function run_unit_test() {
+        $this->make_test_directory();
+        $this->extract_zip_to($this->get_input_zip_file(), 'files');
+        $this->extract_zip_to($this->get_current_test_source_directory() . $this->get_current_test_configuration_value('zip_file'), 'files');
         
+        // TODO: execute test and read output
+        
+        $this->delete_test_directory();
+        
+        // TODO: return test output
+        return '';
     }
     
     protected function save_unit_test_config($new_config) {
