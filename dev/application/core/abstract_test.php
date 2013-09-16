@@ -210,7 +210,7 @@ abstract class abstract_test {
     
     protected function make_test_directory() {
         $random_folder = '';
-        $tests_folder = 'private/tests_executed/';
+        $tests_folder = 'private/test_to_execute/';
         do {
             $random_folder = 'test_' . $this->get_current_test_id() . '_' . substr(md5(time() . rand(-99999999, 99999999)), rand(0, 19), 12);
         } while (file_exists($tests_folder . $random_folder));
