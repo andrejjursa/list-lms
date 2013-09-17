@@ -1,5 +1,10 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Abstract test constroller.
+ * @package LIST_Tests
+ * @author Andrej Jursa
+ */ 
 abstract class abstract_test {
     
     protected $CI = NULL;
@@ -249,6 +254,39 @@ abstract class abstract_test {
             return $this->$method_name($new_config);
         }
         return $new_config;
+    }
+    
+    /**
+     * Return path of directory with test execution scripts.
+     * @return string path to directory.
+     */
+    protected function get_test_scripts_directory() {
+        $path = rtrim(getcwd(), '\\/') . '/';
+        
+        $path .= 'test_scripts/';
+        
+        if (file_exists($path . ENVIRONMENT)) {
+            $path .= ENVIRONMENT . '/';
+        }
+        
+        return $path;
+    }
+    
+    /**
+     * Return content of test output file.
+     * @param string $output_file name of output file (with path inside working directory).
+     * @return string content of output file.
+     */
+    protected function read_output_file($output_file) {
+        $output = '';
+        if (file_exists($this->current_test_directory . $output_file)) {
+            $f = fopen($this->current_test_directory . $output_file, 'r');
+            while (!feof(($f))) {
+                $output .= fread($f, 1024);
+            }
+            fclose($f);
+        }
+        return $output;
     }
 
     /**

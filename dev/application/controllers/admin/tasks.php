@@ -129,6 +129,7 @@ class Tasks extends LIST_Controller {
     
     public function edit() {
         $this->_select_teacher_menu_pagetag('tasks');
+        $this->_load_teacher_langfile('tests');
         $url = $this->uri->ruri_to_assoc(3);
         $task_id = isset($url['task_id']) ? intval($url['task_id']) : intval($this->input->post('task_id'));
         $task = new Task();

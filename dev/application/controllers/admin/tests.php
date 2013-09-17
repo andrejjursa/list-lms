@@ -72,7 +72,7 @@ class Tests extends LIST_Controller {
     public function configure_test($test_id) {
         $test = new Test();
         $test->include_related('task');
-        $test->get_by_id($test_id);
+        $test->get_by_id(intval($test_id));
         $error_message = NULL;
         $test_config_view = '';
         $configuration = array();
@@ -88,7 +88,7 @@ class Tests extends LIST_Controller {
             }
             $this->lang->load_all_overlays('tests', $test->id);
         } else {
-            $error_message = 'lang:admin_tasks_error_cant_find_test';
+            $error_message = 'lang:admin_tests_error_cant_find_test';
         }
         $this->_add_tinymce4();
         $this->parser->add_js_file('admin_tests/configure_test.js');
@@ -105,7 +105,7 @@ class Tests extends LIST_Controller {
         $this->_transaction_isolation();
         $this->db->trans_begin();
         $test = new Test();
-        $test->get_by_id($test_id);
+        $test->get_by_id(intval($test_id));
         if ($test->exists()) {
             $this->load->library('form_validation');
             
@@ -183,5 +183,86 @@ class Tests extends LIST_Controller {
             'task' => $task,
             'tests' => $tests,
         ));
+    }
+    
+    public function delete_test($test_id) {
+        $output = new stdClass();
+        $output->result = FALSE;
+        $output->message = $this->lang->line('admin_tests_error_cant_find_test');
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $test = new Test();
+        $test->get_by_id(intval($test_id));
+        if ($test->exists()) {
+            $test->delete();
+            if ($this->db->trans_status()) {
+                $this->db->trans_commit();
+                $output->result = TRUE;
+                $output->message = $this->lang->line('admin_tests_delete_test_success');
+            } else {
+                $this->db->trans_rollback();
+                $output->message = $this->lang->line('admin_tests_error_cant_delete_test');
+            }
+        } else {
+            $this->db->trans_rollback();
+        }
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+    
+    public function prepare_execution($test_id) {
+        $test = new Test();
+        $test->include_related('task');
+        $test->get_by_id(intval($test_id));
+        $this->parser->parse('backend/tests/prepare_execution.tpl', array('test' => $test));
+    }
+    
+    public function run_testing_execution($test_id) {
+        $test = new Test();
+        $test->include_related('task');
+        $test->get_by_id(intval($test_id));
+        $file_name = '';
+        if ($test->exists()) {
+            $path = 'private/test_to_execute/testing_execution/';
+            if (!file_exists($path)) {
+                @mkdir($path, DIR_READ_MODE);
+            }
+            $config['upload_path'] = $path;
+            $config['allowed_types'] = 'zip';
+            $config['overwrite'] = FALSE;
+            $config['encrypt_name'] = TRUE;
+            $this->load->library('upload');
+            $this->upload->initialize($config);
+            if ($this->upload->do_upload('source_codes')) {
+                $data = $this->upload->data();
+                $file_name = $data['file_name'];
+            } else {
+                $this->parser->assign('source_codes_error', $this->upload->display_errors());
+                $this->prepare_execution($test_id);
+                return;
+            }
+        }
+        $this->parser->add_js_file('admin_tests/run_testing_execution.js');
+        $this->parser->parse('backend/tests/run_testing_execution.tpl', array('test' => $test, 'file_name' => $file_name));
+    }
+    
+    public function run_single_test($test_id, $source_file) {
+        $output = new stdClass();
+        $output->text = '';
+        $output->code = 0;
+        try {
+            $test = new Test();
+            $test->get_by_id(intval($test_id));
+            if ($test->exists()) {
+                $test_object = $this->load->test($test->type);
+                $test_object->initialize($test);
+                $output->text = $test_object->run(decode_from_url($source_file));
+            }
+        } catch (Exception $e) {
+            $output->text = $e->getMessage();
+            $output->code = $e->getCode();
+        } 
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
     }
 }

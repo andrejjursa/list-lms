@@ -1,8 +1,9 @@
 <?php
 
 $lang['admin_tests_new_test_form_title'] = 'Nový test';
-$lang['admin_tasks_error_cant_find_task'] = 'Úlohu nemožno nájsť.';
-$lang['admin_tasks_error_cant_find_test'] = 'Test nemožno nájsť.';
+$lang['admin_tests_error_cant_find_task'] = 'Úlohu nemožno nájsť.';
+$lang['admin_tests_error_cant_find_test'] = 'Test nemožno nájsť.';
+$lang['admin_tests_error_cant_delete_test'] = 'Test sa nedá vymazať.';
 $lang['admin_tests_error_there_are_no_tests'] = 'Zatiaľ nie sú žiadne testy.';
 $lang['admin_tests_test_form_label_name'] = 'Názov testu';
 $lang['admin_tests_test_form_label_type'] = 'Typ testu';
@@ -29,3 +30,9 @@ $lang['admin_tests_test_table_button_execute'] = 'Spustiť';
 $lang['admin_tests_test_table_button_configure'] = 'Nastaviť';
 $lang['admin_tests_test_table_button_delete'] = 'Vymazať';
 $lang['admin_tests_configure_test_page_title'] = 'Konfigurácia testu';
+$lang['admin_tests_delete_test_success'] = 'Test úspešne vymazaný.';
+$lang['admin_tests_js_message_delete_question'] = 'Prajete si vymazať tento test?';
+$lang['admin_tests_testing_execution_page_header'] = 'Testovacie spustenie';
+$lang['admin_tests_prepare_execution_form_label_file'] = 'Zdrojové kódy v ZIPe';
+$lang['admin_tests_prepare_execution_form_button_submit'] = 'Nahrať a spustiť';
+$lang['admin_tests_testing_execution_test_is_being_executed_message'] = 'Test sa spúšťa, môže to chvílu trvať ...';

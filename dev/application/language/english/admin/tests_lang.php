@@ -1,8 +1,9 @@
 <?php
 
 $lang['admin_tests_new_test_form_title'] = 'New test';
-$lang['admin_tasks_error_cant_find_task'] = 'Can\t find task.';
-$lang['admin_tasks_error_cant_find_test'] = 'Can\t find test.';
+$lang['admin_tests_error_cant_find_task'] = 'Can\t find task.';
+$lang['admin_tests_error_cant_find_test'] = 'Can\t find test.';
+$lang['admin_tests_error_cant_delete_test'] = 'Test can\'t be deleted.';
 $lang['admin_tests_error_there_are_no_tests'] = 'There are no tests jet.';
 $lang['admin_tests_test_form_label_name'] = 'Test name';
 $lang['admin_tests_test_form_label_type'] = 'Test type';
@@ -29,3 +30,9 @@ $lang['admin_tests_test_table_button_execute'] = 'Execute';
 $lang['admin_tests_test_table_button_configure'] = 'Configure';
 $lang['admin_tests_test_table_button_delete'] = 'Delete';
 $lang['admin_tests_configure_test_page_title'] = 'Test configuration';
+$lang['admin_tests_delete_test_success'] = 'Test deleted successfully.';
+$lang['admin_tests_js_message_delete_question'] = 'Do you want to delete this test?';
+$lang['admin_tests_testing_execution_page_header'] = 'Testing execution';
+$lang['admin_tests_prepare_execution_form_label_file'] = 'Source codes in ZIP';
+$lang['admin_tests_prepare_execution_form_button_submit'] = 'Upload and execute';
+$lang['admin_tests_testing_execution_test_is_being_executed_message'] = 'Test is being executed, this may take some time ...';

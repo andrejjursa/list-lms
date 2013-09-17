@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
     
     reload_all_tests();
     
-    $(document).on('click', 'a.button.new_test_button, a.button.configure_test', function(event) {
+    $(document).on('click', 'a.button.new_test_button, a.button.configure_test, a.button.execute_test', function(event) {
         event.preventDefault();
         var url = $(this).attr('href');
         $.fancybox(url, {
@@ -28,6 +28,19 @@ jQuery(document).ready(function($) {
                 return true;
             }
         });
+    });
+    
+    $(document).on('click', 'a.button.delete_test', function(event) {
+        event.preventDefault();
+        if (confirm(test_delete_question)) {
+            var url = $(this).attr('href');
+            api_ajax_update(url, 'post', {}, function(output) {
+                if (output.result !== undefined && output.message !== undefined) {
+                    show_notification(output.message, output.result ? 'success' : 'error');
+                }
+                reload_all_tests();
+            });
+        }
     });
     
 });

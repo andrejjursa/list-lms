@@ -43,7 +43,7 @@
         </form>
     </fieldset>
     {else}
-        {include file='partials/backend_general/error_box.tpl' message='lang:admin_tasks_error_cant_find_task' inline}
+        {include file='partials/backend_general/error_box.tpl' message='lang:admin_tests_error_cant_find_task' inline}
     {/if}
 {/block}
 {block custom_head}<script type="text/javascript">

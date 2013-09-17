@@ -111,4 +111,5 @@
     };
     var highlighters = {$highlighters|json_encode};    
     var all_tests_list_url = '{internal_url url="admin_tests/all_tests/{$task->id}"}';
+    var test_delete_question = '{translate line="admin_tests_js_message_delete_question"}';
 </script>{/block}
