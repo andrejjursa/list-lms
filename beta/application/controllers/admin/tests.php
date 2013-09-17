@@ -274,4 +274,31 @@ class Tests extends LIST_Controller {
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
+    
+    public function download_test_file($test_id, $file_name_encrypted) {
+        $path = 'private/uploads/unit_tests/test_' . (int)$test_id . '/' . decode_from_url($file_name_encrypted);
+        if (file_exists($path)) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime_type = finfo_file($finfo, $path);
+            finfo_close($finfo);
+            header('Content-Description: File Transfer');
+            header('Content-Type: ' . $mime_type);
+            header('Content-Disposition: attachment; filename='.basename($path));
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($path));
+            ob_clean();
+            flush();
+            $f = fopen($path, 'r');
+            while (!feof($f)) {
+                echo fread($f, 1024);
+            }
+            fclose($f);
+            exit;
+        } else {
+            $this->output->set_status_header(404, 'Not found');
+        }
+    }
 }
