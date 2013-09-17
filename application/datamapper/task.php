@@ -76,6 +76,13 @@ $cache = array (
       array (
       ),
     ),
+    'test' => 
+    array (
+      'field' => 'test',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -111,6 +118,17 @@ $cache = array (
       'other_field' => 'task',
       'join_self_as' => 'task',
       'join_other_as' => 'task_set',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'test' => 
+    array (
+      'class' => 'test',
+      'other_field' => 'task',
+      'join_self_as' => 'task',
+      'join_other_as' => 'test',
+      'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
       'cascade_delete' => true,

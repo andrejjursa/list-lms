@@ -47,7 +47,7 @@ class LIST_Lang extends CI_Lang {
         }  
         return parent::load($langfile, $idiom, $return, $add_suffix, $alt_path); 
     }
-    
+
     /**
      * Performs language idiom change and reload all previously loaded language files.
      * @param string $idiom language idiom to switch to.

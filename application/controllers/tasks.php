@@ -136,8 +136,11 @@ class Tasks extends LIST_Controller {
             $file_info = $task_set->get_specific_file_info($filename);
             if ($file_info !== FALSE) {
                 $filename = $file_info['file_name'] . '_' . $file_info['version'] . '.zip';
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mime_type = finfo_file($finfo, $file_info['filepath']);
+                finfo_close($finfo);
                 header('Content-Description: File Transfer');
-                header('Content-Type: application/octet-stream');
+                header('Content-Type: ' . $mime_type);
                 header('Content-Disposition: attachment; filename='.$filename);
                 header('Content-Transfer-Encoding: binary');
                 header('Expires: 0');
@@ -146,7 +149,11 @@ class Tasks extends LIST_Controller {
                 header('Content-Length: ' . filesize($file_info['filepath']));
                 ob_clean();
                 flush();
-                readfile($file_info['filepath']);
+                $f = fopen($file_info['filepath'], 'r');
+                while (!feof($f)) {
+                    echo fread($f, 1024);
+                }
+                fclose($f);
                 exit;
             }
         }
@@ -157,8 +164,11 @@ class Tasks extends LIST_Controller {
         $filename = decode_from_url($file);
         $filepath = 'private/uploads/task_files/task_' . intval($task_id) . '/' . $filename;
         if (file_exists($filepath)) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime_type = finfo_file($finfo, $filepath);
+            finfo_close($finfo);
             header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
+            header('Content-Type: ' . $mime_type);
             header('Content-Disposition: attachment; filename='.basename($filepath));
             header('Content-Transfer-Encoding: binary');
             header('Expires: 0');
@@ -167,7 +177,11 @@ class Tasks extends LIST_Controller {
             header('Content-Length: ' . filesize($filepath));
             ob_clean();
             flush();
-            readfile($filepath);
+            $f = fopen($filepath, 'r');
+            while (!feof($f)) {
+                echo fread($f, 1024);
+            }
+            fclose($f);
             exit;
         } else {
             $this->output->set_status_header(404, 'Not found');
@@ -178,8 +192,11 @@ class Tasks extends LIST_Controller {
         $filename = decode_from_url($file);
         $filepath = 'private/uploads/task_files/task_' . intval($task_id) . '/hidden/' . $filename;
         if (file_exists($filepath)) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime_type = finfo_file($finfo, $filepath);
+            finfo_close($finfo);
             header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
+            header('Content-Type: ' . $mime_type);
             header('Content-Disposition: attachment; filename='.basename($filepath));
             header('Content-Transfer-Encoding: binary');
             header('Expires: 0');
@@ -188,7 +205,11 @@ class Tasks extends LIST_Controller {
             header('Content-Length: ' . filesize($filepath));
             ob_clean();
             flush();
-            readfile($filepath);
+            $f = fopen($filepath, 'r');
+            while (!feof($f)) {
+                echo fread($f, 1024);
+            }
+            fclose($f);
             exit;
         } else {
             $this->output->set_status_header(404, 'Not found');

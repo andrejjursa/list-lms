@@ -129,6 +129,7 @@ class Tasks extends LIST_Controller {
     
     public function edit() {
         $this->_select_teacher_menu_pagetag('tasks');
+        $this->_load_teacher_langfile('tests');
         $url = $this->uri->ruri_to_assoc(3);
         $task_id = isset($url['task_id']) ? intval($url['task_id']) : intval($this->input->post('task_id'));
         $task = new Task();
@@ -141,10 +142,15 @@ class Tasks extends LIST_Controller {
         $this->inject_prettify_config();
         $this->parser->add_js_file('admin_tasks/form.js');
         $this->parser->add_js_file('admin_tasks/form_edit.js');
+        $this->parser->add_js_file('admin_tests/all_tests_list.js');
         $this->parser->add_css_file('admin_tasks.css');
+        $this->parser->add_css_file('admin_tests.css');
         $this->inject_languages();
         $this->lang->load_all_overlays('tasks', $task_id);
-        $this->parser->parse('backend/tasks/edit.tpl', array('task' => $task, 'structure' => $structure));
+        $this->parser->parse('backend/tasks/edit.tpl', array(
+            'task' => $task,
+            'structure' => $structure,
+        ));
     }
     
     public function update() {
