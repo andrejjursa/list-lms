@@ -246,6 +246,15 @@ class Tests extends LIST_Controller {
         $this->parser->parse('backend/tests/run_testing_execution.tpl', array('test' => $test, 'file_name' => $file_name));
     }
     
+    public function after_testing_execution($source_file) {
+        $source_file_decoded = decode_from_url($source_file);
+        $path = 'private/test_to_execute/testing_execution/' . $source_file_decoded;
+        if (file_exists($path)) {
+            @unlink($path);
+        }
+    }
+
+
     public function run_single_test($test_id, $source_file) {
         $output = new stdClass();
         $output->text = '';
