@@ -32,23 +32,28 @@ class Task extends DataMapper {
      * @param array<mixed> $filter two dimensional array of category IDs, it is represented as logic formula in conjunctive normal form, where first dimension is clause and second is disjunct inside clause.
      */
     public function add_categories_filter($filter) {
+        $select_subquery = ' ( SELECT `cat_tasks`.`id` FROM `tasks` `cat_tasks` ';
+        $where_part = '';
         if (count($filter) > 0) {
             $clause = 0;
             foreach ($filter as $cats) {
                 if (count($cats) > 0) {
-                    $this->db->join($this->has_many['category']['join_table'] . ' `categories_' . $clause . '`', 'tasks.id = categories_' . $clause . '.task_id', 'left');
-                    $this->group_start();
+                    $select_subquery .= ' LEFT OUTER JOIN `task_category_rel` `categories_' . $clause . '` ON `cat_tasks`.`id` = `categories_' . $clause . '`.`task_id` ';
+                    $where_part .= (!empty($where_part) ? ' AND ' : '') . ' ( ';
+                    $or_where_part = '';
                     foreach ($cats as $cat) {
                         $category = new Category();
                         $id_list = $category->get_id_list(intval($cat));
-                        $this->or_where('categories_' . $clause . '`.`category_id` IN (' . implode(', ', $id_list) . ')');
+                        $or_where_part .= (!empty($or_where_part) ? ' OR ' : '') . '`categories_' . $clause . '`.`category_id` IN (' . implode(', ', $id_list) . ') ';
                     }
-                    $this->group_end();
+                    $where_part .= $or_where_part . ' ) ';
                     $clause++;
                 }
             }
         }
-        $this->group_by('id');
+        $where_part .= (!empty($where_part) ? ' AND ' : '') . ' `tasks`.`id` = `cat_tasks`.`id` ';
+        $select_subquery .= ' WHERE ' . $where_part . ' GROUP BY `cat_tasks`.`id` ) ';
+        $this->db->ar_where[] = ' EXISTS ' . $select_subquery;
     }
     
     /**
