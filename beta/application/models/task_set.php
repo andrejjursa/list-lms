@@ -109,9 +109,10 @@ class Task_set extends DataMapper {
     /**
      * Reads the directory for solutions of this task set and sorted array of all files belonging to student.
      * @param integer $student_id ID of student.
+     * @param integer|NULL $version concrete version of file or NULL for all files (default NULL).
      * @return array<string> sorted array of files.
      */
-    public function get_student_files($student_id) {
+    public function get_student_files($student_id, $version = NULL) {
         if (!is_null($this->id)) {
             $path = 'private/uploads/solutions/task_set_' . intval($this->id) . '/';
             if (file_exists($path)) {
@@ -119,16 +120,18 @@ class Task_set extends DataMapper {
                 $student_files = array();
                 if (count($all_files) > 0) { foreach ($all_files as $single_file) {
                     if (is_file($path . $single_file) && preg_match(self::STUDENT_FILE_NAME_REGEXP, $single_file, $matches) && intval($matches['student_id']) == intval($student_id)) {
-                        $student_files[intval($matches['solution_version'])] = array(
-                            'file' => $single_file,
-                            'filepath' => $path . $single_file,
-                            'size' => get_file_size($path . $single_file),
-                            'student_id' => intval($matches['student_id']),
-                            'file_name' => $matches['file_name'],
-                            'random_hash' => $matches['random_hash'],
-                            'last_modified' => filemtime($path . $single_file),
-                            'version' => intval($matches['solution_version']),
-                        );
+                        if ($version === NULL || (int)$version == intval($matches['solution_version'])) {
+                            $student_files[intval($matches['solution_version'])] = array(
+                                'file' => $single_file,
+                                'filepath' => $path . $single_file,
+                                'size' => get_file_size($path . $single_file),
+                                'student_id' => intval($matches['student_id']),
+                                'file_name' => $matches['file_name'],
+                                'random_hash' => $matches['random_hash'],
+                                'last_modified' => filemtime($path . $single_file),
+                                'version' => intval($matches['solution_version']),
+                            );
+                        }
                     }
                 }}
                 ksort($student_files, SORT_NUMERIC);

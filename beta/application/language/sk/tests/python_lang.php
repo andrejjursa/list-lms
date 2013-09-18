@@ -1,6 +1,6 @@
 <?php
 
-$lang['tests_python_type_name'] = 'Testy pre jazyk Python';
+$lang['tests_python_type_name'] = 'Python';
 $lang['python_tests_subtype_unit_test_name'] = 'Jednotkový test (Unit test)';
 $lang['python_tests_config_form_unit_test_zip_file'] = 'ZIP súbor so zdrojovým kódom';
 $lang['python_tests_config_form_unit_test_class_to_run'] = 'Názov súboru s testom';

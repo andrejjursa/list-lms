@@ -29,11 +29,13 @@ class Task_sets extends LIST_Controller {
         $this->inject_courses();
         $this->inject_stored_filter();
         $this->inject_task_set_types();
+        $this->inject_test_types();
         $this->parser->parse('backend/task_sets/index.tpl');
     }
     
     public function new_task_set_form() {
         $this->inject_courses();
+        $this->inject_test_types();
         $this->parser->parse('backend/task_sets/new_task_set_form.tpl');
     }
     
@@ -211,6 +213,7 @@ class Task_sets extends LIST_Controller {
             $task_set->comments_enabled = isset($task_set_data['comments_enabled']) ? (bool)intval($task_set_data['comments_enabled']) : FALSE;
             $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
             $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
+            $task_set->allowed_test_types = isset($task_set_data['allowed_test_types']) && is_array($task_set_data['allowed_test_types']) ? implode(',', $task_set_data['allowed_test_types']) : '';
             if ($task_set->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
@@ -238,6 +241,7 @@ class Task_sets extends LIST_Controller {
         $this->parser->add_css_file('admin_task_sets.css');
         $this->inject_courses();
         $this->inject_languages();
+        $this->inject_test_types();
         $this->parser->parse('backend/task_sets/edit.tpl', array('task_set' => $task_set));
     }
     
@@ -274,6 +278,7 @@ class Task_sets extends LIST_Controller {
                 $task_set->comments_enabled = isset($task_set_data['comments_enabled']) ? (bool)intval($task_set_data['comments_enabled']) : FALSE;
                 $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
                 $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
+                $task_set->allowed_test_types = isset($task_set_data['allowed_test_types']) && is_array($task_set_data['allowed_test_types']) ? implode(',', $task_set_data['allowed_test_types']) : '';
                 
                 $overlay = $this->input->post('overlay');
                 
@@ -698,6 +703,12 @@ class Task_sets extends LIST_Controller {
     private function inject_languages() {
         $languages = $this->lang->get_list_of_languages();
         $this->parser->assign('languages', $languages);
+    }
+    
+    private function inject_test_types() {
+        $this->load->helper('tests');
+        
+        $this->parser->assign('test_types', get_all_supported_test_types());
     }
     
 }

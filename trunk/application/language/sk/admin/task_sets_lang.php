@@ -22,6 +22,7 @@ $lang['admin_task_sets_form_label_instructions'] = 'Inštrukcie';
 $lang['admin_task_sets_form_label_task_bonus_task'] = 'Je to bonusová úloha?';
 $lang['admin_task_sets_form_label_allowed_file_types'] = 'Povolené typy súborov';
 $lang['admin_task_sets_form_label_allowed_file_types_hint'] = 'Povolené typy súborov pre odosielanie študentských riešení. Ak študent pošle súbor tohoto typu, bude zabalený do ZIP archívu. Toto je čiarkou oddelovaný zoznam typov (prípon súborov).<br /><strong>Pozor:</strong> Tieto prípony súborov musia byť definované v application/config/mimes.php, inak nebudú fungovať.';
+$lang['admin_task_sets_form_label_allowed_test_types'] = 'Povolené typy testov';
 $lang['admin_task_sets_form_button_submit'] = 'Uložiť';
 $lang['admin_task_sets_form_field_name'] = 'názov';
 $lang['admin_task_sets_form_field_course_id'] = 'kurz';

@@ -1,6 +1,6 @@
 <?php
 
-$lang['tests_java_type_name'] = 'Tests for Java language';
+$lang['tests_java_type_name'] = 'Java';
 $lang['java_tests_subtype_unit_test_name'] = 'Unit test';
 $lang['java_tests_config_form_unit_test_zip_file'] = 'ZIP file with source code';
 $lang['java_tests_config_form_unit_test_class_to_run'] = 'Test file name';

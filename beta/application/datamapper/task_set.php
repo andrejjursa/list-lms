@@ -19,6 +19,7 @@ $cache = array (
     13 => 'comments_enabled',
     14 => 'comments_moderated',
     15 => 'allowed_file_types',
+    16 => 'allowed_test_types',
   ),
   'validation' => 
   array (
@@ -131,6 +132,13 @@ $cache = array (
     'allowed_file_types' => 
     array (
       'field' => 'allowed_file_types',
+      'rules' => 
+      array (
+      ),
+    ),
+    'allowed_test_types' => 
+    array (
+      'field' => 'allowed_test_types',
       'rules' => 
       array (
       ),

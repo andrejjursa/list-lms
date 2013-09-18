@@ -67,4 +67,68 @@ jQuery(document).ready(function($) {
         $('#tabs li.comments_tab a').trigger('click');
     }
     
+    $('#tests_form_id').submit(function(event) {
+        event.preventDefault();
+        
+        var tests_execution_area = $('#tests_execution_area_id');
+        if (tests_execution_area.length === 1) {
+            tests_execution_area.html('');
+            if (tests_object !== undefined) {
+                var test_form = $('#tests_form_id');
+                var test_form_data = test_form.serializeObject();
+                if (typeof test_form_data.test.version !== 'undefined' && typeof test_form_data.test.id !== 'undefined') {
+                    for (var task_id in tests_object) {
+                        var task_header = $('<h4 class="test_task_name">' + tests_object[task_id].name + '</h4>');
+                        task_header.appendTo(tests_execution_area);
+                        for (var test_id in tests_object[task_id]) {
+                            if (typeof tests_object[task_id][test_id].name !== 'undefined' && inArray(test_id, test_form_data.test.id)) {
+                                var test_fieldset = $('<fieldset></fieldset>');
+                                var test_fieldset_legend = $('<legend>' + tests_object[task_id][test_id].name + '</legend>');
+                                var test_div = $('<div></div>');
+                                test_fieldset_legend.appendTo(test_fieldset);
+                                test_fieldset.appendTo(tests_execution_area).addClass('basefieldset').addClass('testfieldset');
+                                test_div.appendTo(test_fieldset).attr('id', 'test_execution_' + test_id + '_id').addClass('test_execution_div');
+                                test_div.html('<p>' + messages.test_being_executed + '</p>');
+                            }
+                        }
+                    }
+                    for (var i in test_form_data.test.id) {
+                        var test_id = test_form_data.test.id[i];
+                        run_test(test_id, test_form_data.test.version, 'test_execution_' + test_id + '_id');
+                    }
+                } else {
+                    show_notification(messages.test_no_selection, 'error');
+                }
+            }
+        }
+    });
+    
+    var run_test = function(test_id, version_id, output_to_element_id) {
+        var url = global_base_url + 'index.php/admin_tests/run_test_for_task/' + test_id + '/' + task_id + '/' + student_id + '/' + version_id;
+        api_ajax_update(url, 'post', {}, function(data) {
+            if (data.code !== undefined && data.text !== undefined) {
+                var div = $('#' + output_to_element_id);
+                var fieldset = div.parents('fieldset.testfieldset');
+                div.hide();
+                div.css('width', fieldset.width());
+                div.show();
+                div.html(data.text);
+                if (data.code > 0) {
+                    div.css('color', 'red');
+                }
+                resize_test_result_content(output_to_element_id);
+            }
+        });
+    };
+    
+    var resize_test_result_content = function(output_to_element_id) {
+        $(window).on('resize', function() {
+            var div = $('#' + output_to_element_id);
+            var fieldset = div.parents('fieldset.testfieldset');
+            div.hide();
+            div.css('width', fieldset.width());
+            div.show();
+        });
+    };
+    
 });
