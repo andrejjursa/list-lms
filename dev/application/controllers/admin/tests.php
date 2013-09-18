@@ -266,8 +266,8 @@ class Tests extends LIST_Controller {
         $output->code = 1;
         if ($task_set->exists() && $student->exists()) {
             $files = $task_set->get_student_files($student->id, (int)$version);
-            if (isset($files[$version]['filepath'])) {
-                $this->run_single_test($test_id, encode_for_url($files[$version]['filepath']));
+            if (isset($files[(int)$version]['filepath'])) {
+                $this->run_single_test($test_id, encode_for_url($files[(int)$version]['filepath']));
             } else {
                 $this->output->set_content_type('application/json');
                 $this->output->set_output(json_encode($output));
