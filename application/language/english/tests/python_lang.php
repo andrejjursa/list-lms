@@ -1,6 +1,6 @@
 <?php
 
-$lang['tests_python_type_name'] = 'Tests for Python language';
+$lang['tests_python_type_name'] = 'Python';
 $lang['python_tests_subtype_unit_test_name'] = 'Unit test';
 $lang['python_tests_config_form_unit_test_zip_file'] = 'ZIP file with source code';
 $lang['python_tests_config_form_unit_test_class_to_run'] = 'Test file name';

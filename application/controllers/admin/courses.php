@@ -87,7 +87,6 @@ class Courses extends LIST_Controller {
             $course = new Course();
             $course_data = $this->input->post('course');
             $course->from_array($course_data, array('name', 'period_id', 'capacity', 'default_points_to_remove'));
-            $course->description = remove_base_url($course_data['description']);
             $course->allow_subscription_to = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : NULL;
             $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
             
