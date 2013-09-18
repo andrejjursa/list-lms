@@ -68,9 +68,59 @@
                     {/if}
                 </div>
                 <div id="tabs-solution">
+                    {$test_allowed_types = ','|explode:$task_set->allowed_test_types}
+                    {$show_tests = false}
+                    {$tests_for_json = [] scope='global'}
+                    {capture name="tests_table" assign="tests_table"}
+                    <table class="solution_tests_table">
+                        <thead>
+                            <tr>
+                                <th class="test_select">&nbsp;</th>
+                                <th class="test_name">{translate line='tasks_test_table_header_test_name'}</th>
+                                <th class="test_type">{translate line='tasks_test_table_header_test_type'}</th>
+                                <th class="test_subtype">{translate line='tasks_test_table_header_test_subtype'}</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4"><input type="submit" name="execute_tests" value="{translate line='tasks_test_table_button_execute_tests'}" class="button" /></td>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                        {foreach $tasks->all as $task}
+                            {$tests = $task->test->where_in('type', $test_allowed_types)->where('enabled', 1)->order_by('type', 'asc')->order_by('subtype', 'asc')->get()}
+                            {$this->lang->init_overlays('tests', $tests->all, ['name', 'instructions'])}
+                            {$tests_for_json[$task->id].name = "{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}" scope='global'}
+                            {if $tests->exists()}{$show_tests = true}
+                            <tr class="task_header">
+                                <td colspan="4" class="task_name">{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}</td>
+                            </tr>
+                            {/if}
+                            {foreach $tests->all as $test}
+                            <tr class="test_header">
+                                <td class="test_select"><input type="checkbox" name="test[id][]" value="{$test->id|intval}" checked="checked" /></td>
+                                <td class="test_name">{overlay table='tests' table_id=$test->id column='name' default=$test->name}</td>
+                                <td class="test_type">{$test_types[$test->type]}</td>
+                                <td class="test_subtype">{$test_subtypes[$test->type][$test->subtype]}</td>
+                            </tr>
+                            {$tests_for_json[$task->id][$test->id].name = "{overlay table='tests' table_id=$test->id column='name' default=$test->name} ({$test_types[$test->type]} / {$test_subtypes[$test->type][$test->subtype]})" scope='global'}
+                            {$test_instructions = {overlay table='tests' table_id=$test->id column='instructions' default=$test->instructions}}
+                            {if $test_instructions}
+                            <tr class="test_instructions">
+                                <td class="test_select"></td>
+                                <td class="test_instructions" colspan="3">{$test_instructions|add_base_url}</td>
+                            </tr>
+                            {/if}
+                            {/foreach}
+                        {/foreach}
+                        </tbody>
+                    </table>
+                    {/capture}
+                    {if $show_tests}<form action="" method="post" id="tests_form_id">{/if}
                     <table class="solutions_table">
                         <thead>
                             <tr>
+                                {if $show_tests}<th class="select"></th>{/if}
                                 <th class="version">{translate line='tasks_task_solution_table_header_version'}</th>
                                 <th class="file">{translate line='tasks_task_solution_table_header_file'}</th>
                                 <th class="size">{translate line='tasks_task_solution_table_header_size'}</th>
@@ -80,6 +130,7 @@
                         <tbody>
                         {foreach $solution_files as $file}
                             <tr>
+                                {if $show_tests}<td class="select"><input type="radio" name="test[version]" value="{$file@key}" /></td>{/if}
                                 <td class="version">{$file@key}</td>
                                 <td class="file"><a href="{internal_url url="tasks/download_solution/{$task_set->id|intval}/{$file.file|encode_for_url}"}" target="_blank">{$file.file_name}_{$file@key}.zip</a></td>
                                 <td class="size">{$file.size}</td>
@@ -92,6 +143,14 @@
                         {/foreach}
                         </tbody>
                     </table>
+                    {if $show_tests}{$tests_table}{/if}
+                    {if $show_tests}</form>{/if}
+                    {if $show_tests}
+                        <div id="tests_execution_area_id"></div>
+                    {/if}
+                    <script type="text/javascript">
+                        var tests_object = {$tests_for_json|json_encode};
+                    </script>
                 </div>
             </div>
         {else}
@@ -106,5 +165,10 @@
 {block custom_head}
 <script type="text/javascript">
     var task_id = {$task_set->id|intval};
+    var student_id = {$list_student_account_model->id|intval};
+    var messages = {
+        test_being_executed: '{translate line='tasks_test_message_test_being_executed'}',
+        test_no_selection: '{translate line='tasks_test_message_test_no_selection'}'
+    };
 </script>
 {/block}

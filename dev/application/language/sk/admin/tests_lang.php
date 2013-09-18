@@ -36,3 +36,4 @@ $lang['admin_tests_testing_execution_page_header'] = 'Testovacie spustenie';
 $lang['admin_tests_prepare_execution_form_label_file'] = 'Zdrojové kódy v ZIPe';
 $lang['admin_tests_prepare_execution_form_button_submit'] = 'Nahrať a spustiť';
 $lang['admin_tests_testing_execution_test_is_being_executed_message'] = 'Test sa spúšťa, môže to chvílu trvať ...';
+$lang['admin_tests_error_message_failed_to_run_student_test'] = 'Zlyhanie pri spustení študentského testu! Zostava úloh, študent alebo súbor s riešením sa nenašieľ.';

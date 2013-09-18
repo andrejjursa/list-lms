@@ -14,7 +14,9 @@ class Tests extends LIST_Controller {
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
         $this->_init_teacher_quick_prefered_course_menu();
-        $this->usermanager->teacher_login_protected_redirect();
+        if ($this->router->method != 'run_test_for_task') {
+            $this->usermanager->teacher_login_protected_redirect();
+        }
     }
     
     public function new_test_form($task_id) {
@@ -254,6 +256,27 @@ class Tests extends LIST_Controller {
         }
     }
 
+    public function run_test_for_task($test_id, $task_set_id, $student_id, $version) {
+        $task_set = new Task_set();
+        $task_set->get_by_id(intval($task_set_id));
+        $student = new Student();
+        $student->get_by_id(intval($student_id));
+        $output = new stdClass();
+        $output->text = $this->lang->line('admin_tests_error_message_failed_to_run_student_test');
+        $output->code = 1;
+        if ($task_set->exists() && $student->exists()) {
+            $files = $task_set->get_student_files($student->id, (int)$version);
+            if (isset($files[$version]['filepath'])) {
+                $this->run_single_test($test_id, encode_for_url($files[$version]['filepath']));
+            } else {
+                $this->output->set_content_type('application/json');
+                $this->output->set_output(json_encode($output));
+            }
+        } else {
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode($output));
+        }
+    }
 
     public function run_single_test($test_id, $source_file) {
         $output = new stdClass();
