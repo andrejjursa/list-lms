@@ -64,6 +64,7 @@ $lang['admin_solutions_list_new_solution_error_student_not_in_course_or_group'] 
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Formulár';
 $lang['admin_solutions_valuation_tabs_label_files'] = 'Súbory';
+$lang['admin_solutions_valuation_tabs_label_tests'] = 'Testy';
 $lang['admin_solutions_valuation_tabs_label_tasks'] = 'Úlohy';
 $lang['admin_solutions_valuation_form_label_points'] = 'Body';
 $lang['admin_solutions_valuation_form_label_points_hint'] = 'Suma bodov za úlohy v tejto zostave úloh je <strong>%s</strong>.';
@@ -71,6 +72,8 @@ $lang['admin_solutions_valuation_form_label_comment'] = 'Komentár';
 $lang['admin_solutions_valuation_form_label_not_considered'] = 'Nebrať do úvahy toto riešenie pri hodnotení';
 $lang['admin_solutions_valuation_form_button_submit'] = 'Uložiť';
 $lang['admin_solutions_valuation_form_field_points'] = 'body';
+$lang['admin_solutions_valuation_test_form_execute_tests'] = 'Spustiť vybrané testy';
+$lang['admin_solutions_valuation_test_form_no_tests_found'] = 'Pre túto zostavu úloh nie sú definované žiadne testy!';
 $lang['admin_solutions_validation_filter_label_version'] = 'Verzia riešenia';
 $lang['admin_solutions_validation_filter_button_download_file'] = 'Stiahnuť túto verziu riešenia';
 $lang['admin_solutions_validation_filter_label_file'] = 'Výber súboru v riešení';
@@ -80,6 +83,8 @@ $lang['admin_solutions_valuation_file_content_error_cant_read_file'] = 'Nemôže
 $lang['admin_solutions_valuation_solution_not_found'] = 'Riešenie sa nenašlo.';
 $lang['admin_solutions_valuation_solution_saved'] = 'Riešenie uložené úspešne.';
 $lang['admin_solutions_valuation_solution_not_saved'] = 'Zlyhanie pri ukladaní riešenia.';
+$lang['admin_solutions_validation_test_messages_test_not_selected'] = 'Prosím, vyberte verziu riešenia a aspoň jeden test na jeho/ich vykonanie.';
+$lang['admin_solutions_validation_test_messages_test_being_executed'] = 'Test sa spúšťa, môže to chvílu trvať, prosím čakajte ...';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámy autor';

@@ -137,3 +137,6 @@ table.valuation_table tbody tr.clicked td:last-child {
     -webkit-box-shadow: 0 4px 2px -3px red inset;
     box-shadow: 0 4px 2px -3px red inset;
 }
+
+#tests_execution_area_id h4 { margin: 15px 5px 10px 5px; font-size: 1.1em; font-weight: bold; }
+#tests_execution_area_id div.test_execution_div { overflow-x: auto; max-width: 100%; }
