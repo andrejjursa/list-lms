@@ -280,11 +280,18 @@ class Solutions extends LIST_Controller {
         $solution->where('task_set_id', $task_set_id);
         $solution->get_by_id($solution_id);
         
+        $this->load->helper('tests');
+        $test_types_subtypes = get_all_supported_test_types_and_subtypes();
+        
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_solutions/valuation.js');
         $this->parser->add_css_file('admin_solutions.css');
         $this->_add_prettify();
-        $this->parser->parse('backend/solutions/valuation.tpl', array('solution' => $solution));
+        $this->parser->parse('backend/solutions/valuation.tpl', array(
+            'solution' => $solution,
+            'test_types' => $test_types_subtypes['types'],
+            'test_subtypes' => $test_types_subtypes['subtypes'],
+        ));
     }
     
     public function update_valuation($task_set_id, $solution_id) {
