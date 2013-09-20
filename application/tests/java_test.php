@@ -3,7 +3,7 @@
 include_once APPPATH . 'core/abstract_test.php';
 
 /**
- * Java test constroller.
+ * Java test instance.
  * @package LIST_Tests
  * @author Andrej Jursa
  */ 
