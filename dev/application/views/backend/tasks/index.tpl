@@ -42,6 +42,21 @@
                     <label>{translate line='admin_tasks_filter_label_filter_by_text'}:</label>
                     <p class="input"><input type="text" name="filter[text]" value="{$filter.text|escape:'html'}" /></p>
                 </div>
+                <div class="field">
+                    <label>{translate line='admin_tasks_filter_label_filter_by_tests'}:</label>
+                    <div class="input">
+                        {html_radios options=['all'=>{translate line='admin_tasks_filter_label_filter_by_tests_option_all'}, 'have'=>{translate line='admin_tasks_filter_label_filter_by_tests_option_have'}, 'donthave'=>{translate line='admin_tasks_filter_label_filter_by_tests_option_donthave'}]
+                        name='filter[tests]' separator='<br />' selected=$filter.tests|default:'all'}
+                    </div>
+                </div>
+                {if $test_types}
+                <div class="field filter_by_test_types">
+                    <label>{translate line='admin_tasks_filter_label_filter_by_test_types'}:</label>
+                    <div class="input">
+                        {html_checkboxes options=$test_types separator='<br />' selected=$filter.test_types name='filter[test_types]'}
+                    </div>
+                </div>
+                {/if}
                 <div class="buttons">
                     <input type="submit" name="filter_submit" value="{translate line='admin_tasks_filter_submit_button'}" class="button" />
                     <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />
@@ -51,6 +66,7 @@
                     <input type="hidden" name="filter[fields][name]" value="{$filter.fields.name|default:1}" />
                     <input type="hidden" name="filter[fields][categories]" value="{$filter.fields.categories|default:1}" />
                     <input type="hidden" name="filter[fields][task_sets]" value="{$filter.fields.task_sets|default:1}" />
+                    <input type="hidden" name="filter[fields][test_count]" value="{$filter.fields.test_count|default:0}" />
                     <input type="hidden" name="filter[fields][author]" value="{$filter.fields.author|default:0}" />
                     <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'name'}" />
                     <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />

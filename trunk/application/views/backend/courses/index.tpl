@@ -20,6 +20,7 @@
                 <input type="hidden" name="filter[fields][period]" value="{$filter.fields.period|default:1}" />
                 <input type="hidden" name="filter[fields][groups]" value="{$filter.fields.groups|default:1}" />
                 <input type="hidden" name="filter[fields][task_set_types]" value="{$filter.fields.task_set_types|default:1}" />
+                <input type="hidden" name="filter[fields][task_set_count]" value="{$filter.fields.task_set_count|default:0}" />
                 <input type="hidden" name="filter[fields][capacity]" value="{$filter.fields.capacity|default:1}" />
                 <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'period'}" />
                 <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />

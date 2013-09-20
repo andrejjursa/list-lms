@@ -8,6 +8,7 @@ $lang['admin_courses_fieldset_legend_all_courses'] = 'Všetky kurzy';
 $lang['admin_courses_table_header_course_name'] = 'Názov';
 $lang['admin_courses_table_header_course_period'] = 'Obdobie';
 $lang['admin_courses_table_header_course_capacity'] = 'Kapacita kurzu';
+$lang['admin_courses_table_header_course_task_set_count'] = 'Počet zostáv úloh';
 $lang['admin_courses_table_header_controlls'] = 'Ovládanie';
 $lang['admin_courses_table_controlls_edit'] = 'Upraviť';
 $lang['admin_courses_table_controlls_delete'] = 'Vymazať';

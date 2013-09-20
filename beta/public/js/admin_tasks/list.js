@@ -13,6 +13,7 @@ jQuery(document).ready(function($) {
             field_filter_checkbox('#fields_config_name_checkbox_id', '#filter_form_id', 'name');
             field_filter_checkbox('#fields_config_categories_checkbox_id', '#filter_form_id', 'categories');
             field_filter_checkbox('#fields_config_task_sets_checkbox_id', '#filter_form_id', 'task_sets');
+            field_filter_checkbox('#fields_config_test_count_checkbox_id', '#filter_form_id', 'test_count');
             field_filter_checkbox('#fields_config_author_checkbox_id', '#filter_form_id', 'author');
             sort_table('table.tasks_table', '#filter_form_id');
         };
@@ -42,7 +43,7 @@ jQuery(document).ready(function($) {
         event.preventDefault();
         if (confirm(messages.delete_question)) {
             api_ajax_update($(this).attr('href'), 'get', {}, function(output) {
-                if (output == true) {
+                if (output === true) {
                     reload_all_tasks();
                     show_notification(messages.after_delete, 'success');    
                 }
@@ -93,5 +94,19 @@ jQuery(document).ready(function($) {
             }
         });
     });
+    
+    $('#filter_form_id').activeForm({
+        speed: 0
+    });
+    
+    $('#filter_form_id div.field.filter_by_test_types').setActiveFormDisplayCondition(function() {
+        var tests_select = $('#filter_form_id input[type=radio][name="filter[tests]"]:checked');
+        if (tests_select.val() === 'have') {
+            return true;
+        }
+        return false;
+    });
+    
+    $('#filter_form_id').activeForm().applyConditions();
     
 });

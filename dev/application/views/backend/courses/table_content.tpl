@@ -9,6 +9,7 @@
             {if $filter.fields.period}<th class="sort:period">{translate line='admin_courses_table_header_course_period'}</th>{/if}
             {if $filter.fields.groups}<th class="sort:groups:desc">{translate line='admin_courses_table_header_course_groups'}</th>{/if}
             {if $filter.fields.task_set_types}<th class="sort:task_set_types:desc">{translate line='admin_courses_table_header_course_task_set_types'}</th>{/if}
+            {if $filter.fields.task_set_count}<th class="sort:task_set_count:desc">{translate line='admin_courses_table_header_course_task_set_count'}</th>{/if}
             {if $filter.fields.capacity}<th class="sort:capacity:desc">{translate line='admin_courses_table_header_course_capacity'}</th>{/if}
             <th colspan="4" class="controlls"><div id="open_fields_config_id">{translate line='admin_courses_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
@@ -24,6 +25,7 @@
             {if $filter.fields.period}<td>{translate_text|default:{translate line='admin_courses_table_content_no_period'}|escape:'html' text=$course->period_name}</td>{/if}
             {if $filter.fields.groups}<td>{$course->group_count}</td>{/if}
             {if $filter.fields.task_set_types}<td>{$course->task_set_type_count}</td>{/if}
+            {if $filter.fields.task_set_count}<td>{$course->task_set_count}</td>{/if}
             {if $filter.fields.capacity}<td>{$course->capacity|intval}</td>{/if}
             <td class="controlls"><a href="{internal_url url="admin_courses/task_set_types/course_id/{$course->id}"}" class="button special task_set_types_editor">{translate line='admin_courses_table_controlls_task_set_types'}</a></td>
             <td class="controlls"><a href="{internal_url url="admin_courses/edit/course_id/{$course->id}"}" class="button edit">{translate line='admin_courses_table_controlls_edit'}</a></td>
@@ -32,7 +34,7 @@
         </tr>
         {foreachelse}
         <tr>
-            <td colspan="10">
+            <td colspan="{5 + $filter.fields|sum_array}">
                 {include file='partials/backend_general/error_box.tpl' message='lang:admin_courses_table_content_no_courses'}
             </td>
         </tr>

@@ -8,6 +8,7 @@ $lang['admin_courses_fieldset_legend_all_courses'] = 'All courses';
 $lang['admin_courses_table_header_course_name'] = 'Name';
 $lang['admin_courses_table_header_course_period'] = 'Period';
 $lang['admin_courses_table_header_course_capacity'] = 'Course capacity';
+$lang['admin_courses_table_header_course_task_set_count'] = 'Nr. of task sets';
 $lang['admin_courses_table_header_controlls'] = 'Controlls';
 $lang['admin_courses_table_controlls_edit'] = 'Edit';
 $lang['admin_courses_table_controlls_delete'] = 'Delete';

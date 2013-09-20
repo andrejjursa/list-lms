@@ -14,6 +14,7 @@ jQuery(document).ready(function($) {
                 field_filter_checkbox('#fields_config_period_checkbox_id', '#filter_form_id', 'period');
                 field_filter_checkbox('#fields_config_groups_checkbox_id', '#filter_form_id', 'groups');
                 field_filter_checkbox('#fields_config_task_set_types_checkbox_id', '#filter_form_id', 'task_set_types');
+                field_filter_checkbox('#fields_config_task_set_count_checkbox_id', '#filter_form_id', 'task_set_count');
                 field_filter_checkbox('#fields_config_capacity_checkbox_id', '#filter_form_id', 'capacity');
                 sort_table('#table_content table', '#filter_form_id');
             });

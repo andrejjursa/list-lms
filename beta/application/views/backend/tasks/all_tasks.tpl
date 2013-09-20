@@ -7,6 +7,7 @@
             {if $filter.fields.name}<th class="sort:name">{translate line='admin_tasks_table_header_name'}</th>{/if}
             {if $filter.fields.categories}<th>{translate line='admin_tasks_table_header_categories'}</th>{/if}
             {if $filter.fields.task_sets}<th class="sort:task_sets:desc">{translate line='admin_tasks_table_header_task_sets'}</th>{/if}
+            {if $filter.fields.test_count}<th class="sort:test_count:desc">{translate line='admin_tasks_table_header_test_count'}</th>{/if}
             {if $filter.fields.author}<th class="sort:author">{translate line='admin_tasks_table_header_author'}</th>{/if}
             <th colspan="4" class="controlls"><div id="open_fields_config_id">{translate line='admin_tasks_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
@@ -25,6 +26,7 @@
             {if $filter.fields.name}<td><strong>{overlay|escape:'html' table='tasks' table_id=$task->id column='name' default=$task->name}</strong></td>{/if}
             {if $filter.fields.categories}<td>{foreach $task->category->order_by('name', 'asc')->get_iterated() as $category}{if !$category@first}, {/if}{translate_text|escape:'html' text=$category->name}{/foreach}</td>{/if}
             {if $filter.fields.task_sets}<td>{$task->task_set_count}</td>{/if}
+            {if $filter.fields.test_count}<td>{$task->test_count}</td>{/if}
             {if $filter.fields.author}<td>{$task->author_fullname|default:{translate line='admin_tasks_table_content_unknown_author'}}</td>{/if}
             <td class="controlls"><a href="{internal_url url="admin_tasks/add_to_task_set/task_id/{$task->id}"}" class="button special add_to_task_set" title="{translate line='admin_tasks_form_button_add_to_task_set'}">{translate line='admin_tasks_form_button_add_to_task_set_button'}</a></td>
             <td class="controlls"><a href="{internal_url url="admin_tasks/preview/task_id/{$task->id}"}" class="button special preview">{translate line='admin_tasks_form_button_preview'}</a></td>

@@ -24,13 +24,15 @@ class Tasks extends LIST_Controller {
     
     public function index() {
         $this->_select_teacher_menu_pagetag('tasks');
+        $this->load->helper('tests');
+        $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_tasks/list.js');
         $this->parser->add_js_file('admin_tasks/filter.js');
         $this->parser->add_css_file('admin_tasks.css');
         $this->inject_stored_filter();
         $category = new Category();
         $structure = $category->get_all_structured();
-        $this->parser->parse('backend/tasks/index.tpl', array('structure' => $structure));
+        $this->parser->parse('backend/tasks/index.tpl', array('structure' => $structure, 'test_types' => get_all_supported_test_types()));
     }
     
     public function get_all_tasks() {
@@ -40,6 +42,7 @@ class Tasks extends LIST_Controller {
             array('name' => 'name', 'caption' => 'lang:admin_tasks_table_header_name'),
             array('name' => 'categories', 'caption' => 'lang:admin_tasks_table_header_categories'),
             array('name' => 'task_sets', 'caption' => 'lang:admin_tasks_table_header_task_sets'),
+            array('name' => 'test_count', 'caption' => 'lang:admin_tasks_table_header_test_count'),
             array('name' => 'author', 'caption' => 'lang:admin_tasks_table_header_author'),
         );
         
@@ -49,6 +52,7 @@ class Tasks extends LIST_Controller {
         
         $tasks = new Task();
         $tasks->include_related('author', 'fullname');
+        $tasks->include_related_count('test');
         if (isset($filter['categories']['clauses']) && count($filter['categories']['clauses']) > 0) {
             $tasks->add_categories_filter($filter['categories']['clauses']);
         }
@@ -62,6 +66,19 @@ class Tasks extends LIST_Controller {
             }
             $tasks->group_end();
         }
+        if (isset($filter['tests'])) {
+            $tests = $tasks->test;
+            $tests->select_func('COUNT', '@id', 'tests_count');
+            $tests->where_related('task', 'id', '${parent}.id');
+            if ($filter['tests'] == 'have') {
+                if (isset($filter['test_types']) && is_array($filter['test_types']) && count($filter['test_types']) > 0) {
+                    $tests->where_in('type', $filter['test_types']);
+                }
+                $tasks->where_subquery('0 < ', $tests);
+            } elseif ($filter['tests'] == 'donthave') {
+                $tasks->where_subquery('0 = ', $tests);
+            }
+        }
         $tasks->include_related_count('task_set');
         $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
         if ($filter['order_by_field'] == 'created') {
@@ -72,6 +89,8 @@ class Tasks extends LIST_Controller {
             $tasks->order_by_with_overlay('name', $order_by_direction);
         } elseif ($filter['order_by_field'] == 'task_sets') {
             $tasks->order_by('task_set_count', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'test_count') {
+            $tasks->order_by('test_count', $order_by_direction);
         } elseif ($filter['order_by_field'] == 'author') {
             $tasks->order_by_related_as_fullname('author', 'fullname', $order_by_direction);
         }
