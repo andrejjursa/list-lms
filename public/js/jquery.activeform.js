@@ -1,7 +1,7 @@
 (function($) {
     $.extend($.fn, {
         activeForm: function(options) {
-            if (this.length == 0) {
+            if (this.length === 0) {
                 $.activeForm.errorMessage('Can\'t start conditional form on empty list of elements.');
                 return this;
             }
@@ -22,7 +22,7 @@
             }
         },
         setActiveFormDisplayCondition: function(condition) {
-            if (this.length == 0) {
+            if (this.length === 0) {
                 $.activeForm.errorMessage('Can\'t add condition to empty list, selector must match one DIV element.');
                 return this;
             }
@@ -41,10 +41,10 @@
             }
         },
         addActiveFormPage: function(pageName, pageButtonElement, condition) {
-            if (pageButtonElement == undefined) {
+            if (pageButtonElement === undefined) {
                 pageButtonElement = null;
             }
-            if (this.length == 0) {
+            if (this.length === 0) {
                 $.activeForm.errorMessage('Can\'t add page if list of selected elements is empty, selector must match one DIV of FIELDSET element.');
                 return this;
             }
@@ -73,7 +73,7 @@
         this.nextButton = null;
         this.prevButton = null;
         this.init();
-    }
+    };
     
     $.extend($.activeForm, {
         defaults: {
@@ -115,28 +115,28 @@
                     }
                     $.activeForm.processConditions.call(this);
                 });
-                if (this.settings.nextPageSelector != null) {
+                if (this.settings.nextPageSelector !== null) {
                     this.nextButton = $(this.workOnForm).find(this.settings.nextPageSelector);
                     $.data($(this.nextButton)[0], 'activeFormObject', this);
                     this.nextButton.click($.activeForm.nextButtonClick);
                 }
-                if (this.settings.previousPageSelector != null) {
+                if (this.settings.previousPageSelector !== null) {
                     this.prevButton = $(this.workOnForm).find(this.settings.previousPageSelector);
                     $.data($(this.prevButton)[0], 'activeFormObject', this);
                     this.prevButton.click($.activeForm.prevButtonClick);
                 }
             },
             setDisplayCondition: function(element, condition) {
-                if (!(typeof condition == 'function')) {
+                if (!(typeof condition === 'function')) {
                     $.activeForm.errorMessage('Condition must be function.');
                     return this;
                 }
-                if (typeof element == 'string') {
+                if (typeof element === 'string') {
                     element = $(this.workOnForm).find(element);
                 }
                 if (element.length > 0 && $(element).is($.activeForm.consts.formPartElements())) {
                     var activeForm = $.activeForm.getActiveForm($.activeForm.getParentForm(element));
-                    if (activeForm == this) {
+                    if (activeForm === this) {
                         var index = this.isConditionForElementSet(element);
                         if (index !== false) {
                             this.conditions[index].condition = condition;
@@ -144,7 +144,7 @@
                             var conditionObject = {
                                 element: $(element)[0],
                                 condition: condition
-                            }
+                            };
                             this.conditions.push(conditionObject);
                         }
                     } else {
@@ -156,22 +156,22 @@
                 return this;
             },
             addPageAndCondition: function(element, pageName, pageButtonElement, condition) {
-                if (pageButtonElement == undefined) { pageButtonElement = null; }
+                if (pageButtonElement === undefined) { pageButtonElement = null; }
                 if (condition !== undefined) {
-                    if (!(typeof condition == 'function')) {
+                    if (!(typeof condition === 'function')) {
                         $.activeForm.errorMessage('Condition must be function.');
                         return this;
                     }
                 }
-                if (typeof element == 'string') {
+                if (typeof element === 'string') {
                     element = $(this.workOnForm).find(element);
                 }
-                if (typeof pageButtonElement == 'string') {
+                if (typeof pageButtonElement === 'string') {
                     pageButtonElement = $(this.workOnForm).find(pageButtonElement);
                 }
                 if (element.length > 0 && $(element).is($.activeForm.consts.pageElements())) {
                     var activeForm = $.activeForm.getActiveForm($.activeForm.getParentForm(element));
-                    if (activeForm == this) {
+                    if (activeForm === this) {
                         var index = this.isPageSet(element);
                         if (index !== false) {
                             this.pages[index].condition = condition !== undefined ? condition : function() { return true; };
@@ -183,7 +183,7 @@
                                 condition: condition !== undefined ? condition : function() { return true; },
                                 pageName: pageName,
                                 pageButtonElement: pageButtonElement
-                            }
+                            };
                             this.pages.push(pageObject);
                         }
                         if (pageButtonElement !== null) {
@@ -216,7 +216,7 @@
                 this.settings.speedPageButton = 0;
                 $.activeForm.showHideElements(this, 0);
                 this.settings.speedPageButton = oldSpeed;
-                if (typeof this.settings.onConditionCheck == 'function') {
+                if (typeof this.settings.onConditionCheck === 'function') {
                     this.settings.onConditionCheck.call(this);
                 }
             },
@@ -225,13 +225,13 @@
                 if (index !== false) {
                     return this.conditions[index].condition;
                 }
-                return function() { return true; }
+                return function() { return true; };
             },
             isConditionForElementSet: function(element) {
                 if (element.length > 0 && $(element).is($.activeForm.consts.formPartElements())) {
                     var elementDIV = $(element)[0];
                     for (index in this.conditions) {
-                        if (this.conditions[index].element == elementDIV) {
+                        if (this.conditions[index].element === elementDIV) {
                             return index;
                         }
                     }
@@ -242,7 +242,7 @@
                 if (element.length > 0 && $(element).is($.activeForm.consts.pageElements())) {
                     var elementPage = $(element)[0];
                     for (index in this.pages) {
-                        if (this.pages[index].element == elementPage) {
+                        if (this.pages[index].element === elementPage) {
                             return index;
                         }
                     }
@@ -256,15 +256,15 @@
                         return this.pages[index].condition;
                     }
                 }
-                return function() { return true; }
+                return function() { return true; };
             },
             isDisplayed: function(element) {
-                if (typeof element == 'string') {
+                if (typeof element === 'string') {
                     element = $(this.workOnForm).find(element);
                 }
                 if (element.length > 0 && $(element).is($.activeForm.consts.formPartElements())) {
                     var elementActiveForm = $.activeForm.getActiveForm($.activeForm.getParentForm(element));
-                    if (elementActiveForm == this) {
+                    if (elementActiveForm === this) {
                         var condition = this.getConditionForElement(element);
                         return condition.call(this);
                     }
@@ -272,12 +272,12 @@
                 return false;
             },
             idPageEnabled: function(element) {
-                if (typeof element == 'string') {
+                if (typeof element === 'string') {
                     element = $(this.workOnForm).find(element);
                 }
                 if (element.length > 0 && $(element).is($.activeForm.consts.pageElements())) {
                     var pageActiveForm = $.activeForm.getActiveForm($.activeForm.getParentForm(element));
-                    if (pageActiveForm == this) {
+                    if (pageActiveForm === this) {
                         var condition = this.getConditionForPage(element);
                         return condition.call(this);
                     }
@@ -291,7 +291,7 @@
                         var activePageObject = {
                             index: index,
                             page: this.pages[index]
-                        }
+                        };
                         visiblePages.push(activePageObject);
                     }
                 }
@@ -304,7 +304,7 @@
                         var activePageObject = {
                             index: index,
                             page: this.pages[index]
-                        }
+                        };
                         activePages.push(activePageObject);
                     }
                 }
@@ -356,7 +356,7 @@
                 }
             }
             $.activeForm.showHideElements(activeForm, activeForm.settings.speed);
-            if (typeof activeForm.settings.onConditionCheck == 'function') {
+            if (typeof activeForm.settings.onConditionCheck === 'function') {
                 activeForm.settings.onConditionCheck.call(activeForm);
             }
         },
@@ -442,7 +442,7 @@
                 var setVisited = true;
                 for (index in visiblePages) {
                     var pageButtonElement = visiblePages[index].page.pageButtonElement;
-                    if (visiblePages[index].index == activeForm.currentPage) {
+                    if (visiblePages[index].index === activeForm.currentPage) {
                         $(visiblePages[index].page.element).show(activeForm.settings.pageTransitionSpeed);
                         if (pageButtonElement !== null) {
                             $(pageButtonElement).removeClass(activeForm.settings.pageButtonInactiveClass);
@@ -511,7 +511,7 @@
         },
         isIndexInPagesArray: function(index, pagesArray) {
             for (i in pagesArray) {
-                if (pagesArray[i].index == index) {
+                if (pagesArray[i].index === index) {
                     return true;
                 }
             }
@@ -521,12 +521,12 @@
             var output = {
                 prev: null,
                 next: null
-            }
+            };
             
             if ($.activeForm.isIndexInPagesArray(currentIndex, pagesArray)) {
                 var isNext = false;
                 for (index in pagesArray) {
-                    if (pagesArray[index].index == currentIndex) {
+                    if (pagesArray[index].index === currentIndex) {
                         isNext = true;
                     } else {
                         if (isNext) {
@@ -563,7 +563,7 @@
                 var name = $(this).attr('name');
                 $(this).removeAttr('name');
                 $(this).attr('hiddenname', name);
-                if ($.trim(hiddenClass) != '') {
+                if ($.trim(hiddenClass) !== '') {
                     $(this).addClass($.trim(hiddenClass));
                 }
             });
@@ -573,7 +573,7 @@
                 var name = $(this).attr('hiddenname');
                 $(this).removeAttr('hiddenname');
                 $(this).attr('name', name);
-                if ($.trim(hiddenClass) != '') {
+                if ($.trim(hiddenClass) !== '') {
                     $(this).removeClass($.trim(hiddenClass));
                 }
             });

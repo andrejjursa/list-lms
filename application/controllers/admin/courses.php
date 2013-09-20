@@ -43,6 +43,7 @@ class Courses extends LIST_Controller {
             array('name' => 'period', 'caption' => 'lang:admin_courses_table_header_course_period'),
             array('name' => 'groups', 'caption' => 'lang:admin_courses_table_header_course_groups'),
             array('name' => 'task_set_types', 'caption' => 'lang:admin_courses_table_header_course_task_set_types'),
+            array('name' => 'task_set_count', 'caption' => 'lang:admin_courses_table_header_course_task_set_count'),
             array('name' => 'capacity', 'caption' => 'lang:admin_courses_table_header_course_capacity'),
         );
         
@@ -53,6 +54,7 @@ class Courses extends LIST_Controller {
         $courses = new Course();
         $courses->include_related_count('group');
         $courses->include_related_count('task_set_type');
+        $courses->include_related_count('task_set');
         $courses->include_related('period', 'name', TRUE);
         $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
         if ($filter['order_by_field'] == 'name') {
@@ -67,10 +69,11 @@ class Courses extends LIST_Controller {
             $courses->order_by('group_count', $order_by_direction);
         } elseif ($filter['order_by_field'] == 'task_set_types') {
             $courses->order_by('task_set_type_count', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'task_set_count') {
+            $courses->order_by('task_set_count', $order_by_direction);
         } elseif ($filter['order_by_field'] == 'capacity') {
             $courses->order_by('capacity', $order_by_direction);
         }
-        //$courses->order_by_with_constant('name', 'asc');
         $courses->get_iterated();
         $this->lang->init_overlays('courses', $courses->all_to_array(), array('description'));
         $this->parser->parse('backend/courses/table_content.tpl', array('courses' => $courses, 'fields_config' => $fields_config));
