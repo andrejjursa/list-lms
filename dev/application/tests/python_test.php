@@ -3,7 +3,7 @@
 include_once APPPATH . 'core/abstract_test.php';
 
 /**
- * Python test constroller.
+ * Python test instance.
  * @package LIST_Tests
  * @author Andrej Jursa
  */ 
