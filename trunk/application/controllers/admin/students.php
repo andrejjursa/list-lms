@@ -337,6 +337,22 @@ class Students extends LIST_Controller {
                             if ($participant->save(array('student' => $student, 'course' => $course))) {
                                 $this->db->trans_commit();
                                 $this->parser->assign('course_assignment_success_message', 'lang:admin_students_csv_import_successfully_added_course_participation');
+                                $this->db->trans_begin();
+                                $course = new Course();
+                                $course->get_by_id(intval($options['assign_to_course']));
+                                $participant->allowed = 1;
+                                $participant->save();
+                                $participants = new Participant();
+                                $participants->where_related($course);
+                                $participants->where('allowed', 1);
+                                $participants_count = $participants->count();
+                                if ($participants_count <= $course->capacity) {
+                                    $this->db->trans_commit();
+                                    $this->parser->assign('course_assignment_approwal_success_message', 'lang:admin_students_csv_import_successfully_added_course_participation_approwal');
+                                } else {
+                                    $this->db->trans_rollback();
+                                    $this->parser->assign('course_assignment_approwal_error_message', 'lang:admin_students_csv_import_error_message_added_course_participation_approwal');
+                                }
                             } else {
                                 $this->db->trans_rollback();
                                 $this->parser->assign('course_assignment_error_message', 'lang:admin_students_csv_import_error_message_participation_save_failed');

@@ -9,6 +9,8 @@
     {if $success_message}<p class="success">{translate_text text=$success_message}</p>{/if}
     {if $course_assignment_success_message}<p class="success">{translate_text text=$course_assignment_success_message}</p>{/if}
     {if $course_assignment_error_message}<p class="error">{translate_text text=$course_assignment_error_message}</p>{/if}
+    {if $course_assignment_approwal_success_message}<p class="success">{translate_text text=$course_assignment_approwal_success_message}</p>{/if}
+    {if $course_assignment_approwal_error_message}<p class="error">{translate_text text=$course_assignment_approwal_error_message}</p>{/if}
     {if $email_success_message}<p class="success">{translate_text text=$email_success_message}</p>{/if}
     {if $email_error_message}<p class="error">{translate_text text=$email_error_message}</p>{/if}
 </div>
