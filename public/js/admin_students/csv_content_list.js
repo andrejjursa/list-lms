@@ -32,4 +32,14 @@ jQuery(document).ready(function($) {
             checkbox.change();
         }
     });
+    
+    var update_content_width = function() {
+        var table_wrapper = $('#csv_table_content_id > div:first-child');
+        var parent_fieldset = table_wrapper.parents('fieldset');
+        table_wrapper.hide();
+        table_wrapper.css('width', parent_fieldset.width());
+        table_wrapper.show();
+    };
+    
+    $(window).on('resize', update_content_width);
 });
