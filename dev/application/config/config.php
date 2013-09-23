@@ -462,6 +462,13 @@ $config['email_multirecipient_batch_mode'] = FALSE;
 $config['email_address']['system']['name'] = 'LIST';
 $config['email_address']['system']['email'] = 'noreply@list.sk';
 
+/**
+|--------------------------------------------------------------------------
+| E-mail change option for students
+|--------------------------------------------------------------------------
+*/
+$config['student_mail_change'] = TRUE;
+
 /* End of file config.php */
 
 /* Location: ./application/config/config.php */

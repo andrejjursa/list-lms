@@ -15,6 +15,7 @@ $lang['admin_settings_form_label_maximum_solition_filesize_hint'] = 'Hodnota je 
 $lang['admin_settings_form_label_readable_file_extensions'] = 'Čitateľné súbory';
 $lang['admin_settings_form_label_readable_file_extensions_hint'] = 'Čiarkou oddelovaný zoznam prípon súborov, ktoré sú čitateľné (napr. v hodnotení študentských riešení).';
 $lang['admin_settings_form_label_student_registration_enabled'] = 'Povoliť funkciu registrácie študentov';
+$lang['admin_settings_form_label_student_mail_change'] = 'Povoliť študentom funkciu zmeny e-mailu';
 $lang['admin_settings_form_label_email_protocol'] = 'E-mailový protokol';
 $lang['admin_settings_form_label_email_mailpath'] = '[Sendmail] Cesta k aplikácii sendmail';
 $lang['admin_settings_form_label_email_smtp_host'] = '[SMTP] SMTP hostiteľ';

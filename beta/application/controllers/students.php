@@ -393,39 +393,44 @@ class Students extends LIST_Controller {
     
     public function save_email() {
         $this->usermanager->student_login_protected_redirect();
-        $this->load->library('form_validation');
-        
-        $student_id = intval($this->input->post('student_id'));
-        $this->form_validation->set_rules('student[email]', 'lang:students_my_account_field_email', 'required|valid_email|is_unique[students.email]');
-        $this->form_validation->set_rules('student[email_validation]', 'lang:students_my_account_field_email_validation', 'required|matches[student[email]]');
-        $this->form_validation->set_rules('student_id', 'id', 'required');
-        
-        if ($this->form_validation->run()) {
-            if ($student_id == $this->usermanager->get_student_id()) {
-                $this->_transaction_isolation();
-                $this->db->trans_begin();
-                $student = new Student();
-                $student->get_by_id($student_id);
-                if ($student->exists()) {
-                    $student_post = $this->input->post('student');
-                    $student->email = $student_post['email'];
-                    if ($student->save() && $this->db->trans_status()) {
-                        $this->db->trans_commit();
-                        $this->messages->add_message('lang:students_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
+        if ((bool)$this->config->item('student_mail_change')) {
+            $this->load->library('form_validation');
+
+            $student_id = intval($this->input->post('student_id'));
+            $this->form_validation->set_rules('student[email]', 'lang:students_my_account_field_email', 'required|valid_email|is_unique[students.email]');
+            $this->form_validation->set_rules('student[email_validation]', 'lang:students_my_account_field_email_validation', 'required|matches[student[email]]');
+            $this->form_validation->set_rules('student_id', 'id', 'required');
+
+            if ($this->form_validation->run()) {
+                if ($student_id == $this->usermanager->get_student_id()) {
+                    $this->_transaction_isolation();
+                    $this->db->trans_begin();
+                    $student = new Student();
+                    $student->get_by_id($student_id);
+                    if ($student->exists()) {
+                        $student_post = $this->input->post('student');
+                        $student->email = $student_post['email'];
+                        if ($student->save() && $this->db->trans_status()) {
+                            $this->db->trans_commit();
+                            $this->messages->add_message('lang:students_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
+                        } else {
+                            $this->db->trans_rollback();
+                            $this->messages->add_message('lang:students_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
+                        }
                     } else {
                         $this->db->trans_rollback();
-                        $this->messages->add_message('lang:students_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
+                        $this->messages->add_message('lang:students_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
                     }
                 } else {
-                    $this->db->trans_rollback();
                     $this->messages->add_message('lang:students_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
                 }
+                redirect(create_internal_url('students/my_account'));
             } else {
-                $this->messages->add_message('lang:students_my_account_error_invalid_account', Messages::MESSAGE_TYPE_ERROR);
+                $this->my_account();
             }
-            redirect(create_internal_url('students/my_account'));
         } else {
-            $this->my_account();
+            $this->messages->add_message('lang:students_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('students/my_account'));
         }
     }
     

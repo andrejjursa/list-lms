@@ -48,6 +48,7 @@
             <input type="hidden" name="student_id" value="{$smarty.post.student_id|default:$student->id|intval}" />
         </form>
     </fieldset>
+    {if $this->config->item('student_mail_change') eq TRUE}
     <fieldset>
         <legend>{translate line='students_my_account_legend_change_email'}</legend>
         <form action="{internal_url url='students/save_email'}" method="post">
@@ -71,6 +72,7 @@
             <input type="hidden" name="student_id" value="{$smarty.post.student_id|default:$student->id|intval}" />
         </form>
     </fieldset>
+    {/if}
     <fieldset>
         <legend>{translate line='students_my_account_legend_avatar'}</legend>
         <form action="" method="post">

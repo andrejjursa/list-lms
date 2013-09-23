@@ -15,6 +15,7 @@ $lang['admin_settings_form_label_maximum_solition_filesize_hint'] = 'Value is in
 $lang['admin_settings_form_label_readable_file_extensions'] = 'Readable files';
 $lang['admin_settings_form_label_readable_file_extensions_hint'] = 'Comma separated list of file extensions, which are readable (i.e. in student solutions valuation).';
 $lang['admin_settings_form_label_student_registration_enabled'] = 'Enable student registration feature';
+$lang['admin_settings_form_label_student_mail_change'] = 'Enable e-mail change function for students';
 $lang['admin_settings_form_label_email_protocol'] = 'E-mail protocol to use';
 $lang['admin_settings_form_label_email_mailpath'] = '[Sendmail] Path to sendmail app.';
 $lang['admin_settings_form_label_email_smtp_host'] = '[SMTP] SMTP host';

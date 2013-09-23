@@ -65,6 +65,10 @@
                 <label for="config_student_registration_enabled_id">{translate line='admin_settings_form_label_student_registration_enabled'}:</label>
                 <p class="input"><input type="checkbox" name="config[student_registration][enabled]" value="1"{if $smarty.post.config.student_registration.enabled|default:$config.student_registration.enabled} checked="checked"{/if} id="config_student_registration_enabled_id" /></p>
             </div>
+            <div class="field">
+                <label for="config_student_mail_change_id">{translate line='admin_settings_form_label_student_mail_change'}:</label>
+                <p class="input"><input type="checkbox" name="config[student_mail_change]" value="1"{if $smarty.post.config.student_mail_change|default:$config.student_mail_change} checked="checked"{/if} id="config_student_mail_change_id" /></p>
+            </div>
             <hr />
             <div class="field">
                 <label for="config_email_protocol_id" class="required">{translate line='admin_settings_form_label_email_protocol'}:</label>

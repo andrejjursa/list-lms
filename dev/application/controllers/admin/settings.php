@@ -59,6 +59,7 @@ class Settings extends LIST_Controller {
             $config['student_login_security_allowed_attempts'] = intval($config['student_login_security_allowed_attempts']);
             $config['maximum_solition_filesize'] = intval($config['maximum_solition_filesize']);
             $config['student_registration']['enabled'] = $this->bool_val($config['student_registration']['enabled']);
+            $config['student_mail_change'] = $this->bool_val($config['student_mail_change']);
             $config['email']['smtp_port'] = intval($config['email']['smtp_port']);
             $config['email']['smtp_timeout'] = intval($config['email']['smtp_timeout']);
             $config['email']['priority'] = intval($config['email']['priority']);
@@ -94,6 +95,7 @@ class Settings extends LIST_Controller {
             'student_registration',
             'email',
             'email_multirecipient_batch_mode',
+            'student_mail_change',
         );
         
         $output = array();
