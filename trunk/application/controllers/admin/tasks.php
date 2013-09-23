@@ -252,6 +252,63 @@ class Tasks extends LIST_Controller {
         $this->parser->parse('backend/tasks/preview.tpl', array('task' => $task));
     }
     
+    public function clone_task($task_id) {
+        $result = new stdClass();
+        $result->result = FALSE;
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $old_task = new Task();
+        $old_task->get_by_id((int)$task_id);
+        if ($old_task->exists()) {
+            $new_task = $old_task->get_copy();
+            if ($new_task->save()) {
+                $this->lang->clone_overlays('tasks', $old_task->id, $new_task->id);
+                $from = 'private/uploads/task_files/task_' . $old_task->id;
+                $continue = TRUE;
+                if (file_exists($from)) {
+                    $to = 'private/uploads/task_files/task_' . $new_task->id;
+                    if (!clone_directory($from, $to)) {
+                        unlink_recursive($to, TRUE);
+                        $this->db->trans_rollback();
+                        $result->message = $this->lang->line('admin_tasks_error_message_files_not_cloned');
+                        $continue = FALSE;
+                    }
+                }
+                if ($continue) {
+                    $old_categories = new Category();
+                    $old_categories->where_related($old_task);
+                    $old_categories->get();
+                    if ($old_categories->result_count()) { foreach ($old_categories->all as $old_category) {
+                        $old_category->save($new_task);
+                    }}
+                    $old_tests = new Test();
+                    $old_tests->where_related($old_task);
+                    $old_tests->get();
+                    if ($old_tests->result_count()) { foreach ($old_tests->all as $old_test) {
+                        $new_test = $old_test->get_copy();
+                        if ($new_test->save($new_task)) {
+                            $this->lang->clone_overlays('tests', $old_test->id, $new_test->id);
+                            $from = 'private/uploads/unit_tests/test_' . $old_test->id;
+                            $to = 'private/uploads/unit_tests/test_' . $new_test->id;
+                            clone_directory($from, $to);
+                        }
+                    }}
+                    $this->db->trans_commit();
+                    $result->result = TRUE;
+                    $result->message = $this->lang->line('admin_tasks_success_message_task_cloned');
+                }
+            } else {
+                $this->db->trans_rollback();
+                $result->message = $this->lang->line('admin_tasks_error_message_clone_dont_saved');
+            }
+        } else {
+            $this->db->trans_rollback();
+            $result->message = $this->lang->line('admin_tasks_error_message_task_not_found');
+        }
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($result));
+    }
+    
     public function plupload_file($task_id) {
         $this->load->library('plupload');
         $path = 'private/uploads/task_files/task_' . intval($task_id) . '/';

@@ -116,6 +116,12 @@ class Task extends DataMapper {
         $this_id = $this->id;
         parent::delete($object, $related_field);
         if (empty($object) && !is_array($object) && !empty($this_id)) {
+            $tests = new Test();
+            $tests->where_related($this);
+            $tests->get();
+            if ($tests->result_count()) { foreach ($tests->all as $test) {
+                $test->delete();
+            }}
             $path = 'private/uploads/task_files/task_' . intval($this_id) . '/';
             if (file_exists($path)) {
                 unlink_recursive($path, TRUE);

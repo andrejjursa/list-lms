@@ -51,6 +51,20 @@ jQuery(document).ready(function($) {
         }
     });
     
+    $(document).on('click', '#table_content_id a.button.clone_task', function(event) {
+        event.preventDefault();
+        api_ajax_update($(this).attr('href'), 'get', {}, function(output) {
+            if (output.result !== undefined && output.message !== undefined) {
+                if (output.result === true) {
+                    reload_all_tasks();
+                    show_notification(output.message, 'success');    
+                } else {
+                    show_notification(output.message, 'error');    
+                }
+            }
+        });
+    });
+    
     $(document).on('click', '#table_content_id a.preview', function(event) {
         event.preventDefault();
         $.fancybox($(this).attr('href'), {

@@ -254,3 +254,25 @@ function remove_base_url_from_overlay_array($overlay_array, $column_name) {
     }
     return $overlay_array;
 }
+
+function clone_directory($from, $to) {
+    set_time_limit(1200);
+    if ($from == $to) { return FALSE; }
+    if (!file_exists($from)) { return FALSE; }
+    if (!file_exists($to)) {
+        @mkdir($to, DIR_READ_MODE, TRUE);
+    }
+    $files_dirs = scandir($from);
+    foreach ($files_dirs as $file_dir) {
+        if (is_file(ltrim($from, '/\\') . '/' . $file_dir)) {
+            $result = @copy(ltrim($from, '/\\') . '/' . $file_dir, ltrim($to, '/\\') . '/' . $file_dir);
+            if ($result === FALSE) { return FALSE; }
+        } else {
+            if ($file_dir !== '.' && $file_dir !== '..') {
+                $result = clone_directory(ltrim($from, '/\\') . '/' . $file_dir, ltrim($to, '/\\') . '/' . $file_dir);
+                if ($result === FALSE) { return FALSE; }
+            }
+        }
+    }
+    return TRUE;
+}
