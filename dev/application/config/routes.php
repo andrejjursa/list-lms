@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "courses";
+$route['default_controller'] = "tasks";
 $route['404_override'] = '';
 
 $route['admin'] = 'admin/dashboard';

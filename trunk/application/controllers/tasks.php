@@ -392,6 +392,8 @@ class Tasks extends LIST_Controller {
 
             $task_set->where('published', 1);
             $task_set->where_related_course($course);
+            $task_set->include_related('solution');
+            $task_set->add_join_condition('`solutions`.`student_id` = ?', array($student->id));
             $task_set->group_start();
                 $task_set->or_where('group_id', NULL);
                 $task_set->or_where('group_id', $group->id);
