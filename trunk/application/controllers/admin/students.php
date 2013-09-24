@@ -259,19 +259,26 @@ class Students extends LIST_Controller {
         $this->parser->assign('fullname', $fullname);
         $this->parser->assign('email', $email);
         if (((trim($firstname) != '' && trim($lastname) != '') || trim($fullname) != '') && trim($email) != '') {
+            $student_fullname = (trim($fullname) != '') ? trim($fullname) : trim($firstname) . ' ' . trim($lastname);
             $this->_transaction_isolation();
             $this->db->trans_begin();
             $student = new Student();
             $student->where('email', trim($email));
             $student->get();
             if ($student->exists()) {
-                $this->db->trans_rollback();
+                if ($student->fullname != $student_fullname) {
+                    $student->fullname = $student_fullname;
+                    $student->save();
+                    $this->db->trans_commit();
+                } else {
+                    $this->db->trans_rollback();
+                }
                 $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_message_student_exists');
             } else {
                 $this->load->library('form_validation');
                 if ($this->form_validation->valid_email(trim($email))) {
                     $student->email = trim($email);
-                    $student->fullname = (trim($fullname) != '') ? trim($fullname) : trim($firstname) . ' ' . trim($lastname);
+                    $student->fullname = $student_fullname;
                     $password = '';
                     if ($options['password_type'] == 'default') {
                         $password = $this->config->item('student_import_default_password');
