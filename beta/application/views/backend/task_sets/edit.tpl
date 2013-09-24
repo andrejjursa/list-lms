@@ -107,20 +107,29 @@
                             {$tasks_sorting[] = $task->id|intval}
                             <li id="task_{$task->id|intval}" class="ui-state-default">
                                 <h4><span class="ui-icon ui-icon-arrowthick-2-n-s" style="float: left;"></span> {overlay table='tasks' table_id=$task->id column='name' default=$task->name}</h4>
-                            <div class="field">
-                                <label for="task_join_field_{$task->id|intval}_points_total_id" class="required">{translate line='admin_task_sets_form_label_task_points_total'}:</label>
-                                <p class="input"><input type="text" name="task_join_field[{$task->id|intval}][points_total]" value="{$smarty.post.task_join_field[$task->id|intval].points_total|default:$task->join_points_total|floatval}" id="task_join_field_{$task->id|intval}_points_total_id" /></p>
-                                {form_error field="task_join_field[{$task->id|intval}][points_total]" left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
-                            </div>
-                            <div class="field">
-                                <label for="task_join_field_{$task->id|intval}_bonus_task_id">{translate line='admin_task_sets_form_label_task_bonus_task'}:</label>
-                                <p class="input"><input type="checkbox" name="task_join_field[{$task->id|intval}][bonus_task]" value="1" id="task_join_field_{$task->id|intval}_bonus_task_id"{if $smarty.post.task_join_field[$task->id|intval].bonus_task|default:$task->join_bonus_task} checked="checked"{/if} /></p>
-                            </div>
-                            <div class="field">
-                                <label for="task_join_field_{$task->id|intval}_delete_id">{translate line='admin_task_sets_form_label_delete_task'}:</label>
-                                <p class="input"><input type="checkbox" name="task_join_field[{$task->id|intval}][delete]" value="1"{if $smarty.post.task_join_field[$task->id|intval].delete eq 1} checked="checked"{/if} class="delete_checkbox" id="task_join_field_{$task->id|intval}_delete_id" /></p>
-                            </div>
-                        </li>
+                                <div class="field">
+                                    <label for="task_join_field_{$task->id|intval}_points_total_id" class="required">{translate line='admin_task_sets_form_label_task_points_total'}:</label>
+                                    <p class="input"><input type="text" name="task_join_field[{$task->id|intval}][points_total]" value="{$smarty.post.task_join_field[$task->id|intval].points_total|default:$task->join_points_total|floatval}" id="task_join_field_{$task->id|intval}_points_total_id" /></p>
+                                    {form_error field="task_join_field[{$task->id|intval}][points_total]" left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                                </div>
+                                <div class="field">
+                                    <label for="task_join_field_{$task->id|intval}_bonus_task_id">{translate line='admin_task_sets_form_label_task_bonus_task'}:</label>
+                                    <p class="input"><input type="checkbox" name="task_join_field[{$task->id|intval}][bonus_task]" value="1" id="task_join_field_{$task->id|intval}_bonus_task_id"{if $smarty.post.task_join_field[$task->id|intval].bonus_task|default:$task->join_bonus_task} checked="checked"{/if} /></p>
+                                </div>
+                                <div class="field">
+                                    <label for="task_join_field_{$task->id|intval}_delete_id">{translate line='admin_task_sets_form_label_delete_task'}:</label>
+                                    <p class="input"><input type="checkbox" name="task_join_field[{$task->id|intval}][delete]" value="1"{if $smarty.post.task_join_field[$task->id|intval].delete eq 1} checked="checked"{/if} class="delete_checkbox" id="task_join_field_{$task->id|intval}_delete_id" /></p>
+                                </div>
+                                <div class="field">
+                                    <div class="input">
+                                        <div class="task">
+                                            {overlay|add_base_url table='tasks' column='text' table_id=$task->id default=$task->text}
+                                            <hr />
+                                            <a href="{internal_url url="admin_tasks/edit/task_id/{$task->id}"}" target="_blank" class="button special">{translate line='admin_task_sets_edit_task_button'}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
                         {/foreach}
                     </ul>
                 </div>
@@ -150,5 +159,6 @@
 {block custom_head}
 <script type="text/javascript">
     var delete_question = '{translate line='admin_task_sets_javascript_remove_task_question'}';
+    var task_text_title = '{translate line='admin_task_sets_javascript_task_text_title'}';
 </script>
 {/block}

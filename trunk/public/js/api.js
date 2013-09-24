@@ -152,6 +152,36 @@ var field_filter_checkbox = function(checkbox_selector, filter_form_selector, fi
     }
 };
 
+var make_custom_switch = function(selector, text, custom_class) {
+    jQuery(selector).each(function() {
+        var element = jQuery(this);
+        var wrapper = jQuery('<div></div>');
+        wrapper.insertAfter(element);
+        wrapper.addClass('custom_switch_wrapper');
+        element.appendTo(wrapper);
+        var header = jQuery('<div></div>');
+        header.insertBefore(wrapper);
+        header.css({
+            'font-weight': 'bold',
+            'line-height': '1.3em',
+            'cursor': 'pointer'
+        }).addClass('ui-widget-header').addClass('custom_switch_header');
+        if (typeof custom_class === 'string') {
+            wrapper.addClass(custom_class);
+            header.addClass(custom_class);
+        }
+        var header_text = typeof text === 'string' ? text : '';
+        header.html('<span class="ui-icon ui-icon-plusthick" style="float: left;"></span> ' + header_text);
+        wrapper.css({
+            display: 'none'
+        });
+        header.click(function(){
+            wrapper.toggle();
+            header.find('span.ui-icon').toggleClass('ui-icon-minusthick').toggleClass('ui-icon-plusthick');
+        });
+    });
+}
+
 var make_overlay_editors = function() {
     jQuery('form div.overlay_block').each(function() {
         var element = jQuery(this);
