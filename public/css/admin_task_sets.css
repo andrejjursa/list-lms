@@ -29,3 +29,6 @@ ul.comments_list li div.comment_body div.comment_text { padding: 3px 0; }
 ul.comments_list li div.comment_body div.comment_buttons { padding-top: 3px; border-top: 1px solid black; text-align: right; }
 ul.comments_list li:first-child div.comment_body { margin-top: 0; }
 ul.comments_list.level_1 li ul.comments_list li div.comment_body { margin-top: 3px; }
+
+div.custom_switch_header.task_wrapper { width: 99%; }
+div.custom_switch_wrapper.task_wrapper { width: 99%; }
