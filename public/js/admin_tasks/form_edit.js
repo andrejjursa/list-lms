@@ -78,4 +78,24 @@ jQuery(document).ready(function($) {
     uploader_hidden.bind('UploadComplete', function(up, files) {
         reload_hidden_files();
     });
+    
+    $(document).on('click', 'a.button.add_to_task_set', function(event) {
+        event.preventDefault();
+        $.fancybox($(this).attr('href'), {
+            type: 'iframe',
+            width: '100%',
+            height: '100%',
+            autoSize: false,
+            autoHeight: false,
+            autoWidth: false,
+            helpers: {
+                overlay: {
+                    css: {
+                        background: 'rgba(255,255,255,0)'
+                    }
+                }
+            }
+        });
+    });
+    
 });
