@@ -132,4 +132,16 @@ jQuery(document).ready(function($) {
     
     sort_table('table.participants_table', '#filter_form_id');
     
+    $(document).on('change', '#table_pagination_footer_id select[name=paging_page]', function() {
+        var value = $(this).val();
+        $('#filter_form_id input[name="filter[page]"]').val(value);
+        reload_all_participants();
+    });
+    
+    $(document).on('change', '#table_pagination_footer_id select[name=paging_rows_per_page]', function() {
+        var value = $(this).val();
+        $('#filter_form_id input[name="filter[rows_per_page]"]').val(value);
+        reload_all_participants();
+    });
+    
 });
