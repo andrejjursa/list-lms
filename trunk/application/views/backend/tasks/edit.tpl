@@ -95,6 +95,7 @@
         <fieldset class="basefieldset">
             <div class="buttons">
                 <input type="submit" name="submit_button" value="{translate line='admin_tasks_form_button_save'}" class="button" /> <a href="{internal_url url='admin_tasks'}" class="button special">{translate line='common_button_back'}</a>
+                <a href="{internal_url url="admin_tasks/add_to_task_set/task_id/{$task->id}"}" class="button special add_to_task_set" title="{translate line='admin_tasks_form_button_add_to_task_set'}">{translate line='admin_tasks_form_button_add_to_task_set_button'}</a>
                 <input type="hidden" name="task_id" value="{$smarty.post.task_id|default:$task->id|intval}" />
             </div>
         </fieldset>
