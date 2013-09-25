@@ -160,5 +160,8 @@
 <script type="text/javascript">
     var delete_question = '{translate line='admin_task_sets_javascript_remove_task_question'}';
     var task_text_title = '{translate line='admin_task_sets_javascript_task_text_title'}';
+    var all_groups = {$all_groups|json_encode};
+    var all_rooms = {$all_rooms|json_encode};
+    var all_task_set_types = {$all_task_set_types|json_encode};
 </script>
 {/block}

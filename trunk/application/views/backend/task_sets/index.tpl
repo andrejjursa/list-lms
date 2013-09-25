@@ -66,4 +66,7 @@
         after_delete: '{translate line="admin_task_set_javascript_message_after_delete"}',
         after_open: '{translate line="admin_task_set_javascript_message_after_open"}'
     }; 
+    var all_groups = {$all_groups|json_encode};
+    var all_rooms = {$all_rooms|json_encode};
+    var all_task_set_types = {$all_task_set_types|json_encode};
 </script>{/block}

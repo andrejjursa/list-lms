@@ -23,8 +23,6 @@ jQuery(document).ready(function($) {
         api_ajax_load(url, '#table_content_id', 'post', data, onSuccess);
     };
     
-    reload_all_task_sets();
-    
     $('#new_task_set_form_id').submit(function(event) {
         event.preventDefault();
         var url = $(this).attr('action');
@@ -103,11 +101,8 @@ jQuery(document).ready(function($) {
         if (course_id !== '') {
             if (course_id !== last_course_id) {
                 var selected_id = $('#filter_form_id input[name=filter_selected_group_id]').val() !== undefined ? $('#filter_form_id input[name=filter_selected_group_id]').val() : '';
-                var url = global_base_url + 'index.php/admin_task_sets/get_course_groups/' + course_id + '/' + selected_id;
-                var target = '#filter_group_id';
-                api_ajax_load(url, target, 'post', {}, function() {
-                    $('#filter_form_id').activeForm().applyConditions();
-                });
+                var target = $('#filter_group_id');
+                update_select_values_by(target, course_id, all_groups, selected_id);
                 last_course_id = course_id;
             }
             return true;
@@ -120,4 +115,6 @@ jQuery(document).ready(function($) {
     });
     
     $('#filter_form_id').activeForm().applyConditions();
+    
+    reload_all_task_sets();
 });

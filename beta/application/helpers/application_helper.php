@@ -276,3 +276,14 @@ function clone_directory($from, $to) {
     }
     return TRUE;
 }
+
+function is_time($number) {
+    if (is_numeric($number) && intval($number) >= 0 && intval($number) < 86400) {
+        $time = intval($number);
+        $seconds = $time % 60;
+        $minutes = (($time - $seconds) / 60) % 60; 
+        $hours = ((($time - $seconds) / 60) - $minutes) / 60;
+        return str_pad($hours, 2, '0', STR_PAD_LEFT) . ':' . str_pad($minutes, 2, '0', STR_PAD_LEFT) . ':' . str_pad($seconds, 2, '0', STR_PAD_LEFT);
+    }
+    return $number;
+}

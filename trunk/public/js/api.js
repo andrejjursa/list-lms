@@ -108,6 +108,33 @@ jQuery(document).ajaxStart(function () {
     }
 });
 
+var update_select_values_by = function(select_element, parent_value, values_array, selected_value, add_blank, callback) {
+    if (selected_value === undefined) { selected_value = null; }
+    if (add_blank === undefined) { add_blank = true; }
+    if (callback === undefined) { callback = function() {}; }
+    if (select_element.is('select')) {
+        select_element.html('');
+        if (add_blank) {
+            var option = jQuery('<option></option>');
+            option.appendTo(select_element);
+        }
+        if (typeof values_array !== 'undefined' && typeof values_array[parent_value] !== undefined) {
+            for (var i in values_array[parent_value]) {
+                var option = jQuery('<option></option>');
+                option.appendTo(select_element);
+                option.text(values_array[parent_value][i].text);
+                option.attr('value', values_array[parent_value][i].value);
+                if (selected_value !== null && values_array[parent_value][i].value.toString() === selected_value) {
+                    option.attr('selected', true);
+                }
+            }
+        }
+    }
+    if (typeof callback === 'function') {
+        callback();
+    }
+};
+
 var fields_filter = function(open_selector, reload_callback) {
     var open_button = jQuery(open_selector);
     if (open_button.length !== 0) {

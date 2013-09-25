@@ -9,11 +9,9 @@ jQuery(document).ready(function($) {
         var course_id = $('#taks_set_course_id_id').val();
         if (course_id !== '') {
             if (course_id !== last_course_id) {
-                var task_set_id = $('form input[name=task_set_id]').val() !== undefined ? $('form input[name=task_set_id]').val() : '';
                 var selected_id = $('form input[name=post_selected_task_set_type_id]').val() !== undefined ? $('form input[name=post_selected_task_set_type_id]').val() : '';
-                var url = global_base_url + 'index.php/admin_task_sets/get_task_set_types/' + course_id + '/' + selected_id + '/' + task_set_id;
                 var target = '#taks_set_task_set_type_id_id';
-                api_ajax_load(url, target);
+                update_select_values_by($(target), course_id, all_task_set_types, selected_id);
                 last_course_id = course_id;
             }
             return true;
@@ -28,14 +26,12 @@ jQuery(document).ready(function($) {
         var course_id = $('#taks_set_course_id_id').val();
         if (course_id !== '') {
             if (course_id !== last_course_id2) {
-                var task_set_id = $('form input[name=task_set_id]').val() !== undefined ? $('form input[name=task_set_id]').val() : '';
+                last_course_id2 = course_id;
                 var selected_id = $('form input[name=post_selected_group_id_id]').val() !== undefined ? $('form input[name=post_selected_group_id_id]').val() : '';
-                var url = global_base_url + 'index.php/admin_task_sets/get_task_set_groups/' + course_id + '/' + selected_id + '/' + task_set_id;
                 var target = '#taks_set_group_id_id';
-                api_ajax_load(url, target, 'post', {}, function() {
+                update_select_values_by($(target), course_id, all_groups, selected_id, true, function() {
                     $('form').activeForm().applyConditions();
                 });
-                last_course_id2 = course_id;
             }
             return true;
         } else {
@@ -50,12 +46,10 @@ jQuery(document).ready(function($) {
         var group_id = $('#taks_set_group_id_id').val() === undefined ? $('form input[name=post_selected_group_id_id]').val() : $('#taks_set_group_id_id').val();
         if (course_id !== '' && group_id !== undefined && group_id !== null && group_id !== '' && group_id !== '0') {
             if (group_id !== last_group_id) {
-                var task_set_id = $('form input[name=task_set_id]').val() !== undefined ? $('form input[name=task_set_id]').val() : '';
-                var selected_id = $('form input[name=post_selected_room_id_id]').val() !== undefined ? $('form input[name=post_selected_room_id_id]').val() : '';
-                var url = global_base_url + 'index.php/admin_task_sets/get_task_set_group_rooms/' + course_id + '/' + group_id + '/' + selected_id + '/' + task_set_id;
-                var target = '#taks_set_room_id_id';
-                api_ajax_load(url, target);
                 last_group_id = group_id;
+                var selected_id = $('form input[name=post_selected_room_id_id]').val() !== undefined ? $('form input[name=post_selected_room_id_id]').val() : '';
+                var target = '#taks_set_room_id_id';
+                update_select_values_by($(target), group_id, all_rooms, selected_id);
             }
             return true;
         } else {

@@ -30,6 +30,9 @@ class Task_sets extends LIST_Controller {
         $this->inject_stored_filter();
         $this->inject_task_set_types();
         $this->inject_test_types();
+        $this->inject_course_groups();
+        $this->inject_course_group_rooms();
+        $this->inject_course_task_set_types();
         $this->parser->parse('backend/task_sets/index.tpl');
     }
     
@@ -242,6 +245,9 @@ class Task_sets extends LIST_Controller {
         $this->inject_courses();
         $this->inject_languages();
         $this->inject_test_types();
+        $this->inject_course_groups();
+        $this->inject_course_group_rooms();
+        $this->inject_course_task_set_types();
         $this->parser->parse('backend/task_sets/edit.tpl', array('task_set' => $task_set));
     }
     
@@ -709,6 +715,69 @@ class Task_sets extends LIST_Controller {
         $this->load->helper('tests');
         
         $this->parser->assign('test_types', get_all_supported_test_types());
+    }
+    
+    private function inject_course_groups() {
+        $groups = new Group();
+        $groups->include_related('course', '*', TRUE, TRUE);
+        $groups->order_by_related('course', 'id', 'asc');
+        $groups->order_by_with_constant('name', 'asc');
+        $groups->get_iterated();
+        
+        $data = array();
+        foreach ($groups as $group) {
+            if ($group->course->exists()) {
+                $data[$group->course->id][] = array(
+                    'value' => $group->id,
+                    'text' => $this->lang->text($group->name),
+                );
+            }
+        }
+        
+        $this->parser->assign('all_groups', $data);
+    }
+    
+    private function inject_course_group_rooms() {
+        $rooms = new Room();
+        $rooms->include_related('group', '*', TRUE, TRUE);
+        $rooms->order_by_related('group', 'id', 'asc');
+        $rooms->order_by('time_day', 'asc')->order_by('time_begin', 'asc');
+        $rooms->order_by_with_constant('name', 'asc');
+        $rooms->get_iterated();
+        
+        $days = get_days();
+        
+        $data = array();
+        foreach ($rooms as $room) {
+            if ($room->group->exists()) {
+                $data[$room->group->id][] = array(
+                    'value' => $room->id,
+                    'text' => $this->lang->text($room->name) . ' (' . $days[$room->time_day] . ': ' . is_time($room->time_begin) . ' - ' . is_time($room->time_end) . ')',
+                );
+            }
+        }
+        
+        $this->parser->assign('all_rooms', $data);
+    }
+    
+    private function inject_course_task_set_types() {
+        $task_set_types = new Task_set_type();
+        $task_set_types->include_related('course', '*', TRUE, TRUE);
+        $task_set_types->order_by_related('course', 'id', 'true');
+        $task_set_types->order_by_with_constant('name', 'asc');
+        $task_set_types->get_iterated();
+        
+        $data = array();
+        foreach ($task_set_types as $task_set_type) {
+            if ($task_set_type->course->exists()) {
+                $data[$task_set_type->course->id][] = array(
+                    'value' => $task_set_type->id,
+                    'text' => $this->lang->text($task_set_type->name),
+                );
+            }
+        }
+        
+        $this->parser->assign('all_task_set_types', $data);
     }
     
 }
