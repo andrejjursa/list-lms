@@ -37,13 +37,13 @@ jQuery(document).ready(function($) {
         var sorting = '';
         $('#tasks_sortable li').each(function() {
             var element_id = $(this).attr('id');
-            if (element_id.substr(0, 5) == 'task_') {
+            if (element_id.substr(0, 5) === 'task_') {
                 var task_id = element_id.substr(5);
-                sorting += (sorting == '' ? '' : ',') + task_id;
+                sorting += (sorting === '' ? '' : ',') + task_id;
             }
         });
         $('input[name=tasks_sorting]').val(sorting);
-    }
+    };
     
     var presort_tasks = function() {
         var sorting_str = $('input[name=tasks_sorting]').val();
@@ -66,7 +66,7 @@ jQuery(document).ready(function($) {
             container.remove();
         }
         compile_sorting();
-    }
+    };
     
     presort_tasks();
     
