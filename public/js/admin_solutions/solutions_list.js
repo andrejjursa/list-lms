@@ -1,12 +1,19 @@
 jQuery(document).ready(function($) {
     
     make_switchable_form('#new_solution_form_id');
+    make_filter_form('#filter_form_id');
     
     var refresh_all_solutions = function() {
+        var data = $('#filter_form_id').serializeArray();
         var url = global_base_url + 'index.php/admin_solutions/get_solutions_list_for_task_set/' + task_set_id;
         var target = '#table_content_id';
-        api_ajax_load(url, target);
+        api_ajax_load(url, target, 'post', data);
     };
+    
+    $('#filter_form_id').submit(function(event) {
+        event.preventDefault();
+        refresh_all_solutions();
+    });
     
     refresh_all_solutions();
     
