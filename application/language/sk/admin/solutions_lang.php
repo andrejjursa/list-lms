@@ -73,6 +73,7 @@ $lang['admin_solutions_valuation_form_label_points_hint'] = 'Suma bodov za úloh
 $lang['admin_solutions_valuation_form_label_comment'] = 'Komentár';
 $lang['admin_solutions_valuation_form_label_not_considered'] = 'Nebrať do úvahy toto riešenie pri hodnotení';
 $lang['admin_solutions_valuation_form_button_submit'] = 'Uložiť';
+$lang['admin_solutions_valuation_form_button_go_to_next_solution'] = 'Prejsť na ďalšie riešenie';
 $lang['admin_solutions_valuation_form_field_points'] = 'body';
 $lang['admin_solutions_valuation_test_form_execute_tests'] = 'Spustiť vybrané testy';
 $lang['admin_solutions_valuation_test_form_no_tests_found'] = 'Pre túto zostavu úloh nie sú definované žiadne testy!';
@@ -87,6 +88,8 @@ $lang['admin_solutions_valuation_solution_saved'] = 'Riešenie uložené úspeš
 $lang['admin_solutions_valuation_solution_not_saved'] = 'Zlyhanie pri ukladaní riešenia.';
 $lang['admin_solutions_validation_test_messages_test_not_selected'] = 'Prosím, vyberte verziu riešenia a aspoň jeden test na jeho/ich vykonanie.';
 $lang['admin_solutions_validation_test_messages_test_being_executed'] = 'Test sa spúšťa, môže to chvílu trvať, prosím čakajte ...';
+$lang['admin_solutions_valuation_next_solution_message_no_more_solution_to_valuate'] = 'Nie je ďalšie riešenie, ktoré vyžaduje hodnotenie.';
+$lang['admin_solutions_valuation_next_solution_message_this_solution_is_not_valuated'] = 'Môžete prepnúť na ďalšie riešenie len ak ohodnotíte toto.';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámy autor';
