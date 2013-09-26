@@ -35,6 +35,32 @@ function create_internal_url($relative_url, $force_simple_link = FALSE) {
         return base_url($CI->config->item('index_page') . '/' . trim($relative_url, '/')) . (!$force_simple_link ? $CI->config->item('url_suffix') : '');
     }
 }
+/**
+ * Adds new part of url at the end of internal url.
+ * @param string $old_url old url with base url.
+ * @param string $url_part_to_add additional part of url added in the process.
+ * @param boolean $can_add condition, which must be satisfied to add $url_part_to_add to the $old_url, default is TRUE.
+ * @return string modified url.
+ */
+function add_to_internal_url($old_url, $url_part_to_add, $can_add = TRUE) {
+    if (!$can_add) { return $old_url; }
+    $CI =& get_instance();
+    $suffix = $CI->config->item('url_suffix');
+    $base_url = base_url();
+    $index_page = $CI->config->item('index_page');
+    if (substr($old_url, 0, strlen($base_url)) == $base_url) {
+        $new_url = $old_url;
+        $add_suffix = FALSE;
+        if (substr($new_url, - strlen($index_page)) != $index_page && substr($new_url, - strlen($suffix)) == $suffix) {
+            $new_url = substr($new_url, 0, strlen($new_url) - strlen($suffix));
+            $add_suffix = TRUE;
+        }
+        $new_url = rtrim(rtrim($new_url, '\\/') . '/' . trim(trim($url_part_to_add), '\\/'), '\\/') . ($add_suffix ? $suffix : '');
+        return $new_url;
+    } else {
+        return $old_url;
+    }
+}
 
 /**
  * Encodes string using base64 algorithm and replace some url invalid characters like / and = to - and _ .

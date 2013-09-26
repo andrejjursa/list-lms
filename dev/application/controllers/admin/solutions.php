@@ -294,7 +294,42 @@ class Solutions extends LIST_Controller {
             'solution' => $solution,
             'test_types' => $test_types_subtypes['types'],
             'test_subtypes' => $test_types_subtypes['subtypes'],
+            'add_url' => $this->uri->assoc_to_uri($this->uri->ruri_to_assoc(5)),
         ));
+    }
+    
+    public function get_next_solution($task_set_id, $solution_id) {
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $output = new stdClass();
+        $output->have_next = FALSE;
+        $output->next_id = NULL;
+        $output->error_message = '';
+        $current_solution = new Solution();
+        $current_solution->where('task_set_id', $task_set_id);
+        $current_solution->get_by_id($solution_id);
+        if ($current_solution->revalidate == 0) {
+            $additional = $this->uri->ruri_to_assoc(5);
+            $solution = new Solution();
+            $solution->where('task_set_id', $task_set_id);
+            $solution->where('revalidate', 1);
+            if (isset($additional['group_id'])) {
+                $solution->where_related('student/participant/group', 'id', (int)$additional['group_id']);
+            }
+            $solution->limit(1);
+            $solution->get();
+            if ($solution->exists()) {
+                $output->have_next = TRUE;
+                $output->next_id = $solution->id;
+            } else {
+                $output->error_message = $this->lang->line('admin_solutions_valuation_next_solution_message_no_more_solution_to_valuate');
+            }
+        } else {
+            $output->error_message = $this->lang->line('admin_solutions_valuation_next_solution_message_this_solution_is_not_valuated');
+        }
+        $this->db->trans_rollback();
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
     }
     
     public function update_valuation($task_set_id, $solution_id) {
@@ -326,7 +361,7 @@ class Solutions extends LIST_Controller {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_solutions_valuation_solution_not_found', Messages::MESSAGE_TYPE_ERROR);
             }
-            redirect(create_internal_url('admin_solutions/valuation/' . $task_set_id . '/' . $solution_id));
+            redirect(create_internal_url('admin_solutions/valuation/' . $task_set_id . '/' . $solution_id . '/' . $this->uri->assoc_to_uri($this->uri->ruri_to_assoc(5))));
         } else {
             $this->valuation($task_set_id, $solution_id);
         }

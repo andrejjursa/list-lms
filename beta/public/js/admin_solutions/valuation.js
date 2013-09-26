@@ -1,7 +1,6 @@
 jQuery(document).ready(function($) {
     
     api_make_tabs('tabs');
-    //make_filter_form('#filter_form_id');
     
     var last_zip_file = '';
     var last_index = '';
@@ -147,6 +146,20 @@ jQuery(document).ready(function($) {
         } else {
             $('input[type=checkbox][name="switch_checkboxes[' + current_class + ']"].switch_checkboxes').prop('checked', false);
         }
+    });
+    
+    $('a.button.go_to_next_solution').click(function(event) {
+        event.preventDefault();
+        api_ajax_update(urls.get_next_solution, 'post', {}, function(output) {
+            if (output.have_next !== undefined && output.next_id !== undefined && output.error_message !== undefined) {
+                if (output.have_next) {
+                    var url = urls.valuation.replace('###SOLUTION_ID###', output.next_id);
+                    window.location = url;
+                } else {
+                    show_notification(output.error_message, 'error');
+                }
+            }
+        });
     });
     
 });

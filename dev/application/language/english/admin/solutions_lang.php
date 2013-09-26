@@ -73,6 +73,7 @@ $lang['admin_solutions_valuation_form_label_points_hint'] = 'Sum of points for t
 $lang['admin_solutions_valuation_form_label_comment'] = 'Comment';
 $lang['admin_solutions_valuation_form_label_not_considered'] = 'Do not consider this solution in valuation';
 $lang['admin_solutions_valuation_form_button_submit'] = 'Save';
+$lang['admin_solutions_valuation_form_button_go_to_next_solution'] = 'Go to next solution';
 $lang['admin_solutions_valuation_form_field_points'] = 'points';
 $lang['admin_solutions_valuation_test_form_execute_tests'] = 'Execute selected tests';
 $lang['admin_solutions_valuation_test_form_no_tests_found'] = 'There are no tests defined for this task set!';
@@ -87,6 +88,8 @@ $lang['admin_solutions_valuation_solution_saved'] = 'Solution saved successfully
 $lang['admin_solutions_valuation_solution_not_saved'] = 'Failed to save solution.';
 $lang['admin_solutions_validation_test_messages_test_not_selected'] = 'Please, select solution version and at least one test to execute them.';
 $lang['admin_solutions_validation_test_messages_test_being_executed'] = 'Test being executed, this may take some time, please wait ...';
+$lang['admin_solutions_valuation_next_solution_message_no_more_solution_to_valuate'] = 'There is no more solutions which needs valuation.';
+$lang['admin_solutions_valuation_next_solution_message_this_solution_is_not_valuated'] = 'You can switch to another solution only if you valuate this one.';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Instructions for student';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Unknown author';
