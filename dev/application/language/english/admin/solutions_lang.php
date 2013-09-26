@@ -45,6 +45,7 @@ $lang['admin_solutions_list_fieldset_legend_add_solution_record'] = 'Add solutio
 $lang['admin_solutions_list_fieldset_legend_all_solutions'] = 'All solutions';
 $lang['admin_solutions_list_solution_not_valuated'] = 'Not valuated.';
 $lang['admin_solutions_list_table_header_student'] = 'Student';
+$lang['admin_solutions_list_table_header_group'] = 'Group';
 $lang['admin_solutions_list_table_header_files_count'] = 'Nr. of solutions';
 $lang['admin_solutions_list_table_header_valuation'] = 'Valuation';
 $lang['admin_solutions_list_table_header_points'] = 'Points';
@@ -61,6 +62,7 @@ $lang['admin_solutions_list_form_field_points'] = 'points';
 $lang['admin_solutions_list_new_solution_created'] = 'Solution record created successfully.';
 $lang['admin_solutions_list_new_solution_error_solution_exists'] = 'Solution records already existed for this student and task set.';
 $lang['admin_solutions_list_new_solution_error_student_not_in_course_or_group'] = 'Selected student does not belongs to this course or group attached to this task set.';
+$lang['admin_solutions_solution_list_filter_label_group_not_found'] = 'This task set is related to specific group, you can\'t select different one for filtering.';
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Form';
 $lang['admin_solutions_valuation_tabs_label_files'] = 'Files';

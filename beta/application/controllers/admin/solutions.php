@@ -9,6 +9,7 @@ class Solutions extends LIST_Controller {
     
     const STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME = 'admin_solutions_filter_data_task_set_selection';
     const STORED_VALUATION_TABLES_FILTER_SESSION_NAME = 'admin_solutions_filter_data_valuation_tables';
+    const STORED_SOLUTION_SELECTION_FILTER_SESSION_NAME = 'admin_solutions_filter_data_solution_list';
     
     public function __construct() {
         parent::__construct();
@@ -194,6 +195,8 @@ class Solutions extends LIST_Controller {
         $task_set->get_by_id($task_set_id);
         
         $this->inject_students($task_set_id);
+        $this->inject_task_set_possible_groups($task_set_id);
+        $this->inject_stored_solution_list_filter($task_set_id);
         $this->parser->add_js_file('admin_solutions/solutions_list.js');
         $this->parser->add_css_file('admin_solutions.css');
         $this->parser->parse('backend/solutions/solutions_list.tpl', array('task_set' => $task_set));
@@ -408,6 +411,9 @@ class Solutions extends LIST_Controller {
     }
     
     public function get_solutions_list_for_task_set($task_set_id) {
+        $filter = $this->input->post('filter');
+        $this->store_solution_list_filter($filter, $task_set_id);
+        
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         
@@ -417,6 +423,11 @@ class Solutions extends LIST_Controller {
             $solutions->include_related('student');
             $solutions->include_related('teacher');
             $solutions->order_by_related_as_fullname('student', 'fullname', 'asc');
+            $solutions->include_related('student/participant/group');
+            if (isset($filter['group']) && (int)$filter['group'] > 0) {
+                $solutions->where_related('student/participant/group', 'id', (int)$filter['group']);
+            }
+            $solutions->where_related('student/participant/course', 'id', $task_set->course_id);
             $solutions->get_iterated();
         }
         
@@ -641,6 +652,20 @@ class Solutions extends LIST_Controller {
         $this->parser->assign('filter', $filter);
     }
 
+    private function store_solution_list_filter($filter, $task_set_id) {
+        if (is_array($filter)) {
+            $this->load->library('filter');
+            $old_filter = $this->filter->restore_filter(self::STORED_SOLUTION_SELECTION_FILTER_SESSION_NAME . '_' . $task_set_id);
+            $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
+            $this->filter->store_filter(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME . '_' . $task_set_id, $new_filter);
+        }
+    }
+    
+    private function inject_stored_solution_list_filter($task_set_id) {
+        $this->load->library('filter');
+        $filter = $this->filter->restore_filter(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME . '_' . $task_set_id);
+        $this->parser->assign('filter', $filter);
+    }
 
     private function inject_courses() {
         $periods = new Period();
@@ -726,5 +751,21 @@ class Solutions extends LIST_Controller {
         }
         
         $this->parser->assign('task_set_types', $data);
+    }
+    
+    public function inject_task_set_possible_groups($task_set_id) {
+        $task_sets = new Task_set();
+        $task_sets->where('group_id', NULL);
+        $task_sets->include_related('course/group');
+        $task_sets->order_by_related_with_constant('course/group', 'name', 'asc');
+        $task_sets->where('id', (int)$task_set_id);
+        $task_sets->get_iterated();
+        
+        $data = array('' => '');
+        foreach ($task_sets as $task_set) {
+            $data[$task_set->course_group_id] = $task_set->course_group_name;
+        }
+        
+        $this->parser->assign('possible_groups', $data);
     }
 }

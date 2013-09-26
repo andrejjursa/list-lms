@@ -16,6 +16,30 @@
         </fieldset>
         <fieldset>
             <legend>{translate line='admin_solutions_list_fieldset_legend_all_solutions'}</legend>
+            <div class="filter_wrap">
+                <form action="{internal_url url='admin_solutions/get_task_set_list'}" method="post" id="filter_form_id">          
+                    {if is_null($task_set->group_id)}
+                    <div class="field">
+                        <label>{translate line='admin_solutions_filter_label_group'}:</label>
+                        <p class="input"><select name="filter[group]" size="1" id="filter_group_id">
+                            {list_html_options options=$possible_groups selected=$filter.group|intval}
+                        </select></p>
+                    </div>
+                    {else}
+                    <div class="field">
+                        <label>{translate line='admin_solutions_filter_label_group'}:</label>
+                        <p class="input"><em>{translate line='admin_solutions_solution_list_filter_label_group_not_found'}</em></p>
+                    </div>
+                    {/if}
+                    <div class="buttons">
+                        <input type="submit" name="filter_submit" value="{translate line='admin_solutions_filter_submit'}" class="button" />
+                        <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />
+                        <input type="hidden" name="filter[rows_per_page]" value="{$filter.rows_per_page|default:25|intval}" />
+                        {*<input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'task_set_name'}" />
+                        <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />*}
+                    </div>
+                </form>
+            </div>
             <table class="solutions_table">
                 <thead>
                     <tr>
@@ -23,6 +47,7 @@
                         <th rowspan="2">{translate line='common_table_header_created'}</th>
                         <th rowspan="2">{translate line='common_table_header_updated'}</th>
                         <th rowspan="2">{translate line='admin_solutions_list_table_header_student'}</th>
+                        <th rowspan="2">{translate line='admin_solutions_list_table_header_group'}</th>
                         <th rowspan="2">{translate line='admin_solutions_list_table_header_files_count'}</th>
                         <th colspan="3" class="valuation">{translate line='admin_solutions_list_table_header_valuation'}</th>
                         <th rowspan="2" class="controlls right_corner">{translate line='admin_solutions_table_header_controlls'}</th>

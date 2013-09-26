@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
     
     api_make_tabs('tabs');
-    make_filter_form('#filter_form_id');
+    //make_filter_form('#filter_form_id');
     
     var last_zip_file = '';
     var last_index = '';

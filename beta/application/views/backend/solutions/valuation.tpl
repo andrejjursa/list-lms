@@ -35,32 +35,35 @@
                 </form>
             </div>
             <div id="tabs-files">
-                <div class="filter_wrap">
-                    <form action="" method="post" id="filter_form_id">
-                        <div class="field">
-                            <label>{translate line='admin_solutions_validation_filter_label_version'}:</label>
-                            <p class="input">
-                                <select name="zip[file]" size="1">
-                                    <option value=""></option>
-                                    {foreach $solution->task_set->get_student_files($solution->student_id) as $file}
-                                        <option value="{$file.file|encode_for_url}"{if $file@last} selected="selected"{/if}>{$file@key}</option>
-                                    {/foreach}
-                                </select>
-                            </p>
-                        </div>
-                        <div class="buttons download_file_buttons">
-                            <input type="button" class="button" name="download_file_button" value="{translate line='admin_solutions_validation_filter_button_download_file'}" />
-                        </div>
-                        <div class="field select_file">
-                            <label>{translate line='admin_solutions_validation_filter_label_file'}:</label>
-                            <p class="input"><select name="zip[index]" size="1" id="zip_index_id"></select></p>
-                        </div>
-                        <div class="buttons read_file_buttons">
-                            <input type="button" class="button" name="read_file_button" value="{translate line='admin_solutions_validation_filter_button_read_file'}" />
-                        </div>
-                    </form>
+                <div id="valuation_files_id">
+                    <div class="filter_wrap">
+                        <form action="" method="post" id="filter_form_id">
+                            <div class="field">
+                                <label>{translate line='admin_solutions_validation_filter_label_version'}:</label>
+                                <p class="input">
+                                    <select name="zip[file]" size="1">
+                                        <option value=""></option>
+                                        {foreach $solution->task_set->get_student_files($solution->student_id) as $file}
+                                            <option value="{$file.file|encode_for_url}"{if $file@last} selected="selected"{/if}>{$file@key}</option>
+                                        {/foreach}
+                                    </select>
+                                </p>
+                            </div>
+                            <div class="buttons download_file_buttons">
+                                <input type="button" class="button full_width_button" name="download_file_button" value="{translate line='admin_solutions_validation_filter_button_download_file'}" />
+                            </div>
+                            <div class="field select_file">
+                                <label>{translate line='admin_solutions_validation_filter_label_file'}:</label>
+                                <p class="input"><select name="zip[index]" size="1" id="zip_index_id"></select></p>
+                            </div>
+                            <div class="buttons read_file_buttons">
+                                <input type="button" class="button full_width_button" name="read_file_button" value="{translate line='admin_solutions_validation_filter_button_read_file'}" />
+                            </div>
+                        </form>
+                    </div>
+                    <div id="file_content_id"></div>
+                    <div class="clear"></div>
                 </div>
-                <div id="file_content_id"></div>
             </div>
             <div id="tabs-tests">
                 <form action="" method="post" id="tests_form_id">
