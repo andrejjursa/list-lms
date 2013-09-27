@@ -29,6 +29,14 @@
                     {form_error field='task[text]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                     {include file='partials/backend_general/overlay_editor.tpl' table='tasks' table_id=$smarty.post.task_id|default:$task->id column='text' editor_type='textarea' class='tinymce' inline}
                 </div>
+                <div class="field">
+                    <label for="task_author_id_id">{translate line='admin_tasks_form_label_author'}:</label>
+                    <div class="input">
+                        <select name="task[author_id]" size="1" id="task_author_id_id">
+                            {list_html_options options=$teachers selected=$smarty.post.task.author_id|default:$task->author_id}
+                        </select>
+                    </div>
+                </div>
             </div>
             <div id="tabs-categories">
                 <div class="field">

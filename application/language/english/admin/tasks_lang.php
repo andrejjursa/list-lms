@@ -25,6 +25,7 @@ $lang['admin_tasks_filter_label_filter_by_tests_option_donthave'] = 'Tasks witho
 $lang['admin_tasks_filter_label_filter_by_test_types'] = 'Test types';
 $lang['admin_tasks_form_label_name'] = 'Task name';
 $lang['admin_tasks_form_label_text'] = 'Task text';
+$lang['admin_tasks_form_label_author'] = 'Task author';
 $lang['admin_tasks_form_label_categories'] = 'Task categories';
 $lang['admin_tasks_form_label_file_upload'] = 'File upload';
 $lang['admin_tasks_form_label_hidden_file_upload'] = 'Hidden file upload';
