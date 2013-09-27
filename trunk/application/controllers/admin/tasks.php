@@ -159,6 +159,7 @@ class Tasks extends LIST_Controller {
         $this->_add_tinymce4();
         $this->_add_plupload();
         $this->inject_prettify_config();
+        $this->inject_teachers();
         $this->parser->add_js_file('admin_tasks/form.js');
         $this->parser->add_js_file('admin_tasks/form_edit.js');
         $this->parser->add_js_file('admin_tests/all_tests_list.js');
@@ -190,6 +191,11 @@ class Tasks extends LIST_Controller {
                 $task->from_array($task_data, array('name'));
                 $task->text = remove_base_url($task_data['text']);
                 
+                $author = new Teacher();
+                if ((int)$task_data['author_id'] > 0) {
+                    $author->get_by_id((int)$task_data['author_id']);
+                }
+                
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
                 
@@ -200,7 +206,7 @@ class Tasks extends LIST_Controller {
                 $task->category->get();
                 $task->delete($task->category->all);
                 
-                if ($task->save($categories->all) && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'text')) && $this->db->trans_status()) {
+                if ($task->save(array('category' => $categories->all, 'author' => $author)) && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'text')) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_tasks_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 } else {
@@ -485,6 +491,20 @@ class Tasks extends LIST_Controller {
             }
         }
         $this->parser->assign('highlighters', $output);
+    }
+    
+    public function inject_teachers() {
+        $teachers = new Teacher();
+        $teachers->order_by_as_fullname('fullname', 'asc');
+        $teachers->get_iterated();
+        
+        $data = array(NULL => '');
+        
+        foreach ($teachers as $teacher) {
+            $data[$teacher->id] = $teacher->fullname . ' (' . $teacher->email . ')';
+        }
+        
+        $this->parser->assign('teachers', $data);
     }
     
 }

@@ -25,6 +25,7 @@ $lang['admin_tasks_filter_label_filter_by_tests_option_donthave'] = 'Úlohy bez 
 $lang['admin_tasks_filter_label_filter_by_test_types'] = 'Typy testov';
 $lang['admin_tasks_form_label_name'] = 'Názov úlohy';
 $lang['admin_tasks_form_label_text'] = 'Text úlohy';
+$lang['admin_tasks_form_label_author'] = 'Autor úlohy';
 $lang['admin_tasks_form_label_categories'] = 'Kategórie úlohy';
 $lang['admin_tasks_form_label_file_upload'] = 'Upload súborov';
 $lang['admin_tasks_form_label_hidden_file_upload'] = 'Upload skrytých súborov';
