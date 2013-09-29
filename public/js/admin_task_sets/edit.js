@@ -35,7 +35,7 @@ jQuery(document).ready(function($) {
     
     var compile_sorting = function() {
         var sorting = '';
-        $('#tasks_sortable li').each(function() {
+        $('#tasks_sortable > li.task_sorting_item').each(function() {
             var element_id = $(this).attr('id');
             if (element_id.substr(0, 5) === 'task_') {
                 var task_id = element_id.substr(5);
