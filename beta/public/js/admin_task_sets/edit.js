@@ -55,12 +55,12 @@ jQuery(document).ready(function($) {
             }
             var container = $('<ul id="tasks_presortable" style="display: none;"></ul>');
             container.insertAfter('#tasks_sortable');
-            var li_elements = $('#tasks_sortable li');
+            var li_elements = $('#tasks_sortable > li.task_sorting_item');
             li_elements.appendTo(container);
             for (var i in elements_array) {
                 elements_array[i].appendTo('#tasks_sortable');
             }
-            container.find('li').each(function() {
+            container.find('> li.task_sorting_item').each(function() {
                 $(this).appendTo('#tasks_sortable');
             });
             container.remove();
