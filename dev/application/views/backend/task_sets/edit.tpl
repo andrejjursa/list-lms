@@ -105,7 +105,7 @@
                         {$tasks_sorting = []}
                         {foreach $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get_iterated() as $task}
                             {$tasks_sorting[] = $task->id|intval}
-                            <li id="task_{$task->id|intval}" class="ui-state-default">
+                            <li id="task_{$task->id|intval}" class="ui-state-default task_sorting_item">
                                 <h4><span class="ui-icon ui-icon-arrowthick-2-n-s" style="float: left;"></span> {overlay table='tasks' table_id=$task->id column='name' default=$task->name}</h4>
                                 <div class="field">
                                     <label for="task_join_field_{$task->id|intval}_points_total_id" class="required">{translate line='admin_task_sets_form_label_task_points_total'}:</label>
