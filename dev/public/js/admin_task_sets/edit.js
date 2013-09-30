@@ -86,4 +86,17 @@ jQuery(document).ready(function($) {
         }
     });
     
+    var refresh_additional_permissions = function() {
+        var url = global_base_url + 'index.php/admin_task_set_permissions/index/' + task_set_id;
+        var target = '#additional_permissions_id';
+        api_ajax_load(url, target);
+    };
+    
+    refresh_additional_permissions();
+    
+    $(document).on('click', 'a.button.new_permission', function(event) {
+        event.preventDefault();
+        
+    });
+    
 });

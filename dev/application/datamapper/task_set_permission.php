@@ -1,13 +1,17 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 $cache = array (
-  'table' => 'groups',
+  'table' => 'task_set_permissions',
   'fields' => 
   array (
     0 => 'id',
     1 => 'updated',
     2 => 'created',
-    3 => 'name',
-    4 => 'course_id',
+    3 => 'publish_start_time',
+    4 => 'upload_end_time',
+    5 => 'group_id',
+    6 => 'room_id',
+    7 => 'task_set_id',
+    8 => 'enabled',
   ),
   'validation' => 
   array (
@@ -33,37 +37,44 @@ $cache = array (
       array (
       ),
     ),
-    'name' => 
+    'publish_start_time' => 
     array (
-      'field' => 'name',
+      'field' => 'publish_start_time',
       'rules' => 
       array (
       ),
     ),
-    'course_id' => 
+    'upload_end_time' => 
     array (
-      'field' => 'course_id',
+      'field' => 'upload_end_time',
       'rules' => 
       array (
       ),
     ),
-    'course' => 
+    'group_id' => 
     array (
-      'field' => 'course',
+      'field' => 'group_id',
       'rules' => 
       array (
       ),
     ),
-    'room' => 
+    'room_id' => 
     array (
-      'field' => 'room',
+      'field' => 'room_id',
       'rules' => 
       array (
       ),
     ),
-    'participant' => 
+    'task_set_id' => 
     array (
-      'field' => 'participant',
+      'field' => 'task_set_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'enabled' => 
+    array (
+      'field' => 'enabled',
       'rules' => 
       array (
       ),
@@ -75,9 +86,16 @@ $cache = array (
       array (
       ),
     ),
-    'task_set_permission' => 
+    'group' => 
     array (
-      'field' => 'task_set_permission',
+      'field' => 'group',
+      'rules' => 
+      array (
+      ),
+    ),
+    'room' => 
+    array (
+      'field' => 'room',
       'rules' => 
       array (
       ),
@@ -85,12 +103,34 @@ $cache = array (
   ),
   'has_one' => 
   array (
-    'course' => 
+    'task_set' => 
     array (
-      'class' => 'course',
-      'other_field' => 'group',
-      'join_self_as' => 'group',
-      'join_other_as' => 'course',
+      'class' => 'task_set',
+      'other_field' => 'task_set_permission',
+      'join_self_as' => 'task_set_permission',
+      'join_other_as' => 'task_set',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'group' => 
+    array (
+      'class' => 'group',
+      'other_field' => 'task_set_permission',
+      'join_self_as' => 'task_set_permission',
+      'join_other_as' => 'group',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'room' => 
+    array (
+      'class' => 'room',
+      'other_field' => 'task_set_permission',
+      'join_self_as' => 'task_set_permission',
+      'join_other_as' => 'room',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
@@ -99,50 +139,6 @@ $cache = array (
   ),
   'has_many' => 
   array (
-    'room' => 
-    array (
-      'class' => 'room',
-      'other_field' => 'group',
-      'join_self_as' => 'group',
-      'join_other_as' => 'room',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
-    'participant' => 
-    array (
-      'class' => 'participant',
-      'other_field' => 'group',
-      'join_self_as' => 'group',
-      'join_other_as' => 'participant',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
-    'task_set' => 
-    array (
-      'class' => 'task_set',
-      'other_field' => 'group',
-      'join_self_as' => 'group',
-      'join_other_as' => 'task_set',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
-    'task_set_permission' => 
-    array (
-      'class' => 'task_set_permission',
-      'other_field' => 'group',
-      'join_self_as' => 'group',
-      'join_other_as' => 'task_set_permission',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
   ),
   '_field_tracking' => 
   array (

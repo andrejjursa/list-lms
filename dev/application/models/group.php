@@ -14,5 +14,7 @@ class Group extends DataMapper {
     public $has_many = array(
         'room',
         'participant',
+        'task_set',
+        'task_set_permission',
     );
 }

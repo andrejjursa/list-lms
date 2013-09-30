@@ -8,6 +8,7 @@
             <div id="tabs">
                 <ul>
                     <li><a href="#tabs-about_task_set">{translate line='admin_task_sets_tabs_label_about_task_set'}</a></li>
+                    <li><a href="#tabs-additional_permissions">{translate line='admin_task_sets_tabs_label_additional_permissions'}</a></li>
                     <li><a href="#tabs-tasks">{translate line='admin_task_sets_tabs_label_tasks'}</a></li>
                     <li><a href="#tabs-instructions">{translate line='admin_task_sets_tabs_label_instructions'}</a></li>
                 </ul>
@@ -100,6 +101,14 @@
                         </div>
                     </div>
                 </div>
+                <div id="tabs-additional_permissions">
+                    <fieldset class="basefieldset">
+                        <a href="{internal_url url="admin_task_set_permissions/new_permission/{$task_set->id|intval}"}" class="button new_permission">{translate line='admin_task_sets_permission_button_new_permission'}</a>
+                    </fieldset>
+                    <fieldset class="basefieldset">
+                        <div id="additional_permissions_id"></div>
+                    </fieldset>
+                </div>
                 <div id="tabs-tasks">
                     <ul id="tasks_sortable">
                         {$tasks_sorting = []}
@@ -158,6 +167,7 @@
 {/block}
 {block custom_head}
 <script type="text/javascript">
+    var task_set_id = {$task_set->id|intval};
     var delete_question = '{translate line='admin_task_sets_javascript_remove_task_question'}';
     var task_text_title = '{translate line='admin_task_sets_javascript_task_text_title'}';
     var all_groups = {$all_groups|json_encode};
