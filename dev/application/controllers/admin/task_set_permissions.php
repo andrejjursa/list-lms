@@ -11,6 +11,7 @@ class Task_set_permissions extends LIST_Controller {
         parent::__construct();
         $this->_init_language_for_teacher();
         $this->_load_teacher_langfile();
+        $this->_load_teacher_langfile('task_sets');
         $this->_init_teacher_quick_prefered_course_menu();
         $this->usermanager->teacher_login_protected_redirect();
     }
@@ -34,11 +35,34 @@ class Task_set_permissions extends LIST_Controller {
     }
     
     public function new_permission($task_set_id) {
-        
+        $task_set = new Task_set();
+        $task_set->include_related('course');
+        $task_set->include_related('course/period');
+        $task_set->get_by_id((int)$task_set_id);
+        $this->inject_course_groups($task_set->course_id);
+        $this->inject_course_group_rooms($task_set->course_id);
+        $this->parser->add_js_file('admin_task_set_permissions/form.js');
+        $this->parser->add_js_file('jquery.activeform.js');
+        $this->parser->parse('backend/task_set_permissions/new_permission.tpl', array('task_set' => $task_set));
     }
     
-    private function inject_course_group_rooms() {
+    private function inject_course_groups($course_id) {
+        $groups = new Group();
+        $groups->where_related('course', 'id', (int)$course_id);
+        $groups->order_by_with_constant('name', 'asc');
+        $groups->get_iterated();
+        
+        $data = array('' => '');
+        foreach ($groups as $group) {
+            $data[$group->id] = $this->lang->text($group->name);
+        }
+        
+        $this->parser->assign('groups', $data);
+    }
+    
+    private function inject_course_group_rooms($course_id) {
         $rooms = new Room();
+        $rooms->where_related('group/course', 'id', (int)$course_id);
         $rooms->include_related('group', '*', TRUE, TRUE);
         $rooms->order_by_related('group', 'id', 'asc');
         $rooms->order_by('time_day', 'asc')->order_by('time_begin', 'asc');
@@ -58,26 +82,6 @@ class Task_set_permissions extends LIST_Controller {
         }
         
         $this->parser->assign('all_rooms', $data);
-    }
-    
-    private function inject_course_task_set_types() {
-        $task_set_types = new Task_set_type();
-        $task_set_types->include_related('course', '*', TRUE, TRUE);
-        $task_set_types->order_by_related('course', 'id', 'true');
-        $task_set_types->order_by_with_constant('name', 'asc');
-        $task_set_types->get_iterated();
-        
-        $data = array();
-        foreach ($task_set_types as $task_set_type) {
-            if ($task_set_type->course->exists()) {
-                $data[$task_set_type->course->id][] = array(
-                    'value' => $task_set_type->id,
-                    'text' => $this->lang->text($task_set_type->name),
-                );
-            }
-        }
-        
-        $this->parser->assign('all_task_set_types', $data);
     }
     
 }

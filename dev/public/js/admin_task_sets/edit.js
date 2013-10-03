@@ -96,7 +96,26 @@ jQuery(document).ready(function($) {
     
     $(document).on('click', 'a.button.new_permission', function(event) {
         event.preventDefault();
-        
+        var url = $(this).attr('href');
+        $.fancybox(url, {
+            type: 'iframe',
+            width: '100%',
+            height: '100%',
+            autoSize: false,
+            autoHeight: false,
+            autoWidth: false,
+            helpers: {
+                overlay: {
+                    css: {
+                        background: 'rgba(255,255,255,0)'
+                    }
+                }
+            },
+            beforeClose: function() {
+                refresh_additional_permissions();
+                return true;
+            }
+        });
     });
     
 });
