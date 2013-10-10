@@ -106,6 +106,9 @@
                         <a href="{internal_url url="admin_task_set_permissions/new_permission/{$task_set->id|intval}"}" class="button new_permission">{translate line='admin_task_sets_permission_button_new_permission'}</a>
                     </fieldset>
                     <fieldset class="basefieldset">
+                        <p>{translate line='admin_task_sets_permissions_info'}</p>
+                    </fieldset>
+                    <fieldset class="basefieldset">
                         <div id="additional_permissions_id"></div>
                     </fieldset>
                 </div>

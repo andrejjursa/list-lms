@@ -19,8 +19,8 @@
             <td>{$task_set_permission->publish_start_time|date_format:{translate line='common_datetime_format'}}</td>
             <td>{$task_set_permission->upload_end_time|date_format:{translate line='common_datetime_format'}}</td>
             <td>{$enabled_status[$task_set_permission->enabled|intval]}</td>
-            <td class="controlls"><a href="{internal_url url="admin_task_set_permissions/edit_permission/{$task_set->id|intval}/{$task_set_permissions->id|intval}"}" class="button edit_task_set_permission">{translate line='admin_task_set_permissions_table_button_edit'}</a></td>
-            <td class="controlls"><a href="{internal_url url="admin_task_set_permissions/delete_permission/{$task_set->id|intval}/{$task_set_permissions->id|intval}"}" class="button delete delete_task_set_permission">{translate line='admin_task_set_permissions_table_button_delete'}</a></td>
+            <td class="controlls"><a href="{internal_url url="admin_task_set_permissions/edit_permission/{$task_set->id|intval}/{$task_set_permission->id|intval}"}" class="button edit_task_set_permission">{translate line='admin_task_set_permissions_table_button_edit'}</a></td>
+            <td class="controlls"><a href="{internal_url url="admin_task_set_permissions/delete_permission/{$task_set->id|intval}/{$task_set_permission->id|intval}"}" class="button delete delete_task_set_permission">{translate line='admin_task_set_permissions_table_button_delete'}</a></td>
         </tr>
         {/foreach}
     </tbody>

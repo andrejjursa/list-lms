@@ -94,7 +94,7 @@ jQuery(document).ready(function($) {
     
     refresh_additional_permissions();
     
-    $(document).on('click', 'a.button.new_permission', function(event) {
+    $(document).on('click', 'a.button.new_permission, a.button.edit_task_set_permission', function(event) {
         event.preventDefault();
         var url = $(this).attr('href');
         $.fancybox(url, {

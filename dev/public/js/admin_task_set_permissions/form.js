@@ -12,7 +12,8 @@ jQuery(document).ready(function($) {
             if (group_id !== last_group_id) {
                 last_group_id = group_id;
                 var target = '#taks_set_permission_room_id_id';
-                update_select_values_by($(target), group_id, all_rooms);
+                var selected = $('input[type=hidden][name=taks_set_permission_room_id]').length === 1 ? $('input[type=hidden][name=taks_set_permission_room_id]').val() : '0';
+                update_select_values_by($(target), group_id, all_rooms, selected);
             }
             return true;
         } else {
@@ -25,5 +26,16 @@ jQuery(document).ready(function($) {
     });
     
     $('form').activeForm().applyConditions();
+    
+    $('#task_permission_set_publish_start_time_id').datetimepicker({
+        showSecond: true,
+        dateFormat: 'yy-mm-dd',
+        timeFormat: 'HH:mm:ss'
+    });
+    $('#task_set_permission_upload_end_time_id').datetimepicker({
+        showSecond: true,
+        dateFormat: 'yy-mm-dd',
+        timeFormat: 'HH:mm:ss'
+    });
     
 });
