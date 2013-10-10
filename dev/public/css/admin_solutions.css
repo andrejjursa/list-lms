@@ -59,10 +59,10 @@ div.instructions_wrap { margin-bottom: 5px; }
 div.instructions_wrap h5 { font-size: 1.1em; margin-bottom: 5px; }
 div.instructions_wrap div.instructions_text { margin-left: 3px; }
 
+#table_content_id { width: 100%; }
 #table_content_id h3 { margin-top: 10px; }
 
 div.valuation_table_outer_wrap { border: 1px solid black; border-radius: 5px; padding: 5px; margin-top: 10px; }
-div.valuation_table_outer_wrap div.valuation_table_wrap { overflow-x: scroll; padding-bottom: 10px; }
 table.valuation_table { border-collapse: collapse; min-width: 100%; }
 table.valuation_table th { text-align: left; }
 table.valuation_table thead tr th { padding: 2px; background-color: rgba(192,192,192,128); white-space: nowrap; }

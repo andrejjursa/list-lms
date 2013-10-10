@@ -3,6 +3,7 @@
     
     <div class="valuation_table_outer_wrap">
         <div class="valuation_table_wrap">
+            <div class="overflow"><div class="extend">
             <table class="valuation_table">
                 <thead>
                     <tr>
@@ -52,6 +53,7 @@
                     {/foreach}
                 </tbody>
             </table>
+            </div></div>
         </div>
     </div>
 {else}
