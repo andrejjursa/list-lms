@@ -53,6 +53,7 @@ $lang['admin_tasks_edit_tabs_files'] = 'Súbory';
 $lang['admin_tasks_edit_tabs_tests'] = 'Testy';
 $lang['admin_tasks_edit_tabs_usages'] = 'Použitia';
 $lang['admin_tasks_javascript_text_select_files'] = 'Vybrať súbory';
+$lang['admin_tasks_javascript_text_switch_categories'] = 'Vybrať kategórie';
 $lang['admin_tasks_file_upload_message_upload_error'] = 'Chyba uploadu súboru: %s';
 $lang['admin_tasks_edit_files_delete_file'] = 'Vymazať&nbsp;súbor';
 $lang['admin_tasks_edit_files_table_header_file'] = 'Súbor';
