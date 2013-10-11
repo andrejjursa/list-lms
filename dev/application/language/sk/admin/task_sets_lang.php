@@ -54,6 +54,7 @@ $lang['admin_task_set_javascript_message_delete_question'] = 'Naozaj chcete vyma
 $lang['admin_task_set_javascript_message_after_delete'] = 'Zostava úloh bola úspešne vymazaná.';
 $lang['admin_task_set_javascript_message_after_open'] = 'Zostava úloh bola úspešne otvorená.';
 $lang['admin_task_set_javascript_message_clone_question'] = 'Chcete naklonovať túto zostavu úloh? Správy z diskusie nebudú klonované. Klonovaná zostava úloh nebude publikovaná.';
+$lang['admin_task_sets_javascript_remove_task_set_permission_question'] = 'Naozaj chcete vymazať toto oprávnenie?';
 $lang['admin_task_sets_javascript_task_text_title'] = 'Text úlohy';
 $lang['admin_task_sets_filter_form_submit_button'] = 'Použiť';
 $lang['admin_task_sets_filter_form_field_course'] = 'Kurz';

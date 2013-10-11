@@ -172,6 +172,7 @@
 <script type="text/javascript">
     var task_set_id = {$task_set->id|intval};
     var delete_question = '{translate line='admin_task_sets_javascript_remove_task_question'}';
+    var delete_permission_question = '{translate line='admin_task_sets_javascript_remove_task_set_permission_question'}';
     var task_text_title = '{translate line='admin_task_sets_javascript_task_text_title'}';
     var all_groups = {$all_groups|json_encode};
     var all_rooms = {$all_rooms|json_encode};

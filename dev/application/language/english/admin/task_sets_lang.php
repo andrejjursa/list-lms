@@ -54,6 +54,7 @@ $lang['admin_task_set_javascript_message_delete_question'] = 'Are you sure with 
 $lang['admin_task_set_javascript_message_after_delete'] = 'Task set was successfully deleted.';
 $lang['admin_task_set_javascript_message_after_open'] = 'Task set was successfully opened.';
 $lang['admin_task_set_javascript_message_clone_question'] = 'Do you want to clone this task set? Discussion messages will not be cloned. Clonet task set will not be publicated.';
+$lang['admin_task_sets_javascript_remove_task_set_permission_question'] = 'Are you sure with deleting of this permission?';
 $lang['admin_task_sets_javascript_task_text_title'] = 'Text of task';
 $lang['admin_task_sets_filter_form_submit_button'] = 'Apply';
 $lang['admin_task_sets_filter_form_field_course'] = 'Course';

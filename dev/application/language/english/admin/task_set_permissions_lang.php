@@ -18,4 +18,7 @@ $lang['admin_task_set_permissions_form_button_submit'] = 'Save';
 $lang['admin_task_set_permissions_error_message_cant_find_task_set_or_course'] = 'Can\'t find task set or course!';
 $lang['admin_task_set_permissions_error_message_cant_save_for_the_same_group'] = 'Can\'t save new permission for the group, which already have permission record.';
 $lang['admin_task_set_permissions_error_message_cant_save'] = 'Error occured during save process and permission was not saved.';
+$lang['admin_task_set_permissions_error_message_cant_find_task_set_permission_or_is_not_related_to_task_set'] = 'Task set permission not found or is not related to specified task set.';
+$lang['admin_task_set_permissions_error_message_delete_error'] = 'Error occured during delete process and permission was not deleted.';
 $lang['admin_task_set_permissions_success_message_saved'] = 'Permission saved!';
+$lang['admin_task_set_permissions_success_message_deleted'] = 'Permission deleted!';

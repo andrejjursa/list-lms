@@ -118,4 +118,21 @@ jQuery(document).ready(function($) {
         });
     });
     
+    $(document).on('click', 'a.button.delete_task_set_permission', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        if (confirm(delete_permission_question)) {
+            api_ajax_update(url, 'POST', {}, function(output) {
+                if (typeof output.result !== 'undefined' && typeof output.message !== 'undefined') {
+                    if (output.result) {
+                        show_notification(output.message, 'success');
+                    } else {
+                        show_notification(output.message, 'error');
+                    }
+                }
+                refresh_additional_permissions();
+            });
+        }
+    });
+    
 });

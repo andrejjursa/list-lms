@@ -18,4 +18,7 @@ $lang['admin_task_set_permissions_form_button_submit'] = 'Uložiť';
 $lang['admin_task_set_permissions_error_message_cant_find_task_set_or_course'] = 'Nenašla sa zostava úloh alebo kurz!';
 $lang['admin_task_set_permissions_error_message_cant_save_for_the_same_group'] = 'Nemožno uložiť oprávnenie ak už existuje iné oprávnenie pre rovnakú skupinu.';
 $lang['admin_task_set_permissions_error_message_cant_save'] = 'Vyskytla sa chyba pri ukladaní a oprávnenie nebolo uložené.';
+$lang['admin_task_set_permissions_error_message_cant_find_task_set_permission_or_is_not_related_to_task_set'] = 'Oprávnenie zostavy úloh sa nenašlo alebo nie je v relácii s požadovanou zostavou úloh.';
+$lang['admin_task_set_permissions_error_message_delete_error'] = 'Vyskytla sa chyba pri vymazávaní a oprávnenie nebolo vymazané.';
 $lang['admin_task_set_permissions_success_message_saved'] = 'Oprávnenie uložené!';
+$lang['admin_task_set_permissions_success_message_deleted'] = 'Oprávnenie vymazané!';
