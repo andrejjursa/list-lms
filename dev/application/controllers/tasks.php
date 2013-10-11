@@ -383,6 +383,7 @@ class Tasks extends LIST_Controller {
         $course->get();
         
         $task_set = new Task_set();
+        $task_set2 = new Task_set();
         $group = new Group();
         
         if ($course->exists()) {
@@ -390,24 +391,52 @@ class Tasks extends LIST_Controller {
             $group->where_related_participant('course_id', $course->id);
             $group->get();
 
+            $task_set->select('`task_sets`.*, `rooms`.`time_day` AS `pb_time_day`, `rooms`.`time_begin` AS `pb_time_begin`, `rooms`.`id` AS `pb_room_id`, `task_sets`.`publish_start_time` AS `pb_publish_start_time`, `task_sets`.`upload_end_time` AS `pb_upload_end_time`');
             $task_set->where('published', 1);
             $task_set->where_related_course($course);
             $task_set->include_related('solution');
             $task_set->add_join_condition('`solutions`.`student_id` = ?', array($student->id));
+            $task_set->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
             $task_set->group_start();
                 $task_set->or_where('group_id', NULL);
                 $task_set->or_where('group_id', $group->id);
-                $task_set->or_where_related('solution', 'student_id', $student->id);
             $task_set->group_end();
             $task_set->include_related('room', '*', TRUE, TRUE);
             $task_set->include_related_count('task', 'total_tasks');
+            $task_set->include_related('task_set_type');
             $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
-            $task_set->order_by_related_with_constant('task_set_type', 'name', 'asc');
-            $task_set->order_by_with_overlay('name', 'asc');
-            $task_set->get();
+            
+            $task_set2->select('`task_sets`.*, `task_set_permission_rooms`.`time_day` AS `pb_time_day`, `task_set_permission_rooms`.`time_begin` AS `pb_time_begin`, `task_set_permission_rooms`.`id` AS `pb_room_id`, `task_set_permissions`.`publish_start_time` AS `pb_publish_start_time`, `task_set_permissions`.`upload_end_time` AS `pb_upload_end_time`');
+            $task_set2->where('published', 1);
+            $task_set2->where_related_course($course);
+            $task_set2->where_related('task_set_permission', 'group_id', $group->id);
+            $task_set2->where_related('task_set_permission', 'enabled', 1);
+            $task_set2->include_related('solution');
+            $task_set2->add_join_condition('`solutions`.`student_id` = ?', array($student->id));
+            $task_set2->include_related('task_set_permission/room', '*', 'room', TRUE);
+            $task_set2->include_related_count('task', 'total_tasks');
+            $task_set2->include_related('task_set_type');
+            $task_set2->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
+            
+            $task_set3 = new Task_set();
+            $task_set3->select('`task_sets`.*, NULL AS `pb_time_day`, NULL AS `pb_time_begin`, NULL AS `pb_room_id`, NULL AS `pb_publish_start_time`, "0000-00-00 00:00:00" AS `pb_upload_end_time`', FALSE);
+            $task_set3->where('published', 1);
+            $task_set3->where_related_course($course);
+            $task_set3->include_related('solution');
+            $task_set3->add_join_condition('`solutions`.`student_id` = ?', array($student->id));
+            $task_set3->where_related('solution', 'student_id', $student->id);
+            $task_set3->include_related('room', '*', TRUE, TRUE);
+            $task_set3->include_related_count('task', 'total_tasks');
+            $task_set3->include_related('task_set_type');
+            $task_set3->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
+            
+            $sorting = $task_set2->union_order_by_overlay('task_set_type_name', 'task_set_types', 'name', 'task_set_type_id', 'asc');
+            $sorting .= ', ' . $task_set2->union_order_by_constant('name', 'asc');
+            
+            $task_set2->union(array($task_set, $task_set3), FALSE, $sorting, NULL, NULL, 'id');
         }
         
-        return $task_set;
+        return $task_set2;
     }
     
     private function get_task_set_by_id(&$course, &$group, &$student, $task_set_id) {
@@ -415,48 +444,75 @@ class Tasks extends LIST_Controller {
         $student->get_by_id($this->usermanager->get_student_id());
         
         $course = new Course();
-        $group = new Group();
+        $course->where_related('active_for_student', 'id', $student->id);
+        $course->where_related('participant', 'student_id', $student->id);
+        $course->where_related('participant', 'allowed', 1);
+        $course->include_related('period', 'name');
+        $course->get();
         
         $task_set = new Task_set();
-        $task_set->include_related('room', '*', TRUE, TRUE);
-        $task_set->where('published', 1);
-        $task_set->get_by_id($task_set_id);
+        $task_set2 = new Task_set();
+        $group = new Group();
         
-        if ($task_set->exists()) {
-            $course->where_related_participant('student_id', $student->id);
-            $course->where_related_participant('allowed', 1);
-            $course->get_by_id($task_set->course_id);
-            if (!$course->exists()) {
-                return new Task_set();
-            }
+        if ($course->exists()) {
+            $group->where_related_participant('student_id', $student->id);
+            $group->where_related_participant('course_id', $course->id);
+            $group->get();
+
+            $task_set->select('`task_sets`.*, `rooms`.`time_day` AS `pb_time_day`, `rooms`.`time_begin` AS `pb_time_begin`, `rooms`.`id` AS `pb_room_id`, `task_sets`.`publish_start_time` AS `pb_publish_start_time`, `task_sets`.`upload_end_time` AS `pb_upload_end_time`');
+            $task_set->where('published', 1);
+            $task_set->where_related_course($course);
+            $task_set->include_related('solution');
+            $task_set->add_join_condition('`solutions`.`student_id` = ?', array($student->id));
+            $task_set->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_set->group_start();
+                $task_set->or_where('group_id', NULL);
+                $task_set->or_where('group_id', $group->id);
+            $task_set->group_end();
+            $task_set->include_related('room', '*', TRUE, TRUE);
+            $task_set->include_related_count('task', 'total_tasks');
+            $task_set->include_related('task_set_type');
+            $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
+            $task_set->where('id', $task_set_id);
             
-            $solution = new Solution();
-            $solution->where('task_set_id', $task_set->id);
-            $solution->where('student_id', $student->id);
-            $solution->get();
-            if ($solution->exists()) {
-                return $task_set;
-            }
+            $task_set2->select('`task_sets`.*, `task_set_permission_rooms`.`time_day` AS `pb_time_day`, `task_set_permission_rooms`.`time_begin` AS `pb_time_begin`, `task_set_permission_rooms`.`id` AS `pb_room_id`, `task_set_permissions`.`publish_start_time` AS `pb_publish_start_time`, `task_set_permissions`.`upload_end_time` AS `pb_upload_end_time`');
+            $task_set2->where('published', 1);
+            $task_set2->where_related_course($course);
+            $task_set2->where_related('task_set_permission', 'group_id', $group->id);
+            $task_set2->where_related('task_set_permission', 'enabled', 1);
+            $task_set2->include_related('solution');
+            $task_set2->add_join_condition('`solutions`.`student_id` = ?', array($student->id));
+            $task_set2->include_related('task_set_permission/room', '*', 'room', TRUE);
+            $task_set2->include_related_count('task', 'total_tasks');
+            $task_set2->include_related('task_set_type');
+            $task_set2->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
+            $task_set2->where('id', $task_set_id);
             
-            if (!is_null($task_set->group_id)) {
-                $group->where_related_participant('student_id', $student->id);
-                $group->where_related_participant('course_id', $course->id);
-                $group->get_by_id($task_set->group_id);
-                if (!$group->exists()) {
-                    return new Task_set();
-                }
-            }
+            $task_set3 = new Task_set();
+            $task_set3->select('`task_sets`.*, NULL AS `pb_time_day`, NULL AS `pb_time_begin`, NULL AS `pb_room_id`, NULL AS `pb_publish_start_time`, "0000-00-00 00:00:00" AS `pb_upload_end_time`', FALSE);
+            $task_set3->where('published', 1);
+            $task_set3->where_related_course($course);
+            $task_set3->include_related('solution');
+            $task_set3->add_join_condition('`solutions`.`student_id` = ?', array($student->id));
+            $task_set3->where_related('solution', 'student_id', $student->id);
+            $task_set3->include_related('room', '*', TRUE, TRUE);
+            $task_set3->include_related_count('task', 'total_tasks');
+            $task_set3->include_related('task_set_type');
+            $task_set3->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
+            $task_set3->where('id', $task_set_id);
+            
+            $task_set2->union(array($task_set, $task_set3), FALSE, '', 1, 0, 'id');
         }
         
-        return $task_set;
+        return $task_set2;
     }
 
     private function can_upload_file($task_set, $course) {
         if ($task_set->exists() && $course->exists()) {
             $task_set_type = $course->task_set_type->where('id', $task_set->task_set_type_id)->include_join_fields()->get();
             if ($task_set_type->exists() && $task_set_type->join_upload_solution == 1) {
-                if (is_null($task_set->upload_end_time)) { return TRUE; }
-                if (strtotime($task_set->upload_end_time) > time()) { return TRUE; }
+                if (is_null($task_set->pb_upload_end_time)) { return TRUE; }
+                if (strtotime($task_set->pb_upload_end_time) > time()) { return TRUE; }
             }
         }
         return FALSE;
@@ -466,29 +522,31 @@ class Tasks extends LIST_Controller {
         $output = array();
         
         $days = array(1=> 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
-        
+                
         foreach($task_sets->all as $task_set) {
             $add = TRUE;
-            if (!is_null($task_set->publish_start_time)) {
-                if (!is_null($task_set->room->id)) {
-                    if (strtotime($task_set->publish_start_time) > time()) {
-                        $add = FALSE;
-                    } else {
-                        $current_day = intval(strftime('%w', strtotime($task_set->publish_start_time)));
-                        $current_day = $current_day > 0 ? $current_day : 7;
-                        if ($task_set->room->time_day == $current_day) {
-                            list($year, $month, $day) = explode(',', strftime('%Y,%m,%d', strtotime($task_set->publish_start_time)));
-                            $time = mktime(0, 0, 0, intval($month), intval($day), intval($year)) + intval($task_set->room->time_begin);
+            if (is_null($task_set->solution_id)) {
+                if (!is_null($task_set->pb_publish_start_time)) {
+                    if (!is_null($task_set->pb_room_id)) {
+                        if (strtotime($task_set->pb_publish_start_time) > time()) {
+                            $add = FALSE;
                         } else {
-                            $time = strtotime('next ' . $days[$task_set->room->time_day], strtotime($task_set->publish_start_time)) + intval($task_set->room->time_begin);
+                            $current_day = intval(strftime('%w', strtotime($task_set->pb_publish_start_time)));
+                            $current_day = $current_day > 0 ? $current_day : 7;
+                            if ($task_set->pb_time_day == $current_day) {
+                                list($year, $month, $day) = explode(',', strftime('%Y,%m,%d', strtotime($task_set->pb_publish_start_time)));
+                                $time = mktime(0, 0, 0, intval($month), intval($day), intval($year)) + intval($task_set->pb_time_begin);
+                            } else {
+                                $time = strtotime('next ' . $days[$task_set->pb_time_day], strtotime($task_set->pb_publish_start_time)) + intval($task_set->pb_time_begin);
+                            }
+                            if ($time > time()) {
+                                $add = FALSE;
+                            }
                         }
-                        if ($time > time()) {
+                    } else {
+                        if (strtotime($task_set->pb_publish_start_time) > time()) {
                             $add = FALSE;
                         }
-                    }
-                } else {
-                    if (strtotime($task_set->publish_start_time) > time()) {
-                        $add = FALSE;
                     }
                 }
             }
@@ -551,5 +609,5 @@ class Tasks extends LIST_Controller {
         }
         return FALSE;
     }
-    
+        
 }
