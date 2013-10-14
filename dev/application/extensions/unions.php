@@ -31,7 +31,7 @@ class DMZ_Unions {
         if (!is_null($group_by)) {
             $super_select = 'SELECT `table_grouped_by_' . $group_by . '`.* FROM (' . $super_select . ') `table_grouped_by_' . $group_by . '` GROUP BY `table_grouped_by_' . $group_by . '`.' . $object->db->protect_identifiers($group_by);
         }
-        $object->query($super_select);
+        $object->query($this->fixQuery($super_select));
     }
     
     public function union_iterated($object, $next_object, $all = FALSE, $order = '', $limit = NULL, $offset = NULL, $group_by = NULL) {
@@ -57,7 +57,7 @@ class DMZ_Unions {
             $super_select = 'SELECT `table_grouped_by_' . $group_by . '`.* FROM (' . $super_select . ') `table_grouped_by_' . $group_by . '` GROUP BY `table_grouped_by_' . $group_by . '`.' . $object->db->protect_identifiers($group_by);
         }
         $CI =& get_instance();
-        $query = $CI->db->query($super_select);
+        $query = $CI->db->query($this->fixQuery($super_select));
         $object->_dm_dataset_iterator = new DM_DatasetIterator($object, $query);
     }
     
@@ -86,6 +86,11 @@ SELECT ' . $object->db->protect_identifiers($column) . ' AS `sorting_text`
 LIMIT 1) ' . (strtolower($direction) == 'asc' ? 'ASC' : 'DESC');
         
         return $subquery;
+    }
+    
+    private function fixQuery($query) {
+        $changed = preg_replace('/FROM[ \n\r\t]+\([ \n\r\t]*(`[a-z0-9\_]+`([ \n\r\t]*\,[ \n\r\t]*`[a-z0-9\_]+`)*)[ \n\r\t]*\)/im', 'FROM ${1}', $query);
+        return $changed;
     }
     
 }

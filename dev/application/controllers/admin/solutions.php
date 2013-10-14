@@ -68,8 +68,14 @@ class Solutions extends LIST_Controller {
                 $task_set_check->where_related('course/participant/student', 'id', intval($student_id));
                 $task_set_check->where_related('course/participant', 'allowed', 1);
                 $task_set_check->group_start();
-                    $task_set_check->or_where('group_id', NULL);
-                    $task_set_check->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+                    $task_set_check->or_group_start();
+                        $task_set_check->group_start();
+                            $task_set_check->or_where('group_id', NULL);
+                            $task_set_check->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+                        $task_set_check->group_end();
+                        $task_set_check->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                    $task_set_check->group_end();
+                    $task_set_check->or_where_related('task_set_permission', '`group_id` = `course_participants`.`group_id`');
                     $task_set_check->or_where_related('solution', 'student_id', $student->id);
                 $task_set_check->group_end();
                 $task_set_check->get_by_id($task_set_id);
@@ -216,8 +222,14 @@ class Solutions extends LIST_Controller {
             $task_set->where_related('course/participant/student', 'id', intval($solution_data['student_id']));
             $task_set->where_related('course/participant', 'allowed', 1);
             $task_set->group_start();
-                $task_set->or_where('group_id', NULL);
-                $task_set->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+                $task_set->or_group_start();
+                    $task_set->group_start();
+                        $task_set->or_where('group_id', NULL);
+                        $task_set->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+                    $task_set->group_end();
+                    $task_set->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                $task_set->group_end();
+                $task_set->or_where_related('task_set_permission', '`group_id` = `course_participants`.`group_id`');
             $task_set->group_end();
             $task_set->get_by_id($task_set_id);
             if ($task_set->exists()) {
@@ -720,13 +732,26 @@ class Solutions extends LIST_Controller {
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         
+        $task_set_permissions = new Task_set_permission();
+        $task_set_permissions->where_related($task_set);
+        $task_set_permissions->where('enabled', 1);
+        $task_set_permissions->get_iterated();
+        
         $data = array('' => '');
         if ($task_set->exists()) {
             $students = new Student();
             $students->where_related('participant', 'allowed', 1);
             $students->where_related('participant/course/task_set', 'id', intval($task_set_id));
-            if (!is_null($task_set->group_id)) {
-                $students->where_related('participant/group', 'id', intval($task_set->group_id));
+            if ($task_set_permissions->result_count() == 0) {
+                if (!is_null($task_set->group_id)) {
+                    $students->where_related('participant/group', 'id', intval($task_set->group_id));
+                }
+            } else {
+                $group_ids = array();
+                foreach ($task_set_permissions as $task_set_permission) {
+                    $group_ids[] = (int)$task_set_permission->group_id;
+                }
+                $students->where_in_related('participant/group', 'id', $group_ids);
             }
             $students->where('students.id = `students`.`id` AND NOT EXISTS (SELECT * FROM `solutions` WHERE `solutions`.`student_id` = `students`.`id` AND `solutions`.`task_set_id` = ' . intval($task_set_id) . ')');
             $students->group_by('id');
@@ -745,6 +770,11 @@ class Solutions extends LIST_Controller {
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         
+        $task_set_permissions = new Task_set_permission();
+        $task_set_permissions->where_related($task_set);
+        $task_set_permissions->where('enabled', 1);
+        $task_set_permissions->get_iterated();
+        
         $solutions = new Solution();
         $solutions->where_related($task_set);
         $solutions->group_by('student_id');
@@ -758,8 +788,16 @@ class Solutions extends LIST_Controller {
             $students = new Student();
             $students->where_related('participant', 'allowed', 1);
             $students->where_related('participant/course/task_set', 'id', intval($task_set_id));
-            if (!is_null($task_set->group_id)) {
-                $students->where_related('participant/group', 'id', intval($task_set->group_id));
+            if ($task_set_permissions->result_count() == 0) {
+                if (!is_null($task_set->group_id)) {
+                    $students->where_related('participant/group', 'id', intval($task_set->group_id));
+                }
+            } else {
+                $group_ids = array();
+                foreach ($task_set_permissions as $task_set_permission) {
+                    $group_ids[] = (int)$task_set_permission->group_id;
+                }
+                $students->where_in_related('participant/group', 'id', $group_ids);
             }
             $students->include_related('solution');
             $students->add_join_condition('`solutions`.`task_set_id` = ?', array($task_set->id));
@@ -792,9 +830,19 @@ class Solutions extends LIST_Controller {
         $task_sets = new Task_set();
         $task_sets->where('group_id', NULL);
         $task_sets->include_related('course/group');
-        $task_sets->order_by_related_with_constant('course/group', 'name', 'asc');
         $task_sets->where('id', (int)$task_set_id);
-        $task_sets->get_iterated();
+        $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+        
+        $task_sets2 = new Task_set();
+        $task_sets2->where('id', (int)$task_set_id);
+        $task_sets2->include_related('task_set_permission/group', '*', 'course_group');
+        $task_sets2->where_related('task_set_permission', 'enabled', 1);
+        $task_sets2->not_group_start();
+            $task_sets2->or_where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_sets2->or_where_subquery(1, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+        $task_sets2->group_end();
+        
+        $task_sets->union_iterated($task_sets2, FALSE, $task_sets->union_order_by_constant('course_group_name', 'asc'));
         
         $data = array('' => '');
         foreach ($task_sets as $task_set) {
