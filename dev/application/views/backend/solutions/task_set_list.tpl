@@ -1,15 +1,36 @@
 {foreach $task_sets as $task_set}
+    {if $task_set->task_set_permission_count ne 0}
+        {$task_set_permissions = $task_set->task_set_permission->where('enabled', 1)->include_related('group')->order_by_related_with_constant('group', 'name', 'asc')->get()}
+    {/if}
     <tr>
         <td>{$task_set->id|intval}</td>
         <td>{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}</td>
         <td>{translate_text text=$task_set->course_name} / {translate_text text=$task_set->course_period_name}</td>
-        <td>{translate_text text=$task_set->group_name}</td>
+        <td>
+            {if $task_set->task_set_permission_count eq 0}
+                {translate_text text=$task_set->group_name}
+            {else}
+                <ol>
+                {foreach $task_set_permissions->all as $task_set_permission}
+                    <li>{translate_text text=$task_set_permission->group_name}</li>
+                {/foreach}
+                </ol>
+            {/if}
+        </td>
         <td>{translate_text text=$task_set->task_set_type_name}</td>
         <td>{$task_set->solution_count}</td>
         <td>{$task_set->task_count}</td>
         <td>
             {if $task_set->join_upload_solution eq 1}
-                {$task_set->upload_end_time|date_format:{translate line='admin_solutions_datetime_format'}|default:{translate line='admin_solutions_no_time_information'}}
+                {if $task_set->task_set_permission_count eq 0}
+                    {$task_set->upload_end_time|date_format:{translate line='admin_solutions_datetime_format'}|default:{translate line='admin_solutions_no_time_information'}}
+                {else}
+                    <ol>
+                    {foreach $task_set_permissions->all as $task_set_permission}
+                        <li>{$task_set_permission->upload_end_time|date_format:{translate line='admin_solutions_datetime_format'}|default:{translate line='admin_solutions_no_time_information'}}</li>
+                    {/foreach}
+                    </ol>
+                {/if}
             {else}
                 {translate line='admin_solutions_no_solution_uploading'}
             {/if}
