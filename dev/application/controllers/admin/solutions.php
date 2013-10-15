@@ -603,12 +603,22 @@ class Solutions extends LIST_Controller {
             $task_sets = new Task_set();
             $task_sets->select('*');
             $task_sets->select_subquery('(SELECT SUM(`points_total`) FROM `task_task_set_rel` WHERE `task_task_set_rel`.`task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'counted_points_sum');
+            $task_sets->select_subquery('(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `${parent}`.`id` AND `tsp`.`enabled` = 1)', 'permissions_count');
             $task_sets->include_related('group', 'name');
             $task_sets->where_related('course', 'id', $course->id);
             if ($group->exists()) {
                 $task_sets->group_start();
-                    $task_sets->or_where_related('group', 'id', $group->id);
-                    $task_sets->or_where_related('group', 'id', NULL);
+                    $task_sets->or_group_start();
+                        $task_sets->group_start();
+                            $task_sets->or_where_related('group', 'id', $group->id);
+                            $task_sets->or_where_related('group', 'id', NULL);
+                        $task_sets->group_end();
+                        $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                    $task_sets->group_end();
+                    $task_sets->or_group_start();
+                        $task_sets->where_related('task_set_permission', 'enabled', 1);
+                        $task_sets->where_related('task_set_permission', 'group_id', $group->id);
+                    $task_sets->group_end();
                 $task_sets->group_end();
             }
             $task_sets->where('published', 1);
@@ -631,10 +641,22 @@ class Solutions extends LIST_Controller {
                 $task_set_ids[] = $task_set->id;
                 $points = floatval(!is_null($task_set->points_override) ? $task_set->points_override : $task_set->counted_points_sum);
                 $task_set_types_points_max[$task_set->task_set_type_id] = isset($task_set_types_points_max[$task_set->task_set_type_id]) ? $task_set_types_points_max[$task_set->task_set_type_id] + $points : $points;
+                if ($task_set->permissions_count > 0) {
+                    $task_set_permissions = $task_set->task_set_permissions->include_related('group')->where('enabled', 1)->order_by_related_with_constant('group', 'name', 'asc')->get_iterated();
+                    $group_name = array();
+                    $group_id = array();
+                    foreach ($task_set_permissions as $task_set_permission) {
+                        $group_name[] = $task_set_permission->group_name;
+                        $group_id[] = $task_set_permission->group_id;
+                    }
+                } else {
+                    $group_name = $task_set->group_name;
+                    $group_id = $task_set->group_id;
+                }
                 $header[$task_set->task_set_type_id]['task_sets'][$task_set->id] = array(
                     'name' => $task_set->name,
-                    'group_name' => $task_set->group_name,
-                    'group_id' => $task_set->group_id,
+                    'group_name' => $group_name,
+                    'group_id' => $group_id,
                     'points' => $points,
                 );
             }
