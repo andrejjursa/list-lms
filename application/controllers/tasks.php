@@ -396,6 +396,7 @@ class Tasks extends LIST_Controller {
             $task_set->where_related_course($course);
             $task_set->include_related('solution');
             $task_set->add_join_condition('`solutions`.`student_id` = ?', array($student->id));
+            $task_set->include_related('solution/teacher', 'fullname');
             $task_set->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
             $task_set->group_start();
                 $task_set->or_where('group_id', NULL);
@@ -414,6 +415,7 @@ class Tasks extends LIST_Controller {
             $task_set2->where_related('task_set_permission', 'enabled', 1);
             $task_set2->include_related('solution');
             $task_set2->add_join_condition('`solutions`.`student_id` = ?', array($student->id));
+            $task_set2->include_related('solution/teacher', 'fullname');
             $task_set2->include_related('task_set_permission/room', '*', 'room', TRUE);
             $task_set2->include_related_count('task', 'total_tasks');
             $task_set2->include_related('task_set_type');
@@ -426,6 +428,7 @@ class Tasks extends LIST_Controller {
             $task_set3->where_related_course($course);
             $task_set3->include_related('solution');
             $task_set3->add_join_condition('`solutions`.`student_id` = ?', array($student->id));
+            $task_set3->include_related('solution/teacher', 'fullname');
             $task_set3->where_related('solution', 'student_id', $student->id);
             $task_set3->include_related('room', '*', TRUE, TRUE);
             $task_set3->include_related_count('task', 'total_tasks');
