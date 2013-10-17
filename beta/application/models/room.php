@@ -14,6 +14,8 @@ class Room extends DataMapper {
         'teacher' => array(
             'join_table' => 'rooms_teachers_rel',
         ),
+        'task_set',
+        'task_set_permission',
     );
     
     public function selected_teachers() {

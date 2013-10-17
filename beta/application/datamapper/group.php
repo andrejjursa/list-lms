@@ -68,6 +68,20 @@ $cache = array (
       array (
       ),
     ),
+    'task_set' => 
+    array (
+      'field' => 'task_set',
+      'rules' => 
+      array (
+      ),
+    ),
+    'task_set_permission' => 
+    array (
+      'field' => 'task_set_permission',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -102,6 +116,28 @@ $cache = array (
       'other_field' => 'group',
       'join_self_as' => 'group',
       'join_other_as' => 'participant',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'task_set' => 
+    array (
+      'class' => 'task_set',
+      'other_field' => 'group',
+      'join_self_as' => 'group',
+      'join_other_as' => 'task_set',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'task_set_permission' => 
+    array (
+      'class' => 'task_set_permission',
+      'other_field' => 'group',
+      'join_self_as' => 'group',
+      'join_other_as' => 'task_set_permission',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

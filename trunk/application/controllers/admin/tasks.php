@@ -106,6 +106,7 @@ class Tasks extends LIST_Controller {
         $this->inject_prettify_config();
         $this->_add_tinymce4();
         $this->parser->add_js_file('admin_tasks/form.js');
+        $this->parser->add_js_file('admin_tasks/form_new.js');
         $this->parser->add_css_file('admin_tasks.css');
         $this->parser->parse('backend/tasks/new_task.tpl', array('structure' => $structure));
     }

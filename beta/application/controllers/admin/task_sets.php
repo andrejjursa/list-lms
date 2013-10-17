@@ -137,6 +137,8 @@ class Task_sets extends LIST_Controller {
         $this->store_filter($filter);
         $this->inject_stored_filter();
         $task_sets = new Task_set();
+        $task_sets->include_related_count('task_set_permission');
+        $task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
         $task_sets->include_related('course', 'name', TRUE);
         $task_sets->include_related('course/period', 'name', TRUE);
         $task_sets->include_related('group', 'name', TRUE);
@@ -145,12 +147,20 @@ class Task_sets extends LIST_Controller {
         $task_sets->include_related_count('comment');
         if (isset($filter['course']) && intval($filter['course']) > 0) {
             $task_sets->where_related_course('id', intval($filter['course']));
-            if (isset($filter['group'])) {
-                if ($filter['group'] == 'none') {
-                    $task_sets->where_related_group('id', NULL);
-                } elseif (intval($filter['group']) > 0) {
-                    $task_sets->where_related_group('id', intval($filter['group']));
-                }
+            if (isset($filter['group']) && $filter['group'] == 'none') {
+                $task_sets->where_related_group('id', NULL);
+                $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            } else if (isset($filter['group']) && intval($filter['group']) > 0) {
+                $task_sets->group_start();
+                    $task_sets->or_group_start();
+                        $task_sets->where_related_group('id', intval($filter['group']));
+                        $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                    $task_sets->group_end();
+                    $task_sets->or_group_start();
+                        $task_sets->where_related('task_set_permission/group', 'id', intval($filter['group']));
+                        $task_sets->where_related('task_set_permission', 'enabled', 1);
+                    $task_sets->group_end();
+                $task_sets->group_end();
             }
         }
         if (isset($filter['task_set_type']) && intval($filter['task_set_type']) > 0) {

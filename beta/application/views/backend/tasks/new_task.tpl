@@ -19,7 +19,11 @@
             </div>
             <div class="field">
                 <label class="required">{translate line='admin_tasks_form_label_categories'}:</label>
-                <div class="input categories_structure">{category_checkboxes chbname='task[categories][]' structure=$structure selected=$smarty.post.task.categories|default:[]}</div>
+                <div class="input categories_structure">
+                    <div class="categories_structure_switch">
+                    {category_checkboxes chbname='task[categories][]' structure=$structure selected=$smarty.post.task.categories|default:[]}
+                    </div>
+                </div>
                 {form_error field='task[categories][]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="buttons">
@@ -30,4 +34,5 @@
 {/block}
 {block custom_head}<script type="text/javascript">
     var highlighters = {$highlighters|json_encode};
+    var categories_switch_text = '{translate line='admin_tasks_javascript_text_switch_categories'}';
 </script>{/block}

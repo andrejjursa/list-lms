@@ -68,8 +68,14 @@ class Solutions extends LIST_Controller {
                 $task_set_check->where_related('course/participant/student', 'id', intval($student_id));
                 $task_set_check->where_related('course/participant', 'allowed', 1);
                 $task_set_check->group_start();
-                    $task_set_check->or_where('group_id', NULL);
-                    $task_set_check->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+                    $task_set_check->or_group_start();
+                        $task_set_check->group_start();
+                            $task_set_check->or_where('group_id', NULL);
+                            $task_set_check->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+                        $task_set_check->group_end();
+                        $task_set_check->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                    $task_set_check->group_end();
+                    $task_set_check->or_where_related('task_set_permission', '`group_id` = `course_participants`.`group_id`');
                     $task_set_check->or_where_related('solution', 'student_id', $student->id);
                 $task_set_check->group_end();
                 $task_set_check->get_by_id($task_set_id);
@@ -112,63 +118,46 @@ class Solutions extends LIST_Controller {
         $this->form_validation->set_rules('points', 'lang:admin_solutions_remove_points_form_field_points', 'required|numeric|greater_than[0]');
         if ($this->form_validation->run()) {
             $points_to_remove = floatval($this->input->post('points'));
-            $this->_transaction_isolation();
-            $this->db->trans_begin();
             $task_set = new Task_set();
             $task_set->select('*');
             $task_set->select_subquery('(SELECT `upload_solution` FROM `course_task_set_type_rel` ctst WHERE `ctst`.`course_id` = `${parent}`.`course_id` AND `ctst`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
+            $task_set->include_related_count('task_set_permission');
+            $task_set->add_join_condition('`task_set_permissions`.`enabled` = 1');
             $task_set->include_related('course', '*', TRUE, TRUE);
             $task_set->include_related('course/period', 'name');
             $task_set->include_related('group', '*', TRUE, TRUE);
             $task_set->get_by_id($task_set_id);
             if ($task_set->exists()) {
                 if ($task_set->join_upload_solution == 1) {
-                    if (!is_null($task_set->upload_end_time)) {
-                        $timestamp_end = strtotime($task_set->upload_end_time);
-                        if(time() > $timestamp_end) {
-                            $participants = new Participant();
-                            $participants->select('*');
-                            $participants->select_subquery('(SELECT `solutions`.`id` FROM `solutions` WHERE `solutions`.`task_set_id` = ' . $task_set->id . ' AND `solutions`.`student_id` = `${parent}`.`student_id`)', 'solution_id');
-                            $participants->where_related_course($task_set->course);
-                            if ($task_set->group->exists() && !is_null($task_set->group->id)) {
-                                $participants->where_related_group($task_set->group);
-                            }
-                            $participants->where('allowed', 1);
-                            $participants->get_iterated();
-                            $notify_students = array(0);
-                            foreach ($participants as $participant) {
-                                if (is_null($participant->solution_id) && !is_null($participant->student_id)) {
-                                    $solution = new Solution();
-                                    $solution->task_set_id = $task_set->id;
-                                    $solution->student_id = $participant->student_id;
-                                    $solution->teacher_id = $this->usermanager->get_teacher_id();
-                                    $solution->points = - $points_to_remove;
-                                    $solution->revalidate = 0;
-                                    if ($solution->save()) {
-                                        $notify_students[] = $participant->student_id;
-                                    }
-                                }
-                            }
-                            if ($this->db->trans_status()) {
-                                $this->db->trans_commit();
-                                $result->result = TRUE;
-                                $result->message = sprintf($this->lang->line('admin_solutions_remove_points_success'), count($notify_students) - 1);
-
-                                $students = new Student();
-                                $students->where_in('id', $notify_students);
-                                $students->get();
-                                $result->mail_sent = $this->_send_multiple_emails($students, 'lang:admin_solutions_remove_points_notification_subject', 'file:emails/backend/solutions/remove_points_notify.tpl', array('task_set' => $task_set, 'points_to_remove' => $points_to_remove));
-                            } else {
-                                $this->db->trans_rollback();
-                                $result->message = $this->lang->line('admin_solutions_remove_points_error_unknown');
-                            }
-                        } else {
-                            $this->db->trans_rollback();
-                            $result->message = $this->lang->line('admin_solutions_remove_points_error_task_set_upload_limit_not_reached');
+                    $notify_students = array();
+                    $students = NULL;
+                    $error_code = 0;
+                    if ($task_set->task_set_permission_count == 0) {
+                        if ($this->remove_points_iteration($task_set, $points_to_remove, $task_set->id, $task_set->course->id, $task_set->group->id, $error_code, $students)) {
+                            $notify_students[] = $students;
                         }
                     } else {
-                        $this->db->trans_rollback();
-                        $result->message = $this->lang->line('admin_solutions_remove_points_error_task_set_upload_not_limited');
+                        $task_set_permissions = $task_set->task_set_permissions;
+                        $task_set_permissions->where('enabled', 1);
+                        $task_set_permissions->include_related('group', '*', TRUE, TRUE);
+                        $task_set_permissions->get_iterated();
+                        foreach ($task_set_permissions as $task_set_permission) {
+                            if ($this->remove_points_iteration($task_set_permission, $points_to_remove, $task_set->id, $task_set->course->id, $task_set_permission->group_id, $error_code, $students)) {
+                                $notify_students[] = $students;
+                                $error_code = 0;
+                            }
+                        }
+                    }
+                    if ($error_code == 0 || count($notify_students) > 0) {
+                        $student_count = 0;
+                        foreach ($notify_students as $notify_student_group) {
+                            $student_count += $notify_student_group->result_count();
+                            $result->mail_sent = $this->_send_multiple_emails($notify_student_group, 'lang:admin_solutions_remove_points_notification_subject', 'file:emails/backend/solutions/remove_points_notify.tpl', array('task_set' => $task_set, 'points_to_remove' => $points_to_remove));
+                        }
+                        $result->result = TRUE;
+                        $result->message = sprintf($this->lang->line('admin_solutions_remove_points_success'), $student_count);    
+                    } else {
+                        $result->message = $this->lang->line('admin_solutions_remove_points_error_some_problem');    
                     }
                 } else {
                     $this->db->trans_rollback();
@@ -182,6 +171,63 @@ class Solutions extends LIST_Controller {
             $result->message = $this->form_validation->error_string();
         }
         $this->output->set_output(json_encode($result));
+    }
+    
+    private function remove_points_iteration($task_set, $points_to_remove, $task_set_id, $task_set_course_id, $task_set_group_id, &$error_code = 0, &$students = NULL) {
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        if (!is_null($task_set->upload_end_time)) {
+            $timestamp_end = strtotime($task_set->upload_end_time);
+            if(time() > $timestamp_end) {
+                $participants = new Participant();
+                $participants->select('*');
+                $participants->select_subquery('(SELECT `solutions`.`id` FROM `solutions` WHERE `solutions`.`task_set_id` = ' . $task_set_id . ' AND `solutions`.`student_id` = `${parent}`.`student_id`)', 'solution_id');
+                $participants->where_related_course('id', $task_set_course_id);
+                if ($task_set->group->exists() && !is_null($task_set_group_id)) {
+                    $participants->where_related_group('id', $task_set_group_id);
+                }
+                $participants->where('allowed', 1);
+                $participants->get_iterated();
+                $notify_students = array(0);
+                foreach ($participants as $participant) {
+                    if (is_null($participant->solution_id) && !is_null($participant->student_id)) {
+                        $solution = new Solution();
+                        $solution->task_set_id = $task_set_id;
+                        $solution->student_id = $participant->student_id;
+                        $solution->teacher_id = $this->usermanager->get_teacher_id();
+                        $solution->points = - $points_to_remove;
+                        $solution->revalidate = 0;
+                        if ($solution->save()) {
+                            $notify_students[] = $participant->student_id;
+                        }
+                    }
+                }
+                if ($this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    
+                    $students = new Student();
+                    $students->where_in('id', $notify_students);
+                    $students->get();
+                    //$result->mail_sent = $this->_send_multiple_emails($students, 'lang:admin_solutions_remove_points_notification_subject', 'file:emails/backend/solutions/remove_points_notify.tpl', array('task_set' => $task_set, 'points_to_remove' => $points_to_remove));
+                    return TRUE;
+                } else {
+                    $this->db->trans_rollback();
+                    //$result->message = $this->lang->line('admin_solutions_remove_points_error_unknown');
+                    $error_code = 1;
+                    return FALSE;
+                }
+            } else {
+                $this->db->trans_rollback();
+                //$result->message = $this->lang->line('admin_solutions_remove_points_error_task_set_upload_limit_not_reached');
+                $error_code = 2;
+                return FALSE;
+            }
+        } else {
+            $this->db->trans_rollback();
+            //$result->message = $this->lang->line('admin_solutions_remove_points_error_task_set_upload_not_limited');
+            $error_code = 3;
+            return FALSE;
+        }
     }
     
     public function solutions_list($task_set_id = NULL) {
@@ -216,8 +262,14 @@ class Solutions extends LIST_Controller {
             $task_set->where_related('course/participant/student', 'id', intval($solution_data['student_id']));
             $task_set->where_related('course/participant', 'allowed', 1);
             $task_set->group_start();
-                $task_set->or_where('group_id', NULL);
-                $task_set->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+                $task_set->or_group_start();
+                    $task_set->group_start();
+                        $task_set->or_where('group_id', NULL);
+                        $task_set->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
+                    $task_set->group_end();
+                    $task_set->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                $task_set->group_end();
+                $task_set->or_where_related('task_set_permission', '`group_id` = `course_participants`.`group_id`');
             $task_set->group_end();
             $task_set->get_by_id($task_set_id);
             if ($task_set->exists()) {
@@ -404,6 +456,8 @@ class Solutions extends LIST_Controller {
         $this->store_task_set_selection_filter($filter);
         $task_sets = new Task_set();
         $task_sets->select('`task_sets`.*, `course_course_task_set_type_rel`.`upload_solution` AS `join_upload_solution`');
+        $task_sets->include_related_count('task_set_permission');
+        $task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
         $task_sets->include_related_count('solution');
         $task_sets->include_related_count('task');
         $task_sets->include_related('course', array('name', 'default_points_to_remove'));
@@ -417,8 +471,18 @@ class Solutions extends LIST_Controller {
         }
         if (isset($filter['group']) && $filter['group'] == 'NULL') {
             $task_sets->where_related_group('id', NULL);
+            $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
         } else if (isset($filter['group']) && intval($filter['group']) > 0) {
-            $task_sets->where_related_group('id', intval($filter['group']));
+            $task_sets->group_start();
+                $task_sets->or_group_start();
+                    $task_sets->where_related_group('id', intval($filter['group']));
+                    $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                $task_sets->group_end();
+                $task_sets->or_group_start();
+                    $task_sets->where_related('task_set_permission/group', 'id', intval($filter['group']));
+                    $task_sets->where_related('task_set_permission', 'enabled', 1);
+                $task_sets->group_end();
+            $task_sets->group_end();
         }
         if (isset($filter['task_set_type']) && intval($filter['task_set_type']) > 0) {
             $task_sets->where_related_task_set_type('id', intval($filter['task_set_type']));
@@ -539,12 +603,22 @@ class Solutions extends LIST_Controller {
             $task_sets = new Task_set();
             $task_sets->select('*');
             $task_sets->select_subquery('(SELECT SUM(`points_total`) FROM `task_task_set_rel` WHERE `task_task_set_rel`.`task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'counted_points_sum');
+            $task_sets->select_subquery('(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `${parent}`.`id` AND `tsp`.`enabled` = 1)', 'permissions_count');
             $task_sets->include_related('group', 'name');
             $task_sets->where_related('course', 'id', $course->id);
             if ($group->exists()) {
                 $task_sets->group_start();
-                    $task_sets->or_where_related('group', 'id', $group->id);
-                    $task_sets->or_where_related('group', 'id', NULL);
+                    $task_sets->or_group_start();
+                        $task_sets->group_start();
+                            $task_sets->or_where_related('group', 'id', $group->id);
+                            $task_sets->or_where_related('group', 'id', NULL);
+                        $task_sets->group_end();
+                        $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                    $task_sets->group_end();
+                    $task_sets->or_group_start();
+                        $task_sets->where_related('task_set_permission', 'enabled', 1);
+                        $task_sets->where_related('task_set_permission', 'group_id', $group->id);
+                    $task_sets->group_end();
                 $task_sets->group_end();
             }
             $task_sets->where('published', 1);
@@ -567,10 +641,22 @@ class Solutions extends LIST_Controller {
                 $task_set_ids[] = $task_set->id;
                 $points = floatval(!is_null($task_set->points_override) ? $task_set->points_override : $task_set->counted_points_sum);
                 $task_set_types_points_max[$task_set->task_set_type_id] = isset($task_set_types_points_max[$task_set->task_set_type_id]) ? $task_set_types_points_max[$task_set->task_set_type_id] + $points : $points;
+                if ($task_set->permissions_count > 0) {
+                    $task_set_permissions = $task_set->task_set_permissions->include_related('group')->where('enabled', 1)->order_by_related_with_constant('group', 'name', 'asc')->get_iterated();
+                    $group_name = array();
+                    $group_id = array();
+                    foreach ($task_set_permissions as $task_set_permission) {
+                        $group_name[] = $task_set_permission->group_name;
+                        $group_id[] = $task_set_permission->group_id;
+                    }
+                } else {
+                    $group_name = $task_set->group_name;
+                    $group_id = $task_set->group_id;
+                }
                 $header[$task_set->task_set_type_id]['task_sets'][$task_set->id] = array(
                     'name' => $task_set->name,
-                    'group_name' => $task_set->group_name,
-                    'group_id' => $task_set->group_id,
+                    'group_name' => $group_name,
+                    'group_id' => $group_id,
                     'points' => $points,
                 );
             }
@@ -720,13 +806,26 @@ class Solutions extends LIST_Controller {
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         
+        $task_set_permissions = new Task_set_permission();
+        $task_set_permissions->where_related($task_set);
+        $task_set_permissions->where('enabled', 1);
+        $task_set_permissions->get_iterated();
+        
         $data = array('' => '');
         if ($task_set->exists()) {
             $students = new Student();
             $students->where_related('participant', 'allowed', 1);
             $students->where_related('participant/course/task_set', 'id', intval($task_set_id));
-            if (!is_null($task_set->group_id)) {
-                $students->where_related('participant/group', 'id', intval($task_set->group_id));
+            if ($task_set_permissions->result_count() == 0) {
+                if (!is_null($task_set->group_id)) {
+                    $students->where_related('participant/group', 'id', intval($task_set->group_id));
+                }
+            } else {
+                $group_ids = array();
+                foreach ($task_set_permissions as $task_set_permission) {
+                    $group_ids[] = (int)$task_set_permission->group_id;
+                }
+                $students->where_in_related('participant/group', 'id', $group_ids);
             }
             $students->where('students.id = `students`.`id` AND NOT EXISTS (SELECT * FROM `solutions` WHERE `solutions`.`student_id` = `students`.`id` AND `solutions`.`task_set_id` = ' . intval($task_set_id) . ')');
             $students->group_by('id');
@@ -745,6 +844,11 @@ class Solutions extends LIST_Controller {
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         
+        $task_set_permissions = new Task_set_permission();
+        $task_set_permissions->where_related($task_set);
+        $task_set_permissions->where('enabled', 1);
+        $task_set_permissions->get_iterated();
+        
         $solutions = new Solution();
         $solutions->where_related($task_set);
         $solutions->group_by('student_id');
@@ -758,8 +862,16 @@ class Solutions extends LIST_Controller {
             $students = new Student();
             $students->where_related('participant', 'allowed', 1);
             $students->where_related('participant/course/task_set', 'id', intval($task_set_id));
-            if (!is_null($task_set->group_id)) {
-                $students->where_related('participant/group', 'id', intval($task_set->group_id));
+            if ($task_set_permissions->result_count() == 0) {
+                if (!is_null($task_set->group_id)) {
+                    $students->where_related('participant/group', 'id', intval($task_set->group_id));
+                }
+            } else {
+                $group_ids = array();
+                foreach ($task_set_permissions as $task_set_permission) {
+                    $group_ids[] = (int)$task_set_permission->group_id;
+                }
+                $students->where_in_related('participant/group', 'id', $group_ids);
             }
             $students->include_related('solution');
             $students->add_join_condition('`solutions`.`task_set_id` = ?', array($task_set->id));
@@ -792,9 +904,19 @@ class Solutions extends LIST_Controller {
         $task_sets = new Task_set();
         $task_sets->where('group_id', NULL);
         $task_sets->include_related('course/group');
-        $task_sets->order_by_related_with_constant('course/group', 'name', 'asc');
         $task_sets->where('id', (int)$task_set_id);
-        $task_sets->get_iterated();
+        $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+        
+        $task_sets2 = new Task_set();
+        $task_sets2->where('id', (int)$task_set_id);
+        $task_sets2->include_related('task_set_permission/group', '*', 'course_group');
+        $task_sets2->where_related('task_set_permission', 'enabled', 1);
+        $task_sets2->not_group_start();
+            $task_sets2->or_where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_sets2->or_where_subquery(1, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+        $task_sets2->group_end();
+        
+        $task_sets->union_iterated($task_sets2, FALSE, $task_sets->union_order_by_constant('course_group_name', 'asc'));
         
         $data = array('' => '');
         foreach ($task_sets as $task_set) {

@@ -3,6 +3,7 @@
     
     <div class="valuation_table_outer_wrap">
         <div class="valuation_table_wrap">
+            <div class="overflow"><div class="extend">
             <table class="valuation_table">
                 <thead>
                     <tr>
@@ -13,7 +14,16 @@
                             <th class="task_set_col sort:task_set_{$header_item@key}_{$task_set@key}:desc">
                                 {overlay table='task_sets' column='name' table_id=$task_set@key default=$task_set.name}
                                 {if !$group->exists()}<br />
-                                <sub>{translate_text text=$task_set.group_name|default:'lang:admin_solutions_valuation_tables_table_header_for_all_groups'}</sub>
+                                <sub>
+                                    {if is_array($task_set.group_name)}
+                                        {foreach $task_set.group_name as $group_name}
+                                            {if !$group_name@first}, {/if}
+                                            {translate_text text=$group_name}
+                                        {/foreach}
+                                    {else}
+                                        {translate_text text=$task_set.group_name|default:'lang:admin_solutions_valuation_tables_table_header_for_all_groups'}
+                                    {/if}
+                                </sub>
                                 {/if}
                             </th>
                             {/foreach}{/if}
@@ -39,7 +49,7 @@
                                         {/if}
                                     {/if}
                                 {else}
-                                    {if !is_null($task_set.group_id) and $points_row.student.group ne $task_set.group_id}
+                                    {if !is_null($task_set.group_id) and ((!is_array($task_set.group_id) and $points_row.student.group ne $task_set.group_id) or (is_array($task_set.group_id) and !in_array($points_row.student.group, $task_set.group_id)))}
                                     <td class="task_set_col not_this_group">{translate line='admin_solutions_valuation_tables_solution_not_this_group'}</td>
                                     {else}
                                     <td class="task_set_col not_submited">{translate line='admin_solutions_valuation_tables_solution_not_submited'}</td>
@@ -52,6 +62,7 @@
                     {/foreach}
                 </tbody>
             </table>
+            </div></div>
         </div>
     </div>
 {else}

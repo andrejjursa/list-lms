@@ -116,3 +116,6 @@ table#fields_filter_table_id tbody tr td { text-align: left; background-color: #
 div.fields_config_open_button { text-decoration: underline; cursor: pointer; }
 
 div.fancybox-wrap div.fancybox-skin { background-color: #66df66; }
+
+div.overflow { position: relative; overflow: hidden; width: 100%; }
+div.overflow div.extend { overflow-x: auto; } 

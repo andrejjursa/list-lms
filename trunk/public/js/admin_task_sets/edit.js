@@ -86,4 +86,53 @@ jQuery(document).ready(function($) {
         }
     });
     
+    var refresh_additional_permissions = function() {
+        var url = global_base_url + 'index.php/admin_task_set_permissions/index/' + task_set_id;
+        var target = '#additional_permissions_id';
+        api_ajax_load(url, target);
+    };
+    
+    refresh_additional_permissions();
+    
+    $(document).on('click', 'a.button.new_permission, a.button.edit_task_set_permission', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        $.fancybox(url, {
+            type: 'iframe',
+            width: '100%',
+            height: '100%',
+            autoSize: false,
+            autoHeight: false,
+            autoWidth: false,
+            helpers: {
+                overlay: {
+                    css: {
+                        background: 'rgba(255,255,255,0)'
+                    }
+                }
+            },
+            beforeClose: function() {
+                refresh_additional_permissions();
+                return true;
+            }
+        });
+    });
+    
+    $(document).on('click', 'a.button.delete_task_set_permission', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        if (confirm(delete_permission_question)) {
+            api_ajax_update(url, 'POST', {}, function(output) {
+                if (typeof output.result !== 'undefined' && typeof output.message !== 'undefined') {
+                    if (output.result) {
+                        show_notification(output.message, 'success');
+                    } else {
+                        show_notification(output.message, 'error');
+                    }
+                }
+                refresh_additional_permissions();
+            });
+        }
+    });
+    
 });

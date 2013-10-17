@@ -192,6 +192,13 @@ $cache = array (
       array (
       ),
     ),
+    'task_set_permission' => 
+    array (
+      'field' => 'task_set_permission',
+      'rules' => 
+      array (
+      ),
+    ),
     'comment_subscriber_student' => 
     array (
       'field' => 'comment_subscriber_student',
@@ -306,6 +313,17 @@ $cache = array (
       'other_field' => 'task_set',
       'join_self_as' => 'task_set',
       'join_other_as' => 'comment',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'task_set_permission' => 
+    array (
+      'class' => 'task_set_permission',
+      'other_field' => 'task_set',
+      'join_self_as' => 'task_set',
+      'join_other_as' => 'task_set_permission',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
