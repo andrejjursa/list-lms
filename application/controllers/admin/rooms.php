@@ -204,6 +204,10 @@ class Rooms extends LIST_Controller {
                 } else {
                     $room->teachers_plain = NULL;
                 }
+                
+                $current_teachers = $room->teacher->get();
+                $room->delete($current_teachers->all);
+                
                 $teachers = new Teacher();
                 if (is_array($room_data['teachers']) && count($room_data['teachers'])) {
                     foreach ($room_data['teachers'] as $teacher_id) {
