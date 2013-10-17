@@ -30,7 +30,7 @@
                         <td colspan="4" class="td_task_set_type">{translate_text text=$task_set_type->name}</td>
                     </tr>
                     {foreach $task_set_in_types[$task_set_type->id] as $task_set}
-                    <tr class="{cycle values="tr_background_odd,tr_background_even" name=$task_set_type->name}">{$solution = $task_set->solution->where('student_id', $list_student_account.id)->include_related('teacher', 'fullname')->get()}
+                    <tr class="{cycle values="tr_background_odd,tr_background_even" name=$task_set_type->name}">
                         <td class="td_name"><a href="{internal_url url="tasks/task/{$task_set->id}"}">{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}</a></td>
                         <td class="td_time_limit">
                             {if $task_set->join_upload_solution eq 1}
@@ -39,14 +39,14 @@
                                 {translate line='tasks_table_no_uploading'}
                             {/if}
                         </td>
-                        <td class="td_points{if $solution->not_considered} not_considered{/if}">{$solution->points|default:0|floatval} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if}</td>
+                        <td class="td_points{if $task_set->solution_not_considered} not_considered{/if}">{$task_set->solution_points|default:0|floatval} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if}</td>
                         <td class="td_comment">
-                            {if $solution->exists() AND !is_null($solution->points)}
-                                {if trim($solution->comment)}
-                                    {$solution->comment|nl2br}
+                            {if !is_null($task_set->solution_id) AND !is_null($task_set->solution_points)}
+                                {if trim($task_set->solution_comment)}
+                                    {$task_set->solution_comment|nl2br}
                                     <hr />
                                 {/if}
-                                <em>{$solution->teacher_fullname}</em>
+                                <em>{$task_set->solution_teacher_fullname}</em>
                             {else}
                                 {translate line='tasks_table_not_valuated'}
                             {/if}

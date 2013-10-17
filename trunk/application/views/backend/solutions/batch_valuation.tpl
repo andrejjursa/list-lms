@@ -10,6 +10,17 @@
     {if $task_set->exists()}
         <fieldset>
             <legend>{translate line="admin_solutions_batch_valuation_fieldset_legend_table"}</legend>
+            <div class="filter_wrap">
+                <form action="{internal_url url="admin_solutions/batch_valuation_list/{$task_set->id|intval}"}" method="post" id="filter_form_id">
+                    <div class="field">
+                        <label>{translate line='admin_solutions_filter_label_group'}:</label>
+                        <p class="input"><select name="filter[group]" size="1" id="filter_group_id">{list_html_options options=$possible_groups selected=$filter.group}</select></p>
+                    </div>
+                    <div class="buttons">
+                        <input type="submit" name="filter_submit" value="{translate line='admin_solutions_filter_submit'}" class="button" />
+                    </div>
+                </form>
+            </div>
             <form action="{internal_url url="admin_solutions/batch_save_solutions/{$task_set->id}"}" method="post" id="batch_valuation_form_id"></form>
         </fieldset>
         <fieldset>

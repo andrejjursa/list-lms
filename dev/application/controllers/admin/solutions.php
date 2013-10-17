@@ -10,6 +10,7 @@ class Solutions extends LIST_Controller {
     const STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME = 'admin_solutions_filter_data_task_set_selection';
     const STORED_VALUATION_TABLES_FILTER_SESSION_NAME = 'admin_solutions_filter_data_valuation_tables';
     const STORED_SOLUTION_SELECTION_FILTER_SESSION_NAME = 'admin_solutions_filter_data_solution_list';
+    const STORED_BATCH_VALUATION_FILTER_SESSION_NAME = 'admin_solutions_filter_data_batch_valuation';
     
     public function __construct() {
         parent::__construct();
@@ -39,6 +40,8 @@ class Solutions extends LIST_Controller {
         $task_set->include_related('course/period', 'name', TRUE);
         $task_set->include_related('group', 'name', TRUE);
         $task_set->get_by_id($task_set_id);
+        $this->inject_task_set_possible_groups($task_set_id);
+        $this->inject_batch_valuation_filter((int)$task_set_id);
         $this->parser->add_js_file('admin_solutions/batch_valuation_list.js');
         $this->parser->add_css_file('admin_solutions.css');
         $this->_add_prettify();
@@ -235,9 +238,12 @@ class Solutions extends LIST_Controller {
         $task_set = new Task_set();
         $task_set->select('`task_sets`.*');
         $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'task_set_total_points');
+        $task_set->include_related_count('task_set_permission');
+        $task_set->add_join_condition('`task_set_permissions`.`enabled` = 1');
         $task_set->include_related('course', 'name');
         $task_set->include_related('course/period', 'name');
         $task_set->include_related('group', 'name');
+        
         $task_set->get_by_id($task_set_id);
         
         $this->inject_students($task_set_id);
@@ -787,6 +793,27 @@ class Solutions extends LIST_Controller {
         $filter = $this->filter->restore_filter(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME . '_' . $task_set_id);
         $this->parser->assign('filter', $filter);
     }
+    
+    private function store_batch_valuation_filter($filter, $task_set_id) {
+        if (is_array($filter)) {
+            $this->load->library('filter');
+            $old_filter = $this->filter->restore_filter(self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id);
+            $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
+            $this->filter->store_filter(self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id, $new_filter);
+        }
+    }
+    
+    private function inject_batch_valuation_filter($task_set_id) {
+        $this->load->library('filter');
+        $filter = $this->filter->restore_filter(self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id);
+        $this->parser->assign('filter', $filter);
+    }
+    
+    private function get_batch_valuation_filter($task_set_id) {
+        $this->load->library('filter');
+        $filter = $this->filter->restore_filter(self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id);
+        return $filter;
+    }
 
     private function inject_courses() {
         $periods = new Period();
@@ -841,6 +868,10 @@ class Solutions extends LIST_Controller {
     }
     
     private function inject_batch_valuation($task_set_id) {
+        $filter = $this->input->post('filter');
+        $filter = is_array($filter) && count($filter) > 0 ? $filter : $this->get_batch_valuation_filter((int)$task_set_id);
+        $this->store_batch_valuation_filter($filter, (int)$task_set_id);
+        
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         
@@ -852,6 +883,9 @@ class Solutions extends LIST_Controller {
         $solutions = new Solution();
         $solutions->where_related($task_set);
         $solutions->group_by('student_id');
+        if (isset($filter['group']) && (int)$filter['group'] > 0) {
+            $solutions->where_related('student/participant/group', 'id', (int)$filter['group']);
+        }
         $solutions->get_iterated();
         
         $additional_student_ids = array( 0 );
@@ -875,9 +909,12 @@ class Solutions extends LIST_Controller {
             }
             $students->include_related('solution');
             $students->add_join_condition('`solutions`.`task_set_id` = ?', array($task_set->id));
-            $students->or_where_in('id', $additional_student_ids);
             $students->order_by_as_fullname('fullname', 'asc');
             $students->order_by('email', 'asc');
+            if (isset($filter['group']) && (int)$filter['group'] > 0) {
+                $students->where_related('participant/group', 'id', (int)$filter['group']);
+            }
+            $students->or_where_in('id', $additional_student_ids);
             $students->get_iterated();
 
             foreach ($students as $student) {
@@ -911,7 +948,7 @@ class Solutions extends LIST_Controller {
         $task_sets2->where('id', (int)$task_set_id);
         $task_sets2->include_related('task_set_permission/group', '*', 'course_group');
         $task_sets2->where_related('task_set_permission', 'enabled', 1);
-        $task_sets2->not_group_start();
+        $task_sets2->group_start(' NOT ');
             $task_sets2->or_where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
             $task_sets2->or_where_subquery(1, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
         $task_sets2->group_end();

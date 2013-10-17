@@ -18,7 +18,7 @@
             <legend>{translate line='admin_solutions_list_fieldset_legend_all_solutions'}</legend>
             <div class="filter_wrap">
                 <form action="{internal_url url='admin_solutions/get_task_set_list'}" method="post" id="filter_form_id">          
-                    {if is_null($task_set->group_id)}
+                    {if is_null($task_set->group_id) OR $task_set->task_set_permission_count gt 0}
                     <div class="field">
                         <label>{translate line='admin_solutions_filter_label_group'}:</label>
                         <p class="input"><select name="filter[group]" size="1" id="filter_group_id">
