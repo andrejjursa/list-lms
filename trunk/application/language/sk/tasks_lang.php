@@ -8,6 +8,7 @@ $lang['tasks_table_header_comment'] = 'Učiteľov komentár / hodnotiľ';
 $lang['tasks_no_active_course'] = 'Nie je zvolený žiadny aktívny kurz.';
 $lang['tasks_table_no_upload_limit'] = 'Bez obmedzenia na odovzdanie riešenia.';
 $lang['tasks_table_not_valuated'] = 'Zatiaľ nehodnotené.';
+$lang['tasks_table_no_uploading'] = 'Neodovzdáva sa.';
 $lang['table_no_tasks_yet'] = 'Nie sú tu teraz žiadne úlohy.';
 $lang['tasks_date_format'] = 'd.m.Y H:i:s';
 $lang['tasks_table_task_set_type_points_total'] = 'Získal(a) si %s bodov z %s.';
