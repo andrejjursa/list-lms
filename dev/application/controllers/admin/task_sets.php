@@ -341,6 +341,10 @@ class Task_sets extends LIST_Controller {
             $this->db->trans_begin();
             $task_set = new Task_set();
             $task_set->get_by_id($task_set_id);
+            
+            $task_set_permissions = $task_set->task_set_permission->get();
+            $task_set_permissions->delete_all();
+            
             $task_set->delete();
             $this->lang->delete_overlays('task_sets', intval($task_set_id));
             if ($this->db->trans_status()) {
@@ -394,6 +398,13 @@ class Task_sets extends LIST_Controller {
                         $task->set_join_field($new_task_set, 'sorting', $task->join_sorting);
                         $task->set_join_field($new_task_set, 'points_total', $task->join_points_total);
                         $task->set_join_field($new_task_set, 'bonus_task', $task->join_bonus_task);
+                    }
+                    $task_set_permissions = new Task_set_permission();
+                    $task_set_permissions->where_related($task_set);
+                    $task_set_permissions->get_iterated();
+                    foreach ($task_set_permissions as $task_set_permission) {
+                        $new_task_set_permission = $task_set_permission->get_copy();
+                        $new_task_set_permission->save($new_task_set);
                     }
                     if ($this->db->trans_status()) {
                         $this->db->trans_commit();
