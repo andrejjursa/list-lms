@@ -53,6 +53,7 @@ $lang['admin_tasks_edit_tabs_files'] = 'Files';
 $lang['admin_tasks_edit_tabs_tests'] = 'Tests';
 $lang['admin_tasks_edit_tabs_usages'] = 'Usages';
 $lang['admin_tasks_javascript_text_select_files'] = 'Select files';
+$lang['admin_tasks_javascript_text_switch_categories'] = 'Select categories';
 $lang['admin_tasks_file_upload_message_upload_error'] = 'File upload error: %s';
 $lang['admin_tasks_edit_files_delete_file'] = 'Delete&nbsp;file';
 $lang['admin_tasks_edit_files_table_header_file'] = 'File';
