@@ -7,6 +7,7 @@
             <table class="valuation_table">
                 <thead>
                     <tr>
+                        <th class="row_number"></th>
                         <th class="student_col sort:students">{translate line='admin_solutions_valuation_tables_table_header_student'}</th>
                         {foreach $header as $header_item}
                         <th class="task_set_type_col sort:task_set_type_{$header_item@key}:desc">{translate_text text=$header_item.name}:</th>
@@ -34,6 +35,7 @@
                 <tbody>
                     {foreach $points_table as $points_row}
                     <tr>
+                        <td class="row_number">{$points_row@iteration}</td>
                         <td class="student_col"><big>{$points_row.student.fullname}</big><br /><sub>[{$points_row.student.email}]</sub></td>
                         {foreach $header as $header_item}
                         <td class="task_set_type_col">{$points_row.points[$header_item@key].total|floatval} / {$task_set_types_points_max[$header_item@key]|floatval}</td>
