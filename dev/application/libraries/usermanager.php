@@ -104,6 +104,25 @@ class Usermanager {
     }
     
     /**
+     * Enforce student login.
+     * @param Student $student student model with loaded student account.
+     * @return boolean TRUE, if student authentification is successful, FALSE otherwise (i.e. $student is not loaded).
+     */
+    public function force_student_login(Student $student) {
+        if ($student->exists()) {
+            $userdata = $student->to_array();
+            unset($userdata['password']);
+            unset($userdata['created']);
+            unset($userdata['updated']);
+            $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_STUDENT, $userdata);
+            $this->validate_student_login_verification(TRUE);
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+        /**
      * Performs teacher account authentification and returns boolean information about success.
      * @param string $eamil teacher account e-mail address.
      * @param string $password teacher account password in plain text form.

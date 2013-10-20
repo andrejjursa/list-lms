@@ -39,7 +39,7 @@
                     <th>ID</th>
                     <th class="sort:fullname">{translate line='admin_students_table_header_fullname'}</th>
                     <th class="sort:email">{translate line='admin_students_table_header_email'}</th>
-                    <th class="controlls" colspan="2">{translate line='admin_students_table_header_controlls'}</th>
+                    <th class="controlls" colspan="3">{translate line='admin_students_table_header_controlls'}</th>
                 </tr>
             </thead>
             <tfoot id="table_pagination_footer_id"></tfoot>

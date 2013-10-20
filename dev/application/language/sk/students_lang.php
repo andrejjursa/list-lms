@@ -11,6 +11,7 @@ $lang['students_login_field_password'] = 'heslo';
 $lang['students_login_error_bad_email_or_password'] = 'Nesprávny e-mail alebo heslo.';
 $lang['students_login_error_attempts_exceeded'] = 'Počet pokusov o prihlásenie prekročil povolené maximum %s pokusov. Prosím, počkajte aspoň %s minút a skúste znova.';
 $lang['students_login_successful'] = 'Ste úspešne prihlásený(á) do systému.';
+$lang['students_force_loged_in'] = 'Vynútené prihlásenie úspešné.';
 $lang['students_logout_logout_message'] = 'Bol(a) ste úspešne odhlásený(á).';
 $lang['students_login_forgoten_password'] = 'Zabudol som heslo ...';
 $lang['students_login_link'] = 'Prihlásiť sa';
