@@ -387,6 +387,20 @@ class Students extends LIST_Controller {
         @unlink($file_path);
     }
     
+    public function log_in_as_student() {
+        $uri_data = $this->uri->ruri_to_assoc(3);
+        if (isset($uri_data['student_id'])) {
+            $student = new Student();
+            $student->get_by_id((int)$uri_data['student_id']);
+            if ($this->usermanager->force_student_login($student)) {
+                $this->messages->add_message('lang:students_force_loged_in', Messages::MESSAGE_TYPE_SUCCESS);
+                redirect(create_internal_url('/'));
+            }
+        }
+        $this->messages->add_message('lang:admin_students_failed_to_force_login', Messages::MESSAGE_TYPE_ERROR);
+        redirect(create_internal_url('admin_students'));
+    }
+    
     private function test_csv_import_cols($cols) {
         $is_firstname = 0;
         $is_lastname = 0;

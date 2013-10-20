@@ -11,6 +11,7 @@ $lang['students_login_field_password'] = 'password';
 $lang['students_login_error_bad_email_or_password'] = 'Bad e-mail of password.';
 $lang['students_login_error_attempts_exceeded'] = 'Number of login attempts exceed allowed maximum of %s. Please, wait at least %s minutes and try again.';
 $lang['students_login_successful'] = 'You are logged into to system sucessfully.';
+$lang['students_force_loged_in'] = 'Enforced login successful.';
 $lang['students_logout_logout_message'] = 'You were loged out successfuly.';
 $lang['students_login_forgoten_password'] = 'I forgot my password ...';
 $lang['students_login_link'] = 'Login';
