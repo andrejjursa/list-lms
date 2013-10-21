@@ -50,7 +50,7 @@
                         <th rowspan="2">{translate line='admin_solutions_list_table_header_group'}</th>
                         <th rowspan="2">{translate line='admin_solutions_list_table_header_files_count'}</th>
                         <th colspan="3" class="valuation">{translate line='admin_solutions_list_table_header_valuation'}</th>
-                        <th rowspan="2" class="controlls right_corner">{translate line='admin_solutions_table_header_controlls'}</th>
+                        <th rowspan="2" colspan="2" class="controlls right_corner">{translate line='admin_solutions_table_header_controlls'}</th>
                     </tr>
                     <tr>
                         <th>{translate line='admin_solutions_list_table_header_points'}</th>

@@ -754,7 +754,7 @@ class Solutions extends LIST_Controller {
         $solution->add_join_condition('`student_participants`.`course_id` = `task_sets`.`course_id`');
         $solution->include_related('student/participant/group', array('name', 'id'), 'group');
         $solution->get_by_id((int)$solution_id);
-        
+        $this->parser->add_css_file('admin_solutions.css');
         $this->parser->parse('backend/solutions/student_solution_upload.tpl', array('solution' => $solution));
     }
     
@@ -763,8 +763,9 @@ class Solutions extends LIST_Controller {
         $this->db->trans_begin();
         $solution = new Solution();
         $solution->include_related('task_set', '*', TRUE, TRUE);
+        $solution->include_related('student');
         $solution->get_by_id((int)$solution_id);
-        if ($solution->exists()) {/*
+        if ($solution->exists()) {
             if ($solution->task_set->exists()) {
                 $allowed_file_types_array = trim($solution->task_set->allowed_file_types) != '' ? array_map('trim', explode(',', $solution->task_set->allowed_file_types)) : array();
                 $config['upload_path'] = 'private/uploads/solutions/task_set_' . intval($solution->task_set->id) . '/';
@@ -803,11 +804,28 @@ class Solutions extends LIST_Controller {
             } else {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_solutions_upload_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
-            }*/
+            }
         } else {
             $this->db->trans_rollback();
             $this->student_solution_upload($solution_id);
         }
+    }
+    
+    private function zip_plain_file_to_archive($archive_name, $original_file_name, $file_path) {
+        if (file_exists($archive_name)) {
+            rename($archive_name, rtrim($file_path, '/\\') . '/' . $original_file_name);
+            $zip = new ZipArchive();
+            if ($zip->open($archive_name, ZipArchive::CREATE) === TRUE) {
+                $zip->addFile(rtrim($file_path, '/\\') . '/' . $original_file_name, $original_file_name);
+                $zip->close();
+                @unlink(rtrim($file_path, '/\\') . '/' . $original_file_name);
+                return TRUE;
+            } else {
+                @unlink(rtrim($file_path, '/\\') . '/' . $original_file_name);
+                return FALSE;
+            }
+        }
+        return FALSE;
     }
     
     private function normalize_student_name($student_fullname) {

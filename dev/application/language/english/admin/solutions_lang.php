@@ -129,3 +129,7 @@ $lang['admin_solutions_upload_form_button_submit'] = 'Upload';
 $lang['admin_solutions_upload_fieldset_legend_form'] = 'Upload form';
 $lang['admin_solutions_upload_fieldset_legend_files'] = 'Files list';
 $lang['admin_solutions_upload_solution_not_found'] = 'Solution not found.';
+$lang['admin_solutions_upload_task_set_not_found'] = 'Task set related to this solution can\'t be found.';
+$lang['admin_solutions_upload_failed'] = 'Upload failed.';
+$lang['admin_solutions_upload_success'] = 'Upload successful.';
+$lang['admin_solutions_upload_cant_zip_file'] = 'Error compressing your file.';

@@ -29,7 +29,7 @@ jQuery(document).ready(function($) {
         api_ajax_load(url, '#new_solution_form_id', 'post', data, success);
     });
     
-    $(document).on('click', '#table_content_id a.open_valuation_dialog', function(event) {
+    $(document).on('click', '#table_content_id a.open_valuation_dialog, #table_content_id a.open_upload_dialog', function(event) {
         event.preventDefault();
         var url = $(this).attr('href');
         $.fancybox(url, {

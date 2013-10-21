@@ -129,3 +129,7 @@ $lang['admin_solutions_upload_form_button_submit'] = 'Nahrať';
 $lang['admin_solutions_upload_fieldset_legend_form'] = 'Nahrávací formulár';
 $lang['admin_solutions_upload_fieldset_legend_files'] = 'Zoznam súborov';
 $lang['admin_solutions_upload_solution_not_found'] = 'Riešenie sa nenašlo.';
+$lang['admin_solutions_upload_task_set_not_found'] = 'Zostava úloh pridružená k tomuto rieśeniu sa nenašla.';
+$lang['admin_solutions_upload_failed'] = 'Nahrávanie neúspešné.';
+$lang['admin_solutions_upload_success'] = 'Nahrávanie úspešné.';
+$lang['admin_solutions_upload_cant_zip_file'] = 'Chyba kompresie vášho súboru.';

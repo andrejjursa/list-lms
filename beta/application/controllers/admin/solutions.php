@@ -743,6 +743,102 @@ class Solutions extends LIST_Controller {
         
         $this->parser->parse('backend/solutions/valuation_table_content.tpl', array('course' => $course, 'group' => $group));
     }
+    
+    public function student_solution_upload($solution_id) {
+        $solution = new Solution();
+        $solution->include_related('student', array('fullname', 'email'));
+        $solution->include_related('task_set', 'name');
+        $solution->include_related('task_set/course', 'name');
+        $solution->include_related('task_set/course/period', 'name');
+        $solution->join_related('student/participant');
+        $solution->add_join_condition('`student_participants`.`course_id` = `task_sets`.`course_id`');
+        $solution->include_related('student/participant/group', array('name', 'id'), 'group');
+        $solution->get_by_id((int)$solution_id);
+        $this->parser->add_css_file('admin_solutions.css');
+        $this->parser->parse('backend/solutions/student_solution_upload.tpl', array('solution' => $solution));
+    }
+    
+    public function do_upload_student_solution($solution_id) {
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $solution = new Solution();
+        $solution->include_related('task_set', '*', TRUE, TRUE);
+        $solution->include_related('student');
+        $solution->get_by_id((int)$solution_id);
+        if ($solution->exists()) {
+            if ($solution->task_set->exists()) {
+                $allowed_file_types_array = trim($solution->task_set->allowed_file_types) != '' ? array_map('trim', explode(',', $solution->task_set->allowed_file_types)) : array();
+                $config['upload_path'] = 'private/uploads/solutions/task_set_' . intval($solution->task_set->id) . '/';
+                $config['allowed_types'] = 'zip' . (count($allowed_file_types_array) ? '|' . implode('|', $allowed_file_types_array) : '');
+                $config['max_size'] = intval($this->config->item('maximum_solition_filesize'));
+                $config['file_name'] = $solution->student_id . '_' . $this->normalize_student_name($solution->student_fullname) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $solution->task_set->get_student_file_next_version($solution->student_id) . '.zip';
+                @mkdir($config['upload_path'], DIR_READ_MODE);
+                $this->load->library('upload', $config);
+                
+                if ($this->upload->do_upload('upload')) {
+                    $upload_data = $this->upload->data();
+                    $mimes = $this->upload->mimes_types('zip');
+                    if ((is_array($mimes) && !in_array($upload_data['file_type'], $mimes)) || (is_string($mimes) && $upload_data['file_type'] != $mimes)) {
+                        if (!$this->zip_plain_file_to_archive($upload_data['full_path'], $upload_data['client_name'], $upload_data['file_path'])) {
+                            $this->messages->add_message('lang:admin_solutions_upload_cant_zip_file', Messages::MESSAGE_TYPE_ERROR);
+                            redirect(create_internal_url('admin_solutions/student_solution_upload/' . intval($solution_id)));
+                            die();
+                        }
+                    }               
+                    $solution->revalidate = 1;
+                    $solution->save();
+                    if ($this->db->trans_status()) {
+                        $this->db->trans_commit();
+                        $this->messages->add_message('lang:admin_solutions_upload_success', Messages::MESSAGE_TYPE_SUCCESS);
+                    } else {
+                        $this->db->trans_rollback();
+                        @unlink($config['upload_path'] . $config['file_name']);
+                        $this->messages->add_message('lang:admin_solutions_upload_failed', Messages::MESSAGE_TYPE_ERROR);
+                    }
+                    redirect(create_internal_url('admin_solutions/student_solution_upload/' . intval($solution_id)));
+                } else {
+                    $this->db->trans_rollback();
+                    $this->parser->assign('file_error_message', $this->upload->display_errors('', ''));
+                    $this->student_solution_upload($solution_id);
+                }
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_solutions_upload_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+            }
+        } else {
+            $this->db->trans_rollback();
+            $this->student_solution_upload($solution_id);
+        }
+    }
+    
+    private function zip_plain_file_to_archive($archive_name, $original_file_name, $file_path) {
+        if (file_exists($archive_name)) {
+            rename($archive_name, rtrim($file_path, '/\\') . '/' . $original_file_name);
+            $zip = new ZipArchive();
+            if ($zip->open($archive_name, ZipArchive::CREATE) === TRUE) {
+                $zip->addFile(rtrim($file_path, '/\\') . '/' . $original_file_name, $original_file_name);
+                $zip->close();
+                @unlink(rtrim($file_path, '/\\') . '/' . $original_file_name);
+                return TRUE;
+            } else {
+                @unlink(rtrim($file_path, '/\\') . '/' . $original_file_name);
+                return FALSE;
+            }
+        }
+        return FALSE;
+    }
+    
+    private function normalize_student_name($student_fullname) {
+        $normalized = normalize($student_fullname);
+        $output = '';
+        for($i = 0; $i < mb_strlen($normalized); $i++) {
+            $char = mb_substr($normalized, $i, 1);
+            if (preg_match('/^[a-zA-Z]$/', $char)) {
+                $output .= $char;
+            }
+        }
+        return $output;
+    }
 
     private function store_task_set_selection_filter($filter) {
         if (is_array($filter)) {

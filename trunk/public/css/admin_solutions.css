@@ -152,3 +152,7 @@ table.valuation_table tbody tr.clicked td:last-child {
 #valuation_files_id #file_content_id { margin-left: 310px; width: auto; }
 #valuation_files_id #file_content_id pre.prettyprint { border: 0 none; padding: 0; }
 #valuation_files_id div.clear { clear: both; }
+
+#solution_files_list_id { margin-left: 20px; }
+#solution_files_list_id li { background-color: white; padding: 5px; margin-bottom: 3px; border-radius: 5px; }
+#solution_files_list_id li:last-child { margin-bottom: 0; }
