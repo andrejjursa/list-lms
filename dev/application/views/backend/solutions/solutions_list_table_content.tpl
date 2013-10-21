@@ -14,5 +14,6 @@
     <td>{$solution->teacher_fullname} ({$solution->teacher_email})</td>
     {/if}
     <td class="controlls"><a href="{internal_url|add_to_url:{"group_id/{$solution->student_participant_group_id}"}:{!is_null($solution->student_participant_group_id)} url="admin_solutions/valuation/{$task_set->id|intval}/{$solution->id|intval}"}" class="button special open_valuation_dialog">{translate line='admin_solutions_list_table_button_valuate'}</a></td>
+    <td class="controlls"><a href="{internal_url url="admin_solutions/student_solution_upload/{$solution->id|intval}"}" class="button special open_upload_dialog">{translate line='admin_solutions_list_table_button_file_upload'}</a></td>
 </tr>
 {/foreach}
