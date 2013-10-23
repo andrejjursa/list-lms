@@ -19,6 +19,9 @@ class DMZ_Unions {
             }
             $super_select = '(' . $object->get_sql() . ') UNION' . ($all === TRUE ? ' ALL' : '') . ' ' . implode(' UNION' . ($all === TRUE ? ' ALL' : '') . ' ', $partials);
         }
+        if (!is_null($group_by)) {
+            $super_select = 'SELECT `table_grouped_by_' . $group_by . '`.* FROM (' . $super_select . ') `table_grouped_by_' . $group_by . '` GROUP BY `table_grouped_by_' . $group_by . '`.' . $object->db->protect_identifiers($group_by);
+        }
         if ($order != '') {
             $super_select .= ' ORDER BY ' . $order;
         }
@@ -27,9 +30,6 @@ class DMZ_Unions {
             if (!is_null($offset) && is_integer($offset)) {
                 $super_select .= ' OFFSET ' . $offset;
             }
-        }
-        if (!is_null($group_by)) {
-            $super_select = 'SELECT `table_grouped_by_' . $group_by . '`.* FROM (' . $super_select . ') `table_grouped_by_' . $group_by . '` GROUP BY `table_grouped_by_' . $group_by . '`.' . $object->db->protect_identifiers($group_by);
         }
         $object->query($this->fixQuery($super_select));
     }
@@ -44,6 +44,9 @@ class DMZ_Unions {
             }
             $super_select = '(' . $object->get_sql() . ') UNION' . ($all === TRUE ? ' ALL' : '') . ' ' . implode(' UNION' . ($all === TRUE ? ' ALL' : '') . ' ', $partials);
         }
+        if (!is_null($group_by)) {
+            $super_select = 'SELECT `table_grouped_by_' . $group_by . '`.* FROM (' . $super_select . ') `table_grouped_by_' . $group_by . '` GROUP BY `table_grouped_by_' . $group_by . '`.' . $object->db->protect_identifiers($group_by);
+        }
         if ($order != '') {
             $super_select .= ' ORDER BY ' . $order;
         }
@@ -52,9 +55,6 @@ class DMZ_Unions {
             if (!is_null($offset) && is_integer($offset)) {
                 $super_select .= ' OFFSET ' . $offset;
             }
-        }
-        if (!is_null($group_by)) {
-            $super_select = 'SELECT `table_grouped_by_' . $group_by . '`.* FROM (' . $super_select . ') `table_grouped_by_' . $group_by . '` GROUP BY `table_grouped_by_' . $group_by . '`.' . $object->db->protect_identifiers($group_by);
         }
         $CI =& get_instance();
         $query = $CI->db->query($this->fixQuery($super_select));

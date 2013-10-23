@@ -437,6 +437,7 @@ class Tasks extends LIST_Controller {
             $task_set3->select_subquery('(SELECT `upload_solution` FROM `course_task_set_type_rel` WHERE `course_task_set_type_rel`.`course_id` = `${parent}`.`course_id` AND `course_task_set_type_rel`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
             
             $sorting = $task_set2->union_order_by_overlay('task_set_type_name', 'task_set_types', 'name', 'task_set_type_id', 'asc');
+            $sorting .= ', `pb_publish_start_time` ASC, `pb_upload_end_time` ASC';
             $sorting .= ', ' . $task_set2->union_order_by_constant('name', 'asc');
             
             $task_set2->union(array($task_set, $task_set3), FALSE, $sorting, NULL, NULL, 'id');
