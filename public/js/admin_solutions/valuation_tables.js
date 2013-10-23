@@ -53,11 +53,11 @@ jQuery(document).ready(function($) {
     $(document).on('change', '#filter_group_id', update_filter_group);
     
     var update_content_width = function() {
-        var valuation_table_outer_wrap = $('#table_content_id div.valuation_table_outer_wrap');
+        /*var valuation_table_outer_wrap = $('#table_content_id div.valuation_table_outer_wrap');
         var valuation_table_wrap = $('#table_content_id div.valuation_table_wrap');
         valuation_table_wrap.hide();
         valuation_table_wrap.css('width', valuation_table_outer_wrap.width());
-        valuation_table_wrap.show();
+        valuation_table_wrap.show();*/
     };
     
     $(window).resize(function() {

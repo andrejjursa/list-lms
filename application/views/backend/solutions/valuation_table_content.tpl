@@ -34,6 +34,33 @@
                 </thead>
                 <tbody>
                     {foreach $points_table as $points_row}
+                    {if $filter.header_repeat|intval gt 0 and $points_row@iteration mod $filter.header_repeat|intval eq 1 and $points_row@iteration gt 1}
+                    <tr>
+                        <th class="row_number"></th>
+                        <th class="student_col sort:students">{translate line='admin_solutions_valuation_tables_table_header_student'}</th>
+                        {foreach $header as $header_item}
+                        <th class="task_set_type_col sort:task_set_type_{$header_item@key}:desc">{translate_text text=$header_item.name}:</th>
+                            {if $filter.simple ne 1}{foreach $header_item.task_sets as $task_set}
+                            <th class="task_set_col sort:task_set_{$header_item@key}_{$task_set@key}:desc">
+                                {overlay table='task_sets' column='name' table_id=$task_set@key default=$task_set.name}
+                                {if !$group->exists()}<br />
+                                <sub>
+                                    {if is_array($task_set.group_name)}
+                                        {foreach $task_set.group_name as $group_name}
+                                            {if !$group_name@first}, {/if}
+                                            {translate_text text=$group_name}
+                                        {/foreach}
+                                    {else}
+                                        {translate_text text=$task_set.group_name|default:'lang:admin_solutions_valuation_tables_table_header_for_all_groups'}
+                                    {/if}
+                                </sub>
+                                {/if}
+                            </th>
+                            {/foreach}{/if}
+                        {/foreach}
+                        <th class="total_col sort:total:desc">{translate line='admin_solutions_valuation_tables_table_header_total'}</th>
+                    </tr>
+                    {/if}
                     <tr>
                         <td class="row_number">{$points_row@iteration}</td>
                         <td class="student_col"><big>{$points_row.student.fullname}</big><br /><sub>[{$points_row.student.email}]</sub></td>
@@ -47,7 +74,7 @@
                                         {if $points_row.points[$header_item@key][$task_set@key].not_considered}
                                         <td class="task_set_col not_considered">{translate line='admin_solutions_valuation_tables_solution_not_considered'}</td>
                                         {else}
-                                        <td class="task_set_col{if $points_row.points[$header_item@key][$task_set@key].revalidate} not_valuated{/if}">{$points_row.points[$header_item@key][$task_set@key].points|floatval} / {$task_set.points|floatval}</td>
+                                        <td class="task_set_col{if $points_row.points[$header_item@key][$task_set@key].revalidate} not_valuated{/if}">{$points_row.points[$header_item@key][$task_set@key].points|floatval}{* / {$task_set.points|floatval}*}</td>
                                         {/if}
                                     {/if}
                                 {else}
@@ -59,7 +86,7 @@
                                 {/if}
                             {/foreach}{/if}
                         {/foreach}
-                        <td class="total_col">{$points_row.points.total|floatval} / {$total_points|floatval}</td>
+                        <td class="total_col">{$points_row.points.total|floatval}{* / {$total_points|floatval}*}</td>
                     </tr>
                     {/foreach}
                 </tbody>
