@@ -114,6 +114,7 @@ $lang['admin_solutions_valuation_tables_page_title'] = 'Valuation tables';
 $lang['admin_solutions_valuation_tables_filter_label_course'] = 'Course';
 $lang['admin_solutions_valuation_tables_filter_label_group'] = 'Group';
 $lang['admin_solutions_valuation_tables_filter_label_simple'] = 'Simplified table';
+$lang['admin_solutions_valuation_tables_filter_label_header_repeat'] = 'Repeat header after every #n lines';
 $lang['admin_solutions_valuation_tables_error_no_course_selected'] = 'You do not have selected course. Please, select one from filter.';
 $lang['admin_solutions_valuation_tables_table_header_student'] = 'Student';
 $lang['admin_solutions_valuation_tables_table_header_total'] = 'Sum';
@@ -122,6 +123,7 @@ $lang['admin_solutions_valuation_tables_solution_not_valuated'] = 'Not valuated'
 $lang['admin_solutions_valuation_tables_solution_not_submited'] = 'Not submited';
 $lang['admin_solutions_valuation_tables_solution_not_this_group'] = 'Not member';
 $lang['admin_solutions_valuation_tables_solution_not_considered'] = 'Not consideret<br />in valuation';
+$lang['admin_solutions_valuation_tables_header_repeat_off'] = 'Turn off';
 
 $lang['admin_solutions_upload_page_title'] = 'Upload file to solution';
 $lang['admin_solutions_upload_form_label_upload'] = 'File';

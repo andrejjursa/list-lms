@@ -114,6 +114,7 @@ $lang['admin_solutions_valuation_tables_page_title'] = 'Tabuľky hodnotení';
 $lang['admin_solutions_valuation_tables_filter_label_course'] = 'Kurz';
 $lang['admin_solutions_valuation_tables_filter_label_group'] = 'Skupina';
 $lang['admin_solutions_valuation_tables_filter_label_simple'] = 'Zjednodušená tabuľka';
+$lang['admin_solutions_valuation_tables_filter_label_header_repeat'] = 'Zopakovať hlavičku po každých #n riadkoch';
 $lang['admin_solutions_valuation_tables_error_no_course_selected'] = 'Nemáte vybraný žiaden kurz. Prosím, vyberte jeden z filtra.';
 $lang['admin_solutions_valuation_tables_table_header_student'] = 'Študent';
 $lang['admin_solutions_valuation_tables_table_header_total'] = 'Spolu';
@@ -122,6 +123,7 @@ $lang['admin_solutions_valuation_tables_solution_not_valuated'] = 'Nehodnotené'
 $lang['admin_solutions_valuation_tables_solution_not_submited'] = 'Neodovzdané';
 $lang['admin_solutions_valuation_tables_solution_not_this_group'] = 'Nie je členom';
 $lang['admin_solutions_valuation_tables_solution_not_considered'] = 'Neberie sa<br />do úvahy';
+$lang['admin_solutions_valuation_tables_header_repeat_off'] = 'Vypnúť';
 
 $lang['admin_solutions_upload_page_title'] = 'Nahranie súboru študentského riešenia';
 $lang['admin_solutions_upload_form_label_upload'] = 'Súbor';

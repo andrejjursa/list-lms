@@ -20,6 +20,14 @@
                 <label for="filter_simple_id">{translate line='admin_solutions_valuation_tables_filter_label_simple'}:</label>
                 <p class="input"><input type="checkbox" name="filter[simple]" value="1" id="filter_simple_id"{if $filter.simple} checked="checked"{/if} /></p>
             </div>
+            <div class="field">
+                <label for="filter_header_repeat_id">{translate line='admin_solutions_valuation_tables_filter_label_header_repeat'}:</label>
+                <p class="input">
+                    <select name="filter[header_repeat]" size="1" id="filter_header_repeat_id">
+                        {list_html_options options=[0 => 'lang:admin_solutions_valuation_tables_header_repeat_off', 5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25, 30 => 30] selected=$filter.header_repeat|default:20}
+                    </select>
+                </p>
+            </div>
             <div class="buttons">
                 <input type="submit" name="filter_submit" value="{translate line='admin_solutions_filter_submit'}" class="button" />
                 <input type="hidden" name="filter_selected_group_id" value="{$filter.group|intval}" />
@@ -27,6 +35,6 @@
                 <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />
             </div>
         </form>
-        <div id="table_content_id"></div>
     </fieldset>
+    <fieldset><div id="table_content_id"></div></fieldset>
 {/block}
