@@ -82,6 +82,7 @@ $lang['admin_solutions_valuation_test_form_execute_tests'] = 'Execute selected t
 $lang['admin_solutions_valuation_test_form_no_tests_found'] = 'There are no tests defined for this task set!';
 $lang['admin_solutions_validation_filter_label_version'] = 'Solution version';
 $lang['admin_solutions_validation_filter_button_download_file'] = 'Download this solution version';
+$lang['admin_solutions_validation_filter_button_switch_code_highlight'] = 'Switch code highlighting';
 $lang['admin_solutions_validation_filter_label_file'] = 'Select file in solution';
 $lang['admin_solutions_validation_filter_button_read_file'] = 'Show content of file';
 $lang['admin_solutions_valuation_file_content_error_task_set_not_found'] = 'Can\'t read file content because task set was not found.';

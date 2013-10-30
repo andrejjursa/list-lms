@@ -5,6 +5,29 @@ jQuery(document).ready(function($) {
     var last_zip_file = '';
     var last_index = '';
     
+    var prettiPrintContent = function() {
+        var codepreview = $('pre.codepreview.prettyprint');
+        var codepreview_copy_html = codepreview.html();
+        var codepreview_copy = $('<pre></pre>');
+        codepreview_copy.insertAfter(codepreview);
+        codepreview_copy.addClass('codepreviewNohighlight');
+        codepreview_copy.css({'display': 'none'});
+        codepreview_copy.html(codepreview_copy_html);
+        prettyPrint();
+    }
+    
+    var switchCodePreview = function() {
+        var codepreview = $('pre.codepreview');
+        var codepreviewNohighlight = $('pre.codepreviewNohighlight');
+        if (codepreview.css('display') == 'none') {
+            codepreview.css('display', '');
+            codepreviewNohighlight.css('display', 'none');
+        } else {
+            codepreview.css('display', 'none');
+            codepreviewNohighlight.css('display', '');
+        }
+    }
+    
     $('#filter_form_id').activeForm({
         speed: 0
     });
@@ -47,8 +70,13 @@ jQuery(document).ready(function($) {
         var url = global_base_url + 'index.php/admin_solutions/show_file_content/' + task_set_id + '/' + solution_id + '/' + last_zip_file + '/' + last_index;
         var target = '#file_content_id';
         api_ajax_load(url, target, 'post', {}, function() {
-            prettyPrint();
+            prettiPrintContent();
         });
+    });
+    
+    $(document).on('click', '#filter_form_id input[name="switch_code_highlight"]', function(event) {
+        event.preventDefault();
+        switchCodePreview();
     });
     
     $('#tests_form_id').submit(function(event) {

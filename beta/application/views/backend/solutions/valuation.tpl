@@ -59,6 +59,7 @@
                             </div>
                             <div class="buttons read_file_buttons">
                                 <input type="button" class="button full_width_button" name="read_file_button" value="{translate line='admin_solutions_validation_filter_button_read_file'}" />
+                                <input type="button" class="button special full_width_button" name="switch_code_highlight" value="{translate line='admin_solutions_validation_filter_button_switch_code_highlight'}" />
                             </div>
                         </form>
                     </div>

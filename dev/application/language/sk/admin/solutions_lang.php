@@ -82,6 +82,7 @@ $lang['admin_solutions_valuation_test_form_execute_tests'] = 'Spustiť vybrané 
 $lang['admin_solutions_valuation_test_form_no_tests_found'] = 'Pre túto zostavu úloh nie sú definované žiadne testy!';
 $lang['admin_solutions_validation_filter_label_version'] = 'Verzia riešenia';
 $lang['admin_solutions_validation_filter_button_download_file'] = 'Stiahnuť túto verziu riešenia';
+$lang['admin_solutions_validation_filter_button_switch_code_highlight'] = 'Prepnúť zvýrazňovanie kódu';
 $lang['admin_solutions_validation_filter_label_file'] = 'Výber súboru v riešení';
 $lang['admin_solutions_validation_filter_button_read_file'] = 'Zobraziť obsah súboru';
 $lang['admin_solutions_valuation_file_content_error_task_set_not_found'] = 'Nedá sa čítať obsah súboru lebo sa nenašla zostava úloh.';
