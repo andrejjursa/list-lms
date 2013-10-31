@@ -35,11 +35,12 @@
                 {translate line='admin_solutions_no_solution_uploading'}
             {/if}
         </td>
+        <td class="controlls"><a href="{internal_url url="admin_solutions/download_solutions/{$task_set->id}"}" target="_blank" class="button special">{translate line='admin_solutions_table_button_download_solutions'}</a></td>
         <td class="controlls"><a href="{internal_url url="admin_solutions/solutions_list/{$task_set->id}"}" class="button special">{translate line='admin_solutions_table_button_select_task_set'}</a></td>
         <td class="controlls"><a href="{internal_url url="admin_solutions/batch_valuation/{$task_set->id}"}" class="button special">{translate line='admin_solutions_table_button_batch_valuation'}</a></td>
         <td class="controlls"><a href="{internal_url url="admin_solutions/remove_points/{$task_set->id}"}" class="button special remove_points points:{$task_set->course_default_points_to_remove|floatval}">{translate line='admin_solutions_table_button_remove_points'}</a></td>
     </tr>
 {/foreach}
 <tr id="pagination_row_id">
-    <td colspan="11">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
+    <td colspan="12">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
 </tr>

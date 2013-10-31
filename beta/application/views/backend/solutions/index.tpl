@@ -43,7 +43,7 @@
                     <th class="sort:solution_count:desc">{translate line='admin_solutions_table_header_task_set_solution_count'}</th>
                     <th class="sort:task_count:desc">{translate line='admin_solutions_table_header_task_set_task_count'}</th>
                     <th class="sort:upload_end_time">{translate line='admin_solutions_table_header_task_set_task_upload_end_time'}</th>
-                    <th colspan="3" class="controlls">{translate line='admin_solutions_table_header_controlls'}</th>
+                    <th colspan="4" class="controlls">{translate line='admin_solutions_table_header_controlls'}</th>
                 </tr>
             </thead>
             <tfoot id="table_pagination_footer_id">

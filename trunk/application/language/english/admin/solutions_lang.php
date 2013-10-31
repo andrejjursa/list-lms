@@ -16,6 +16,7 @@ $lang['admin_solutions_table_header_task_set_solution_count'] = 'Student solutio
 $lang['admin_solutions_table_header_task_set_task_count'] = 'Number of tasks in task set';
 $lang['admin_solutions_table_header_task_set_task_upload_end_time'] = 'End of solution uploading';
 $lang['admin_solutions_table_header_controlls'] = 'Controlls';
+$lang['admin_solutions_table_button_download_solutions'] = 'Download&nbsp;solutions';
 $lang['admin_solutions_table_button_select_task_set'] = 'Select&nbsp;task&nbsp;set';
 $lang['admin_solutions_table_button_batch_valuation'] = 'Batch&nbsp;valuation';
 $lang['admin_solutions_table_button_remove_points'] = 'Remove&nbsp;points';
@@ -24,6 +25,7 @@ $lang['admin_solutions_datetime_format'] = 'm/d/Y H:i:s';
 $lang['admin_solutions_no_time_information'] = 'No time information.';
 $lang['admin_solutions_no_solution_uploading'] = 'Solution uploading is disabled.';
 $lang['admin_solutions_group_no_group'] = 'No group';
+$lang['admin_solutions_solutions_download_unknown_task_set'] = 'Task set not found, can\'t download solutions.';
 
 $lang['admin_solutions_remove_points_error_task_set_upload_limit_not_reached'] = 'Time limit for solution uploading have not been reached yet.';
 $lang['admin_solutions_remove_points_error_task_set_upload_not_limited'] = 'This task set does not have set limit for solution uploading.';

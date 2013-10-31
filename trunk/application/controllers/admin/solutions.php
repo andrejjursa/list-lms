@@ -811,6 +811,17 @@ class Solutions extends LIST_Controller {
         }
     }
     
+    public function download_solutions($task_set_id) {
+        $task_set = new Task_set();
+        $task_set->get_by_id((int)$task_set_id);
+        if ($task_set->exists()) {
+            $task_set->download_all_solutions();
+        } else {
+            $this->messages->add_message('lang:admin_solutions_solutions_download_unknown_task_set', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('admin_solutions'));
+        }
+    }
+    
     private function zip_plain_file_to_archive($archive_name, $original_file_name, $file_path) {
         if (file_exists($archive_name)) {
             rename($archive_name, rtrim($file_path, '/\\') . '/' . $original_file_name);

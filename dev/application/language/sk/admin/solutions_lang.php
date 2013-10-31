@@ -16,6 +16,7 @@ $lang['admin_solutions_table_header_task_set_solution_count'] = 'Počet študent
 $lang['admin_solutions_table_header_task_set_task_count'] = 'Počet úloh v zostave úloh';
 $lang['admin_solutions_table_header_task_set_task_upload_end_time'] = 'Koniec odovzdávania riešení';
 $lang['admin_solutions_table_header_controlls'] = 'Ovládanie';
+$lang['admin_solutions_table_button_download_solutions'] = 'Stiahnuť&nbsp;riešenia';
 $lang['admin_solutions_table_button_select_task_set'] = 'Vybrať&nbsp;zostavu&nbsp;úloh';
 $lang['admin_solutions_table_button_batch_valuation'] = 'Hromadné&nbsp;hodnotenie';
 $lang['admin_solutions_table_button_remove_points'] = 'Odobrať&nbsp;body';
@@ -24,6 +25,7 @@ $lang['admin_solutions_datetime_format'] = 'd.m.Y H:i:s';
 $lang['admin_solutions_no_time_information'] = 'Časová informácia neexistuje.';
 $lang['admin_solutions_no_solution_uploading'] = 'Odosielanie riešení je zakázané.';
 $lang['admin_solutions_group_no_group'] = 'Bez skupiny';
+$lang['admin_solutions_solutions_download_unknown_task_set'] = 'Zostava úloh sa nenašla, nemožno stiahnuť riešenia.';
 
 $lang['admin_solutions_remove_points_error_task_set_upload_limit_not_reached'] = 'Časový limit pre odosielanie riešení do tejto zostavy úloh nebol ešte dosiahnutý.';
 $lang['admin_solutions_remove_points_error_task_set_upload_not_limited'] = 'Táto zostava úloh nemá nastavený časový limit odosielania riešení.';
