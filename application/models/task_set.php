@@ -306,4 +306,60 @@ class Task_set extends DataMapper {
         }
         parent::delete($object, $related_field);
     }
+    
+    /**
+     * Enforces download of all files submited as a solution of this task set.
+     */
+    public function download_all_solutions() {
+        $filename = $this->get_new_solution_zip_filename();
+        $zip_archive = new ZipArchive();
+        if ($zip_archive->open($filename, ZipArchive::CREATE)) {
+            if ($this->id != NULL) {
+                $path_to_task_set_files = 'private/uploads/solutions/task_set_' . $this->id . '/';
+                if (file_exists($path_to_task_set_files)) {
+                    $files = scandir($path_to_task_set_files);
+                    foreach ($files as $file) {
+                        if ($file != '.' && $file != '..') {
+                            $zip_archive->addFile($path_to_task_set_files . $file, $file);
+                        }
+                    }
+                }
+            }
+            $zip_archive->close();
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/zip');
+            header('Content-Disposition: attachment; filename='.basename($filename));
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($filename));
+            ob_clean();
+            flush();
+            $f = fopen($filename, 'r');
+            while (!feof($f)) {
+                echo fread($f, 1024);
+            }
+            fclose($f);
+            unlink($filename);
+        } else {
+            header("HTTP/1.0 404 Not Found");
+        }
+        die();
+    }
+    
+    /**
+     * Returns unused file name for solution download.
+     * @return string file name with path.
+     */
+    private function get_new_solution_zip_filename() {
+        $path = 'private/extracted_solutions/';
+        $filename = '';
+        $i = 0;
+        do {
+            $filename = 'task_set_solutions_' . date('U') . '_' . ($this->id != NULL ? $this->id : 'unknown') . ($i > 0 ? '_' . $i : '') . '.zip';
+            $i++;
+        } while (file_exists($path . $filename));
+        return $path . $filename;
+    }
 }
