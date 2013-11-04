@@ -138,3 +138,5 @@ $lang['admin_solutions_upload_task_set_not_found'] = 'Zostava úloh pridružená
 $lang['admin_solutions_upload_failed'] = 'Nahrávanie neúspešné.';
 $lang['admin_solutions_upload_success'] = 'Nahrávanie úspešné.';
 $lang['admin_solutions_upload_cant_zip_file'] = 'Chyba kompresie vášho súboru.';
+
+$lang['admin_solutions_student_selection_not_in_group'] = 'Bez skupiny';

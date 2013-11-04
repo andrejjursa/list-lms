@@ -138,3 +138,5 @@ $lang['admin_solutions_upload_task_set_not_found'] = 'Task set related to this s
 $lang['admin_solutions_upload_failed'] = 'Upload failed.';
 $lang['admin_solutions_upload_success'] = 'Upload successful.';
 $lang['admin_solutions_upload_cant_zip_file'] = 'Error compressing your file.';
+
+$lang['admin_solutions_student_selection_not_in_group'] = 'Not in group';

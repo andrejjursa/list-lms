@@ -25,6 +25,10 @@ jQuery(document).ready(function($) {
             if ($('#new_solution_form_id .flash_message.message_success').length > 0) {
                 refresh_all_solutions();
             }
+            var last_created_id = $('#new_solution_form_id input[type=hidden][name=last_created_solution_id]');
+            if (last_created_id.length > 0 && last_created_id.val() > 0) {
+                open_upload_dialog(global_base_url + 'index.php/admin_solutions/student_solution_upload/' + last_created_id.val());
+            }
         };
         api_ajax_load(url, '#new_solution_form_id', 'post', data, success);
     });
@@ -32,6 +36,10 @@ jQuery(document).ready(function($) {
     $(document).on('click', '#table_content_id a.open_valuation_dialog, #table_content_id a.open_upload_dialog', function(event) {
         event.preventDefault();
         var url = $(this).attr('href');
+        open_upload_dialog(url);
+    });
+    
+    var open_upload_dialog = function(url) {
         $.fancybox(url, {
             type: 'iframe',
             width: '100%',
@@ -51,6 +59,6 @@ jQuery(document).ready(function($) {
                 return true;
             }
         });
-    });
+    };
     
 });

@@ -278,6 +278,7 @@ class Solutions extends LIST_Controller {
                 $task_set->or_where_related('task_set_permission', '`group_id` = `course_participants`.`group_id`');
             $task_set->group_end();
             $task_set->get_by_id($task_set_id);
+            $created_solution_id = NULL;
             if ($task_set->exists()) {
                 $teacher = new Teacher();
                 $teacher->get_by_id($this->usermanager->get_teacher_id());
@@ -290,6 +291,7 @@ class Solutions extends LIST_Controller {
                 $solution->where('task_set_id', $task_set_id);
                 $solution->where('student_id', intval($solution_data['student_id']));
                 if ($solution->count() == 1) {
+                    $created_solution_id = $solution->id;
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_solutions_list_new_solution_created', Messages::MESSAGE_TYPE_SUCCESS);
                 } else {
@@ -300,19 +302,19 @@ class Solutions extends LIST_Controller {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_solutions_list_new_solution_error_student_not_in_course_or_group', Messages::MESSAGE_TYPE_ERROR);
             }
-            redirect(create_internal_url('admin_solutions/new_solution_form/' . intval($task_set_id)));
+            redirect(create_internal_url('admin_solutions/new_solution_form/' . intval($task_set_id) . ($created_solution_id !== NULL ? '/' . intval($created_solution_id) : '')));
         } else {
             $this->new_solution_form($task_set_id);
         }
     }
     
-    public function new_solution_form($task_set_id) {
+    public function new_solution_form($task_set_id, $last_created_solution_id = NULL) {
         $task_set = new Task_set();
         $task_set->select('`task_sets`.*');
         $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'task_set_total_points');
         $task_set->get_by_id($task_set_id);
         $this->inject_students($task_set_id);
-        $this->parser->parse('backend/solutions/new_solution_form.tpl', array('task_set' => $task_set));
+        $this->parser->parse('backend/solutions/new_solution_form.tpl', array('task_set' => $task_set, 'last_created_solution_id' => $last_created_solution_id));
     }
     
     public function display_tasks_list($task_set_id) {
@@ -961,14 +963,16 @@ class Solutions extends LIST_Controller {
                 }
                 $students->where_in_related('participant/group', 'id', $group_ids);
             }
+            $students->include_related('participant/group', 'name', 'group');
             $students->where('students.id = `students`.`id` AND NOT EXISTS (SELECT * FROM `solutions` WHERE `solutions`.`student_id` = `students`.`id` AND `solutions`.`task_set_id` = ' . intval($task_set_id) . ')');
             $students->group_by('id');
-            $students->order_by('fullname', 'asc');
+            $students->order_by_related_with_constant('participant/group', 'name', 'asc');
+            $students->order_by_as_fullname('fullname', 'asc');
             $students->order_by('email', 'asc');
             $students->get_iterated();
 
             foreach ($students as $student) {
-                $data[$student->id] = $student->fullname . ' (' . $student->email . ')';
+                $data[is_null($student->group_name) ? 'lang:admin_solutions_student_selection_not_in_group' : $student->group_name][$student->id] = $student->fullname . ' (' . $student->email . ')';
             }
         }
         $this->parser->assign('students', $data);
