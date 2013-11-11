@@ -30,14 +30,14 @@
             {if $filter.fields.created}<td>{$task_set->created|date_format:{translate line='common_datetime_format'}}</td>{/if}
             {if $filter.fields.updated}<td>{$task_set->updated|date_format:{translate line='common_datetime_format'}}</td>{/if}
             {if $filter.fields.name}<td><strong>{overlay|escape:'html' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}</strong></td>{/if}
-            {if $filter.fields.course}<td>{translate_text text=$task_set->course_name} / {translate_text text=$task_set->course_period_name}</td>{/if}
+            {if $filter.fields.course}<td><span title="{translate_text text=$task_set->course_name}">{translate_text|abbreviation text=$task_set->course_name}</span> / <span title="{translate_text text=$task_set->course_period_name}">{translate_text|abbreviation text=$task_set->course_period_name}</span></td>{/if}
             {if $filter.fields.group}<td>
                 {if $task_set->task_set_permission_count eq 0}
-                    {translate_text text=$task_set->group_name}
+                    <span title="{translate_text text=$task_set->group_name}">{translate_text|abbreviation text=$task_set->group_name}</span>
                 {else}
                     <ol>
                     {foreach $task_set_permissions->all as $task_set_permission}
-                        <li>{translate_text text=$task_set_permission->group_name}</li>
+                        <li><span title="{translate_text text=$task_set_permission->group_name}">{translate_text|abbreviation text=$task_set_permission->group_name}</span></li>
                     {/foreach}
                     </ol>
                 {/if}
@@ -67,11 +67,11 @@
                     </ol>
                 {/if}
             </td>{/if}
-            <td class="controlls"><a href="{internal_url url="admin_task_sets/clone_task_set/task_set_id/{$task_set->id}"}" class="button special clone_task_set">{translate line='admin_task_sets_table_button_clone_task_set'}</a></td>
-            <td class="controlls">{if $task_set->comments_enabled}<a href="{internal_url url="admin_task_sets/comments/{$task_set->id}"}" class="button special">{translate line='admin_task_sets_table_button_discussion'}&nbsp;[{$task_set->comment_count}]</a>{/if}</td>
-            <td class="controlls"><a href="{internal_url url="admin_task_sets/open/task_set_id/{$task_set->id}"}" class="button special open_task_set_button">{translate line='admin_task_sets_table_button_open'}</a></td>
-            <td class="controlls"><a href="{internal_url url="admin_task_sets/edit/task_set_id/{$task_set->id}"}" class="button">{translate line='admin_task_sets_table_button_edit'}</a></td>
-            <td class="controlls"><a href="{internal_url url="admin_task_sets/delete/task_set_id/{$task_set->id}"}" class="button delete">{translate line='admin_task_sets_table_button_delete'}</a></td>
+            <td class="controlls"><a href="{internal_url url="admin_task_sets/clone_task_set/task_set_id/{$task_set->id}"}" class="button special clone_task_set" title="{translate line='admin_task_sets_table_button_clone_task_set'}"><span class="list-icon list-icon-copy"></span></a></td>
+            <td class="controlls">{if $task_set->comments_enabled}<a href="{internal_url url="admin_task_sets/comments/{$task_set->id}"}" class="button special" title="{translate line='admin_task_sets_table_button_discussion'}"><span class="list-icon list-icon-comment"></span> [{$task_set->comment_count}]</a>{/if}</td>
+            <td class="controlls"><a href="{internal_url url="admin_task_sets/open/task_set_id/{$task_set->id}"}" class="button special open_task_set_button" title="{translate line='admin_task_sets_table_button_open'}"><span class="list-icon list-icon-task-set-open"></span></a></td>
+            <td class="controlls"><a href="{internal_url url="admin_task_sets/edit/task_set_id/{$task_set->id}"}" class="button" title="{translate line='admin_task_sets_table_button_edit'}"><span class="list-icon list-icon-edit"></span></a></td>
+            <td class="controlls"><a href="{internal_url url="admin_task_sets/delete/task_set_id/{$task_set->id}"}" class="button delete" title="{translate line='admin_task_sets_table_button_delete'}"><span class="list-icon list-icon-delete"></span></a></td>
         </tr>
         {/foreach}
     </tbody>

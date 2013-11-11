@@ -5,6 +5,7 @@
         <meta name="robots" content="noindex, follow" />
         <title>{block name='title'}{/block}</title>
         <link href="{'/public/css/admin_general.css'|base_url}" rel="stylesheet" type="text/css" media="screen" />
+        <link href="{'/public/css/admin_icons.css'|base_url}" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="{'favicon.ico'|base_url}" />
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";
