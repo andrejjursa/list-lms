@@ -125,8 +125,9 @@ $lang['admin_solutions_valuation_tables_table_header_for_all_groups'] = 'Pre&nbs
 $lang['admin_solutions_valuation_tables_solution_not_valuated'] = 'Nehodnotené';
 $lang['admin_solutions_valuation_tables_solution_not_submited'] = 'Neodovzdané';
 $lang['admin_solutions_valuation_tables_solution_not_this_group'] = 'Nie je členom';
-$lang['admin_solutions_valuation_tables_solution_not_considered'] = 'Neberie sa<br />do úvahy';
+$lang['admin_solutions_valuation_tables_solution_not_considered'] = 'Neberie sa do úvahy';
 $lang['admin_solutions_valuation_tables_header_repeat_off'] = 'Vypnúť';
+$lang['admin_solutions_valuation_tables_table_legend'] = 'Legenda';
 
 $lang['admin_solutions_upload_page_title'] = 'Nahranie súboru študentského riešenia';
 $lang['admin_solutions_upload_form_label_upload'] = 'Súbor';

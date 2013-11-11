@@ -36,5 +36,14 @@
             </div>
         </form>
     </fieldset>
+    <fieldset>
+        <legend>{translate line='admin_solutions_valuation_tables_table_legend'}</legend>
+        <div class="legend">
+            <div class="not_submited">{translate|space_to_nbsp line='admin_solutions_valuation_tables_solution_not_submited'}</div>
+            <div class="not_this_group">{translate|space_to_nbsp line='admin_solutions_valuation_tables_solution_not_this_group'}</div>
+            <div class="not_considered">{translate|space_to_nbsp line='admin_solutions_valuation_tables_solution_not_considered'}</div>
+            <div class="not_valuated">{translate|space_to_nbsp line='admin_solutions_valuation_tables_solution_not_valuated'}</div>
+        </div>
+    </fieldset>
     <fieldset><div id="table_content_id"></div></fieldset>
 {/block}

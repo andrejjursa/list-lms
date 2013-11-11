@@ -125,8 +125,9 @@ $lang['admin_solutions_valuation_tables_table_header_for_all_groups'] = 'For&nbs
 $lang['admin_solutions_valuation_tables_solution_not_valuated'] = 'Not valuated';
 $lang['admin_solutions_valuation_tables_solution_not_submited'] = 'Not submited';
 $lang['admin_solutions_valuation_tables_solution_not_this_group'] = 'Not member';
-$lang['admin_solutions_valuation_tables_solution_not_considered'] = 'Not consideret<br />in valuation';
+$lang['admin_solutions_valuation_tables_solution_not_considered'] = 'Not consideret in valuation';
 $lang['admin_solutions_valuation_tables_header_repeat_off'] = 'Turn off';
+$lang['admin_solutions_valuation_tables_table_legend'] = 'Legend';
 
 $lang['admin_solutions_upload_page_title'] = 'Upload file to solution';
 $lang['admin_solutions_upload_form_label_upload'] = 'File';

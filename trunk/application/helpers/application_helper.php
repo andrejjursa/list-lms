@@ -313,3 +313,30 @@ function is_time($number) {
     }
     return $number;
 }
+
+function abbreviation($input) {
+    $letters = array();
+    $words = explode(' ', $input);
+    foreach($words as $word)
+    {
+        $first_letter = (mb_substr($word, 0, 1));
+        $second_letter = (mb_substr($word, 1, 1));
+        if ($first_letter >= '0' && $first_letter <= '9') {
+            array_push($letters, $word);
+        } else {
+            if (mb_strtolower($first_letter) == 'c' && mb_strtolower($second_letter) == 'h') {
+                array_push($letters, mb_strtoupper($first_letter) . 'h');
+            } else if (mb_strtolower($first_letter) == 'd' && (mb_strtolower($second_letter) == 'z' || mb_strtolower($second_letter) == 'ž')) {
+                array_push($letters, mb_strtoupper($first_letter) . mb_strtolower($second_letter));
+            } else {
+                array_push($letters, mb_strtoupper($first_letter));
+            }
+        }
+    }
+    $shortname = strtoupper(implode($letters));
+    return $shortname;
+}
+
+function space_to_nbsp($input) {
+    return preg_replace('/\s+/', '&nbsp;', $input);
+}
