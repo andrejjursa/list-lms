@@ -165,3 +165,13 @@ table.valuation_table tbody tr.clicked td:last-child {
 #solution_files_list_id { margin-left: 20px; }
 #solution_files_list_id li { background-color: white; padding: 5px; margin-bottom: 3px; border-radius: 5px; }
 #solution_files_list_id li:last-child { margin-bottom: 0; }
+
+div.legend > div{ display: inline-block; padding: 10px; border-radius: 5px; box-shadow: 2px 2px 2px silver; }
+div.legend > div.not_submited { background-color: #ffc6c6; }
+div.legend > div.not_submited:hover { background-color: #ff9696; }
+div.legend > div.not_this_group { background-color: #f4ffa4; }
+div.legend > div.not_this_group:hover { background-color: #f4ff84; }
+div.legend > div.not_valuated { background-color: #d1f4ff; }
+div.legend > div.not_valuated:hover { background-color: #96b9ff; }
+div.legend > div.not_considered { background-color: #fad6ff; }
+div.legend > div.not_considered:hover { background-color: #fa96ff; }
