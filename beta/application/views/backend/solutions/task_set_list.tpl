@@ -5,14 +5,14 @@
     <tr>
         <td>{$task_set->id|intval}</td>
         <td>{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}</td>
-        <td>{translate_text text=$task_set->course_name} / {translate_text text=$task_set->course_period_name}</td>
+        <td><span title="{translate_text text=$task_set->course_name}">{translate_text|abbreviation text=$task_set->course_name}</span> / <span title="{translate_text text=$task_set->course_period_name}">{translate_text|abbreviation text=$task_set->course_period_name}</span></td>
         <td>
             {if $task_set->task_set_permission_count eq 0}
-                {translate_text text=$task_set->group_name}
+                <span title="{translate_text text=$task_set->group_name}">{translate_text|abbreviation text=$task_set->group_name}</span>
             {else}
                 <ol>
                 {foreach $task_set_permissions->all as $task_set_permission}
-                    <li>{translate_text text=$task_set_permission->group_name}</li>
+                    <li><span title="{translate_text text=$task_set_permission->group_name}">{translate_text|abbreviation text=$task_set_permission->group_name}</span></li>
                 {/foreach}
                 </ol>
             {/if}
@@ -35,10 +35,10 @@
                 {translate line='admin_solutions_no_solution_uploading'}
             {/if}
         </td>
-        <td class="controlls"><a href="{internal_url url="admin_solutions/download_solutions/{$task_set->id}"}" target="_blank" class="button special">{translate line='admin_solutions_table_button_download_solutions'}</a></td>
-        <td class="controlls"><a href="{internal_url url="admin_solutions/solutions_list/{$task_set->id}"}" class="button special">{translate line='admin_solutions_table_button_select_task_set'}</a></td>
-        <td class="controlls"><a href="{internal_url url="admin_solutions/batch_valuation/{$task_set->id}"}" class="button special">{translate line='admin_solutions_table_button_batch_valuation'}</a></td>
-        <td class="controlls"><a href="{internal_url url="admin_solutions/remove_points/{$task_set->id}"}" class="button special remove_points points:{$task_set->course_default_points_to_remove|floatval}">{translate line='admin_solutions_table_button_remove_points'}</a></td>
+        <td class="controlls"><a href="{internal_url url="admin_solutions/download_solutions/{$task_set->id}"}" target="_blank" class="button special" title="{translate line='admin_solutions_table_button_download_solutions'}"><span class="list-icon list-icon-download"></span></a></td>
+        <td class="controlls"><a href="{internal_url url="admin_solutions/solutions_list/{$task_set->id}"}" class="button special" title="{translate line='admin_solutions_table_button_select_task_set'}"><span class="list-icon list-icon-open"></span></a></td>
+        <td class="controlls"><a href="{internal_url url="admin_solutions/batch_valuation/{$task_set->id}"}" class="button special" title="{translate line='admin_solutions_table_button_batch_valuation'}"><span class="list-icon list-icon-table"></span></a></td>
+        <td class="controlls"><a href="{internal_url url="admin_solutions/remove_points/{$task_set->id}"}" class="button special remove_points points:{$task_set->course_default_points_to_remove|floatval}" title="{translate line='admin_solutions_table_button_remove_points'}"><span class="list-icon list-icon-remove"></span></a></td>
     </tr>
 {/foreach}
 <tr id="pagination_row_id">

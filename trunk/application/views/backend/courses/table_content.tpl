@@ -22,15 +22,15 @@
             {if $filter.fields.updated}<td>{$course->updated|date_format:{translate line='common_datetime_format'}}</td>{/if}
             {if $filter.fields.name}<td>{translate_text|escape:'html' text=$course->name}</td>{/if}
             {if $filter.fields.description}<td><div class="course_description">{overlay|add_base_url table='courses' table_id=$course->id column='description' default=$course->description}</div></td>{/if}
-            {if $filter.fields.period}<td>{translate_text|default:{translate line='admin_courses_table_content_no_period'}|escape:'html' text=$course->period_name}</td>{/if}
+            {if $filter.fields.period}<td><span title="{translate_text|default:{translate line='admin_courses_table_content_no_period'}|escape:'html' text=$course->period_name}">{translate_text|abbreviation|default:{translate line='admin_courses_table_content_no_period'}|escape:'html' text=$course->period_name}</span></td>{/if}
             {if $filter.fields.groups}<td>{$course->group_count}</td>{/if}
             {if $filter.fields.task_set_types}<td>{$course->task_set_type_count}</td>{/if}
             {if $filter.fields.task_set_count}<td>{$course->task_set_count}</td>{/if}
             {if $filter.fields.capacity}<td>{$course->capacity|intval}</td>{/if}
-            <td class="controlls"><a href="{internal_url url="admin_courses/task_set_types/course_id/{$course->id}"}" class="button special task_set_types_editor">{translate line='admin_courses_table_controlls_task_set_types'}</a></td>
-            <td class="controlls"><a href="{internal_url url="admin_courses/edit/course_id/{$course->id}"}" class="button edit">{translate line='admin_courses_table_controlls_edit'}</a></td>
-            <td class="controlls"><a href="{internal_url url="admin_courses/delete/course_id/{$course->id}"}" class="button delete">{translate line='admin_courses_table_controlls_delete'}</a></td>
-            <td class="controlls"><a href="{internal_url url="courses/show_details/{$course->id}/{$this->lang->get_current_idiom()}"}" target="_blank" class="button special" title="{translate|escape:'html' line='admin_courses_table_controlls_details_hint'}">{translate line='admin_courses_table_controlls_details'}</a></td>
+            <td class="controlls"><a href="{internal_url url="admin_courses/task_set_types/course_id/{$course->id}"}" class="button special task_set_types_editor" title="{translate line='admin_courses_table_controlls_task_set_types'}"><span class="list-icon list-icon-bookmark"></span></a></td>
+            <td class="controlls"><a href="{internal_url url="admin_courses/edit/course_id/{$course->id}"}" class="button edit" title="{translate line='admin_courses_table_controlls_edit'}"><span class="list-icon list-icon-edit"></span></a></td>
+            <td class="controlls"><a href="{internal_url url="admin_courses/delete/course_id/{$course->id}"}" class="button delete" title="{translate line='admin_courses_table_controlls_delete'}"><span class="list-icon list-icon-delete"></span></a></td>
+            <td class="controlls"><a href="{internal_url url="courses/show_details/{$course->id}/{$this->lang->get_current_idiom()}"}" target="_blank" class="button special" title="{translate line='admin_courses_table_controlls_details'} - {translate|escape:'html' line='admin_courses_table_controlls_details_hint'}"><span class="list-icon list-icon-page-preview"></span></a></td>
         </tr>
         {foreachelse}
         <tr>

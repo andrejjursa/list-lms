@@ -19,7 +19,7 @@
         {/if}
         </ul>
     </td>
-    <td class="controlls"><a href="{internal_url url="admin_rooms/edit/{$group_id}/room_id/{$room->id}"}" class="button">{translate line='admin_rooms_table_controlls_button_edit'}</a></td>
-    <td class="controlls"><a href="{internal_url url="admin_rooms/delete/{$group_id}/room_id/{$room->id}"}" class="button delete">{translate line='admin_rooms_table_controlls_button_delete'}</a></td>
+    <td class="controlls"><a href="{internal_url url="admin_rooms/edit/{$group_id}/room_id/{$room->id}"}" class="button" title="{translate line='admin_rooms_table_controlls_button_edit'}"><span class="list-icon list-icon-edit"></span></a></td>
+    <td class="controlls"><a href="{internal_url url="admin_rooms/delete/{$group_id}/room_id/{$room->id}"}" class="button delete" title="{translate line='admin_rooms_table_controlls_button_delete'}"><span class="list-icon list-icon-delete"></span></a></td>
 </tr>
 {/foreach}

@@ -6,7 +6,7 @@
         {list_html_options options=[1 => {translate line='admin_courses_form_select_option_upload_solution_yes'}, 0 => {translate line='admin_courses_form_select_option_upload_solution_no'}]
          selected=$task_set_type->join_upload_solution|intval}
     </select><input type="hidden" value="{$task_set_type->id|intval}" name="task_set_type_id"><input type="hidden" value="{$course->id|intval}" name="course_id"></td>
-    <td class="controlls"><a href="{internal_url url="admin_courses/save_task_set_type"}" class="button save_button">{translate line='admin_courses_form_button_submit'}</a></td>
-    <td class="controlls"><a href="{internal_url url="admin_courses/delete_task_set_type"}" class="button delete">{translate line='admin_courses_table_controlls_delete'}</a></td>
+    <td class="controlls"><a href="{internal_url url="admin_courses/save_task_set_type"}" class="button save_button" title="{translate line='admin_courses_form_button_submit'}"><span class="list-icon list-icon-save"></span></a></td>
+    <td class="controlls"><a href="{internal_url url="admin_courses/delete_task_set_type"}" class="button delete" title="{translate line='admin_courses_table_controlls_delete'}"><span class="list-icon list-icon-delete"></span></a></td>
 </tr>
 {/foreach}

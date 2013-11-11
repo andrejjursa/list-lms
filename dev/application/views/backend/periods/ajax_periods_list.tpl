@@ -17,10 +17,10 @@
                 {if $filter.fields.updated}<td>{$period->updated|date_format:{translate line='common_datetime_format'}}</td>{/if}
                 {if $filter.fields.name}<td>{translate_text|escape:'html' text=$period->name}</td>{/if}
                 {if $filter.fields.related_courses}<td>{$period->course_count}</td>{/if}
-                <td class="controlls"><a href="{internal_url url="admin_periods/edit/period_id/{$period->id}"}" class="button button_edit">{translate line='admin_periods_table_button_edit'}</a></td>
-                <td class="controlls"><a href="{internal_url url="admin_periods/delete/period_id/{$period->id}"}" class="button button_delete delete">{translate line='admin_periods_table_button_delete'}</a></td>
-                <td class="controlls">{if !$period@first}<a href="{internal_url url="admin_periods/move_up/period_id/{$period->id}"}" class="button button_up special">{translate line='admin_periods_table_button_up'}</a>{/if}</td>
-                <td class="controlls">{if !$period@last}<a href="{internal_url url="admin_periods/move_down/period_id/{$period->id}"}" class="button button_down special">{translate line='admin_periods_table_button_down'}</a>{/if}</td>
+                <td class="controlls"><a href="{internal_url url="admin_periods/edit/period_id/{$period->id}"}" class="button button_edit" title="{translate line='admin_periods_table_button_edit'}"><span class="list-icon list-icon-edit" /></a></td>
+                <td class="controlls"><a href="{internal_url url="admin_periods/delete/period_id/{$period->id}"}" class="button button_delete delete" title="{translate line='admin_periods_table_button_delete'}"><span class="list-icon list-icon-delete" /></a></td>
+                <td class="controlls">{if !$period@first}<a href="{internal_url url="admin_periods/move_up/period_id/{$period->id}"}" class="button button_up special" title="{translate line='admin_periods_table_button_up'}"><span class="list-icon list-icon-sort-up" /></a>{/if}</td>
+                <td class="controlls">{if !$period@last}<a href="{internal_url url="admin_periods/move_down/period_id/{$period->id}"}" class="button button_down special" title="{translate line='admin_periods_table_button_down'}"><span class="list-icon list-icon-sort-down" /></a>{/if}</td>
             </tr>
         {/foreach}
     </tbody>

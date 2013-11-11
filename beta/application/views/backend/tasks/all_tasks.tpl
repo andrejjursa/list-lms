@@ -28,11 +28,11 @@
             {if $filter.fields.task_sets}<td>{$task->task_set_count}</td>{/if}
             {if $filter.fields.test_count}<td>{$task->test_count}</td>{/if}
             {if $filter.fields.author}<td>{$task->author_fullname|default:{translate line='admin_tasks_table_content_unknown_author'}}</td>{/if}
-            <td class="controlls"><a href="{internal_url url="admin_tasks/clone_task/{$task->id}"}" class="button special clone_task">{translate line='admin_tasks_form_button_clone_task'}</a></td>
-            <td class="controlls"><a href="{internal_url url="admin_tasks/add_to_task_set/task_id/{$task->id}"}" class="button special add_to_task_set" title="{translate line='admin_tasks_form_button_add_to_task_set'}">{translate line='admin_tasks_form_button_add_to_task_set_button'}</a></td>
-            <td class="controlls"><a href="{internal_url url="admin_tasks/preview/task_id/{$task->id}"}" class="button special preview">{translate line='admin_tasks_form_button_preview'}</a></td>
-            <td class="controlls"><a href="{internal_url url="admin_tasks/edit/task_id/{$task->id}"}" class="button">{translate line='admin_tasks_form_button_edit'}</a></td>
-            <td class="controlls"><a href="{internal_url url="admin_tasks/delete/task_id/{$task->id}"}" class="button delete">{translate line='admin_tasks_form_button_delete'}</a></td>
+            <td class="controlls"><a href="{internal_url url="admin_tasks/clone_task/{$task->id}"}" class="button special clone_task" title="{translate line='admin_tasks_form_button_clone_task'}"><span class="list-icon list-icon-copy"></span></a></td>
+            <td class="controlls"><a href="{internal_url url="admin_tasks/add_to_task_set/task_id/{$task->id}"}" class="button special add_to_task_set" title="{translate line='admin_tasks_form_button_add_to_task_set_button'} - {translate line='admin_tasks_form_button_add_to_task_set'}"><span class="list-icon list-icon-build"></span></a></td>
+            <td class="controlls"><a href="{internal_url url="admin_tasks/preview/task_id/{$task->id}"}" class="button special preview" title="{translate line='admin_tasks_form_button_preview'}"><span class="list-icon list-icon-page-preview"></span></a></td>
+            <td class="controlls"><a href="{internal_url url="admin_tasks/edit/task_id/{$task->id}"}" class="button" title="{translate line='admin_tasks_form_button_edit'}"><span class="list-icon list-icon-edit"></span></a></td>
+            <td class="controlls"><a href="{internal_url url="admin_tasks/delete/task_id/{$task->id}"}" class="button delete" title="{translate line='admin_tasks_form_button_delete'}"><span class="list-icon list-icon-delete"></span></a></td>
         </tr>
         {/foreach}
     </tbody>
