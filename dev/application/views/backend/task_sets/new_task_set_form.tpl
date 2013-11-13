@@ -84,6 +84,12 @@
         {html_checkboxes name='task_set[allowed_test_types]' options=$test_types separator='<br />' selected=$smarty.post.task_set.allowed_test_types}
     </div>
 </div>
+<div class="field">
+    <label for="task_set_internal_comment_id">{translate line='admin_task_sets_form_label_internal_comment'}:</label>
+    <div class="input">
+        <textarea name="task_set[internal_comment]" id="task_set_internal_comment_id">{$smarty.post.task_set.internal_comment|escape:'html'}</textarea>
+    </div>
+</div>
 <div class="buttons">
     <input type="submit" name="submit_button" value="{translate line='admin_task_sets_form_button_submit'}" class="button" />
     <input type="hidden" name="post_selected_task_set_type_id" value="{$smarty.post.task_set.task_set_type_id|intval}" />

@@ -20,6 +20,7 @@ $cache = array (
     14 => 'comments_moderated',
     15 => 'allowed_file_types',
     16 => 'allowed_test_types',
+    17 => 'internal_comment',
   ),
   'validation' => 
   array (
@@ -139,6 +140,13 @@ $cache = array (
     'allowed_test_types' => 
     array (
       'field' => 'allowed_test_types',
+      'rules' => 
+      array (
+      ),
+    ),
+    'internal_comment' => 
+    array (
+      'field' => 'internal_comment',
       'rules' => 
       array (
       ),

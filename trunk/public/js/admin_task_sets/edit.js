@@ -2,6 +2,7 @@ jQuery(document).ready(function($) {
     
     make_overlay_editors();
     make_custom_switch('form div.task', task_text_title, 'task_wrapper');
+    make_custom_switch('form div.internal_comment', internal_comment_title, 'task_wrapper');
     
     $('textarea.tinymce').tinymce({
         plugins: [

@@ -56,8 +56,19 @@ div.task_wrap h5 span { color: green; font-weight: normal; }
 div.task_wrap h5 span.bonus_task { color: red; }
 div.task_wrap div.task_text { margin-left: 3px; }
 
+div.task_internal_comment_wrap,
+div.relation_internal_comment_wrap,
+div.internal_comment_wrap,
 div.instructions_wrap { margin-bottom: 5px; }
+div.task_internal_comment_wrap { float: left; width: 49.9%; }
+div.relation_internal_comment_wrap { margin-left: 50%; }
+div.task_internal_comment_wrap h5,
+div.relation_internal_comment_wrap h5,
+div.internal_comment_wrap h5,
 div.instructions_wrap h5 { font-size: 1.1em; margin-bottom: 5px; }
+div.task_internal_comment_wrap div.internal_comment_text,
+div.relation_internal_comment_wrap div.internal_comment_text,
+div.internal_comment_wrap div.internal_comment_text,
 div.instructions_wrap div.instructions_text { margin-left: 3px; }
 
 #table_content_id { width: 100%; }

@@ -99,6 +99,9 @@ $lang['admin_solutions_valuation_next_solution_message_this_solution_is_not_valu
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámy autor';
+$lang['admin_solutions_tasks_list_internal_comment_from_task_set_header'] = 'Interný komentár zo zostavy úloh';
+$lang['admin_solutions_tasks_list_internal_comment_from_task_header'] = 'Interný komentár z úlohy';
+$lang['admin_solutions_tasks_list_internal_comment_from_join_table_header'] = 'Interný komentár z relácie';
 $lang['admin_solutions_task_list_is_bonus_task'] = 'Bonusová úloha';
 
 $lang['admin_solutions_batch_valuation_page_title'] = 'Hromadné hodnotenie';

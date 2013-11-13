@@ -189,7 +189,7 @@ class Tasks extends LIST_Controller {
             if ($task->exists()) {
                 $task_data = $this->input->post('task');
                 $overlay = $this->input->post('overlay');
-                $task->from_array($task_data, array('name'));
+                $task->from_array($task_data, array('name', 'internal_comment'));
                 $task->text = remove_base_url($task_data['text']);
                 
                 $author = new Teacher();
@@ -407,6 +407,7 @@ class Tasks extends LIST_Controller {
             $task_set_id = intval($this->input->post('task_set_id'));
             $points_total = floatval($this->input->post('points_total'));
             $bonus_task = (int)(bool)intval($this->input->post('bonus_task'));
+            $internal_comment = $this->input->post('internal_comment');
             $this->_transaction_isolation();
             $this->db->trans_begin();
             $task = new Task();
@@ -429,6 +430,7 @@ class Tasks extends LIST_Controller {
                 $task_set->set_join_field($task, 'points_total', $points_total);
                 $task_set->set_join_field($task, 'sorting', $new_sorting);
                 $task_set->set_join_field($task, 'bonus_task', $bonus_task);
+                $task_set->set_join_field($task, 'internal_comment', $internal_comment);
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_tasks_add_to_task_set_save_success', Messages::MESSAGE_TYPE_SUCCESS);

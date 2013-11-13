@@ -24,6 +24,12 @@
                 <p class="input"><input type="checkbox" name="bonus_task" value="1" id="bonus_task_id"{if $smarty.post.bonus_task} checked="checked"{/if} /></p>
                 <p class="input"><em>{translate line='admin_tasks_add_to_task_set_form_label_bonus_task_hint'}</em></p>
             </div>
+            <div class="field">
+                <label for="internal_comment_id">{translate line='admin_tasks_add_to_task_set_form_label_internal_comment'}:</label>
+                <div class="input">
+                    <textarea name="internal_comment" id="internal_comment_id">{$smarty.post.internal_comment|escape:'html'}</textarea>
+                </div>
+            </div>
             <div class="buttons">
                 <input type="submit" name="submit_button" value="{translate line='admin_tasks_add_to_task_set_form_button_submit'}" class="button" />
                 <input type="hidden" name="task_id" value="{$task->id|intval}" />

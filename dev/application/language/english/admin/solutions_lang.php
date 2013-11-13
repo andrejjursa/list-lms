@@ -99,6 +99,9 @@ $lang['admin_solutions_valuation_next_solution_message_this_solution_is_not_valu
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Instructions for student';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Unknown author';
+$lang['admin_solutions_tasks_list_internal_comment_from_task_set_header'] = 'Internal comment from task set';
+$lang['admin_solutions_tasks_list_internal_comment_from_task_header'] = 'Internal comment from task';
+$lang['admin_solutions_tasks_list_internal_comment_from_join_table_header'] = 'Internal comment from relation';
 $lang['admin_solutions_task_list_is_bonus_task'] = 'Bonus task';
 
 $lang['admin_solutions_batch_valuation_page_title'] = 'Batch valuation';

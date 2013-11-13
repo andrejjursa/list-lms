@@ -100,6 +100,12 @@
                             {html_checkboxes name='task_set[allowed_test_types]' options=$test_types separator='<br />' selected=$smarty.post.task_set.allowed_test_types|default:$selected_allowed_test_types}
                         </div>
                     </div>
+                    <div class="field">
+                        <label for="task_set_internal_comment_id">{translate line='admin_task_sets_form_label_internal_comment'}:</label>
+                        <div class="input">
+                            <textarea name="task_set[internal_comment]" id="task_set_internal_comment_id">{$smarty.post.task_set.internal_comment|default:$task_set->internal_comment|escape:'html'}</textarea>
+                        </div>
+                    </div>
                 </div>
                 <div id="tabs-additional_permissions">
                     <fieldset class="basefieldset">
@@ -131,6 +137,14 @@
                                 <div class="field">
                                     <label for="task_join_field_{$task->id|intval}_delete_id">{translate line='admin_task_sets_form_label_delete_task'}:</label>
                                     <p class="input"><input type="checkbox" name="task_join_field[{$task->id|intval}][delete]" value="1"{if $smarty.post.task_join_field[$task->id|intval].delete eq 1} checked="checked"{/if} class="delete_checkbox" id="task_join_field_{$task->id|intval}_delete_id" /></p>
+                                </div>
+                                <div class="field">
+                                    <label for="task_join_field_{$task->id|intval}_internal_comment_id">{translate line='admin_task_sets_form_label_internal_comment'}:</label>
+                                    <div class="input">
+                                        <div class="internal_comment">
+                                            <textarea name="task_join_field[{$task->id|intval}][internal_comment]" id="task_join_field_{$task->id|intval}_internal_comment_id">{$smarty.post.task_join_field[$task->id|intval].internal_comment|default:$task->join_internal_comment|escape:'html'}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="field">
                                     <div class="input">
@@ -177,5 +191,6 @@
     var all_groups = {$all_groups|json_encode};
     var all_rooms = {$all_rooms|json_encode};
     var all_task_set_types = {$all_task_set_types|json_encode};
+    var internal_comment_title = '{translate line='admin_task_sets_form_label_internal_comment'}';
 </script>
 {/block}

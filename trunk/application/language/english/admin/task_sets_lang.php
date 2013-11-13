@@ -23,6 +23,7 @@ $lang['admin_task_sets_form_label_task_bonus_task'] = 'Is bonus task?';
 $lang['admin_task_sets_form_label_allowed_file_types'] = 'Allowed file types';
 $lang['admin_task_sets_form_label_allowed_file_types_hint'] = 'Allowed file types when student uploading solution. If student sends file of this file type, it will be compressed to ZIP archive. This is comma separated list of types (file extensions).<br /><strong>Warning:</strong> These file extensions must be defined in application/config/mimes.php, otherwise it will not work.';
 $lang['admin_task_sets_form_label_allowed_test_types'] = 'Allowed test types';
+$lang['admin_task_sets_form_label_internal_comment'] = 'Internal comment';
 $lang['admin_task_sets_form_button_submit'] = 'Save';
 $lang['admin_task_sets_form_field_name'] = 'name';
 $lang['admin_task_sets_form_field_course_id'] = 'course';
