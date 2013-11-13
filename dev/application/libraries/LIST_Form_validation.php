@@ -98,6 +98,7 @@ class LIST_Form_validation extends CI_Form_validation {
      * @return boolean TRUE, if string is floating point value, FALSE otherwise.
      */
     public function floatpoint($str) {
+        if ($str == '') { return TRUE; }
         $pattern = '/^-{0,1}(0|[1-9]{1}[0-9]*)(\.[0-9]+){0,1}$/';
         if (preg_match($pattern, $str)) {
             return TRUE;

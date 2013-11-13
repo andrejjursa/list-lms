@@ -258,7 +258,7 @@ class Solutions extends LIST_Controller {
         $this->load->library('form_validation');
         
         $this->form_validation->set_rules('solution[student_id]', 'lang:admin_solutions_list_form_field_student', 'required|exists_in_table[students.id.1.1]');
-        $this->form_validation->set_rules('solution[points]', 'lang:admin_solutions_list_form_field_points', 'required|floatpoint');
+        $this->form_validation->set_rules('solution[points]', 'lang:admin_solutions_list_form_field_points', 'floatpoint');
         
         if ($this->form_validation->run()) {
             $this->_transaction_isolation();
@@ -284,7 +284,12 @@ class Solutions extends LIST_Controller {
                 $teacher->get_by_id($this->usermanager->get_teacher_id());
                 
                 $solution = new Solution();
-                $solution->from_array($solution_data, array('student_id', 'points', 'comment'));
+                $solution->from_array($solution_data, array('student_id', 'comment'));
+                if (trim($solution_data['points']) != '' && is_float($solution_data['points'])) {
+                    $solution->points = floatval($solution_data['points']);
+                } else {
+                    $solution->points = NULL;
+                }
                 $solution->revalidate = 0;
                 $solution->save(array($teacher, $task_set));
                 
