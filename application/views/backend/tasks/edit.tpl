@@ -13,7 +13,8 @@
                 <li><a href="#tabs-basic">{translate line='admin_tasks_edit_tabs_basic'}</a></li>
                 <li><a href="#tabs-categories">{translate line='admin_tasks_edit_tabs_categories'}</a></li>
                 <li><a href="#tabs-files">{translate line='admin_tasks_edit_tabs_files'}</a></li>
-                <li><a href="#tabs-tests">{translate line='admin_tasks_edit_tabs_tests'}</a></li>    
+                <li><a href="#tabs-tests">{translate line='admin_tasks_edit_tabs_tests'}</a></li>
+                <li><a href="#tabs-internal_comment">{translate line='admin_tasks_edit_tabs_internal_comment'}</a></li>
                 {if $task_sets->exists()}<li><a href="#tabs-usages">{translate line='admin_tasks_edit_tabs_usages'}</a></li>{/if}
             </ul>
             <div id="tabs-basic">
@@ -88,6 +89,12 @@
                     <legend>{translate line='admin_tasks_edit_tests_fieldset_legend_all_tests'}</legend>
                     <div id="tests_content_id"></div>
                 </fieldset>
+            </div>
+            <div id="tabs-internal_comment">
+                <div class="field">
+                    <label for="task_internal_comment_id">{translate line='admin_tasks_form_label_internal_comment'}:</label>
+                    <div class="input"><textarea name="task[internal_comment]" id="task_internal_comment_id">{$smarty.post.task.internal_comment|default:$task->internal_comment|escape:'html'}</textarea></div>
+                </div>
             </div>
             {if $task_sets->exists()}<div id="tabs-usages">{$this->lang->init_overlays('task_sets', $task_sets->all, ['name'])}
                 <ul>

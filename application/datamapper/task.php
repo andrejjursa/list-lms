@@ -9,6 +9,7 @@ $cache = array (
     3 => 'name',
     4 => 'text',
     5 => 'author_id',
+    6 => 'internal_comment',
   ),
   'validation' => 
   array (
@@ -51,6 +52,13 @@ $cache = array (
     'author_id' => 
     array (
       'field' => 'author_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'internal_comment' => 
+    array (
+      'field' => 'internal_comment',
       'rules' => 
       array (
       ),
