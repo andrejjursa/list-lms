@@ -22,7 +22,7 @@ class Courses extends LIST_Controller {
         $period_id = $this->input->post('period_id');
         $filter = $this->inject_stored_filter();
         $cache_id = $this->usermanager->get_student_cache_id('period_' . ($period_id ? $period_id : @$filter['period_id']));
-        if ($this->_is_cache_enabled() && !$this->parser->isCached('frontend/courses/index.tpl', $cache_id)) {
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/courses/index.tpl', $cache_id)) {
             $this->_initialize_student_menu();
             $this->_select_student_menu_pagetag('courses');
             $this->parser->add_css_file('frontend_courses.css');
@@ -42,8 +42,9 @@ class Courses extends LIST_Controller {
             $filter['period_id'] = $periods->id;
             $this->store_filter($filter);
             $this->inject_period_options();
+            $this->parser->assign(array('periods' => $periods));
         }
-        $this->parser->parse('frontend/courses/index.tpl', array('periods' => $periods), FALSE, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse('frontend/courses/index.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
     public function signup_to_course($course_id) {
@@ -139,14 +140,15 @@ class Courses extends LIST_Controller {
         if (!is_null($lang)) {
             $this->_init_specific_language($lang);
         }
-        if ($this->_is_cache_enabled() && !$this->parser->isCached('frontend/courses/course_details.tpl', $cache_id)) {
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/courses/course_details.tpl', $cache_id)) {
             $course = new Course();
             $course->include_related('period');
             $course->get_by_id($course_id);
             smarty_inject_days();
             $this->parser->add_css_file('frontend_courses.css');
+            $this->parser->assign(array('course' => $course));
         }
-        $this->parser->parse('frontend/courses/course_details.tpl', array('course' => $course), FALSE, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse('frontend/courses/course_details.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
     public function quick_course_change($course_id, $current_url) {

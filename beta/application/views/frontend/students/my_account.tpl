@@ -9,14 +9,14 @@
             <div class="field">
                 <label for="student_fullname_id">{translate line='students_my_account_label_fullname'}:</label>
                 <p class="input"><input type="text" name="student[fullname]" value="{$smarty.post.student.fullname|default:$student->fullname|escape:'html'}" id="student_fullname_id" /></p>
-                {form_error field='student[fullname]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                {form_error field='student[fullname]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>' nocache}
             </div>
             <div class="field">
                 <label for="student_language_id">{translate line='students_my_account_label_language'}:</label>
                 <p class="input"><select name="student[language]" size="1">
                     {html_options options=$languages selected=$smarty.post.student.language|default:$student->language}
                 </select></p>
-                {form_error field='student[language]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                {form_error field='student[language]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>' nocache}
             </div>
             <div class="buttons">
                 <input type="submit" name="button_submit" value="{translate line='students_my_account_button_submit'}" class="button" />
@@ -30,17 +30,17 @@
             <div class="field">
                 <label for="student_password_old_id">{translate line='students_my_account_label_password_old'}:</label>
                 <p class="input"><input type="password" name="student[password_old]" value="{$smarty.post.student.password_old|escape:'html'}" id="student_password_old_id" /></p>
-                {form_error field='student[password_old]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                {form_error field='student[password_old]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>' nocache}
             </div>
             <div class="field">
                 <label for="student_password_id">{translate line='students_my_account_label_password_new'}:</label>
                 <p class="input"><input type="password" name="student[password]" value="{$smarty.post.student.password|escape:'html'}" id="student_password_id" /></p>
-                {form_error field='student[password]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                {form_error field='student[password]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>' nocache}
             </div>
             <div class="field">
                 <label for="student_password_validation_id">{translate line='students_my_account_label_password_validation'}:</label>
                 <p class="input"><input type="password" name="student[password_validation]" value="{$smarty.post.student.password_validation|escape:'html'}" id="student_password_validation_id" /></p>
-                {form_error field='student[password_validation]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                {form_error field='student[password_validation]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>' nocache}
             </div>
             <div class="buttons">
                 <input type="submit" name="button_submit" value="{translate line='students_my_account_button_submit'}" class="button" />
@@ -59,12 +59,12 @@
             <div class="field">
                 <label for="student_email_id">{translate line='students_my_account_label_email'}:</label>
                 <p class="input"><input type="text" name="student[email]" value="{$smarty.post.student.email|escape:'html'}" id="student_email_id" /></p>
-                {form_error field='student[email]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                {form_error field='student[email]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>' nocache}
             </div>
             <div class="field">
                 <label for="student_email_validation_id">{translate line='students_my_account_label_email_validation'}:</label>
                 <p class="input"><input type="text" name="student[email_validation]" value="{$smarty.post.student.email_validation|escape:'html'}" id="student_email_validation_id" /></p>
-                {form_error field='student[email_validation]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                {form_error field='student[email_validation]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>' nocache}
             </div>
             <div class="buttons">
                 <input type="submit" name="button_submit" value="{translate line='students_my_account_button_submit'}" class="button" />
