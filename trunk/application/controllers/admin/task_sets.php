@@ -230,6 +230,7 @@ class Task_sets extends LIST_Controller {
             if ($task_set->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_task_sets_flash_message_save_fail', Messages::MESSAGE_TYPE_ERROR);
@@ -320,6 +321,7 @@ class Task_sets extends LIST_Controller {
                 if ($task_set->save() && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'instructions')) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_task_sets_flash_message_save_fail', Messages::MESSAGE_TYPE_ERROR);
@@ -350,7 +352,8 @@ class Task_sets extends LIST_Controller {
             $this->lang->delete_overlays('task_sets', intval($task_set_id));
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->output->set_output(json_encode(TRUE));    
+                $this->output->set_output(json_encode(TRUE)); 
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->output->set_output(json_encode(FALSE));                
@@ -411,6 +414,7 @@ class Task_sets extends LIST_Controller {
                         $this->db->trans_commit();
                         $result->result = TRUE;
                         $result->message = $this->lang->line('admin_task_sets_success_task_set_cloned');
+                        $this->_action_success();
                     } else {
                         $this->db->trans_rollback();
                         $result->message = $this->lang->line('admin_task_sets_error_task_set_cant_be_cloned');

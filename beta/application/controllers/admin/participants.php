@@ -156,6 +156,8 @@ class Participants extends LIST_Controller {
             if ($output['status']) {
                 $this->db->trans_commit();
                 $output['message'] = $this->lang->line('admin_participants_message_participant_approwed');
+                $this->_action_success();
+                $this->output->set_internal_value('student_id', $student->id);
             } else {
                 $this->db->trans_rollback();
             }
@@ -178,6 +180,7 @@ class Participants extends LIST_Controller {
             
             $participant = new Participant();
             $participant->get_by_id($participant_id);
+            $student_id = $participant->student_id;
             
             if (!$participant->exists()) {
                 $output['message'] = $this->lang->line('admin_participants_message_participant_not_found');
@@ -197,6 +200,8 @@ class Participants extends LIST_Controller {
             $output['status'] = $process_ok;
             if ($output['status']) {
                 $this->db->trans_commit();
+                $this->_action_success();
+                $this->output->set_internal_value('student_id', $student_id);
             } else {
                 $this->db->trans_rollback();
             }
@@ -244,6 +249,8 @@ class Participants extends LIST_Controller {
             $output['status'] = $process_ok;
             if ($output['status']) {
                 $this->db->trans_commit();
+                $this->_action_success();
+                $this->output->set_internal_value('student_id', $student->id);
             } else {
                 $this->db->trans_rollback();
             }
@@ -342,6 +349,7 @@ class Participants extends LIST_Controller {
                 $info_disappoved = intval(@$participant_data['allowed']) == 1 ? $disapproved : $added;
                 $message = sprintf($this->lang->line('admin_participants_message_addition_successfull'), $info_approved, $info_disappoved);
                 $this->messages->add_message($message, Messages::MESSAGE_TYPE_SUCCESS);
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_participants_messages_error_in_addition_transaction', Messages::MESSAGE_TYPE_ERROR);
@@ -411,6 +419,9 @@ class Participants extends LIST_Controller {
         
         if ($is_ok && $this->db->trans_status()) {
             $this->db->trans_commit();
+            $this->_action_success();
+            $this->output->set_internal_value('student_id', $participant->student_id);
+            $this->output->set_internal_value('course_id', $participant->course_id);
         } else {
             $this->db->trans_rollback();
         }

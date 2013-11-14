@@ -12,30 +12,32 @@ class Groups extends LIST_Controller {
         $this->usermanager->student_login_protected_redirect();
         $this->_init_language_for_student();
         $this->_load_student_langfile();
-        $this->_initialize_student_menu();
     }
     
     public function index() {
-        $this->_select_student_menu_pagetag('groups');
-        $student = new Student();
-        $student->get_by_id($this->usermanager->get_student_id());
-        
-        $course = new Course();
-        $course->where_related_active_for_student($student);
-        $course->where_related('participant/student', $student);
-        $course->where_related_participant('allowed', 1);
-        $course->get();
-        
-        $can_change_group = FALSE;
-        
-        if ($course->exists()) {
-            if (is_null($course->groups_change_deadline) || date('U', strtotime($course->groups_change_deadline)) >= time()) { $can_change_group = TRUE; }
+        $cache_id = $this->usermanager->get_student_cache_id();
+        if ($this->_is_cache_enabled() && !$this->parser->isCached('frontend/groups/index.tpl', $cache_id)) {
+            $this->_initialize_student_menu();
+            $this->_select_student_menu_pagetag('groups');
+            $student = new Student();
+            $student->get_by_id($this->usermanager->get_student_id());
+
+            $course = new Course();
+            $course->where_related_active_for_student($student);
+            $course->where_related('participant/student', $student);
+            $course->where_related_participant('allowed', 1);
+            $course->get();
+
+            $can_change_group = FALSE;
+
+            if ($course->exists()) {
+                if (is_null($course->groups_change_deadline) || date('U', strtotime($course->groups_change_deadline)) >= time()) { $can_change_group = TRUE; }
+            }
+
+            smarty_inject_days();
+            $this->parser->add_css_file('frontend_groups.css');
         }
-        
-        smarty_inject_days();
-        $this->parser->add_css_file('frontend_groups.css');
-        
-        $this->parser->parse('frontend/groups/index.tpl', array('course' => $course, 'can_change_group' => $can_change_group));
+        $this->parser->parse('frontend/groups/index.tpl', array('course' => $course, 'can_change_group' => $can_change_group), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
     public function select_group() {
@@ -76,6 +78,8 @@ class Groups extends LIST_Controller {
                             } else {
                                 $this->db->trans_commit();
                                 $this->messages->add_message(sprintf($this->lang->line('groups_message_group_changed'), $this->lang->text($group->name)), Messages::MESSAGE_TYPE_SUCCESS);
+                                $this->_action_success();
+                                $this->output->set_internal_value('course_id', $participant->course_id);
                             }
                         } else {
                             $this->db->trans_rollback();

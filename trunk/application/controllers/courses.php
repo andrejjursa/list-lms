@@ -16,32 +16,34 @@ class Courses extends LIST_Controller {
         }
         $this->_init_language_for_student();
         $this->_load_student_langfile();
-        $this->_initialize_student_menu();
     }
     
     public function index() {
-        $this->_select_student_menu_pagetag('courses');
-        $this->parser->add_css_file('frontend_courses.css');
-        $this->parser->add_js_file('courses/selection.js');
-        
-        $filter = $this->inject_stored_filter();
-        
         $period_id = $this->input->post('period_id');
-        $periods = new Period();
-        if (intval($period_id) == 0) {
-            if (isset($filter['period_id'])) {
-                $periods->where('id', $filter['period_id']);
+        $filter = $this->inject_stored_filter();
+        $cache_id = $this->usermanager->get_student_cache_id('period_' . ($period_id ? $period_id : @$filter['period_id']));
+        if ($this->_is_cache_enabled() && !$this->parser->isCached('frontend/courses/index.tpl', $cache_id)) {
+            $this->_initialize_student_menu();
+            $this->_select_student_menu_pagetag('courses');
+            $this->parser->add_css_file('frontend_courses.css');
+            $this->parser->add_js_file('courses/selection.js');
+
+            $periods = new Period();
+            if (intval($period_id) == 0) {
+                if (isset($filter['period_id'])) {
+                    $periods->where('id', $filter['period_id']);
+                } else {
+                    $periods->limit(1);
+                }
             } else {
-                $periods->limit(1);
+                $periods->where('id', $period_id);
             }
-        } else {
-            $periods->where('id', $period_id);
+            $periods->order_by('sorting', 'asc')->get();
+            $filter['period_id'] = $periods->id;
+            $this->store_filter($filter);
+            $this->inject_period_options();
         }
-        $periods->order_by('sorting', 'asc')->get();
-        $filter['period_id'] = $periods->id;
-        $this->store_filter($filter);
-        $this->inject_period_options();
-        $this->parser->parse('frontend/courses/index.tpl', array('periods' => $periods));
+        $this->parser->parse('frontend/courses/index.tpl', array('periods' => $periods), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
     public function signup_to_course($course_id) {
@@ -72,6 +74,7 @@ class Courses extends LIST_Controller {
                     $this->parser->assign('course', $course);
                     $output->content = $this->parser->parse('frontend/courses/single_course.tpl', array(), TRUE);
                     $output->status = TRUE;
+                    $this->_action_success();
                 } else {
                     $output->message = $this->lang->line('courses_message_already_in_course_or_waiting_for_approwal');
                     $this->db->trans_rollback();
@@ -89,6 +92,7 @@ class Courses extends LIST_Controller {
     }
 
     public function activate_course($course_id) {
+        $this->_initialize_student_menu();
         $this->output->set_content_type('application/json');
         
         $output = new stdClass();
@@ -117,6 +121,7 @@ class Courses extends LIST_Controller {
                 $output->metainfo = $this->parser->parse('partials/frontend_general/selected_course.tpl', array(), TRUE);
                 $output->status = TRUE;
                 $output->message = sprintf($this->lang->line('courses_message_switched_to_course'), $this->lang->text($course->name) . ' / ' . $this->lang->text($period->name));
+                $this->_action_success();
             } else {
                 $output->message = $this->lang->line('courses_message_cant_switch_to_unsigned_course');
                 $this->db->trans_rollback();
@@ -130,15 +135,18 @@ class Courses extends LIST_Controller {
     }
     
     public function show_details($course_id, $lang = NULL) {
+        $cache_id = 'course_' . $course_id;
         if (!is_null($lang)) {
             $this->_init_specific_language($lang);
         }
-        $course = new Course();
-        $course->include_related('period');
-        $course->get_by_id($course_id);
-        smarty_inject_days();
-        $this->parser->add_css_file('frontend_courses.css');
-        $this->parser->parse('frontend/courses/course_details.tpl', array('course' => $course));
+        if ($this->_is_cache_enabled() && !$this->parser->isCached('frontend/courses/course_details.tpl', $cache_id)) {
+            $course = new Course();
+            $course->include_related('period');
+            $course->get_by_id($course_id);
+            smarty_inject_days();
+            $this->parser->add_css_file('frontend_courses.css');
+        }
+        $this->parser->parse('frontend/courses/course_details.tpl', array('course' => $course), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
     public function quick_course_change($course_id, $current_url) {

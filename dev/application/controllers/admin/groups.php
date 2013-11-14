@@ -94,6 +94,8 @@ class Groups extends LIST_Controller {
             if ($group->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_groups_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->_action_success();
+                $this->output->set_internal_value('course_id', $group->course_id);
             } else {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_groups_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -139,6 +141,8 @@ class Groups extends LIST_Controller {
                 if ($group->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_groups_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
+                    $this->output->set_internal_value('course_id', $group->course_id);
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_groups_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -160,12 +164,15 @@ class Groups extends LIST_Controller {
             $this->db->trans_begin();
             $group = new Group();
             $group->get_by_id(intval($uri['group_id']));
+            $course_id = $group->course_id;
             if ($group->exists()) {
                 $group->room->get()->delete_all();
                 $group->delete();
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->output->set_output(json_encode(TRUE));    
+                    $this->_action_success();
+                    $this->output->set_internal_value('course_id', $course_id);
                 } else {
                     $this->db->trans_rollback();
                     $this->output->set_output(json_encode(FALSE));

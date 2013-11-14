@@ -99,6 +99,7 @@ class Courses extends LIST_Controller {
             if ($course->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_courses_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_courses_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -128,6 +129,8 @@ class Courses extends LIST_Controller {
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->output->set_output(json_encode(TRUE));    
+                $this->_action_success();
+                $this->output->set_internal_value('course_id', $course_id);
             } else {
                 $this->db->trans_rollback();
                 $this->output->set_output(json_encode(FALSE));                
@@ -184,6 +187,8 @@ class Courses extends LIST_Controller {
                 if ($course->save() && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'description')) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_courses_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
+                    $this->output->set_internal_value('course_id', $course->id);
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_courses_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -248,6 +253,7 @@ class Courses extends LIST_Controller {
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_courses_flash_message_task_set_type_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_courses_flash_message_task_set_type_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -288,6 +294,7 @@ class Courses extends LIST_Controller {
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->output->set_output(json_encode(TRUE));
+                    $this->_action_success();
                     return;    
                 } else {
                     $this->db->trans_rollback();

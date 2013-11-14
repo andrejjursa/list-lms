@@ -14,6 +14,8 @@
 
 class LIST_Output extends CI_Output {
     	
+        const IV_ACTION_RESULT = 'action_result';
+    
 	public function _display($output = '')
 	{
 		parent::_display($output);
@@ -24,6 +26,19 @@ class LIST_Output extends CI_Output {
 			Smarty_Internal_Debug::display_debug( $CI->smarty);
 		}
 	}
+        
+        public function set_internal_value($name, $value) {
+            $CI =& get_instance();
+            $CI->internal_values[$name] = $value;
+        }
+        
+        public function get_internal_value($name) {
+            $CI =& get_instance();
+            if (isset($CI->internal_values[$name])) {
+                return $CI->internal_values[$name];
+            }
+            return NULL;
+        }
 }
 // END MY_Output Class
 

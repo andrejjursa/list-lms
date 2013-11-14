@@ -76,6 +76,7 @@ class Task_set_permissions extends LIST_Controller {
                     } else {
                         $this->db->trans_commit();
                         $this->messages->add_message('lang:admin_task_set_permissions_success_message_saved', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->_action_success();
                     }
                 } else {
                     $this->db->trans_rollback();
@@ -135,6 +136,7 @@ class Task_set_permissions extends LIST_Controller {
                         } else {
                             $this->db->trans_commit();
                             $this->messages->add_message('lang:admin_task_set_permissions_success_message_saved', Messages::MESSAGE_TYPE_SUCCESS);
+                            $this->_action_success();
                         }
                     } else {
                         $this->db->trans_rollback();
@@ -172,6 +174,7 @@ class Task_set_permissions extends LIST_Controller {
                     $this->db->trans_commit();
                     $output->result = TRUE;
                     $output->message = $this->lang->line('admin_task_set_permissions_success_message_deleted');
+                    $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
                     $output->message = $this->lang->line('admin_task_set_permissions_error_message_delete_error');

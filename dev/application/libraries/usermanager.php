@@ -385,6 +385,31 @@ class Usermanager {
     }
     
     /**
+     * Construct student cache id.
+     * @param mixed* zero or more parameters of cache id.
+     * @return string cache id.
+     */
+    public function get_student_cache_id() {
+        $args = func_get_args();
+        $cache_id = 'student_' . $this->get_student_id() . '|lang_' . $this->get_student_language();
+        if (count($args)) { foreach($args as $arg) {
+            if (strlen($arg)) {
+                $cache_id .= '|' . $arg;
+            }
+        }}
+        return $cache_id;
+    }
+    
+    /**
+     * Construct simple student cache id, based only at student id.
+     * @return string cache id.
+     */
+    public function get_student_simple_cache_id($student_id = NULL) {
+        return 'student_' . (is_null($student_id) ? $this->get_student_id() : $student_id);
+    }
+
+
+    /**
      * This internal function will set the verification status of student.
      * @param boolean $status status can be TRUE, FALSE or NULL.
      */

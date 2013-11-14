@@ -68,6 +68,7 @@ class Periods extends LIST_Controller  {
             if ($period->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_periods_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_periods_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -116,6 +117,7 @@ class Periods extends LIST_Controller  {
                 if ($period->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_periods_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_periods_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -148,7 +150,8 @@ class Periods extends LIST_Controller  {
             $period->delete();
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->output->set_output(json_encode(TRUE));    
+                $this->output->set_output(json_encode(TRUE));   
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->output->set_output(json_encode(FALSE));                
@@ -169,7 +172,8 @@ class Periods extends LIST_Controller  {
             $period->move_up();
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->output->set_output(json_encode(TRUE));    
+                $this->output->set_output(json_encode(TRUE)); 
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->output->set_output(json_encode(FALSE));                
@@ -190,7 +194,8 @@ class Periods extends LIST_Controller  {
             $period->move_down();
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->output->set_output(json_encode(TRUE));    
+                $this->output->set_output(json_encode(TRUE));   
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->output->set_output(json_encode(FALSE));                

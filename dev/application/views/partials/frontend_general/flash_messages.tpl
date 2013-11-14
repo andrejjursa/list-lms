@@ -1,3 +1,4 @@
+{nocache}
 {foreach $list_flash_messages as $flash_message}
     {if $flash_message.type eq 'default'}
     <div class="flash_message message_default">
@@ -14,3 +15,4 @@
     {/if}
 {/foreach}
 {$list_flash_messages = [] scope=global}
+{/nocache}

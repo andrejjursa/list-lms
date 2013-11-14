@@ -59,6 +59,7 @@ class Tests extends LIST_Controller {
                     $this->db->trans_commit();
                     @mkdir('private/uploads/unit_tests/test_' . $test->id, DIR_READ_MODE);
                     $this->messages->add_message('lang:admin_tests_flash_message_new_test_saved', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
                     redirect(create_internal_url('admin_tests/configure_test/' . $test->id));
                 } else {
                     $this->db->trans_rollback();
@@ -148,6 +149,7 @@ class Tests extends LIST_Controller {
                     if ($test->save() && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'instructions')) && $this->db->trans_status()) {
                         $this->db->trans_commit();
                         $this->messages->add_message('lang:admin_tests_flash_message_configuration_saved', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->_action_success();
                     } else {
                         $this->db->trans_rollback();
                         $this->messages->add_message('lang:admin_tests_flash_message_configuration_save_failed', Messages::MESSAGE_TYPE_SUCCESS);

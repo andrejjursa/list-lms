@@ -148,15 +148,18 @@ class LIST_Parser extends CI_Parser {
      * @param $data
      * @param $return
      * @param $caching
+     * @param $cache_id
      * @param $theme
      * @return string
      */
-    public function parse($template, $data = array(), $return = FALSE, $caching = TRUE, $theme = '')
+    public function parse($template, $data = array(), $return = FALSE, $caching = FALSE, $cache_id =  '', $theme = '')
     {        
         // If we don't want caching, disable it
         if ($caching === FALSE)
         {
             $this->CI->smarty->disable_caching();
+        } elseif ($caching === TRUE) {
+            $this->CI->smarty->enable_caching();
         }
         
         // If no file extension dot has been found default to defined extension for view extensions
@@ -191,7 +194,7 @@ class LIST_Parser extends CI_Parser {
         $this->CI->smarty->assign('list_internal_js_files', $this->js_files);
         
         // Load our template into our string for judgement
-        $template_string = $this->CI->smarty->fetch($template);
+        $template_string = $this->CI->smarty->fetch($template, $cache_id);
         
         // If we're returning the templates contents, we're displaying the template
         if ($return === FALSE)

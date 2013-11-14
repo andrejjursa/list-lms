@@ -11,64 +11,69 @@ class Tasks extends LIST_Controller {
         parent::__construct();
         $this->_init_language_for_student();
         $this->_load_student_langfile();
-        $this->_initialize_student_menu();
     }
 
     public function index() {
-        $this->usermanager->student_login_protected_redirect();
-        
-        $this->_select_student_menu_pagetag('tasks');
-        
-        $task_set = $this->get_task_sets($course, $group, $student);
-        if ($course->exists()) {
-            $task_set_types = $course->task_set_type->order_by_with_constant('name', 'asc')->get_iterated();
-            $this->parser->assign('task_set_types', $task_set_types);
-            
-            $task_sets = $this->filter_valid_task_sets($task_set);
-            $this->lang->init_overlays('task_sets', $task_sets, array('name'));
-            $this->parser->assign('task_sets', $task_sets);
-            
-            $points = $this->compute_points($task_sets, $student);
-            $this->parser->assign('points', $points);
+        $cache_id = $this->usermanager->get_student_cache_id();
+        if ($this->_is_cache_enabled() && !$this->parser->isCached('frontend/tasks/index.tpl', $cache_id)) {
+            $this->_initialize_student_menu();
+            $this->usermanager->student_login_protected_redirect();
+
+            $this->_select_student_menu_pagetag('tasks');
+
+            $task_set = $this->get_task_sets($course, $group, $student);
+            if ($course->exists()) {
+                $task_set_types = $course->task_set_type->order_by_with_constant('name', 'asc')->get_iterated();
+                $this->parser->assign('task_set_types', $task_set_types);
+
+                $task_sets = $this->filter_valid_task_sets($task_set);
+                $this->lang->init_overlays('task_sets', $task_sets, array('name'));
+                $this->parser->assign('task_sets', $task_sets);
+
+                $points = $this->compute_points($task_sets, $student);
+                $this->parser->assign('points', $points);
+            }
+
+            $this->parser->add_css_file('frontend_tasks.css');
         }
-        
-        $this->parser->add_css_file('frontend_tasks.css');
-        
-        $this->parser->parse('frontend/tasks/index.tpl', array('course' => $course));
+        $this->parser->parse('frontend/tasks/index.tpl', array('course' => $course), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
     public function task($task_set_id = NULL) {
-        $this->usermanager->student_login_protected_redirect();
-        
-        $this->_select_student_menu_pagetag('tasks');
-        
-        $task_set = $this->get_task_set_by_id($course, $group, $student, $task_set_id);
-        if ($course->exists()) {
-            $task_sets = $this->filter_valid_task_sets($task_set);
-            $this->lang->init_overlays('task_sets', $task_sets, array('name'));
-            $filtered_task_set = count($task_sets) == 1 ? $task_sets[0] : new Task_set();
-            if ($filtered_task_set->exists()) {
-                $this->load->helper('tests');
-                $test_types_subtypes = get_all_supported_test_types_and_subtypes();
-                $this->lang->init_overlays('task_sets', $filtered_task_set, array('name', 'instructions'));
-                $this->parser->assign('task_set', $filtered_task_set);
-                $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set, $course));
-                $this->parser->assign('solution_files', $filtered_task_set->get_student_files($student->id));
-                $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
-                $this->parser->assign('test_types', $test_types_subtypes['types']);
-                $this->parser->assign('test_subtypes', $test_types_subtypes['subtypes']);
-            } else {
-                $this->messages->add_message('lang:tasks_task_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
-                redirect(create_internal_url('tasks/index'));
+        $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id);
+        if ($this->_is_cache_enabled() && !$this->parser->isCached('frontend/tasks/task.tpl', $cache_id)) {
+            $this->_initialize_student_menu();
+            $this->usermanager->student_login_protected_redirect();
+
+            $this->_select_student_menu_pagetag('tasks');
+
+            $task_set = $this->get_task_set_by_id($course, $group, $student, $task_set_id);
+            if ($course->exists()) {
+                $task_sets = $this->filter_valid_task_sets($task_set);
+                $this->lang->init_overlays('task_sets', $task_sets, array('name'));
+                $filtered_task_set = count($task_sets) == 1 ? $task_sets[0] : new Task_set();
+                if ($filtered_task_set->exists()) {
+                    $this->load->helper('tests');
+                    $test_types_subtypes = get_all_supported_test_types_and_subtypes();
+                    $this->lang->init_overlays('task_sets', $filtered_task_set, array('name', 'instructions'));
+                    $this->parser->assign('task_set', $filtered_task_set);
+                    $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set, $course));
+                    $this->parser->assign('solution_files', $filtered_task_set->get_student_files($student->id));
+                    $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
+                    $this->parser->assign('test_types', $test_types_subtypes['types']);
+                    $this->parser->assign('test_subtypes', $test_types_subtypes['subtypes']);
+                } else {
+                    $this->messages->add_message('lang:tasks_task_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+                    redirect(create_internal_url('tasks/index'));
+                }
             }
+
+            $this->parser->add_css_file('frontend_tasks.css');
+            $this->parser->add_js_file('tasks/task.js');
+            $this->_add_prettify();
+            $this->_add_scrollTo();
         }
-                
-        $this->parser->add_css_file('frontend_tasks.css');
-        $this->parser->add_js_file('tasks/task.js');
-        $this->_add_prettify();
-        $this->_add_scrollTo();
-        
-        $this->parser->parse('frontend/tasks/task.tpl', array('course' => $course));
+        $this->parser->parse('frontend/tasks/task.tpl', array('course' => $course), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
     public function upload_solution($task_set_id = 0) {
@@ -116,6 +121,8 @@ class Tasks extends LIST_Controller {
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:tasks_task_solution_uploaded', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
+                    $this->output->set_internal_value('task_set_id', $solution->task_set_id);
                 } else {
                     $this->db->trans_rollback();
                     @unlink($config['upload_path'] . $config['file_name']);
