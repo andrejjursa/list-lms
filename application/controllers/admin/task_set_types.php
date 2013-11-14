@@ -54,6 +54,7 @@ class Task_set_types extends LIST_Controller {
             if ($task_set_type->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_task_set_types_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_task_set_types_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -96,6 +97,7 @@ class Task_set_types extends LIST_Controller {
                 if ($task_set_type->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_task_set_types_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_task_set_types_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -121,7 +123,8 @@ class Task_set_types extends LIST_Controller {
             $task_set_type->delete();
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->output->set_output(json_encode(TRUE));    
+                $this->output->set_output(json_encode(TRUE));  
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->output->set_output(json_encode(FALSE));                

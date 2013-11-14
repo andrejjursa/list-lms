@@ -118,6 +118,7 @@ class Teachers extends LIST_Controller {
                         $this->usermanager->refresh_teacher_userdata();
                         $this->load->library('filter');
                         $this->filter->set_all_filters_course($teacher->prefered_course_id);
+                        $this->_action_success();
                     } else {
                         $this->db->trans_rollback();
                         $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
@@ -204,6 +205,7 @@ class Teachers extends LIST_Controller {
                     if ($teacher->save() && $this->db->trans_status()) {
                         $this->db->trans_commit();
                         $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->_action_success();
                     } else {
                         $this->db->trans_rollback();
                         $this->messages->add_message('lang:admin_teachers_my_account_error_save', Messages::MESSAGE_TYPE_ERROR);
@@ -263,6 +265,7 @@ class Teachers extends LIST_Controller {
             if ($teacher->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_teachers_list_account_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_teachers_list_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
@@ -312,6 +315,7 @@ class Teachers extends LIST_Controller {
                 if ($teacher->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_teachers_list_account_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_teachers_list_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
@@ -347,6 +351,7 @@ class Teachers extends LIST_Controller {
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->output->set_output(json_encode(TRUE));    
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->output->set_output(json_encode(FALSE));                

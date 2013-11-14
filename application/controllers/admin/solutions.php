@@ -100,6 +100,7 @@ class Solutions extends LIST_Controller {
             if ($this->db->trans_status() && $save_status && $saved_count > 0) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_solutions_batch_valuation_success_message_save_ok', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_solutions_batch_valuation_error_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -158,7 +159,8 @@ class Solutions extends LIST_Controller {
                             $result->mail_sent = $this->_send_multiple_emails($notify_student_group, 'lang:admin_solutions_remove_points_notification_subject', 'file:emails/backend/solutions/remove_points_notify.tpl', array('task_set' => $task_set, 'points_to_remove' => $points_to_remove));
                         }
                         $result->result = TRUE;
-                        $result->message = sprintf($this->lang->line('admin_solutions_remove_points_success'), $student_count);    
+                        $result->message = sprintf($this->lang->line('admin_solutions_remove_points_success'), $student_count); 
+                        $this->_action_success();
                     } else {
                         $result->message = $this->lang->line('admin_solutions_remove_points_error_some_problem');    
                     }
@@ -299,6 +301,8 @@ class Solutions extends LIST_Controller {
                     $created_solution_id = $solution->id;
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_solutions_list_new_solution_created', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
+                    $this->output->set_internal_value('student_id', $solution->student_id);
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_solutions_list_new_solution_error_solution_exists', Messages::MESSAGE_TYPE_ERROR);
@@ -418,6 +422,8 @@ class Solutions extends LIST_Controller {
                 if ($solution->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_solutions_valuation_solution_saved', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
+                    $this->output->set_internal_value('student_id', $solution->student_id);
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_solutions_valuation_solution_not_saved', Messages::MESSAGE_TYPE_ERROR);
@@ -797,6 +803,8 @@ class Solutions extends LIST_Controller {
                     if ($this->db->trans_status()) {
                         $this->db->trans_commit();
                         $this->messages->add_message('lang:admin_solutions_upload_success', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->_action_success();
+                        $this->output->set_internal_value('student_id', $solution->student_id);
                     } else {
                         $this->db->trans_rollback();
                         @unlink($config['upload_path'] . $config['file_name']);

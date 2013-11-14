@@ -369,4 +369,12 @@ class LIST_Controller extends CI_Controller {
             return FALSE;
         }
     }
+    
+    protected function _is_cache_enabled() {
+        return $this->config->item('enable_hooks');
+    }
+    
+    protected function _action_success() {
+        $this->output->set_internal_value(LIST_Output::IV_ACTION_RESULT, TRUE);
+    }
 }

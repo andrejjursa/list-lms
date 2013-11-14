@@ -136,6 +136,7 @@ class Tasks extends LIST_Controller {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_tasks_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 redirect(create_internal_url('admin_tasks/edit/task_id/' . $task->id));
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_tasks_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -210,6 +211,7 @@ class Tasks extends LIST_Controller {
                 if ($task->save(array('category' => $categories->all, 'author' => $author)) && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'text')) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_tasks_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_tasks_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -238,6 +240,7 @@ class Tasks extends LIST_Controller {
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->output->set_output(json_encode(TRUE));    
+                $this->_action_success();
             } else {
                 $this->db->trans_rollback();
                 $this->output->set_output(json_encode(FALSE));                
@@ -434,6 +437,7 @@ class Tasks extends LIST_Controller {
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_tasks_add_to_task_set_save_success', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_tasks_add_to_task_set_save_failed', Messages::MESSAGE_TYPE_ERROR);

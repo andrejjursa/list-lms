@@ -80,6 +80,9 @@ class Rooms extends LIST_Controller {
                 if ($room->save(array($teachers->all)) && $group->save($room) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_rooms_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
+                    $room->group->get();
+                    $this->output->set_internal_value('course_id', $room->group->course_id);
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_rooms_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
@@ -146,10 +149,14 @@ class Rooms extends LIST_Controller {
             $this->db->trans_begin();
             $room = new Room();
             $room->get_by_id($room_id);
+            $room->group->get();
+            $course_id = $room->group->course_id;
             $room->delete();
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->output->set_output(json_encode(TRUE));    
+                $this->output->set_output(json_encode(TRUE));   
+                $this->_action_success();
+                $this->output->set_internal_value('course_id', $course_id);
             } else {
                 $this->db->trans_rollback();
                 $this->output->set_output(json_encode(FALSE));                
@@ -218,6 +225,9 @@ class Rooms extends LIST_Controller {
                 if ($room->save(array($teachers->all)) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_rooms_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->_action_success();
+                    $room->group->get();
+                    $this->output->set_internal_value('course_id', $room->group->course_id);
                 } else {
                     $this->db->trans_rollback();
                     $this->messages->add_message('lang:admin_rooms_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);

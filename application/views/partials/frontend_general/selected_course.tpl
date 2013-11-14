@@ -13,7 +13,6 @@
         </ul>
         {/if}
     </span>
-    
 {else}
     {$student_registration = $this->config->item('student_registration')}
     <span id="not_loged_in_links_id">

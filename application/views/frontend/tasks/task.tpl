@@ -55,9 +55,11 @@
                                     {capture name='allowed_file_types' assign='allowed_file_types'}{', '|implode:$exploded_allow_file_types}{/capture}    
                                     <p class="input"><em>{translate|sprintf:$allowed_file_types line='tasks_task_form_label_file_hint2'}</em></p>
                                     {/if}
+                                    {nocache}
                                     {if $file_error_message}
                                     <p class="error"><span class="message">{translate_text text=$file_error_message}</span></p>
                                     {/if}
+                                    {/nocache}
                                 </div>
                                 <div class="buttons">
                                     <input type="submit" name="submit_button" value="{translate line='tasks_task_form_submit'}" class="button" />

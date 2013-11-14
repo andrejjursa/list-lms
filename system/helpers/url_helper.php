@@ -535,12 +535,17 @@ if ( ! function_exists('redirect'))
 			$uri = site_url($uri);
 		}
 
+                $EXT =& load_class('Hooks', 'core');
+                $EXT->_call_hook('post_controller');
+                
 		switch($method)
 		{
-			case 'refresh'	: header("Refresh:0;url=".$uri);
-				break;
-			default			: header("Location: ".$uri, TRUE, $http_response_code);
-				break;
+			case 'refresh': 
+                            header("Refresh:0;url=".$uri);
+			break;
+			default:
+                            header("Location: ".$uri, TRUE, $http_response_code);
+			break;
 		}
 		exit;
 	}
