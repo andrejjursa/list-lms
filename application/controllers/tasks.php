@@ -15,7 +15,7 @@ class Tasks extends LIST_Controller {
 
     public function index() {
         $cache_id = $this->usermanager->get_student_cache_id();
-        if ($this->_is_cache_enabled() && !$this->parser->isCached('frontend/tasks/index.tpl', $cache_id)) {
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/tasks/index.tpl', $cache_id)) {
             $this->_initialize_student_menu();
             $this->usermanager->student_login_protected_redirect();
 
@@ -35,13 +35,14 @@ class Tasks extends LIST_Controller {
             }
 
             $this->parser->add_css_file('frontend_tasks.css');
+            $this->parser->assign(array('course' => $course));
         }
-        $this->parser->parse('frontend/tasks/index.tpl', array('course' => $course), FALSE, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse('frontend/tasks/index.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
     public function task($task_set_id = NULL) {
         $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id);
-        if ($this->_is_cache_enabled() && !$this->parser->isCached('frontend/tasks/task.tpl', $cache_id)) {
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/tasks/task.tpl', $cache_id)) {
             $this->_initialize_student_menu();
             $this->usermanager->student_login_protected_redirect();
 
@@ -72,8 +73,9 @@ class Tasks extends LIST_Controller {
             $this->parser->add_js_file('tasks/task.js');
             $this->_add_prettify();
             $this->_add_scrollTo();
+            $this->parser->assign(array('course' => $course));
         }
-        $this->parser->parse('frontend/tasks/task.tpl', array('course' => $course), FALSE, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse('frontend/tasks/task.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
     public function upload_solution($task_set_id = 0) {
