@@ -6,8 +6,9 @@ body { background-color: silver; font-size: 14px; font-family: Verdana, Arial; }
 #top_meta_informations div.left { float: left; padding: 5px 4px 3px 4px; }
 #top_meta_informations div.right { float: right; padding: 5px 4px 3px 4px; }
 #top_meta_informations div.clear { clear: both; }
-#top_meta_informations a { text-decoration: none; color: #00cc00; transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; }
-#top_meta_informations a:hover { color: #B6FBA6; }
+#top_meta_informations a, #active_course_id { text-decoration: none; color: #00cc00; transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; }
+#top_meta_informations a:hover, #active_course_id:hover { color: #B6FBA6; }
+#active_course_id { cursor: pointer; }
 
 #mainwrap { min-width: 900px; max-width: 1200px; margin: 0 auto; margin-top: 50px; text-align: center; background-color: white; border: 1px solid black; border-radius: 4px; box-shadow: 0px 0px 50px 20px gray; }
 #footer { min-width: 900px; max-width: 1200px; margin: 0 auto; margin-top: 20px; text-align: center; background-color: white; border: 1px solid black; border-radius: 4px; box-shadow: 0px 0px 50px 20px gray; }
