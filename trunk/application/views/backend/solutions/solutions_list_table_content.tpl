@@ -4,7 +4,13 @@
     <td>{$solution->created|date_format:{translate line='common_datetime_format'}}</td>
     <td>{$solution->updated|date_format:{translate line='common_datetime_format'}}</td>
     <td>{$solution->student_fullname} ({$solution->student_email})</td>
-    <td><span title="{translate_text text=$solution->student_participant_group_name}">{translate_text|abbreviation text=$solution->student_participant_group_name}</span></td>
+    <td>
+        {if $solution->student_participant_group_name}
+        <span title="{translate_text text=$solution->student_participant_group_name}">{translate_text|abbreviation text=$solution->student_participant_group_name}</span>
+        {else}
+        <span title="{translate line='admin_solutions_valuation_student_no_group'}">{translate|abbreviation line='admin_solutions_valuation_student_no_group'}</span>
+        {/if}
+    </td>
     <td>{$task_set->get_student_files_count($solution->student_id)|intval}</td>
     {if is_null($solution->points)}
     <td colspan="3">{translate line='admin_solutions_list_solution_not_valuated'}</td>

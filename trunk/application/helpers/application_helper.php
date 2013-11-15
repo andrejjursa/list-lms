@@ -185,10 +185,34 @@ function normalize($string) {
         'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e',
         'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o',
         'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b',
-        'ÿ'=>'y', 'Ŕ'=>'R', 'ŕ'=>'r',
+        'ÿ'=>'y', 'Ŕ'=>'R', 'ŕ'=>'r', 
+        'ď'=>'d', 'ň'=>'n', 'ľ'=>'l', 'ĺ'=>'l', 'ť'=>'t', 'ř'=>'r',
+        'Ď'=>'D', 'Ň'=>'N', 'Ľ'=>'L', 'Ĺ'=>'L', 'Ť'=>'T', 'Ř'=>'R',
     );
     
     return strtr($string, $table);
+}
+
+/**
+ * Normalizes characters in string for file system.
+ * @param string $string to normalize.
+ * @return string string with normalized characters.
+ */
+function normalizeForFilesystem($string) {
+    $normalized = normalize($string);
+    
+    $output = '';
+    for ($i = 0; $i < mb_strlen($normalized); $i++) {
+       $char = mb_substr($normalized, $i, 1); 
+       if ($char >= 'a' && $char <= 'z' || $char >= 'A' && $char <= 'Z' || $char >= '0' && $char <= '9') {
+           $output .= $char;
+       } elseif ($char == ' ') {
+           $output .= '_';
+       } elseif ($char == '-' || $char == '_' || $char == ':' || $char == '.') {
+           $output .= '-';
+       }
+    }
+    return $output;
 }
 
 /**

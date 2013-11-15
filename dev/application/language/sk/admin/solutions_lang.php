@@ -96,6 +96,7 @@ $lang['admin_solutions_validation_test_messages_test_not_selected'] = 'Prosím, 
 $lang['admin_solutions_validation_test_messages_test_being_executed'] = 'Test sa spúšťa, môže to chvílu trvať, prosím čakajte ...';
 $lang['admin_solutions_valuation_next_solution_message_no_more_solution_to_valuate'] = 'Nie je ďalšie riešenie, ktoré vyžaduje hodnotenie.';
 $lang['admin_solutions_valuation_next_solution_message_this_solution_is_not_valuated'] = 'Môžete prepnúť na ďalšie riešenie len ak ohodnotíte toto.';
+$lang['admin_solutions_valuation_student_no_group'] = 'Bez skupiny';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámy autor';

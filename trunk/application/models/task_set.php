@@ -314,13 +314,38 @@ class Task_set extends DataMapper {
         $filename = $this->get_new_solution_zip_filename();
         $zip_archive = new ZipArchive();
         if ($zip_archive->open($filename, ZipArchive::CREATE)) {
+            $course = $this->course->get();
+            $period = $course->period->get();
+            $overlay_name = $this->lang->get_overlay('task_sets', $this->id, 'name');
+            $readme = trim($overlay_name) == '' ? $this->name : $overlay_name;
+            $readme .= "\r\n" . str_repeat('-', mb_strlen($readme));
+            $readme .= "\r\n" . $this->lang->text($course->name);
+            $readme .= "\r\n" . $this->lang->text($period->name);
+            $zip_archive->addFromString('readme.txt', $readme);
             if ($this->id != NULL) {
                 $path_to_task_set_files = 'private/uploads/solutions/task_set_' . $this->id . '/';
                 if (file_exists($path_to_task_set_files)) {
+                    $groups = $course->groups->get_iterated();
+                    $group_names = array(0 => 'unassigned');
+                    foreach ($groups as $group) {
+                        $group_names[$group->id] = normalizeForFilesystem($this->lang->text($group->name));
+                    }
+                    $students = new Student();
+                    $students->include_related('participant');
+                    $students->where_related('participant/course', $course);
+                    $students->get_iterated();
+                    $student_groups = array();
+                    foreach ($students as $studnet) {
+                        $student_groups[$studnet->id] = intval($studnet->participant_group_id);
+                    }
                     $files = scandir($path_to_task_set_files);
                     foreach ($files as $file) {
                         if ($file != '.' && $file != '..') {
-                            $zip_archive->addFile($path_to_task_set_files . $file, $file);
+                            if (preg_match(self::STUDENT_FILE_NAME_REGEXP, $file, $matches)) {
+                                $student_id = intval($matches['student_id']);
+                                $path = $group_names[$student_groups[$student_id]] . '/' . $file;
+                                $zip_archive->addFile($path_to_task_set_files . $file, $path);
+                            }
                         }
                     }
                 }

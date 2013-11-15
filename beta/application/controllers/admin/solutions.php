@@ -352,6 +352,11 @@ class Solutions extends LIST_Controller {
         $solution->where('task_set_id', $task_set_id);
         $solution->get_by_id($solution_id);
         
+        $group = new Group();
+        $group->where_related('participant', 'student_id', $solution->student_id);
+        $group->where_related('participant/course/task_set', 'id', $task_set_id);
+        $group->get();
+        
         $this->load->helper('tests');
         $test_types_subtypes = get_all_supported_test_types_and_subtypes();
         
@@ -361,6 +366,7 @@ class Solutions extends LIST_Controller {
         $this->_add_prettify();
         $this->parser->parse('backend/solutions/valuation.tpl', array(
             'solution' => $solution,
+            'group' => $group,
             'test_types' => $test_types_subtypes['types'],
             'test_subtypes' => $test_types_subtypes['subtypes'],
             'add_url' => $this->uri->assoc_to_uri($this->uri->ruri_to_assoc(5)),

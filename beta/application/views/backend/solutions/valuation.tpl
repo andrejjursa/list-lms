@@ -2,7 +2,7 @@
 {block title}{/block}
 {block main_content}
     {if $solution->exists()}
-        <h3>{translate_text text=$solution->task_set->name} / {translate_text text=$solution->task_set_course_name} / {translate_text text=$solution->task_set_course_period_name}{if $solution->task_set_group_name} / {translate_text text=$solution->task_set_group_name}{/if}</h3>
+        <h3>{translate_text text=$solution->task_set->name} / {translate_text text=$solution->task_set_course_name} / {translate_text text=$solution->task_set_course_period_name} / {if $group->exists()}{translate_text text=$group->name}{else}{translate line='admin_solutions_valuation_student_no_group'}{/if}</h3>
         <h4>{$solution->student_fullname} ({$solution->student_email})</h4>
         {include file='partials/backend_general/flash_messages.tpl' inline}
         <div id="tabs">
