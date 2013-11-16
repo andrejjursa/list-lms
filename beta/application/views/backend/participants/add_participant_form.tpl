@@ -13,7 +13,7 @@
 </div>
 <div class="field">
     <label for="participant_allowed_id">{translate line='admin_participants_form_label_allowed'}:</label>
-    <p class="input"><input type="checkbox" name="participant[allowed]" value="1"{if $smarty.post.participant.allowed eq 1} checked="checked"{/if} /></p>
+    <p class="input"><input type="checkbox" name="participant[allowed]" value="1"{if $smarty.post.participant.allowed eq 1 or !$smarty.post} checked="checked"{/if} /></p>
 </div>
 <div class="field">
     <label for="participant_student_searchbox_id" class="required">{translate line='admin_participants_form_label_students'}:</label>
