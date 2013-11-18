@@ -31,6 +31,7 @@ $lang['admin_tasks_form_label_file_upload'] = 'Upload súborov';
 $lang['admin_tasks_form_label_hidden_file_upload'] = 'Upload skrytých súborov';
 $lang['admin_tasks_form_label_internal_comment'] = 'Interný komentár';
 $lang['admin_tasks_form_button_save'] = 'Uložiť';
+$lang['admin_tasks_form_button_save_and_go_to_list'] = 'Uložiť a vrátiť sa na zoznam';
 $lang['admin_tasks_form_button_edit'] = 'Upraviť';
 $lang['admin_tasks_form_button_preview'] = 'Náhlad';
 $lang['admin_tasks_form_button_add_to_task_set'] = 'Vložiť&nbsp;do&nbsp;zostavy&nbsp;úloh';

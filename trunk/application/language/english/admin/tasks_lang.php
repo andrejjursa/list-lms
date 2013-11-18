@@ -31,6 +31,7 @@ $lang['admin_tasks_form_label_file_upload'] = 'File upload';
 $lang['admin_tasks_form_label_hidden_file_upload'] = 'Hidden file upload';
 $lang['admin_tasks_form_label_internal_comment'] = 'Internal comment';
 $lang['admin_tasks_form_button_save'] = 'Save';
+$lang['admin_tasks_form_button_save_and_go_to_list'] = 'Save and go to list';
 $lang['admin_tasks_form_button_edit'] = 'Edit';
 $lang['admin_tasks_form_button_preview'] = 'Preview';
 $lang['admin_tasks_form_button_add_to_task_set'] = 'Add&nbsp;to&nbsp;task&nbsp;set';
