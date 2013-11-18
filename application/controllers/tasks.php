@@ -35,6 +35,7 @@ class Tasks extends LIST_Controller {
             }
 
             $this->parser->add_css_file('frontend_tasks.css');
+            $this->parser->add_js_file('tasks/list.js');
             $this->parser->assign(array('course' => $course));
         }
         $this->parser->parse('frontend/tasks/index.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);

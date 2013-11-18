@@ -10,6 +10,7 @@ $lang['tasks_table_no_upload_limit'] = 'No limitation for solution uploading.';
 $lang['tasks_table_not_valuated'] = 'Not valuated yet.';
 $lang['tasks_table_no_uploading'] = 'No solution uploading.';
 $lang['tasks_table_student_solutions_count'] = 'You have submited %d files in this task.';
+$lang['tasks_table_click_to_display_comment'] = 'Click to display comment.';
 $lang['table_no_tasks_yet'] = 'There is no tasks yet.';
 $lang['tasks_date_format'] = 'm/d/Y H:i:s';
 $lang['tasks_table_task_set_type_points_total'] = 'You have earned %s points out of %s.';

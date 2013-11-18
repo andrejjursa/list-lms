@@ -16,7 +16,7 @@
     <td colspan="3">{translate line='admin_solutions_list_solution_not_valuated'}</td>
     {else}
     <td>{$solution->points|floatval}</td>
-    <td>{$solution->comment|nl2br}</td>
+    <td><span title="{$solution->comment|strip_tags|escape:'html'}">{$solution->comment|strip_tags|truncate:20}</span></td>
     <td>{$solution->teacher_fullname} ({$solution->teacher_email})</td>
     {/if}
     <td class="controlls"><a href="{internal_url|add_to_url:{"group_id/{$solution->student_participant_group_id}"}:{!is_null($solution->student_participant_group_id)} url="admin_solutions/valuation/{$task_set->id|intval}/{$solution->id|intval}"}" class="button special open_valuation_dialog" title="{translate line='admin_solutions_list_table_button_valuate'}"><span class="list-icon list-icon-approve"></span></a></td>
