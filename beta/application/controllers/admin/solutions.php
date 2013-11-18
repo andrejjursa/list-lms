@@ -362,7 +362,7 @@ class Solutions extends LIST_Controller {
         
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_solutions/valuation.js');
-        $this->parser->add_css_file('admin_solutions.css');
+        $this->parser->add_css_file('admin_solutions.css', array('media' => ''));
         $this->_add_prettify();
         $this->parser->parse('backend/solutions/valuation.tpl', array(
             'solution' => $solution,

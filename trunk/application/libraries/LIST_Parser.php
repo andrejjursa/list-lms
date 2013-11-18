@@ -222,7 +222,7 @@ class LIST_Parser extends CI_Parser {
         
         $attributes = array_merge($defaults, $attributes);
         
-        $html = '<link rel="'.$attributes['rel'].'" type="'.$attributes['type'].'" href="'.base_url("/public/css/".$file).'" media="'.$attributes['media'].'" />';
+        $html = '<link rel="'.$attributes['rel'].'" type="'.$attributes['type'].'" href="'.base_url("/public/css/".$file).'" ' . ($attributes['media'] ? 'media="'.$attributes['media'].'" ' : '') . '/>';
         
         $this->css_files[] = array(
             'html' => $html,
