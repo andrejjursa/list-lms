@@ -19,7 +19,10 @@ table.task_sets_table tbody tr.tr_background_even a { color: darkgreen; }
 table.task_sets_table tbody td a:hover { color: blue; }
 table.task_sets_table tbody td.td_task_set_type { background-color: #99ff99; padding-left: 20px; font-weight: bold; }
 table.task_sets_table tbody td.td_task_set_type_points { background-color: #99ff99; padding-left: 20px; font-weight: bold; border-bottom: 1px solid black; }
+table.task_sets_table tbody td div.whole_comment { display: none; }
 div.points_total { padding: 5px 13px; margin: 15px 0 5px 0; background-color: #99ff99; border-radius: 3px; }
+div.comment_body { background-color: white; padding: 15px; color: black; }
+div.comment_body a { color: green; }
 
 table.points_table { width: 100%; border-collapse: collapse; }
 table.points_table thead tr th { background-color: #99ff99; padding: 4px 3px; font-weight: bold; text-align: left; }
