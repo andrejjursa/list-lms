@@ -28,6 +28,7 @@
             </div>
             <div class="buttons">
                 <input type="submit" name="submit_button" value="{translate line='admin_tasks_form_button_save'}" class="button" />
+                <input type="submit" name="submit_and_go_to_list" value="{translate line='admin_tasks_form_button_save_and_go_to_list'}" class="button" />
             </div>
         </form>
     </fieldset>
