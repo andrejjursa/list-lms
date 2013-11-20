@@ -345,8 +345,17 @@ class Tasks extends LIST_Controller {
                             $all_students->where('id !=', $this->usermanager->get_student_id());
                             $all_students->get();
                             $this->_send_multiple_emails($all_students, 'lang:tasks_comments_email_subject_new_post', 'file:emails/frontend/comments/new_comment_student.tpl', array('task_set' => $task_set, 'student' => $student, 'comment' => $comment));
-                            $all_teachers = $task_set->comment_subscriber_teacher;
-                            $all_teachers->get();
+                            $task_set_related_teachers = new Teacher();
+                            if (!is_null($task_set->group_id)) {
+                                $task_set_related_teachers->where_related('room/group', 'id', $task_set->group_id);
+                            } else {
+                                $task_set_related_teachers->where_related('room/group/course', 'id', $task_set->course_id);
+                            }
+                            $task_set_related_teachers->group_by('id');
+                            $all_teachers = new Teacher();
+                            $all_teachers->where_related('comment_subscription', 'id', $task_set->id);
+                            $all_teachers->union($task_set_related_teachers, FALSE, '', NULL, NULL, 'id');
+                            $all_teachers->check_last_query();
                             $this->_send_multiple_emails($all_teachers, 'lang:tasks_comments_email_subject_new_post', 'file:emails/frontend/comments/new_comment_teacher.tpl', array('task_set' => $task_set, 'student' => $student, 'comment' => $comment));
                         }
                         return TRUE;
