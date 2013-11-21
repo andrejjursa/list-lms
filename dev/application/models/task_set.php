@@ -322,34 +322,7 @@ class Task_set extends DataMapper {
             $readme .= "\r\n" . $this->lang->text($course->name);
             $readme .= "\r\n" . $this->lang->text($period->name);
             $zip_archive->addFromString('readme.txt', $readme);
-            if ($this->id != NULL) {
-                $path_to_task_set_files = 'private/uploads/solutions/task_set_' . $this->id . '/';
-                if (file_exists($path_to_task_set_files)) {
-                    $groups = $course->groups->get_iterated();
-                    $group_names = array(0 => 'unassigned');
-                    foreach ($groups as $group) {
-                        $group_names[$group->id] = normalizeForFilesystem($this->lang->text($group->name));
-                    }
-                    $students = new Student();
-                    $students->include_related('participant');
-                    $students->where_related('participant/course', $course);
-                    $students->get_iterated();
-                    $student_groups = array();
-                    foreach ($students as $studnet) {
-                        $student_groups[$studnet->id] = intval($studnet->participant_group_id);
-                    }
-                    $files = scandir($path_to_task_set_files);
-                    foreach ($files as $file) {
-                        if ($file != '.' && $file != '..') {
-                            if (preg_match(self::STUDENT_FILE_NAME_REGEXP, $file, $matches)) {
-                                $student_id = intval($matches['student_id']);
-                                $path = $group_names[$student_groups[$student_id]] . '/' . $file;
-                                $zip_archive->addFile($path_to_task_set_files . $file, $path);
-                            }
-                        }
-                    }
-                }
-            }
+            $this->add_files_to_zip_archive($zip_archive, $course);
             $zip_archive->close();
             header('Content-Description: File Transfer');
             header('Content-Type: application/zip');
@@ -373,6 +346,44 @@ class Task_set extends DataMapper {
         die();
     }
     
+    /**
+     * Add files to open zip archive.
+     * @param ZipArchive $zip_archive open zip archive.
+     * @param Course $course course object with loaded course.
+     * @param string|NULL $subdirectory subdirectory where to add files.
+     */
+    public function add_files_to_zip_archive(ZipArchive $zip_archive, Course $course, $subdirectory = NULL) {
+        if (!is_null($this->id)) {
+            ini_set('max_execution_time', 300);
+            $path_to_task_set_files = 'private/uploads/solutions/task_set_' . $this->id . '/';
+            if (file_exists($path_to_task_set_files)) {
+                $groups = $course->groups->get_iterated();
+                $group_names = array(0 => 'unassigned');
+                foreach ($groups as $group) {
+                    $group_names[$group->id] = normalizeForFilesystem($this->lang->text($group->name));
+                }
+                $students = new Student();
+                $students->include_related('participant');
+                $students->where_related('participant/course', $course);
+                $students->get_iterated();
+                $student_groups = array();
+                foreach ($students as $studnet) {
+                    $student_groups[$studnet->id] = intval($studnet->participant_group_id);
+                }
+                $files = scandir($path_to_task_set_files);
+                foreach ($files as $file) {
+                    if ($file != '.' && $file != '..') {
+                        if (preg_match(self::STUDENT_FILE_NAME_REGEXP, $file, $matches)) {
+                            $student_id = intval($matches['student_id']);
+                            $path = ($subdirectory !== NULL && trim($subdirectory) != '' ? $subdirectory . '/' : '') . $group_names[$student_groups[$student_id]] . '/' . $file;
+                            $zip_archive->addFile($path_to_task_set_files . $file, $path);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Returns unused file name for solution download.
      * @return string file name with path.

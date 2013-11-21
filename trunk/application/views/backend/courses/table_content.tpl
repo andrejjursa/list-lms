@@ -11,7 +11,7 @@
             {if $filter.fields.task_set_types}<th class="sort:task_set_types:desc">{translate line='admin_courses_table_header_course_task_set_types'}</th>{/if}
             {if $filter.fields.task_set_count}<th class="sort:task_set_count:desc">{translate line='admin_courses_table_header_course_task_set_count'}</th>{/if}
             {if $filter.fields.capacity}<th class="sort:capacity:desc">{translate line='admin_courses_table_header_course_capacity'}</th>{/if}
-            <th colspan="4" class="controlls"><div id="open_fields_config_id">{translate line='admin_courses_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
+            <th colspan="5" class="controlls"><div id="open_fields_config_id">{translate line='admin_courses_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
     </thead>
     <tbody>
@@ -31,10 +31,11 @@
             <td class="controlls"><a href="{internal_url url="admin_courses/edit/course_id/{$course->id}"}" class="button edit" title="{translate line='admin_courses_table_controlls_edit'}"><span class="list-icon list-icon-edit"></span></a></td>
             <td class="controlls"><a href="{internal_url url="admin_courses/delete/course_id/{$course->id}"}" class="button delete" title="{translate line='admin_courses_table_controlls_delete'}"><span class="list-icon list-icon-delete"></span></a></td>
             <td class="controlls"><a href="{internal_url url="courses/show_details/{$course->id}/{$this->lang->get_current_idiom()}"}" target="_blank" class="button special" title="{translate line='admin_courses_table_controlls_details'} - {translate|escape:'html' line='admin_courses_table_controlls_details_hint'}"><span class="list-icon list-icon-page-preview"></span></a></td>
+            <td class="controlls"><a href="{internal_url url="admin_courses/download_solutions/{$course->id}"}" target="_blank" class="button special" title="{translate line='admin_courses_table_controlls_download_solutions'}"><span class="list-icon list-icon-download"></span></a></td>
         </tr>
         {foreachelse}
         <tr>
-            <td colspan="{5 + $filter.fields|sum_array}">
+            <td colspan="{6 + $filter.fields|sum_array}">
                 {include file='partials/backend_general/error_box.tpl' message='lang:admin_courses_table_content_no_courses'}
             </td>
         </tr>
