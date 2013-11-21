@@ -344,7 +344,18 @@ class Courses extends LIST_Controller {
         }
         $this->output->set_output(json_encode(FALSE));    
     }
-        
+    
+    public function download_solutions($course_id) {
+        $course = new Course();
+        $course->get_by_id((int)$course_id);
+        if ($course->exists()) {
+            $course->download_all_solutions();
+        } else {
+            $this->messages->add_message('lang:admin_courses_message_cant_download_solutions', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('admin_courses'));
+        }
+    }
+
     private function inject_periods() {
         $periods = new Period();
         $periods->order_by('sorting', 'asc');
