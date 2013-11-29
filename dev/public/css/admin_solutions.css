@@ -181,6 +181,10 @@
     div.legend > div.not_valuated:hover { background-color: #96b9ff; }
     div.legend > div.not_considered { background-color: #fad6ff; }
     div.legend > div.not_considered:hover { background-color: #fa96ff; }
+    
+    #valuation_files_id div.codepreview_container { width: 100%; height: 450px; overflow: scroll; }
+    #valuation_files_id pre.codepreview,
+    #valuation_files_id pre.codepreviewNohighlight {  }
 }
 @media only screen and (min-width: 1024px) {
     #valuation_files_id div.filter_wrap { width: 300px; border-bottom: 0 none; float: left; }

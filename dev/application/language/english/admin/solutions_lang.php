@@ -97,6 +97,7 @@ $lang['admin_solutions_validation_test_messages_test_being_executed'] = 'Test be
 $lang['admin_solutions_valuation_next_solution_message_no_more_solution_to_valuate'] = 'There is no more solutions which needs valuation.';
 $lang['admin_solutions_valuation_next_solution_message_this_solution_is_not_valuated'] = 'You can switch to another solution only if you valuate this one.';
 $lang['admin_solutions_valuation_student_no_group'] = 'Without group';
+$lang['admin_solutions_validation_filter_hint_resize'] = 'You can resize code preview viewport by dragging bottom line (just above scrollbar).';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Instructions for student';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Unknown author';
