@@ -4,6 +4,7 @@ jQuery(document).ready(function($) {
     
     var last_zip_file = '';
     var last_index = '';
+    var first_load = true;
     
     var prettiPrintContent = function() {
         var codepreview = $('pre.codepreview.prettyprint');
@@ -14,19 +15,19 @@ jQuery(document).ready(function($) {
         codepreview_copy.css({'display': 'none'});
         codepreview_copy.html(codepreview_copy_html);
         prettyPrint();
-    }
+    };
     
     var switchCodePreview = function() {
         var codepreview = $('pre.codepreview');
         var codepreviewNohighlight = $('pre.codepreviewNohighlight');
-        if (codepreview.css('display') == 'none') {
+        if (codepreview.css('display') === 'none') {
             codepreview.css('display', '');
             codepreviewNohighlight.css('display', 'none');
         } else {
             codepreview.css('display', 'none');
             codepreviewNohighlight.css('display', '');
         }
-    }
+    };
     
     $('#filter_form_id').activeForm({
         speed: 0
@@ -43,6 +44,16 @@ jQuery(document).ready(function($) {
                 var url = global_base_url + 'index.php/admin_solutions/get_student_file_content/' + task_set_id + '/' + solution_id + '/' + zip_file;
                 var target = '#zip_index_id';
                 api_ajax_load(url, target, 'post', {}, function() {
+                    if (first_load) {
+                        var first_file = $(target + ' option:nth-child(2)');
+                        if (first_file.length === 1) {
+                            first_file.prop('selected', true);
+                            setTimeout(function() {
+                                load_file_content();
+                            }, 50);
+                        }
+                        first_load = false;
+                    }
                     $('#filter_form_id').activeForm().applyConditions();
                 });
                 last_zip_file = zip_file;
@@ -65,13 +76,22 @@ jQuery(document).ready(function($) {
         window.open(url, '_blank');
     }); 
     
-    $(document).on('click', '#filter_form_id input[name="read_file_button"]', function(event) {
-        event.preventDefault();
+    var load_file_content = function() {
         var url = global_base_url + 'index.php/admin_solutions/show_file_content/' + task_set_id + '/' + solution_id + '/' + last_zip_file + '/' + last_index;
         var target = '#file_content_id';
         api_ajax_load(url, target, 'post', {}, function() {
             prettiPrintContent();
+            $('div.codepreview_container').resizable({
+                autoHide: true,
+                handles: 's',
+                minHeight: 350
+            });
         });
+    };
+    
+    $(document).on('click', '#filter_form_id input[name="read_file_button"]', function(event) {
+        event.preventDefault();
+        load_file_content();
     });
     
     $(document).on('click', '#filter_form_id input[name="switch_code_highlight"]', function(event) {
