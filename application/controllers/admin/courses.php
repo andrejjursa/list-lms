@@ -146,6 +146,7 @@ class Courses extends LIST_Controller {
         $this->parser->add_js_file('translation_selector.js');
         $this->parser->add_js_file('admin_courses/list.js');
         $this->parser->add_js_file('admin_courses/form.js');
+        $this->parser->add_js_file('admin_courses/edit.js');
         
         $url = $this->uri->ruri_to_assoc(3);
         $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;

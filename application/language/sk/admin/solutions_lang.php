@@ -116,7 +116,7 @@ $lang['admin_solutions_batch_valuation_table_header_solution_not_considered'] = 
 $lang['admin_solutions_batch_valuation_table_label_do_not_consider_this'] = 'Nebrať riešenie do úvahy pri hodnotení';
 $lang['admin_solutions_batch_valuation_form_submit_batch_save'] = 'Hromadne uložiť';
 $lang['admin_solutions_batch_valuation_success_message_save_ok'] = 'Hromadné uloženie úspešné.';
-$lang['admin_solutions_batch_valuation_error_message_save_failed'] = 'Hromadné uloženie zlyhalo, nič nebolo uložené.';
+$lang['admin_solutions_batch_valuation_error_message_save_failed'] = 'Hromadné uloženie nevykonalo žiadne zmeny. Zmenil(a) ste niečo pred odoslaním?';
 
 $lang['admin_solutions_valuation_tables_page_title'] = 'Tabuľky hodnotení';
 $lang['admin_solutions_valuation_tables_filter_label_course'] = 'Kurz';

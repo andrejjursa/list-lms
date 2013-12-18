@@ -43,6 +43,7 @@ jQuery(document).ready(function($) {
             if ($('#new_student_form_id .flash_message.message_success').length > 0) {
                 reload_all_students();
             }
+            $('#new_student_form_id').formErrorWarning();
         };
         api_ajax_load(url, '#new_student_form_id', 'post', data, success);
     });

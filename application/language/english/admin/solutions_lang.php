@@ -116,7 +116,7 @@ $lang['admin_solutions_batch_valuation_table_header_solution_not_considered'] = 
 $lang['admin_solutions_batch_valuation_table_label_do_not_consider_this'] = 'Do not consider this solution in valuation';
 $lang['admin_solutions_batch_valuation_form_submit_batch_save'] = 'Batch save';
 $lang['admin_solutions_batch_valuation_success_message_save_ok'] = 'Batch saved successfully.';
-$lang['admin_solutions_batch_valuation_error_message_save_failed'] = 'Batch save failed, nothing were saved.';
+$lang['admin_solutions_batch_valuation_error_message_save_failed'] = 'Batch save did not made any changes. Do you have changed data before submission?';
 
 $lang['admin_solutions_valuation_tables_page_title'] = 'Valuation tables';
 $lang['admin_solutions_valuation_tables_filter_label_course'] = 'Course';

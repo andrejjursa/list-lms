@@ -116,6 +116,7 @@ class Groups extends LIST_Controller {
         $this->_select_teacher_menu_pagetag('groups');
         $this->parser->add_js_file('translation_selector.js');
         $this->parser->add_js_file('admin_groups/form.js');
+        $this->parser->add_js_file('admin_groups/edit.js');
         $this->parser->parse('backend/groups/edit.tpl', array('group' => $group));
     }
     
