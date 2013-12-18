@@ -11,7 +11,7 @@ jQuery(document).ready(function($) {
             $('#table_content_id #pagination_row_id').appendTo($('#table_pagination_footer_id'));
         };
         api_ajax_load(url, '#table_content_id', 'post', data, onSuccess);
-    }
+    };
     
     reload_all_participants();
     
@@ -24,6 +24,7 @@ jQuery(document).ready(function($) {
                 reload_all_participants();
             }
             $.getScript(global_base_url + 'public/js/admin_participants/form.js');
+            $('#add_participant_form_id').formErrorWarning();
         });
     });
     
@@ -39,9 +40,9 @@ jQuery(document).ready(function($) {
         hiddenClass: 'hidden'
     }).setDisplayCondition('div.group_field', function() {
         var filter_course_id = this.findElement('select[name="filter[course]"]').val();
-        if (filter_course_id > 0 && $('#filter_group_set_none_id:checked').length == 0) {
-            if (filter_course_id != filter_last_course_id) {
-                var selected_id = this.findElement('input[name=filter_selected_group_id]').val() != undefined ? this.findElement('input[name=filter_selected_group_id]').val() : '0';
+        if (filter_course_id > 0 && $('#filter_group_set_none_id:checked').length === 0) {
+            if (filter_course_id !== filter_last_course_id) {
+                var selected_id = this.findElement('input[name=filter_selected_group_id]').val() !== undefined ? this.findElement('input[name=filter_selected_group_id]').val() : '0';
                 var url = global_base_url + 'index.php/admin_participants/get_groups_from_course/' + filter_course_id + '/' + selected_id;
                 var target = $('#filter_group_id');
                 api_ajax_load(url, target, 'post', {}, function() {
@@ -67,7 +68,7 @@ jQuery(document).ready(function($) {
         event.preventDefault();
         var url = $(this).attr('href');
         api_ajax_update(url, 'post', {}, function(data) {
-            if (data.status != undefined) {
+            if (data.status !== undefined) {
                 if (data.status) {
                     show_notification(data.message, 'success');
                     reload_all_participants();
@@ -83,7 +84,7 @@ jQuery(document).ready(function($) {
         if (!confirm(messages.disapprove_question)) { return; }
         var url = $(this).attr('href');
         api_ajax_update(url, 'post', {}, function(data) {
-            if (data.status != undefined) {
+            if (data.status !== undefined) {
                 if (data.status) {
                     show_notification(data.message, 'success');
                     reload_all_participants();
@@ -99,7 +100,7 @@ jQuery(document).ready(function($) {
         if (!confirm(messages.delete_question)) { return; }
         var url = $(this).attr('href');
         api_ajax_update(url, 'post', {}, function(data) {
-            if (data.status != undefined) {
+            if (data.status !== undefined) {
                 if (data.status) {
                     show_notification(data.message, 'success');
                     reload_all_participants();

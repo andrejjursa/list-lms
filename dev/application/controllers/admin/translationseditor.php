@@ -75,6 +75,7 @@ class Translationseditor extends LIST_Controller {
     
     public function new_constant() {
         $languages = $this->lang->get_list_of_languages();
+        $this->parser->add_js_file('admin_translationseditor/form.js');
         $this->parser->parse('backend/translationseditor/new_constant.tpl', array('languages' => $languages));
     }
     

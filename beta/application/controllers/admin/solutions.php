@@ -774,6 +774,7 @@ class Solutions extends LIST_Controller {
         $solution->include_related('student/participant/group', array('name', 'id'), 'group');
         $solution->get_by_id((int)$solution_id);
         $this->parser->add_css_file('admin_solutions.css');
+        $this->parser->add_js_file('admin_solutions/upload.js');
         $this->parser->parse('backend/solutions/student_solution_upload.tpl', array('solution' => $solution));
     }
     

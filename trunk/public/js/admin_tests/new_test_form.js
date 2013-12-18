@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    $('#new_test_form_id').formErrorWarning();
+    
     $('#new_test_form_id').activeForm({
         speed: 0
     });

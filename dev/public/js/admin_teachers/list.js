@@ -18,6 +18,7 @@ jQuery(document).ready(function($) {
             if ($('#new_teacher_form_id .flash_message.message_success').length > 0) {
                 reload_all_teachers();
             }
+            $('#new_teacher_form_id').formErrorWarning();
         };
         api_ajax_load(url, target, 'post', data, success);
     });

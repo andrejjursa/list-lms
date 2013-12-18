@@ -32,6 +32,7 @@ jQuery(document).ready(function($) {
                 reload_all_task_sets();
             }
             $.getScript(global_base_url + 'public/js/admin_task_sets/form.js');
+            $('#new_task_set_form_id').formErrorWarning();
         };
         api_ajax_load(url, '#new_task_set_form_id', 'post', data, success);
     });

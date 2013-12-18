@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    $('form').formErrorWarning();
+    
     $('form').activeForm({
         speed: 0
     });

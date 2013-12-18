@@ -87,6 +87,7 @@ class Students extends LIST_Controller {
         $student_id = isset($url['student_id']) ? intval($url['student_id']) : 0;
         $student = new Student();
         $student->get_by_id($student_id);
+        $this->parser->add_js_file('admin_students/edit.js');
         $this->parser->parse('backend/students/edit.tpl', array('student' => $student));
     }
     
@@ -162,6 +163,7 @@ class Students extends LIST_Controller {
     
     public function csv_import() {
         $this->_select_teacher_menu_pagetag('students_manager');
+        $this->parser->add_js_file('admin_students/csv_import_form.js');
         $this->parser->parse('backend/students/csv_import.tpl');
     }
     

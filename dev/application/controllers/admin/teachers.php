@@ -286,6 +286,7 @@ class Teachers extends LIST_Controller {
         $teacher_id = isset($url['teacher_id']) ? intval($url['teacher_id']) : 0;
         $teacher = new Teacher();
         $teacher->where('id !=', $this->usermanager->get_teacher_id())->get_by_id($teacher_id);
+        $this->parser->add_js_file('admin_teachers/edit.js');
         $this->parser->parse('backend/teachers/edit_teacher.tpl', array('teacher' => $teacher));
     }
     

@@ -23,6 +23,7 @@ class Settings extends LIST_Controller {
         $config = $this->configurator->get_config_array('config');
         $languages = $this->lang->get_list_of_languages();
         $this->parser->add_css_file('admin_settings.css');
+        $this->parser->add_js_file('admin_settings/form.js');
         $this->parser->parse('backend/settings/index.tpl', array('config' => $config, 'languages' => $languages));
     }
     

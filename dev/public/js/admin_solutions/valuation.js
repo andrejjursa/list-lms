@@ -2,6 +2,8 @@ jQuery(document).ready(function($) {
     
     api_make_tabs('tabs');
     
+    $('#valuation_form_id').formErrorWarning();
+    
     var last_zip_file = '';
     var last_index = '';
     var first_load = true;

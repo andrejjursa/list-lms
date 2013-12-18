@@ -16,8 +16,9 @@ jQuery(document).ready(function($) {
                 reload_all_task_set_types();
             }
             $.getScript(global_base_url + 'public/js/admin_task_set_types/form.js');
-        }
+        };
         api_ajax_load($(this).attr('action'), '#new_task_set_type_form_id', 'post', data, success);
+        $('#new_task_set_type_form_id').formErrorWarning();
     });
     
     var delete_task_set_type = function(event) {
@@ -27,7 +28,7 @@ jQuery(document).ready(function($) {
         var url = $(this).attr('href');
         
         api_ajax_update(url, 'post', {}, function(output) {
-            if (output == true) {
+            if (output === true) {
                 reload_all_task_set_types();
                 show_notification(messages.after_delete, 'success');
             }

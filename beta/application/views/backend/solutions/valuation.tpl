@@ -13,7 +13,7 @@
                 <li><a href="{internal_url url="admin_solutions/display_tasks_list/{$solution->task_set->id}"}">{translate line='admin_solutions_valuation_tabs_label_tasks'}</a></li>
             </ul>
             <div id="tabs-form">
-                <form action="{internal_url|add_to_url:$add_url url="admin_solutions/update_valuation/{$solution->task_set->id|intval}/{$solution->id|intval}"}" method="post">
+                <form action="{internal_url|add_to_url:$add_url url="admin_solutions/update_valuation/{$solution->task_set->id|intval}/{$solution->id|intval}"}" method="post" id="valuation_form_id">
                     <div class="field">
                         <label for="solution_points_id" class="required">{translate line='admin_solutions_valuation_form_label_points'}:</label>
                         <p class="input"><input type="text" name="solution[points]" value="{$smarty.post.solution.points|default:$solution->points|escape:'html'}" id="solution_points_id" /></p>{capture name='total_points' assign='total_points'}{if !is_null($solution->task_set->points_override)}{$solution->task_set->points_override}{else}{$solution->task_set_total_points}{/if}{/capture}

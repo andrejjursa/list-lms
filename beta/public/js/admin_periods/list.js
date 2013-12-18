@@ -21,6 +21,7 @@ jQuery(document).ready(function($) {
                 reload_all_periods();
             }
             $.getScript(global_base_url + 'public/js/admin_periods/form.js');
+            $('#new_period_form_id').formErrorWarning();
         };
         api_ajax_load($(this).attr('action'), '#new_period_form_id', 'post', data, success);
     });
@@ -40,7 +41,7 @@ jQuery(document).ready(function($) {
         var url = $(this).attr('href');
         
         api_ajax_update(url, 'post', {}, function(output) {
-            if (output == true) {
+            if (output === true) {
                 reload_all_periods();
                 show_notification(messages.after_delete, 'success');    
             }

@@ -36,6 +36,7 @@ jQuery(document).ready(function($) {
                     reload_table_content();
                 }
                 $.getScript(global_base_url + 'public/js/admin_courses/form.js');
+                $('#new_course_form_id').formErrorWarning();
             };
             api_ajax_load(url, '#new_course_form_id', 'post', data, success);
         });

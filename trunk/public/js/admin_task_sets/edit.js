@@ -4,6 +4,8 @@ jQuery(document).ready(function($) {
     make_custom_switch('form div.task', task_text_title, 'task_wrapper');
     make_custom_switch('form div.internal_comment', internal_comment_title, 'task_wrapper');
     
+    $('form').formErrorWarning();
+    
     $('textarea.tinymce').tinymce({
         plugins: [
             "advlist autolink link image lists charmap preview hr anchor pagebreak autoresize",

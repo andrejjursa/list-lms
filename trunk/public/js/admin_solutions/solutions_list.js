@@ -25,6 +25,7 @@ jQuery(document).ready(function($) {
             if ($('#new_solution_form_id .flash_message.message_success').length > 0) {
                 refresh_all_solutions();
             }
+            $('#new_solution_form_id').formErrorWarning();
             var last_created_id = $('#new_solution_form_id input[type=hidden][name=last_created_solution_id]');
             if (last_created_id.length > 0 && last_created_id.val() > 0) {
                 open_upload_dialog(global_base_url + 'index.php/admin_solutions/student_solution_upload/' + last_created_id.val());

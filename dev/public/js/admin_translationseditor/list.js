@@ -16,7 +16,7 @@ jQuery(document).ready(function($){
             data: data,
             dataType: 'json',
             success: function(data) {
-                if (data.result != undefined && data.result == true) {
+                if (data.result !== undefined && data.result === true) {
                     row.html(data.row);
                     row.removeClass('changed_row');
                     row.addClass('saved_row');
@@ -24,7 +24,7 @@ jQuery(document).ready(function($){
                         row.removeClass('saved_row');
                     }, 5000);
                 } else {
-                    if (data.row != undefined) {
+                    if (data.row !== undefined) {
                         row.html(data.row);
                         row.removeClass('changed_row');
                         row.addClass('failed_row');
@@ -51,7 +51,7 @@ jQuery(document).ready(function($){
         var row = $(this).parents('tr.row_of_constant');
         var cell = $(this).parents('td.controlls');
         for ( i in classes) {
-            if (classes[i].substr(0, 9) == 'constant_') {
+            if (classes[i].substr(0, 9) === 'constant_') {
                 var constant = classes[i].substr(9);
                 var url = global_base_url + 'index.php/admin_translationseditor/ajax_delete/' + constant + '/';
                 if (!confirm(messages.delete_question.replace('[$constant$]', constant))) { return; }
@@ -61,7 +61,7 @@ jQuery(document).ready(function($){
                     type: 'post',
                     dataType: 'json',
                     success: function(data) {
-                        if (data == true) {
+                        if (data === true) {
                             row.slideUp(1000, function() {
                                 row.remove();
                             });

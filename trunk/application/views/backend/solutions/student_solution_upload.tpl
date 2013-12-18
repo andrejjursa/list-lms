@@ -14,7 +14,7 @@
                     <label for="upload_id" class="required">{translate line='admin_solutions_upload_form_label_upload'}:</label>
                     <p class="input"><input type="file" name="upload" id="upload_id" /></p>
                     {if $file_error_message}
-                    <div class="input">{include file='partials/backend_general/error_box.tpl' message=$file_error_message}</div>
+                    <p class="error"><span class="message">{translate_text text=$file_error_message}</span></p>
                     {/if}
                 </div>
                 <div class="buttons">

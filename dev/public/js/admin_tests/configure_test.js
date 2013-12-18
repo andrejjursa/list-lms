@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
     
+    $('form').formErrorWarning();
+    
     $('textarea.tinymce').tinymce({
         plugins: [
             "advlist autolink link image lists charmap preview hr anchor pagebreak autoresize",

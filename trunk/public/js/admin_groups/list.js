@@ -30,6 +30,7 @@ jQuery(document).ready(function($) {
                 reload_all_groups();
             }
             $.getScript(global_base_url + 'public/js/admin_groups/form.js');
+            $('#groups_form_id').formErrorWarning();
         };
         api_ajax_load(url, target, 'post', data, success);
     });

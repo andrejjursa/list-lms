@@ -169,6 +169,7 @@ class Rooms extends LIST_Controller {
     public function edit($group_id) {
         $this->parser->add_js_file('translation_selector.js');
         $this->parser->add_js_file('admin_rooms/form.js');
+        $this->parser->add_js_file('admin_rooms/edit.js');
         
         $url = $this->uri->ruri_to_assoc(4);
         $room_id = isset($url['room_id']) ? intval($url['room_id']) : 0;

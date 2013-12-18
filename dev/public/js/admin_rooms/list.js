@@ -18,6 +18,7 @@ jQuery(document).ready(function($) {
                 reload_all_rooms();
             }
             $.getScript(global_base_url + 'public/js/admin_rooms/form.js');
+            $('#new_room_form_id').formErrorWarning();
         };
         api_ajax_load(url, '#new_room_form_id', 'post', data, success);
     });
@@ -29,7 +30,7 @@ jQuery(document).ready(function($) {
         var url = $(this).attr('href');
         
         api_ajax_update(url, 'post', {}, function(output) {
-            if (output == true) {
+            if (output === true) {
                 reload_all_rooms();
                 show_notification(messages.after_delete, 'success');
             }
