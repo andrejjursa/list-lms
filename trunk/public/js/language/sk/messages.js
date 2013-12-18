@@ -42,6 +42,8 @@ var lang = {
     ajax_standby: 'Čakajte prosím ...',
     filter_header: 'Filter',
     form_header: 'Zobraziť / skryť formulár',
-    overlay_editor_header: 'Upraviť jazykové prekrytia'
+    overlay_editor_header: 'Upraviť jazykové prekrytia',
+    error_notification_dialog_title: 'Chyba vo formulári',
+    error_notification_dialog_close: 'Zatvoriť'
   }
 };

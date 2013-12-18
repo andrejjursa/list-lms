@@ -10,6 +10,8 @@ jQuery(document).ready(function($) {
     
     reload_files();
     
+    $('form').formErrorWarning();
+    
     $(document).on('click', '#files_table_content_id a.delete', function(event) {
         event.preventDefault();
         if (confirm(messages.delete_question)) {
