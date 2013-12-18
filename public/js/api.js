@@ -14,6 +14,48 @@ jQuery(document).ready(function($) {
 });
 
 (function($){
+    $.fn.formErrorWarning = function() {
+        var self = this;
+        
+        if (self.is('form')) {
+            var errors = self.find('p.error span.message');
+            if (errors.length > 0) {
+                var dialog_content = $('<div></div>').addClass('error-notification-dialog');
+                dialog_content.insertAfter($(self));
+                var errors_list = $('<ul></ul>').addClass('error-notification-dialog-list');
+                errors_list.appendTo(dialog_content);
+                $(errors).each(function() {
+                    var error_message = $('<li></li>').addClass('error-message');
+                    error_message.appendTo(errors_list);
+                    error_message.html($(this).html());
+                });
+                $('div.error-notification-dialog').dialog({
+                    modal: true,
+                    buttons: [ { text: lang.messages.error_notification_dialog_close, click: function() { $( this ).dialog( "close" ); } } ],
+                    title: lang.messages.error_notification_dialog_title,
+                    closeOnEscape: true,
+                    closeText: lang.messages.error_notification_dialog_close,
+                    minWidth: 400,
+                    maxWidth: 1800,
+                    maxHeight: 600,
+                    dialogClass: 'alert'
+                }).parent().addClass("ui-state-error");
+                $('.ui-dialog-buttonpane, .ui-dialog-buttonpane .ui-button, .ui-dialog-titlebar, .ui-dialog-titlebar .ui-button').addClass('ui-state-error');
+                $('.ui-dialog-buttonpane').css({
+                    'border-left': '0 none',
+                    'border-right': '0 none',
+                    'border-bottom': '0 none'
+                });
+            }
+        } else {
+            console.log('Can\'t call formErrorWarning on not a form element!');
+        }
+        
+        return self;
+    };
+})(jQuery);
+
+(function($){
     $.fn.serializeObject = function(){
 
         var self = this,
