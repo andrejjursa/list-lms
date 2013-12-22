@@ -203,6 +203,98 @@ class Courses extends LIST_Controller {
         }
     }
     
+    public function mail_to_course($course_id) {
+        $course = new Course();
+        $course->include_related('period', 'name');
+        $course->get_by_id((int)$course_id);
+        
+        if ($course->exists()) {
+            $groups = new Group();
+            $groups->where_related_course('id', $course->id);
+            $groups->order_by_with_constant('name', 'asc');
+            $groups->get_iterated();
+            
+            $groups_students = array();
+            
+            foreach ($groups as $group) {
+                $groups_students[$group->id] = array(
+                    'name' => $group->name,
+                    'students' => array(),
+                );
+            }
+            
+            $groups_students[0] = array(
+                'name' => 'lang:admin_courses_mail_to_course_group_name_unassigned_students',
+                'students' => array(),
+            );
+            
+            $participants = new Participant();
+            $participants->where('allowed', 1);
+            $participants->include_related('student');
+            $participants->where_related_course('id', $course->id);
+            $participants->order_by_related_as_fullname('student', 'fullname', 'asc');
+            $participants->get_iterated();
+            
+            foreach($participants as $participant) {
+                $groups_students[(int)$participant->group_id]['students'][(int)$participant->student_id] = array(
+                    'fullname' => $participant->student_fullname,
+                    'email' => $participant->student_email,
+                );
+            }
+            
+            $this->parser->assign('groups_students', $groups_students);
+        }
+        
+        $this->_add_tinymce4();
+        
+        $this->parser->add_js_file('admin_courses/mail_form.js');
+        $this->parser->add_css_file('admin_courses.css');
+        $this->parser->parse('backend/courses/mail_to_course.tpl', array('course' => $course));
+    }
+    
+    public function send_mail_to_course($course_id) {
+        $course = new Course();
+        $course->get_by_id($course_id);
+        if ($course->exists()) {
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('course_mail[subject]', 'lang:admin_courses_mail_to_course_form_field_subject', 'required');
+            $this->form_validation->set_rules('course_mail[body]', 'lang:admin_courses_mail_to_course_form_field_body', 'required_no_html');
+            $this->form_validation->set_rules('course_mail[from]', 'lang:admin_courses_mail_to_course_form_field_from', 'required');
+            $this->form_validation->set_rules('course_mail[student][]', 'lang:admin_courses_mail_to_course_form_field_students', 'required');
+            if ($this->form_validation->run()) {
+                $data = $this->input->post('course_mail');
+                $students = new Student();
+                $students->where_related('participant/course', 'id', $course->id);
+                $students->where_related('participant', 'allowed', 1);
+                $students->where_in('id', $data['student']);
+                $students->get();
+                if ($students->exists()) {
+                    $from = NULL;
+                    $from_name = '';
+                    if ($data['from'] == 'me') {
+                        $teacher = new Teacher();
+                        $teacher->get_by_id($this->usermanager->get_teacher_id());
+                        $from = $teacher->email;
+                        $from_name = $teacher->fullname;
+                    }
+                    if ($this->_send_multiple_emails($students, $data['subject'], '{$data.body|add_base_url}', array('data' => $data), $from, $from_name)) {
+                        $this->messages->add_message('lang:admin_courses_mail_to_course_success_sent', Messages::MESSAGE_TYPE_SUCCESS);
+                    } else {
+                        $this->messages->add_message('lang:admin_courses_mail_to_course_error_send_failed', Messages::MESSAGE_TYPE_ERROR);
+                    }
+                } else {
+                    $this->messages->add_message('lang:admin_courses_mail_to_course_error_no_students_selected', Messages::MESSAGE_TYPE_ERROR);
+                }
+                redirect(create_internal_url('admin_courses/mail_to_course/' . $course_id));
+            } else {
+                $this->mail_to_course($course_id);
+            }
+        } else {
+            $this->messages->add_message('lang:admin_courses_mail_to_course_error_course_not_found', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('admin_courses/mail_to_course/' . $course_id));
+        }
+    }
+
     public function task_set_types() {
         $url = $this->uri->ruri_to_assoc(3);
         $course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;

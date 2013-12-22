@@ -11,7 +11,7 @@
             {if $filter.fields.task_set_types}<th class="sort:task_set_types:desc">{translate line='admin_courses_table_header_course_task_set_types'}</th>{/if}
             {if $filter.fields.task_set_count}<th class="sort:task_set_count:desc">{translate line='admin_courses_table_header_course_task_set_count'}</th>{/if}
             {if $filter.fields.capacity}<th class="sort:capacity:desc">{translate line='admin_courses_table_header_course_capacity'}</th>{/if}
-            <th colspan="5" class="controlls"><div id="open_fields_config_id">{translate line='admin_courses_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
+            <th colspan="6" class="controlls"><div id="open_fields_config_id">{translate line='admin_courses_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +27,7 @@
             {if $filter.fields.task_set_types}<td>{$course->task_set_type_count}</td>{/if}
             {if $filter.fields.task_set_count}<td>{$course->task_set_count}</td>{/if}
             {if $filter.fields.capacity}<td>{$course->capacity|intval}</td>{/if}
+            <td class="controlls"><a href="{internal_url url="admin_courses/mail_to_course/{$course->id}"}" class="button special mail_to_course" title="{translate line="admin_courses_table_controlls_mail_to_group"}"><span class="list-icon list-icon-mail"></span></a></td>
             <td class="controlls"><a href="{internal_url url="admin_courses/task_set_types/course_id/{$course->id}"}" class="button special task_set_types_editor" title="{translate line='admin_courses_table_controlls_task_set_types'}"><span class="list-icon list-icon-bookmark"></span></a></td>
             <td class="controlls"><a href="{internal_url url="admin_courses/edit/course_id/{$course->id}"}" class="button edit" title="{translate line='admin_courses_table_controlls_edit'}"><span class="list-icon list-icon-edit"></span></a></td>
             <td class="controlls"><a href="{internal_url url="admin_courses/delete/course_id/{$course->id}"}" class="button delete" title="{translate line='admin_courses_table_controlls_delete'}"><span class="list-icon list-icon-delete"></span></a></td>
@@ -35,7 +36,7 @@
         </tr>
         {foreachelse}
         <tr>
-            <td colspan="{6 + $filter.fields|sum_array}">
+            <td colspan="{7 + $filter.fields|sum_array}">
                 {include file='partials/backend_general/error_box.tpl' message='lang:admin_courses_table_content_no_courses'}
             </td>
         </tr>
