@@ -81,6 +81,26 @@ jQuery(document).ready(function($) {
             });
         });
         
+        $(document).on('click', '#table_content a.mail_to_course', function(event) {
+            event.preventDefault();
+            var url = $(this).attr('href');
+            $.fancybox(url, {
+                type: 'iframe',
+                width: '100%',
+                height: '100%',
+                autoSize: false,
+                autoHeight: false,
+                autoWidth: false,
+                helpers: {
+                    overlay: {
+                        css: {
+                            background: 'rgba(255,255,255,0)'
+                        }
+                    }
+                }
+            });
+        });
+        
     } else if ($('#add_task_set_type_form_id').length !== 0) {
         make_switchable_form('#add_task_set_type_form_id');
         
