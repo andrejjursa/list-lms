@@ -136,10 +136,10 @@ class Courses extends LIST_Controller {
     }
     
     public function show_details($course_id, $lang = NULL) {
-        $cache_id = 'course_' . $course_id;
         if (!is_null($lang)) {
             $this->_init_specific_language($lang);
         }
+        $cache_id = 'course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
         if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/courses/course_details.tpl', $cache_id)) {
             $course = new Course();
             $course->include_related('period');
