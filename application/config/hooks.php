@@ -61,7 +61,7 @@ $hook['post_controller'] = array(
                 'select_group' => array(
                     'frontend/courses/course_details.tpl' => $course_cache_id,
                     'frontend/groups/index.tpl' => $student_cache_id,
-                    'frontend/tasks/index.tpl' => $student_cache_id,
+                    'frontend/tasks/*' => $student_cache_id,
                 ),
             ),
             'tasks' => array(
