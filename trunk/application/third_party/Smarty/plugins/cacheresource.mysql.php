@@ -112,6 +112,8 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
      */
     protected function save($id, $name, $cache_id, $compile_id, $exp_time, $content)
     {
+        $this->ci->db->where('id', $id);
+        $this->ci->db->delete('output_cache');
         $this->ci->db->set('id', $id);
         $this->ci->db->set('name', $name);
         $this->ci->db->set('cache_id', $cache_id);
