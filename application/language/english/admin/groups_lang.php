@@ -38,6 +38,7 @@ $lang['admin_groups_group_email_form_field_subject'] = 'subject';
 $lang['admin_groups_group_email_form_field_body'] = 'body';
 $lang['admin_groups_group_email_form_field_from'] = 'from';
 $lang['admin_groups_group_email_form_field_students'] = 'for students';
+$lang['admin_groups_group_email_form_label_sender_copy'] = 'Send message copy to myself.';
 $lang['admin_groups_group_email_button_select_all_students'] = 'Select all students';
 $lang['admin_groups_group_email_error_group_is_empty'] = 'This group is empty, can\'t send e-mail.';
 $lang['admin_groups_group_email_error_group_not_found'] = 'Group not found.';

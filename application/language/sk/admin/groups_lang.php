@@ -38,6 +38,7 @@ $lang['admin_groups_group_email_form_field_subject'] = 'subjekt';
 $lang['admin_groups_group_email_form_field_body'] = 'telo';
 $lang['admin_groups_group_email_form_field_from'] = 'od';
 $lang['admin_groups_group_email_form_field_students'] = 'pre študentov';
+$lang['admin_groups_group_email_form_label_sender_copy'] = 'Poslať kópiu správy ja sebe.';
 $lang['admin_groups_group_email_button_select_all_students'] = 'Vybrať všetkých študentov';
 $lang['admin_groups_group_email_error_group_is_empty'] = 'Táto skupina je prázdna, nemožno poslať e-mail.';
 $lang['admin_groups_group_email_error_group_not_found'] = 'Skupina sa nenašla.';
