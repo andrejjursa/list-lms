@@ -319,9 +319,11 @@ class LIST_Controller extends CI_Controller {
      * @param string $template_variables array of template variables.
      * @param string $from email addres of sender or NULL to use system address.
      * @param string $from_name name of sender.
+     * @param boolean $sender_copy enable sending of copy to sender email address.
+     * @param string $sender_email sender email address.
      * @return boolean TRUE, if all emails are sent, or FALSE if all or some emails failed to be send.
      */
-    protected function _send_multiple_emails($recipients, $subject, $template, $template_variables = array(), $from = NULL, $from_name = '') {
+    protected function _send_multiple_emails($recipients, $subject, $template, $template_variables = array(), $from = NULL, $from_name = '', $sender_copy = FALSE, $sender_email = '') {
         if ($recipients instanceof Teacher || $recipients instanceof Student) {
             $email_by_languages = array();
             if ($recipients->exists()) { foreach ($recipients->all as $recipient) {
@@ -349,6 +351,9 @@ class LIST_Controller extends CI_Controller {
                     foreach ($subrecipients as $recipient) {
                         $to_list[] = $recipient->email;
                     }
+                    if ($sender_copy === TRUE) {
+                        $to_list[] = $sender_email;
+                    }
                     $this->email->to($to_list);
                     $this->email->subject($email_subject);
                     $partial_result = $this->email->send();
@@ -356,6 +361,12 @@ class LIST_Controller extends CI_Controller {
                 } else {
                     foreach($subrecipients as $recipient) {
                         $this->email->to($recipient->email);
+                        $this->email->subject($email_subject);
+                        $partial_result = $this->email->send();
+                        $result = $result && $partial_result;
+                    }
+                    if ($sender_copy === TRUE) {
+                        $this->email->to($sender_email);
                         $this->email->subject($email_subject);
                         $partial_result = $this->email->send();
                         $result = $result && $partial_result;

@@ -75,6 +75,7 @@ $lang['admin_courses_mail_to_course_form_label_body'] = 'Message';
 $lang['admin_courses_mail_to_course_form_label_from'] = 'From';
 $lang['admin_courses_mail_to_course_form_label_from_system'] = 'System';
 $lang['admin_courses_mail_to_course_form_label_from_me'] = 'Me';
+$lang['admin_courses_mail_to_course_form_label_sender_copy'] = 'Send message copy to myself.';
 $lang['admin_courses_mail_to_course_form_submit_button'] = 'Send e-mail';
 $lang['admin_courses_mail_to_course_form_field_subject'] = 'subject';
 $lang['admin_courses_mail_to_course_form_field_body'] = 'message';

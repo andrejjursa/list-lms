@@ -24,7 +24,7 @@
                             {list_html_options
                                 options=[''=>'','system'=>'lang:admin_courses_mail_to_course_form_label_from_system','me'=>'lang:admin_courses_mail_to_course_form_label_from_me']
                                 selected=$smarty.post.course_mail.from}
-                        </select>
+                        </select> <label><input type="checkbox" name="course_mail[sender_copy]" value="1" {if !$smarty.post or $smarty.post.course_mail.sender_copy eq 1}checked="checked"{/if} /> {translate line="admin_courses_mail_to_course_form_label_sender_copy"}</label>
                     </div>
                     {form_error field='course_mail[from]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>

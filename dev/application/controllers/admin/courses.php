@@ -271,13 +271,15 @@ class Courses extends LIST_Controller {
                 if ($students->exists()) {
                     $from = NULL;
                     $from_name = '';
+                    $teacher = new Teacher();
+                    $teacher->get_by_id($this->usermanager->get_teacher_id());
                     if ($data['from'] == 'me') {
-                        $teacher = new Teacher();
-                        $teacher->get_by_id($this->usermanager->get_teacher_id());
                         $from = $teacher->email;
                         $from_name = $teacher->fullname;
                     }
-                    if ($this->_send_multiple_emails($students, $data['subject'], '{$data.body|add_base_url}', array('data' => $data), $from, $from_name)) {
+                    $sender_copy = isset($data['sender_copy']) && $data['sender_copy'] == 1 ? TRUE : FALSE;
+                    $sender_email = $teacher->email;
+                    if ($this->_send_multiple_emails($students, $data['subject'], '{$data.body|add_base_url}', array('data' => $data), $from, $from_name, $sender_copy, $sender_email)) {
                         $this->messages->add_message('lang:admin_courses_mail_to_course_success_sent', Messages::MESSAGE_TYPE_SUCCESS);
                     } else {
                         $this->messages->add_message('lang:admin_courses_mail_to_course_error_send_failed', Messages::MESSAGE_TYPE_ERROR);
