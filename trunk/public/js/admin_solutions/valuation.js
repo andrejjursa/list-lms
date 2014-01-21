@@ -91,6 +91,13 @@ jQuery(document).ready(function($) {
         });
     };
     
+    $(document).on('change', '#filter_form_id #zip_index_id', function(event) {
+        if ($(this).val() !== '') {
+            event.preventDefault();
+            load_file_content();
+        }
+    });
+    
     $(document).on('click', '#filter_form_id input[name="read_file_button"]', function(event) {
         event.preventDefault();
         load_file_content();
