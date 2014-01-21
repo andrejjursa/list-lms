@@ -257,7 +257,7 @@ class Task_set extends DataMapper {
                 $extension = '';
                 $ext_pos = strrpos($extracted_file, '.');
                 if ($ext_pos !== FALSE) { $extension = substr($extracted_file, $ext_pos + 1); }
-                if (in_array($extension, $supported_extensions)) {
+                if (in_array(strtolower($extension), $supported_extensions)) {
                     $zip_file->extractTo($extract_path, $extracted_file);
                     $content = @file_get_contents($extract_path . $extracted_file);
                     $filename = basename($extract_path . $extracted_file);
