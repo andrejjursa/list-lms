@@ -467,7 +467,7 @@ class Solutions extends LIST_Controller {
             $file_name = decode_from_url($solution_file);
             $output = $task_set->extract_student_file_by_index($file_name, $zip_index);
             if ($output !== FALSE) {
-                $this->output->set_output('<div class="codepreview_container"><pre class="codepreview prettyprint linenums lang-' . $output['extension'] . '">' . htmlspecialchars($output['content']) . '</pre></div>');
+                $this->output->set_output('<div class="codepreview_container"><pre class="codepreview prettyprint linenums lang-' . strtolower($output['extension']) . '">' . htmlspecialchars($output['content']) . '</pre></div>');
             } else {
                 $this->output->set_output($this->lang->line('admin_solutions_valuation_file_content_error_cant_read_file'));
             }
