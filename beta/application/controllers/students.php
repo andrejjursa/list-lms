@@ -13,6 +13,7 @@ class Students extends LIST_Controller {
         parent::__construct();
         $this->_init_language_for_student();
         $this->_load_student_langfile();
+        $this->_load_student_langfile('pagemenu');
         $this->student_registration_config = $this->config->item('student_registration');
     }
         
