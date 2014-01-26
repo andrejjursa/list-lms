@@ -30,6 +30,7 @@ class Tasks extends LIST_Controller {
         $this->parser->add_js_file('admin_tasks/filter.js');
         $this->parser->add_css_file('admin_tasks.css');
         $this->inject_stored_filter();
+        $this->inject_courses();
         $category = new Category();
         $structure = $category->get_all_structured();
         $this->parser->parse('backend/tasks/index.tpl', array('structure' => $structure, 'test_types' => get_all_supported_test_types()));
@@ -516,6 +517,16 @@ class Tasks extends LIST_Controller {
         }
         
         $this->parser->assign('teachers', $data);
+    }
+    
+    private function inject_courses() {
+        $courses = new Course();
+        $courses->include_related('period', 'name');
+        $courses->order_by_related('period', 'sorting', 'ASC');
+        $courses->order_by_with_constant('name', 'ASC');
+        $courses->get_iterated();
+        
+        $this->parser->assign('courses', $courses);
     }
     
 }

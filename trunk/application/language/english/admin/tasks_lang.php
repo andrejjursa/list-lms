@@ -81,3 +81,5 @@ $lang['admin_tasks_edit_warning_task_assigned_to_n_task_sets'] = 'Warning: this 
 $lang['admin_tasks_edit_tests_fieldset_legend_new_test'] = 'New test';
 $lang['admin_tasks_edit_tests_fieldset_legend_all_tests'] = 'All tests';
 $lang['admin_tasks_edit_button_create_new_test'] = 'Create new test';
+$lang['admin_tasks_selection_category'] = 'Categories:';
+$lang['admin_tasks_selection_course'] = 'Courses:';

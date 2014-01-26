@@ -81,3 +81,5 @@ $lang['admin_tasks_edit_warning_task_assigned_to_n_task_sets'] = 'Varovanie: tá
 $lang['admin_tasks_edit_tests_fieldset_legend_new_test'] = 'Nový test';
 $lang['admin_tasks_edit_tests_fieldset_legend_all_tests'] = 'Všetky testy';
 $lang['admin_tasks_edit_button_create_new_test'] = 'Vytvoriť nový test';
+$lang['admin_tasks_selection_category'] = 'Kategórie:';
+$lang['admin_tasks_selection_course'] = 'Kurzy:';

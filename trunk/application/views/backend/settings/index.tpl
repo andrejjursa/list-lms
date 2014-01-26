@@ -93,7 +93,7 @@
             </div>
             <div class="field">
                 <label for="config_email_smtp_pass_id">{translate line='admin_settings_form_label_email_smtp_pass'}:</label>
-                <p class="input"><input type="text" name="config[email][smtp_pass]" value="{$smarty.post.config.email.smtp_pass|default:$config.email.smtp_pass|escape:'html'}" id="config_email_smtp_pass_id" /></p>
+                <p class="input"><input type="password" name="config[email][smtp_pass]" value="{$smarty.post.config.email.smtp_pass|default:$config.email.smtp_pass|escape:'html'}" id="config_email_smtp_pass_id" /></p>
             </div>
             <div class="field">
                 <label for="config_email_smtp_port_id">{translate line='admin_settings_form_label_email_smtp_port'}:</label>

@@ -36,15 +36,32 @@ class Task extends DataMapper {
         $where_part = '';
         if (count($filter) > 0) {
             $clause = 0;
+            /*echo '<pre>';
+            print_r($filter);
+            echo '</pre>';*/
             foreach ($filter as $cats) {
                 if (count($cats) > 0) {
-                    $select_subquery .= ' LEFT OUTER JOIN `task_category_rel` `categories_' . $clause . '` ON `cat_tasks`.`id` = `categories_' . $clause . '`.`task_id` ';
                     $where_part .= (!empty($where_part) ? ' AND ' : '') . ' ( ';
                     $or_where_part = '';
+                    $category = FALSE;
+                    $task_set = FALSE;
                     foreach ($cats as $cat) {
-                        $category = new Category();
-                        $id_list = $category->get_id_list(intval($cat));
-                        $or_where_part .= (!empty($or_where_part) ? ' OR ' : '') . '`categories_' . $clause . '`.`category_id` IN (' . implode(', ', $id_list) . ') ';
+                        if (substr($cat, 0, 9) == 'category:') {
+                            if (!$category) {
+                                $select_subquery .= ' LEFT OUTER JOIN `task_category_rel` `categories_' . $clause . '` ON `cat_tasks`.`id` = `categories_' . $clause . '`.`task_id` ';
+                                $category = TRUE;
+                            }
+                            $category = new Category();
+                            $id_list = $category->get_id_list(intval(substr($cat, 9)));
+                            $or_where_part .= (!empty($or_where_part) ? ' OR ' : '') . '`categories_' . $clause . '`.`category_id` IN (' . implode(', ', $id_list) . ') ';
+                        } else if (substr($cat, 0, 7) == 'course:') {
+                            if (!$task_set) {
+                                $select_subquery .= ' LEFT OUTER JOIN `task_task_set_rel` `task_rel_' . $clause . '` ON `cat_tasks`.`id` = `task_rel_' . $clause . '`.`task_id` ';
+                                $select_subquery .= ' LEFT OUTER JOIN `task_sets` `task_set_' . $clause . '` ON `task_rel_' . $clause . '`.`task_set_id` = `task_set_' . $clause . '`.`id` ';
+                                $task_set = TRUE;
+                            }
+                            $or_where_part .= (!empty($or_where_part) ? ' OR ' : '') . '`task_set_' . $clause . '`.`course_id` = ' . intval(substr($cat, 7));
+                        }
                     }
                     $where_part .= $or_where_part . ' ) ';
                     $clause++;
@@ -54,6 +71,7 @@ class Task extends DataMapper {
         $where_part .= (!empty($where_part) ? ' AND ' : '') . ' `tasks`.`id` = `cat_tasks`.`id` ';
         $select_subquery .= ' WHERE ' . $where_part . ' GROUP BY `cat_tasks`.`id` ) ';
         $this->db->ar_where[] = ' EXISTS ' . $select_subquery;
+        //echo ' EXISTS ' . $select_subquery;
     }
     
     /**
