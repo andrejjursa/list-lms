@@ -4,6 +4,7 @@
     <h2>{translate line='admin_tasks_page_title'}</h2>
     {include file='partials/backend_general/flash_messages.tpl' inline}
     {include file='backend/categories/categories_parent_selector.tpl' inline}
+    {include file='backend/tasks/courses_selection.tpl' inline}
     <fieldset>
         <a href="{internal_url url='admin_tasks/new_task'}" class="button">{translate line='admin_tasks_new_task_button_label'}</a>
     </fieldset>
@@ -21,7 +22,12 @@
                                 {foreach $clause as $category}
                                     <span class="category{if $category@first} first_category{/if}" id="clause_{$clause@key}_category_{$category@key}_id">
                                         <select name="filter[categories][clauses][{$clause@key}][{$category@key}]" size="1">
-                                            {categories_tree_options structure=$structure selected=$category}
+                                            <optgroup label="{translate|escape:'html' line='admin_tasks_selection_category'}">
+                                                {categories_tree_options structure=$structure selected=$category prefix='category:'}
+                                            </optgroup>
+                                            <optgroup label="{translate|escape:'html' line='admin_tasks_selection_course'}">
+                                                {courses_selection courses=$courses selected=$category}
+                                            </optgroup>
                                         </select>
                                         <a href="javascript:void(0);" class="button special remove_category" rel="{$clause@key}|{$category@key}">-</a>
                                     </span>
@@ -78,9 +84,10 @@
 {/block}
 {block custom_head}<script type="text/javascript">
     {include file='backend/categories/categories_parent_selector.tpl' inline}
+    {include file='backend/tasks/courses_selection.tpl' inline}
     var messages = {
         delete_question: '{translate line="admin_tasks_javascript_message_delete_question"}',
         after_delete: '{translate line="admin_tasks_javascript_message_after_delete"}',
     }; 
-    var category_select_box = '<select name="" size="1">{categories_tree_options structure=$structure}</select>';
+    var category_select_box = '<select name="" size="1"><optgroup label="{translate|escape:'html' line='admin_tasks_selection_category'}">{categories_tree_options structure=$structure prefix='category:'}</optgroup><optgroup label="{translate|escape:'html' line='admin_tasks_selection_course'}">{courses_selection courses=$courses}</optgroup></select>';
 </script>{/block}
