@@ -38,7 +38,7 @@ class Students extends LIST_Controller {
             }
         }
         $uri_params = $this->uri->uri_to_assoc(3);
-        $this->parser->add_js_file('students/login.js');
+        $this->parser->add_js_file('students/login.js?1');
         $this->parser->parse('frontend/students/login.tpl', array('uri_params' => $uri_params));
     }
     
