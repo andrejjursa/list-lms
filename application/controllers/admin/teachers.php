@@ -26,7 +26,7 @@ class Teachers extends LIST_Controller {
                 redirect(create_internal_url($redirects['teacher']));
             }
         } else {
-            $this->parser->add_js_file('admin_teachers/login.js');
+            $this->parser->add_js_file('admin_teachers/login.js?1');
             $this->parser->parse('backend/teachers/login.tpl', array('uri_params' => $uri_params));
         }
     }
