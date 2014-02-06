@@ -5,7 +5,7 @@
     {include file='partials/frontend_general/flash_messages.tpl' inline}
     <fieldset>
         <legend>{translate_text text=$course->name} / {translate_text text=$course->period_name}</legend>
-        <div class="text">
+        <div class="text text_content">
         {if {overlay table='courses' table_id=$course->id column='description' default=$course->description}}
             {overlay|add_base_url table='courses' table_id=$course->id column='description' default=$course->description}
         {else}
