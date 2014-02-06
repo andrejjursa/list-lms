@@ -1,6 +1,8 @@
+@import url('content_styles.css');
+
 * { margin: 0; padding: 0; }
 
-body { background-color: silver; font-size: 14px; font-family: Verdana, Arial; }
+body { background-color: silver; font-size: 14px; font-family: Verdana, Arial; margin: 0; padding: 0; }
 
 #top_meta_informations { background-color: #322f32; color: white; box-shadow: 0px 5px 5px 2px #322f32; margin-bottom: 10px; font-size: 0.8em; position: fixed; z-index: 1; width: 100%; left: 0; top: 0; }
 #top_meta_informations div.left { float: left; padding: 5px 4px 3px 4px; }
@@ -17,14 +19,17 @@ body { background-color: silver; font-size: 14px; font-family: Verdana, Arial; }
 #registrationboxwrap { padding: 20px; }
 #leftwrap { text-align: left; float: left; width: 200px; }
 #leftwrap > div.internal_padding { padding: 3px; }
-#leftwrap > div.title { padding: 3px; background-color: #444444; color: white; border-top-left-radius: 3px; border-top-right-radius: 3px; text-align: center; }
+#leftwrap > div.title { margin:0; padding: 3px; background-color: #444444; color: white; border-top-left-radius: 3px; border-top-right-radius: 3px; text-align: center; }
+#leftwrap > div.title h4 { margin: 0; padding: 0; }
 #rightwrap { text-align: left; margin-left: 205px; }
 #rightwrap > div.internal_padding { padding: 5px; }
+#rightwrap > div.internal_padding > h1 { margin: 0; padding: 0; }
 
 #rightwrap > div.internal_padding > fieldset, fieldset.basefieldset { background-color: #f0f0f0; border: 1px solid black; border-radius: 10px; padding: 10px; margin: 4px 0; box-shadow: 3px 3px 6px gray; }
 #rightwrap > div.internal_padding > fieldset > legend, fieldset.basefieldset > legend { background-color: #f0f0f0; border: 1px solid black; min-width: 50%; padding: 3px 10px; border-radius: 50px; font-weight: bold; }
 #rightwrap > div.internal_padding > h1 { margin-bottom: 10px; text-shadow: 2px 2px 2px silver; }
 
+#pagemenu, #pagemenu ul, #pagemenu ul li { margin: 0; padding: 0; }
 #pagemenu, 
 #pagemenu > li > ul, 
 #pagemenu > li > ul > li > ul { list-style-type: none; }
