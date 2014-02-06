@@ -117,5 +117,24 @@ jQuery(document).ready(function($) {
     
     $('#filter_form_id').activeForm().applyConditions();
     
+    $(document).on('click', '#table_content_id a.preview_task_set', function(event) {
+        event.preventDefault();
+        $.fancybox($(this).attr('href'), {
+            type: 'iframe',
+            width: '75%',
+            height: '100%',
+            autoSize: false,
+            autoHeight: false,
+            autoWidth: false,
+            helpers: {
+                overlay: {
+                    css: {
+                        background: 'rgba(255,255,255,0)'
+                    }
+                }
+            }
+        });
+    });
+    
     reload_all_task_sets();
 });

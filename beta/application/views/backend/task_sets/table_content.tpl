@@ -12,12 +12,12 @@
             {if $filter.fields.published}<th class="sort:published:desc">{translate line='admin_task_sets_table_header_published'}</th>{/if}
             {if $filter.fields.publish_start_time}<th class="sort:publish_start_time:desc">{translate line='admin_task_sets_table_header_publish_start_time'}</th>{/if}
             {if $filter.fields.upload_end_time}<th class="sort:upload_end_time:desc">{translate line='admin_task_sets_table_header_upload_end_time'}</th>{/if}
-            <th colspan="5" class="controlls"><div id="open_fields_config_id">{translate line='admin_task_sets_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
+            <th colspan="6" class="controlls"><div id="open_fields_config_id">{translate line='admin_task_sets_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
     </thead>
     <tfoot id="table_pagination_footer_id">
         <tr>
-            <td colspan="{6 + $filter.fields|sum_array}">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
+            <td colspan="{7 + $filter.fields|sum_array}">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
         </tr>
     </tfoot>
     <tbody>
@@ -69,6 +69,7 @@
             </td>{/if}
             <td class="controlls"><a href="{internal_url url="admin_task_sets/clone_task_set/task_set_id/{$task_set->id}"}" class="button special clone_task_set" title="{translate line='admin_task_sets_table_button_clone_task_set'}"><span class="list-icon list-icon-copy"></span></a></td>
             <td class="controlls">{if $task_set->comments_enabled}<a href="{internal_url url="admin_task_sets/comments/{$task_set->id}"}" class="button special" title="{translate line='admin_task_sets_table_button_discussion'}"><span class="list-icon list-icon-comment"></span> [{$task_set->comment_count}]</a>{/if}</td>
+            <td class="controlls"><a href="{internal_url url="admin_task_sets/preview/{$task_set->id}"}" class="button special preview_task_set" title="{translate line='admin_task_sets_table_button_preview'}"><span class="list-icon list-icon-page-preview"></span></a></td>
             <td class="controlls"><a href="{internal_url url="admin_task_sets/open/task_set_id/{$task_set->id}"}" class="button special open_task_set_button" title="{translate line='admin_task_sets_table_button_open'}"><span class="list-icon list-icon-task-set-open"></span></a></td>
             <td class="controlls"><a href="{internal_url url="admin_task_sets/edit/task_set_id/{$task_set->id}"}" class="button" title="{translate line='admin_task_sets_table_button_edit'}"><span class="list-icon list-icon-edit"></span></a></td>
             <td class="controlls"><a href="{internal_url url="admin_task_sets/delete/task_set_id/{$task_set->id}"}" class="button delete" title="{translate line='admin_task_sets_table_button_delete'}"><span class="list-icon list-icon-delete"></span></a></td>

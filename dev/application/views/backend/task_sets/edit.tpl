@@ -149,7 +149,7 @@
                                 <div class="field">
                                     <div class="input">
                                         <div class="task">
-                                            {overlay|add_base_url table='tasks' column='text' table_id=$task->id default=$task->text}
+                                            <div class="text_content">{overlay|add_base_url table='tasks' column='text' table_id=$task->id default=$task->text}</div>
                                             <hr />
                                             <a href="{internal_url url="admin_tasks/edit/task_id/{$task->id}"}" target="_blank" class="button special">{translate line='admin_task_sets_edit_task_button'}</a>
                                         </div>

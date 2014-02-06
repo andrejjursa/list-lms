@@ -39,7 +39,9 @@
     </fieldset>
     <fieldset>
         <legend>{overlay table='tasks' table_id=$task->id column='name' default=$task->name}</legend>
+        <div class="text_content">
         {overlay|add_base_url table='tasks' table_id=$task->id column='text' default=$task->text}
+        </div>
     </fieldset>
     {/if}
 {/block}

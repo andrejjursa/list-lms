@@ -16,7 +16,7 @@
                     {$instructions_text = {overlay table='task_sets' table_id=$task_set->id|intval column='instructions' default=$task_set->instructions}}
                     {if $instructions_text}
                     <h3>{translate line='tasks_instructions_header'}</h3>
-                    <div class="instructions_text">
+                    <div class="instructions_text text_content">
                         {$instructions_text|add_base_url}
                     </div>
                     {/if}
@@ -24,7 +24,7 @@
                     {$this->lang->init_overlays('tasks', $tasks->all, ['name', 'text'])}
                     {foreach $tasks->all as $task}
                     <h3>{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}{if $task->join_bonus_task} <span class="bonus_task">({translate line='tasks_task_is_bonus_task'})</span>{/if}</h3>
-                    <div class="task_text">
+                    <div class="task_text text_content">
                     {overlay|add_base_url table='tasks' table_id=$task->id column='text' default=$task->text}
                     </div>{$files = $task->get_task_files()}
                     {if count($files) > 0}

@@ -3,7 +3,9 @@
 {block main_content}
     {if $task->exists()}
         <h3>{overlay|escape:'html' table='tasks' table_id=$task->id column='name' default=$task->name}</h3>
+        <div class="text_content">
         {overlay|add_base_url table='tasks' table_id=$task->id column='text' default=$task->text}
+        </div>
         <div id="preview_tasks_id">
             <ul>
             {foreach $files as $file}

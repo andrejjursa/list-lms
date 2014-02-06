@@ -363,6 +363,13 @@ class Task_sets extends LIST_Controller {
         }
     }
     
+    public function preview($task_set_id = null) {
+        $task_set = new Task_set();
+        $task_set->get_by_id((int)$task_set_id);
+        
+        $this->parser->parse('backend/task_sets/preview.tpl', array('task_set' => $task_set));
+    }
+
     public function open() {
         $url = $this->uri->ruri_to_assoc(3);
         $task_set_id = isset($url['task_set_id']) ? intval($url['task_set_id']) : 0;
