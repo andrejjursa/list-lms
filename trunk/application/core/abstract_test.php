@@ -326,6 +326,7 @@ abstract class abstract_test {
         if ($single_file_handle) {
             $this->CI->load->library('upload');
             $mimes_zip = $this->CI->upload->mimes_types('zip');
+            $mimes_zip = is_array($mimes_zip) ? $mimes_zip : array($mimes_zip);
             $finfo = finfo_open(FILEINFO_MIME_TYPE);
             $file_location = $_FILES['configuration_test_files_' . $field_name]['tmp_name'];
             $file_mime_type = finfo_file($finfo, $file_location);
@@ -353,7 +354,7 @@ abstract class abstract_test {
                         return FALSE;
                     }
                 } else {
-                    $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->CI->upload->display_errors('', ''));
+                    $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->CI->upload->display_errors('', '') . ' (' . $file_mime_type . ')');
                     return FALSE;
                 }
             }
