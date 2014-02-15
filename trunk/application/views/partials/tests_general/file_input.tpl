@@ -11,8 +11,6 @@
     </div>
     {$error_message_variable = "configuration_test_files_{$field_name}_error"}
     {if ${$error_message_variable}}
-    <div class="input">
-        {include file='partials/backend_general/error_box.tpl' message=${$error_message_variable} inline}
-    </div>
+    {include file='partials/backend_general/error_message.tpl' message=${$error_message_variable} inline}
     {/if}
 </div>

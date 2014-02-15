@@ -1,0 +1,1 @@
+<p class="error"><span class="message">{translate_text text=$message}</span></p>

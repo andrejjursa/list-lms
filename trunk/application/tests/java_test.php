@@ -63,7 +63,7 @@ class java_test extends abstract_test {
             $data = $this->upload_file('unit_test', 'zip_file', 'zip', array(
                 'overwrite' => TRUE,
                 'file_name' => 'unit_test.zip',
-            ));
+            ), TRUE, 'java', 'unit_test.zip');
             if ($data === FALSE) {
                 $valid = FALSE;
             } else {

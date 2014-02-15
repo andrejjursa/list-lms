@@ -314,11 +314,51 @@ abstract class abstract_test {
      * Proccess uploaded file.
      * @param string $folder name of directory inside test working directory where the file will be uploaded.
      * @param string $field_name name of configuration constant and form input (in the form of configuration_test_files_&lt;$field_name&gt;.
-     * @param string $allowed allowed file types, pipe separated list of extensions, like: txt|zip
+     * @param string $allowed allowed file types, pipe separated list of extensions, like: txt|zip.
      * @param array<mixed> $additional_config optional additional configuration (see CodeIgniter manual for upload library).
+     * @param boolean $single_file_handle set to TRUE means that additional file types will be handled as single file and ZIPed.
+     * @param string $single_file_allowed file types for single file, pipe separated list of extensions, like: txt|zip.
+     * @param string $single_file_target_zip_filename target zip file name.
+     * @param string $single_file_additional_config additional upload configuration.
      * @return boolean|array<mixed> return FALSE if upload failed, or uploaded file data on success (see CodeIgniter manual for upload library, specificaly $this->upload->data() method).
      */
-    protected function upload_file($folder, $field_name, $allowed = 'zip', $additional_config = array()) {
+    protected function upload_file($folder, $field_name, $allowed = 'zip', $additional_config = array(), $single_file_handle = FALSE, $single_file_allowed = '', $single_file_target_zip_filename = '', $single_file_additional_config = array()) {
+        if ($single_file_handle) {
+            $this->CI->load->library('upload');
+            $mimes_zip = $this->CI->upload->mimes_types('zip');
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $file_location = $_FILES['configuration_test_files_' . $field_name]['tmp_name'];
+            $file_mime_type = finfo_file($finfo, $file_location);
+            finfo_close($finfo);
+            if (!in_array($file_mime_type, $mimes_zip)) {
+                if (array_key_exists('upload_path', $single_file_additional_config)) { unset($single_file_additional_config['upload_path']); }
+                if (array_key_exists('allowed_types', $single_file_additional_config)) { unset($single_file_additional_config['allowed_types']); }
+                if (array_key_exists('encrypt_name', $single_file_additional_config)) { unset($single_file_additional_config['encrypt_name']); }
+                $config = array_merge(array(
+                    'upload_path' => 'private/uploads/unit_tests/test_' . $this->get_current_test_id() . '/' . trim($folder, '\\/') . '/',
+                    'allowed_types' => $single_file_allowed,
+                    'max_size' => 2048,
+                    'encrypt_name' => TRUE,
+                ), $single_file_additional_config);
+                $this->CI->load->library('upload');
+                $this->CI->upload->initialize($config);
+                $this->create_directory($config['upload_path']);
+                if ($this->CI->upload->do_upload('configuration_test_files_' . $field_name)) {
+                    $data = $this->CI->upload->data();
+                    if ($this->zip_plain_file_to_archive($single_file_target_zip_filename, $config['upload_path'], $data['file_name'], $data['orig_name'])) {
+                        $data['file_name'] = $single_file_target_zip_filename;
+                        return $data;
+                    } else {
+                        $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->lang->line('tests_general_error_single_file_zip_error'));
+                        return FALSE;
+                    }
+                } else {
+                    $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->CI->upload->display_errors('', ''));
+                    return FALSE;
+                }
+            }
+        }
+        
         if (array_key_exists('upload_path', $additional_config)) { unset($additional_config['upload_path']); }
         if (array_key_exists('allowed_types', $additional_config)) { unset($additional_config['allowed_types']); }
         $config = array_merge(array(
@@ -332,7 +372,7 @@ abstract class abstract_test {
         if ($this->CI->upload->do_upload('configuration_test_files_' . $field_name)) {
             return $this->CI->upload->data();
         } else {
-            $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->CI->upload->display_errors());
+            $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->CI->upload->display_errors('', ''));
             return FALSE;
         }
     }
@@ -405,6 +445,29 @@ abstract class abstract_test {
         }
     }
     
+    private function zip_plain_file_to_archive($zip_name, $path, $file_to_zip, $original_file_name) {
+        $clear_path = rtrim($path, '/\\') . '/';
+        if (file_exists($clear_path . $zip_name) && file_exists($clear_path . $file_to_zip)) {
+            $rand_zip_name = '';
+            do {
+                $rand_zip_name = 'temp_' . rand(1000, 9999) . '_' . $zip_name;
+            } while (file_exists($clear_path . $rand_zip_name));
+            
+            $zip = new ZipArchive();
+            if ($zip->open($clear_path . $rand_zip_name, ZipArchive::CREATE) === TRUE) {
+                $zip->addFile($clear_path . $file_to_zip, $original_file_name);
+                $zip->close();
+                @unlink($clear_path . $file_to_zip);
+                @unlink($clear_path . $zip_name);
+                rename($clear_path . $rand_zip_name, $clear_path . $zip_name);
+                return TRUE;
+            }
+        }
+        if (file_exists($clear_path . $file_to_zip)) {
+            @unlink($clear_path . $file_to_zip);
+        }
+        return FALSE;
+    }
 }
 
 class TestException extends Exception {
