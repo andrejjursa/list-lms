@@ -808,6 +808,8 @@ class Solutions extends LIST_Controller {
                     $solution->revalidate = 1;
                     $solution->save();
                     if ($this->db->trans_status()) {
+                        $log = new Log();
+                        $log->add_teacher_solution_upload_log(sprintf($this->lang->line('admin_solutions_upload_log_message'), $config['file_name']), $this->usermanager->get_teacher_id(), $solution->student_id, $solution->id);
                         $this->db->trans_commit();
                         $this->messages->add_message('lang:admin_solutions_upload_success', Messages::MESSAGE_TYPE_SUCCESS);
                         $this->_action_success();

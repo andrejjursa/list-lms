@@ -31,6 +31,7 @@ $lang['tasks_task_error_cant_upload_solution'] = 'Solution upload failed. You ar
 $lang['tasks_task_error_cant_zip_file'] = 'Can\'t compress file you have submitted to ZIP archive.';
 $lang['tasks_task_solution_canceled_due_db_error'] = 'Solution was uploaded, but it must be canceled due to database error.';
 $lang['tasks_task_solution_uploaded'] = 'Solution was uploaded successfully.';
+$lang['tasks_task_solution_upload_log_message'] = 'Student uploaded solution file %s.';
 $lang['tasks_task_solution_table_header_version'] = 'Vers.';
 $lang['tasks_task_solution_table_header_file'] = 'File';
 $lang['tasks_task_solution_table_header_size'] = 'Size';

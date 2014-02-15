@@ -31,6 +31,7 @@ $lang['tasks_task_error_cant_upload_solution'] = 'Zlyhanie pri odovzdaní rieše
 $lang['tasks_task_error_cant_zip_file'] = 'Nepodarilo sa zabaliť tvoj odoslaný súbor do ZIP archívu.';
 $lang['tasks_task_solution_canceled_due_db_error'] = 'Riešenie bolo uploadované, ale muselo byť zrušené kvôli chybe v databáze.';
 $lang['tasks_task_solution_uploaded'] = 'Riešenie bolo úspešne uploadované.';
+$lang['tasks_task_solution_upload_log_message'] = 'Študent nahral súbor riešenia %s.';
 $lang['tasks_task_solution_table_header_version'] = 'Verz.';
 $lang['tasks_task_solution_table_header_file'] = 'Súbor';
 $lang['tasks_task_solution_table_header_size'] = 'Veľkosť';

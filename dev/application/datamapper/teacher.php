@@ -113,6 +113,13 @@ $cache = array (
       array (
       ),
     ),
+    'log' => 
+    array (
+      'field' => 'log',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -181,6 +188,17 @@ $cache = array (
       'other_field' => 'teacher',
       'join_self_as' => 'teacher',
       'join_other_as' => 'solution',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'log' => 
+    array (
+      'class' => 'log',
+      'other_field' => 'teacher',
+      'join_self_as' => 'teacher',
+      'join_other_as' => 'log',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

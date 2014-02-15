@@ -111,10 +111,12 @@ class Tasks extends LIST_Controller {
                 $solution->where('student_id', $student->id);
                 $solution->get();
                 if ($solution->exists()) {
+                    $solution->ip_address = $_SERVER["REMOTE_ADDR"];
                     $solution->revalidate = 1;
                     $solution->save();
                 } else {
                     $solution = new Solution();
+                    $solution->ip_address = $_SERVER["REMOTE_ADDR"];
                     $solution->revalidate = 1;
                     $solution->save(array(
                         'student' => $student, 
@@ -122,6 +124,8 @@ class Tasks extends LIST_Controller {
                     ));
                 }
                 if ($this->db->trans_status()) {
+                    $log = new Log();
+                    $log->add_student_solution_upload_log(sprintf($this->lang->line('tasks_task_solution_upload_log_message'), $config['file_name']), $student, $solution->id);
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:tasks_task_solution_uploaded', Messages::MESSAGE_TYPE_SUCCESS);
                     $this->_action_success();

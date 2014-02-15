@@ -55,6 +55,7 @@ $lang['admin_solutions_list_table_header_valuation'] = 'Hodnotenie';
 $lang['admin_solutions_list_table_header_points'] = 'Body';
 $lang['admin_solutions_list_table_header_comment'] = 'Komentár';
 $lang['admin_solutions_list_table_header_teacher'] = 'Učiteľ';
+$lang['admin_solutions_list_table_header_ip_address'] = 'IP adresa<br />posledného nahrania';
 $lang['admin_solutions_list_table_button_valuate'] = 'Hodnotiť';
 $lang['admin_solutions_list_table_button_file_upload'] = 'Odoslať&nbsp;súbor&nbsp;riešenia';
 $lang['admin_solutions_list_form_label_student'] = 'Študent';
@@ -144,5 +145,6 @@ $lang['admin_solutions_upload_task_set_not_found'] = 'Zostava úloh pridružená
 $lang['admin_solutions_upload_failed'] = 'Nahrávanie neúspešné.';
 $lang['admin_solutions_upload_success'] = 'Nahrávanie úspešné.';
 $lang['admin_solutions_upload_cant_zip_file'] = 'Chyba kompresie vášho súboru.';
+$lang['admin_solutions_upload_log_message'] = 'Učiteľ nahral súbor riešenia %s pre študenta.';
 
 $lang['admin_solutions_student_selection_not_in_group'] = 'Bez skupiny';

@@ -20,6 +20,7 @@ class Student extends DataMapper {
             'join_other_as' => 'comment_subscription',
             'join_table' => 'task_set_comment_subscription_rel',
         ),
+        'log',
     );
     
     public $has_one = array(
