@@ -610,7 +610,7 @@ class Solutions extends LIST_Controller {
             }
             $students->where_related('participant', 'allowed', 1);
             if ($filter['order_by_field'] == 'students') {
-                $students->order_by('fullname', $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc');
+                $students->order_by_as_fullname('fullname', $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc');
             }
             $students->get_iterated();
             
