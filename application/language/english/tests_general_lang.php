@@ -14,3 +14,4 @@ $lang['tests_general_error_configure_before_save_not_exists'] = 'Before save met
 $lang['tests_general_error_configure_uploader_not_exists'] = 'Upload handler method is set but does not exists.';
 $lang['tests_general_error_file_not_found'] = 'File not found: %s';
 $lang['tests_general_error_not_a_zip_file'] = 'File is not a zip archive: %s';
+$lang['tests_general_error_single_file_zip_error'] = 'Uploaded file failed to be ZIPed.';
