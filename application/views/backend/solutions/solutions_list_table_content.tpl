@@ -12,6 +12,7 @@
         {/if}
     </td>
     <td>{$task_set->get_student_files_count($solution->student_id)|intval}</td>
+    <td>{$solution->ip_address}</td>
     {if is_null($solution->points)}
     <td colspan="3">{translate line='admin_solutions_list_solution_not_valuated'}</td>
     {else}

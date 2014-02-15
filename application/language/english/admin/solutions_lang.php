@@ -55,6 +55,7 @@ $lang['admin_solutions_list_table_header_valuation'] = 'Valuation';
 $lang['admin_solutions_list_table_header_points'] = 'Points';
 $lang['admin_solutions_list_table_header_comment'] = 'Comment';
 $lang['admin_solutions_list_table_header_teacher'] = 'Teacher';
+$lang['admin_solutions_list_table_header_ip_address'] = 'Last upload<br />IP address';
 $lang['admin_solutions_list_table_button_valuate'] = 'Valuate';
 $lang['admin_solutions_list_table_button_file_upload'] = 'Upload&nbsp;solution&nbsp;file';
 $lang['admin_solutions_list_form_label_student'] = 'Student';
@@ -144,5 +145,6 @@ $lang['admin_solutions_upload_task_set_not_found'] = 'Task set related to this s
 $lang['admin_solutions_upload_failed'] = 'Upload failed.';
 $lang['admin_solutions_upload_success'] = 'Upload successful.';
 $lang['admin_solutions_upload_cant_zip_file'] = 'Error compressing your file.';
+$lang['admin_solutions_upload_log_message'] = 'Teacher uploaded solution file %s for student.';
 
 $lang['admin_solutions_student_selection_not_in_group'] = 'Not in group';

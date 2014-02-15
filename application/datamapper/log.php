@@ -1,19 +1,20 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 $cache = array (
-  'table' => 'solutions',
+  'table' => 'logs',
   'fields' => 
   array (
     0 => 'id',
     1 => 'updated',
     2 => 'created',
-    3 => 'task_set_id',
-    4 => 'student_id',
-    5 => 'teacher_id',
-    6 => 'comment',
-    7 => 'points',
-    8 => 'revalidate',
-    9 => 'not_considered',
-    10 => 'ip_address',
+    3 => 'message',
+    4 => 'ip_address',
+    5 => 'language',
+    6 => 'log_type',
+    7 => 'student_id',
+    8 => 'teacher_id',
+    9 => 'affected_table',
+    10 => 'affected_row_primary_id',
+    11 => 'additional_data',
   ),
   'validation' => 
   array (
@@ -39,9 +40,30 @@ $cache = array (
       array (
       ),
     ),
-    'task_set_id' => 
+    'message' => 
     array (
-      'field' => 'task_set_id',
+      'field' => 'message',
+      'rules' => 
+      array (
+      ),
+    ),
+    'ip_address' => 
+    array (
+      'field' => 'ip_address',
+      'rules' => 
+      array (
+      ),
+    ),
+    'language' => 
+    array (
+      'field' => 'language',
+      'rules' => 
+      array (
+      ),
+    ),
+    'log_type' => 
+    array (
+      'field' => 'log_type',
       'rules' => 
       array (
       ),
@@ -60,44 +82,23 @@ $cache = array (
       array (
       ),
     ),
-    'comment' => 
+    'affected_table' => 
     array (
-      'field' => 'comment',
+      'field' => 'affected_table',
       'rules' => 
       array (
       ),
     ),
-    'points' => 
+    'affected_row_primary_id' => 
     array (
-      'field' => 'points',
+      'field' => 'affected_row_primary_id',
       'rules' => 
       array (
       ),
     ),
-    'revalidate' => 
+    'additional_data' => 
     array (
-      'field' => 'revalidate',
-      'rules' => 
-      array (
-      ),
-    ),
-    'not_considered' => 
-    array (
-      'field' => 'not_considered',
-      'rules' => 
-      array (
-      ),
-    ),
-    'ip_address' => 
-    array (
-      'field' => 'ip_address',
-      'rules' => 
-      array (
-      ),
-    ),
-    'task_set' => 
-    array (
-      'field' => 'task_set',
+      'field' => 'additional_data',
       'rules' => 
       array (
       ),
@@ -119,22 +120,11 @@ $cache = array (
   ),
   'has_one' => 
   array (
-    'task_set' => 
-    array (
-      'class' => 'task_set',
-      'other_field' => 'solution',
-      'join_self_as' => 'solution',
-      'join_other_as' => 'task_set',
-      'join_table' => '',
-      'reciprocal' => false,
-      'auto_populate' => NULL,
-      'cascade_delete' => true,
-    ),
     'student' => 
     array (
       'class' => 'student',
-      'other_field' => 'solution',
-      'join_self_as' => 'solution',
+      'other_field' => 'log',
+      'join_self_as' => 'log',
       'join_other_as' => 'student',
       'join_table' => '',
       'reciprocal' => false,
@@ -144,8 +134,8 @@ $cache = array (
     'teacher' => 
     array (
       'class' => 'teacher',
-      'other_field' => 'solution',
-      'join_self_as' => 'solution',
+      'other_field' => 'log',
+      'join_self_as' => 'log',
       'join_other_as' => 'teacher',
       'join_table' => '',
       'reciprocal' => false,

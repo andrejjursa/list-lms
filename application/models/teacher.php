@@ -27,6 +27,7 @@ class Teacher extends DataMapper {
         'room' => array(
             'join_table' => 'rooms_teachers_rel',
         ),
+        'log',
     );
     public $has_one = array(
         'prefered_course' => array(
