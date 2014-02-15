@@ -448,7 +448,7 @@ abstract class abstract_test {
     
     private function zip_plain_file_to_archive($zip_name, $path, $file_to_zip, $original_file_name) {
         $clear_path = rtrim($path, '/\\') . '/';
-        if (file_exists($clear_path . $zip_name) && file_exists($clear_path . $file_to_zip)) {
+        if (file_exists($clear_path . $file_to_zip)) {
             $rand_zip_name = '';
             do {
                 $rand_zip_name = 'temp_' . rand(1000, 9999) . '_' . $zip_name;
@@ -459,13 +459,12 @@ abstract class abstract_test {
                 $zip->addFile($clear_path . $file_to_zip, $original_file_name);
                 $zip->close();
                 @unlink($clear_path . $file_to_zip);
-                @unlink($clear_path . $zip_name);
+                if (file_exists($clear_path . $zip_name)) {
+                    @unlink($clear_path . $zip_name);
+                }
                 rename($clear_path . $rand_zip_name, $clear_path . $zip_name);
                 return TRUE;
             }
-        }
-        if (file_exists($clear_path . $file_to_zip)) {
-            @unlink($clear_path . $file_to_zip);
         }
         return FALSE;
     }
