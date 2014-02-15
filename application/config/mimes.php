@@ -10,7 +10,7 @@
 
 $mimes = array(	'hqx'	=>	'application/mac-binhex40',
                                 'hs'    =>      'text/plain',
-                                'py'    =>      array('text/plain', 'application/x-python'),
+                                'py'    =>      array('text/plain', 'application/x-python', 'text/x-python'),
                                 'pas'   =>      'text/plain',
                                 'java'  =>      array('text/plain', 'text/x-java-source', 'text/java', 'text/x-java', 'application/ms-java', 'text/x-c'),
                                 'css'   =>      array('text/plain', 'text/css', 'application/css-stylesheet'),
