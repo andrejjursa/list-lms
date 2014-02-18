@@ -14,7 +14,7 @@ class Tests extends LIST_Controller {
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
         $this->_init_teacher_quick_prefered_course_menu();
-        if ($this->router->method != 'run_test_for_task') {
+        if ($this->router->method != 'run_test_for_task' && $this->router->method != 'request_token') {
             $this->usermanager->teacher_login_protected_redirect();
         }
     }
@@ -130,6 +130,7 @@ class Tests extends LIST_Controller {
                 $test_data = $this->input->post('test');
                 $test->name = $test_data['name'];
                 $test->enabled = isset($test_data['enabled']) ? 1 : 0;
+                $test->enable_scoring = isset($test_data['enable_scoring']) ? 1 : 0;
                 $test->instructions = isset($test_data['instructions']) ? remove_base_url($test_data['instructions']) : '';
                 $can_save = TRUE;
                 try {
@@ -258,7 +259,7 @@ class Tests extends LIST_Controller {
         }
     }
 
-    public function run_test_for_task($test_id, $task_set_id, $student_id, $version) {
+    public function run_test_for_task($test_id, $task_set_id, $student_id, $version, $token = '') {
         $task_set = new Task_set();
         $task_set->get_by_id(intval($task_set_id));
         $student = new Student();
@@ -325,5 +326,15 @@ class Tests extends LIST_Controller {
         } else {
             $this->output->set_status_header(404, 'Not found');
         }
+    }
+    
+    public function request_token() {
+        $this->load->model('test_score');
+        
+        $this->output->set_content_type('application/json');
+        
+        $token = $this->test_score->request_token();
+        
+        $this->output->set_output(json_encode($token));
     }
 }

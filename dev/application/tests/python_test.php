@@ -26,7 +26,7 @@ class python_test extends abstract_test {
         return $this->CI->lang->line('tests_python_type_name');
     }
     
-    protected function run_unit_test() {
+    protected function run_unit_test($save_score = FALSE, $score_token = '', $score_student = NULL) {
         $working_directory = $this->make_test_directory();
         $this->extract_zip_to($this->get_input_zip_file());
         $this->extract_zip_to($this->get_current_test_source_directory() . $this->get_current_test_configuration_value('zip_file'));
