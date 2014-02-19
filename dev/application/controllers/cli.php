@@ -48,7 +48,8 @@ class Cli extends CI_Controller {
                 echo $this->migration->error_string();
             } else {
                 echo 'SUCCESS!' . "\n";
-                echo 'Cache cleared, ' . $cleared . ' files deleted.';
+                $this->_recreate_production_cache();
+                echo 'Cache refreshed, ' . $cleared . ' old cache files deleted.';
             }
         } elseif (is_numeric($migration) && intval($migration) > 0) {
             $answer = $this->_get_cli_user_input('Do you realy want to update database to version ' . $migration . '? (yes)');
@@ -62,7 +63,8 @@ class Cli extends CI_Controller {
                 echo $this->migration->error_string();
             } else {
                 echo 'SUCCESS!' . "\n";
-                echo 'Cache cleared, ' . $cleared . ' files deleted.';
+                $this->_recreate_production_cache();
+                echo 'Cache refreshed, ' . $cleared . ' old cache files deleted.';
             }
         } else {
             echo 'Can\'t execute command!';
@@ -291,4 +293,31 @@ class Cli extends CI_Controller {
         return $varin;
     }
     
+    /**
+     * Create new cache files for DataMapper if production cache is enabled.
+     */
+    private function _recreate_production_cache() {
+        $this->config->load('datamapper', TRUE);
+        $production_cache = $this->config->item('production_cache', 'datamapper');
+        if (!empty($production_cache) && file_exists($production_cache) && is_dir($production_cache)) {
+            include APPPATH . '../system/core/Model.php';
+            $path = APPPATH . 'models/';
+            if (file_exists($path)) {
+                $files = scandir($path);
+                foreach ($files as $file) {
+                    $ext = pathinfo($file, PATHINFO_EXTENSION);
+                    $class_name = basename($file, '.' . $ext);
+                    $class_name = strtoupper(substr($class_name, 0, 1)) . strtolower(substr($class_name, 1));
+                    if (strtolower($ext) == 'php') {
+                        include $path . $file;
+                        if (class_exists($class_name) && in_array('DataMapper', class_parents($class_name))) {
+                            echo '  DataMapper model ' . $class_name . ' cached again ...' . "\n";
+                            $model = new $class_name();
+                            $model->limit(1)->get_iterated();
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
