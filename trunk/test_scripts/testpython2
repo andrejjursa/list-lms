@@ -8,4 +8,3 @@ TIMEOUT=90000
 PYTHON_ARGS=""
 #
 nice /opt/lampp/htdocs/list-svn/dev/test_scripts/run_with_timeout $TIMEOUT /usr/bin/python3.3 $PYTHON_ARGS Test$1.py 
-cd .. ;
