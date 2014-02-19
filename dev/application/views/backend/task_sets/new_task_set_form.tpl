@@ -85,6 +85,10 @@
     </div>
 </div>
 <div class="field">
+    <label for="task_set_enable_tests_scoring_id">{translate line='admin_task_sets_form_label_enable_tests_scoring'}:</label>
+    <p class="input"><input type="checkbox" name="task_set[enable_tests_scoring]" value="1" id="task_set_enable_tests_scoring_id"{if $smarty.post.task_set.enable_tests_scoring} checked="checked"{/if} /></p>
+</div>
+<div class="field">
     <label for="task_set_internal_comment_id">{translate line='admin_task_sets_form_label_internal_comment'}:</label>
     <div class="input">
         <textarea name="task_set[internal_comment]" id="task_set_internal_comment_id">{$smarty.post.task_set.internal_comment|escape:'html'}</textarea>

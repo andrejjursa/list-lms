@@ -227,6 +227,7 @@ class Task_sets extends LIST_Controller {
             $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
             $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
             $task_set->allowed_test_types = isset($task_set_data['allowed_test_types']) && is_array($task_set_data['allowed_test_types']) ? implode(',', $task_set_data['allowed_test_types']) : '';
+            $task_set->enable_tests_scoring = isset($task_set_data['enable_tests_scoring']) ? 1 : 0;
             if ($task_set->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
@@ -279,6 +280,8 @@ class Task_sets extends LIST_Controller {
             if (isset($tasks_join_fields_data[$task->id])) {
                 if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
                     $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][points_total]', 'lang:admin_task_sets_form_field_task_points_total', 'required|number|greater_than_equal[0]');
+                    $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][test_max_points]', 'lang:admin_task_sets_form_field_task_test_max_points', 'required|number|greater_than_equal[0]');
+                    $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][test_min_points]', 'lang:admin_task_sets_form_field_task_test_min_points', 'required|number|less_than_field_or_equal[task_join_field[' . intval($task->id) . '][test_max_points]]');
                 }
             }
         }}
@@ -296,6 +299,7 @@ class Task_sets extends LIST_Controller {
                 $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
                 $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
                 $task_set->allowed_test_types = isset($task_set_data['allowed_test_types']) && is_array($task_set_data['allowed_test_types']) ? implode(',', $task_set_data['allowed_test_types']) : '';
+                $task_set->enable_tests_scoring = isset($task_set_data['enable_tests_scoring']) ? 1 : 0;
                 
                 $overlay = $this->input->post('overlay');
                 
@@ -309,6 +313,8 @@ class Task_sets extends LIST_Controller {
                             if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
                                 $task->set_join_field($task_set, 'sorting', $tasks_sorting[$task->id] + 1);
                                 $task->set_join_field($task_set, 'points_total', floatval($tasks_join_fields_data[$task->id]['points_total']));
+                                $task->set_join_field($task_set, 'test_min_points', floatval($tasks_join_fields_data[$task->id]['test_min_points']));
+                                $task->set_join_field($task_set, 'test_max_points', floatval($tasks_join_fields_data[$task->id]['test_max_points']));
                                 $task->set_join_field($task_set, 'bonus_task', (int)(bool)@$tasks_join_fields_data[$task->id]['bonus_task']);
                                 $task->set_join_field($task_set, 'internal_comment', @$tasks_join_fields_data[$task->id]['internal_comment']);
                             } else {
@@ -408,6 +414,8 @@ class Task_sets extends LIST_Controller {
                         $new_task_set->save_task($task);
                         $task->set_join_field($new_task_set, 'sorting', $task->join_sorting);
                         $task->set_join_field($new_task_set, 'points_total', $task->join_points_total);
+                        $task->set_join_field($new_task_set, 'test_min_points', $task->join_test_min_points);
+                        $task->set_join_field($new_task_set, 'test_max_points', $task->join_test_max_points);
                         $task->set_join_field($new_task_set, 'bonus_task', $task->join_bonus_task);
                     }
                     $task_set_permissions = new Task_set_permission();

@@ -8,3 +8,4 @@ $lang['floatpoint'] = 'Hodnota v poli <strong>%s</strong> musí byť číslo s p
 $lang['greater_than_equal'] = 'Pole <strong>%s</strong> musí obsahovať číslo väčšie alebo rovné ako <strong>%s</strong>.';
 $lang['less_than_equal'] = 'Pole <strong>%s</strong> musí obsahovať číslo menšie alebo rovné ako <strong>%s</strong>.';
 $lang['required_no_html'] = $lang['required'];
+$lang['less_than_field_or_equal'] = 'Pole <strong>%s</strong> musí obsahovať číslo menšie alebo rovné ako pole <strong>%s</strong>.';

@@ -131,4 +131,44 @@ class LIST_Form_validation extends CI_Form_validation {
         }
         return $str <= $max;
     }
+    
+    /**
+     * Test if string is number and is less or equal to given field.
+     * @param string $str string to evaluate.
+     * @param string $field POST field as written in html input element name attribute.
+     * @return boolean TRUE on success.
+     */
+    public function less_than_field_or_equal($str, $field) {
+        if (!is_numeric($str)) {
+            return FALSE;
+        }
+        $max = $this->_reduce_array($_POST, $this->get_keys($field));
+        return $str <= $max;
+    }
+    
+    /**
+     * Returns keys from field.
+     * @param string $field POST field as written in html input element name attribute.
+     * @return array<string> array of keys to the $_POST superglobal.
+     */
+    private function get_keys($field) {
+        if (strpos($field, '[') !== FALSE AND preg_match_all('/\[(.*?)\]/', $field, $matches))
+        {
+            // Note: Due to a bug in current() that affects some versions
+            // of PHP we can not pass function call directly into it
+            $x = explode('[', $field);
+            $indexes[] = current($x);
+
+            for ($i = 0; $i < count($matches['0']); $i++)
+            {
+                if ($matches['1'][$i] != '')
+                {
+                    $indexes[] = $matches['1'][$i];
+                }
+            }
+            return $indexes;
+        } else {
+            return array($field);
+        }
+    }
 }

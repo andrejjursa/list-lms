@@ -101,6 +101,10 @@
                         </div>
                     </div>
                     <div class="field">
+                        <label for="task_set_enable_tests_scoring_id">{translate line='admin_task_sets_form_label_enable_tests_scoring'}:</label>
+                        <p class="input"><input type="checkbox" name="task_set[enable_tests_scoring]" value="1" id="task_set_enable_tests_scoring_id"{if $smarty.post.task_set.enable_tests_scoring|default:$task_set->enable_tests_scoring} checked="checked"{/if} /></p>
+                    </div>
+                    <div class="field">
                         <label for="task_set_internal_comment_id">{translate line='admin_task_sets_form_label_internal_comment'}:</label>
                         <div class="input">
                             <textarea name="task_set[internal_comment]" id="task_set_internal_comment_id">{$smarty.post.task_set.internal_comment|default:$task_set->internal_comment|escape:'html'}</textarea>
@@ -129,6 +133,16 @@
                                     <label for="task_join_field_{$task->id|intval}_points_total_id" class="required">{translate line='admin_task_sets_form_label_task_points_total'}:</label>
                                     <p class="input"><input type="text" name="task_join_field[{$task->id|intval}][points_total]" value="{$smarty.post.task_join_field[$task->id|intval].points_total|default:$task->join_points_total|floatval}" id="task_join_field_{$task->id|intval}_points_total_id" /></p>
                                     {form_error field="task_join_field[{$task->id|intval}][points_total]" left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                                </div>
+                                <div class="field">
+                                    <label for="task_join_field_{$task->id|intval}_test_min_points_id" class="required">{translate line='admin_task_sets_form_label_task_test_min_points'}:</label>
+                                    <p class="input"><input type="text" name="task_join_field[{$task->id|intval}][test_min_points]" value="{$smarty.post.task_join_field[$task->id|intval].test_min_points|default:$task->join_test_min_points|floatval}" id="task_join_field_{$task->id|intval}_test_min_points_id" /></p>
+                                    {form_error field="task_join_field[{$task->id|intval}][test_min_points]" left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                                </div>
+                                <div class="field">
+                                    <label for="task_join_field_{$task->id|intval}_test_max_points_id" class="required">{translate line='admin_task_sets_form_label_task_test_max_points'}:</label>
+                                    <p class="input"><input type="text" name="task_join_field[{$task->id|intval}][test_max_points]" value="{$smarty.post.task_join_field[$task->id|intval].test_max_points|default:$task->join_test_max_points|floatval}" id="task_join_field_{$task->id|intval}_test_max_points_id" /></p>
+                                    {form_error field="task_join_field[{$task->id|intval}][test_max_points]" left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                                 </div>
                                 <div class="field">
                                     <label for="task_join_field_{$task->id|intval}_bonus_task_id">{translate line='admin_task_sets_form_label_task_bonus_task'}:</label>
