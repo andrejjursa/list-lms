@@ -21,6 +21,7 @@ $cache = array (
     15 => 'allowed_file_types',
     16 => 'allowed_test_types',
     17 => 'internal_comment',
+    18 => 'enable_tests_scoring',
   ),
   'validation' => 
   array (
@@ -147,6 +148,13 @@ $cache = array (
     'internal_comment' => 
     array (
       'field' => 'internal_comment',
+      'rules' => 
+      array (
+      ),
+    ),
+    'enable_tests_scoring' => 
+    array (
+      'field' => 'enable_tests_scoring',
       'rules' => 
       array (
       ),
