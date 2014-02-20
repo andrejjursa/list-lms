@@ -170,7 +170,13 @@
     var student_id = {$list_student_account_model->id|intval};
     var messages = {
         test_being_executed: '{translate line='tasks_test_message_test_being_executed'}',
-        test_no_selection: '{translate line='tasks_test_message_test_no_selection'}'
+        test_no_selection: '{translate line='tasks_test_message_test_no_selection'}',
+        test_result_area: '{translate line='tasks_test_message_test_result_area_legend'}',
+        test_result_tests_in_progress: '{translate line='tasks_test_message_tests_in_progress'}',
+        test_result_evaluation: '{translate line='tasks_test_message_tests_evaluation'}',
+        test_result_not_obtained: '{translate line='tasks_test_message_result_not_obtained'}',
+        test_result_token_failed: '{translate line='tasks_test_message_token_request_failed'}'
     };
+    var test_evaluation_enabled = {if $task_set->enable_tests_scoring > 0 and $course->test_scoring_deadline gt date('Y-m-d H:i:s')}true{else}false{/if};
 </script>
 {/block}

@@ -44,6 +44,10 @@ class java_test extends abstract_test {
         @exec($exec_command, $output_data, $exit_code);
         $output = $this->read_output_file('test.out');
         
+        if ($save_score) {
+            $this->save_test_result($exit_code, $score_student, $score_token);
+        }
+        
         $this->delete_test_directory();
         
         return $output;

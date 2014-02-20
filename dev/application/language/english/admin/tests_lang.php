@@ -39,3 +39,6 @@ $lang['admin_tests_prepare_execution_form_label_file'] = 'Source codes in ZIP';
 $lang['admin_tests_prepare_execution_form_button_submit'] = 'Upload and execute';
 $lang['admin_tests_testing_execution_test_is_being_executed_message'] = 'Test is being executed, this may take some time ...';
 $lang['admin_tests_error_message_failed_to_run_student_test'] = 'Failed to start student test! Task set, student or solution file not found.';
+$lang['admin_tasks_test_result_nothing_to_update'] = 'There is nothing to update, your score is not better like your last score.';
+$lang['admin_tasks_test_result_disabled'] = 'Can\'t compute score, this feature is disable.';
+$lang['admin_tasks_test_result_input_error'] = 'Can\'t compute score, because of error on input.';

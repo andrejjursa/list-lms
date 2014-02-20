@@ -150,6 +150,7 @@ abstract class abstract_test {
                 'config' => unserialize($test_model->configuration),
                 'id' => $test_model->id,
                 'enable_scoring' => (int)$test_model->enable_scoring > 0 ? TRUE : FALSE,
+                'task_id' => $test_model->task_id,
             );
             $this->current_test = $current_test;
         } else {
@@ -438,6 +439,25 @@ abstract class abstract_test {
             throw new TestException(sprintf($this->CI->lang->line('tests_general_error_file_not_found'), $zip_file), 1800001);
         }
     }
+    
+    /**
+     * Adds information about score into database.
+     * @param int $score score value from 0 to 100, or more for bonus points.
+     * @param int|Student $student_id student id or student model.
+     * @param string $token string token.
+     * @return void returns nothing.
+     */
+    protected function save_test_result($score, $student_id, $token) {
+        if (!$this->current_test['enable_scoring']) { return; }
+        
+        $this->CI->load->model('test_score');
+        
+        if (is_object($student_id) && $student_id instanceOf DataMapper) {
+            $student_id = (int)$student_id->id;
+        }
+        
+        $this->CI->test_score->set_score_for_task($student_id, $this->current_test['task_id'], $token, $score);
+    }
 
     /**
      * Run by constructor, determines type of test from class name.
@@ -450,6 +470,14 @@ abstract class abstract_test {
         }
     }
     
+    /**
+     * Add not zip file into zip archive.
+     * @param string $zip_name zip archive name.
+     * @param string $path path to file and zip archive.
+     * @param string $file_to_zip name of file to add to zip archive.
+     * @param string $original_file_name original name of file.
+     * @return boolean TRUE, if file is added to zip archive.
+     */
     private function zip_plain_file_to_archive($zip_name, $path, $file_to_zip, $original_file_name) {
         $clear_path = rtrim($path, '/\\') . '/';
         if (file_exists($clear_path . $file_to_zip)) {

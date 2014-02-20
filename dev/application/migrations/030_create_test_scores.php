@@ -5,7 +5,7 @@ class Migration_create_test_scores extends CI_Migration {
     public function up() {
         $this->dbforge->add_field(
             array(
-                'test_id' => array(
+                'task_id' => array(
                     'type' => 'int',
                     'unsigned' => TRUE,
                     'null' => TRUE,
