@@ -293,7 +293,7 @@ class Tests extends LIST_Controller {
             if ($test->exists()) {
                 $test_object = $this->load->test($test->type);
                 $test_object->initialize($test);
-                $output->text = $test_object->run(decode_from_url($source_file), (bool)(int)$evaluation && strlen($token) == 32, $student_id, $token);
+                $output->text = $test_object->run(decode_from_url($source_file), (bool)(int)$evaluation && strlen($token) > 0, $student_id, $token);
             }
         } catch (Exception $e) {
             $output->text = $e->getMessage();
@@ -335,12 +335,14 @@ class Tests extends LIST_Controller {
         
         $this->output->set_content_type('application/json');
         
+        $this->test_score->delete_old_scores();
+        
         $token = $this->test_score->request_token();
         
         $this->output->set_output(json_encode($token));
     }
     
-    public function evaluate_test_result($task_set_id, $student_id, $version, $token) {
+    public function evaluate_test_result($task_set_id, $student_id, $version, $test_type, $token) {
         $task_set = new Task_set();
         $task_set->include_related('course', 'test_scoring_deadline');
         $task_set->get_by_id((int)$task_set_id);
@@ -358,70 +360,99 @@ class Tests extends LIST_Controller {
         
         if ($task_set->exists() && $student->exists()) {
             if ($task_set->course_test_scoring_deadline >= date('Y-m-d H:i:s') && $task_set->enable_tests_scoring > 0) {
-                $results = $this->test_score->get_data_for_student($student->id, $token);
-                $total_score = 0;
-                if (count($results)) {
-                    foreach($results as $task_id => $score) {
-                        $this->db->select('*');
-                        $this->db->where('task_set_id', $task_set->id);
-                        $this->db->where('task_id', (int)$task_id);
-                        $query = $this->db->get('task_task_set_rel');
-                        
-                        if ($query->num_rows() > 0) {
-                            $task_rel = $query->row_object();
-                            $min = $task_rel->test_min_points;
-                            $max = $task_rel->test_max_points;
-                            $diff = abs($max - $min);
-                            $score_percentage = (double)$score / 100;
-                            $sub_score = round(10 * ($min + $diff * $score_percentage)) / 10;
-                            $total_score += $sub_score;
+                $results = $this->test_score->get_data_for_student($student->id, $token, $test_type);
+                $this->_transaction_isolation();
+                $this->db->trans_start();
+                
+                $tests = new Test();
+                $tests->where_related('task/task_set', 'id', $task_set->id);
+                $tests->where('type', $test_type);
+                $tests->where('enable_scoring >', 0);
+                $tests->group_by('task_id');
+                $tests->get_iterated();
+                $test_count = $tests->result_count();
+                
+                $min_results = $task_set->test_min_needed > $test_count ? $test_count : $task_set->test_min_needed;
+                $max_results = $task_set->test_max_allowed < count($results) ? $task_set->test_max_allowed : count($results);
+                                
+                if ($test_count > 0) {
+                    if (count($results) >= $min_results) {
+                        $total_score = 0;
+                        $score_array = array();
+                        if (count($results)) {
+                            foreach($results as $task_id => $score) {
+                                $this->db->select('*');
+                                $this->db->where('task_set_id', $task_set->id);
+                                $this->db->where('task_id', (int)$task_id);
+                                $query = $this->db->get('task_task_set_rel');
+
+                                if ($query->num_rows() > 0) {
+                                    $task_rel = $query->row_object();
+                                    $min = $task_rel->test_min_points;
+                                    $max = $task_rel->test_max_points;
+                                    $diff = abs($max - $min);
+                                    $score_percentage = (double)$score / 100;
+                                    $sub_score = round(10 * ($min + $diff * $score_percentage)) / 10;
+                                    $score_array[] = $sub_score;
+                                }
+
+                                $query->free_result();
+                            }
                         }
                         
-                        $query->free_result();
-                    }
-                }
-                
-                $solution = new Solution();
-                $solution->where('task_set_id', $task_set->id);
-                $solution->where('student_id', $student->id);
-                $solution->get();
-                
-                $save_solution = FALSE;
-                
-                $output->points_new = $total_score;
-                
-                if ($solution->exists()) {
-                    $output->points_before = $solution->points;
-                    if ($solution->points < $total_score || is_null($solution->points)) {
-                        $solution->points = $total_score;
-                        $solution->comment = '';
-                        $solution->teacher_id = NULL;
-                        $solution->best_version = (int)$version;
-                        $solution->revalidate = 0;
-                        $save_solution = TRUE;
+                        rsort($score_array, SORT_NUMERIC);
+                        for ($i = 0; $i < $max_results; $i++) {
+                            $total_score += $score_array[$i];
+                        }
+
+                        $solution = new Solution();
+                        $solution->where('task_set_id', $task_set->id);
+                        $solution->where('student_id', $student->id);
+                        $solution->get();
+
+                        $save_solution = FALSE;
+
+                        $output->points_new = $total_score;
+
+                        if ($solution->exists()) {
+                            $output->points_before = $solution->points;
+                            if ($solution->points < $total_score || is_null($solution->points)) {
+                                $solution->points = $total_score;
+                                $solution->comment = '';
+                                $solution->teacher_id = NULL;
+                                $solution->best_version = (int)$version;
+                                $solution->revalidate = 0;
+                                $save_solution = TRUE;
+                            }
+                        } else {
+                            $solution->points = $total_score;
+                            $solution->comment = '';
+                            $solution->teacher_id = NULL;
+                            $solution->best_version = (int)$version;
+                            $solution->task_set_id = $task_set->id;
+                            $solution->student_id = $student->id;
+                            $solution->revalidate = 0;
+                            $save_solution = TRUE;
+                        }
+
+                        if ($save_solution) {
+                            $solution->save();
+                            $output->result = TRUE;
+                        } else {
+                            $output->message = $this->lang->line('admin_tests_test_result_nothing_to_update');
+                        }
+                    } else {
+                        $output->message = sprintf($this->lang->line('admin_tests_test_result_minimum_number_of_test_not_selected'), $min_results);
                     }
                 } else {
-                    $solution->points = $total_score;
-                    $solution->comment = '';
-                    $solution->teacher_id = NULL;
-                    $solution->best_version = (int)$version;
-                    $solution->task_set_id = $task_set->id;
-                    $solution->student_id = $student->id;
-                    $solution->revalidate = 0;
-                    $save_solution = TRUE;
+                    $output->message = $this->lang->line('admin_tests_test_result_no_evaluationg_tests');
                 }
-                
-                if ($save_solution) {
-                    $solution->save();
-                    $output->result = TRUE;
-                } else {
-                    $output->message = $this->lang->line('admin_tasks_test_result_nothing_to_update');
-                }
+                $this->db->trans_complete();
             } else {
-                $output->message = $this->lang->line('admin_tasks_test_result_disabled');
+                $output->message = $this->lang->line('admin_tests_test_result_disabled');
             }
         } else {
-            $output->message = $this->lang->line('admin_tasks_test_result_input_error');
+            $output->message = $this->lang->line('admin_tests_test_result_input_error');
         }
         
         $this->test_score->delete_token($token);

@@ -212,12 +212,16 @@ class Task_sets extends LIST_Controller {
         $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
         $this->form_validation->set_rules('task_set[task_set_type_id]', 'lang:admin_task_sets_form_field_task_set_type_id', 'required|exists_in_table[task_set_types.id]');
         $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'greater_than_equal[0]');
+        $task_set_data = $this->input->post('task_set');
+        if (isset($task_set_data['enable_tests_scoring'])) {
+            $this->form_validation->set_rules('task_set[test_min_needed]', 'lang:admin_task_sets_form_field_test_min_needed', 'greater_than_equal[0]');
+            $this->form_validation->set_rules('task_set[test_max_allowed]', 'lang:admin_task_sets_form_field_test_max_allowed', 'greater_than_field_or_equal[task_set[test_min_needed]]');
+        }
         
         $this->_transaction_isolation();
         $this->db->trans_begin();
         if ($this->form_validation->run()) {
             $task_set = new Task_set();
-            $task_set_data = $this->input->post('task_set');
             $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment'));
             $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
             $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
@@ -228,6 +232,10 @@ class Task_sets extends LIST_Controller {
             $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
             $task_set->allowed_test_types = isset($task_set_data['allowed_test_types']) && is_array($task_set_data['allowed_test_types']) ? implode(',', $task_set_data['allowed_test_types']) : '';
             $task_set->enable_tests_scoring = isset($task_set_data['enable_tests_scoring']) ? 1 : 0;
+            if ($task_set->enable_tests_scoring == 1) {
+                $task_set->test_min_needed = isset($task_set_data['test_min_needed']) ? intval($task_set_data['test_min_needed']) : 0;
+                $task_set->test_max_allowed = isset($task_set_data['test_max_allowed']) ? intval($task_set_data['test_max_allowed']) : 0;
+            }
             if ($task_set->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
@@ -270,6 +278,11 @@ class Task_sets extends LIST_Controller {
         $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
         $this->form_validation->set_rules('task_set[task_set_type_id]', 'lang:admin_task_sets_form_field_task_set_type_id', 'required|exists_in_table[task_set_types.id]');
         $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'greater_than_equal[0]');
+        $task_set_data = $this->input->post('task_set');
+        if (isset($task_set_data['enable_tests_scoring'])) {
+            $this->form_validation->set_rules('task_set[test_min_needed]', 'lang:admin_task_sets_form_field_test_min_needed', 'greater_than_equal[0]');
+            $this->form_validation->set_rules('task_set[test_max_allowed]', 'lang:admin_task_sets_form_field_test_max_allowed', 'greater_than_field_or_equal[task_set[test_min_needed]]');
+        }
         
         $task_set_id = intval($this->input->post('task_set_id'));
         $task_set = new Task_set();
@@ -288,7 +301,6 @@ class Task_sets extends LIST_Controller {
         
         if ($this->form_validation->run()) {    
             if ($task_set->exists()) {
-                $task_set_data = $this->input->post('task_set');
                 $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment'));
                 $task_set->instructions = remove_base_url($task_set_data['instructions']);
                 $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
@@ -300,6 +312,10 @@ class Task_sets extends LIST_Controller {
                 $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
                 $task_set->allowed_test_types = isset($task_set_data['allowed_test_types']) && is_array($task_set_data['allowed_test_types']) ? implode(',', $task_set_data['allowed_test_types']) : '';
                 $task_set->enable_tests_scoring = isset($task_set_data['enable_tests_scoring']) ? 1 : 0;
+                if ($task_set->enable_tests_scoring == 1) {
+                    $task_set->test_min_needed = isset($task_set_data['test_min_needed']) ? intval($task_set_data['test_min_needed']) : 0;
+                    $task_set->test_max_allowed = isset($task_set_data['test_max_allowed']) ? intval($task_set_data['test_max_allowed']) : 0;
+                }
                 
                 $overlay = $this->input->post('overlay');
                 

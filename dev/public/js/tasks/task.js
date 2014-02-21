@@ -75,6 +75,8 @@ jQuery(document).ready(function($) {
     
     var test_results_field_div = null;
     
+    var selected_test_type = '';
+    
     $('#tests_form_id').submit(function(event) {
         event.preventDefault();
         
@@ -83,50 +85,67 @@ jQuery(document).ready(function($) {
         } else {
             batch_tests_execution();
         }
+    });
+    
+    $('#select_test_type_id').change(function(event) {
+        event.preventDefault();
         
+        var test_type = $(this).val();
         
+        $('.solution_tests_table .test_header').each(function() {
+            if (test_type === '' || $(this).hasClass('test_type_' + test_type)) {
+                $(this).find('input[type=checkbox]').prop('checked', true).prop('disabled', false);
+            } else {
+                $(this).find('input[type=checkbox]').prop('checked', false).prop('disabled', true);
+            }
+        });
     });
     
     var batch_tests_execution = function() {
         var tests_execution_area = $('#tests_execution_area_id');
+        selected_test_type = $('#select_test_type_id').val();
         if (tests_execution_area.length === 1) {
             tests_execution_area.html('');
             if (tests_object !== undefined) {
                 var test_form = $('#tests_form_id');
                 var test_form_data = test_form.serializeObject();
-                if (typeof test_form_data.test.version !== 'undefined' && typeof test_form_data.test.id !== 'undefined') {
-                    if (test_evaluation_enabled) {
-                        var test_results_field = $('<fieldset></fieldset>');
-                        var test_results_field_legend = $('<legend>' + messages.test_result_area + '<legend>');
-                        test_results_field_div = $('<div>' + messages.test_result_tests_in_progress + '</div>');
-                        test_results_field_legend.appendTo(test_results_field);
-                        test_results_field.appendTo(tests_execution_area).addClass('basefieldset').addClass('test_result_area');
-                        test_results_field_div.appendTo(test_results_field);
-                    }
-                    for (var task_id in tests_object) {
-                        var task_header = $('<h4 class="test_task_name">' + tests_object[task_id].name + '</h4>');
-                        task_header.appendTo(tests_execution_area);
-                        for (var test_id in tests_object[task_id]) {
-                            if (typeof tests_object[task_id][test_id].name !== 'undefined' && inArray(test_id, test_form_data.test.id)) {
-                                var test_fieldset = $('<fieldset></fieldset>');
-                                var test_fieldset_legend = $('<legend>' + tests_object[task_id][test_id].name + '</legend>');
-                                var test_div = $('<div></div>');
-                                test_fieldset_legend.appendTo(test_fieldset);
-                                test_fieldset.appendTo(tests_execution_area).addClass('basefieldset').addClass('testfieldset');
-                                test_div.appendTo(test_fieldset).attr('id', 'test_execution_' + test_id + '_id').addClass('test_execution_div');
-                                test_div.html('<p>' + messages.test_being_executed + '</p>');
+                if (selected_test_type !== '') {
+                    if (typeof test_form_data.test.version !== 'undefined' && typeof test_form_data.test.id !== 'undefined') {
+                        if (test_evaluation_enabled) {
+                            var test_results_field = $('<fieldset></fieldset>');
+                            var test_results_field_legend = $('<legend>' + messages.test_result_area + '<legend>');
+                            test_results_field_div = $('<div>' + messages.test_result_tests_in_progress + '</div>');
+                            test_results_field_legend.appendTo(test_results_field);
+                            test_results_field.appendTo(tests_execution_area).addClass('basefieldset').addClass('test_result_area');
+                            test_results_field_div.appendTo(test_results_field);
+                        }
+                        for (var task_id in tests_object) {
+                            var task_header = $('<h4 class="test_task_name">' + tests_object[task_id].name + '</h4>');
+                            task_header.appendTo(tests_execution_area);
+                            for (var test_id in tests_object[task_id]) {
+                                if (typeof tests_object[task_id][test_id].name !== 'undefined' && inArray(test_id, test_form_data.test.id)) {
+                                    var test_fieldset = $('<fieldset></fieldset>');
+                                    var test_fieldset_legend = $('<legend>' + tests_object[task_id][test_id].name + '</legend>');
+                                    var test_div = $('<div></div>');
+                                    test_fieldset_legend.appendTo(test_fieldset);
+                                    test_fieldset.appendTo(tests_execution_area).addClass('basefieldset').addClass('testfieldset');
+                                    test_div.appendTo(test_fieldset).attr('id', 'test_execution_' + test_id + '_id').addClass('test_execution_div');
+                                    test_div.html('<p>' + messages.test_being_executed + '</p>');
+                                }
                             }
                         }
+                        test_file_version_id = test_form_data.test.version;
+                        tests_to_run = 0;
+                        for (var i in test_form_data.test.id) {
+                            var test_id = test_form_data.test.id[i];
+                            run_test(test_id, test_form_data.test.version, 'test_execution_' + test_id + '_id');
+                        }
+                        test_finalization_check();
+                    } else {
+                        show_notification(messages.test_no_selection, 'error');
                     }
-                    test_file_version_id = test_form_data.test.version;
-                    tests_to_run = 0;
-                    for (var i in test_form_data.test.id) {
-                        var test_id = test_form_data.test.id[i];
-                        run_test(test_id, test_form_data.test.version, 'test_execution_' + test_id + '_id');
-                    }
-                    test_finalization_check();
                 } else {
-                    show_notification(messages.test_no_selection, 'error');
+                    show_notification(messages.test_type_not_selected, 'error');
                 }
             }
         }
@@ -156,19 +175,30 @@ jQuery(document).ready(function($) {
     };
     
     var get_tests_token_and_execute = function() {
-        var url = global_base_url + 'index.php/admin_tests/request_token/';
-        api_ajax_update(url, 'post', {}, function(result) {
-            tests_token = result;
-            batch_tests_execution();
-        }, function() {
-            show_notification(messages.test_result_token_failed, 'error');
-        });
+        selected_test_type = $('#select_test_type_id').val();
+        var test_form = $('#tests_form_id');
+        var test_form_data = test_form.serializeObject();
+        if (selected_test_type !== '') {
+            if (typeof test_form_data.test.version !== 'undefined' && typeof test_form_data.test.id !== 'undefined') {
+                var url = global_base_url + 'index.php/admin_tests/request_token/';
+                api_ajax_update(url, 'post', {}, function(result) {
+                    tests_token = result;
+                    batch_tests_execution();
+                }, function() {
+                    show_notification(messages.test_result_token_failed, 'error');
+                });
+            } else {
+                show_notification(messages.test_no_selection, 'error');
+            }
+        } else {
+            show_notification(messages.test_type_not_selected, 'error');
+        }
     };
     
     var test_finalization_check = function() {
         if (test_evaluation_enabled) {
             if (tests_to_run === 0) {
-                var url = global_base_url + 'index.php/admin_tests/evaluate_test_result/' + task_id + '/' + student_id + '/' + test_file_version_id + '/' + tests_token;
+                var url = global_base_url + 'index.php/admin_tests/evaluate_test_result/' + task_id + '/' + student_id + '/' + test_file_version_id + '/' + selected_test_type + '/' + tests_token;
                 console.log(url);
                 api_ajax_update(url, 'post', {}, function(data) {
                     if (data.result === false) {

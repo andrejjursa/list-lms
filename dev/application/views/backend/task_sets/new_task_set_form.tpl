@@ -88,6 +88,18 @@
     <label for="task_set_enable_tests_scoring_id">{translate line='admin_task_sets_form_label_enable_tests_scoring'}:</label>
     <p class="input"><input type="checkbox" name="task_set[enable_tests_scoring]" value="1" id="task_set_enable_tests_scoring_id"{if $smarty.post.task_set.enable_tests_scoring} checked="checked"{/if} /></p>
 </div>
+<div class="field task_set_test_min_needed" style="display: none;">
+    <label for="task_set_test_min_needed_id">{translate line='admin_task_sets_form_label_test_min_needed'}:</label>
+    <p class="input"><input name="task_set[test_min_needed]" value="{$smarty.post.task_set.test_min_needed|escape:'html'}" type="text" id="task_set_test_min_needed_id" /></p>
+    <p class="input"><em>{translate line='admin_task_sets_form_label_test_min_needed_hint'}</em></p>
+    {form_error field='task_set[test_min_needed]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+</div>
+<div class="field task_set_test_max_allowed" style="display: none;">
+    <label for="task_set_test_max_allowed_id">{translate line='admin_task_sets_form_label_test_max_allowed'}:</label>
+    <p class="input"><input name="task_set[test_max_allowed]" value="{$smarty.post.task_set.test_max_allowed|escape:'html'}" type="text" id="task_set_test_max_allowed_id" /></p>
+    <p class="input"><em>{translate line='admin_task_sets_form_label_test_max_allowed_hint'}</em></p>
+    {form_error field='task_set[test_max_allowed]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+</div>
 <div class="field">
     <label for="task_set_internal_comment_id">{translate line='admin_task_sets_form_label_internal_comment'}:</label>
     <div class="input">

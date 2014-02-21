@@ -72,6 +72,12 @@ jQuery(document).ready(function($) {
     $('form div.field.task_set_points_override').setActiveFormDisplayCondition(function() {
         return $('#task_set_points_override_enabled_id').is(':checked');
     });
+    $('form div.field.task_set_test_min_needed').setActiveFormDisplayCondition(function() {
+        return $('#task_set_enable_tests_scoring_id').is(':checked');
+    });
+    $('form div.field.task_set_test_max_allowed').setActiveFormDisplayCondition(function() {
+        return $('#task_set_enable_tests_scoring_id').is(':checked');
+    });
     $('form').activeForm().applyConditions();
     
     $('#task_set_publish_start_time_id').datetimepicker({

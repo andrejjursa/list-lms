@@ -22,6 +22,8 @@ $cache = array (
     16 => 'allowed_test_types',
     17 => 'internal_comment',
     18 => 'enable_tests_scoring',
+    19 => 'test_min_needed',
+    20 => 'test_max_allowed',
   ),
   'validation' => 
   array (
@@ -155,6 +157,20 @@ $cache = array (
     'enable_tests_scoring' => 
     array (
       'field' => 'enable_tests_scoring',
+      'rules' => 
+      array (
+      ),
+    ),
+    'test_min_needed' => 
+    array (
+      'field' => 'test_min_needed',
+      'rules' => 
+      array (
+      ),
+    ),
+    'test_max_allowed' => 
+    array (
+      'field' => 'test_max_allowed',
       'rules' => 
       array (
       ),

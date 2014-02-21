@@ -147,6 +147,20 @@ class LIST_Form_validation extends CI_Form_validation {
     }
     
     /**
+     * Test if string is number and is greater or equal to given field.
+     * @param string $str string to evaluate.
+     * @param string $field POST field as written in html input element name attribute.
+     * @return boolean TRUE on success.
+     */
+    public function greater_than_field_or_equal($str, $field) {
+        if (!is_numeric($str)) {
+            return FALSE;
+        }
+        $max = $this->_reduce_array($_POST, $this->get_keys($field));
+        return $str >= $max;
+    }
+    
+    /**
      * Returns keys from field.
      * @param string $field POST field as written in html input element name attribute.
      * @return array<string> array of keys to the $_POST superglobal.

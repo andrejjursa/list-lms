@@ -9,3 +9,4 @@ $lang['greater_than_equal'] = 'The <strong>%s</strong> field must contain a numb
 $lang['less_than_equal'] = 'The <strong>%s</strong> field must contain a number less than or equal to <strong>%s</strong>.';
 $lang['required_no_html'] = $lang['required'];
 $lang['less_than_field_or_equal'] = 'The <strong>%s</strong> field must contain a number less than or equal to field <strong>%s</strong>.';
+$lang['greater_than_field_or_equal'] = 'The <strong>%s</strong> field must contain a number greater than or equal to field <strong>%s</strong>.';

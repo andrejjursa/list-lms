@@ -438,13 +438,14 @@ var sort_table = function(table_selector, filter_selector) {
 
 var show_notification = function(text, notif_type) {
   if (text === undefined) { return; }
-  if (notif_type === undefined || notif_type === null) { notif_type = 'information'; }
+  display_notification(text, notif_type);
+  /*if (notif_type === undefined || notif_type === null) { notif_type = 'information'; }
   showNotification({
     message: text,
     type: notif_type,
     autoClose: true,
     duration: 5
-  });
+  });*/
 };
 
 var api_read_url_anchor = function() {
@@ -668,6 +669,36 @@ var Base64url = {
         transformed_input = transformed_input.replace(/\_/g, '=');
         return Base64.decode(transformed_input);
     }
+};
+
+var display_notification = function(message, type) {
+    
+    if (type === undefined || type === null) { type = 'info'; }
+    
+    var notification_area = jQuery('#list_dynamic_notification_area_id');
+    
+    if (notification_area.length === 0) {
+        notification_area = jQuery('<div id="list_dynamic_notification_area_id"></div>').appendTo('body');
+    }
+    
+    var notification_box = jQuery('<div class="notification_box"></div>').prependTo(notification_area);
+    notification_box.html('<div class="message">' + message + '</div>');
+    notification_box.addClass('type_' + type);
+    notification_box.css('display', 'none');
+    notification_box.fadeIn(500, function() {
+        notification_box.fadeTo(10000, 0.8, function() {
+            notification_box.fadeOut(500, function() {
+                notification_box.remove();
+            });
+        });
+    });
+    var close_button = jQuery('<span class="close_button">x</span>').prependTo(notification_box);
+    close_button.click(function() {
+        notification_box.stop();
+        notification_box.fadeOut(500, function() {
+            notification_box.remove();
+        });
+    });
 };
 
 /**

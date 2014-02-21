@@ -456,7 +456,7 @@ abstract class abstract_test {
             $student_id = (int)$student_id->id;
         }
         
-        $this->CI->test_score->set_score_for_task($student_id, $this->current_test['task_id'], $token, $score);
+        $this->CI->test_score->set_score_for_task($student_id, $this->current_test['task_id'], $token, $score, $this->test_type);
     }
 
     /**
