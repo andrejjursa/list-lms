@@ -36,6 +36,20 @@
                     <input type="hidden" name="task_set_permission[room_id]" value="" />
                 </div>
                 <div class="field">
+                    <label for="task_set_permission_deadline_notification_emails_id">{translate line='admin_task_sets_form_label_deadline_notification_emails'}:</label>
+                    <p class="input"><input type="text" name="task_set_permission[deadline_notification_emails]" id="task_set_permission_deadline_notification_emails_id" value="{$smarty.post.task_set_permission.deadline_notification_emails|escape:'html'}" /></p>
+                    {form_error field='task_set_permission[deadline_notification_emails]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                </div>
+                <div class="field">
+                    <label class="required">{translate line='admin_task_sets_form_label_deadline_notification_emails_handler'}:</label>
+                    <div class="input">
+                        <label><input type="radio" name="task_set_permission[deadline_notification_emails_handler]" value="0"{if isset($smarty.post.task_set_permission.deadline_notification_emails_handler) and $smarty.post.task_set_permission.deadline_notification_emails_handler eq 0} checked="checked"{/if} /> {translate line='admin_task_sets_form_label_deadline_notification_emails_handler_0'}</label><br />
+                        <label><input type="radio" name="task_set_permission[deadline_notification_emails_handler]" value="1"{if isset($smarty.post.task_set_permission.deadline_notification_emails_handler) and $smarty.post.task_set_permission.deadline_notification_emails_handler eq 1} checked="checked"{/if} /> {translate line='admin_task_sets_form_label_deadline_notification_emails_handler_1'}</label><br />
+                        <label><input type="radio" name="task_set_permission[deadline_notification_emails_handler]" value="2"{if isset($smarty.post.task_set_permission.deadline_notification_emails_handler) and $smarty.post.task_set_permission.deadline_notification_emails_handler eq 2} checked="checked"{/if} /> {translate line='admin_task_sets_form_label_deadline_notification_emails_handler_2'}</label>
+                    </div>
+                    {form_error field='task_set_permission[deadline_notification_emails_handler]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                </div>
+                <div class="field">
                     <label for="task_set_permission_enabled_id">{translate line='admin_task_set_permissions_form_label_enabled'}:</label>
                     <p class="input"><input type="checkbox" name="task_set_permission[enabled]" value="1" id="task_set_permission_enabled_id"{if $smarty.post.task_set_permission.enabled eq 1} checked="checked"{/if} /></p>
                     {form_error field='task_set_permission[enabled]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}

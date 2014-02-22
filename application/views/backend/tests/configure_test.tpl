@@ -22,6 +22,11 @@
                 <p class="input"><textarea name="test[instructions]" class="tinymce" id="test_instructions_id">{$smarty.post.test.instructions|default:$test->instructions|add_base_url}</textarea></p>
                 {include file='partials/backend_general/overlay_editor.tpl' table='tests' table_id=$test->id column='instructions' editor_type='textarea' class='tinymce' inline}
             </div>
+            <div class="field">
+                <label for="test_enable_scoring_id">{translate line='admin_tests_test_form_label_enable_scoring'}:</label>
+                <p class="input"><input type="checkbox" name="test[enable_scoring]" value="1"{if $smarty.post.test.enable_scoring|default:$test->enable_scoring} checked="checked"{/if} id="test_enable_scoring_id" /></p>
+                <p class="input"><em>{translate line='admin_tests_test_form_label_enable_scoring_hint'}</em></p>
+            </div>
             <hr />
             {include file=$test_config_view}
             <div class="buttons">

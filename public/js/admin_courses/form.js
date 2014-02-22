@@ -35,5 +35,11 @@ jQuery(document).ready(function($) {
         timeFormat: 'HH:mm:ss'
     });
     
+    $('#course_test_scoring_deadline_id').datetimepicker({
+        showSecond: true,
+        dateFormat: 'yy-mm-dd',
+        timeFormat: 'HH:mm:ss'
+    });
+    
     make_overlay_editors();
 });

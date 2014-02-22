@@ -409,11 +409,15 @@ class Tasks extends LIST_Controller {
         $this->form_validation->set_rules('task_id', 'task_id', 'required');
         $this->form_validation->set_rules('task_set_id', 'task_set_id', 'required');
         $this->form_validation->set_rules('points_total', 'lang:admin_tasks_add_to_task_set_form_field_points_total', 'required|number|greater_than_equal[0]');
+        $this->form_validation->set_rules('test_max_points', 'lang:admin_tasks_add_to_task_set_form_field_test_max_points', 'required|number|greater_than_equal[0]');
+        $this->form_validation->set_rules('test_min_points', 'lang:admin_tasks_add_to_task_set_form_field_test_min_points', 'required|number|less_than_field_or_equal[test_max_points]');
         
         if ($this->form_validation->run()) {
             $task_id = intval($this->input->post('task_id'));
             $task_set_id = intval($this->input->post('task_set_id'));
             $points_total = floatval($this->input->post('points_total'));
+            $test_max_points = floatval($this->input->post('test_max_points'));
+            $test_min_points = floatval($this->input->post('test_min_points'));
             $bonus_task = (int)(bool)intval($this->input->post('bonus_task'));
             $internal_comment = $this->input->post('internal_comment');
             $this->_transaction_isolation();
@@ -436,6 +440,8 @@ class Tasks extends LIST_Controller {
                 $new_sorting = $related_task->exists() ? intval($related_task->join_sorting) + 1 : 1; 
                 $task_set->save($task);
                 $task_set->set_join_field($task, 'points_total', $points_total);
+                $task_set->set_join_field($task, 'test_max_points', $test_max_points);
+                $task_set->set_join_field($task, 'test_min_points', $test_min_points);
                 $task_set->set_join_field($task, 'sorting', $new_sorting);
                 $task_set->set_join_field($task, 'bonus_task', $bonus_task);
                 $task_set->set_join_field($task, 'internal_comment', $internal_comment);

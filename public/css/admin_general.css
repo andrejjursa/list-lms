@@ -89,8 +89,8 @@ form div.field div.input input[type=text], form div.field div.input input[type=p
 form div.field p.input input[type=text], form div.field p.input input[type=password], form div.field p.input textarea { width: 98%; }
 form div.field div.input textarea,
 form div.field p.input textarea { height: 100px; }
-form div.field div.input select
-form div.field p.input select { max-width: 98%; }
+form div.field div.input select,
+form div.field p.input select { width: 98%; }
 form div.field p.error { width: 80%; margin-left: 20%; } 
 form div.field p.error span.message { padding: 2px; border: 1px solid red; color: red; border-radius: 3px; width: 98%; margin: 2px 0; display: block; background-color: #FFAFAF; }
 form div.field p.caption { width: 80%; margin-left: 20%; font-size: 0.9em; }
@@ -98,6 +98,19 @@ form div.field p.caption > label { font-weight: bold; cursor: pointer; }
 
 form div.field div.overlay-editor-header { width: 80%; margin-left: 20%; padding: 6px 0 0 0; }
 form div.field div.overlay-editor-header div.ui-widget-header { width: 99%; }
+
+div.columns { margin: 0; padding: 0; width: 100%; }
+div.columns div.clear { clear: both; }
+div.columns div.col_50p { width: 49.89%; float: left; margin-right: 0.09% }
+
+div.columns div.col_50p div.field p.error { width: 58.9%; margin-left: 40.1%; }
+div.columns div.col_50p div.field p.caption { width: 58.9%; margin-left: 40.1%; }
+div.columns div.col_50p div.field > label { width: 40.1%; }
+div.columns div.col_50p div.field p.input,
+div.columns div.col_50p div.field div.input { width: 58.9%; margin-left: 40.1%; }
+div.columns div.col_50p div.field div.input input[type=text], div.columns div.col_50p div.field div.input input[type=password], div.columns div.col_50p div.field div.input textarea,
+div.columns div.col_50p div.field p.input input[type=text], div.columns div.col_50p div.field p.input input[type=password], div.columns div.col_50p div.field p.input textarea { max-width: 96.5%; }
+div.columns div.col_50p div.field div.input select, div.columns div.col_50p div.field p.input select { width: 96.5%; }
 
 div.flash_message { color: blue; margin: 5px; padding: 5px; border: 1px solid blue; background-color: #d0d8ff; border-radius: 5px; box-shadow: 0px 0px 2px 2px blue inset; }
 div.flash_message.message_success { border-color: green; box-shadow: 0px 0px 2px 2px green inset; background-color: #ADFF9A; color: green; }

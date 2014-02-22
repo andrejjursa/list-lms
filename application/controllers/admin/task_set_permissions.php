@@ -52,6 +52,13 @@ class Task_set_permissions extends LIST_Controller {
         $this->load->library('form_validation');
         
         $this->form_validation->set_rules('task_set_permission[group_id]', 'lang:admin_task_sets_form_field_group_id', 'required');
+        $task_set_permission_data = $this->input->post('task_set_permission');
+        $this->form_validation->set_rules('task_set_permission[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
+        if (isset($task_set_permission_data['deadline_notification_emails_handler']) && $task_set_permission_data['deadline_notification_emails_handler'] == 2) {
+            $this->form_validation->set_rules('task_set_permission[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
+        } else {
+            $this->form_validation->set_rules('task_set_permission[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
+        }
         
         if ($this->form_validation->run()) {
             $this->_transaction_isolation();
@@ -59,13 +66,15 @@ class Task_set_permissions extends LIST_Controller {
             $task_set = new Task_set();
             $task_set->get_by_id((int)$task_set_id);
             if ($task_set->exists() && !is_null($task_set->course_id)) {
-                $task_set_permission_data = $this->input->post('task_set_permission');
                 $task_set_permission = new Task_set_permission();
                 $task_set_permission->enabled = isset($task_set_permission_data['enabled']) ? 1 : 0;
                 $task_set_permission->group_id = $task_set_permission_data['group_id'];
                 $task_set_permission->room_id = intval($task_set_permission_data['room_id']) > 0 ? intval($task_set_permission_data['room_id']) : NULL;
                 $task_set_permission->publish_start_time = preg_match(Task_sets::REGEXP_PATTERN_DATETYME, $task_set_permission_data['publish_start_time']) ? $task_set_permission_data['publish_start_time'] : NULL;
                 $task_set_permission->upload_end_time = preg_match(Task_sets::REGEXP_PATTERN_DATETYME, $task_set_permission_data['upload_end_time']) ? $task_set_permission_data['upload_end_time'] : NULL;
+                $task_set_permission->deadline_notification_emails = $task_set_permission_data['deadline_notification_emails'];
+                $task_set_permission->deadline_notification_emails_handler = $task_set_permission_data['deadline_notification_emails_handler'];
+                $task_set_permission->deadline_notified = is_null($task_set_permission->upload_end_time) ? 1 : 0;
                 if ($task_set_permission->save($task_set)) {
                     $task_set_permissions = new Task_set_permission();
                     $task_set_permissions->where_related($task_set);
@@ -110,6 +119,13 @@ class Task_set_permissions extends LIST_Controller {
         $this->load->library('form_validation');
         
         $this->form_validation->set_rules('task_set_permission[group_id]', 'lang:admin_task_sets_form_field_group_id', 'required');
+        $task_set_permission_data = $this->input->post('task_set_permission');
+        $this->form_validation->set_rules('task_set_permission[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
+        if (isset($task_set_permission_data['deadline_notification_emails_handler']) && $task_set_permission_data['deadline_notification_emails_handler'] == 2) {
+            $this->form_validation->set_rules('task_set_permission[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
+        } else {
+            $this->form_validation->set_rules('task_set_permission[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
+        }
         
         if ($this->form_validation->run()) {
             $this->_transaction_isolation();
@@ -120,12 +136,17 @@ class Task_set_permissions extends LIST_Controller {
             $task_set_permission->get_by_id((int)$task_set_permission_id);
             if ($task_set->exists() && !is_null($task_set->course_id)) {
                 if ($task_set_permission->exists() && $task_set_permission->is_related_to($task_set)) {
-                    $task_set_permission_data = $this->input->post('task_set_permission');
+                    $task_set_permission_upload_end_time = $task_set_permission->upload_end_time;
                     $task_set_permission->enabled = isset($task_set_permission_data['enabled']) ? 1 : 0;
                     $task_set_permission->group_id = $task_set_permission_data['group_id'];
                     $task_set_permission->room_id = intval($task_set_permission_data['room_id']) > 0 ? intval($task_set_permission_data['room_id']) : NULL;
                     $task_set_permission->publish_start_time = preg_match(Task_sets::REGEXP_PATTERN_DATETYME, $task_set_permission_data['publish_start_time']) ? $task_set_permission_data['publish_start_time'] : NULL;
                     $task_set_permission->upload_end_time = preg_match(Task_sets::REGEXP_PATTERN_DATETYME, $task_set_permission_data['upload_end_time']) ? $task_set_permission_data['upload_end_time'] : NULL;
+                    $task_set_permission->deadline_notification_emails = $task_set_permission_data['deadline_notification_emails'];
+                    $task_set_permission->deadline_notification_emails_handler = $task_set_permission_data['deadline_notification_emails_handler'];
+                    if ($task_set_permission->upload_end_time !== $task_set_permission_upload_end_time) {
+                        $task_set_permission->deadline_notified = 0;
+                    }
                     if ($task_set_permission->save()) {
                         $task_set_permissions = new Task_set_permission();
                         $task_set_permissions->where_related($task_set);

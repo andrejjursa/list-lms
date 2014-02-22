@@ -21,6 +21,12 @@ $cache = array (
     15 => 'allowed_file_types',
     16 => 'allowed_test_types',
     17 => 'internal_comment',
+    18 => 'enable_tests_scoring',
+    19 => 'test_min_needed',
+    20 => 'test_max_allowed',
+    21 => 'deadline_notification_emails',
+    22 => 'deadline_notified',
+    23 => 'deadline_notification_emails_handler',
   ),
   'validation' => 
   array (
@@ -147,6 +153,48 @@ $cache = array (
     'internal_comment' => 
     array (
       'field' => 'internal_comment',
+      'rules' => 
+      array (
+      ),
+    ),
+    'enable_tests_scoring' => 
+    array (
+      'field' => 'enable_tests_scoring',
+      'rules' => 
+      array (
+      ),
+    ),
+    'test_min_needed' => 
+    array (
+      'field' => 'test_min_needed',
+      'rules' => 
+      array (
+      ),
+    ),
+    'test_max_allowed' => 
+    array (
+      'field' => 'test_max_allowed',
+      'rules' => 
+      array (
+      ),
+    ),
+    'deadline_notification_emails' => 
+    array (
+      'field' => 'deadline_notification_emails',
+      'rules' => 
+      array (
+      ),
+    ),
+    'deadline_notified' => 
+    array (
+      'field' => 'deadline_notified',
+      'rules' => 
+      array (
+      ),
+    ),
+    'deadline_notification_emails_handler' => 
+    array (
+      'field' => 'deadline_notification_emails_handler',
       'rules' => 
       array (
       ),

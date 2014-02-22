@@ -20,6 +20,16 @@
                 {form_error field='points_total' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="field">
+                <label for="test_max_points_id" class="required">{translate line='admin_tasks_add_to_task_set_form_label_test_max_points'}:</label>
+                <p class="input"><input type="text" name="test_max_points" value="{$smarty.post.test_max_points|floatval}" id="test_max_points_id" /></p>
+                {form_error field='test_max_points' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
+                <label for="test_min_points_id" class="required">{translate line='admin_tasks_add_to_task_set_form_label_test_min_points'}:</label>
+                <p class="input"><input type="text" name="test_min_points" value="{$smarty.post.test_min_points|floatval}" id="test_min_points_id" /></p>
+                {form_error field='test_min_points' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
                 <label for="bonus_task_id">{translate line='admin_tasks_add_to_task_set_form_label_bonus_task'}:</label>
                 <p class="input"><input type="checkbox" name="bonus_task" value="1" id="bonus_task_id"{if $smarty.post.bonus_task} checked="checked"{/if} /></p>
                 <p class="input"><em>{translate line='admin_tasks_add_to_task_set_form_label_bonus_task_hint'}</em></p>
