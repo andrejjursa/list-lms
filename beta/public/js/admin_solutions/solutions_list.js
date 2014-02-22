@@ -3,6 +3,15 @@ jQuery(document).ready(function($) {
     make_switchable_form('#new_solution_form_id');
     make_filter_form('#filter_form_id');
     
+    var url_anchor = api_read_url_anchor();
+    if (url_anchor.substring(0, 6) === 'group_') {
+        var group_id = url_anchor.substring(6);
+        var regex = /^[1-9][0-9]*$/;
+        if (regex.test(group_id)) {
+            $('#filter_group_id option[value="' + group_id + '"]').prop('selected', true);
+        }
+    }
+    
     var refresh_all_solutions = function() {
         var data = $('#filter_form_id').serializeArray();
         var url = global_base_url + 'index.php/admin_solutions/get_solutions_list_for_task_set/' + task_set_id;

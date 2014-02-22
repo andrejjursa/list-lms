@@ -13,6 +13,7 @@ $cache = array (
     7 => 'configuration',
     8 => 'enabled',
     9 => 'instructions',
+    10 => 'enable_scoring',
   ),
   'validation' => 
   array (
@@ -83,6 +84,13 @@ $cache = array (
     'instructions' => 
     array (
       'field' => 'instructions',
+      'rules' => 
+      array (
+      ),
+    ),
+    'enable_scoring' => 
+    array (
+      'field' => 'enable_scoring',
       'rules' => 
       array (
       ),

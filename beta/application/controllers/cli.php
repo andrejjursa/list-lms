@@ -9,7 +9,7 @@ class Cli extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
-        if (!$this->input->is_cli_request()) {
+        if (!$this->input->is_cli_request() && $this->router->method != 'send_deadline_notifications') {
             show_error('This controller can be called only from CLI!');
             die();
         }
@@ -29,7 +29,8 @@ class Cli extends CI_Controller {
         echo '  clear_lockdown' . "\n";
         echo '  generate_encryption_key' . "\n";
         echo '  apply_lockdown' . "\n";
-        echo '  fix_broken_link';
+        echo '  fix_broken_link' . "\n";
+        echo '  send_deadline_notifications';
     }
 
     /**
@@ -48,7 +49,8 @@ class Cli extends CI_Controller {
                 echo $this->migration->error_string();
             } else {
                 echo 'SUCCESS!' . "\n";
-                echo 'Cache cleared, ' . $cleared . ' files deleted.';
+                $this->_recreate_production_cache();
+                echo 'Cache refreshed, ' . $cleared . ' old cache files deleted.';
             }
         } elseif (is_numeric($migration) && intval($migration) > 0) {
             $answer = $this->_get_cli_user_input('Do you realy want to update database to version ' . $migration . '? (yes)');
@@ -62,7 +64,8 @@ class Cli extends CI_Controller {
                 echo $this->migration->error_string();
             } else {
                 echo 'SUCCESS!' . "\n";
-                echo 'Cache cleared, ' . $cleared . ' files deleted.';
+                $this->_recreate_production_cache();
+                echo 'Cache refreshed, ' . $cleared . ' old cache files deleted.';
             }
         } else {
             echo 'Can\'t execute command!';
@@ -259,6 +262,136 @@ class Cli extends CI_Controller {
         fix_broken_tasks_links($broken_prefix);
         $this->clear_lockdown();
     }
+    
+    public function send_deadline_notifications($lang_idiom = NULL) {
+        $this->load->database();
+        
+        $this->load->model('translations');
+        if (!is_null($lang_idiom)) {
+            $this->lang->reinitialize_for_idiom($lang_idiom);
+        }
+        $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
+        $this->lang->add_custom_translations($translations);
+        $this->lang->load('cli');
+        
+        $current_time = Date('Y-m-d H:i:s');
+        $one_day_back_time = Date('Y-m-d H:i:s', strtotime('now -1 day'));
+        
+        $task_sets1 = new Task_set();
+        $task_sets1->select('id, name, course_id, group_id AS common_group_id, upload_end_time AS common_upload_end_time, deadline_notified AS common_deadline_notified, deadline_notification_emails AS common_deadline_notification_emails, deadline_notification_emails_handler AS common_deadline_notification_emails_handler');
+        $task_sets1->select('null AS `task_set_permission_id`', FALSE);
+        $task_sets1->where('deadline_notified', 0);
+        $task_sets1->where('deadline_notification_emails_handler >', 0);
+        $task_sets1->group_start();
+            $task_sets1->not_group_start();
+                $task_sets1->where('upload_end_time', NULL);
+            $task_sets1->group_end();
+            $task_sets1->where('upload_end_time <', $current_time);
+            $task_sets1->where('upload_end_time >=', $one_day_back_time);
+        $task_sets1->group_end();
+        $task_sets1->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+        $task_sets1->where('published', 1);
+        
+        $task_sets2 = new Task_set();
+        $task_sets2->select('id, name, course_id');
+        $task_sets2->include_related('task_set_permission', 'group_id', 'common');
+        $task_sets2->include_related('task_set_permission', 'upload_end_time', 'common');
+        $task_sets2->include_related('task_set_permission', 'deadline_notified', 'common');
+        $task_sets2->include_related('task_set_permission', 'deadline_notification_emails', 'common');
+        $task_sets2->include_related('task_set_permission', 'deadline_notification_emails_handler', 'common');
+        $task_sets2->include_related('task_set_permission', 'id');
+        $task_sets2->where_related('task_set_permission', 'enabled', 1);
+        $task_sets2->where_related('task_set_permission', 'deadline_notified', 0);
+        $task_sets2->where_related('task_set_permission', 'deadline_notification_emails_handler >', 0);
+        $task_sets2->group_start();
+            $task_sets2->not_group_start();
+                $task_sets2->where_related('task_set_permission', 'upload_end_time', NULL);
+            $task_sets2->group_end();
+            $task_sets2->where_related('task_set_permission', 'upload_end_time <', $current_time);
+            $task_sets2->where_related('task_set_permission', 'upload_end_time >=', $one_day_back_time);
+        $task_sets2->group_end();
+        $task_sets2->where('published', 1);
+        
+        $task_sets1->union_iterated($task_sets2, TRUE);
+        
+        $this->load->library('email');
+        
+        $sent_notifications = 0;
+        
+        foreach ($task_sets1 as $task_set) {
+            if ($task_set->common_deadline_notification_emails_handler > 0) {
+                $emails = trim($task_set->common_deadline_notification_emails) != '' ? explode(',', $task_set->common_deadline_notification_emails) : array();
+                array_walk($emails, function(&$email, $key) {
+                    $email = trim($email);
+                });
+                if ($task_set->common_deadline_notification_emails_handler == 1) {
+                    $groups = new Group();
+                    $groups->where_related('course', 'id', $task_set->course_id);
+                    $groups->include_related('room/teacher', '*');
+                    $groups->group_start('NOT');
+                        $groups->where_related('room', 'id', null);
+                        $groups->or_where_related('room/teacher', 'id', null);
+                    $groups->group_end();
+                    $groups->group_by_related('room/teacher', 'email');
+                    if (!is_null($task_set->common_group_id)) {
+                        $groups->where('id', $task_set->common_group_id);
+                    }
+                    $groups->get_iterated();
+                    
+                    foreach($groups as $teacher) {
+                        if (trim($teacher->room_teacher_email) != '') {
+                            $email = trim($teacher->room_teacher_email);
+                            if (!in_array($email, $emails)) { $emails[] = $email; }
+                        }
+                    }
+                }
+                
+                $group = new Group();
+                if (!is_null($task_set->common_group_id)) {
+                    $group->get_by_id((int)$task_set->common_group_id);
+                }
+                
+                if (count($emails)) {
+                    $this->email->from_system();
+                    $this->email->reply_to_system();
+                    
+                    $this->email->build_message_body('file:emails/cli/deadline_notification.tpl', array('task_set' => $task_set, 'group' => $group));
+                    
+                    if ($this->config->item('email_multirecipient_batch_mode')) {
+                        $this->email->to($emails);
+                        $this->email->subject('LIST: ' . $this->lang->line('cli_deadline_notification_subject'));
+                        $this->email->send();
+                    } else {
+                        foreach ($emails as $email) {
+                            $this->email->to($email);
+                            $this->email->subject('TEST');
+                            $this->email->send();
+                        }
+                    }
+                    
+                    $sent_notifications++;
+                    
+                    if (!is_null($task_set->task_set_permission_id)) {
+                        $task_set_permission = new Task_set_permission();
+                        $task_set_permission->get_by_id($task_set->task_set_permission_id);
+                        if ($task_set_permission->exists()) {
+                            $task_set_permission->deadline_notified = 1;
+                            $task_set_permission->save();
+                        }
+                    } else {
+                        $task_set_update = new Task_set();
+                        $task_set_update->get_by_id($task_set->id);
+                        if ($task_set_update->exists()) {
+                            $task_set_update->deadline_notified = 1;
+                            $task_set_update->save();
+                        }
+                    }
+                }
+            }
+        }
+        
+        echo "Process finished, {$sent_notifications} notifications were sent ...\n";
+    }
 
     /**
      * Clear production cache for DataMapper if it is enabled.
@@ -291,4 +424,31 @@ class Cli extends CI_Controller {
         return $varin;
     }
     
+    /**
+     * Create new cache files for DataMapper if production cache is enabled.
+     */
+    private function _recreate_production_cache() {
+        $this->config->load('datamapper', TRUE);
+        $production_cache = $this->config->item('production_cache', 'datamapper');
+        if (!empty($production_cache) && file_exists($production_cache) && is_dir($production_cache)) {
+            include APPPATH . '../system/core/Model.php';
+            $path = APPPATH . 'models/';
+            if (file_exists($path)) {
+                $files = scandir($path);
+                foreach ($files as $file) {
+                    $ext = pathinfo($file, PATHINFO_EXTENSION);
+                    $class_name = basename($file, '.' . $ext);
+                    $class_name = strtoupper(substr($class_name, 0, 1)) . strtolower(substr($class_name, 1));
+                    if (strtolower($ext) == 'php') {
+                        include $path . $file;
+                        if (class_exists($class_name) && in_array('DataMapper', class_parents($class_name))) {
+                            echo '  DataMapper model ' . $class_name . ' cached again ...' . "\n";
+                            $model = new $class_name();
+                            $model->limit(1)->get_iterated();
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -92,6 +92,8 @@ class Courses extends LIST_Controller {
             $course->from_array($course_data, array('name', 'period_id', 'capacity', 'default_points_to_remove'));
             $course->allow_subscription_to = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : NULL;
             $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
+            $course->test_scoring_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['test_scoring_deadline']) ? $course_data['test_scoring_deadline'] : NULL;
+            $course->hide_in_lists = isset($course_data['hide_in_lists']) ? 1 : 0;
             
             $this->_transaction_isolation();
             $this->db->trans_begin();
@@ -179,6 +181,8 @@ class Courses extends LIST_Controller {
                 $course->description = remove_base_url($course_data['description']);
                 $course->allow_subscription_to = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : NULL;
                 $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
+                $course->test_scoring_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['test_scoring_deadline']) ? $course_data['test_scoring_deadline'] : NULL;
+                $course->hide_in_lists = isset($course_data['hide_in_lists']) ? 1 : 0;
                 
                 $overlay = $this->input->post('overlay');
                 

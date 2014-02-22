@@ -149,6 +149,8 @@ abstract class abstract_test {
                 'subtype' => $test_model->subtype,
                 'config' => unserialize($test_model->configuration),
                 'id' => $test_model->id,
+                'enable_scoring' => (int)$test_model->enable_scoring > 0 ? TRUE : FALSE,
+                'task_id' => $test_model->task_id,
             );
             $this->current_test = $current_test;
         } else {
@@ -159,10 +161,13 @@ abstract class abstract_test {
     /**
      * Runs initialized test. It will accept the input zip file (with path) and run the method defined in $this->test_subtypes[current_subtype]['method'].
      * @param string $input_zip_file path to zip file with source code to be tested.
+     * @param boolean $save_score enables or disables saving score into score database table.
+     * @param string $score_token unique identification token for batch test set.
+     * @param int|Student $score_student id or initialized student model.
      * @return string result of test in text/html or plain/text form.
      * @throws TestException can be thrown if test object is not initialized, source file is not found or run method is not found.
      */
-    public function run($input_zip_file) {
+    public function run($input_zip_file, $save_score = FALSE, $score_token = '', $score_student = NULL) {
         if (is_null($this->get_current_test_subtype())) {
             throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1100001);
         }
@@ -174,7 +179,7 @@ abstract class abstract_test {
             throw new TestException($this->CI->lang->line('tests_general_error_subtype_method_not_found'), 1100003);
         }
         $this->zip_file_path = $input_zip_file;
-        return $this->$method_name();
+        return $this->$method_name($save_score, $score_token, $score_student);
     }
     
     /**
@@ -434,6 +439,25 @@ abstract class abstract_test {
             throw new TestException(sprintf($this->CI->lang->line('tests_general_error_file_not_found'), $zip_file), 1800001);
         }
     }
+    
+    /**
+     * Adds information about score into database.
+     * @param int $score score value from 0 to 100, or more for bonus points.
+     * @param int|Student $student_id student id or student model.
+     * @param string $token string token.
+     * @return void returns nothing.
+     */
+    protected function save_test_result($score, $student_id, $token) {
+        if (!$this->current_test['enable_scoring']) { return; }
+        
+        $this->CI->load->model('test_score');
+        
+        if (is_object($student_id) && $student_id instanceOf DataMapper) {
+            $student_id = (int)$student_id->id;
+        }
+        
+        $this->CI->test_score->set_score_for_task($student_id, $this->current_test['task_id'], $token, $score, $this->test_type);
+    }
 
     /**
      * Run by constructor, determines type of test from class name.
@@ -446,6 +470,14 @@ abstract class abstract_test {
         }
     }
     
+    /**
+     * Add not zip file into zip archive.
+     * @param string $zip_name zip archive name.
+     * @param string $path path to file and zip archive.
+     * @param string $file_to_zip name of file to add to zip archive.
+     * @param string $original_file_name original name of file.
+     * @return boolean TRUE, if file is added to zip archive.
+     */
     private function zip_plain_file_to_archive($zip_name, $path, $file_to_zip, $original_file_name) {
         $clear_path = rtrim($path, '/\\') . '/';
         if (file_exists($clear_path . $file_to_zip)) {

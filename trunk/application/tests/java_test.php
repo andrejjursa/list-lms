@@ -26,7 +26,7 @@ class java_test extends abstract_test {
         return $this->CI->lang->line('tests_java_type_name');
     }
     
-    protected function run_unit_test() {
+    protected function run_unit_test($save_score = FALSE, $score_token = '', $score_student = NULL) {
         $working_directory = $this->make_test_directory();
         $this->extract_zip_to($this->get_input_zip_file());
         $this->extract_zip_to($this->get_current_test_source_directory() . $this->get_current_test_configuration_value('zip_file'));
@@ -39,8 +39,14 @@ class java_test extends abstract_test {
         
         $scripts_directory = $this->get_test_scripts_directory();
         $exec_command = $scripts_directory . 'test ' . rtrim(getcwd(), '\\/') . DIRECTORY_SEPARATOR . $working_directory . ' ' . $class_to_run . ' JAVA';
-        @exec($exec_command);
+        $output_data = array();
+        $exit_code = 0;
+        @exec($exec_command, $output_data, $exit_code);
         $output = $this->read_output_file('test.out');
+        
+        if ($save_score) {
+            $this->save_test_result($exit_code, $score_student, $score_token);
+        }
         
         $this->delete_test_directory();
         

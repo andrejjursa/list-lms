@@ -62,6 +62,7 @@ class Courses extends LIST_Controller {
         $student->get_by_id($this->usermanager->get_student_id());
         
         $course = new Course();
+        $course->where('hide_in_lists', 0);
         $course->get_by_id($course_id);
         
         if ($course->exists()) {

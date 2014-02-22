@@ -12,6 +12,9 @@ $cache = array (
     6 => 'room_id',
     7 => 'task_set_id',
     8 => 'enabled',
+    9 => 'deadline_notification_emails',
+    10 => 'deadline_notified',
+    11 => 'deadline_notification_emails_handler',
   ),
   'validation' => 
   array (
@@ -75,6 +78,27 @@ $cache = array (
     'enabled' => 
     array (
       'field' => 'enabled',
+      'rules' => 
+      array (
+      ),
+    ),
+    'deadline_notification_emails' => 
+    array (
+      'field' => 'deadline_notification_emails',
+      'rules' => 
+      array (
+      ),
+    ),
+    'deadline_notified' => 
+    array (
+      'field' => 'deadline_notified',
+      'rules' => 
+      array (
+      ),
+    ),
+    'deadline_notification_emails_handler' => 
+    array (
+      'field' => 'deadline_notification_emails_handler',
       'rules' => 
       array (
       ),

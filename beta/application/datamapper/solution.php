@@ -14,6 +14,7 @@ $cache = array (
     8 => 'revalidate',
     9 => 'not_considered',
     10 => 'ip_address',
+    11 => 'best_version',
   ),
   'validation' => 
   array (
@@ -91,6 +92,13 @@ $cache = array (
     'ip_address' => 
     array (
       'field' => 'ip_address',
+      'rules' => 
+      array (
+      ),
+    ),
+    'best_version' => 
+    array (
+      'field' => 'best_version',
       'rules' => 
       array (
       ),

@@ -78,6 +78,7 @@ table.solution_tests_table thead th:last-child { border-top-right-radius: 3px; }
 table.solution_tests_table thead th.test_select { width: 15px; }
 table.solution_tests_table thead th.test_type { width: 100px; }
 table.solution_tests_table thead th.test_subtype { width: 200px; }
+table.solution_tests_table thead th.test_evaluation { width: 1px; }
 table.solution_tests_table tbody td { padding: 4px; border-bottom: 1px dashed silver; }
 table.solution_tests_table tbody tr.task_header td.task_name { border: 0px none; background-color: #99ff99; font-weight: bold; }
 table.solution_tests_table tbody tr.test_header td.test_select { width: 15px; }
