@@ -161,6 +161,20 @@ class LIST_Form_validation extends CI_Form_validation {
     }
     
     /**
+     * Special case of email address check, can be zero or more valid e-mail adresses.
+     * @param string $str string to evaluate.
+     * @return boolean TRUE if empty or contains only comma separated list of email addresses.
+     */
+    public function zero_or_more_valid_emails($str) {
+        if (trim($str) == '') {
+            return TRUE;
+        }
+        
+        return $this->valid_emails($str);
+    }
+
+
+    /**
      * Returns keys from field.
      * @param string $field POST field as written in html input element name attribute.
      * @return array<string> array of keys to the $_POST superglobal.

@@ -50,6 +50,11 @@
                     <p class="input"><input type="text" name="course[test_scoring_deadline]" value="{$smarty.post.course.test_scoring_deadline|default:$course->test_scoring_deadline|escape:'html'}" id="course_test_scoring_deadline_id" /></p>
                     <p class="input"><em>{translate line='admin_courses_form_label_test_scoring_deadline_hint'}</em></p>
                 </div>
+                <div class="field">
+                    <label for="course_hide_in_lists_id">{translate line='admin_courses_form_label_hide_in_lists'}:</label>
+                    <p class="input"><input type="checkbox" name="course[hide_in_lists]" id="course_hide_in_lists_id" value="1"{if $smarty.post.course.hide_in_lists|default:$course->hide_in_lists eq 1} checked="checked"{/if}</p>
+                    <p class="input"><em>{translate line='admin_courses_form_label_hide_in_lists_hint'}</em></p>
+                </div>
                 <div class="buttons">
                     <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" /> <a href="{internal_url url='admin_courses'}" class="button special">{translate line='common_button_back'}</a>
                 </div>

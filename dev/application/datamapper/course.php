@@ -14,6 +14,7 @@ $cache = array (
     8 => 'default_points_to_remove',
     9 => 'allow_subscription_to',
     10 => 'test_scoring_deadline',
+    11 => 'hide_in_lists',
   ),
   'validation' => 
   array (
@@ -91,6 +92,13 @@ $cache = array (
     'test_scoring_deadline' => 
     array (
       'field' => 'test_scoring_deadline',
+      'rules' => 
+      array (
+      ),
+    ),
+    'hide_in_lists' => 
+    array (
+      'field' => 'hide_in_lists',
       'rules' => 
       array (
       ),

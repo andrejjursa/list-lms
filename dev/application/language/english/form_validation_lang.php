@@ -10,3 +10,4 @@ $lang['less_than_equal'] = 'The <strong>%s</strong> field must contain a number 
 $lang['required_no_html'] = $lang['required'];
 $lang['less_than_field_or_equal'] = 'The <strong>%s</strong> field must contain a number less than or equal to field <strong>%s</strong>.';
 $lang['greater_than_field_or_equal'] = 'The <strong>%s</strong> field must contain a number greater than or equal to field <strong>%s</strong>.';
+$lang['zero_or_more_valid_emails'] = 'The <strong>%s</strong> field must contain all valid email addresses.';

@@ -36,7 +36,7 @@ class Migration_create_test_scores extends CI_Migration {
             )
         );
         
-        $this->dbforge->add_key('test_id', TRUE);
+        $this->dbforge->add_key('task_id', TRUE);
         $this->dbforge->add_key('student_id', TRUE);
         $this->dbforge->add_key('token', TRUE);
         
