@@ -72,6 +72,11 @@ $hook['post_controller'] = array(
                     },
                 ),
             ),
+            'fetests' => array(
+                'evaluate_test_result' => array(
+                    'frontend/tasks/index.tpl' => $student_cache_id,
+                ),
+            ),
         ),
         'admin/' => array(
             'periods' => array(
