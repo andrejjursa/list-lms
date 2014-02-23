@@ -687,7 +687,10 @@ var display_notification = function(message, type) {
     notification_box.css('display', 'none');
     notification_box.fadeIn(500, function() {
         notification_box.fadeTo(10000, 0.8, function() {
-            notification_box.fadeOut(500, function() {
+            notification_box.animate({
+                height: 0,
+                opacity: 0
+            }, 500, 'swing', function() {
                 notification_box.remove();
             });
         });
@@ -695,7 +698,10 @@ var display_notification = function(message, type) {
     var close_button = jQuery('<span class="close_button">x</span>').prependTo(notification_box);
     close_button.click(function() {
         notification_box.stop();
-        notification_box.fadeOut(500, function() {
+        notification_box.animate({
+            height: 0,
+            opacity: 0
+        }, 500, 'swing', function() {
             notification_box.remove();
         });
     });
