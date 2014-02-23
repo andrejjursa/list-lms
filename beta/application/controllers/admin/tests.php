@@ -446,6 +446,7 @@ class Tests extends LIST_Controller {
                         if ($save_solution) {
                             $solution->save();
                             $output->result = TRUE;
+                            $this->_action_success();
                         } else {
                             $output->message = sprintf($this->lang->line('admin_tests_test_result_nothing_to_update'), $output->points_new, $output->points_before);
                         }
