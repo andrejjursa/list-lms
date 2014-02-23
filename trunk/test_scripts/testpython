@@ -24,7 +24,7 @@ cd out
 echo "------------------------Testing with Test$1...<br />" >> $OUTPUT_FILE
 sudo -u testovac /opt/lampp/htdocs/list-svn/dev/test_scripts/testpython2 $1 >> ../$OUTPUT_FILE 2>> ../$OUTPUT_FILE
 return_val=$?
-cd ../.. 
+cd .. 
 #
 rm -rf out 2>/dev/null
 echo "------------------------Done.<br />" >> $OUTPUT_FILE
