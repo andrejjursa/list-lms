@@ -14,10 +14,10 @@ class Tasks extends LIST_Controller {
     }
 
     public function index() {
+        $this->usermanager->student_login_protected_redirect();
         $cache_id = $this->usermanager->get_student_cache_id();
         if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/tasks/index.tpl', $cache_id)) {
             $this->_initialize_student_menu();
-            $this->usermanager->student_login_protected_redirect();
 
             $this->_select_student_menu_pagetag('tasks');
 
@@ -42,11 +42,11 @@ class Tasks extends LIST_Controller {
     }
     
     public function task($task_set_id = NULL) {
+        $this->usermanager->student_login_protected_redirect();
         $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id);
         if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/tasks/task.tpl', $cache_id)) {
             $this->_initialize_student_menu();
-            $this->usermanager->student_login_protected_redirect();
-
+            
             $this->_select_student_menu_pagetag('tasks');
 
             $task_set = $this->get_task_set_by_id($course, $group, $student, $task_set_id);

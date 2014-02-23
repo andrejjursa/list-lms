@@ -216,6 +216,7 @@ class LIST_Parser extends CI_Parser {
      * @param $file
      */
     public function add_css_file($file, $attributes = array()) {
+        include_once APPPATH . 'third_party/Smarty/plugins/modifier.add_file_version.php';
         $defaults = array(
             'media' => 'screen',
             'rel'   => 'stylesheet',
@@ -224,11 +225,14 @@ class LIST_Parser extends CI_Parser {
         
         $attributes = array_merge($defaults, $attributes);
         
-        $html = '<link rel="'.$attributes['rel'].'" type="'.$attributes['type'].'" href="'.base_url("/public/css/".$file).'" ' . ($attributes['media'] ? 'media="'.$attributes['media'].'" ' : '') . '/>';
+        $file = smarty_modifier_add_file_version(base_url("/public/css/".$file));
+        
+        $html = '<link rel="'.$attributes['rel'].'" type="'.$attributes['type'].'" href="'.$file.'" ' . ($attributes['media'] ? 'media="'.$attributes['media'].'" ' : '') . '/>';
         
         $this->css_files[] = array(
             'html' => $html,
             'attributes' => $attributes,
+            'file' => $file,
         );
     }
     
@@ -239,17 +243,21 @@ class LIST_Parser extends CI_Parser {
      * @param $file
      */
     public function add_js_file($file, $attributes = array()) {
+        include_once APPPATH . 'third_party/Smarty/plugins/modifier.add_file_version.php';
         $defaults = array(
             'type'  => 'text/javascript'
         );
 
         $attributes = array_merge($defaults, $attributes);
 
-        $html = '<script type="'.$attributes['type'].'" src="'.base_url("/public/js/".$file).'"></script>';
+        $file = smarty_modifier_add_file_version(base_url("/public/js/".$file));
+        
+        $html = '<script type="'.$attributes['type'].'" src="'.$file.'"></script>';
         
         $this->js_files[] = array(
             'html' => $html,
             'attributes' => $attributes,
+            'file' => $file,
         );
     }
     

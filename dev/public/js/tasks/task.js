@@ -153,7 +153,7 @@ jQuery(document).ready(function($) {
     
     var run_test = function(test_id, version_id, output_to_element_id) {
         tests_to_run++;
-        var url = global_base_url + 'index.php/admin_tests/run_test_for_task/' + test_id + '/' + task_id + '/' + student_id + '/' + version_id + '/' + tests_token;
+        var url = global_base_url + 'index.php/fetests/run_test_for_task/' + test_id + '/' + task_id + '/' + student_id + '/' + version_id + '/' + tests_token;
         api_ajax_update(url, 'post', {}, function(data) {
             if (data.code !== undefined && data.text !== undefined) {
                 console.log(data.token);
@@ -180,7 +180,7 @@ jQuery(document).ready(function($) {
         var test_form_data = test_form.serializeObject();
         if (selected_test_type !== '') {
             if (typeof test_form_data.test.version !== 'undefined' && typeof test_form_data.test.id !== 'undefined') {
-                var url = global_base_url + 'index.php/admin_tests/request_token/';
+                var url = global_base_url + 'index.php/fetests/request_token/';
                 api_ajax_update(url, 'post', {}, function(result) {
                     tests_token = result;
                     batch_tests_execution();
@@ -198,7 +198,7 @@ jQuery(document).ready(function($) {
     var test_finalization_check = function() {
         if (test_evaluation_enabled) {
             if (tests_to_run === 0) {
-                var url = global_base_url + 'index.php/admin_tests/evaluate_test_result/' + task_id + '/' + student_id + '/' + test_file_version_id + '/' + selected_test_type + '/' + tests_token;
+                var url = global_base_url + 'index.php/fetests/evaluate_test_result/' + task_id + '/' + student_id + '/' + test_file_version_id + '/' + selected_test_type + '/' + tests_token;
                 console.log(url);
                 api_ajax_update(url, 'post', {}, function(data) {
                     if (data.result === false) {
