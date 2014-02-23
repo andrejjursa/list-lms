@@ -32,8 +32,14 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
     protected $fetchTimestamp;
     protected $save;
     
+    protected $list_version;
+    
     public function __construct() {
         $this->ci =& get_instance();
+        
+        $this->ci->config->load('list');
+        
+        $this->list_version = $this->ci->config->item('list_version');
     }
 
     /**
@@ -59,6 +65,7 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
         if ($compile_id) {
             $this->ci->db->where('compile_id', $compile_id);
         }
+        $this->ci->db->where('list_version', $this->list_version);
         $query = $this->ci->db->get();
         $row = $query->row();
         $query->free_result();
@@ -93,6 +100,7 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
         if ($compile_id) {
             $this->ci->db->where('compile_id', $compile_id);
         }
+        $this->ci->db->where('list_version', $this->list_version);
         $query = $this->ci->db->get();
         $row = $query->row();
         $query->free_result();
@@ -119,6 +127,7 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
         $this->ci->db->set('cache_id', $cache_id);
         $this->ci->db->set('compile_id', $compile_id);
         $this->ci->db->set('content', $content);
+        $this->ci->db->set('list_version', $this->list_version);
         $this->ci->db->insert('output_cache');
         return $this->ci->db->affected_rows() == 1;
     }

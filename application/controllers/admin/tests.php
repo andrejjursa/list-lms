@@ -10,7 +10,7 @@ class Tests extends LIST_Controller {
     public function __construct() {
         parent::__construct();
         $this->_init_language_for_teacher();
-        $this->_load_teacher_langfile();
+        $this->_load_teacher_langfile('tests');
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
         $this->_init_teacher_quick_prefered_course_menu();
@@ -374,6 +374,12 @@ class Tests extends LIST_Controller {
                 
                 $min_results = $task_set->test_min_needed > $test_count ? $test_count : $task_set->test_min_needed;
                 $max_results = $task_set->test_max_allowed < count($results) ? $task_set->test_max_allowed : count($results);
+                
+                $course = new Course();
+                $course->where_related_task_set('id', $task_set->id);
+                $course->get();
+                
+                $min_points_limit = -$course->default_points_to_remove;
                                 
                 if ($test_count > 0) {
                     if (count($results) >= $min_results) {
@@ -404,6 +410,8 @@ class Tests extends LIST_Controller {
                         for ($i = 0; $i < $max_results; $i++) {
                             $total_score += $score_array[$i];
                         }
+                        
+                        $total_score = $total_score < $min_points_limit ? $min_points_limit : $total_score;
 
                         $solution = new Solution();
                         $solution->where('task_set_id', $task_set->id);
@@ -439,7 +447,7 @@ class Tests extends LIST_Controller {
                             $solution->save();
                             $output->result = TRUE;
                         } else {
-                            $output->message = $this->lang->line('admin_tests_test_result_nothing_to_update');
+                            $output->message = sprintf($this->lang->line('admin_tests_test_result_nothing_to_update'), $output->points_new, $output->points_before);
                         }
                     } else {
                         $output->message = sprintf($this->lang->line('admin_tests_test_result_minimum_number_of_test_not_selected'), $min_results);
