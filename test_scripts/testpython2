@@ -1,5 +1,5 @@
 #!/bin/bash
-# usage: testpython MODULE
+# usage: testpython2 MODULE
 # should be run from the directory private/test_to_execute/<unique random hash>
 #
 # test configuration variables:
