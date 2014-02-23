@@ -6,11 +6,14 @@
 # test configuration variables:
 #
 cd $1
+retval=0
 
 if [[ "$3" == "JAVA" ]] ; then
   /opt/lampp/htdocs/list-svn/dev/test_scripts/testjava $2 ;
+  retval=$?
 fi
 if [[ "$3" == "PYTHON" ]] ; then
   /opt/lampp/htdocs/list-svn/dev/test_scripts/testpython $2 ;
+  retval=$?
 fi
-
+exit $retval
