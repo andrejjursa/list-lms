@@ -113,6 +113,7 @@ class Tests extends LIST_Controller {
             $this->load->library('form_validation');
             
             $this->form_validation->set_rules('test[name]', 'lang:admin_tests_test_form_field_name', 'required');
+            $this->form_validation->set_rules('test[timeout]', 'lang:admin_tests_test_form_field_timeout', 'required|greater_than_equal[100]');
             
             $valid = TRUE;
             
@@ -129,6 +130,7 @@ class Tests extends LIST_Controller {
             if ($this->form_validation->run() && $valid) {
                 $test_data = $this->input->post('test');
                 $test->name = $test_data['name'];
+                $test->timeout = (int)$test_data['timeout'];
                 $test->enabled = isset($test_data['enabled']) ? 1 : 0;
                 $test->enable_scoring = isset($test_data['enable_scoring']) ? 1 : 0;
                 $test->instructions = isset($test_data['instructions']) ? remove_base_url($test_data['instructions']) : '';

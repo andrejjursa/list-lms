@@ -23,6 +23,12 @@
                 {include file='partials/backend_general/overlay_editor.tpl' table='tests' table_id=$test->id column='instructions' editor_type='textarea' class='tinymce' inline}
             </div>
             <div class="field">
+                <label for="test_timeout_id" class="required">{translate line='admin_tests_test_form_label_timeout'}:</label>
+                <p class="input"><input type="text" name="test[timeout]" value="{$smarty.post.test.timeout|default:$test->timeout|default:90000|escape:'html'}" id="test_timeout_id" /></p>
+                <p class="input"><em>{translate line='admin_tests_test_form_label_timeout_hint'}</em></p>
+                {form_error field='test[timeout]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
                 <label for="test_enable_scoring_id">{translate line='admin_tests_test_form_label_enable_scoring'}:</label>
                 <p class="input"><input type="checkbox" name="test[enable_scoring]" value="1"{if $smarty.post.test.enable_scoring|default:$test->enable_scoring} checked="checked"{/if} id="test_enable_scoring_id" /></p>
                 <p class="input"><em>{translate line='admin_tests_test_form_label_enable_scoring_hint'}</em></p>

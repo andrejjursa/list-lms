@@ -45,7 +45,7 @@
                                     <select name="zip[file]" size="1">
                                         <option value=""></option>
                                         {foreach $solution->task_set->get_student_files($solution->student_id) as $file}
-                                            <option value="{$file.file|encode_for_url}"{if $file@last} selected="selected"{/if}>{$file@key}</option>
+                                            <option value="{$file.file|encode_for_url}"{if $file@last} selected="selected"{/if}>{$file@key}{if $solution->best_version eq $file@key} (*){/if}</option>
                                         {/foreach}
                                     </select>
                                 </p>
@@ -78,7 +78,7 @@
                             <select name="test[version]" size="1">
                                 <option value=""></option>
                                 {foreach $solution->task_set->get_student_files($solution->student_id) as $file}
-                                    <option value="{$file@key}"{if $file@last} selected="selected"{/if}>{$file@key}</option>
+                                    <option value="{$file@key}"{if $file@last} selected="selected"{/if}>{$file@key}{if $solution->best_version eq $file@key} (*){/if}</option>
                                 {/foreach}
                             </select>
                         </p>
