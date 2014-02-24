@@ -151,6 +151,7 @@ abstract class abstract_test {
                 'id' => $test_model->id,
                 'enable_scoring' => (int)$test_model->enable_scoring > 0 ? TRUE : FALSE,
                 'task_id' => $test_model->task_id,
+                'timeout' => $test_model->timeout,
             );
             $this->current_test = $current_test;
         } else {
@@ -499,6 +500,15 @@ abstract class abstract_test {
             }
         }
         return FALSE;
+    }
+    
+    /**
+     * Returns test timeout.
+     * @return int timeout.
+     */
+    protected function get_test_timeout() {
+        $timeout = (int)$this->current_test['timeout'];
+        return $timeout >= 100 ? $timeout : 100;
     }
 }
 

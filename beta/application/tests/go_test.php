@@ -38,7 +38,7 @@ class go_test extends abstract_test {
         }
         
         $scripts_directory = $this->get_test_scripts_directory();
-        $exec_command = $scripts_directory . 'test ' . rtrim(getcwd(), '\\/') . DIRECTORY_SEPARATOR . $working_directory . ' ' . $class_to_run . ' GO';
+        $exec_command = $scripts_directory . 'test ' . rtrim(getcwd(), '\\/') . DIRECTORY_SEPARATOR . $working_directory . ' ' . $class_to_run . ' GO ' . $this->get_test_timeout();
         $output_data = array();
         $exit_code = 0;
         @exec($exec_command, $output_data, $exit_code);

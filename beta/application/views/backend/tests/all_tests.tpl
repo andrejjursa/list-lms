@@ -6,6 +6,7 @@
             <th>{translate line='admin_tests_test_table_header_type'}</th>
             <th>{translate line='admin_tests_test_table_header_subtype'}</th>
             <th>{translate line='admin_tests_test_table_header_enabled'}</th>
+            <th>{translate line='admin_tests_test_table_header_enable_scoring'}</th>
             <th colspan="3" class="controlls">{translate line='admin_tests_test_table_header_controlls'}</th>
         </tr>
     </thead>
@@ -17,6 +18,7 @@
                 <td>{$test_types[$test->type]}</td>
                 <td>{$test_subtypes[$test->type][$test->subtype]}</td>
                 <td>{if $test->enabled}{translate line='admin_tests_test_table_col_enabled_yes'}{else}{translate line='admin_tests_test_table_col_enabled_no'}{/if}</td>
+                <td>{if $test->enable_scoring}{translate line='admin_tests_test_table_col_enabled_yes'}{else}{translate line='admin_tests_test_table_col_enabled_no'}{/if}</td>
                 <td class="controlls"><a href="{internal_url url="admin_tests/prepare_execution/{$test->id}"}" class="button special execute_test">{translate line='admin_tests_test_table_button_execute'}</a></td>
                 <td class="controlls"><a href="{internal_url url="admin_tests/configure_test/{$test->id}"}" class="button configure_test">{translate line='admin_tests_test_table_button_configure'}</a></td>
                 <td class="controlls"><a href="{internal_url url="admin_tests/delete_test/{$test->id}"}" class="button delete delete_test">{translate line='admin_tests_test_table_button_delete'}</a></td>

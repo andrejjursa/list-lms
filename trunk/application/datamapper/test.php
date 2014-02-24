@@ -14,6 +14,7 @@ $cache = array (
     8 => 'enabled',
     9 => 'instructions',
     10 => 'enable_scoring',
+    11 => 'timeout',
   ),
   'validation' => 
   array (
@@ -91,6 +92,13 @@ $cache = array (
     'enable_scoring' => 
     array (
       'field' => 'enable_scoring',
+      'rules' => 
+      array (
+      ),
+    ),
+    'timeout' => 
+    array (
+      'field' => 'timeout',
       'rules' => 
       array (
       ),

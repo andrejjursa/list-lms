@@ -16,6 +16,8 @@ form div.categories_structure ul { list-style-type: none; }
 form div.categories_structure ul.ul_level_1 ul { margin-left: 20px; }
 form div.categories_structure ul li input { margin-right: 5px; }
 
+#dynamic_categories_id select { width: auto; }
+
 #dynamic_categories_id div.clauses div.clause { padding-left: 16px; background-image: url('../images_ui/and.png'); background-position: left center; background-repeat: no-repeat; }
 #dynamic_categories_id div.clauses div.clause.first_clause { padding-left: 0px; background-image: none; }
 #dynamic_categories_id div.clauses div.clause span.categories span.category { padding-left: 20px; background-image: url('../images_ui/or.png'); background-position: left center; background-repeat: no-repeat; }
