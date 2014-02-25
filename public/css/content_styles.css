@@ -8,3 +8,4 @@
 .text_content li { margin: 0.3em 0; }
 .text_content ul { margin-left: 4em; }
 .text_content ol { margin-left: 4em; }
+.text_content { word-wrap: break-word; word-break: break-all; }
