@@ -21,7 +21,7 @@
                     <div class="group_wrap">
                         <div class="group_name">{if $can_change_group}<input type="radio" name="group_id" value="{$group->id}" /> {/if}{translate_text text=$group->name} ({$group->participant->where_related($course)->where('allowed', 1)->count()}&nbsp;/&nbsp;{$group->room->order_by('capacity', 'asc')->limit(1)->get()->capacity|intval})</div>
                         <ul class="group_students">
-                        {foreach $group->participant->include_related('student', ['fullname','id'])->where_related($course)->where('allowed', 1)->order_by_related('student', 'fullname', 'asc')->get_iterated() as $participant}
+                        {foreach $group->participant->include_related('student', ['fullname','id'])->where_related($course)->where('allowed', 1)->order_by_related_as_fullname('student', 'fullname', 'asc')->get_iterated() as $participant}
                             <li{if $participant->student_id eq $list_student_account.id} class="me"{/if}>{$participant->student_fullname}</li>
                         {foreachelse}
                             <li>{translate line='groups_group_is_empty'}</li>
@@ -41,7 +41,7 @@
                 <div class="group_wrap">
                     <div class="group_name">{translate line='groups_not_assigned_group_name'}</div>
                     <ul class="group_students">
-                    {foreach $course->participant->include_related('student', ['fullname', 'id'])->where('allowed', 1)->where('group_id', null)->order_by_related('student', 'fullname', 'asc')->get_iterated() as $participant}
+                    {foreach $course->participant->include_related('student', ['fullname', 'id'])->where('allowed', 1)->where('group_id', null)->order_by_related_as_fullname('student', 'fullname', 'asc')->get_iterated() as $participant}
                         <li{if $participant->student_id eq $list_student_account.id} class="me"{/if}>{$participant->student_fullname}</li>
                     {foreachelse}
                             <li>{translate line='groups_group_is_empty'}</li>

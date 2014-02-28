@@ -21,7 +21,7 @@
             <div class="group_wrap">
                 <div class="group_name">{translate_text text=$group->name}</div>
                 <ul class="group_students">
-                    {foreach $group->participant->where('allowed', 1)->include_related('student', '*', true, true)->order_by_related('student', 'fullname', 'asc')->get_iterated() as $participant}
+                    {foreach $group->participant->where('allowed', 1)->include_related('student', '*', true, true)->order_by_related_as_fullname('student', 'fullname', 'asc')->get_iterated() as $participant}
                         <li>{$participant->student->fullname}</li>
                     {foreachelse}
                         <li>{translate line='courses_detail_group_empty'}</li>
@@ -55,7 +55,7 @@
             <div class="group_wrap">
                 <div class="group_name">{translate line='courses_detail_group_name_not_assigned'}</div>
                 <ul class="group_students">
-                    {foreach $course->participant->where('allowed', 1)->where('group_id', null)->include_related('student', '*', true, true)->order_by_related('student', 'fullname', 'asc')->get_iterated() as $participant}
+                    {foreach $course->participant->where('allowed', 1)->where('group_id', null)->include_related('student', '*', true, true)->order_by_related_as_fullname('student', 'fullname', 'asc')->get_iterated() as $participant}
                         <li>{$participant->student->fullname}</li>
                     {foreachelse}
                         <li>{translate line='courses_detail_group_empty'}</li>
