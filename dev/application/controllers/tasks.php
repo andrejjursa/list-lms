@@ -110,14 +110,24 @@ class Tasks extends LIST_Controller {
                 $solution->where('task_set_id', $filtered_task_set->id);
                 $solution->where('student_id', $student->id);
                 $solution->get();
+                $revalidate = 1;
+                if ($course->test_scoring_deadline >= date('Y-m-d H:i:s') && $filtered_task_set->enable_tests_scoring == 1 && $filtered_task_set->allowed_test_types != '') {
+                    $test_types = explode(',', $filtered_task_set->allowed_test_types);
+                    $tests = new Test();
+                    $tests->where_related('task/task_set', 'id', $filtered_task_set->id);
+                    $tests->where('enabled', 1);
+                    $tests->where('enable_scoring', 1);
+                    $tests->where_in('type', $test_types);
+                    $revalidate = $tests->count() > 0 ? 0 : 1;
+                }
                 if ($solution->exists()) {
                     $solution->ip_address = $_SERVER["REMOTE_ADDR"];
-                    $solution->revalidate = 1;
+                    $solution->revalidate = $revalidate;
                     $solution->save();
                 } else {
                     $solution = new Solution();
                     $solution->ip_address = $_SERVER["REMOTE_ADDR"];
-                    $solution->revalidate = 1;
+                    $solution->revalidate = $revalidate;
                     $solution->save(array(
                         'student' => $student, 
                         'task_set' => $filtered_task_set,
