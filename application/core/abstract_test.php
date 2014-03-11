@@ -427,13 +427,12 @@ abstract class abstract_test {
      * @throws TestException can be thrown if zip file is not found or input file is not valid zip file (can't be open by ZipArchive).
      */
     protected function extract_zip_to($zip_file, $subdirectory='') {
+        $this->CI->load->library('unzip');
+        
         if (file_exists($zip_file)) {
             $this->create_directory(ltrim($this->current_test_directory . $subdirectory, '\\/'));
-            $zip = new ZipArchive();
-            if ($zip->open($zip_file) === TRUE) {
-                $zip->extractTo(ltrim($this->current_test_directory . $subdirectory, '\\/') . '/');
-                $zip->close();
-            } else {
+            $result = $this->ci->unzip->extract($zip_file, ltrim($this->current_test_directory . $subdirectory, '\\/') . '/');
+            if ($result === FALSE) {
                 throw new TestException(sprintf($this->CI->lang->line('tests_general_error_not_a_zip_file'), $zip_file), 1800002);
             }
         } else {
