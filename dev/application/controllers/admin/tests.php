@@ -371,11 +371,12 @@ class Tests extends LIST_Controller {
                 $tests->where('type', $test_type);
                 $tests->where('enable_scoring >', 0);
                 $tests->group_by('task_id');
+                $tests->where('task_task_task_set_rel.bonus_task', 0);
                 $tests->get_iterated();
+                //$output->debug = $tests->check_last_query(array('', ''), TRUE);
                 $test_count = $tests->result_count();
                 
                 $min_results = $task_set->test_min_needed > $test_count ? $test_count : $task_set->test_min_needed;
-                $max_results = $task_set->test_max_allowed < count($results) ? $task_set->test_max_allowed : count($results);
                 
                 $course = new Course();
                 $course->where_related_task_set('id', $task_set->id);
@@ -384,37 +385,73 @@ class Tests extends LIST_Controller {
                 $min_points_limit = -$course->default_points_to_remove;
                                 
                 if ($test_count > 0) {
-                    if (count($results) >= $min_results) {
-                        $total_score = 0;
-                        $score_array = array();
-                        if (count($results)) {
-                            foreach($results as $task_id => $score) {
-                                $this->db->select('*');
-                                $this->db->where('task_set_id', $task_set->id);
-                                $this->db->where('task_id', (int)$task_id);
-                                $query = $this->db->get('task_task_set_rel');
+                    $total_score = 0;
+                    $score_array = array();
+                    $bonus_tasks_array = array();
+                    $score_percentage = array();
+                    $bonus_tasks_percentage = array();
+                    if (count($results)) {
+                        foreach($results as $task_id => $score) {
+                            $this->db->select('*');
+                            $this->db->where('task_set_id', $task_set->id);
+                            $this->db->where('task_id', (int)$task_id);
+                            $query = $this->db->get('task_task_set_rel');
 
-                                if ($query->num_rows() > 0) {
-                                    $task_rel = $query->row_object();
-                                    $min = $task_rel->test_min_points;
-                                    $max = $task_rel->test_max_points;
-                                    $diff = abs($max - $min);
-                                    $score_percentage = (double)$score / 100;
-                                    $sub_score = round(10 * ($min + $diff * $score_percentage)) / 10;
-                                    $score_array[] = $sub_score;
+                            if ($query->num_rows() > 0) {
+                                $task_rel = $query->row_object();
+                                $min = $task_rel->test_min_points;
+                                $max = $task_rel->test_max_points;
+                                $diff = abs($max - $min);
+                                $score_percent = (double)$score / 100;
+                                $sub_score = round(10 * ($min + $diff * $score_percent)) / 10;
+                                if ($task_rel->bonus_task == 0) {
+                                    $score_array[$task_id] = $sub_score;
+                                    $score_percentage[$task_id] = $score;
+                                } else {
+                                    $bonus_tasks_array[$task_id] = $sub_score;
+                                    $bonus_tasks_percentage[$task_id] = $score;
                                 }
-
-                                $query->free_result();
                             }
-                        }
-                        
-                        rsort($score_array, SORT_NUMERIC);
-                        for ($i = 0; $i < $max_results; $i++) {
-                            $total_score += $score_array[$i];
-                        }
-                        
-                        $total_score = $total_score < $min_points_limit ? $min_points_limit : $total_score;
 
+                            $query->free_result();
+                        }
+                    }
+                    
+                    $max_results = $task_set->test_max_allowed < count($score_array) ? $task_set->test_max_allowed : count($score_array);
+
+                    arsort($score_array, SORT_NUMERIC);
+                    $i = 0;
+                    foreach($score_array as $task_id => $points) {
+                        if ($i < $max_results) {
+                            $total_score += $points;
+                            $i++;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    $total_score = $total_score < $min_points_limit ? $min_points_limit : $total_score;
+
+                    arsort($bonus_tasks_array, SORT_NUMERIC);
+                    
+                    $total_score += array_sum($bonus_tasks_array);
+                        
+                    if (count($score_array) >= $min_results) {
+                        $tasks = new Task();
+                        $tasks->where_related_task_set('id', $task_set_id);
+                        $tasks->order_by('`task_task_set_rel`.`sorting`', 'asc');
+                        $tasks->get_iterated();
+                        //$output->debug = $tasks->check_last_query(array('', ''), TRUE);
+                        
+                        $output->evaluation = $this->parser->parse('backend/tests/evaluation_table.tpl', array(
+                            'tasks' => $tasks,
+                            'real_points' => $score_array,
+                            'bonus_points' => $bonus_tasks_array,
+                            'real_percentage' => $score_percentage,
+                            'bonus_percentage' => $bonus_tasks_percentage,
+                            'max_results' => $max_results,
+                        ), TRUE);
+                        
                         $solution = new Solution();
                         $solution->where('task_set_id', $task_set->id);
                         $solution->where('student_id', $student->id);
