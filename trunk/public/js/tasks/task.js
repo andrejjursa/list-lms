@@ -211,6 +211,9 @@ jQuery(document).ready(function($) {
                         test_results_field_div.html(msg);
                         show_notification(msg, 'success');
                     }
+                    if (data.evaluation !== undefined) {
+                        test_results_field_div.html(test_results_field_div.html() + data.evaluation);
+                    }
                 }, function() {
                     test_results_field_div.html(messages.test_result_not_obtained);
                     show_notification(messages.test_result_not_obtained, 'error');

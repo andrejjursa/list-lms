@@ -114,7 +114,7 @@
                                 {if $tests->exists()}{$show_tests = true}
                                 {$tests_for_json[$task->id].name = "{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}" scope='global'}
                                 <tr class="task_header test_task_{$task->id}">
-                                    <td colspan="{if $test_scoring}5{else}4{/if}" class="task_name">{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}</td>
+                                    <td colspan="{if $test_scoring}5{else}4{/if}" class="task_name">{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}{if $task->join_bonus_task} <span class="bonus_task">({translate line='tasks_task_is_bonus_task'})</span>{/if}</td>
                                 </tr>
                                 {/if}
                                 {foreach $tests->all as $test}
