@@ -244,6 +244,18 @@ class LIST_Controller extends CI_Controller {
         $this->parser->add_js_file('jquery.Jcrop.js');
         $this->parser->add_css_file('jquery.Jcrop.css');
     }
+    
+    /**
+     * This method add jQuery countdown plugin to template.
+     */
+    protected function _add_jquery_countdown() {
+        $this->parser->add_js_file('jquery.plugin.min.js');
+        $this->parser->add_js_file('jquery.countdown.js');
+        $localisation_file = $this->lang->line('common_jquery_countdown_localisation_file');
+        if (!is_null($localisation_file) && trim($localisation_file) !== '') {
+            $this->parser->add_js_file(trim($localisation_file));
+        }
+    }
 
     /**
      * Injects all possible languages to smarty parser.

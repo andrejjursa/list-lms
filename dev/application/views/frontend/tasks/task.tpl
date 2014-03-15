@@ -41,7 +41,7 @@
                     <div class="task_author">{translate|sprintf:{$task->author->get()->fullname|default:{translate line='tasks_task_author_unknown'}} line='tasks_task_author'}</div>
                     {/foreach}
                     {if $task_set_can_upload}
-                    <div class="upload_solution">
+                    <div class="upload_solution" id="upload_solution_id">
                         <fieldset class="basefieldset">
                             <legend>{translate line='tasks_task_fieldset_legend_upload_solution'}</legend>
                             <form action="{internal_url url="tasks/upload_solution/{$task_set->id|intval}"}" method="post" enctype="multipart/form-data">
@@ -61,6 +61,13 @@
                                     {/if}
                                     {/nocache}
                                 </div>
+                                {if !is_null($task_set->upload_end_time)}
+                                <div class="field">
+                                    <label>{translate line='tasks_task_form_label_remaining'}:</label>
+                                    <p class="input" id="remaining_time"></p>
+                                    <span id="remaining_counter" style="display: none;"></span>
+                                </div>
+                                {/if}
                                 <div class="buttons">
                                     <input type="submit" name="submit_button" value="{translate line='tasks_task_form_submit'}" class="button" />
                                 </div>
@@ -195,8 +202,16 @@
         test_result_tests_in_progress: '{translate line='tasks_test_message_tests_in_progress'}',
         test_result_evaluation: '{translate line='tasks_test_message_tests_evaluation'}',
         test_result_not_obtained: '{translate line='tasks_test_message_result_not_obtained'}',
-        test_result_token_failed: '{translate line='tasks_test_message_token_request_failed'}'
+        test_result_token_failed: '{translate line='tasks_test_message_token_request_failed'}',
+        countdown_time: '{translate line='tasks_countdown_message_time_info'}',
+        countdown_expired: '{translate line='tasks_countdown_message_expired'}'
     };
     var test_evaluation_enabled = {if $task_set->enable_tests_scoring > 0 and $course->test_scoring_deadline gt date('Y-m-d H:i:s')}true{else}false{/if};
+    {if $task_set_can_upload and !is_null($task_set->upload_end_time)}
+    var enable_countdown = true;
+    var countdown_to = new Date({$task_set->upload_end_time|date_format:Y}, {$task_set->upload_end_time|date_format:m} - 1, {$task_set->upload_end_time|date_format:d}, {$task_set->upload_end_time|date_format:H}, {$task_set->upload_end_time|date_format:i}, {$task_set->upload_end_time|date_format:s});
+    {else}
+    var enable_countdown = false;
+    {/if}
 </script>
 {/block}
