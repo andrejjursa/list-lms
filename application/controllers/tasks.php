@@ -41,7 +41,8 @@ class Tasks extends LIST_Controller {
         $this->parser->parse('frontend/tasks/index.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
-    public function task($task_set_id = NULL) {
+    public function task($task_set_id_url = NULL) {
+        $task_set_id = url_get_id($task_set_id_url);
         $this->usermanager->student_login_protected_redirect();
         $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id);
         if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/tasks/task.tpl', $cache_id)) {
@@ -74,9 +75,16 @@ class Tasks extends LIST_Controller {
             $this->parser->add_js_file('tasks/task.js');
             $this->_add_prettify();
             $this->_add_scrollTo();
+            $this->_add_jquery_countdown();
             $this->parser->assign(array('course' => $course));
         }
         $this->parser->parse('frontend/tasks/task.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
+    }
+    
+    public function reset_task_cache($task_set_id) {
+        $this->usermanager->student_login_protected_redirect();
+        $this->_action_success();
+        $this->output->set_internal_value('task_set_id', $task_set_id);
     }
     
     public function upload_solution($task_set_id = 0) {

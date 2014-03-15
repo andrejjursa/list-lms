@@ -364,3 +364,36 @@ function abbreviation($input) {
 function space_to_nbsp($input) {
     return preg_replace('/\s+/', '&nbsp;', $input);
 }
+
+function url_get_id($url_part) {
+    if (is_null($url_part) || trim($url_part) === '') { return NULL; }
+    $id = '';
+    for ($i = 0; $i < mb_strlen($url_part); $i++) {
+        $char = mb_substr($url_part, $i, 1);
+        if ($char === '0' || $char === '1' || $char === '2' || $char === '3'
+            || $char === '4' || $char === '5' || $char === '6' || $char === '7'
+            || $char === '8' || $char === '9') {
+            $id .= $char;
+        } else {
+            break;
+        }
+    }
+    if ($id != '') {
+        return intval($id);
+    }
+    return NULL;
+}
+
+function text_convert_for_url($text, $prepend_if_possible = '_') {
+    $text1 = mb_strtolower($text);
+    $text2 = normalize($text1);
+    $text3 = '';
+    for ($i = 0; $i < mb_strlen($text2); $i++) {
+        $char = mb_substr($text2, $i, 1);
+        if (preg_match('/^[a-z0-9_\- ]$/', $char)) {
+            $text3 .= str_replace(array('-', ' '), '_', $char);
+        }
+    }
+    $text4 = preg_replace('/[_]{2,}/', '_', $text3);
+    return $text4 !== '' ? $prepend_if_possible . $text4 : '';
+}

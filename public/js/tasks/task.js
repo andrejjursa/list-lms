@@ -4,6 +4,23 @@ jQuery(document).ready(function($) {
     
     api_make_tabs('tabs');
     
+    if (enable_countdown) {
+        var current_date = new Date();
+        if (countdown_to > current_date) {
+            $('#remaining_time').countdown({
+                until: countdown_to,
+                layout: messages.countdown_time,
+                onExpiry: function() {
+                    show_notification(messages.countdown_expired, 'info');
+                    $('#upload_solution_id').fadeOut('slow');
+                    api_ajax_update(global_base_url + 'index.php/tasks/reset_task_cache/' + task_id);
+                }
+            });
+        } else {
+            $('#upload_solution_id').hide();
+        }
+    }
+    
     $(document).on('click', 'a.button.subscribe, a.button.unsubscribe', function(event) {
         event.preventDefault();
         var url = $(this).attr('href');

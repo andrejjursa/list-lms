@@ -27,3 +27,5 @@ $lang['common_button_back'] = 'Nazad';
 
 $lang['commont_copyright_text'] = 'L.I.S.T. verzia %4$s. Pôvodne navrhol a vytvoril %1$s v %2$s ako bakalársku prácu na škole %3$s.';
 $lang['common_copyright_faculty'] = 'Univerzita Komenského v Bratislave, Fakulta matematiky, fyziky a informatiky';
+
+$lang['common_jquery_countdown_localisation_file'] = 'language/sk/jquery.countdown-sk.js';
