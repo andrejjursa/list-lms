@@ -71,6 +71,11 @@ $hook['post_controller'] = array(
                         return $CI->usermanager->get_student_cache_id('task_set_' . $CI->output->get_internal_value('task_set_id'));
                     },
                 ),
+                'reset_task_cache' => array(
+                    'frontend/tasks/task.tpl' => function(&$CI) {
+                        return $CI->usermanager->get_student_cache_id('task_set_' . $CI->output->get_internal_value('task_set_id'));
+                    },
+                ),
             ),
             'fetests' => array(
                 'evaluate_test_result' => array(
