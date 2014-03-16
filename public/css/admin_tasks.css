@@ -2,6 +2,7 @@ table.tasks_table { width: 100%; }
 table.tasks_table th { text-align: left; }
 table.tasks_table th.controlls { width: 1px; text-align: center; }
 table.tasks_table td.controlls { width: 1px;}
+table.tasks_table tbody tr.new_task { color: blue; }
 table.tasks_table tbody td { padding: 2px; }
 table.tasks_table tbody td:first-child { border-right: 1px dashed gray; }
 table.tasks_table tbody td:nth-child(2) { padding-left: 5px; }
