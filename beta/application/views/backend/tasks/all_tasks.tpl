@@ -19,7 +19,7 @@
     </tfoot>
     <tbody>
         {foreach $tasks as $task}
-        <tr>
+        <tr{if $task->created gte date('Y-m-d H:i:s', strtotime('now -2 hours'))} class="new_task"{/if}>
             <td>{$task->id|intval}</td>
             {if $filter.fields.created}<td>{$task->created|date_format:{translate line='common_datetime_format'}}</td>{/if}
             {if $filter.fields.updated}<td>{$task->updated|date_format:{translate line='common_datetime_format'}}</td>{/if}

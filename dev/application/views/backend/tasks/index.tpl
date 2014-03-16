@@ -63,6 +63,26 @@
                     </div>
                 </div>
                 {/if}
+                <div class="field">
+                    <label>{translate line='admin_tasks_filter_label_filter_by_author'}:</label>
+                    <div class="input">
+                        <select name="filter[author]" size="1">
+                            <option value=""></option>
+                            {list_html_options options=$authors selected=$filter.author}
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>{translate line='admin_tasks_filter_label_filter_by_time'}:</label>
+                    <div class="input">
+                        {html_radios options=['disable'=>{translate line='admin_tasks_filter_label_filter_by_time_disable'}, 'created'=>{translate line='admin_tasks_filter_label_filter_by_time_created'}, 'updated'=>{translate line='admin_tasks_filter_label_filter_by_time_updated'}]
+                        name='filter[time]' separator=' ' selected=$filter.time|default:'disable'}
+                    </div>
+                    <div class="input">
+                        <input type="text" name="filter[time_days]" value="{$filter.time_days|default:1|escape:'html'}" />
+                    </div>
+                    <p class="input"><em>{translate line='admin_tasks_filter_label_filter_by_time_hint'}</em></p>
+                </div>
                 <div class="buttons">
                     <input type="submit" name="filter_submit" value="{translate line='admin_tasks_filter_submit_button'}" class="button" />
                     <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />

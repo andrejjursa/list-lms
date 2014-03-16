@@ -31,6 +31,7 @@ class Tasks extends LIST_Controller {
         $this->parser->add_css_file('admin_tasks.css');
         $this->inject_stored_filter();
         $this->inject_courses();
+        $this->inject_authors();
         $category = new Category();
         $structure = $category->get_all_structured();
         $this->parser->parse('backend/tasks/index.tpl', array('structure' => $structure, 'test_types' => get_all_supported_test_types()));
@@ -78,6 +79,26 @@ class Tasks extends LIST_Controller {
                 $tasks->where_subquery('0 < ', $tests);
             } elseif ($filter['tests'] == 'donthave') {
                 $tasks->where_subquery('0 = ', $tests);
+            }
+        }
+        if (isset($filter['author'])) {
+            if (trim($filter['author']) !== '') {
+                if ($filter['author'] == '0') {
+                    $tasks->where('author_id', NULL);
+                } else {
+                    $tasks->where('author_id', (int)$filter['author']);
+                }
+            }
+        }
+        if (isset($filter['time']) && isset($filter['time_days'])) {
+            if (is_numeric($filter['time_days']) && $filter['time_days'] >= 1 && $filter['time'] != 'disable') {
+                $days = $filter['time_days'] - 1;
+                $day_min = date('Y-m-d H:i:s', strtotime(date('Y-m-d') . ' 00:00:00' . ($days == 1 ? ' -1 day' : ($days > 1 ? ' -' . $days . ' days' : ''))));
+                if ($filter['time'] == 'created') {
+                    $tasks->where('created >=', $day_min);
+                } elseif ($filter['time'] == 'updated') {
+                    $tasks->where('updated >=', $day_min);
+                }
             }
         }
         $tasks->include_related_count('task_set');
@@ -533,6 +554,22 @@ class Tasks extends LIST_Controller {
         $courses->get_iterated();
         
         $this->parser->assign('courses', $courses);
+    }
+    
+    private function inject_authors() {
+        $teachers = new Teacher();
+        $teachers->order_by_as_fullname('fullname');
+        $teachers->get_iterated();
+        
+        $data = array(
+            0 => $this->lang->line('admin_tasks_authors_list_unknown_author'),
+        );
+        
+        foreach ($teachers as $teacher) {
+            $data[$teacher->id] = $teacher->fullname . ' (' . $teacher->email . ')';
+        }
+        
+        $this->parser->assign('authors', $data);
     }
     
 }
