@@ -4,7 +4,9 @@
 #
 # test configuration variables:
 #
-TIMEOUT=90000
+# TIMEOUT=90000
+MY_DIR=$( cd "$( dirname "$0" )" && pwd )
+TIMEOUT=$2
 JAVA_ARGS="-Xmx128m -cp /usr/share/java/junit4.jar:."
 #
-nice /opt/lampp/htdocs/list-svn/dev/test_scripts/run_with_timeout $TIMEOUT /usr/bin/java $JAVA_ARGS org.junit.runner.JUnitCore Test$1 | grep --text -v "at junit." |grep --text -v "at org.junit." |grep --text -v "at sun.reflect." |grep --text -v "at java.lang.reflect.Method.invoke" 
+nice $MY_DIR/run_with_timeout $TIMEOUT /usr/bin/java $JAVA_ARGS org.junit.runner.JUnitCore Test$1 | grep --text -v "at junit." |grep --text -v "at org.junit." |grep --text -v "at sun.reflect." |grep --text -v "at java.lang.reflect.Method.invoke" 
