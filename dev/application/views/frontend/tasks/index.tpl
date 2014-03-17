@@ -27,7 +27,7 @@
                 <tbody>
                     {foreach $task_set_types as $task_set_type}{if $task_set_in_types[$task_set_type->id]}
                     <tr>
-                        <td colspan="4" class="td_task_set_type">{translate_text text=$task_set_type->name}</td>
+                        <td colspan="4" class="td_task_set_type">{translate_text|str_to_first_upper text=$task_set_type->name}</td>
                     </tr>
                     {foreach $task_set_in_types[$task_set_type->id] as $task_set}
                     <tr class="{cycle values="tr_background_odd,tr_background_even" name=$task_set_type->name}">
@@ -39,7 +39,7 @@
                         </td>
                         <td class="td_time_limit">
                             {if $task_set->join_upload_solution eq 1}
-                                {if is_null($task_set->pb_upload_end_time)}{translate line='tasks_table_no_upload_limit'}{else}{$task_set->pb_upload_end_time}{/if}
+                                {if is_null($task_set->pb_upload_end_time)}{translate line='tasks_table_no_upload_limit'}{else}{$task_set->pb_upload_end_time|date_format:{translate line='common_datetime_format'}}{/if}
                             {else}
                                 {translate line='tasks_table_no_uploading'}
                             {/if}
@@ -94,7 +94,7 @@
             <tbody>
                 {foreach $task_set_types as $task_set_type}
                 <tr>
-                    <td class="td_task_set_type">{translate_text text=$task_set_type->name}</td>
+                    <td class="td_task_set_type">{translate_text|str_to_first_upper|truncate:20 text=$task_set_type->name}</td>
                     <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval}</td>
                 </tr>
                 {/foreach}

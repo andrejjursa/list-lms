@@ -48,6 +48,7 @@ $lang['admin_tests_test_result_disabled'] = 'Nemožno vypočítať skóre, táto
 $lang['admin_tests_test_result_input_error'] = 'Nemožno vypočítať skóre, kvôli chybe na vstupe.';
 $lang['admin_tests_test_result_no_evaluationg_tests'] = 'Nemožno vypočítať skóre, pretože nie sú definované žiadne hodnotiace testy.';
 $lang['admin_tests_test_result_minimum_number_of_test_not_selected'] = 'Nemožno vypočítať skóre, pretože musíš vybrať testy z aspoň %d úloh na zhodnotenie.';
+$lang['admin_tests_test_result_solution_not_considered'] = 'Tvoje riešenie bolo vyradené z hodnotenia, takže nie je možné upraviť hodnotenie podľa testov.';
 $lang['admin_tests_evaluation_table_header_task_name'] = 'Úloha';
 $lang['admin_tests_evaluation_table_header_percentage'] = 'Percento';
 $lang['admin_tests_evaluation_table_header_points'] = 'Body';

@@ -48,6 +48,7 @@ $lang['admin_tests_test_result_disabled'] = 'Can\'t compute score, this feature 
 $lang['admin_tests_test_result_input_error'] = 'Can\'t compute score, because of error on input.';
 $lang['admin_tests_test_result_no_evaluationg_tests'] = 'Can\'t compute score, because there are no tests defined for solution evaluation.';
 $lang['admin_tests_test_result_minimum_number_of_test_not_selected'] = 'Can\'t compute score, bacause you must select tests from at least %d tasks for evaluation.';
+$lang['admin_tests_test_result_solution_not_considered'] = 'Your solution has been marked as not considered in evaluation, hence updating your score by tests is impossible.';
 $lang['admin_tests_evaluation_table_header_task_name'] = 'Task';
 $lang['admin_tests_evaluation_table_header_percentage'] = 'Percentage';
 $lang['admin_tests_evaluation_table_header_points'] = 'Points';

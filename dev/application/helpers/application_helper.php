@@ -397,3 +397,7 @@ function text_convert_for_url($text, $prepend_if_possible = '_') {
     $text4 = preg_replace('/[_]{2,}/', '_', $text3);
     return $text4 !== '' ? $prepend_if_possible . $text4 : '';
 }
+
+function str_to_first_upper($text) {
+    return mb_strtoupper(mb_substr($text, 0, 1)) . mb_strtolower(mb_substr($text, 1));
+}

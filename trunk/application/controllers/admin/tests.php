@@ -458,18 +458,23 @@ class Tests extends LIST_Controller {
                         $solution->get();
 
                         $save_solution = FALSE;
+                        $solution_not_considered = FALSE;
 
                         $output->points_new = $total_score;
 
                         if ($solution->exists()) {
-                            $output->points_before = $solution->points;
-                            if ($solution->points < $total_score || is_null($solution->points)) {
-                                $solution->points = $total_score;
-                                $solution->comment = '';
-                                $solution->teacher_id = NULL;
-                                $solution->best_version = (int)$version;
-                                $solution->revalidate = 0;
-                                $save_solution = TRUE;
+                            if ($solution->not_considered == 0) {
+                                $output->points_before = $solution->points;
+                                if ($solution->points < $total_score || is_null($solution->points)) {
+                                    $solution->points = $total_score;
+                                    $solution->comment = '';
+                                    $solution->teacher_id = NULL;
+                                    $solution->best_version = (int)$version;
+                                    $solution->revalidate = 0;
+                                    $save_solution = TRUE;
+                                }
+                            } else {
+                                $solution_not_considered = TRUE;
                             }
                         } else {
                             $solution->points = $total_score;
@@ -487,7 +492,11 @@ class Tests extends LIST_Controller {
                             $output->result = TRUE;
                             $this->_action_success();
                         } else {
-                            $output->message = sprintf($this->lang->line('admin_tests_test_result_nothing_to_update'), $output->points_new, $output->points_before);
+                            if (!$solution_not_considered) {
+                                $output->message = sprintf($this->lang->line('admin_tests_test_result_nothing_to_update'), $output->points_new, $output->points_before);
+                            } else {
+                                $output->message = $this->lang->line('admin_tests_test_result_solution_not_considered');
+                            }
                         }
                     } else {
                         $output->message = sprintf($this->lang->line('admin_tests_test_result_minimum_number_of_test_not_selected'), $min_results);
