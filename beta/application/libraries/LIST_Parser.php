@@ -162,6 +162,8 @@ class LIST_Parser extends CI_Parser {
             $this->CI->smarty->disable_caching();
         } elseif ($caching === TRUE) {
             $this->CI->smarty->enable_caching();
+        } elseif (is_integer($caching)) {
+            $this->CI->smarty->caching = $caching;
         }
         
         // If no file extension dot has been found default to defined extension for view extensions

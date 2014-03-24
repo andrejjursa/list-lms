@@ -7,6 +7,8 @@
  */
 class Tasks extends LIST_Controller {
     
+    protected $filter_next_task_set_publication_min_cache_lifetime;
+    
     public function __construct() {
         parent::__construct();
         $this->_init_language_for_student();
@@ -16,6 +18,9 @@ class Tasks extends LIST_Controller {
     public function index() {
         $this->usermanager->student_login_protected_redirect();
         $cache_id = $this->usermanager->get_student_cache_id();
+        if ($this->_is_cache_enabled()) {
+            $this->smarty->caching = Smarty::CACHING_LIFETIME_SAVED;
+        }
         if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/tasks/index.tpl', $cache_id)) {
             $this->_initialize_student_menu();
 
@@ -27,6 +32,9 @@ class Tasks extends LIST_Controller {
                 $this->parser->assign('task_set_types', $task_set_types);
 
                 $task_sets = $this->filter_valid_task_sets($task_set);
+                if ($this->filter_next_task_set_publication_min_cache_lifetime > 0 && $this->filter_next_task_set_publication_min_cache_lifetime < $this->smarty->cache_lifetime) {
+                    $this->smarty->cache_lifetime = $this->filter_next_task_set_publication_min_cache_lifetime + 1;
+                }
                 $this->lang->init_overlays('task_sets', $task_sets, array('name'));
                 $this->parser->assign('task_sets', $task_sets);
 
@@ -38,7 +46,7 @@ class Tasks extends LIST_Controller {
             $this->parser->add_js_file('tasks/list.js');
             $this->parser->assign(array('course' => $course));
         }
-        $this->parser->parse('frontend/tasks/index.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse('frontend/tasks/index.tpl', array(), FALSE, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : FALSE, $cache_id);
     }
     
     public function task($task_set_id_url = NULL) {
@@ -573,6 +581,8 @@ class Tasks extends LIST_Controller {
         $output = array();
         
         $days = array(1=> 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+        
+        $minimum_next_time = date('U') + $this->smarty->cache_lifetime * 2;
                 
         foreach($task_sets->all as $task_set) {
             $add = TRUE;
@@ -581,6 +591,7 @@ class Tasks extends LIST_Controller {
                     if (!is_null($task_set->pb_room_id)) {
                         if (strtotime($task_set->pb_publish_start_time) > time()) {
                             $add = FALSE;
+                            if (strtotime($task_set->pb_publish_start_time) < $minimum_next_time) { $minimum_next_time = strtotime($task_set->pb_publish_start_time); }
                         } else {
                             $current_day = intval(strftime('%w', strtotime($task_set->pb_publish_start_time)));
                             $current_day = $current_day > 0 ? $current_day : 7;
@@ -592,11 +603,13 @@ class Tasks extends LIST_Controller {
                             }
                             if ($time > time()) {
                                 $add = FALSE;
+                                if ($time < $minimum_next_time) { $minimum_next_time = $time; }
                             }
                         }
                     } else {
                         if (strtotime($task_set->pb_publish_start_time) > time()) {
                             $add = FALSE;
+                            if (strtotime($task_set->pb_publish_start_time) < $minimum_next_time) { $minimum_next_time = strtotime($task_set->pb_publish_start_time); }
                         }
                     }
                 }
@@ -605,6 +618,8 @@ class Tasks extends LIST_Controller {
                 $output[] = $task_set;
             }
         }
+        
+        $this->filter_next_task_set_publication_min_cache_lifetime = abs($minimum_next_time - date('U'));
         
         return $output;
     }
