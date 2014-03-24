@@ -14,6 +14,7 @@
                 <label>{translate line='admin_tasks_add_to_task_set_form_label_selected_task_set'}:</label>
                 <p class="input">{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name} / {translate_text text=$task_set->course->get()->name} / {translate_text text=$task_set->course->period->get()->name}</p>
             </div>
+            {if $task_set->content_type eq 'task_set'}
             <div class="field">
                 <label for="points_total_id" class="required">{translate line='admin_tasks_add_to_task_set_form_label_points_total'}:</label>
                 <p class="input"><input type="text" name="points_total" value="{$smarty.post.points_total|floatval}" id="points_total_id" /></p>
@@ -34,6 +35,14 @@
                 <p class="input"><input type="checkbox" name="bonus_task" value="1" id="bonus_task_id"{if $smarty.post.bonus_task} checked="checked"{/if} /></p>
                 <p class="input"><em>{translate line='admin_tasks_add_to_task_set_form_label_bonus_task_hint'}</em></p>
             </div>
+            {/if}
+            {if $task_set->content_type eq 'project'}
+            <div class="field">
+                <label for="max_projects_selections_id" class="required">{translate line='admin_tasks_add_to_task_set_form_label_max_projects_selections'}:</label>
+                <p class="input"><input type="text" name="max_projects_selections" value="{$smarty.post.max_projects_selections|floatval}" id="max_projects_selections_id" /></p>
+                {form_error field='max_projects_selections' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>    
+            {/if}
             <div class="field">
                 <label for="internal_comment_id">{translate line='admin_tasks_add_to_task_set_form_label_internal_comment'}:</label>
                 <div class="input">

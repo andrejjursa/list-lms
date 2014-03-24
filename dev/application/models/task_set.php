@@ -20,6 +20,7 @@ class Task_set extends DataMapper {
         'solution',
         'comment',
         'task_set_permission',
+        'project_selection',
         'comment_subscriber_student' => array(
             'class' => 'student',
             'other_field' => 'comment_subscription',

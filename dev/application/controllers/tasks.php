@@ -456,6 +456,7 @@ class Tasks extends LIST_Controller {
             $task_set->include_related('task_set_type');
             $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set->select_subquery('(SELECT `upload_solution` FROM `course_task_set_type_rel` WHERE `course_task_set_type_rel`.`course_id` = `${parent}`.`course_id` AND `course_task_set_type_rel`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
+            $task_set->where('content_type', 'task_set');
             
             $task_set2->select('`task_sets`.*, `task_set_permission_rooms`.`time_day` AS `pb_time_day`, `task_set_permission_rooms`.`time_begin` AS `pb_time_begin`, `task_set_permission_rooms`.`id` AS `pb_room_id`, `task_set_permissions`.`publish_start_time` AS `pb_publish_start_time`, `task_set_permissions`.`upload_end_time` AS `pb_upload_end_time`');
             $task_set2->where('published', 1);
@@ -470,6 +471,7 @@ class Tasks extends LIST_Controller {
             $task_set2->include_related('task_set_type');
             $task_set2->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set2->select_subquery('(SELECT `upload_solution` FROM `course_task_set_type_rel` WHERE `course_task_set_type_rel`.`course_id` = `${parent}`.`course_id` AND `course_task_set_type_rel`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
+            $task_set2->where('content_type', 'task_set');
             
             $task_set3 = new Task_set();
             $task_set3->select('`task_sets`.*, NULL AS `pb_time_day`, NULL AS `pb_time_begin`, NULL AS `pb_room_id`, NULL AS `pb_publish_start_time`, "0000-00-00 00:00:00" AS `pb_upload_end_time`', FALSE);
@@ -484,6 +486,7 @@ class Tasks extends LIST_Controller {
             $task_set3->include_related('task_set_type');
             $task_set3->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set3->select_subquery('(SELECT `upload_solution` FROM `course_task_set_type_rel` WHERE `course_task_set_type_rel`.`course_id` = `${parent}`.`course_id` AND `course_task_set_type_rel`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
+            $task_set3->where('content_type', 'task_set');
             
             $sorting = $task_set2->union_order_by_overlay('task_set_type_name', 'task_set_types', 'name', 'task_set_type_id', 'asc');
             $sorting .= ', `pb_publish_start_time` ASC, `pb_upload_end_time` ASC';
@@ -531,6 +534,7 @@ class Tasks extends LIST_Controller {
             $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set->where('id', $task_set_id);
             $task_set->include_related('course', 'test_scoring_deadline');
+            $task_set->where('content_type', 'task_set');
             
             $task_set2->select('`task_sets`.*, `task_set_permission_rooms`.`time_day` AS `pb_time_day`, `task_set_permission_rooms`.`time_begin` AS `pb_time_begin`, `task_set_permission_rooms`.`id` AS `pb_room_id`, `task_set_permissions`.`publish_start_time` AS `pb_publish_start_time`, `task_set_permissions`.`upload_end_time` AS `pb_upload_end_time`');
             $task_set2->where('published', 1);
@@ -545,6 +549,7 @@ class Tasks extends LIST_Controller {
             $task_set2->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set2->where('id', $task_set_id);
             $task_set2->include_related('course', 'test_scoring_deadline');
+            $task_set2->where('content_type', 'task_set');
             
             $task_set3 = new Task_set();
             $task_set3->select('`task_sets`.*, NULL AS `pb_time_day`, NULL AS `pb_time_begin`, NULL AS `pb_room_id`, NULL AS `pb_publish_start_time`, "0000-00-00 00:00:00" AS `pb_upload_end_time`', FALSE);
@@ -559,6 +564,7 @@ class Tasks extends LIST_Controller {
             $task_set3->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set3->where('id', $task_set_id);
             $task_set3->include_related('course', 'test_scoring_deadline');
+            $task_set3->where('content_type', 'task_set');
             
             $task_set2->union(array($task_set, $task_set3), FALSE, '', 1, 0, 'id');
         }

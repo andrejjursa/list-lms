@@ -125,6 +125,7 @@ class Task_sets extends LIST_Controller {
             array('name' => 'created', 'caption' => 'lang:common_table_header_created'),
             array('name' => 'updated', 'caption' => 'lang:common_table_header_updated'),
             array('name' => 'name', 'caption' => 'lang:admin_task_sets_table_header_name'),
+            array('name' => 'content_type', 'caption' => 'lang:admin_task_sets_table_header_content_type'),
             array('name' => 'course', 'caption' => 'lang:admin_task_sets_table_header_course'),
             array('name' => 'group', 'caption' => 'lang:admin_task_sets_table_header_group'),
             array('name' => 'task_set_type', 'caption' => 'lang:admin_task_sets_table_header_task_set_type'),
@@ -132,6 +133,7 @@ class Task_sets extends LIST_Controller {
             array('name' => 'published', 'caption' => 'lang:admin_task_sets_table_header_published'),
             array('name' => 'publish_start_time', 'caption' => 'lang:admin_task_sets_table_header_publish_start_time'),
             array('name' => 'upload_end_time', 'caption' => 'lang:admin_task_sets_table_header_upload_end_time'),
+            array('name' => 'project_selection_deadline', 'caption' => 'lang:admin_task_sets_table_header_project_selection_deadline'),
         );
         $filter = $this->input->post('filter');
         $this->store_filter($filter);
@@ -197,6 +199,10 @@ class Task_sets extends LIST_Controller {
             $task_sets->order_by('upload_end_time', $order_by_direction);
         } elseif ($filter['order_by_field'] == 'publish_start_time') {
             $task_sets->order_by('publish_start_time', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'project_selection_deadline') {
+            $task_sets->order_by('project_selection_deadline', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'content_type') {
+            $task_sets->order_by('content_type', $order_by_direction);
         }
         $task_sets->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('task_sets', $task_sets->all_to_array(), array('name'));
@@ -208,31 +214,52 @@ class Task_sets extends LIST_Controller {
     public function create() {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('task_set[name]', 'lang:admin_task_sets_form_field_name', 'required');
-        $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
-        $this->form_validation->set_rules('task_set[task_set_type_id]', 'lang:admin_task_sets_form_field_task_set_type_id', 'required|exists_in_table[task_set_types.id]');
-        $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'greater_than_equal[0]');
         $task_set_data = $this->input->post('task_set');
-        if (isset($task_set_data['enable_tests_scoring'])) {
-            $this->form_validation->set_rules('task_set[test_min_needed]', 'lang:admin_task_sets_form_field_test_min_needed', 'greater_than_equal[0]');
-            $this->form_validation->set_rules('task_set[test_max_allowed]', 'lang:admin_task_sets_form_field_test_max_allowed', 'greater_than_field_or_equal[task_set[test_min_needed]]');
-        }
-        $this->form_validation->set_rules('task_set[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
-        if (isset($task_set_data['deadline_notification_emails_handler']) && $task_set_data['deadline_notification_emails_handler'] == 2) {
-            $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
+        
+        $this->form_validation->set_rules('task_set[content_type]', 'lang:admin_task_sets_form_field_content_type', 'required');
+        
+        if (isset($task_set_data['content_type']) && $task_set_data['content_type'] == 'task_set') {
+            $this->form_validation->set_rules('task_set[name]', 'lang:admin_task_sets_form_field_name', 'required');
+            $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
+            $this->form_validation->set_rules('task_set[task_set_type_id]', 'lang:admin_task_sets_form_field_task_set_type_id', 'required|exists_in_table[task_set_types.id]');
+            $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'greater_than_equal[0]');
+            if (isset($task_set_data['enable_tests_scoring'])) {
+                $this->form_validation->set_rules('task_set[test_min_needed]', 'lang:admin_task_sets_form_field_test_min_needed', 'greater_than_equal[0]');
+                $this->form_validation->set_rules('task_set[test_max_allowed]', 'lang:admin_task_sets_form_field_test_max_allowed', 'greater_than_field_or_equal[task_set[test_min_needed]]');
+            }
+            $this->form_validation->set_rules('task_set[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
+            if (isset($task_set_data['deadline_notification_emails_handler']) && $task_set_data['deadline_notification_emails_handler'] == 2) {
+                $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
+            } else {
+                $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
+            }
+            $this->form_validation->set_rules('task_set[publish_start_time]', 'lang:admin_task_sets_form_field_publish_start_time', 'datetime');
+            $this->form_validation->set_rules('task_set[upload_end_time]', 'lang:admin_task_sets_form_field_upload_end_time', 'datetime');
         } else {
-            $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
+            $this->form_validation->set_rules('task_set[name]', 'lang:admin_task_sets_form_field_name', 'required');
+            $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
+            $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'required|numeric|greater_than_equal[0]');
+            $this->form_validation->set_rules('task_set[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
+            if (isset($task_set_data['deadline_notification_emails_handler']) && $task_set_data['deadline_notification_emails_handler'] == 2) {
+                $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
+            } else {
+                $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
+            }
+            $this->form_validation->set_rules('task_set[publish_start_time]', 'lang:admin_task_sets_form_field_publish_start_time', 'datetime');
+            $this->form_validation->set_rules('task_set[upload_end_time]', 'lang:admin_task_sets_form_field_upload_end_time', 'required|datetime');
+            $this->form_validation->set_rules('task_set[project_selection_deadline]', 'lang:admin_task_sets_form_field_project_selection_deadline', 'required|datetime');
         }
         
         $this->_transaction_isolation();
         $this->db->trans_begin();
         if ($this->form_validation->run()) {
             $task_set = new Task_set();
-            $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment'));
+            $task_set->from_array($task_set_data, array('content_type', 'name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment'));
             $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
             $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
             $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
             $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
+            $task_set->project_selection_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['project_selection_deadline']) ? $task_set_data['project_selection_deadline'] : NULL;
             $task_set->comments_enabled = isset($task_set_data['comments_enabled']) ? (bool)intval($task_set_data['comments_enabled']) : FALSE;
             $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
             $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
@@ -283,97 +310,125 @@ class Task_sets extends LIST_Controller {
     public function update() {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('task_set[name]', 'lang:admin_task_sets_form_field_name', 'required');
-        $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
-        $this->form_validation->set_rules('task_set[task_set_type_id]', 'lang:admin_task_sets_form_field_task_set_type_id', 'required|exists_in_table[task_set_types.id]');
-        $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'greater_than_equal[0]');
         $task_set_data = $this->input->post('task_set');
-        if (isset($task_set_data['enable_tests_scoring'])) {
-            $this->form_validation->set_rules('task_set[test_min_needed]', 'lang:admin_task_sets_form_field_test_min_needed', 'greater_than_equal[0]');
-            $this->form_validation->set_rules('task_set[test_max_allowed]', 'lang:admin_task_sets_form_field_test_max_allowed', 'greater_than_field_or_equal[task_set[test_min_needed]]');
-        }
-        $this->form_validation->set_rules('task_set[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
-        if (isset($task_set_data['deadline_notification_emails_handler']) && $task_set_data['deadline_notification_emails_handler'] == 2) {
-            $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
-        } else {
-            $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
-        }
-        
+                
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
         $task_set_id = intval($this->input->post('task_set_id'));
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
-        $tasks = $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get();
-        $tasks_join_fields_data = $this->input->post('task_join_field');
-        if ($tasks->exists()) { foreach ($tasks->all as $task) {
-            if (isset($tasks_join_fields_data[$task->id])) {
-                if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
-                    $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][points_total]', 'lang:admin_task_sets_form_field_task_points_total', 'required|number|greater_than_equal[0]');
-                    $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][test_max_points]', 'lang:admin_task_sets_form_field_task_test_max_points', 'required|number|greater_than_equal[0]');
-                    $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][test_min_points]', 'lang:admin_task_sets_form_field_task_test_min_points', 'required|number|less_than_field_or_equal[task_join_field[' . intval($task->id) . '][test_max_points]]');
-                }
-            }
-        }}
         
-        if ($this->form_validation->run()) {    
-            if ($task_set->exists()) {
-                $task_set_upload_end_time = $task_set->upload_end_time;
-                $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment'));
-                $task_set->instructions = remove_base_url($task_set_data['instructions']);
-                $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
-                $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
-                $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
-                $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
-                $task_set->comments_enabled = isset($task_set_data['comments_enabled']) ? (bool)intval($task_set_data['comments_enabled']) : FALSE;
-                $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
-                $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
-                $task_set->allowed_test_types = isset($task_set_data['allowed_test_types']) && is_array($task_set_data['allowed_test_types']) ? implode(',', $task_set_data['allowed_test_types']) : '';
-                $task_set->enable_tests_scoring = isset($task_set_data['enable_tests_scoring']) ? 1 : 0;
-                $task_set->deadline_notification_emails = $task_set_data['deadline_notification_emails'];
-                $task_set->deadline_notification_emails_handler = $task_set_data['deadline_notification_emails_handler'];
-                if ($task_set->upload_end_time !== $task_set_upload_end_time) {
-                    $task_set->deadline_notified = 0;
+        if ($task_set->exists()) {
+            if (isset($task_set_data['content_type']) && $task_set_data['content_type'] == 'task_set') {
+                $this->form_validation->set_rules('task_set[name]', 'lang:admin_task_sets_form_field_name', 'required');
+                $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
+                $this->form_validation->set_rules('task_set[task_set_type_id]', 'lang:admin_task_sets_form_field_task_set_type_id', 'required|exists_in_table[task_set_types.id]');
+                $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'greater_than_equal[0]');
+                if (isset($task_set_data['enable_tests_scoring'])) {
+                    $this->form_validation->set_rules('task_set[test_min_needed]', 'lang:admin_task_sets_form_field_test_min_needed', 'greater_than_equal[0]');
+                    $this->form_validation->set_rules('task_set[test_max_allowed]', 'lang:admin_task_sets_form_field_test_max_allowed', 'greater_than_field_or_equal[task_set[test_min_needed]]');
                 }
-                if ($task_set->enable_tests_scoring == 1) {
-                    $task_set->test_min_needed = isset($task_set_data['test_min_needed']) ? intval($task_set_data['test_min_needed']) : 0;
-                    $task_set->test_max_allowed = isset($task_set_data['test_max_allowed']) ? intval($task_set_data['test_max_allowed']) : 0;
+                $this->form_validation->set_rules('task_set[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
+                if (isset($task_set_data['deadline_notification_emails_handler']) && $task_set_data['deadline_notification_emails_handler'] == 2) {
+                    $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
+                } else {
+                    $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
                 }
-                
-                $overlay = $this->input->post('overlay');
-                
-                $this->_transaction_isolation();
-                $this->db->trans_begin();
-                
-                if ($tasks->exists()) {
-                    $tasks_sorting = array_flip(explode(',', $this->input->post('tasks_sorting')));
-                    foreach($tasks->all as $task) {
-                        if (isset($tasks_join_fields_data[$task->id])) {
-                            if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
-                                $task->set_join_field($task_set, 'sorting', $tasks_sorting[$task->id] + 1);
-                                $task->set_join_field($task_set, 'points_total', floatval($tasks_join_fields_data[$task->id]['points_total']));
-                                $task->set_join_field($task_set, 'test_min_points', floatval($tasks_join_fields_data[$task->id]['test_min_points']));
-                                $task->set_join_field($task_set, 'test_max_points', floatval($tasks_join_fields_data[$task->id]['test_max_points']));
-                                $task->set_join_field($task_set, 'bonus_task', (int)(bool)@$tasks_join_fields_data[$task->id]['bonus_task']);
-                                $task->set_join_field($task_set, 'internal_comment', @$tasks_join_fields_data[$task->id]['internal_comment']);
-                            } else {
-                                $task_set->delete($task);
-                            }
+                $this->form_validation->set_rules('task_set[publish_start_time]', 'lang:admin_task_sets_form_field_publish_start_time', 'datetime');
+                $this->form_validation->set_rules('task_set[upload_end_time]', 'lang:admin_task_sets_form_field_upload_end_time', 'datetime');
+            } else {
+                $this->form_validation->set_rules('task_set[name]', 'lang:admin_task_sets_form_field_name', 'required');
+                $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
+                $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'required|numeric|greater_than_equal[0]');
+                $this->form_validation->set_rules('task_set[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
+                if (isset($task_set_data['deadline_notification_emails_handler']) && $task_set_data['deadline_notification_emails_handler'] == 2) {
+                    $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
+                } else {
+                    $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
+                }
+                $this->form_validation->set_rules('task_set[publish_start_time]', 'lang:admin_task_sets_form_field_publish_start_time', 'datetime');
+                $this->form_validation->set_rules('task_set[upload_end_time]', 'lang:admin_task_sets_form_field_upload_end_time', 'required|datetime');
+                $this->form_validation->set_rules('task_set[project_selection_deadline]', 'lang:admin_task_sets_form_field_project_selection_deadline', 'required|datetime');
+            }
+
+            $tasks = $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get();
+            $tasks_join_fields_data = $this->input->post('task_join_field');
+            if ($tasks->exists()) { foreach ($tasks->all as $task) {
+                if (isset($tasks_join_fields_data[$task->id])) {
+                    if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
+                        if ($task_set->content_type == 'task_set') {
+                            $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][points_total]', 'lang:admin_task_sets_form_field_task_points_total', 'required|number|greater_than_equal[0]');
+                            $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][test_max_points]', 'lang:admin_task_sets_form_field_task_test_max_points', 'required|integer|greater_than_equal[0]');
+                            $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][test_min_points]', 'lang:admin_task_sets_form_field_task_test_min_points', 'required|integer|less_than_field_or_equal[task_join_field[' . intval($task->id) . '][test_max_points]]');
+                        } else {
+                            $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][max_projects_selections]', 'lang:admin_task_sets_form_field_task_max_projects_selections', 'required|integer|greater_than[0]');
                         }
                     }
                 }
-                
-                if ($task_set->save() && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'instructions')) && $this->db->trans_status()) {
-                    $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
-                    $this->_action_success();
-                } else {
-                    $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_task_sets_flash_message_save_fail', Messages::MESSAGE_TYPE_ERROR);
+            }}
+        } else {
+            $this->db->trans_rollback();
+            $this->messages->add_message('lang:admin_task_sets_error_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('admin_task_sets'));
+            die();
+        }
+        
+        if ($this->form_validation->run()) {   
+            $task_set_upload_end_time = $task_set->upload_end_time;
+            $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment'));
+            $task_set->instructions = remove_base_url($task_set_data['instructions']);
+            $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
+            $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
+            $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
+            $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
+            $task_set->project_selection_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['project_selection_deadline']) ? $task_set_data['project_selection_deadline'] : NULL;
+            $task_set->comments_enabled = isset($task_set_data['comments_enabled']) ? (bool)intval($task_set_data['comments_enabled']) : FALSE;
+            $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
+            $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
+            $task_set->allowed_test_types = isset($task_set_data['allowed_test_types']) && is_array($task_set_data['allowed_test_types']) ? implode(',', $task_set_data['allowed_test_types']) : '';
+            $task_set->enable_tests_scoring = isset($task_set_data['enable_tests_scoring']) ? 1 : 0;
+            $task_set->deadline_notification_emails = $task_set_data['deadline_notification_emails'];
+            $task_set->deadline_notification_emails_handler = $task_set_data['deadline_notification_emails_handler'];
+            if ($task_set->upload_end_time !== $task_set_upload_end_time) {
+                $task_set->deadline_notified = 0;
+            }
+            if ($task_set->enable_tests_scoring == 1) {
+                $task_set->test_min_needed = isset($task_set_data['test_min_needed']) ? intval($task_set_data['test_min_needed']) : 0;
+                $task_set->test_max_allowed = isset($task_set_data['test_max_allowed']) ? intval($task_set_data['test_max_allowed']) : 0;
+            }
+
+            $overlay = $this->input->post('overlay');
+
+            if ($tasks->exists()) {
+                $tasks_sorting = array_flip(explode(',', $this->input->post('tasks_sorting')));
+                foreach($tasks->all as $task) {
+                    if (isset($tasks_join_fields_data[$task->id])) {
+                        if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
+                            $task->set_join_field($task_set, 'sorting', $tasks_sorting[$task->id] + 1);
+                            $task->set_join_field($task_set, 'points_total', floatval($tasks_join_fields_data[$task->id]['points_total']));
+                            $task->set_join_field($task_set, 'test_min_points', floatval($tasks_join_fields_data[$task->id]['test_min_points']));
+                            $task->set_join_field($task_set, 'test_max_points', floatval($tasks_join_fields_data[$task->id]['test_max_points']));
+                            $task->set_join_field($task_set, 'bonus_task', (int)(bool)@$tasks_join_fields_data[$task->id]['bonus_task']);
+                            $task->set_join_field($task_set, 'internal_comment', @$tasks_join_fields_data[$task->id]['internal_comment']);
+                            $task->set_join_field($task_set, 'max_projects_selections', @$tasks_join_fields_data[$task->id]['max_projects_selections']);
+                        } else {
+                            $task_set->delete($task);
+                        }
+                    }
                 }
+            }
+
+            if ($task_set->save() && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'instructions')) && $this->db->trans_status()) {
+                $this->db->trans_commit();
+                $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->_action_success();
             } else {
-                $this->messages->add_message('lang:admin_task_sets_error_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:admin_task_sets_flash_message_save_fail', Messages::MESSAGE_TYPE_ERROR);
             }
             redirect(create_internal_url('admin_task_sets'));
         } else {
+            $this->db->trans_rollback();
             $this->edit();
         }
     }
