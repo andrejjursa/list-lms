@@ -26,7 +26,6 @@
  */
 class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
     // PDO instance
-    protected $ci;
     protected $db;
     protected $fetch;
     protected $fetchTimestamp;
@@ -35,11 +34,11 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
     protected $list_version;
     
     public function __construct() {
-        $this->ci =& get_instance();
+        $ci =& get_instance();
         
-        $this->ci->config->load('list');
+        $ci->config->load('list');
         
-        $this->list_version = $this->ci->config->item('list_version');
+        $this->list_version = $ci->config->item('list_version');
     }
 
     /**
@@ -55,18 +54,19 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
      */
     protected function fetch($id, $name, $cache_id, $compile_id, &$content, &$mtime)
     {
-        $this->ci->db->select('modified, content')->from('output_cache')->where('id', $id);
+        $ci =& get_instance();
+        $ci->db->select('modified, content')->from('output_cache')->where('id', $id);
         if ($name) {
-            $this->ci->db->where('name', $name);
+            $ci->db->where('name', $name);
         }
         if ($cache_id) {
-            $this->ci->db->where('cache_id', $cache_id);
+            $ci->db->where('cache_id', $cache_id);
         }
         if ($compile_id) {
-            $this->ci->db->where('compile_id', $compile_id);
+            $ci->db->where('compile_id', $compile_id);
         }
-        $this->ci->db->where('list_version', $this->list_version);
-        $query = $this->ci->db->get();
+        $ci->db->where('list_version', $this->list_version);
+        $query = $ci->db->get();
         $row = $query->row();
         $query->free_result();
         if ($row) {
@@ -90,18 +90,19 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
      */
     protected function fetchTimestamp($id, $name, $cache_id, $compile_id)
     {
-        $this->ci->db->select('modified')->from('output_cache')->where('id', $id);
+        $ci =& get_instance();
+        $ci->db->select('modified')->from('output_cache')->where('id', $id);
         if ($name) {
-            $this->ci->db->where('name', $name);
+            $ci->db->where('name', $name);
         }
         if ($cache_id) {
-            $this->ci->db->where('cache_id', $cache_id);
+            $ci->db->where('cache_id', $cache_id);
         }
         if ($compile_id) {
-            $this->ci->db->where('compile_id', $compile_id);
+            $ci->db->where('compile_id', $compile_id);
         }
-        $this->ci->db->where('list_version', $this->list_version);
-        $query = $this->ci->db->get();
+        $ci->db->where('list_version', $this->list_version);
+        $query = $ci->db->get();
         $row = $query->row();
         $query->free_result();
         return $row ? strtotime($row->modified) : 0;
@@ -120,16 +121,17 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
      */
     protected function save($id, $name, $cache_id, $compile_id, $exp_time, $content)
     {
-        $this->ci->db->where('id', $id);
-        $this->ci->db->delete('output_cache');
-        $this->ci->db->set('id', $id);
-        $this->ci->db->set('name', $name);
-        $this->ci->db->set('cache_id', $cache_id);
-        $this->ci->db->set('compile_id', $compile_id);
-        $this->ci->db->set('content', $content);
-        $this->ci->db->set('list_version', $this->list_version);
-        $this->ci->db->insert('output_cache');
-        return $this->ci->db->affected_rows() == 1;
+        $ci =& get_instance();
+        $ci->db->where('id', $id);
+        $ci->db->delete('output_cache');
+        $ci->db->set('id', $id);
+        $ci->db->set('name', $name);
+        $ci->db->set('cache_id', $cache_id);
+        $ci->db->set('compile_id', $compile_id);
+        $ci->db->set('content', $content);
+        $ci->db->set('list_version', $this->list_version);
+        $ci->db->insert('output_cache');
+        return $ci->db->affected_rows() == 1;
     }
     
     /**
@@ -143,26 +145,27 @@ class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
      */
     protected function delete($name, $cache_id, $compile_id, $exp_time)
     {
+        $ci =& get_instance();
         if ($name === null && $cache_id === null && $compile_id === null && $exp_time === null) {
             // returning the number of deleted caches would require a second query to count them
-            $this->ci->db->truncate('output_cache');
+            $ci->db->truncate('output_cache');
             return -1;
         }
         if ($name !== null) {
-            $this->ci->db->where('`name` LIKE \'' . str_replace('*', '%', $this->ci->db->escape_str(APPPATH . 'views/' . $name)) . '\'');
+            $ci->db->where('`name` LIKE \'' . str_replace('*', '%', $ci->db->escape_str(APPPATH . 'views/' . $name)) . '\'');
         }
         if ($compile_id !== null) {
-            $this->ci->db->where('compile_id', $compile_id);
+            $ci->db->where('compile_id', $compile_id);
         }
         if ($exp_time !== null) {
-            $this->ci->db->where('modified <', 'DATE_SUB(NOW(), INTERVAL ' . intval($exp_time) . ' SECOND)', FALSE);
+            $ci->db->where('modified <', 'DATE_SUB(NOW(), INTERVAL ' . intval($exp_time) . ' SECOND)', FALSE);
         }
         if ($cache_id !== null) {
-            $this->ci->db->where($this->build_cache_id_where_clause($cache_id));
+            $ci->db->where($this->build_cache_id_where_clause($cache_id));
         }
-        $this->ci->db->delete('output_cache');
-        //echo($this->ci->db->last_query() . ';'. "\n");
-        return $this->ci->db->affected_rows();
+        $ci->db->delete('output_cache');
+        //echo($ci->db->last_query() . ';'. "\n");
+        return $ci->db->affected_rows();
     }
     
     /**
