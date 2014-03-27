@@ -22,7 +22,7 @@ class Courses extends LIST_Controller {
         $period_id = $this->input->post('period_id');
         $filter = $this->inject_stored_filter();
         $cache_id = $this->usermanager->get_student_cache_id('period_' . ($period_id ? $period_id : @$filter['period_id']));
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/courses/index.tpl', $cache_id)) {
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/courses/index.tpl'), $cache_id)) {
             $this->_initialize_student_menu();
             $this->_select_student_menu_pagetag('courses');
             $this->parser->add_css_file('frontend_courses.css');
@@ -141,7 +141,7 @@ class Courses extends LIST_Controller {
             $this->_init_specific_language($lang);
         }
         $cache_id = 'course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/courses/course_details.tpl', $cache_id)) {
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/courses/course_details.tpl'), $cache_id)) {
             $course = new Course();
             $course->include_related('period');
             $course->get_by_id($course_id);

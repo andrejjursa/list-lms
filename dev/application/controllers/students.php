@@ -293,7 +293,7 @@ class Students extends LIST_Controller {
     
     public function my_account() {
         $cache_id = $this->usermanager->get_student_cache_id();
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/students/my_account.tpl', $cache_id)) {
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/students/my_account.tpl'), $cache_id)) {
             $this->_initialize_student_menu();
             $this->usermanager->student_login_protected_redirect();
             $this->_select_student_menu_pagetag('student_account');

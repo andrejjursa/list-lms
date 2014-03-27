@@ -21,7 +21,7 @@ class Tasks extends LIST_Controller {
         if ($this->_is_cache_enabled()) {
             $this->smarty->caching = Smarty::CACHING_LIFETIME_SAVED;
         }
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/tasks/index.tpl', $cache_id)) {
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/tasks/index.tpl'), $cache_id)) {
             $this->_initialize_student_menu();
 
             $this->_select_student_menu_pagetag('tasks');
@@ -32,8 +32,9 @@ class Tasks extends LIST_Controller {
                 $this->parser->assign('task_set_types', $task_set_types);
 
                 $task_sets = $this->filter_valid_task_sets($task_set);
-                if ($this->filter_next_task_set_publication_min_cache_lifetime > 0 && $this->filter_next_task_set_publication_min_cache_lifetime < $this->smarty->cache_lifetime) {
-                    $this->smarty->cache_lifetime = $this->filter_next_task_set_publication_min_cache_lifetime + 1;
+                if ($this->_is_cache_enabled() && $this->filter_next_task_set_publication_min_cache_lifetime > 0 && $this->filter_next_task_set_publication_min_cache_lifetime <= $this->smarty->cache_lifetime) {
+                    $this->smarty->setCacheLifetime($this->filter_next_task_set_publication_min_cache_lifetime + 1);
+                    $this->parser->setCacheLifetimeForTemplateObject('frontend/tasks/index.tpl', $this->filter_next_task_set_publication_min_cache_lifetime + 1);
                 }
                 $this->lang->init_overlays('task_sets', $task_sets, array('name'));
                 $this->parser->assign('task_sets', $task_sets);
@@ -53,7 +54,7 @@ class Tasks extends LIST_Controller {
         $task_set_id = url_get_id($task_set_id_url);
         $this->usermanager->student_login_protected_redirect();
         $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id);
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/tasks/task.tpl', $cache_id)) {
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/tasks/task.tpl'), $cache_id)) {
             $this->_initialize_student_menu();
             
             $this->_select_student_menu_pagetag('tasks');
