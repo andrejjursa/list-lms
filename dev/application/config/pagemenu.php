@@ -19,4 +19,10 @@ $config['pagemenu'] = array(
         'link' => 'tasks',
         'sub' => NULL,
     ),
+    array(
+        'title' => 'lang:pagemenu_title_projects',
+        'pagetag' => 'projects',
+        'link' => 'projects',
+        'sub' => NULL,
+    ),
 );

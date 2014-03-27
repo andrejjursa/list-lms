@@ -1,0 +1,16 @@
+table.projects_list_table { width: 100%; border-collapse: collapse; }
+table.projects_list_table thead th { background-color: #99ff99; }
+table.projects_list_table thead th:first-child { border-top-left-radius: 3px; }
+table.projects_list_table thead th:last-child { border-top-right-radius: 3px; }
+table.projects_list_table thead th,
+table.projects_list_table tbody td,
+table.projects_list_table tfoot td { padding: 4px; }
+table.projects_list_table tfoot td { background-color: #99ff99; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; padding-left: 20px; font-weight: bold; }
+table.projects_list_table thead th { text-align: left; font-weight: bold; }
+table.projects_list_table tbody td.pl_points.not_considered { color: gray; text-decoration: line-through; }
+table.projects_list_table tbody td div.whole_comment { display: none; }
+table.projects_list_table tbody td a { text-decoration: none; color: green; transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; }
+table.projects_list_table tbody tr.projects_list_line_even { background-color: rgba(220,220,220,64); }
+table.projects_list_table tbody tr.projects_list_line_even a { color: darkgreen; }
+div.comment_body { background-color: white; padding: 15px; color: black; }
+div.comment_body a { color: green; }

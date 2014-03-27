@@ -47,11 +47,13 @@ $hook['post_controller'] = array(
                     'frontend/courses/index.tpl' => $student_cache_id,
                     'frontend/groups/index.tpl' => $student_cache_id,
                     'frontend/tasks/index.tpl' => $student_cache_id,
+                    'frontend/projects/index.tpl' => $student_cache_id,
                 ),
                 'quick_course_change' => array(
                     'frontend/courses/index.tpl' => $student_cache_id,
                     'frontend/groups/index.tpl' => $student_cache_id,
                     'frontend/tasks/index.tpl' => $student_cache_id,
+                    'frontend/projects/index.tpl' => $student_cache_id,
                 ),
                 'signup_to_course' => array(
                     'frontend/courses/index.tpl' => $student_cache_id,
@@ -62,6 +64,7 @@ $hook['post_controller'] = array(
                     'frontend/courses/course_details.tpl' => $course_cache_id,
                     'frontend/groups/index.tpl' => $student_cache_id,
                     'frontend/tasks/*' => $student_cache_id,
+                    'frontend/projects/*' => $student_cache_id,
                 ),
             ),
             'tasks' => array(
@@ -145,41 +148,49 @@ $hook['post_controller'] = array(
                     'frontend/*' => $admin_student_cache_id,
                     'frontend/tasks/index.tpl' => $admin_student_cache_id,
                     'frontend/tasks/task.tpl' => $admin_student_cache_id,
+                    'frontend/projects/index.tpl' => $admin_student_cache_id,
                 ),
                 'disapprove_participation' => array(
                     'frontend/*' => $admin_student_cache_id,
                     'frontend/tasks/index.tpl' => $admin_student_cache_id,
                     'frontend/tasks/task.tpl' => $admin_student_cache_id,
+                    'frontend/projects/index.tpl' => $admin_student_cache_id,
                 ),
                 'delete_participation' => array(
                     'frontend/*' => $admin_student_cache_id,
                     'frontend/tasks/index.tpl' => $admin_student_cache_id,
                     'frontend/tasks/task.tpl' => $admin_student_cache_id,
+                    'frontend/projects/index.tpl' => $admin_student_cache_id,
                 ),
                 'add_participant' => array(
                     'frontend/*' => $no_student_id,
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/tasks/task.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $no_student_id,
                 ),
                 'change_group' => array(
                     'frontend/*' => $admin_student_cache_id,
                     'frontend/courses/course_details.tpl' => $course_cache_id,
                     'frontend/tasks/index.tpl' => $admin_student_cache_id,
                     'frontend/tasks/task.tpl' => $admin_student_cache_id,
+                    'frontend/projects/index.tpl' => $admin_student_cache_id,
                 ),
             ),
             'tasks' => array(
                 'update' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/tasks/task.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $no_student_id,
                 ),
                 'delete' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/tasks/task.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $no_student_id,
                 ),
                 'insert_to_task_set' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/tasks/task.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $no_student_id,
                 ),
             ),
             'task_set_types' => array(
@@ -196,14 +207,17 @@ $hook['post_controller'] = array(
                 'create' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/tasks/task.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $no_student_id,
                 ),
                 'update' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/tasks/task.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $no_student_id,
                 ),
                 'delete' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/tasks/task.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $no_student_id,
                 ),
             ),
             'task_set_permissions' => array(
@@ -233,37 +247,46 @@ $hook['post_controller'] = array(
             'solutions' => array(
                 'batch_save_solutions' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $admin_student_cache_id,
                 ),
                 'create_solution' => array(
                     'frontend/tasks/index.tpl' => $admin_student_cache_id,
+                    'frontend/projects/index.tpl' => $admin_student_cache_id,
                 ),
                 'do_upload_student_solution' => array(
                     'frontend/tasks/index.tpl' => $admin_student_cache_id,
                     'frontend/tasks/task.tpl' => $admin_student_cache_id,
+                    'frontend/projects/index.tpl' => $admin_student_cache_id,
                 ),
                 'remove_points' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $admin_student_cache_id,
                 ),
                 'update_valuation' => array(
                     'frontend/tasks/index.tpl' => $admin_student_cache_id,
+                    'frontend/projects/index.tpl' => $admin_student_cache_id,
                 ),
             ),
             'teachers' => array(
                 'update_teacher' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/courses/course_details.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $no_student_id,
                 ),
                 'delete_teacher' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/courses/course_details.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $no_student_id,
                 ),
                 'save_basic_information' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/courses/course_details.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $no_student_id,
                 ),
                 'save_email' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/courses/course_details.tpl' => $no_student_id,
+                    'frontend/projects/index.tpl' => $no_student_id,
                 ),
             ),
         ),
