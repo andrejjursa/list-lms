@@ -25,12 +25,6 @@
  * @author Rodney Rehm, Andrej Jursa
  */
 class Smarty_CacheResource_Mysql extends Smarty_CacheResource_Custom {
-    // PDO instance
-    protected $db;
-    protected $fetch;
-    protected $fetchTimestamp;
-    protected $save;
-    
     protected $list_version;
     
     public function __construct() {
