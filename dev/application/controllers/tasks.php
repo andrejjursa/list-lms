@@ -17,15 +17,15 @@ class Tasks extends LIST_Controller {
 
     public function index() {
         $this->usermanager->student_login_protected_redirect();
+        $this->_initialize_student_menu();
+        $this->_select_student_menu_pagetag('tasks');
+        $this->parser->add_css_file('frontend_tasks.css');
+        $this->parser->add_js_file('tasks/list.js');
         $cache_id = $this->usermanager->get_student_cache_id();
         if ($this->_is_cache_enabled()) {
             $this->smarty->caching = Smarty::CACHING_LIFETIME_SAVED;
         }
         if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/tasks/index.tpl'), $cache_id)) {
-            $this->_initialize_student_menu();
-
-            $this->_select_student_menu_pagetag('tasks');
-
             $task_set = $this->get_task_sets($course, $group, $student);
             if ($course->exists()) {
                 $task_set_types = $course->task_set_type->order_by_with_constant('name', 'asc')->get_iterated();
@@ -42,9 +42,6 @@ class Tasks extends LIST_Controller {
                 $points = $this->compute_points($task_sets, $student);
                 $this->parser->assign('points', $points);
             }
-
-            $this->parser->add_css_file('frontend_tasks.css');
-            $this->parser->add_js_file('tasks/list.js');
             $this->parser->assign(array('course' => $course));
         }
         $this->parser->parse('frontend/tasks/index.tpl', array(), FALSE, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : FALSE, $cache_id);
@@ -53,12 +50,16 @@ class Tasks extends LIST_Controller {
     public function task($task_set_id_url = NULL) {
         $task_set_id = url_get_id($task_set_id_url);
         $this->usermanager->student_login_protected_redirect();
+        $this->_initialize_student_menu();
+        $this->_select_student_menu_pagetag('tasks');
+        $this->parser->add_css_file('frontend_tasks.css');
+        $this->parser->add_js_file('tasks/task.js');
+        $this->_add_prettify();
+        $this->_add_scrollTo();
+        $this->_add_jquery_countdown();
+        $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
         $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id);
         if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/tasks/task.tpl'), $cache_id)) {
-            $this->_initialize_student_menu();
-            
-            $this->_select_student_menu_pagetag('tasks');
-
             $task_set = $this->get_task_set_by_id($course, $group, $student, $task_set_id);
             if ($course->exists()) {
                 $task_sets = $this->filter_valid_task_sets($task_set);
@@ -71,7 +72,6 @@ class Tasks extends LIST_Controller {
                     $this->parser->assign('task_set', $filtered_task_set);
                     $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set, $course));
                     $this->parser->assign('solution_files', $filtered_task_set->get_student_files($student->id));
-                    $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
                     $this->parser->assign('test_types', $test_types_subtypes['types']);
                     $this->parser->assign('test_subtypes', $test_types_subtypes['subtypes']);
                 } else {
@@ -79,12 +79,6 @@ class Tasks extends LIST_Controller {
                     redirect(create_internal_url('tasks/index'));
                 }
             }
-
-            $this->parser->add_css_file('frontend_tasks.css');
-            $this->parser->add_js_file('tasks/task.js');
-            $this->_add_prettify();
-            $this->_add_scrollTo();
-            $this->_add_jquery_countdown();
             $this->parser->assign(array('course' => $course));
         }
         $this->parser->parse('frontend/tasks/task.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);

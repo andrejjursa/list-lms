@@ -15,10 +15,11 @@ class Groups extends LIST_Controller {
     }
     
     public function index() {
+        $this->_initialize_student_menu();
+        $this->_select_student_menu_pagetag('groups');
+        $this->parser->add_css_file('frontend_groups.css');
         $cache_id = $this->usermanager->get_student_cache_id();
         if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/groups/index.tpl'), $cache_id)) {
-            $this->_initialize_student_menu();
-            $this->_select_student_menu_pagetag('groups');
             $student = new Student();
             $student->get_by_id($this->usermanager->get_student_id());
 
@@ -35,7 +36,6 @@ class Groups extends LIST_Controller {
             }
 
             smarty_inject_days();
-            $this->parser->add_css_file('frontend_groups.css');
             $this->parser->assign(array('course' => $course, 'can_change_group' => $can_change_group));
         }
         $this->parser->parse('frontend/groups/index.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);

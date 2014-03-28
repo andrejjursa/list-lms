@@ -29,15 +29,15 @@
         <script type="text/javascript" src="{'/public/js/jquery.blockUI.js'|base_url|add_file_version}"></script>
         <script type="text/javascript" src="{'/public/js/api.js'|base_url|add_file_version}"></script>
         <script type="text/javascript" src="{'/public/js/courses/quick_change.js'|base_url|add_file_version}"></script>
-        {foreach $list_internal_css_files as $file}{$file.html}{/foreach}
-        {foreach $list_internal_js_files as $file}{$file.html}{/foreach}
+        {foreach $list_internal_css_files as $file nocache}{$file.html}{/foreach}
+        {foreach $list_internal_js_files as $file nocache}{$file.html}{/foreach}
         {block name='custom_head'}{/block}
     </head>
     <body>
         {include file='partials/frontend_general/pagemenu.tpl' inline}
         <div id="top_meta_informations">
-            <div class="left">{include file='partials/frontend_general/selected_course.tpl' inline}</div>
-            <div class="right">{include file='partials/frontend_general/student_panel.tpl' inline}</div>
+            <div class="left">{include file='partials/frontend_general/selected_course.tpl' inline nocache}</div>
+            <div class="right">{include file='partials/frontend_general/student_panel.tpl' inline nocache}</div>
             <div class="clear"></div>
         </div>
         <div id="mainwrap">
@@ -45,7 +45,7 @@
                 <div class="title">
                     <h4>{translate line='pagemenu_title'}</h4>
                 </div>
-                {make_pagemenu menu=$list_pagemenu current=$list_pagemenu_current}
+                {make_pagemenu menu=$list_pagemenu current=$list_pagemenu_current nocache}
                 {block name='left_content'}{/block}
             </div>
             <div id="rightwrap"><div class="internal_padding">{block name='main_content'}{/block}</div></div>

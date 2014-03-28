@@ -121,6 +121,13 @@ $cache = array (
       array (
       ),
     ),
+    'project_selection' => 
+    array (
+      'field' => 'project_selection',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -188,6 +195,17 @@ $cache = array (
       'other_field' => 'student',
       'join_self_as' => 'student',
       'join_other_as' => 'log',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'project_selection' => 
+    array (
+      'class' => 'project_selection',
+      'other_field' => 'student',
+      'join_self_as' => 'student',
+      'join_other_as' => 'project_selection',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

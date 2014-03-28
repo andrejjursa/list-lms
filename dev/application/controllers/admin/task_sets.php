@@ -405,9 +405,9 @@ class Task_sets extends LIST_Controller {
                     if (isset($tasks_join_fields_data[$task->id])) {
                         if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
                             $task->set_join_field($task_set, 'sorting', $tasks_sorting[$task->id] + 1);
-                            $task->set_join_field($task_set, 'points_total', floatval($tasks_join_fields_data[$task->id]['points_total']));
-                            $task->set_join_field($task_set, 'test_min_points', floatval($tasks_join_fields_data[$task->id]['test_min_points']));
-                            $task->set_join_field($task_set, 'test_max_points', floatval($tasks_join_fields_data[$task->id]['test_max_points']));
+                            $task->set_join_field($task_set, 'points_total', floatval(@$tasks_join_fields_data[$task->id]['points_total']));
+                            $task->set_join_field($task_set, 'test_min_points', floatval(@$tasks_join_fields_data[$task->id]['test_min_points']));
+                            $task->set_join_field($task_set, 'test_max_points', floatval(@$tasks_join_fields_data[$task->id]['test_max_points']));
                             $task->set_join_field($task_set, 'bonus_task', (int)(bool)@$tasks_join_fields_data[$task->id]['bonus_task']);
                             $task->set_join_field($task_set, 'internal_comment', @$tasks_join_fields_data[$task->id]['internal_comment']);
                             $task->set_join_field($task_set, 'max_projects_selections', @$tasks_join_fields_data[$task->id]['max_projects_selections']);

@@ -292,18 +292,16 @@ class Students extends LIST_Controller {
     }
     
     public function my_account() {
+        $this->usermanager->student_login_protected_redirect();
+        $this->_initialize_student_menu();
+        $this->_select_student_menu_pagetag('student_account');
+        $this->parser->add_js_file('students/my_account.js');
         $cache_id = $this->usermanager->get_student_cache_id();
         if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/students/my_account.tpl'), $cache_id)) {
-            $this->_initialize_student_menu();
-            $this->usermanager->student_login_protected_redirect();
-            $this->_select_student_menu_pagetag('student_account');
-
             $student = new Student();
             $student->get_by_id($this->usermanager->get_student_id());
 
             $languages_available = $this->lang->get_list_of_languages();
-
-            $this->parser->add_js_file('students/my_account.js');
             $this->parser->assign(array('student' => $student, 'languages' => $languages_available));
         }
         $this->parser->parse('frontend/students/my_account.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
