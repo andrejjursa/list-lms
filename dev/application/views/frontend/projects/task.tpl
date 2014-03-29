@@ -33,7 +33,7 @@
                             <fieldset class="basefieldset">
                                 <legend>{translate line='projects_task_fieldset_legend_upload_solution'}</legend>
 
-                                <form action="{internal_url url="projects/upload_solution/{$project->id|intval}/{$task->id|intval}"}" method="post" enctype="multipart/form-data">
+                                <form action="{internal_url url="projects/upload_solution/{$project->id|intval}{overlay|text_convert_for_url table='task_sets' column='name' table_id=$project->id default=$project->name}/{$task->id|intval}{overlay|text_convert_for_url table='tasks' column='name' table_id=$task->id default=$task->name}"}" method="post" enctype="multipart/form-data">
                                     <div class="field">
                                         <label for="file_id">{translate line='projects_task_form_label_file'}:</label>
                                         <p class="input"><input type="file" name="file" id="file_id" /></p>
@@ -57,15 +57,29 @@
                                 </form>
                             </fieldset>
                         </div>{/if}
-                        {else}{if 'Y-m-d H:i:s'|date lte $project->project_selection_deadline}
+                        {else}
                         <div class="select_project">
                             <fieldset class="basefieldset">
                                 <legend>{translate line='projects_task_fieldset_legend_select_project'}</legend>
-                                <div class="buttons">
-                                    <a href="{internal_url url="projects/select_project/{$project->id}{overlay|text_convert_for_url table='task_sets' table_id=$project->id column='name' default=$project->name}/{$task->id}{overlay|text_convert_for_url table='tasks' table_id=$task->id column='name' default=$task->name}"}" class="button">{translate line='projects_task_select_project'}</a>
-                                </div>
+                                <form action="" method="post">
+                                    <div class="field">
+                                        <label>{translate line='projects_task_students_working_on_task'}:</label>
+                                        <p class="input students_working_on_task">
+                                            {foreach $students as $student}
+                                                <span{if $student@last} class="last_student"{/if}>{$student->fullname}</span>
+                                            {foreachelse}
+                                                {translate line='projects_task_no_student_working_on_this_task'}
+                                            {/foreach}
+                                        </p>
+                                    </div>
+                                    {if 'Y-m-d H:i:s'|date lte $project->project_selection_deadline and $solution_files|count eq 0}
+                                    <div class="buttons">
+                                        <a href="{internal_url url="projects/select_project/{$project->id}{overlay|text_convert_for_url table='task_sets' table_id=$project->id column='name' default=$project->name}/{$task->id}{overlay|text_convert_for_url table='tasks' table_id=$task->id column='name' default=$task->name}"}" class="button">{translate line='projects_task_select_project'}</a>
+                                    </div>
+                                    {/if}
+                                </form>
                             </fieldset>
-                        </div>{/if}
+                        </div>
                         {/if}
                     </div>
                     {if $project_selection->exists()}
@@ -73,7 +87,6 @@
                         <table class="solutions_table">
                             <thead>
                                 <tr>
-                                    {if $show_tests}<th class="select"></th>{/if}
                                     <th class="version">{translate line='projects_task_solution_table_header_version'}</th>
                                     <th class="file">{translate line='projects_task_solution_table_header_file'}</th>
                                     <th class="size">{translate line='projects_task_solution_table_header_size'}</th>
@@ -83,11 +96,10 @@
                             <tbody>
                             {foreach $solution_files as $file}
                                 <tr>
-                                    {if $show_tests}<td class="select"><input type="radio" name="test[version]" value="{$file@key}" /></td>{/if}
                                     <td class="version">{$file@key}</td>
-                                    <td class="file"><a href="{internal_url url="tasks/download_solution/{$task_set->id|intval}/{$file.file|encode_for_url}"}" target="_blank">{$file.file_name}_{$file@key}.zip</a></td>
+                                    <td class="file"><a href="{internal_url url="tasks/download_solution/{$project->id|intval}/{$file.file|encode_for_url}"}" target="_blank">{$file.file_name}_{$file@key}.zip</a></td>
                                     <td class="size">{$file.size}</td>
-                                    <td class="modified">{$file.last_modified|date_format:{translate line='tasks_date_format'}}</td>
+                                    <td class="modified">{$file.last_modified|date_format:{translate line='common_datetime_format'}}</td>
                                 </tr>
                             {foreachelse}
                                 <tr>

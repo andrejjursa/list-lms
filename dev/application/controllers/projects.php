@@ -82,7 +82,7 @@ class Projects extends LIST_Controller {
         $this->_add_jquery_countdown();
         $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
         
-        $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id . '|task_id_' . $task_id);
+        $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id . '|task_' . $task_id);
         if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/projects/task.tpl'), $cache_id)) {
             $project_all = $this->get_task_set($task_set_id, $course, $student);
             $project = $this->filter_valid_task_sets($project_all);
@@ -98,7 +98,12 @@ class Projects extends LIST_Controller {
                 $project_selection->where('student_id', $this->usermanager->get_student_id());
                 $project_selection->where('task_id', $task->id);
                 $project_selection->get();
+                $students = new Student();
+                $students->where_related('project_selection', 'task_set_id', $project->id);
+                $students->where_related('project_selection', 'task_id', $task->id);
+                $students->get_iterated();
                 $this->parser->assign('task', $task);
+                $this->parser->assign('students', $students);
                 $this->parser->assign('project_selection', $project_selection);
                 $this->parser->assign('solution_files', $project->get_student_files($student->id));
             }
@@ -127,6 +132,7 @@ class Projects extends LIST_Controller {
         if ($course->exists()) {
             $task_set = new Task_set();
             $task_set->where_related('course', $course);
+            $task_set->where('published', 1);
             $task_set->get_by_id($task_set_id);
 
             if ($task_set->exists()) {
@@ -201,6 +207,116 @@ class Projects extends LIST_Controller {
             $this->messages->add_message($this->lang->line('projects_selection_error_no_active_course'), Messages::MESSAGE_TYPE_ERROR);
             redirect(create_internal_url('projects'));
         }
+    }
+    
+    public function upload_solution($task_set_id_url, $task_id_url) {
+        $task_set_id = url_get_id($task_set_id_url);
+        $task_id = url_get_id($task_id_url);
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        
+        $date = date('Y-m-d H:i:s');
+        
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        
+        $course = new Course();
+        $course->where_related('active_for_student', 'id', $student->id);
+        $course->where_related('participant', 'student_id', $student->id);
+        $course->where_related('participant', 'allowed', 1);
+        $course->include_related('period', 'name');
+        $course->get();
+        
+        $task_set = new Task_set();
+        $task_set->where_related($course);
+        $task_set->where('published', 1);
+        $task_set->where('publish_start_time <=', $date);
+        $task_set->get_by_id($task_set_id);
+        
+        $task = $task_set->task->include_join_fields()->get_by_id($task_id);
+        
+        $project_selection = new Project_selection();
+        $project_selection->where_related($student);
+        $project_selection->where_related($task_set);
+        $project_selection->where_related($task);
+        $project_selection->get();
+        
+        if ($student->exists() && $course->exists() && $task_set->exists() && $task->exists() && $project_selection->exists()) {
+            if ($date <= $task_set->upload_end_time) {
+                $config['upload_path'] = 'private/uploads/solutions/task_set_' . intval($task_set_id) . '/';
+                $config['allowed_types'] = 'zip';
+                $config['max_size'] = intval($this->config->item('maximum_solition_filesize'));
+                $config['file_name'] = $student->id . '_' . $this->normalize_student_name($student) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $task_set->get_student_file_next_version($student->id) . '.zip';
+                @mkdir($config['upload_path'], DIR_READ_MODE);
+                $this->load->library('upload', $config);
+                
+                if ($this->upload->do_upload('file')) {
+                    $solution = new Solution();
+                    $solution->where('task_set_id', $task_set->id);
+                    $solution->where('student_id', $student->id);
+                    $solution->get();
+                    $revalidate = 1;
+                    if ($solution->exists()) {
+                        $solution->ip_address = $_SERVER["REMOTE_ADDR"];
+                        $solution->revalidate = $revalidate;
+                        $solution->save();
+                    } else {
+                        $solution = new Solution();
+                        $solution->ip_address = $_SERVER["REMOTE_ADDR"];
+                        $solution->revalidate = $revalidate;
+                        $solution->save(array(
+                            'student' => $student, 
+                            'task_set' => $task_set,
+                        ));
+                    }
+                    if ($this->db->trans_status()) {
+                        $log = new Log();
+                        $log->add_student_solution_upload_log(sprintf($this->lang->line('projects_task_solution_upload_log_message'), $config['file_name']), $student, $solution->id);
+                        $this->db->trans_commit();
+                        $this->messages->add_message('lang:projects_task_solution_uploaded', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->_action_success();
+                        $this->output->set_internal_value('task_set_id', $solution->task_set_id);
+                        $this->output->set_internal_value('task_id', $task->id);
+                    } else {
+                        $this->db->trans_rollback();
+                        @unlink($config['upload_path'] . $config['file_name']);
+                        $this->messages->add_message('lang:projects_task_solution_canceled_due_db_error', Messages::MESSAGE_TYPE_ERROR);
+                    }
+                    redirect(create_internal_url('projects/task/' . $task_set_id_url . '/' . $task_id_url));
+                } else {
+                    $this->db->trans_rollback();
+                    $this->parser->assign('file_error_message', $this->upload->display_errors('', ''));
+                    $this->task($task_set_id_url, $task_id_url);
+                }
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message('lang:projects_task_solution_upload_time_error', Messages::MESSAGE_TYPE_ERROR);
+                redirect(create_internal_url('projects/task/' . $task_set_id_url . '/' . $task_id_url));
+            }
+        } else {
+            $this->db->trans_rollback();
+            $this->messages->add_message('lang:projects_task_solution_database_data_wrong_error', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('projects/task/' . $task_set_id_url . '/' . $task_id_url));
+        }
+    }
+    
+    public function reset_task_cache($task_set_id, $task_id) {
+        $this->_action_success();
+        $this->output->set_internal_value('task_set_id', $task_set_id);
+        $this->output->set_internal_value('task_id', $task_id);
+    }
+    
+    private function normalize_student_name($student) {
+        $normalized = normalize($student->fullname);
+        $output = '';
+        for($i = 0; $i < mb_strlen($normalized); $i++) {
+            $char = mb_substr($normalized, $i, 1);
+            if (preg_match('/^[a-zA-Z]$/', $char)) {
+                $output .= $char;
+            }
+        }
+        return $output;
     }
 
     private function get_task_sets(&$course, &$student) {
