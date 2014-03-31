@@ -29,8 +29,8 @@
         <script type="text/javascript" src="{'/public/js/jquery-ui-timepicker-addon.js'|base_url|add_file_version}"></script>
         <script type="text/javascript" src="{'/public/js/jquery.blockUI.js'|base_url|add_file_version}"></script>
         <script type="text/javascript" src="{'/public/js/api.js'|base_url|add_file_version}"></script>
-        {foreach $list_internal_css_files as $file}{$file.html}{/foreach}
-        {foreach $list_internal_js_files as $file}{$file.html}{/foreach}
+        {foreach $list_internal_css_files as $file nocache}{$file.html}{/foreach}
+        {foreach $list_internal_js_files as $file nocache}{$file.html}{/foreach}
         {block name='custom_head'}{/block}
     </head>
     <body>

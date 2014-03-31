@@ -11,6 +11,7 @@ jQuery(document).ready(function($) {
             field_filter_checkbox('#fields_config_created_checkbox_id', '#filter_form_id', 'created');
             field_filter_checkbox('#fields_config_updated_checkbox_id', '#filter_form_id', 'updated');
             field_filter_checkbox('#fields_config_name_checkbox_id', '#filter_form_id', 'name');
+            field_filter_checkbox('#fields_config_content_type_checkbox_id', '#filter_form_id', 'content_type');
             field_filter_checkbox('#fields_config_course_checkbox_id', '#filter_form_id', 'course');
             field_filter_checkbox('#fields_config_group_checkbox_id', '#filter_form_id', 'group');
             field_filter_checkbox('#fields_config_task_set_type_checkbox_id', '#filter_form_id', 'task_set_type');
@@ -18,6 +19,7 @@ jQuery(document).ready(function($) {
             field_filter_checkbox('#fields_config_published_checkbox_id', '#filter_form_id', 'published');
             field_filter_checkbox('#fields_config_publish_start_time_checkbox_id', '#filter_form_id', 'publish_start_time');
             field_filter_checkbox('#fields_config_upload_end_time_checkbox_id', '#filter_form_id', 'upload_end_time');
+            field_filter_checkbox('#fields_config_project_selection_deadline_checkbox_id', '#filter_form_id', 'project_selection_deadline');
             sort_table('table.task_sets_table', '#filter_form_id');
         };
         api_ajax_load(url, '#table_content_id', 'post', data, onSuccess);

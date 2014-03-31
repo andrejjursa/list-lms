@@ -509,6 +509,7 @@ class Task_sets extends LIST_Controller {
                         $task->set_join_field($new_task_set, 'test_min_points', $task->join_test_min_points);
                         $task->set_join_field($new_task_set, 'test_max_points', $task->join_test_max_points);
                         $task->set_join_field($new_task_set, 'bonus_task', $task->join_bonus_task);
+                        $task->set_join_field($new_task_set, 'max_projects_selections', $task->join_max_projects_selections);
                     }
                     $task_set_permissions = new Task_set_permission();
                     $task_set_permissions->where_related($task_set);

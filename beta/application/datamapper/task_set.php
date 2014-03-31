@@ -6,27 +6,29 @@ $cache = array (
     0 => 'id',
     1 => 'updated',
     2 => 'created',
-    3 => 'name',
-    4 => 'course_id',
-    5 => 'task_set_type_id',
-    6 => 'published',
-    7 => 'publish_start_time',
-    8 => 'upload_end_time',
-    9 => 'group_id',
-    10 => 'room_id',
-    11 => 'instructions',
-    12 => 'points_override',
-    13 => 'comments_enabled',
-    14 => 'comments_moderated',
-    15 => 'allowed_file_types',
-    16 => 'allowed_test_types',
-    17 => 'internal_comment',
-    18 => 'enable_tests_scoring',
-    19 => 'test_min_needed',
-    20 => 'test_max_allowed',
-    21 => 'deadline_notification_emails',
-    22 => 'deadline_notified',
-    23 => 'deadline_notification_emails_handler',
+    3 => 'content_type',
+    4 => 'name',
+    5 => 'course_id',
+    6 => 'task_set_type_id',
+    7 => 'published',
+    8 => 'publish_start_time',
+    9 => 'upload_end_time',
+    10 => 'group_id',
+    11 => 'room_id',
+    12 => 'instructions',
+    13 => 'points_override',
+    14 => 'comments_enabled',
+    15 => 'comments_moderated',
+    16 => 'allowed_file_types',
+    17 => 'allowed_test_types',
+    18 => 'internal_comment',
+    19 => 'enable_tests_scoring',
+    20 => 'test_min_needed',
+    21 => 'test_max_allowed',
+    22 => 'deadline_notification_emails',
+    23 => 'deadline_notified',
+    24 => 'deadline_notification_emails_handler',
+    25 => 'project_selection_deadline',
   ),
   'validation' => 
   array (
@@ -48,6 +50,13 @@ $cache = array (
     'created' => 
     array (
       'field' => 'created',
+      'rules' => 
+      array (
+      ),
+    ),
+    'content_type' => 
+    array (
+      'field' => 'content_type',
       'rules' => 
       array (
       ),
@@ -199,6 +208,13 @@ $cache = array (
       array (
       ),
     ),
+    'project_selection_deadline' => 
+    array (
+      'field' => 'project_selection_deadline',
+      'rules' => 
+      array (
+      ),
+    ),
     'task_set_type' => 
     array (
       'field' => 'task_set_type',
@@ -251,6 +267,13 @@ $cache = array (
     'task_set_permission' => 
     array (
       'field' => 'task_set_permission',
+      'rules' => 
+      array (
+      ),
+    ),
+    'project_selection' => 
+    array (
+      'field' => 'project_selection',
       'rules' => 
       array (
       ),
@@ -380,6 +403,17 @@ $cache = array (
       'other_field' => 'task_set',
       'join_self_as' => 'task_set',
       'join_other_as' => 'task_set_permission',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'project_selection' => 
+    array (
+      'class' => 'project_selection',
+      'other_field' => 'task_set',
+      'join_self_as' => 'task_set',
+      'join_other_as' => 'project_selection',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

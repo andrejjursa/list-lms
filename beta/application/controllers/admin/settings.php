@@ -22,6 +22,8 @@ class Settings extends LIST_Controller {
         $this->_select_teacher_menu_pagetag('settings');
         $config = $this->configurator->get_config_array('config');
         $languages = $this->lang->get_list_of_languages();
+        $this->inject_number_of_cache_records();
+        $this->inject_number_of_compiled_templates();
         $this->parser->add_css_file('admin_settings.css');
         $this->parser->add_js_file('admin_settings/form.js');
         $this->parser->parse('backend/settings/index.tpl', array('config' => $config, 'languages' => $languages));
@@ -72,6 +74,18 @@ class Settings extends LIST_Controller {
         }
     }
     
+    public function clear_all_cache() {
+        $this->smarty->clearAllCache();
+        $this->messages->add_message($this->lang->line('admin_settings_message_cache_cleared'));
+        redirect(create_internal_url('admin_settings'));
+    }
+    
+    public function clear_all_compiled() {
+        $this->smarty->clearCompiledTemplate();
+        $this->messages->add_message($this->lang->line('admin_settings_message_compiled_cleared'));
+        redirect(create_internal_url('admin_settings'));
+    }
+    
     public function _url_suffix($str) {
         return (bool)preg_match('/^(\.[a-z]+[a-z0-9]*){0,1}$/i', $str);
     }
@@ -107,5 +121,23 @@ class Settings extends LIST_Controller {
         }}
         
         return $output;
+    }
+    
+    private function inject_number_of_cache_records() {
+        $count = $this->db->select('*')->from('output_cache')->where('list_version', $this->config->item('list_version'))->count_all_results();
+        
+        $this->parser->assign('count_of_cached_records', $count);
+    }
+    
+    private function inject_number_of_compiled_templates() {
+        $count = 0;
+        if (file_exists($this->config->item('compile_directory'))) {
+            $dir = scandir($this->config->item('compile_directory'));
+            foreach ($dir as $file) {
+                if (mb_substr($file, -4) == '.php') { $count++; }
+            }
+        }
+        
+        $this->parser->assign('count_of_compiled_templates', $count);
     }
 }

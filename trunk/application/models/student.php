@@ -21,6 +21,7 @@ class Student extends DataMapper {
             'join_table' => 'task_set_comment_subscription_rel',
         ),
         'log',
+        'project_selection',
     );
     
     public $has_one = array(

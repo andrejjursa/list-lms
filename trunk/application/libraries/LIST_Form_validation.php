@@ -172,6 +172,17 @@ class LIST_Form_validation extends CI_Form_validation {
         
         return $this->valid_emails($str);
     }
+    
+    /**
+     * Test if string is valid date-time string.
+     * @param string $str string to evaluate.
+     * @return boolean TRUE if condition is satisfied.
+     */
+    public function datetime($str) {
+        if ($str == '') { return TRUE; }
+        $pattern = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
+        return preg_match($pattern, $str) ? TRUE : FALSE;
+    }
 
 
     /**

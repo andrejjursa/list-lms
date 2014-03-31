@@ -48,7 +48,7 @@
                                 <div class="field">
                                     <label for="file_id">{translate line='tasks_task_form_label_file'}:</label>
                                     <p class="input"><input type="file" name="file" id="file_id" /></p>
-                                    <p class="input"><em>{translate|sprintf:$max_filesize line='tasks_task_form_label_file_hint'}</em></p>
+                                    <p class="input"><em>{translate|sprintf:$max_filesize line='tasks_task_form_label_file_hint' nocache}</em></p>
                                     {if trim($task_set->allowed_file_types) ne ''}
                                     {$exploded_allow_file_types = ','|explode:$task_set->allowed_file_types}
                                     {$exploded_allow_file_types = 'trim'|array_map:$exploded_allow_file_types}   

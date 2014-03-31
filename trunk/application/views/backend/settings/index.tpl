@@ -126,6 +126,14 @@
             <div class="buttons">
                 <input type="submit" class="button" name="save_settings" value="{translate line='admin_settings_form_save_button_text'}" />
             </div>
+            <hr />
+            <div class="field">
+                <label>{translate line='admin_settings_form_label_smarty'}:</label>
+                <div class="input">
+                    <a href="{internal_url url='admin_settings/clear_all_cache'}" class="button special">{translate|sprintf:$count_of_cached_records line='admin_settings_form_clear_all_cache_button'}</a>
+                    <a href="{internal_url url='admin_settings/clear_all_compiled'}" class="button special">{translate|sprintf:$count_of_compiled_templates line='admin_settings_form_clear_all_compiled_button'}</a>
+                </div>
+            </div>
         </form>
     </fieldset>
 {/block}

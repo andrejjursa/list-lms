@@ -163,7 +163,7 @@ class LIST_Parser extends CI_Parser {
         } elseif ($caching === TRUE) {
             $this->CI->smarty->enable_caching();
         } elseif (is_integer($caching)) {
-            $this->CI->smarty->caching = $caching;
+            $this->CI->smarty->setCaching($caching);
         }
         
         // If no file extension dot has been found default to defined extension for view extensions
@@ -368,6 +368,29 @@ class LIST_Parser extends CI_Parser {
         }
 
         return trim($return);
+    }
+    
+    /**
+     * Finds location of view file and return it with this path.
+     * 
+     * @access public
+     * @param $file
+     * @return string The path and file found
+     */
+    public function find_view($file) {
+        $current_path = $this->_current_path;
+        $path = $this->_find_view($file);
+        $this->_current_path = $current_path;
+        return $path;
+    }
+    
+    public function setCacheLifetimeForTemplateObject($file, $cache_lifetime) {
+        $path = $this->find_view($file);
+        if (count($this->CI->smarty->template_objects) > 0) { foreach($this->CI->smarty->template_objects as $cache_object) {
+            if ($cache_object->template_resource == $path) {
+                $cache_object->cache_lifetime = $cache_lifetime;
+            }
+        }}
     }
 
     /**

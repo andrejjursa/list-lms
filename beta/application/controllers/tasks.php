@@ -17,23 +17,24 @@ class Tasks extends LIST_Controller {
 
     public function index() {
         $this->usermanager->student_login_protected_redirect();
+        $this->_initialize_student_menu();
+        $this->_select_student_menu_pagetag('tasks');
+        $this->parser->add_css_file('frontend_tasks.css');
+        $this->parser->add_js_file('tasks/list.js');
         $cache_id = $this->usermanager->get_student_cache_id();
         if ($this->_is_cache_enabled()) {
             $this->smarty->caching = Smarty::CACHING_LIFETIME_SAVED;
         }
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/tasks/index.tpl', $cache_id)) {
-            $this->_initialize_student_menu();
-
-            $this->_select_student_menu_pagetag('tasks');
-
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/tasks/index.tpl'), $cache_id)) {
             $task_set = $this->get_task_sets($course, $group, $student);
             if ($course->exists()) {
                 $task_set_types = $course->task_set_type->order_by_with_constant('name', 'asc')->get_iterated();
                 $this->parser->assign('task_set_types', $task_set_types);
 
                 $task_sets = $this->filter_valid_task_sets($task_set);
-                if ($this->filter_next_task_set_publication_min_cache_lifetime > 0 && $this->filter_next_task_set_publication_min_cache_lifetime < $this->smarty->cache_lifetime) {
-                    $this->smarty->cache_lifetime = $this->filter_next_task_set_publication_min_cache_lifetime + 1;
+                if ($this->_is_cache_enabled() && $this->filter_next_task_set_publication_min_cache_lifetime > 0 && $this->filter_next_task_set_publication_min_cache_lifetime <= $this->smarty->cache_lifetime) {
+                    $this->smarty->setCacheLifetime($this->filter_next_task_set_publication_min_cache_lifetime + 1);
+                    $this->parser->setCacheLifetimeForTemplateObject('frontend/tasks/index.tpl', $this->filter_next_task_set_publication_min_cache_lifetime + 1);
                 }
                 $this->lang->init_overlays('task_sets', $task_sets, array('name'));
                 $this->parser->assign('task_sets', $task_sets);
@@ -41,9 +42,6 @@ class Tasks extends LIST_Controller {
                 $points = $this->compute_points($task_sets, $student);
                 $this->parser->assign('points', $points);
             }
-
-            $this->parser->add_css_file('frontend_tasks.css');
-            $this->parser->add_js_file('tasks/list.js');
             $this->parser->assign(array('course' => $course));
         }
         $this->parser->parse('frontend/tasks/index.tpl', array(), FALSE, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : FALSE, $cache_id);
@@ -52,12 +50,16 @@ class Tasks extends LIST_Controller {
     public function task($task_set_id_url = NULL) {
         $task_set_id = url_get_id($task_set_id_url);
         $this->usermanager->student_login_protected_redirect();
+        $this->_initialize_student_menu();
+        $this->_select_student_menu_pagetag('tasks');
+        $this->parser->add_css_file('frontend_tasks.css');
+        $this->parser->add_js_file('tasks/task.js');
+        $this->_add_prettify();
+        $this->_add_scrollTo();
+        $this->_add_jquery_countdown();
+        $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
         $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id);
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/tasks/task.tpl', $cache_id)) {
-            $this->_initialize_student_menu();
-            
-            $this->_select_student_menu_pagetag('tasks');
-
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/tasks/task.tpl'), $cache_id)) {
             $task_set = $this->get_task_set_by_id($course, $group, $student, $task_set_id);
             if ($course->exists()) {
                 $task_sets = $this->filter_valid_task_sets($task_set);
@@ -70,7 +72,6 @@ class Tasks extends LIST_Controller {
                     $this->parser->assign('task_set', $filtered_task_set);
                     $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set, $course));
                     $this->parser->assign('solution_files', $filtered_task_set->get_student_files($student->id));
-                    $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
                     $this->parser->assign('test_types', $test_types_subtypes['types']);
                     $this->parser->assign('test_subtypes', $test_types_subtypes['subtypes']);
                 } else {
@@ -78,12 +79,6 @@ class Tasks extends LIST_Controller {
                     redirect(create_internal_url('tasks/index'));
                 }
             }
-
-            $this->parser->add_css_file('frontend_tasks.css');
-            $this->parser->add_js_file('tasks/task.js');
-            $this->_add_prettify();
-            $this->_add_scrollTo();
-            $this->_add_jquery_countdown();
             $this->parser->assign(array('course' => $course));
         }
         $this->parser->parse('frontend/tasks/task.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
@@ -456,6 +451,7 @@ class Tasks extends LIST_Controller {
             $task_set->include_related('task_set_type');
             $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set->select_subquery('(SELECT `upload_solution` FROM `course_task_set_type_rel` WHERE `course_task_set_type_rel`.`course_id` = `${parent}`.`course_id` AND `course_task_set_type_rel`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
+            $task_set->where('content_type', 'task_set');
             
             $task_set2->select('`task_sets`.*, `task_set_permission_rooms`.`time_day` AS `pb_time_day`, `task_set_permission_rooms`.`time_begin` AS `pb_time_begin`, `task_set_permission_rooms`.`id` AS `pb_room_id`, `task_set_permissions`.`publish_start_time` AS `pb_publish_start_time`, `task_set_permissions`.`upload_end_time` AS `pb_upload_end_time`');
             $task_set2->where('published', 1);
@@ -470,6 +466,7 @@ class Tasks extends LIST_Controller {
             $task_set2->include_related('task_set_type');
             $task_set2->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set2->select_subquery('(SELECT `upload_solution` FROM `course_task_set_type_rel` WHERE `course_task_set_type_rel`.`course_id` = `${parent}`.`course_id` AND `course_task_set_type_rel`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
+            $task_set2->where('content_type', 'task_set');
             
             $task_set3 = new Task_set();
             $task_set3->select('`task_sets`.*, NULL AS `pb_time_day`, NULL AS `pb_time_begin`, NULL AS `pb_room_id`, NULL AS `pb_publish_start_time`, "0000-00-00 00:00:00" AS `pb_upload_end_time`', FALSE);
@@ -484,6 +481,7 @@ class Tasks extends LIST_Controller {
             $task_set3->include_related('task_set_type');
             $task_set3->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set3->select_subquery('(SELECT `upload_solution` FROM `course_task_set_type_rel` WHERE `course_task_set_type_rel`.`course_id` = `${parent}`.`course_id` AND `course_task_set_type_rel`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
+            $task_set3->where('content_type', 'task_set');
             
             $sorting = $task_set2->union_order_by_overlay('task_set_type_name', 'task_set_types', 'name', 'task_set_type_id', 'asc');
             $sorting .= ', `pb_publish_start_time` ASC, `pb_upload_end_time` ASC';
@@ -531,6 +529,7 @@ class Tasks extends LIST_Controller {
             $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set->where('id', $task_set_id);
             $task_set->include_related('course', 'test_scoring_deadline');
+            $task_set->where('content_type', 'task_set');
             
             $task_set2->select('`task_sets`.*, `task_set_permission_rooms`.`time_day` AS `pb_time_day`, `task_set_permission_rooms`.`time_begin` AS `pb_time_begin`, `task_set_permission_rooms`.`id` AS `pb_room_id`, `task_set_permissions`.`publish_start_time` AS `pb_publish_start_time`, `task_set_permissions`.`upload_end_time` AS `pb_upload_end_time`');
             $task_set2->where('published', 1);
@@ -545,6 +544,7 @@ class Tasks extends LIST_Controller {
             $task_set2->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set2->where('id', $task_set_id);
             $task_set2->include_related('course', 'test_scoring_deadline');
+            $task_set2->where('content_type', 'task_set');
             
             $task_set3 = new Task_set();
             $task_set3->select('`task_sets`.*, NULL AS `pb_time_day`, NULL AS `pb_time_begin`, NULL AS `pb_room_id`, NULL AS `pb_publish_start_time`, "0000-00-00 00:00:00" AS `pb_upload_end_time`', FALSE);
@@ -559,6 +559,7 @@ class Tasks extends LIST_Controller {
             $task_set3->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'total_points');
             $task_set3->where('id', $task_set_id);
             $task_set3->include_related('course', 'test_scoring_deadline');
+            $task_set3->where('content_type', 'task_set');
             
             $task_set2->union(array($task_set, $task_set3), FALSE, '', 1, 0, 'id');
         }
