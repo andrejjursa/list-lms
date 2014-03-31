@@ -21,13 +21,14 @@ class Courses extends LIST_Controller {
     public function index() {
         $period_id = $this->input->post('period_id');
         $filter = $this->inject_stored_filter();
+        
+        $this->_initialize_student_menu();
+        $this->_select_student_menu_pagetag('courses');
+        $this->parser->add_css_file('frontend_courses.css');
+        $this->parser->add_js_file('courses/selection.js');
+        
         $cache_id = $this->usermanager->get_student_cache_id('period_' . ($period_id ? $period_id : @$filter['period_id']));
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/courses/index.tpl', $cache_id)) {
-            $this->_initialize_student_menu();
-            $this->_select_student_menu_pagetag('courses');
-            $this->parser->add_css_file('frontend_courses.css');
-            $this->parser->add_js_file('courses/selection.js');
-
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/courses/index.tpl'), $cache_id)) {    
             $periods = new Period();
             if (intval($period_id) == 0) {
                 if (isset($filter['period_id'])) {
@@ -137,16 +138,16 @@ class Courses extends LIST_Controller {
     }
     
     public function show_details($course_id, $lang = NULL) {
+        $this->parser->add_css_file('frontend_courses.css');
         if (!is_null($lang)) {
             $this->_init_specific_language($lang);
         }
         $cache_id = 'course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached('frontend/courses/course_details.tpl', $cache_id)) {
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/courses/course_details.tpl'), $cache_id)) {
             $course = new Course();
             $course->include_related('period');
             $course->get_by_id($course_id);
             smarty_inject_days();
-            $this->parser->add_css_file('frontend_courses.css');
             $this->parser->assign(array('course' => $course));
         }
         $this->parser->parse('frontend/courses/course_details.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);

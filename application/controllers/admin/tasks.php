@@ -427,26 +427,34 @@ class Tasks extends LIST_Controller {
     public function insert_to_task_set() {
         $this->load->library('form_validation');
         
+        $task_set_id = intval($this->input->post('task_set_id'));
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->get_by_id($task_set_id);
+        
         $this->form_validation->set_rules('task_id', 'task_id', 'required');
         $this->form_validation->set_rules('task_set_id', 'task_set_id', 'required');
-        $this->form_validation->set_rules('points_total', 'lang:admin_tasks_add_to_task_set_form_field_points_total', 'required|number|greater_than_equal[0]');
-        $this->form_validation->set_rules('test_max_points', 'lang:admin_tasks_add_to_task_set_form_field_test_max_points', 'required|number|greater_than_equal[0]');
-        $this->form_validation->set_rules('test_min_points', 'lang:admin_tasks_add_to_task_set_form_field_test_min_points', 'required|number|less_than_field_or_equal[test_max_points]');
+        if ($task_set->exists()) {
+            if ($task_set->content_type == 'task_set') {
+                $this->form_validation->set_rules('points_total', 'lang:admin_tasks_add_to_task_set_form_field_points_total', 'required|number|greater_than_equal[0]');
+                $this->form_validation->set_rules('test_max_points', 'lang:admin_tasks_add_to_task_set_form_field_test_max_points', 'required|integer|greater_than_equal[0]');
+                $this->form_validation->set_rules('test_min_points', 'lang:admin_tasks_add_to_task_set_form_field_test_min_points', 'required|integer|less_than_field_or_equal[test_max_points]');
+            } else {
+                $this->form_validation->set_rules('max_projects_selections', 'lang:admin_tasks_add_to_task_set_form_field_max_projects_selections', 'required|integer|greater_than[0]');
+            }
+        }
         
         if ($this->form_validation->run()) {
             $task_id = intval($this->input->post('task_id'));
-            $task_set_id = intval($this->input->post('task_set_id'));
             $points_total = floatval($this->input->post('points_total'));
             $test_max_points = floatval($this->input->post('test_max_points'));
             $test_min_points = floatval($this->input->post('test_min_points'));
             $bonus_task = (int)(bool)intval($this->input->post('bonus_task'));
+            $max_projects_selections = intval($this->input->post('max_projects_selections'));
             $internal_comment = $this->input->post('internal_comment');
-            $this->_transaction_isolation();
-            $this->db->trans_begin();
             $task = new Task();
             $task->get_by_id($task_id);
-            $task_set = new Task_set();
-            $task_set->get_by_id($task_set_id);
             if (!$task->exists()) {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_tasks_error_message_task_not_found', Messages::MESSAGE_TYPE_ERROR);
@@ -465,6 +473,7 @@ class Tasks extends LIST_Controller {
                 $task_set->set_join_field($task, 'test_min_points', $test_min_points);
                 $task_set->set_join_field($task, 'sorting', $new_sorting);
                 $task_set->set_join_field($task, 'bonus_task', $bonus_task);
+                $task_set->set_join_field($task, 'max_projects_selections', $max_projects_selections);
                 $task_set->set_join_field($task, 'internal_comment', $internal_comment);
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
@@ -477,6 +486,7 @@ class Tasks extends LIST_Controller {
             }
             redirect(create_internal_url('admin_tasks/add_to_task_set/task_id/' . $task_id));
         } else {
+            $this->db->trans_rollback();
             $this->add_to_task_set();
         }
     }

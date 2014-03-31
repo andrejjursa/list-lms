@@ -1,6 +1,6 @@
 <?php
 
-$lang['tasks_page_title'] = 'Tasks and valuation';
+$lang['tasks_page_title'] = 'Tasks and evaluation';
 $lang['tasks_table_header_name'] = 'Name';
 $lang['tasks_table_time_limit'] = 'Solution uploading limit';
 $lang['tasks_table_header_points'] = 'Points';
