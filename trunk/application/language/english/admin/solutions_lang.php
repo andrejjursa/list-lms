@@ -134,6 +134,15 @@ $lang['admin_solutions_valuation_tables_solution_not_this_group'] = 'Not member'
 $lang['admin_solutions_valuation_tables_solution_not_considered'] = 'Not consideret in valuation';
 $lang['admin_solutions_valuation_tables_header_repeat_off'] = 'Turn off';
 $lang['admin_solutions_valuation_tables_table_legend'] = 'Legend';
+$lang['admin_solutions_valuation_tables_header_content_type_task_sets'] = 'Task sets';
+$lang['admin_solutions_valuation_tables_header_content_type_project'] = 'Projects';
+$lang['admin_solutions_valuation_tables_table_header_task_sets_subtotal'] = 'Sum';
+$lang['admin_solutions_valuation_tables_table_header_projects_subtotal'] = 'Sum';
+$lang['admin_solutions_valuation_tables_table_body_flag_ok'] = '';
+$lang['admin_solutions_valuation_tables_table_body_flag_notConsidered'] = 'Not considered in evaluation.';
+$lang['admin_solutions_valuation_tables_table_body_flag_revalidate'] = 'Needs reevaluation.';
+$lang['admin_solutions_valuation_tables_table_body_flag_notInGroup'] = 'Student is not in group of this task set/project.';
+$lang['admin_solutions_valuation_tables_table_body_flag_notSubmitted'] = 'Student does not submit solution to this task set/project.';
 
 $lang['admin_solutions_upload_page_title'] = 'Upload file to solution';
 $lang['admin_solutions_upload_form_label_upload'] = 'File';

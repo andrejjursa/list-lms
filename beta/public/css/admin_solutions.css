@@ -76,7 +76,7 @@
     #table_content_id { width: 100%; }
     #table_content_id h3 { margin-top: 10px; }
 
-    div.valuation_table_outer_wrap { border: 1px solid black; border-radius: 5px; padding: 5px; margin-top: 10px; }
+    /*div.valuation_table_outer_wrap { border: 1px solid black; border-radius: 5px; padding: 5px; margin-top: 10px; }
     table.valuation_table { border-collapse: collapse; min-width: 100%; }
     table.valuation_table th { text-align: left; }
     table.valuation_table thead tr th { padding: 2px; background-color: rgba(192,192,192,128); white-space: nowrap; }
@@ -164,7 +164,18 @@
         -moz-box-shadow: 0 4px 2px -3px red inset;
         -webkit-box-shadow: 0 4px 2px -3px red inset;
         box-shadow: 0 4px 2px -3px red inset;
-    }
+    }*/
+    
+    #valutation_table_wrapper { margin-top: 10px; }
+    #valutation_table tbody tr td a { color: blue; text-decoration: underline; }
+    #valutation_table tbody tr td.type_task_set.flag_notSubmitted { color: red; }
+    #valutation_table tbody tr td.type_task_set.flag_notInGroup { color: darkslategrey; }
+    #valutation_table tbody tr td.type_task_set.flag_revalidate { color: blue; }
+    #valutation_table tbody tr td.type_task_set.flag_notConsidered { color: magenta; }
+    #valutation_table tbody tr td.type_summary,
+    #valutation_table tbody tr td.type_task_set_type { font-weight: bold; }
+    #valutation_table_wrapper thead tr th.content_type_task_sets { background-color: #f4ffa4; }
+    #valutation_table_wrapper thead tr th.content_type_projects { background-color: #ffc6c6; }
 
     #tests_execution_area_id h4 { margin: 15px 5px 10px 5px; font-size: 1.1em; font-weight: bold; }
     #tests_execution_area_id div.test_execution_div { overflow-x: auto; max-width: 100%; }

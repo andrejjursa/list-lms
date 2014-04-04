@@ -7,8 +7,15 @@ jQuery(document).ready(function($) {
         var target = '#table_content_id';
         var data = $('#filter_form_id').serializeArray();
         var onSuccess = function() {
-            update_content_width();
-            sort_table('#table_content_id table.valuation_table', '#filter_form_id');
+            //update_content_width();
+            //sort_table('#table_content_id table.valuation_table', '#filter_form_id');
+            $('#valutation_table').dataTable({
+                'bJQueryUI': true,
+                'bPaginate': false,
+                'bInfo': true,
+                'sScrollY': '400px',
+                'bScrollCollapse': true
+            });
         };
         api_ajax_load(url, target, 'post', data, onSuccess);
     };

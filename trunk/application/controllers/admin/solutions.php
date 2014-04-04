@@ -581,6 +581,7 @@ class Solutions extends LIST_Controller {
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_solutions/valuation_tables.js');
         $this->parser->add_css_file('admin_solutions.css');
+        $this->_add_dataTables();
         $this->parser->parse('backend/solutions/valuation_tables.tpl');
     }
     
@@ -588,7 +589,7 @@ class Solutions extends LIST_Controller {
         $filter = $this->input->post('filter');
         $this->store_valuation_tables_filter($filter);
         $this->inject_stored_valuation_tables_filter();
-        
+        /*
         $course = new Course();
         $course->include_related('period', 'name');
         $course->get_by_id(intval(@$filter['course']));
@@ -758,7 +759,16 @@ class Solutions extends LIST_Controller {
             $this->parser->assign('total_points', $total_points);
             $this->parser->assign('header', $header);
             $this->parser->assign('points_table', $points_table);
-        }
+        }*/
+        
+        $this->parser->assign('table_data', $this->get_valuation_table_data(intval(@$filter['course']), @$filter['group'], (bool)@$filter['simple']));
+        
+        $course = new Course();
+        $course->include_related('period');
+        $course->get_by_id(intval(@$filter['course']));
+        
+        $group = new Group();
+        $group->get_by_id(@$filter['group']);
         
         $this->parser->parse('backend/solutions/valuation_table_content.tpl', array('course' => $course, 'group' => $group));
     }
@@ -1094,5 +1104,320 @@ class Solutions extends LIST_Controller {
         }
         
         $this->parser->assign('possible_groups', $data);
+    }
+    
+    private function get_valuation_table_data($course_id, $group_id = NULL, $condensed = FALSE) {
+        $table_data = array(
+            'header' => array(),
+            'content' => array(),
+        );
+        
+        $course = new Course();
+        $course->get_by_id(intval($course_id));
+        
+        $group = new Group();
+        $group->get_by_id((int)$group_id);
+        
+        if ($course->exists()) {
+            $students = new Student();
+            $students->select('id, fullname, email');
+            $students->include_related('participant/group', array('id', 'name'));
+            $students->where_related('participant/course', 'id', $course->id);
+            $students->where_related('participant', 'allowed', 1);
+            $students->order_by_as_fullname('fullname');
+            if ($group->exists()) {
+                $students->where_related('participant/group', 'id', (int)$group_id);
+            }
+            $students->get_iterated();
+            
+            $task_sets_data = array();
+            $task_sets_ids = array();
+            $projects_ids = array();
+            
+            $content_type_task_set = new Task_set();
+            $content_type_task_set->select('id, name, content_type, group_id, task_set_type_id');
+            $content_type_task_set->include_related('task_set_type', 'name');
+            $content_type_task_set->include_related('group', 'name');
+            $content_type_task_set->where('content_type', 'task_set');
+            $content_type_task_set->where('published', 1);
+            $content_type_task_set->where_related_course($course);
+            $content_type_task_set->order_by_related_with_constant('task_set_type', 'name', 'asc');
+            $content_type_task_set->order_by('task_set_type_id', 'asc');
+            $content_type_task_set->order_by('publish_start_time', 'asc');
+            if ($group->exists()) {
+                $content_type_task_set->group_start();
+                    $content_type_task_set->group_start('', 'OR ');
+                        $content_type_task_set->group_start();
+                            $content_type_task_set->or_where('group_id', NULL);
+                            $content_type_task_set->or_where('group_id', (int)$group_id);
+                        $content_type_task_set->group_end();
+                        $content_type_task_set->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                    $content_type_task_set->group_end();
+                    $content_type_task_set->group_start('', 'OR ');
+                        $content_type_task_set->where_related('task_set_permission', 'group_id', (int)$group_id);
+                        $content_type_task_set->where_related('task_set_permission', 'enabled', 1);
+                    $content_type_task_set->group_end();
+                $content_type_task_set->group_end();
+            }
+            $content_type_task_set->get();
+            if ($content_type_task_set->result_count() > 0) {
+                $header_items = array();
+                $last_task_set_type_id = NULL;
+                foreach ($content_type_task_set->all as $task_set) {
+                    $permissions = new Task_set_permission();
+                    $permissions->select('id, group_id');
+                    $permissions->include_related('group', 'name');
+                    $permissions->where_related_task_set($task_set);
+                    $permissions->where('enabled', 1);
+                    $permissions->get_iterated();
+                    if ($permissions->result_count() > 0) {
+                        $group_ids = array();
+                        $group_names = array();
+                        foreach ($permissions as $permission) {
+                            $group_ids[] = $permission->group_id;
+                            $group_names[] = $this->lang->text($permission->group_name);
+                        }
+                        $task_sets_data[$task_set->id] = array(
+                            'group_id' => $group_ids,
+                            'group_name' => $group_names,
+                        );
+                    } else {
+                        $task_sets_data[$task_set->id] = array(
+                            'group_id' => array($task_set->group_id),
+                            'group_name' => $this->lang->text($task_set->group_name),
+                        );
+                    }
+                    if ($task_set->task_set_type_id !== $last_task_set_type_id) {
+                        $last_task_set_type_id = $task_set->task_set_type_id;
+                        $header_items[] = array(
+                            'type' => 'task_set_type',
+                            'id' => $task_set->task_set_type_id,
+                            'name' => $this->lang->text($task_set->task_set_type_name),
+                            'title' => '',
+                        );
+                    }
+                    if (!$condensed) {
+                        $header_items[] = array(
+                            'type' => 'task_set',
+                            'id' => $task_set->id,
+                            'name' => $this->lang->get_overlay_with_default('task_sets', $task_set->id, 'name', $task_set->name),
+                            'title' => is_array($task_sets_data[$task_set->id]['group_name']) ? implode(', ', $task_sets_data[$task_set->id]['group_name']) : $task_sets_data[$task_set->id]['group_name'],
+                        );
+                    }
+                    $task_sets_ids[] = $task_set->id;
+                }
+                $table_data['header']['content_type_task_set'] = array(
+                    'content_type_name' => $this->lang->line('admin_solutions_valuation_tables_header_content_type_task_sets'),
+                    'items' => $header_items,
+                );
+            }
+            
+            $content_type_project = new Task_set();
+            $content_type_project->where('content_type', 'project');
+            $content_type_project->where('published', 1);
+            $content_type_project->where_related_course($course);
+            $content_type_project->order_by_related_with_constant('task_set_type', 'name', 'asc');
+            $content_type_project->order_by('publish_start_time', 'asc');
+            $content_type_project->get();
+            if ($content_type_project->result_count() > 0) {
+                $header_items = array();
+                foreach ($content_type_project->all as $project) {
+                    if (!$condensed) {
+                        $header_items[] = array(
+                            'type' => 'task_set',
+                            'id' => $project->id,
+                            'name' => $this->lang->get_overlay_with_default('task_sets', $project->id, 'name', $project->name),
+                            'title' => '',
+                        );
+                    }
+                    $projects_ids[] = $project->id;
+                }
+                $table_data['header']['content_type_project'] = array(
+                    'content_type_name' => $this->lang->line('admin_solutions_valuation_tables_header_content_type_project'),
+                    'items' => $header_items,
+                );
+            }
+            
+            foreach($students as $student) {
+                $student_line = array(
+                    'fullname' => $student->fullname,
+                    'email' => $student->email,
+                    'id' => $student->id,
+                    'total_points' => 0,
+                    'task_sets_points' => array(),
+                    'task_sets_points_total' => 0,
+                    'projects_points' => array(),
+                    'projects_points_total' => 0,
+                );
+                
+                $solutions_data = array();
+                
+                if ($content_type_task_set->result_count() > 0 || $content_type_project->result_count() > 0) {
+                    $solutions = new Solution();
+                    $solutions->select('task_set_id, points, not_considered, revalidate');
+                    $solutions->where_related_student($student);
+                    $solutions->group_start();
+                        if (count($task_sets_ids) > 0) {
+                            $solutions->or_where_in('task_set_id', $task_sets_ids);
+                        }
+                        if (count($projects_ids) > 0) {
+                            $solutions->or_where_in('task_set_id', $projects_ids);
+                        }
+                    $solutions->group_end();
+                    $solutions->get_iterated();
+                    foreach ($solutions as $solution) {
+                        $solutions_data[$solution->task_set_id] = array(
+                            'points' => $solution->points,
+                            'not_considered' => $solution->not_considered,
+                            'revalidate' => $solution->revalidate,
+                        );
+                    }
+                }
+                                
+                $task_sets_points_array = array();
+                if ($content_type_task_set->result_count() > 0) {
+                    $task_sets_points = 0;
+                    $last_task_set_type_id = NULL;
+                    $last_task_set_type_key = NULL;
+                    foreach($content_type_task_set->all as $task_set) {
+                        if ($last_task_set_type_id !== $task_set->task_set_type_id) {
+                            $last_task_set_type_id = $task_set->task_set_type_id;
+                            $task_sets_points_array[] = array(
+                                'type' => 'task_set_type',
+                                'points' => 0,
+                                'flag' => 'ok',
+                            );
+                            $last_task_set_type_key = count($task_sets_points_array) - 1;
+                        }
+                        $points = 0;
+                        if (is_null($task_sets_data[$task_set->id]['group_id'][0]) || in_array($student->participant_group_id, $task_sets_data[$task_set->id]['group_id'])) {
+                            if (isset($solutions_data[$task_set->id])) {
+                                if ($solutions_data[$task_set->id]['not_considered']) {
+                                    if (!$condensed) {
+                                        $task_sets_points_array[] = array(
+                                            'type' => 'task_set',
+                                            'points' => '*',
+                                            'flag' => 'notConsidered',
+                                        );
+                                    }
+                                } else {
+                                    if (is_null($solutions_data[$task_set->id]['points'])) {
+                                        if (!$condensed) {
+                                            $task_sets_points_array[] = array(
+                                                'type' => 'task_set',
+                                                'points' => '!',
+                                                'flag' => 'revalidate',
+                                            );
+                                        }
+                                    } elseif ($solutions_data[$task_set->id]['revalidate']) {
+                                        if (!$condensed) {
+                                            $task_sets_points_array[] = array(
+                                                'type' => 'task_set',
+                                                'points' => $solutions_data[$task_set->id]['points'],
+                                                'flag' => 'revalidate',
+                                            );
+                                        }
+                                        $points = floatval($solutions_data[$task_set->id]['points']);
+                                    } else {
+                                        if (!$condensed) {
+                                            $task_sets_points_array[] = array(
+                                                'type' => 'task_set',
+                                                'points' => $solutions_data[$task_set->id]['points'],
+                                                'flag' => 'ok',
+                                            );
+                                        }
+                                        $points = floatval($solutions_data[$task_set->id]['points']);
+                                    }
+                                }
+                            } else {
+                                if (!$condensed) {
+                                    $task_sets_points_array[] = array(
+                                        'type' => 'task_set',
+                                        'points' => 'x',
+                                        'flag' => 'notSubmitted',
+                                    );
+                                }
+                            }
+                        } else {
+                            if (!$condensed) {
+                                $task_sets_points_array[] = array(
+                                    'type' => 'task_set',
+                                    'points' => '-',
+                                    'flag' => 'notInGroup',
+                                );
+                            }
+                        }
+                        $task_sets_points += $points;
+                        $task_sets_points_array[$last_task_set_type_key]['points'] += $points;
+                        $student_line['total_points'] += $points;
+                        $student_line['task_sets_points_total'] = $task_sets_points;
+                    }
+                }
+                $student_line['task_sets_points'] = $task_sets_points_array;
+                
+                $task_sets_points_array = array();
+                if ($content_type_project->result_count() > 0) {
+                    $task_sets_points = 0;
+                    foreach ($content_type_project as $task_set) {
+                        $points = 0;
+                        if (isset($solutions_data[$task_set->id])) {
+                            if ($solutions_data[$task_set->id]['not_considered']) {
+                                if (!$condensed) {
+                                    $task_sets_points_array[] = array(
+                                        'type' => 'task_set',
+                                        'points' => '*',
+                                        'flag' => 'notConsidered',
+                                    );
+                                }
+                            } else {
+                                if (is_null($solutions_data[$task_set->id]['points'])) {
+                                    if (!$condensed) {
+                                        $task_sets_points_array[] = array(
+                                            'type' => 'task_set',
+                                            'points' => '!',
+                                            'flag' => 'revalidate',
+                                        );
+                                    }
+                                } elseif ($solutions_data[$task_set->id]['revalidate']) {
+                                    if (!$condensed) {
+                                        $task_sets_points_array[] = array(
+                                            'type' => 'task_set',
+                                            'points' => $solutions_data[$task_set->id]['points'],
+                                            'flag' => 'revalidate',
+                                        );
+                                    }
+                                    $points = floatval($solutions_data[$task_set->id]['points']);
+                                } else {
+                                    if (!$condensed) {
+                                        $task_sets_points_array[] = array(
+                                            'type' => 'task_set',
+                                            'points' => $solutions_data[$task_set->id]['points'],
+                                            'flag' => 'ok',
+                                        );
+                                    }
+                                    $points = floatval($solutions_data[$task_set->id]['points']);
+                                }
+                            }
+                        } else {
+                            if (!$condensed) {
+                                $task_sets_points_array[] = array(
+                                    'type' => 'task_set',
+                                    'points' => 'x',
+                                    'flag' => 'notSubmitted',
+                                );
+                            }
+                        }
+                        $task_sets_points += $points;
+                        $student_line['total_points'] += $points;
+                        $student_line['projects_points_total'] = $task_sets_points;
+                    }
+                }
+                $student_line['projects_points'] = $task_sets_points_array;
+                
+                $table_data['content'][] = $student_line;
+            }
+        }
+        
+        return $table_data;
     }
 }

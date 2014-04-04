@@ -139,6 +139,20 @@ class LIST_Lang extends CI_Lang {
     }
     
     /**
+     * Returns overlay text for given table name, table id, column and idiom (if provided).
+     * @param string $table name of table.
+     * @param integer $table_id table id.
+     * @param string $column column name in given table.
+     * @param string $default default text in case overlay is not found.
+     * @param string $idiom language idiom or NULL to use default.
+     * @return string language overlay text.
+     */
+    public function get_overlay_with_default($table, $table_id, $column, $default, $idiom = NULL) {
+        $text = $this->get_overlay_if_exists($table, $table_id, $column, is_null($idiom) ? $this->lang_idiom : $idiom);
+        return is_null($text) ? $default : $text;
+    }
+    
+    /**
      * Saves language overlay to database.
      * @param string $table name of table.
      * @param integer $table_id table id.

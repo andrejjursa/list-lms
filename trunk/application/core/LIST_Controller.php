@@ -205,6 +205,10 @@ class LIST_Controller extends CI_Controller {
         $this->parser->add_js_file('tinymce4/tinymce.min.js');
     }
 
+    protected function _add_dataTables() {
+        $this->parser->add_js_file('jquery.dataTables.min.js');
+        $this->parser->add_css_file('jquery.dataTables.css');
+    }
 
     /**
      * This method adds plupload to template and load plupload library.

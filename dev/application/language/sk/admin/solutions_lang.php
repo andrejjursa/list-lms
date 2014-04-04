@@ -134,6 +134,15 @@ $lang['admin_solutions_valuation_tables_solution_not_this_group'] = 'Nie je čle
 $lang['admin_solutions_valuation_tables_solution_not_considered'] = 'Neberie sa do úvahy';
 $lang['admin_solutions_valuation_tables_header_repeat_off'] = 'Vypnúť';
 $lang['admin_solutions_valuation_tables_table_legend'] = 'Legenda';
+$lang['admin_solutions_valuation_tables_header_content_type_task_sets'] = 'Zostavy úloh';
+$lang['admin_solutions_valuation_tables_header_content_type_project'] = 'Projekty';
+$lang['admin_solutions_valuation_tables_table_header_task_sets_subtotal'] = 'Spolu';
+$lang['admin_solutions_valuation_tables_table_header_projects_subtotal'] = 'Spolu';
+$lang['admin_solutions_valuation_tables_table_body_flag_ok'] = '';
+$lang['admin_solutions_valuation_tables_table_body_flag_notConsidered'] = 'Neuvažované do hodnotenia.';
+$lang['admin_solutions_valuation_tables_table_body_flag_revalidate'] = 'Potrebuje znovuhodnotenie.';
+$lang['admin_solutions_valuation_tables_table_body_flag_notInGroup'] = 'Študent nie je v skupine tejto zostavy/projektu.';
+$lang['admin_solutions_valuation_tables_table_body_flag_notSubmitted'] = 'Študent neodoslal riešenie tejto zostavy/projektu.';
 
 $lang['admin_solutions_upload_page_title'] = 'Nahranie súboru študentského riešenia';
 $lang['admin_solutions_upload_form_label_upload'] = 'Súbor';
