@@ -37,6 +37,7 @@
                 <tr>
                     <th>ID</th>
                     <th class="sort:task_set_name">{translate line='admin_solutions_table_header_task_set_name'}</th>
+                    <th class="sort:content_type">{translate line='admin_solutions_table_header_content_type'}</th>
                     <th class="sort:course">{translate line='admin_solutions_table_header_task_set_course'}</th>
                     <th class="sort:course_group">{translate line='admin_solutions_table_header_task_set_course_group'}</th>
                     <th class="sort:task_set_type">{translate line='admin_solutions_table_header_task_set_task_set_type'}</th>

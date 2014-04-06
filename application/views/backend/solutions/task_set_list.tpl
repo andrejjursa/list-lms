@@ -5,6 +5,7 @@
     <tr>
         <td>{$task_set->id|intval}</td>
         <td>{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}</td>
+        <td>{translate line="admin_solutions_table_body_content_type_{$task_set->content_type}"}</td>
         <td><span title="{translate_text text=$task_set->course_name}">{translate_text|abbreviation text=$task_set->course_name}</span> / <span title="{translate_text text=$task_set->course_period_name}">{translate_text|abbreviation text=$task_set->course_period_name}</span></td>
         <td>
             {if $task_set->task_set_permission_count eq 0}
@@ -42,5 +43,5 @@
     </tr>
 {/foreach}
 <tr id="pagination_row_id">
-    <td colspan="12">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
+    <td colspan="13">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
 </tr>

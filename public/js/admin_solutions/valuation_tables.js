@@ -9,12 +9,21 @@ jQuery(document).ready(function($) {
         var onSuccess = function() {
             //update_content_width();
             //sort_table('#table_content_id table.valuation_table', '#filter_form_id');
-            $('#valutation_table').dataTable({
-                'bJQueryUI': true,
+            var oTable = $('#valutation_table').dataTable({
                 'bPaginate': false,
-                'bInfo': true,
+                'sScrollX': '100%',
                 'sScrollY': '400px',
-                'bScrollCollapse': true
+                'sScrillXInner': '1000px',
+                'bScrollCollapse': true,
+                'aaSorting': [[ 1, 'asc' ]],
+                'oLanguage': lang.dataTables
+            });
+            
+            new FixedColumns( oTable, {
+                'sLeftWidth': 'relative',
+                'iLeftColumns': 2,
+                'iRightColumns': 1,
+                'iLeftWidth': 25
             });
         };
         api_ajax_load(url, target, 'post', data, onSuccess);
