@@ -357,6 +357,15 @@ class Solutions extends LIST_Controller {
         $group->where_related('participant/course/task_set', 'id', $task_set_id);
         $group->get();
         
+        $project_selection = new Project_selection();
+        $project_selection->select('`project_selections`.*, `task_task_task_set_rel`.`internal_comment` AS `task_join_internal_comment`');
+        $project_selection->include_related('task', '*', TRUE, TRUE);
+        $project_selection->include_related('task/task_set', array('id', 'name'));
+        $project_selection->where('task_set_id', $solution->task_set_id);
+        $project_selection->where('student_id', $solution->student_id);
+        $project_selection->where('task_task_sets.id', $solution->task_set_id);
+        $project_selection->get();
+        
         $this->load->helper('tests');
         $test_types_subtypes = get_all_supported_test_types_and_subtypes();
         
@@ -369,6 +378,7 @@ class Solutions extends LIST_Controller {
             'group' => $group,
             'test_types' => $test_types_subtypes['types'],
             'test_subtypes' => $test_types_subtypes['subtypes'],
+            'project_selection' => $project_selection,
             'add_url' => $this->uri->assoc_to_uri($this->uri->ruri_to_assoc(5)),
         ));
     }
@@ -479,8 +489,13 @@ class Solutions extends LIST_Controller {
     public function get_task_set_list() {
         $filter = $this->input->post('filter');
         $this->store_task_set_selection_filter($filter);
+        
+        $this->db->query('CREATE TEMPORARY TABLE course_task_set_type_rel_override AS ( SELECT ctstr.course_id, ctstr.task_set_type_id, ctstr.upload_solution FROM course_task_set_type_rel ctstr ) UNION ( SELECT cs.id as course_id, 0 AS task_set_type_id, 1 AS upload_solution FROM (SELECT id FROM courses) cs )');
+        
         $task_sets = new Task_set();
-        $task_sets->select('`task_sets`.*, `course_course_task_set_type_rel`.`upload_solution` AS `join_upload_solution`');
+        //$task_sets->select('`task_sets`.*, `course_course_task_set_type_rel`.`upload_solution` AS `join_upload_solution`');
+        $task_sets->select('`task_sets`.*');
+        $task_sets->select_subquery('(SELECT `sq_ctst`.`upload_solution` FROM course_task_set_type_rel_override AS `sq_ctst` WHERE `sq_ctst`.`course_id` = `${parent}`.`course_id` AND `sq_ctst`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
         $task_sets->include_related_count('task_set_permission');
         $task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
         $task_sets->include_related_count('solution');
@@ -489,8 +504,9 @@ class Solutions extends LIST_Controller {
         $task_sets->include_related('course/period', 'name');
         $task_sets->include_related('group', 'name');
         $task_sets->include_related('task_set_type', 'name');
-        $task_sets->include_related('course/task_set_type');
-        $task_sets->where('(`course_task_set_types`.`id` = `task_sets`.`task_set_type_id`)');
+        /*$task_sets->include_related('course/task_set_type');
+        $task_sets->where('(`course_task_set_types`.`id` = `task_sets`.`task_set_type_id`)');*/
+        //$task_sets->where('((`course_course_task_set_type_rel`.`task_set_type_id` = `task_sets`.`task_set_type_id` AND `task_sets`.`task_set_type_id` != 0) OR `task_sets`.`task_set_type_id` = 0)');
         if (isset($filter['course']) && intval($filter['course']) > 0) {
             $task_sets->where_related_course('id', intval($filter['course']));
         }
@@ -528,6 +544,8 @@ class Solutions extends LIST_Controller {
             $task_sets->order_by('task_count', $order_by_direction);
         } elseif ($filter['order_by_field'] == 'upload_end_time') {
             $task_sets->order_by('upload_end_time', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'content_type') {
+            $task_sets->order_by('content_type', $order_by_direction);
         }
         $task_sets->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->lang->init_overlays('task_sets', $task_sets->all_to_array(), array('name'));
@@ -582,6 +600,8 @@ class Solutions extends LIST_Controller {
         $this->parser->add_js_file('admin_solutions/valuation_tables.js');
         $this->parser->add_css_file('admin_solutions.css');
         $this->_add_dataTables();
+        $this->parser->add_js_file('jquery.DataTables.FixedColumns.js');
+        $this->parser->add_js_file('jquery-migrate-1.2.1.min.js');
         $this->parser->parse('backend/solutions/valuation_tables.tpl');
     }
     

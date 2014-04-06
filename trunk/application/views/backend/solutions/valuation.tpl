@@ -9,8 +9,13 @@
             <ul>
                 <li><a href="#tabs-form">{translate line='admin_solutions_valuation_tabs_label_form'}</a></li>
                 <li><a href="#tabs-files">{translate line='admin_solutions_valuation_tabs_label_files'}</a></li>
+                {if $solution->task_set->content_type eq 'task_set'}
                 <li><a href="#tabs-tests">{translate line='admin_solutions_valuation_tabs_label_tests'}</a></li>
                 <li><a href="{internal_url url="admin_solutions/display_tasks_list/{$solution->task_set->id}"}">{translate line='admin_solutions_valuation_tabs_label_tasks'}</a></li>
+                {/if}
+                {if $solution->task_set->content_type eq 'project'}
+                <li><a href="#tabs-task">{translate line='admin_solutions_valuation_tabs_label_task'}</a></li>
+                {/if}
             </ul>
             <div id="tabs-form">
                 <form action="{internal_url|add_to_url:$add_url url="admin_solutions/update_valuation/{$solution->task_set->id|intval}/{$solution->id|intval}"}" method="post" id="valuation_form_id">
@@ -70,6 +75,7 @@
                     <div class="clear"></div>
                 </div>
             </div>
+            {if $solution->task_set->content_type eq 'task_set'}
             <div id="tabs-tests">
                 <form action="" method="post" id="tests_form_id">
                     <div class="field">
@@ -128,6 +134,49 @@
                     var tests_object = {$tests_object|json_encode};
                 </script>
             </div>
+            {/if}
+            {if $solution->task_set->content_type eq 'project'}
+            <div id="tabs-task">
+                {if $solution->task_set->internal_comment}
+                    <div class="internal_comment_wrap">
+                        <h5>{translate line='admin_solutions_tasks_list_internal_comment_from_task_set_header'}</h5>
+                        <div class="internal_comment_text text_content">
+                            <p>{$solution->task_set->internal_comment|nl2br}</p>
+                        </div>
+                    </div>
+                {/if}
+                {$instructions_text = {overlay table='task_sets' table_id=$solution->task_set->id|intval column='instructions' default=$solution->task_set->instructions}}
+                {if $instructions_text}
+                    <div class="instructions_wrap">
+                        <h5>{translate line='admin_solutions_tasks_list_instructions_header'}</h5>
+                        <div class="instructions_text text_content">
+                            {$instructions_text|add_base_url}
+                        </div>
+                    </div>
+                {/if}
+                <div class="task_wrap">
+                    <h5>{overlay table='tasks' column='name' table_id=$project_selection->task->id default=$project_selection->task->name} | <span class="task_author">{$project_selection->task->author->get()->fullname|default:{translate line='admin_solutions_tasks_list_task_unknown_author'}}</span></h5>
+                    <div class="task_text text_content">{overlay|add_base_url table='tasks' column='text' table_id=$project_selection->task->id default=$project_selection->task->text}</div>
+                    {if $project_selection->task->internal_comment}
+                        <div class="task_internal_comment_wrap">
+                            <h5>{translate line='admin_solutions_tasks_list_internal_comment_from_task_header'}</h5>
+                            <div class="internal_comment_text text_content">
+                                <p>{$project_selection->task->internal_comment|nl2br}</p>
+                            </div>
+                        </div>
+                    {/if}
+                    {if $project_selection->task_join_internal_comment}
+                        <div class="relation_internal_comment_wrap">
+                            <h5>{translate line='admin_solutions_tasks_list_internal_comment_from_join_table_header'}</h5>
+                            <div class="internal_comment_text text_content">
+                                <p>{$project_selection->task_join_internal_comment|nl2br}</p>
+                            </div>
+                        </div>
+                    {/if}
+                    <div class="clear"></div>
+                </div>
+            </div>
+            {/if}
         </div>
     {else}
         {include file='partials/backend_general/flash_messages.tpl' inline}

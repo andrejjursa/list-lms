@@ -401,3 +401,19 @@ function text_convert_for_url($text, $prepend_if_possible = '_') {
 function str_to_first_upper($text) {
     return mb_strtoupper(mb_substr($text, 0, 1)) . mb_strtolower(mb_substr($text, 1));
 }
+
+function get_firstname_from_fullname($fullname) {
+    $end = strrpos($fullname, ' ');
+    if ($end !== FALSE) {
+        return mb_substr($fullname, 0, $end);
+    }
+    return $fullname;
+}
+
+function get_lastname_from_fullname($fullname) {
+    $end = strrpos($fullname, ' ');
+    if ($end !== FALSE) {
+        return mb_substr($fullname, $end + 1);
+    }
+    return '';
+}

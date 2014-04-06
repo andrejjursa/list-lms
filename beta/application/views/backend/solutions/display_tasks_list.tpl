@@ -2,7 +2,7 @@
 {if $task_set->internal_comment}
     <div class="internal_comment_wrap">
         <h5>{translate line='admin_solutions_tasks_list_internal_comment_from_task_set_header'}</h5>
-        <div class="internal_comment_text">
+        <div class="internal_comment_text text_content">
             <p>{$task_set->internal_comment|nl2br}</p>
         </div>
     </div>
@@ -22,7 +22,7 @@
         {if $task->internal_comment}
             <div class="task_internal_comment_wrap">
                 <h5>{translate line='admin_solutions_tasks_list_internal_comment_from_task_header'}</h5>
-                <div class="internal_comment_text">
+                <div class="internal_comment_text text_content">
                     <p>{$task->internal_comment|nl2br}</p>
                 </div>
             </div>
@@ -30,7 +30,7 @@
         {if $task->join_internal_comment}
             <div class="relation_internal_comment_wrap">
                 <h5>{translate line='admin_solutions_tasks_list_internal_comment_from_join_table_header'}</h5>
-                <div class="internal_comment_text">
+                <div class="internal_comment_text text_content">
                     <p>{$task->join_internal_comment|nl2br}</p>
                 </div>
             </div>

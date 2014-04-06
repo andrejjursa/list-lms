@@ -38,12 +38,35 @@ jQuery(function($){
 });
 
 var lang = { 
-  messages: {
-    ajax_standby: 'Čakajte prosím ...',
-    filter_header: 'Filter',
-    form_header: 'Zobraziť / skryť formulár',
-    overlay_editor_header: 'Upraviť jazykové prekrytia',
-    error_notification_dialog_title: 'Chyba vo formulári',
-    error_notification_dialog_close: 'Zatvoriť'
-  }
+    messages: {
+        ajax_standby: 'Čakajte prosím ...',
+        filter_header: 'Filter',
+        form_header: 'Zobraziť / skryť formulár',
+        overlay_editor_header: 'Upraviť jazykové prekrytia',
+        error_notification_dialog_title: 'Chyba vo formulári',
+        error_notification_dialog_close: 'Zatvoriť'
+    },
+    dataTables: {
+        'oAria': {
+            'sSortAscentind': ' - klik/návrat k zostupnému zoradeniu',
+            'sSortDescending': ' - klik/návrat k vzostupnému zoradeniu'
+        },
+        'oPaginate': {
+            'sFirst': 'Prvá stránka',
+            'sLast': 'Posledná stránka',
+            'sNext': 'Nasledujúca stránka',
+            'sPrevious': 'Predcházdajúca stránka'
+        },
+        'sEmptyTable': 'V tabuľke nie sú dostupné žiadne dáta.',
+        'sInfo': 'Zobrazuje sa _START_ až _END_ z _TOTAL_ riadkov.',
+        'sInfoEmpty': 'Nie sú dostupné žiadne záznamy.',
+        'sInfoFiltered': ' Filtrované z _MAX_ riadkov.',
+        'sInfoPostFix': '',
+        'sLengthMenu': 'Zoraziť _MENU_ riadkov.',
+        'sLoadingRecords': 'Prosím čakajte - načítava sa ...',
+        'sProcessing': 'Spracovávam ...',
+        'sSearch': 'Nájsť:',
+        'sUrl': '',
+        'sZeroRecords': 'Nenašli sa odpovedajúce záznamy.'
+    }
 };
