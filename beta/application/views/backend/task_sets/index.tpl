@@ -39,7 +39,7 @@
                     <div class="buttons">
                         <input type="submit" name="filter_submit" value="{translate line='admin_task_sets_filter_form_submit_button'}" class="button" />
                         <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />
-                        <input type="hidden" name="filter[rows_per_page]" value="{$filter.rows_per_page|default:25|intval}" />
+                        <input type="hidden" name="filter[rows_per_page]" value="{$filter.rows_per_page|default:100|intval}" />
                         <input type="hidden" name="filter[fields][created]" value="{$filter.fields.created|default:0}" />
                         <input type="hidden" name="filter[fields][updated]" value="{$filter.fields.updated|default:0}" />
                         <input type="hidden" name="filter[fields][name]" value="{$filter.fields.name|default:1}" />

@@ -25,7 +25,7 @@
                 <div class="buttons">
                     <input type="submit" name="filter_submit" value="{translate line='admin_solutions_filter_submit'}" class="button" />
                     <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />
-                    <input type="hidden" name="filter[rows_per_page]" value="{$filter.rows_per_page|default:25|intval}" />
+                    <input type="hidden" name="filter[rows_per_page]" value="{$filter.rows_per_page|default:100|intval}" />
                     <input type="hidden" name="filter_selected_group_id" value="{$filter.group|intval}" />
                     <input type="hidden" name="filter[order_by_field]" value="{$filter.order_by_field|default:'task_set_name'}" />
                     <input type="hidden" name="filter[order_by_direction]" value="{$filter.order_by_direction|default:'asc'}" />
