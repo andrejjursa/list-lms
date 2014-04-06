@@ -358,8 +358,8 @@ class Task_sets extends LIST_Controller {
                     if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
                         if ($task_set->content_type == 'task_set') {
                             $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][points_total]', 'lang:admin_task_sets_form_field_task_points_total', 'required|number|greater_than_equal[0]');
-                            $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][test_max_points]', 'lang:admin_task_sets_form_field_task_test_max_points', 'required|integer|greater_than_equal[0]');
-                            $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][test_min_points]', 'lang:admin_task_sets_form_field_task_test_min_points', 'required|integer|less_than_field_or_equal[task_join_field[' . intval($task->id) . '][test_max_points]]');
+                            $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][test_max_points]', 'lang:admin_task_sets_form_field_task_test_max_points', 'required|number|greater_than_equal[0]');
+                            $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][test_min_points]', 'lang:admin_task_sets_form_field_task_test_min_points', 'required|number|less_than_field_or_equal[task_join_field[' . intval($task->id) . '][test_max_points]]');
                         } else {
                             $this->form_validation->set_rules('task_join_field[' . intval($task->id) . '][max_projects_selections]', 'lang:admin_task_sets_form_field_task_max_projects_selections', 'required|integer|greater_than[0]');
                         }

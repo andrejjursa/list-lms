@@ -438,8 +438,8 @@ class Tasks extends LIST_Controller {
         if ($task_set->exists()) {
             if ($task_set->content_type == 'task_set') {
                 $this->form_validation->set_rules('points_total', 'lang:admin_tasks_add_to_task_set_form_field_points_total', 'required|number|greater_than_equal[0]');
-                $this->form_validation->set_rules('test_max_points', 'lang:admin_tasks_add_to_task_set_form_field_test_max_points', 'required|integer|greater_than_equal[0]');
-                $this->form_validation->set_rules('test_min_points', 'lang:admin_tasks_add_to_task_set_form_field_test_min_points', 'required|integer|less_than_field_or_equal[test_max_points]');
+                $this->form_validation->set_rules('test_max_points', 'lang:admin_tasks_add_to_task_set_form_field_test_max_points', 'required|number|greater_than_equal[0]');
+                $this->form_validation->set_rules('test_min_points', 'lang:admin_tasks_add_to_task_set_form_field_test_min_points', 'required|number|less_than_field_or_equal[test_max_points]');
             } else {
                 $this->form_validation->set_rules('max_projects_selections', 'lang:admin_tasks_add_to_task_set_form_field_max_projects_selections', 'required|integer|greater_than[0]');
             }
