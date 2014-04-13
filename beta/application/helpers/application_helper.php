@@ -403,7 +403,7 @@ function str_to_first_upper($text) {
 }
 
 function get_firstname_from_fullname($fullname) {
-    $end = strrpos($fullname, ' ');
+    $end = mb_strrpos($fullname, ' ');
     if ($end !== FALSE) {
         return mb_substr($fullname, 0, $end);
     }
@@ -411,7 +411,7 @@ function get_firstname_from_fullname($fullname) {
 }
 
 function get_lastname_from_fullname($fullname) {
-    $end = strrpos($fullname, ' ');
+    $end = mb_strrpos($fullname, ' ');
     if ($end !== FALSE) {
         return mb_substr($fullname, $end + 1);
     }
