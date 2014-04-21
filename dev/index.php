@@ -208,6 +208,7 @@ require_once APPPATH.'third_party/datamapper/bootstrap.php';
 try {
     require_once BASEPATH.'core/CodeIgniter.php';
 } catch (Exception $exception) {
+    http_response_code(500);
     require_once APPPATH.'errors/error_exception.php';
 }
 
