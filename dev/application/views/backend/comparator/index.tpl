@@ -34,7 +34,7 @@
         </form>
     </fieldset>
     <fieldset>
-        <legend></legend>
+        <legend>{translate line='admin_comparator_fieldset_legend_protocol'}</legend>
         <div id="solutions_table_content"></div>
     </fieldset>
 {/block}

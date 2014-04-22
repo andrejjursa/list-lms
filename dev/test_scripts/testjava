@@ -9,7 +9,7 @@ JAVAC_ARGS="-Xlint:unchecked -encoding UTF-8 -cp /usr/share/java/junit4.jar:. *.
 #
 rm -f *.class 2> /dev/null
 #rm -rf */* 2> /dev/null
-rmdir * 2>/dev/null
+#rmdir * 2>/dev/null
 #
 mkdir out 2>/dev/null
 chgrp testovac out
