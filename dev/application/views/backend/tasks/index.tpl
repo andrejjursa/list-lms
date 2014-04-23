@@ -106,8 +106,8 @@
     {include file='backend/categories/categories_parent_selector.tpl' inline}
     {include file='backend/tasks/courses_selection.tpl' inline}
     var messages = {
-        delete_question: '{translate line="admin_tasks_javascript_message_delete_question"}',
-        after_delete: '{translate line="admin_tasks_javascript_message_after_delete"}',
+        delete_question: '{translate|addslashes line="admin_tasks_javascript_message_delete_question"}',
+        after_delete: '{translate|addslashes line="admin_tasks_javascript_message_after_delete"}',
     }; 
-    var category_select_box = '<select name="" size="1"><optgroup label="{translate|escape:'html' line='admin_tasks_selection_category'}">{categories_tree_options structure=$structure prefix='category:'}</optgroup><optgroup label="{translate|escape:'html' line='admin_tasks_selection_course'}">{courses_selection courses=$courses}</optgroup></select>';
+    var category_select_box = '<select name="" size="1"><optgroup label="{translate|escape:'html'|addslashes line='admin_tasks_selection_category'}">{categories_tree_options structure=$structure prefix='category:'}</optgroup><optgroup label="{translate|escape:'html'|addslashes line='admin_tasks_selection_course'}">{courses_selection courses=$courses}</optgroup></select>';
 </script>{/block}

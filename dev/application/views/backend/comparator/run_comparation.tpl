@@ -11,6 +11,6 @@
 {include file='backend/comparator/list_solutions.tpl'}
 {if $all_extracted}
 <script type="text/javascript">
-    exec_comparator('{$path}', {$comparator_config|json_encode});
+    exec_comparator('{$path|addslashes}', {$comparator_config|json_encode});
 </script>    
 {/if}

@@ -21,5 +21,5 @@
     </fieldset>
 {/block}
 {block custom_head}<script type="text/javascript">
-    var nothing_selected_notification = '{translate line='students_upload_avatar_no_coordinates_selected'}';
+    var nothing_selected_notification = '{translate|addslashes line='students_upload_avatar_no_coordinates_selected'}';
 </script>{/block}

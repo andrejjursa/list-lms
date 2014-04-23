@@ -63,7 +63,7 @@
 {block custom_head}<script type="text/javascript">
     var students_cache = {ldelim}{rdelim};
     var messages = {
-        disapprove_question: '{translate line='admin_participants_javascript_question_disapprove'}',
-        delete_question: '{translate line='admin_participants_javascript_question_delete'}'
+        disapprove_question: '{translate|addslashes line='admin_participants_javascript_question_disapprove'}',
+        delete_question: '{translate|addslashes line='admin_participants_javascript_question_delete'}'
     };
 </script>{/block}

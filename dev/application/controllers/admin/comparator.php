@@ -8,6 +8,8 @@
 class Comparator extends LIST_Controller {
     
     const STORED_FILTER_SESSION_NAME = 'admin_comparator_filter_data';
+    const SECONDS_TO_BE_CONSIDERED_OLD = 21600; // 6 hours
+    const COMPARATOR_WORKING_DIRECTORY = 'public/comparator/';
     
     public function __construct() {
         parent::__construct();
@@ -30,6 +32,8 @@ class Comparator extends LIST_Controller {
         $this->inject_all_task_sets();
         
         $this->inject_stored_filter();
+        
+        $this->clear_old_reports();
         
         $this->parser->parse('backend/comparator/index.tpl');
     }
@@ -117,7 +121,7 @@ class Comparator extends LIST_Controller {
                         $file = $task_set->get_student_files($student, $version);
                         if (count($file) == 1) {
                             $file = $file[$version];
-                            $subdir = '/' . $file['file_name'] . '_' . $file['student_id'] . '_' . $file['version'];
+                            $subdir = '/' . $file['file_name'] . '_sid-' . $file['student_id'] . '_ver-' . $file['version'];
                             $extract_path = $path_source . $subdir;
                             @mkdir($extract_path, DIR_WRITE_MODE, TRUE);
                             $status = $task_set->extract_student_zip_to_folder($file['file'], $extract_path, array('java'));
@@ -151,6 +155,7 @@ class Comparator extends LIST_Controller {
     }
     
     public function execute() {
+        set_time_limit(0);
         $config = $this->input->post('config');
         $path = $this->input->post('path');
         
@@ -195,8 +200,29 @@ class Comparator extends LIST_Controller {
         return $output;
     }
     
+    private function clear_old_reports() {
+        $path = self::COMPARATOR_WORKING_DIRECTORY;
+        $path = ltrim($path, '\\/') . '/';
+        
+        $directories = scandir($path);
+        
+        $current_time = time();
+        
+        if (is_array($directories) && count($directories) > 0) {
+            foreach ($directories as $directory) {
+                if (is_dir($path . $directory) && $directory != '.' && $directory != '..') {
+                    $last_mod_time = filemtime($path . $directory);
+                    if ($current_time - $last_mod_time >= self::SECONDS_TO_BE_CONSIDERED_OLD) {
+                        unlink_recursive($path . $directory, TRUE);
+                    }
+                }
+            }
+        }
+    }
+    
     private function get_random_hash_folder($course, $task_set) {
-        $path = 'public/comparator/';
+        $path = self::COMPARATOR_WORKING_DIRECTORY;
+        $path = ltrim($path, '\\/') . '/';
         
         $folder_name = '';
         

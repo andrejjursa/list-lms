@@ -20,6 +20,6 @@
 {/block}
 {block custom_head}<script type="text/javascript">
     var task_set_id = {$task_set->id|intval};
-    var delete_question = '{translate line='admin_task_sets_comments_js_message_question_delete'}';
-    var approve_question = '{translate line='admin_task_sets_comments_js_message_question_approve'}';
+    var delete_question = '{translate|addslashes line='admin_task_sets_comments_js_message_question_delete'}';
+    var approve_question = '{translate|addslashes line='admin_task_sets_comments_js_message_question_approve'}';
 </script>{/block}

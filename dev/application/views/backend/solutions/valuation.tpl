@@ -189,8 +189,8 @@
     var solution_id = {$solution->id|intval};
     var student_id = {$solution->student_id|intval};
     var messages = {
-        test_no_selection: '{translate line='admin_solutions_validation_test_messages_test_not_selected'}',
-        test_being_executed: '{translate line='admin_solutions_validation_test_messages_test_being_executed'}'
+        test_no_selection: '{translate|addslashes line='admin_solutions_validation_test_messages_test_not_selected'}',
+        test_being_executed: '{translate|addslashes line='admin_solutions_validation_test_messages_test_being_executed'}'
     };
     var urls = {
         get_next_solution: '{internal_url|add_to_url:$add_url url="admin_solutions/get_next_solution/{$solution->task_set->id|intval}/{$solution->id|intval}"}',
