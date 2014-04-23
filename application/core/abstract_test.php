@@ -510,6 +510,37 @@ abstract class abstract_test {
         $timeout = (int)$this->current_test['timeout'];
         return $timeout >= 100 ? $timeout : 100;
     }
+    
+    /**
+     * Truncate test output to given number of lines. Only lines with text will be count.
+     * @param string $text test output text.
+     * @param integer $lines maximum number of lines.
+     * @return string truncated text.
+     */
+    protected function truncate_lines($text, $lines = 0) {
+        if (is_null($lines) || !is_numeric($lines) || $lines <= 0) { return $text; }
+        $text_array = explode("\n", $text);
+        if (count($text_array) <= $lines) { return $text; }
+        
+        $output = '';
+        
+        $lns = 0;
+        
+        foreach ($text_array as $line) {
+            if (trim(strip_tags($line)) !== '') {
+                $lns++;
+            }
+            $output .= $line . "\n";
+            if ($lns == $lines) {
+                if (strpos($line, '</pre') === FALSE) {
+                    $output .= '</pre>';
+                }
+                break;
+            }
+        }
+        
+        return rtrim($output);
+    }
 }
 
 class TestException extends Exception {

@@ -261,6 +261,14 @@ class LIST_Lang extends CI_Lang {
     }
     
     /**
+     * Initialize language overlays for whole table.
+     * @param string $table name of table.
+     */
+    public function init_all_overlays($table) {
+        $this->load_all_overlays($table);
+    }
+
+    /**
      * Deletes overlay from database, but not from loaded overlays.
      * @param string $table table name for which overlays will be deleted.
      * @param integer $table_id table id or NULL, if id is provided, only overlays for this id will be deleted.

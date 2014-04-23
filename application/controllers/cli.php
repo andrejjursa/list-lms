@@ -30,7 +30,8 @@ class Cli extends CI_Controller {
         echo '  generate_encryption_key' . "\n";
         echo '  apply_lockdown' . "\n";
         echo '  fix_broken_link' . "\n";
-        echo '  send_deadline_notifications';
+        echo '  send_deadline_notifications' . "\n";
+        echo '  garbage_collector';
     }
 
     /**
@@ -391,6 +392,155 @@ class Cli extends CI_Controller {
         }
         
         echo "Process finished, {$sent_notifications} notifications were sent ...\n";
+    }
+    
+    public function garbage_collector() {
+        echo 'Running garbage collector script ...' . "\n";
+        
+        $this->load->helper('application');
+        
+        $current_time = time();
+        
+        // ----------- COMPARATOR WORKING DIRECTORIES --------------------------
+        
+        $path_to_comparator_files = 'public/comparator/';
+        $time_for_comparator_folders_to_remain_untouched = 21600;
+        
+        echo ' Clearing old Java comparator working directories:' . "\n";
+        
+        $dirs = scandir($path_to_comparator_files);
+        $deleted = 0;
+        $total_dirs = 0;
+        
+        if (is_array($dirs) && count($dirs) > 0) {
+            foreach($dirs as $dir) {
+                if (is_dir($path_to_comparator_files . $dir) && $dir != '.' && $dir != '..') {
+                    $total_dirs++;
+                    echo '  ' . $dir;
+                    $dir_mod_time = filemtime($path_to_comparator_files . $dir);
+                    if ($current_time - $dir_mod_time >= $time_for_comparator_folders_to_remain_untouched) {
+                        $deleted++;
+                        unlink_recursive($path_to_comparator_files . $dir, TRUE);
+                        echo ':  OLD - deleting' . "\n";
+                    } else {
+                        echo ':  SAFE' . "\n";
+                    }
+                }
+            }
+        } 
+        if ($total_dirs == 0) {
+            echo '  No directories ...' . "\n";
+        }
+        echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        
+        // ----------- EXTRACTED SOLUTIONS DIRECTORIES -------------------------
+        
+        $path_to_extracted_solutions = 'private/extracted_solutions/';
+        $time_for_extracted_solutions_to_remain_untouched = 1800;
+        
+        echo ' Clearing old extracted solutions working directories:' . "\n";
+        
+        $dirs = scandir($path_to_extracted_solutions);
+        $deleted = 0;
+        $total_dirs = 0;
+        
+        if (is_array($dirs) && count($dirs) > 0) {
+            foreach($dirs as $dir) {
+                if (is_dir($path_to_extracted_solutions . $dir) && $dir != '.' && $dir != '..') {
+                    $total_dirs++;
+                    echo '  ' . $dir;
+                    $dir_mod_time = filemtime($path_to_extracted_solutions . $dir);
+                    if ($current_time - $dir_mod_time >= $time_for_extracted_solutions_to_remain_untouched) {
+                        $deleted++;
+                        unlink_recursive($path_to_extracted_solutions . $dir, TRUE);
+                        echo ':  OLD - deleting' . "\n";
+                    } else {
+                        echo ':  SAFE' . "\n";
+                    }
+                }
+            }
+        } 
+        if ($total_dirs == 0) {
+            echo '  No directories ...' . "\n";
+        }
+        echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        
+        // ----------- TEST TO EXECUTE DIRECTORIES -----------------------------
+        
+        $path_to_test_to_execute = 'private/test_to_execute/';
+        $time_for_test_to_execute_to_remain_untouched = 3600;
+        
+        echo ' Clearing old test to execute working directories:' . "\n";
+        
+        $dirs = scandir($path_to_test_to_execute);
+        $deleted = 0;
+        $total_dirs = 0;
+        
+        if (is_array($dirs) && count($dirs) > 0) {
+            foreach($dirs as $dir) {
+                if (is_dir($path_to_test_to_execute . $dir) && $dir != '.' && $dir != '..') {
+                    $total_dirs++;
+                    echo '  ' . $dir;
+                    $dir_mod_time = filemtime($path_to_test_to_execute . $dir);
+                    if ($current_time - $dir_mod_time >= $time_for_test_to_execute_to_remain_untouched) {
+                        $deleted++;
+                        unlink_recursive($path_to_test_to_execute . $dir, TRUE);
+                        echo ':  OLD - deleting' . "\n";
+                    } else {
+                        echo ':  SAFE' . "\n";
+                    }
+                }
+            }
+        } 
+        if ($total_dirs == 0) {
+            echo '  No directories ...' . "\n";
+        }
+        echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        
+        // ----------- TEST TO EXECUTE DIRECTORIES -----------------------------
+        
+        $total_number = 0;
+        echo ' Clearing unfinished uploads of task files:' . "\n";
+        $deleted = $this->find_and_delete_old_upload_part('private/uploads/task_files/', '', 172800, $current_time, $total_number);
+        if ($total_number == 0) {
+            echo '  No files ...' . "\n";
+        }
+        echo ' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.' . "\n";
+        
+        echo 'Done ...' . "\n";
+    }
+    
+    private function find_and_delete_old_upload_part($path_base, $path_add, $max_time, $current_time, &$count_of_parts) {
+        $deleted = 0;
+        
+        $files = scandir($path_base . $path_add);
+        if (is_array($files) && count($files) > 0) {
+            foreach($files as $file) {
+                if (is_dir($path_base . $path_add . $file) && $file != '.' && $file != '..') {
+                    $deleted = $deleted + $this->find_and_delete_old_upload_part($path_base, $path_add . $file . '/', $max_time, $current_time, $count_of_parts);
+                } else if (is_file($path_base . $path_add . $file)) {
+                    $ext_pos = strrpos($file, '.');
+                    if ($ext_pos !== FALSE) {
+                        $ext = substr($file, $ext_pos + 1);
+                        if ($ext == 'upload_part') {
+                            $count_of_parts++;
+                            echo '  ' . $path_add . $file;
+                            $filemtime = filemtime($path_base . $path_add . $file);
+                            if ($current_time - $filemtime >= $max_time) {
+                                echo ':  OLD - deleting' . "\n";
+                                $deleted++;
+                                @unlink($path_base . $path_add . $file);
+                            } else {
+                                echo ':  SAFE' . "\n";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        return $deleted;
     }
 
     /**
