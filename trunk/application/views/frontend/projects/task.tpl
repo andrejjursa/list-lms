@@ -130,8 +130,8 @@
     var project_id = {$project->id|intval};
     var student_id = {$list_student_account_model->id|intval};
     var messages = {
-        countdown_time: '{translate line='projects_countdown_message_time_info'}',
-        countdown_expired: '{translate line='projects_countdown_message_expired'}'
+        countdown_time: '{translate|addslashes line='projects_countdown_message_time_info'}',
+        countdown_expired: '{translate|addslashes line='projects_countdown_message_expired'}'
     };
     {if $project_selection->exists() and !is_null($project->upload_end_time)}
     var enable_countdown = true;

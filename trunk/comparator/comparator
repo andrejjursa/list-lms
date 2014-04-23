@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ARGUMENTS="-sp $1 -tp $2 -t $3 -m $4 -cut $5 -bf $6 -mp $7"
+
+/usr/bin/java -jar /opt/lampp/htdocs/list-svn/dev/comparator/comparator.jar $ARGUMENTS

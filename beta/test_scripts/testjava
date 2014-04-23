@@ -4,12 +4,14 @@
 #
 # test configuration variables:
 #
+MY_DIR=$( cd "$( dirname "$0" )" && pwd )
 OUTPUT_FILE=test.out
-JAVAC_ARGS="-Xlint:unchecked -encoding UTF-8 -cp /usr/share/java/junit4.jar:. *.java"
+ENCODING="-encoding UTF-8"
+JAVAC_ARGS="-Xlint:unchecked -cp /usr/share/java/junit4.jar:. *.java"
 #
 rm -f *.class 2> /dev/null
-#rm -rf */* 2> /dev/null
-rmdir * 2>/dev/null
+rm -f */*.class 2> /dev/null
+rm -f */*/*.class 2> /dev/null
 #
 mkdir out 2>/dev/null
 chgrp testovac out
@@ -20,10 +22,21 @@ chmod g+r .
 echo "<pre>" > $OUTPUT_FILE
 #
 echo "<br />Compiling:<br />" >> $OUTPUT_FILE
-/usr/bin/javac $JAVAC_ARGS 2>> $OUTPUT_FILE
+cp $MY_DIR/LISTTests.java .
+/usr/bin/javac $JAVAC_ARGS $ENCODING 2> compilation_output.txt
 javacexit=$?
+cat compilation_output.txt | grep -v "assert" >> $OUTPUT_FILE
+grep "unmappable character for encoding UTF-8" compilation_output.txt > /dev/null
+if [[ $? -eq 0 ]] ; then
+  echo "<br />@!@!@!@!@!@!@!@!@!@!@!@!@!@!@!@!@!@!@  Looks like an issue with the encoding, trying again with CP1250...<br />" >> $OUTPUT_FILE
+  /usr/bin/javac $JAVAC_ARGS -encoding cp1250 2> compilation_output.txt
+  javacexit=$?
+fi
+cat compilation_output.txt | grep -v "assert" >> $OUTPUT_FILE
+rm compilation_output.txt
 if [[ $javacexit -ne 0 ]] ; then
   echo "<br />Compilation failed. You must correct the above errors before the tests will be run!<br />" >> $OUTPUT_FILE
+  return_val=0
 else
 #
   echo "<br />Running:<br />" >> $OUTPUT_FILE
@@ -32,11 +45,18 @@ else
   rm -f out/$OUTPUT_FILE 2> /dev/null
   chgrp testovac out/* 2> /dev/null
   cd out
-  echo "------------------------Testing with Test$1...<br />" >> $OUTPUT_FILE
-  sudo -u testovac /opt/lampp/htdocs/list-svn/dev/test_scripts/testjava2 $1 >> ../$OUTPUT_FILE 2>> ../$OUTPUT_FILE
+  echo "------------------------Testing with Test$1...<br />" >> ../$OUTPUT_FILE
+  sudo -u testovac $MY_DIR/testjava2 $1 $2 >> ../$OUTPUT_FILE 2>> ../$OUTPUT_FILE
+  if [ -f "evaluation.percent.txt" ] ; then
+	return_val=`cat evaluation.percent.txt` 
+	echo "------------------------Task completed with: $return_val %" >> ../$OUTPUT_FILE
+  else
+  	return_val=0  
+  fi
   cd .. ;
 fi
 #
 rm -rf out 2>/dev/null
 echo "------------------------Done.<br />" >> $OUTPUT_FILE
 echo "</pre>" >> $OUTPUT_FILE
+exit $return_val

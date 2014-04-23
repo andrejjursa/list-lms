@@ -7,31 +7,35 @@
 <?php echo strip_tags($message); ?>
 
 <?php else: ?>
+<?php if (!$local_input->is_ajax_request()): ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <title>404 Page Not Found</title>
 <meta charset="utf-8" />
+<?php endif; ?>
 <style type="text/css">
 
-::selection{ background-color: #E13300; color: white; }
-::moz-selection{ background-color: #E13300; color: white; }
-::webkit-selection{ background-color: #E13300; color: white; }
+#container::selection{ background-color: #E13300; color: white; }
+#container::moz-selection{ background-color: #E13300; color: white; }
+#container::webkit-selection{ background-color: #E13300; color: white; }
 
+<?php if (!$local_input->is_ajax_request()): ?>
 body {
 	background-color: #fff;
 	margin: 40px;
 	font: 13px/20px normal Helvetica, Arial, sans-serif;
 	color: #4F5155;
 }
+<?php endif; ?>
 
-a {
+#container a {
 	color: #003399;
 	background-color: transparent;
 	font-weight: normal;
 }
 
-h1 {
+#container h1 {
 	color: #444;
 	background-color: transparent;
 	border-bottom: 1px solid #D0D0D0;
@@ -41,7 +45,7 @@ h1 {
 	padding: 14px 15px 10px 15px;
 }
 
-code {
+#container code {
 	font-family: Consolas, Monaco, Courier New, Courier, monospace;
 	font-size: 12px;
 	background-color: #f9f9f9;
@@ -60,16 +64,20 @@ code {
     box-shadow: 0 0 8px 8px #D0D0D0;
 }
 
-p {
+#container p {
 	margin: 12px 15px 12px 15px;
 }
 </style>
+<?php if (!$local_input->is_ajax_request()): ?>
 </head>
 <body>
+<?php endif; ?>
 	<div id="container">
 		<h1><?php echo $heading; ?></h1>
 		<?php echo $message; ?>
 	</div>
+<?php if (!$local_input->is_ajax_request()): ?>
 </body>
 </html>
+<?php endif; ?>
 <?php endif; ?>

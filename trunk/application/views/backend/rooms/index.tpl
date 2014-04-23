@@ -30,7 +30,7 @@
 {block custom_head}<script type="text/javascript">
     var current_group_id = {$group->id|default:'0'};
     var messages = {
-        delete_question: '{translate line="admin_rooms_delete_room_question"}',
-        after_delete: '{translate line="admin_rooms_room_deleted_message"}',
+        delete_question: '{translate|addslashes line="admin_rooms_delete_room_question"}',
+        after_delete: '{translate|addslashes line="admin_rooms_room_deleted_message"}',
     }; 
 </script>{/block}

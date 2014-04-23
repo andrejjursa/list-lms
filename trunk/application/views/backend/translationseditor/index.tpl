@@ -29,12 +29,12 @@
 {block custom_head}<script type="text/javascript">
     var messages = {
         error: {
-            operation_failed: '{translate line="admin_translationseditor_javascript_message_error_operation_failed"}'
+            operation_failed: '{translate|addslashes line="admin_translationseditor_javascript_message_error_operation_failed"}'
         },
         success: {
-          deleted: '{translate line="admin_translationseditor_javascript_message_success_deleted"}'
+          deleted: '{translate|addslashes line="admin_translationseditor_javascript_message_success_deleted"}'
         },
-        working: '{translate line="admin_translationseditor_javascript_message_working"}',
-        delete_question: '{translate line="admin_translationseditor_javascript_message_delete_question"}'
+        working: '{translate|addslashes line="admin_translationseditor_javascript_message_working"}',
+        delete_question: '{translate|addslashes line="admin_translationseditor_javascript_message_delete_question"}'
     };
 </script>{/block}

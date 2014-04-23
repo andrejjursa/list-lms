@@ -5,12 +5,16 @@
 #
 # test configuration variables:
 #
+MY_DIR=$( cd "$( dirname "$0" )" && pwd )
 cd $1
+retval=0
 
 if [[ "$3" == "JAVA" ]] ; then
-  /opt/lampp/htdocs/list-svn/dev/test_scripts/testjava $2 ;
+  $MY_DIR/testjava $2 $4 ;
+  retval=$?
 fi
 if [[ "$3" == "PYTHON" ]] ; then
-  /opt/lampp/htdocs/list-svn/dev/test_scripts/testpython $2 ;
+  $MY_DIR/testpython $2 $4 ;
+  retval=$?
 fi
-
+exit $retval

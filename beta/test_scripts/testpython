@@ -1,5 +1,5 @@
 #!/bin/bash
-# usage: testjava CLASS
+# usage: testpython CLASS
 # should be run from the directory private/test_to_execute/<unique random hash>
 #
 # test configuration variables:
@@ -23,8 +23,10 @@ chgrp testovac out/*
 cd out
 echo "------------------------Testing with Test$1...<br />" >> $OUTPUT_FILE
 sudo -u testovac /opt/lampp/htdocs/list-svn/dev/test_scripts/testpython2 $1 >> ../$OUTPUT_FILE 2>> ../$OUTPUT_FILE
-cd .. ;
+return_val=$?
+cd .. 
 #
 rm -rf out 2>/dev/null
 echo "------------------------Done.<br />" >> $OUTPUT_FILE
 echo "</pre>" >> $OUTPUT_FILE
+exit $return_val

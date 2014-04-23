@@ -35,5 +35,5 @@
 {/block}
 {block custom_head}<script type="text/javascript">
     var highlighters = {$highlighters|json_encode};
-    var categories_switch_text = '{translate line='admin_tasks_javascript_text_switch_categories'}';
+    var categories_switch_text = '{translate|addslashes line='admin_tasks_javascript_text_switch_categories'}';
 </script>{/block}

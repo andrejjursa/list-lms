@@ -89,6 +89,6 @@
 {/block}
 {block custom_head}<script type="text/javascript">
     var messages = {
-        delete_avatar: '{translate line='students_my_account_delete_avatar_question'}'
+        delete_avatar: '{translate|addslashes line='students_my_account_delete_avatar_question'}'
     };
 </script>{/block}

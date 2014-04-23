@@ -120,12 +120,12 @@
     {/if}
 {/block}
 {block custom_head}<script type="text/javascript">
-    var select_files_text = '{translate line="admin_tasks_javascript_text_select_files"}';
+    var select_files_text = '{translate|addslashes line="admin_tasks_javascript_text_select_files"}';
     var messages = {
-        delete_question: '{translate line="admin_tasks_javascript_message_file_delete_question"}',
-        after_delete: '{translate line="admin_tasks_javascript_message_file_after_delete"}'
+        delete_question: '{translate|addslashes line="admin_tasks_javascript_message_file_delete_question"}',
+        after_delete: '{translate|addslashes line="admin_tasks_javascript_message_file_after_delete"}'
     };
     var highlighters = {$highlighters|json_encode};    
     var all_tests_list_url = '{internal_url url="admin_tests/all_tests/{$task->id}"}';
-    var test_delete_question = '{translate line="admin_tests_js_message_delete_question"}';
+    var test_delete_question = '{translate|addslashes line="admin_tests_js_message_delete_question"}';
 </script>{/block}

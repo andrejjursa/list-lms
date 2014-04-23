@@ -195,16 +195,16 @@
     var task_id = {$task_set->id|intval};
     var student_id = {$list_student_account_model->id|intval};
     var messages = {
-        test_being_executed: '{translate line='tasks_test_message_test_being_executed'}',
-        test_no_selection: '{translate line='tasks_test_message_test_no_selection'}',
-        test_type_not_selected: '{translate line='tasks_test_message_test_type_not_selected'}',
-        test_result_area: '{translate line='tasks_test_message_test_result_area_legend'}',
-        test_result_tests_in_progress: '{translate line='tasks_test_message_tests_in_progress'}',
-        test_result_evaluation: '{translate line='tasks_test_message_tests_evaluation'}',
-        test_result_not_obtained: '{translate line='tasks_test_message_result_not_obtained'}',
-        test_result_token_failed: '{translate line='tasks_test_message_token_request_failed'}',
-        countdown_time: '{translate line='tasks_countdown_message_time_info'}',
-        countdown_expired: '{translate line='tasks_countdown_message_expired'}'
+        test_being_executed: '{translate|addslashes line='tasks_test_message_test_being_executed'}',
+        test_no_selection: '{translate|addslashes line='tasks_test_message_test_no_selection'}',
+        test_type_not_selected: '{translate|addslashes line='tasks_test_message_test_type_not_selected'}',
+        test_result_area: '{translate|addslashes line='tasks_test_message_test_result_area_legend'}',
+        test_result_tests_in_progress: '{translate|addslashes line='tasks_test_message_tests_in_progress'}',
+        test_result_evaluation: '{translate|addslashes line='tasks_test_message_tests_evaluation'}',
+        test_result_not_obtained: '{translate|addslashes line='tasks_test_message_result_not_obtained'}',
+        test_result_token_failed: '{translate|addslashes line='tasks_test_message_token_request_failed'}',
+        countdown_time: '{translate|addslashes line='tasks_countdown_message_time_info'}',
+        countdown_expired: '{translate|addslashes line='tasks_countdown_message_expired'}'
     };
     var test_evaluation_enabled = {if $task_set->enable_tests_scoring > 0 and $course->test_scoring_deadline gt date('Y-m-d H:i:s')}true{else}false{/if};
     {if $task_set_can_upload and !is_null($task_set->upload_end_time)}

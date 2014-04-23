@@ -12,8 +12,8 @@
         <link rel="shortcut icon" href="{'favicon.ico'|base_url}" />
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";
-            var logout_question_text = "{translate line='adminmenu_logout_question_text'}";
-            var jqueryui_datepicker_region = "{translate line='common_jqueryui_datepicker_region'|default:'en'}";
+            var logout_question_text = "{translate|addslashes line='adminmenu_logout_question_text'}";
+            var jqueryui_datepicker_region = "{translate|addslashes line='common_jqueryui_datepicker_region'|default:'en'}";
         </script>
         <script type="text/javascript" src="{'/public/js/jquery.js'|base_url|add_file_version}"></script>
         <script type="text/javascript" src="{$list_lang_js_messages|base_url|add_file_version}"></script>

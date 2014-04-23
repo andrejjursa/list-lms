@@ -63,6 +63,6 @@
     </div>
 {/block}
 {block custom_head}<script type="text/javascript">
-    var remove_points_dialog_ok_button = '{translate line='admin_solutions_remove_points_dialog_ok_button'}';
-    var remove_points_dialog_cancel_button = '{translate line='admin_solutions_remove_points_dialog_cancel_button'}';
+    var remove_points_dialog_ok_button = '{translate|addslashes line='admin_solutions_remove_points_dialog_ok_button'}';
+    var remove_points_dialog_cancel_button = '{translate|addslashes line='admin_solutions_remove_points_dialog_cancel_button'}';
 </script>{/block}

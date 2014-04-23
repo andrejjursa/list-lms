@@ -276,6 +276,38 @@ class Task_set extends DataMapper {
     }
     
     /**
+     * This method will extract student file content to provided folder. Optionally can extract only files with specified extensions.
+     * @param string $real_filename solution file name.
+     * @param string $folder destination folder.
+     * @param array<string>|NULL $extensions array of extensions to extract or NULL to extract all files.
+     * @return boolean TRUE on success, FALSE on error.
+     */
+    public function extract_student_zip_to_folder($real_filename, $folder, $extensions = NULL) {
+        $file_info = $this->get_specific_file_info($real_filename);
+        if ($file_info !== FALSE) {
+            $zip_file = new ZipArchive();
+            $open = $zip_file->open($file_info['filepath']);
+            if (is_null($extensions) || !is_array($extensions)) {
+                $zip_file->extractTo($folder);
+            } else {
+                for($index = 0; $index < $zip_file->numFiles; $index++) {
+                    $filename = $zip_file->getNameIndex($index);
+                    $ext_pos = strrpos($filename, '.');
+                    if ($ext_pos !== FALSE) {
+                        $ext = substr($filename, $ext_pos + 1);
+                        if (in_array($ext, $extensions)) {
+                            $zip_file->extractTo($folder, $filename);
+                        }
+                    }
+                }
+            }
+            $zip_file->close();
+            return TRUE;
+        }
+        return FALSE;
+    }
+    
+    /**
      * Performs explode on given string by given delimiter and trims all array items in output array.
      * @param string $delimiter delimiter.
      * @param string $string string to split to array.

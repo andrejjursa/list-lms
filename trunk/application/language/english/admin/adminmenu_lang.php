@@ -25,6 +25,8 @@ $lang['adminmenu_title_students'] = 'Students';
 $lang['adminmenu_title_participants'] = 'Course participants';
 $lang['adminmenu_title_solutions'] = 'Task sets solutions';
 $lang['adminmenu_title_valuation_tables'] = 'Valuation tables';
+$lang['adminmenu_title_comparation'] = 'Comparation';
+$lang['adminmenu_title_java_comparator'] = 'Java comparator';
 
 $lang['adminmenu_open_task_set_message'] = 'Open task set: %s (%s tasks)';
 $lang['adminmenu_open_task_set_nothing_opened'] = 'Nothing opened';

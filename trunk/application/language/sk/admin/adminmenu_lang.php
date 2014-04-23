@@ -25,6 +25,8 @@ $lang['adminmenu_title_students'] = 'Študenti';
 $lang['adminmenu_title_participants'] = 'Účastníci kurzov';
 $lang['adminmenu_title_solutions'] = 'Riešenia zostáv úloh';
 $lang['adminmenu_title_valuation_tables'] = 'Tabuľky hodnotení';
+$lang['adminmenu_title_comparation'] = 'Porovnávanie';
+$lang['adminmenu_title_java_comparator'] = 'Porovnávač Java';
 
 $lang['adminmenu_open_task_set_message'] = 'Otvorená zostava úloh: %s (%s úloh)';
 $lang['adminmenu_open_task_set_nothing_opened'] = 'Nič nie je otvorené';

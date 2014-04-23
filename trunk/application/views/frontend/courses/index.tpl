@@ -23,7 +23,7 @@
 {block custom_head}
 <script type="text/javascript">
     var messages = {
-        unknown_error: '{translate line='courses_messages_unknown_error'}'
+        unknown_error: '{translate|addslashes line='courses_messages_unknown_error'}'
     };
 </script>
 {/block}

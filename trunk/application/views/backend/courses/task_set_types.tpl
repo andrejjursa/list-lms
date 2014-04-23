@@ -31,11 +31,11 @@
 {/block}
 {block custom_head}<script type="text/javascript">
     var messages = {
-        delete_question: '{translate line="admin_courses_message_delete_task_set_type_question"}',
-        save_success: '{translate line="admin_courses_message_task_set_type_updated"}',
-        save_failed: '{translate line="admin_courses_message_task_set_type_update_failed"}',
-        delete_success: '{translate line="admin_courses_message_task_set_type_deleted"}',
-        delete_failed: '{translate line="admin_courses_message_task_set_type_delete_failed"}',
+        delete_question: '{translate|addslashes line="admin_courses_message_delete_task_set_type_question"}',
+        save_success: '{translate|addslashes line="admin_courses_message_task_set_type_updated"}',
+        save_failed: '{translate|addslashes line="admin_courses_message_task_set_type_update_failed"}',
+        delete_success: '{translate|addslashes line="admin_courses_message_task_set_type_deleted"}',
+        delete_failed: '{translate|addslashes line="admin_courses_message_task_set_type_delete_failed"}',
     };
     var current_course = {$course->id|default:0|intval};
 </script>{/block}

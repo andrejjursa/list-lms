@@ -50,7 +50,9 @@ class python_test extends abstract_test {
         
         $this->delete_test_directory();
         
-        return $output;
+        $lines = (int)$this->get_current_test_configuration_value('max_output_lines');
+                
+        return $this->truncate_lines($output, $lines);
     }
     
     protected function save_unit_test_config($new_config) {
@@ -60,6 +62,7 @@ class python_test extends abstract_test {
     
     protected function validator_unit_test() {
         $this->CI->form_validation->set_rules('configuration[class_to_run]', 'lang:python_tests_config_validation_unit_test_class_to_run', 'required|regex_match[' . self::UNIT_TEST_CLASS_TO_RUN_REGEXP . ']');
+        $this->CI->form_validation->set_rules('configuration[max_output_lines]', 'lang:python_tests_config_validation_unit_test_output_maximum_lines', 'required|integer|greater_than_equal[0]');
         return TRUE;
     }
     

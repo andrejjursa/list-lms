@@ -464,7 +464,15 @@ var api_make_tabs = function(structure_id_attr_value, options) {
 var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
     method = method === undefined ? 'post' : method;
     data = data === undefined ? {} : data;
-    onError = onError === undefined ? function() {} : onError;
+    onError = onError === undefined ? function(jqXHR) {
+        var html = '<div style="margin: 2em; font-size: 125%;"><strong>HTTP ERROR occured, status ' + jqXHR.status + ' (' + jqXHR.statusText + '), with message:</strong></div><div style="margin: 2em;">' + jqXHR.responseText + '</div>';
+        console.log(jqXHR);
+        if (typeof(target) === 'string') {
+            jQuery(target).html(html);
+        } else if (typeof(target) === 'object') {
+            target.html(html);
+        }
+    } : onError;
     onSuccess = onSuccess === undefined ? function() {}: onSuccess;
     
     jQuery.ajax(url, {

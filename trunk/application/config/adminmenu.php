@@ -110,6 +110,21 @@ $config['adminmenu'] = array(
         ),
     ),
     array(
+        'title' => 'lang:adminmenu_title_comparation',
+        'pagetag' => 'comparation_tree',
+        'link' => 'external:javascript:void(0);',
+        'class' => 'inactive',
+        'sub' => array(
+            array(
+                'title' => 'lang:adminmenu_title_java_comparator',
+                'pagetag' => 'comparator',
+                'link' => 'admin_comparator',
+                'class' => '',
+                'sub' => NULL,
+            ),
+        ),
+    ),
+    array(
         'title' => 'lang:adminmenu_title_application',
         'pagetag' => 'application_tree',
         'link' => 'external:javascript:void(0);',
@@ -118,7 +133,7 @@ $config['adminmenu'] = array(
             array(
                 'title' => 'lang:adminmenu_title_translations_editor',
                 'pagetag' => 'translations_editor',
-                'link' => 'admin_translationseditor/index',
+                'link' => 'admin_translationseditor',
                 'class' => '',
                 'sub' => NULL,
             ),
