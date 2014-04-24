@@ -90,7 +90,7 @@ class Comparator extends LIST_Controller {
             $this->form_validation->set_rules('solutions', 'lang:admin_comparator_list_solutions_form_field_solution_selection', 'callback__selected_solutions');
             $this->form_validation->set_rules('comparator_setup[threshold]', 'lang:admin_comparator_list_solutions_form_field_threshold', 'required|numeric|greater_than_equal[0]|less_than_equal[1]');
             $this->form_validation->set_rules('comparator_setup[min_tree_size]', 'lang:admin_comparator_list_solutions_form_field_min_tree_size', 'required|integer|greater_than_equal[1]');
-            $this->form_validation->set_rules('comparator_setup[max_cutted_tree_size]', 'lang:admin_comparator_list_solutions_form_field_max_cutted_tree_size', 'required|integer|greater_than_equal[1]');
+            $this->form_validation->set_rules('comparator_setup[max_cutted_tree_size]', 'lang:admin_comparator_list_solutions_form_field_max_cutted_tree_size', 'required|integer|greater_than_field_or_equal[comparator_setup[min_tree_size]]');
             $this->form_validation->set_rules('comparator_setup[branching_factor]', 'lang:admin_comparator_list_solutions_form_field_branching_factor', 'required|integer|greater_than_equal[1]');
             $this->form_validation->set_rules('comparator_setup[min_similarity]', 'lang:admin_comparator_list_solutions_form_field_minimum_similarity', 'required|numeric|greater_than_equal[0]|less_than_equal[1]');
             
@@ -155,7 +155,7 @@ class Comparator extends LIST_Controller {
     }
     
     public function execute() {
-        set_time_limit(0);
+        set_time_limit(3600);
         $config = $this->input->post('config');
         $path = $this->input->post('path');
         
