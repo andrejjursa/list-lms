@@ -120,6 +120,13 @@ $cache = array (
       array (
       ),
     ),
+    'admin_widget' => 
+    array (
+      'field' => 'admin_widget',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -199,6 +206,17 @@ $cache = array (
       'other_field' => 'teacher',
       'join_self_as' => 'teacher',
       'join_other_as' => 'log',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'admin_widget' => 
+    array (
+      'class' => 'admin_widget',
+      'other_field' => 'teacher',
+      'join_self_as' => 'teacher',
+      'join_other_as' => 'admin_widget',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
