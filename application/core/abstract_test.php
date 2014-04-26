@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Abstract test constroller.
+ * Abstract test class.
  * @package LIST_Tests
  * @author Andrej Jursa
  */ 

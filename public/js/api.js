@@ -441,6 +441,26 @@ var show_notification = function(text, notif_type) {
   display_notification(text, notif_type);
 };
 
+var api_read_class_config = function(obj, class_name) {
+    if (typeof obj === 'string') {
+        obj = jQuery(obj);
+    }
+    
+    var classes = obj.attr('class');
+    var sz = class_name.length;
+    var idx = classes.indexOf(class_name + ':');
+    if (idx >= 0) {
+        var end = classes.indexOf(' ', idx + sz + 1);
+        if (end >= 0) {
+            return classes.substring(idx + sz + 1, end);
+        } else {
+            return classes.substring(idx + sz + 1);
+        }
+    } else {
+        return null;
+    }
+};
+
 var api_read_url_anchor = function() {
     var url = document.URL;
     var idx = url.indexOf('#');
