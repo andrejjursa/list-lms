@@ -11,6 +11,7 @@ $cache = array (
     5 => 'password',
     6 => 'language',
     7 => 'prefered_course_id',
+    8 => 'widget_columns',
   ),
   'validation' => 
   array (
@@ -67,6 +68,13 @@ $cache = array (
     'prefered_course_id' => 
     array (
       'field' => 'prefered_course_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'widget_columns' => 
+    array (
+      'field' => 'widget_columns',
       'rules' => 
       array (
       ),
