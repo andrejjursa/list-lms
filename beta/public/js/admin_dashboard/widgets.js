@@ -120,6 +120,8 @@ jQuery(document).ready(function($) {
                     container.html(messages.widget_loading);
                     container.appendTo('div.widget_column_' + output.column);
                     reload_single_widget(output.new_id);
+                    var config_url = global_base_url + 'index.php/admin_widget/configure/' + output.new_id;
+                    edit_widget_configuration(config_url, output.new_id);
                 } else {
                     show_notification(output.message, 'error');
                 }
