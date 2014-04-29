@@ -12,7 +12,7 @@
             <div class="widget_course_overview_content_right">
                 <p><strong>{translate line='widget_admin_course_overview_content_nearest_deadlines'}:</strong></p>
                 {foreach $task_sets as $task_set}
-                    <p><a href="{internal_url url="admin_solutions/solutions_list/{$task_set->id}"}">{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}</a> ({$task_set->common_upload_end_time|date_format:{translate line='common_datetime_format'}})</p>
+                    <p><a href="{internal_url url="admin_solutions/solutions_list/{$task_set->id}"}">{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}</a> ({$task_set->min_upload_end_time|date_format:{translate line='common_datetime_format'}}{if $task_set->min_upload_end_time neq $task_set->max_upload_end_time} - {$task_set->max_upload_end_time|date_format:{translate line='common_datetime_format'}}{/if})</p>
                 {foreachelse}
                     <p>{translate line='widget_admin_course_overview_content_nearest_deadlines_none'}</p>
                 {/foreach}
