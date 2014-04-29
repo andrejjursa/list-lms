@@ -38,15 +38,19 @@ class Unevaluated_solutions extends abstract_admin_widget {
         
         if ($course->exists()) {
             $solutions = new Solution();
-            $solutions->select_func('COUNT', 'id', 'count');
+            $solutions->select_func('COUNT', '@id', 'count');
             $solutions->where('revalidate', 1);
             $solutions->where_related('task_set', 'id', '${parent}.id');
+            $solutions->where_related('student/participant/course', 'id', $course->id);
+            $solutions->where_related('student/participant', 'allowed', 1);
             
             $task_sets = new Task_set();
             $task_sets->select('*');
             $task_sets->select_subquery($solutions, 'solutions_count');
             $task_sets->where_related($course);
             $task_sets->where_related('solution', 'revalidate', 1);
+            $task_sets->where_related('solution/student/participant/course', 'id', $course->id);
+            $task_sets->where_related('solution/student/participant', 'allowed', 1);
             $task_sets->group_by('id');
             $task_sets->order_by_with_overlay('name', 'ASC');
             $task_sets->get_iterated();
