@@ -68,7 +68,7 @@ class Course_overview extends abstract_admin_widget {
                 $task_sets_2->where_related('task_set_permission', 'upload_end_time >=', $minus_ose_week);
                 $task_sets_2->where_related('task_set_permission', 'upload_end_time <=', $plus_two_weeks);
                 
-                $task_sets->union_iterated($task_sets_2, FALSE, 'common_upload_end_time ASC', isset($this->config['number_of_task_sets']) ? (int)$this->config['number_of_task_sets'] : 5);
+                $task_sets->union_iterated($task_sets_2, FALSE, 'common_upload_end_time DESC', isset($this->config['number_of_task_sets']) ? (int)$this->config['number_of_task_sets'] : 5);
                 
                 $this->parser->assign('task_sets', $task_sets);
             }
