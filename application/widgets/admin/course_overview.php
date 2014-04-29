@@ -50,25 +50,27 @@ class Course_overview extends abstract_admin_widget {
                                 
                 $now = date('Y-m-d H:i:s');
                 $plus_two_weeks = date('Y-m-d H:i:s', strtotime($now . ' + 2 weeks'));
-                $minus_ose_week = date('Y-m-d H:i:s', strtotime($now . ' - 1 week'));
+                $minus_one_week = date('Y-m-d H:i:s', strtotime($now . ' - 1 week'));
                 
-                $task_sets->select('id, name, upload_end_time AS common_upload_end_time');
+                $task_sets->select('id, name, upload_end_time AS min_upload_end_time, upload_end_time AS max_upload_end_time');
                 $task_sets->where_related($course);
                 $task_sets->where('published', 1);
                 $task_sets->where_subquery('0', $task_set_permissions);
-                $task_sets->where('upload_end_time >=', $minus_ose_week);
+                $task_sets->where('upload_end_time >=', $minus_one_week);
                 $task_sets->where('upload_end_time <=', $plus_two_weeks);
                 
                 $task_sets_2 = new Task_set();
                 $task_sets_2->select('id, name');
                 $task_sets_2->where_related($course);
                 $task_sets_2->where('published', 1);
-                $task_sets_2->include_related('task_set_permission', 'upload_end_time', 'common');
+                $task_sets_2->select_min('task_set_permissions.upload_end_time', 'min_upload_end_time');
+                $task_sets_2->select_max('task_set_permissions.upload_end_time', 'max_upload_end_time');
                 $task_sets_2->where_related('task_set_permission', 'enabled', 1);
-                $task_sets_2->where_related('task_set_permission', 'upload_end_time >=', $minus_ose_week);
-                $task_sets_2->where_related('task_set_permission', 'upload_end_time <=', $plus_two_weeks);
+                $task_sets_2->having('(MAX(`task_set_permissions`.`upload_end_time`) >= ' . $this->db->escape($minus_one_week) . ' AND MAX(`task_set_permissions`.`upload_end_time`) <= ' . $this->db->escape($plus_two_weeks) . ')');
+                $task_sets_2->or_having('(MIN(`task_set_permissions`.`upload_end_time`) >= ' . $this->db->escape($minus_one_week) . ' AND MIN(`task_set_permissions`.`upload_end_time`) <= ' . $this->db->escape($plus_two_weeks) . ')');
+                $task_sets_2->group_by('id');
                 
-                $task_sets->union_iterated($task_sets_2, FALSE, 'common_upload_end_time DESC', isset($this->config['number_of_task_sets']) ? (int)$this->config['number_of_task_sets'] : 5);
+                $task_sets->union_iterated($task_sets_2, FALSE, 'min_upload_end_time DESC, max_upload_end_time DESC', isset($this->config['number_of_task_sets']) ? (int)$this->config['number_of_task_sets'] : 5);
                 
                 $this->parser->assign('task_sets', $task_sets);
             }
