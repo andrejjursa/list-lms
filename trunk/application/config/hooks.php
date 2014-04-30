@@ -214,6 +214,9 @@ $hook['post_controller'] = array(
                     'frontend/tasks/*' => $no_student_id,
                     'frontend/projects/*' => $no_student_id,
                 ),
+                'select_project' => array(
+                    'frontend/projects/*' => $no_student_id,
+                ),
             ),
             'task_set_permissions' => array(
                 'create_permission' => array(
