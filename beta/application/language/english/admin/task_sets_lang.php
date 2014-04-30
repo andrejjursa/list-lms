@@ -156,3 +156,4 @@ $lang['admin_task_sets_project_selection_cant_find_data'] = 'Can\'t select proje
 $lang['admin_task_sets_project_selection_already_submited_solutions'] = 'Can\'t select project task, student have solutions submitted already.';
 $lang['admin_task_sets_project_selection_fieldset_legend_not_selected'] = 'Students, which have no project task selected jet';
 $lang['admin_task_sets_project_selection_hint'] = 'Here you can see tasks with list of students which have selected it. Gray list item means that student already submit solution and project selection can\'t be changed. You can change student\'s project by draging and droping student list item into different task list. <strong>WARNING: Currently there is no possibility to move student item back to list of students without task selected!</strong>';
+$lang['admin_task_sets_project_selection_select_question'] = 'Are you sure to select this task for given student?';

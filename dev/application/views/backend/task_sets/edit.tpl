@@ -310,5 +310,6 @@
     var all_rooms = {$all_rooms|json_encode};
     var all_task_set_types = {$all_task_set_types|json_encode};
     var internal_comment_title = '{translate|addslashes line='admin_task_sets_form_label_internal_comment'}';
+    var select_project_question = '{translate|addslashes line='admin_task_sets_project_selection_select_question'}';
 </script>
 {/block}
