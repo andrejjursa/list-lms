@@ -293,6 +293,39 @@ class Task_sets extends LIST_Controller {
         $task_set_id = isset($url['task_set_id']) ? intval($url['task_set_id']) : intval($this->input->post('task_set_id'));
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
+        $ps_data = array();
+        $nps_data = array();
+        
+        if ($task_set->exists() && $task_set->content_type == 'project') {
+            $project_selections = new Project_selection();
+            $project_selections->select('*');
+            $project_selections->include_related('student', array('fullname', 'email'));
+            $project_selections->where_related($task_set);
+            $project_selections->include_related('task', 'name');
+            $project_selections->include_related('task/task_set', 'id');
+            $project_selections->where_related('task/task_set', 'id', $task_set->id);
+            $project_selections->order_by('task_task_task_set_rel.sorting', 'ASC');
+            $project_selections->order_by_related_as_fullname('student', 'fullname', 'asc');
+            $project_selections->get();
+            
+            if ($project_selections->exists()) { foreach ($project_selections->all as $project_selection) {
+                $ps_data[$project_selection->task_id][] = $project_selection;
+            }}
+            
+            $project_selections->select_func('COUNT', '@id', 'count');
+            $project_selections->where('task_set_id', 'participant_course_task_sets.id', false);
+            $project_selections->where_related('student', 'id', '${parent}.id');
+            
+            $students = new Student();
+            $students->where_related('participant/course/task_set', $task_set);
+            $students->where_related('participant', 'allowed', 1);
+            $students->where_subquery(0, $project_selections);
+            $students->order_by_as_fullname('fullname', 'asc');
+            $students->get();
+            
+            if ($students->exists()) { $nps_data = $students->all; }
+        }
+        
         $this->_add_tinymce4();
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_task_sets/edit.js');
@@ -304,7 +337,7 @@ class Task_sets extends LIST_Controller {
         $this->inject_course_groups();
         $this->inject_course_group_rooms();
         $this->inject_course_task_set_types();
-        $this->parser->parse('backend/task_sets/edit.tpl', array('task_set' => $task_set));
+        $this->parser->parse('backend/task_sets/edit.tpl', array('task_set' => $task_set, 'project_selections' => $ps_data, 'not_project_selections' => $nps_data));
     }
     
     public function update() {
@@ -734,6 +767,89 @@ class Task_sets extends LIST_Controller {
         } else {
             $this->reply_at_comment($task_set_id, $reply_at_id);
         }
+    }
+    
+    public function select_project($task_set_id, $task_id, $student_id) {
+        $output = new stdClass();
+        $output->message = '';
+        $output->status = FALSE;
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->where('content_type', 'project');
+        $task_set->get_by_id((int)$task_set_id);
+        
+        $task = new Task();
+        $task->get_by_id((int)$task_id);
+        
+        $student = new Student();
+        $student->get_by_id((int)$student_id);
+        
+        $course = new Course();
+        $course->where_related_task_set($task_set);
+        $course->get();
+        
+        $participant = new Participant();
+        $participant->where_related_course($course);
+        $participant->where_related($student);
+        $participant->where('allowed', 1);
+        $participant->get();
+        
+        $project_selection = new Project_selection();
+        $project_selection->where_related_student($student);
+        $project_selection->where_related_task_set($task_set);
+        $project_selection->get();
+        
+        if ($task_set->exists() && $task->exists() && $task_set->is_related_to($task) && $student->exists() && $course->exists() && $participant->exists()) {
+            if ($task_set->get_student_files_count($student->id) == 0) {
+                $all_project_selections = new Project_selection();
+                $all_project_selections->where_related_task_set($task_set);
+                $all_project_selections->where_related_task($task);
+                $currently_selected = $all_project_selections->count();
+
+                $jf_task = $task_set->task->include_join_fields()->get_by_id($task_id);
+                $maximum_selections = (int)$jf_task->join_max_projects_selections;
+
+                if ($project_selection->exists()) {
+                    if (!$project_selection->is_related_to($task)) {
+                        if ($currently_selected < $maximum_selections) {
+                            $project_selection->save($task);
+                            $output->status = TRUE;
+                            $output->message = $this->lang->line('admin_task_sets_project_selection_success');
+                        } else {
+                            $output->message = $this->lang->line('admin_task_sets_project_selection_no_room');
+                        }
+                    } else {
+                        $output->message = $this->lang->line('admin_task_sets_project_selection_already_selected');
+                    }
+                } else {
+                    if ($currently_selected < $maximum_selections) {
+                        $project_selection->save(array(
+                            'student' => $student,
+                            'task_set' => $task_set,
+                            'task' => $task,
+                        ));
+                        $output->status = TRUE;
+                        $output->message = $this->lang->line('admin_task_sets_project_selection_success');
+                    } else {
+                        $output->message = $this->lang->line('admin_task_sets_project_selection_no_room');
+                    }
+                }
+            } else {
+                $output->message = $this->lang->line('admin_task_sets_project_selection_already_submited_solutions');
+            }
+        } else {
+            $output->message = $this->lang->line('admin_task_sets_project_selection_cant_find_data');
+        }
+        
+        if ($output->status) {
+            $this->db->trans_commit();
+        } else {
+            $this->db->trans_rollback();
+        }
+        
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
     }
 
     private function add_comment($task_set_id, $reply_at_id = NULL) {

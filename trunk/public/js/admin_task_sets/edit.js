@@ -138,4 +138,62 @@ jQuery(document).ready(function($) {
         }
     });
     
+    var recompute_task_selections = function(task_id) {
+        var count = $('div.project_selection_list.task_id_' + task_id).find('div.project_selection_student').length;
+        $('span.project_selection_count.task_id_' + task_id).html(count);
+    };
+    
+    var return_student_item = function(student_id, task_id) {
+        var item = $('div.project_selection_student.student_id_' + student_id);
+        var list = $('div.project_selection_list.task_id_' + task_id);
+        item.appendTo(list);
+    };
+    
+    var switch_student_item_task = function(student_id, task_id, original_task_id) {
+        var item = $('div.project_selection_student.student_id_' + student_id);
+        item.removeClass('original_task_id:' + original_task_id);
+        item.addClass('original_task_id:' + task_id);
+    };
+        
+    $('div.project_selection_list').sortable({
+        connectWith: 'div.project_selection_list',
+        cursor: 'move',
+        axis: 'y',
+        delay: 300,
+        revert: true,
+        cancel: 'div.project_selection_student.operations_disabled',
+        receive: function(event, ui) {
+            var original_task_id = api_read_class_config(ui.item, 'original_task_id');
+            var task_id = api_read_class_config(ui.item.parent(), 'task_id');
+            var student_id = api_read_class_config(ui.item, 'student_id');
+            console.log(original_task_id);
+            console.log(task_id);
+            console.log(student_id);
+            var url = global_base_url + 'index.php/admin_task_sets/select_project/' + task_set_id + '/' + task_id + '/' + student_id;
+            console.log(url);
+            $('div.project_selection_list').sortable('disable');
+            api_ajax_update(url, 'post', {}, function(output) {
+                if (typeof output.status !== 'undefined' && typeof output.message !== 'undefined') {
+                    if (output.status) {
+                        show_notification(output.message, 'success');
+                        switch_student_item_task(student_id, task_id, original_task_id);
+                    } else {
+                        show_notification(output.message, 'error');
+                        return_student_item(student_id, original_task_id);
+                    }
+                } else {
+                    return_student_item(student_id, original_task_id);
+                }
+                recompute_task_selections(original_task_id);
+                recompute_task_selections(task_id);
+                $('div.project_selection_list').sortable('enable');
+            }, function() {
+                return_student_item(student_id, original_task_id);
+                recompute_task_selections(original_task_id);
+                recompute_task_selections(task_id);
+                $('div.project_selection_list').sortable('enable');
+            });
+        }
+    });
+    
 });

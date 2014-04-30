@@ -9,6 +9,7 @@
                 <ul>
                     <li><a href="#tabs-about_task_set">{translate line='admin_task_sets_tabs_label_about_task_set'}</a></li>
                     {if $task_set->content_type eq 'task_set'}<li><a href="#tabs-additional_permissions">{translate line='admin_task_sets_tabs_label_additional_permissions'}</a></li>{/if}
+                    {if $task_set->content_type eq 'project'}<li><a href="#tabs-project_selections">{translate line='admin_task_sets_tabs_label_project_selections'}</a></li>{/if}
                     <li><a href="#tabs-tasks">{translate line='admin_task_sets_tabs_label_tasks'}</a></li>
                     <li><a href="#tabs-instructions">{translate line='admin_task_sets_tabs_label_instructions'}</a></li>
                 </ul>
@@ -163,6 +164,35 @@
                     </fieldset>
                     <fieldset class="basefieldset">
                         <div id="additional_permissions_id"></div>
+                    </fieldset>
+                </div>
+                {/if}
+                {if $task_set->content_type eq 'project'}
+                <div id="tabs-project_selections">
+                    <fieldset class="basefieldset">
+                        <p><em>{translate line='admin_task_sets_project_selection_hint'}</em></p>
+                    </fieldset>
+                    {foreach $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get_iterated() as $task}
+                    <fieldset class="basefieldset">
+                        <legend>{overlay table='tasks' column='name' table_id=$task->id default=$task->name} | <span class="project_selection_count task_id_{$task->id}">{$project_selections[$task->id]|count}</span> / {$task->join_max_projects_selections}</legend>
+                        <div class="project_selection_list task_id_{$task->id} task_id:{$task->id}">
+                            {foreach $project_selections[$task->id] as $selection}
+                            <div class="project_selection_student{if $task_set->get_student_files_count($selection->student_id) gt 0} operations_disabled{/if} student_id:{$selection->student_id} original_task_id:{$task->id}  student_id_{$selection->student_id}">
+                                <strong>{$selection->student_fullname}</strong> <em>{$selection->student_email}</em>
+                            </div>
+                            {/foreach}
+                        </div>
+                    </fieldset>
+                    {/foreach}
+                    <fieldset class="basefieldset">
+                        <legend>{translate line='admin_task_sets_project_selection_fieldset_legend_not_selected'}</legend>
+                        <div class="project_selection_list not_selected_list task_id_0 task_id:0">
+                            {foreach $not_project_selections as $selection}
+                            <div class="project_selection_student student_id:{$selection->id} original_task_id:0 student_id_{$selection->id}">
+                                <strong>{$selection->fullname}</strong> <em>{$selection->email}</em>
+                            </div>
+                            {/foreach}
+                        </div>
                     </fieldset>
                 </div>
                 {/if}
