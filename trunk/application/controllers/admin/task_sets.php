@@ -844,6 +844,7 @@ class Task_sets extends LIST_Controller {
         
         if ($output->status) {
             $this->db->trans_commit();
+            $this->_action_success();
         } else {
             $this->db->trans_rollback();
         }
