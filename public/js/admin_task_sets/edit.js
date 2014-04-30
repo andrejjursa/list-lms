@@ -166,33 +166,37 @@ jQuery(document).ready(function($) {
             var original_task_id = api_read_class_config(ui.item, 'original_task_id');
             var task_id = api_read_class_config(ui.item.parent(), 'task_id');
             var student_id = api_read_class_config(ui.item, 'student_id');
-            console.log(original_task_id);
-            console.log(task_id);
-            console.log(student_id);
-            var url = global_base_url + 'index.php/admin_task_sets/select_project/' + task_set_id + '/' + task_id + '/' + student_id;
-            console.log(url);
-            $('div.project_selection_list').sortable('disable');
-            api_ajax_update(url, 'post', {}, function(output) {
-                if (typeof output.status !== 'undefined' && typeof output.message !== 'undefined') {
-                    if (output.status) {
-                        show_notification(output.message, 'success');
-                        switch_student_item_task(student_id, task_id, original_task_id);
+            if (confirm(select_project_question)) {
+                var url = global_base_url + 'index.php/admin_task_sets/select_project/' + task_set_id + '/' + task_id + '/' + student_id;
+                $('div.project_selection_list').sortable('disable');
+                api_ajax_update(url, 'post', {}, function(output) {
+                    if (typeof output.status !== 'undefined' && typeof output.message !== 'undefined') {
+                        if (output.status) {
+                            show_notification(output.message, 'success');
+                            switch_student_item_task(student_id, task_id, original_task_id);
+                        } else {
+                            show_notification(output.message, 'error');
+                            return_student_item(student_id, original_task_id);
+                        }
                     } else {
-                        show_notification(output.message, 'error');
                         return_student_item(student_id, original_task_id);
                     }
-                } else {
+                    recompute_task_selections(original_task_id);
+                    recompute_task_selections(task_id);
+                    $('div.project_selection_list').sortable('enable');
+                }, function() {
                     return_student_item(student_id, original_task_id);
-                }
-                recompute_task_selections(original_task_id);
-                recompute_task_selections(task_id);
-                $('div.project_selection_list').sortable('enable');
-            }, function() {
+                    recompute_task_selections(original_task_id);
+                    recompute_task_selections(task_id);
+                    $('div.project_selection_list').sortable('enable');
+                });
+            } else {
+                $('div.project_selection_list').sortable('disable');
                 return_student_item(student_id, original_task_id);
                 recompute_task_selections(original_task_id);
                 recompute_task_selections(task_id);
                 $('div.project_selection_list').sortable('enable');
-            });
+            }
         }
     });
     
