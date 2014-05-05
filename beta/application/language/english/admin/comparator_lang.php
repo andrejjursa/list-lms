@@ -20,6 +20,8 @@ $lang['admin_comparator_list_solutions_form_label_branching_factor'] = 'Branchin
 $lang['admin_comparator_list_solutions_form_label_branching_factor_hint'] = 'How mutch branches can the tree have.';
 $lang['admin_comparator_list_solutions_form_label_minimum_similarity'] = 'Minimum similarity';
 $lang['admin_comparator_list_solutions_form_label_minimum_similarity_hint'] = 'Minimum similarity of two source codes to be added into list of similar source codes.';
+$lang['admin_comparator_list_solutions_form_label_timeout'] = 'Timeout in minutes';
+$lang['admin_comparator_list_solutions_form_label_timeout_hint'] = 'Timeout in <strong>minutes</strong>, set this parameter carefully, because in case of error and infinite loop in comparator this is best way to stop execution without intervention of server administrator.';
 $lang['admin_comparator_list_solutions_form_button_submit'] = 'Compare';
 
 $lang['admin_comparator_list_solutions_table_header_student_name'] = 'Student name';
@@ -32,6 +34,7 @@ $lang['admin_comparator_list_solutions_form_field_min_tree_size'] = 'minimum tre
 $lang['admin_comparator_list_solutions_form_field_max_cutted_tree_size'] = 'maximum cutted tree size';
 $lang['admin_comparator_list_solutions_form_field_branching_factor'] = 'branching factor';
 $lang['admin_comparator_list_solutions_form_field_minimum_similarity'] = 'minimum similarity';
+$lang['admin_comparator_list_solutions_form_field_timeout'] = 'timeout in minutes';
 $lang['admin_comparator_list_solutions_validation_callback_selected_solutions'] = 'At least one <strong>%s</strong> must be selected.';
 
 $lang['admin_comparator_list_solutions_error_course_task_set'] = 'Course or task set is not found in database. Check your settings.';

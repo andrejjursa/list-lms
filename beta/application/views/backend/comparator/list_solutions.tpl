@@ -64,6 +64,12 @@
                 <p class="input"><em>{translate line='admin_comparator_list_solutions_form_label_minimum_similarity_hint'}</em></p>
                 {form_error field='comparator_setup[min_similarity]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
+            <div class="field">
+                <label>{translate line='admin_comparator_list_solutions_form_label_timeout'}:</label>
+                <div class="input"><input type="text" name="comparator_setup[timeout]" value="{$smarty.post.comparator_setup.timeout|default:'5'|escape:'html'}" /></div>
+                <p class="input"><em>{translate line='admin_comparator_list_solutions_form_label_timeout_hint'}</em></p>
+                {form_error field='comparator_setup[timeout]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
             <div class="buttons">
                 <input type="submit" value="{translate line='admin_comparator_list_solutions_form_button_submit'}" class="button" />
                 <input type="hidden" name="task_sets_setup[course]" value="{$course->id}" />

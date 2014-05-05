@@ -93,6 +93,7 @@ class Comparator extends LIST_Controller {
             $this->form_validation->set_rules('comparator_setup[max_cutted_tree_size]', 'lang:admin_comparator_list_solutions_form_field_max_cutted_tree_size', 'required|integer|greater_than_field_or_equal[comparator_setup[min_tree_size]]');
             $this->form_validation->set_rules('comparator_setup[branching_factor]', 'lang:admin_comparator_list_solutions_form_field_branching_factor', 'required|integer|greater_than_equal[1]');
             $this->form_validation->set_rules('comparator_setup[min_similarity]', 'lang:admin_comparator_list_solutions_form_field_minimum_similarity', 'required|numeric|greater_than_equal[0]|less_than_equal[1]');
+            $this->form_validation->set_rules('comparator_setup[timeout]', 'lang:admin_comparator_list_solutions_form_field_timeout', 'required|integer|greater_than_equal[1]');
             
             $this->form_validation->set_message('_selected_solutions', $this->lang->line('admin_comparator_list_solutions_validation_callback_selected_solutions'));
             if ($this->form_validation->run()) {
@@ -143,6 +144,7 @@ class Comparator extends LIST_Controller {
                     'cut' => $comparator_setup_data['max_cutted_tree_size'],
                     'bf' => $comparator_setup_data['branching_factor'],
                     'mp' => $comparator_setup_data['min_similarity'],
+                    'timeout' => $comparator_setup_data['timeout'] * 60000,
                 ));
                 
                 $this->parser->parse('backend/comparator/run_comparation.tpl');
@@ -166,7 +168,7 @@ class Comparator extends LIST_Controller {
             $exec_path .= ENVIRONMENT . '/';
         }
         
-        $execute_command = $exec_path . 'run ' . $path . ' ' . $config['t'] . ' ' . $config['m'] . ' ' . $config['cut'] . ' ' . $config['bf'] . ' ' . $config['mp'];
+        $execute_command = $exec_path . 'run ' . $path . ' ' . $config['t'] . ' ' . $config['m'] . ' ' . $config['cut'] . ' ' . $config['bf'] . ' ' . $config['mp'] . ' ' . $config['timeout'];
         
         @exec($execute_command, $exec_output, $return_var);
         
