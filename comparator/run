@@ -16,13 +16,14 @@ echo "Starting comparation process in directory:" >> $PROTOCOL
 echo "$1/source" >> $PROTOCOL
 echo "Output will be in directory:" >> $PROTOCOL
 echo "$1/output" >> $PROTOCOL
+echo "Timeout in miliseconds: $7" >> $PROTOCOL
 echo "EXECUTION LOG:" >> $PROTOCOL
 echo "" >> $PROTOCOL
 echo "" >> $PROTOCOL
 
 ABS_PATH="/opt/lampp/htdocs/list-svn/dev/$1"
 
-sudo -u testovac /opt/lampp/htdocs/list-svn/dev/comparator/comparator "$ABS_PATH/source" "$ABS_PATH/output" $2 $3 $4 $5 $6 >> $PROTOCOL 2>> $PROTOCOL
+sudo -u testovac /opt/lampp/htdocs/list-svn/dev/comparator/comparator "$ABS_PATH/source" "$ABS_PATH/output" $2 $3 $4 $5 $6 $7 >> $PROTOCOL 2>> $PROTOCOL
 
 rm -rf source
 

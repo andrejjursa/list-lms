@@ -20,6 +20,8 @@ $lang['admin_comparator_list_solutions_form_label_branching_factor'] = 'Faktor v
 $lang['admin_comparator_list_solutions_form_label_branching_factor_hint'] = 'Ako veľmi sa môže strom vetviť.';
 $lang['admin_comparator_list_solutions_form_label_minimum_similarity'] = 'Minimálna podobnosť';
 $lang['admin_comparator_list_solutions_form_label_minimum_similarity_hint'] = 'Minimálna podobnosť zdrojových kódov na vloženie do zoznamu podobných zdrojových kódov.';
+$lang['admin_comparator_list_solutions_form_label_timeout'] = 'Timeout v minútach';
+$lang['admin_comparator_list_solutions_form_label_timeout_hint'] = 'Timeout v <strong>minútach</strong>, nastavte tento parameter opatrne, pretože v prípade chyby a nekonečného cyklu v komparátore je toto najlepší spôsob ako prerušiť vykonávanie kódu bez zásahu administrátora serveru.';
 $lang['admin_comparator_list_solutions_form_button_submit'] = 'Porovnať';
 
 $lang['admin_comparator_list_solutions_table_header_student_name'] = 'Meno študenta';
@@ -32,6 +34,7 @@ $lang['admin_comparator_list_solutions_form_field_min_tree_size'] = 'minimálna 
 $lang['admin_comparator_list_solutions_form_field_max_cutted_tree_size'] = 'maximálna orezaná veľkosť stromu';
 $lang['admin_comparator_list_solutions_form_field_branching_factor'] = 'faktor vetvenia';
 $lang['admin_comparator_list_solutions_form_field_minimum_similarity'] = 'minimálna podobnosť';
+$lang['admin_comparator_list_solutions_form_field_timeout'] = 'timeout v minútach';
 $lang['admin_comparator_list_solutions_validation_callback_selected_solutions'] = 'Aspoň jedno <strong>%s</strong> musí byť vybrané.';
 
 $lang['admin_comparator_list_solutions_error_course_task_set'] = 'Kurz alebo zostava úloh sa v databáze nenašla. Skontrolujte nastavenie.';
