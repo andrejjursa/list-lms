@@ -30,6 +30,7 @@
                 </div>
                 <div class="buttons">
                     <input type="submit" value="{translate line='admin_restrictions_form_button_update'}" class="button" />
+                    <a href="{internal_url url='admin_restrictions'}" class="button special">{translate line='common_button_back'}</a>
                 </div>
             </form>
         </fieldset>
