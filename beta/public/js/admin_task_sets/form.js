@@ -2,9 +2,7 @@ jQuery(document).ready(function($) {
     var last_course_id = '';
     var last_course_id2 = '';
     var last_group_id = '';
-    $('form').activeForm({
-        speed: 0
-    });
+    $('form').activeForm();
     $('form div.field.task_set_type_field').setActiveFormDisplayCondition(function() {
         var course_id = $('#taks_set_course_id_id').val();
         var content_type = $('#task_set_content_type_id').val();

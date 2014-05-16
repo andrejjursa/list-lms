@@ -86,3 +86,4 @@ $lang['tasks_test_label_select_test_type'] = 'Solution language';
 $lang['tasks_test_fieldset_legend'] = 'Tests';
 $lang['tasks_countdown_message_time_info'] = '{d<}<strong>{dn} {dl}</strong> and {d>}<strong>{hnn}{sep}{mnn}{sep}{snn}</strong> until submission deadline ...';
 $lang['tasks_countdown_message_expired'] = 'Solution submission reached its deadline.';
+$lang['tasks_download_solution_now_disabled'] = 'Sorry, but solution download is currently disabled. Try again later.';

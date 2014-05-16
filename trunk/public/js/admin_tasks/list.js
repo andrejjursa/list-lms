@@ -109,9 +109,7 @@ jQuery(document).ready(function($) {
         });
     });
     
-    $('#filter_form_id').activeForm({
-        speed: 0
-    });
+    $('#filter_form_id').activeForm();
     
     $('#filter_form_id div.field.filter_by_test_types').setActiveFormDisplayCondition(function() {
         var tests_select = $('#filter_form_id input[type=radio][name="filter[tests]"]:checked');

@@ -375,11 +375,11 @@
                 var condition = activeForm.conditions[index].condition;
                 var element = activeForm.conditions[index].element;
                 if (condition.call(activeForm)) {
-                    $(element).show(speed);
+                    $(element).slideDown(speed);
                     $.activeForm.reenableInputElementsIn($(element), activeForm.settings.hiddenClass);
                 } else {
                     $.activeForm.disableInputElementsIn($(element), activeForm.settings.hiddenClass);
-                    $(element).hide(speed);
+                    $(element).slideUp(speed);
                 }
             }
             $.activeForm.hidePages(activeForm);

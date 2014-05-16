@@ -71,6 +71,13 @@ $config['adminmenu'] = array(
                 'class' => '',
                 'sub' => NULL,
             ),
+            array(
+                'title' => 'lang:adminmenu_title_restrictions',
+                'pagetag' => 'restrictions',
+                'link' => 'admin_restrictions',
+                'class' => '',
+                'sub' => NULL,
+            ),
         ),
     ),
     array(

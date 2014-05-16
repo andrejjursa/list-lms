@@ -74,12 +74,26 @@ jQuery(document).ready(function($) {
     presort_tasks();
     
     $('#tasks_sortable').sortable({
-        placeholder: 'ui-state-highlight placeholder',
         axis: 'y',
+        handle: 'h4.task_item_handler',
+        cursor: 'n-resize',
+        opacity: 0.8,
+        revert: true,
         update: function() {
             compile_sorting();
+        },
+        start: function( event, ui ) {
+            clone = $(ui.item[0].outerHTML).clone();
+        },
+        placeholder: {
+            element: function(clone, ui) {
+                return $('<li class="ui-state-default task_sorting_item placeholder">'+clone[0].innerHTML+'</li>');
+            },
+            update: function() {
+                return;
+            }
         }
-    });
+    }).find('h4.task_item_handler').css('cursor', 'n-resize');
     
     $(document).on('change', '#tasks_sortable input.delete_checkbox', function() {
         if ($(this).is(':checked')) {
