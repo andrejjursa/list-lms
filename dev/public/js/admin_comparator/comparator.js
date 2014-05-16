@@ -13,9 +13,7 @@ jQuery(document).ready(function($) {
         reload_all_solutions();
     });
     
-    $('form.task_set_form').activeForm({
-        speed: 0
-    });
+    $('form.task_set_form').activeForm();
     
     $('form.task_set_form div.field.field_task_set_selection').setActiveFormDisplayCondition(function() {
         var course_id = $('#task_sets_setup_course_id').val();

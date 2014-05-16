@@ -3,7 +3,6 @@ jQuery(document).ready(function($) {
     var participant_last_course_id = '';
     
     $('#add_participant_form_id').activeForm({
-        speed: 0,
         hiddenClass: 'hidden'
     }).setDisplayCondition('div.group_field', function() {
         var participant_course_id = this.findElement('select[name="participant[course]"]').val();

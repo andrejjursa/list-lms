@@ -249,7 +249,7 @@ var make_custom_switch = function(selector, text, custom_class) {
             display: 'none'
         });
         header.click(function(){
-            wrapper.toggle();
+            wrapper.slideToggle('normal');
             header.find('span.ui-icon').toggleClass('ui-icon-minusthick').toggleClass('ui-icon-plusthick');
         });
     });
@@ -278,7 +278,7 @@ var make_overlay_editors = function() {
             display: 'none'
         });
         overlay_header.click(function(){
-            overlay_wrapper.toggle();
+            overlay_wrapper.slideToggle('normal');
             overlay_header.find('span.ui-icon').toggleClass('ui-icon-minusthick').toggleClass('ui-icon-plusthick');
         });
     });
@@ -305,7 +305,7 @@ var make_switchable_form = function(selector) {
             });
             filter.appendTo(filter_content);
             filter_header.click(function(){
-                filter_content.toggle();
+                filter_content.slideToggle('normal');
                 filter_header.find('span.ui-icon').toggleClass('ui-icon-minusthick').toggleClass('ui-icon-plusthick');
             });
         }
@@ -333,7 +333,7 @@ var make_filter_form = function(selector) {
             });
             filter.appendTo(filter_content);
             filter_header.click(function(){
-                filter_content.toggle();
+                filter_content.slideToggle('normal');
                 filter_header.find('span.ui-icon').toggleClass('ui-icon-minusthick').toggleClass('ui-icon-plusthick');
             });
         }

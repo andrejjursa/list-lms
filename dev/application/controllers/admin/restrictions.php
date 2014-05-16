@@ -164,4 +164,40 @@ class Restrictions extends LIST_Controller  {
             $this->edit($restriction_id);
         }
     }
+    
+    public function clear_old() {
+        $output = new stdClass();
+        $output->status = FALSE;
+        $output->message = '';
+        
+        $count = 0;
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        
+        $time = date('Y-m-d H:i:s');
+        
+        $restrictions = new Restriction();
+        $restrictions->where('end_time <', $time);
+        $restrictions->where('start_time <', $time);
+        $restrictions->get_iterated();
+        
+        foreach ($restrictions as $restriction) {
+            if ($restriction->delete()) {
+                $count++;
+            }
+        }
+        
+        if ($count > 0) {
+            $this->db->trans_commit();
+            $output->status = TRUE;
+            $output->message = sprintf($this->lang->line('admin_restrictions_message_old_deleted'), $count);
+        } else {
+            $this->db->trans_rollback();
+            $output->message = $this->lang->line('admin_restrictions_message_nothing_old_deleted');
+        }
+        
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
 }

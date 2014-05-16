@@ -37,7 +37,25 @@ jQuery(document).ready(function($) {
         });
     };
     
+    var clear_old = function(event) {
+        event.preventDefault();
+        
+        var url = $(this).attr('href');
+        
+        api_ajax_update(url, 'post', {}, function(output) {
+            if (typeof output.status !== 'undefined' && typeof output.message !== 'undefined') {
+                if (output.status) {
+                    reload_all_restrictions();
+                    show_notification(output.message, 'success');
+                } else {
+                    show_notification(output.message, 'error');
+                }
+            }
+        });
+    }
+    
     $(document).on('click', '#table_container_id a.button.delete', delete_restriction);
+    $(document).on('click', 'a.button.special.clear_old', clear_old);
     
     reload_all_restrictions();
     

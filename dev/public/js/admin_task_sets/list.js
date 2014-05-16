@@ -93,9 +93,7 @@ jQuery(document).ready(function($) {
         }
     });
     
-    $('#filter_form_id').activeForm({
-        speed: 0
-    });
+    $('#filter_form_id').activeForm();
     
     var last_course_id = null;
     
