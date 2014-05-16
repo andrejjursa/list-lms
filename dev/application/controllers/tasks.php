@@ -168,35 +168,39 @@ class Tasks extends LIST_Controller {
     }
     
     public function download_solution($task_set_id, $file) {
-        $task_set = new Task_set();
-        $task_set->get_by_id(intval($task_set_id));
-        if ($task_set->exists()) {
-            $filename = decode_from_url($file);
-            $file_info = $task_set->get_specific_file_info($filename);
-            if ($file_info !== FALSE) {
-                $filename = $file_info['file_name'] . '_' . $file_info['version'] . '.zip';
-                $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $mime_type = finfo_file($finfo, $file_info['filepath']);
-                finfo_close($finfo);
-                header('Content-Description: File Transfer');
-                header('Content-Type: ' . $mime_type);
-                header('Content-Disposition: attachment; filename='.$filename);
-                header('Content-Transfer-Encoding: binary');
-                header('Expires: 0');
-                header('Cache-Control: must-revalidate');
-                header('Pragma: public');
-                header('Content-Length: ' . filesize($file_info['filepath']));
-                ob_clean();
-                flush();
-                $f = fopen($file_info['filepath'], 'r');
-                while (!feof($f)) {
-                    echo fread($f, 1024);
+        if (!Restriction::check_restriction_for_ip_address()) {
+            $task_set = new Task_set();
+            $task_set->get_by_id(intval($task_set_id));
+            if ($task_set->exists()) {
+                $filename = decode_from_url($file);
+                $file_info = $task_set->get_specific_file_info($filename);
+                if ($file_info !== FALSE) {
+                    $filename = $file_info['file_name'] . '_' . $file_info['version'] . '.zip';
+                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                    $mime_type = finfo_file($finfo, $file_info['filepath']);
+                    finfo_close($finfo);
+                    header('Content-Description: File Transfer');
+                    header('Content-Type: ' . $mime_type);
+                    header('Content-Disposition: attachment; filename='.$filename);
+                    header('Content-Transfer-Encoding: binary');
+                    header('Expires: 0');
+                    header('Cache-Control: must-revalidate');
+                    header('Pragma: public');
+                    header('Content-Length: ' . filesize($file_info['filepath']));
+                    ob_clean();
+                    flush();
+                    $f = fopen($file_info['filepath'], 'r');
+                    while (!feof($f)) {
+                        echo fread($f, 1024);
+                    }
+                    fclose($f);
+                    exit;
                 }
-                fclose($f);
-                exit;
             }
+            $this->output->set_status_header(404, 'Not found');
+        } else {
+            $this->parser->parse('frontend/tasks/download_solution.tpl');
         }
-        $this->output->set_status_header(404, 'Not found');
     }
 
     public function download_file($task_id, $file) {

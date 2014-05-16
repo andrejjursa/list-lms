@@ -86,3 +86,4 @@ $lang['tasks_test_label_select_test_type'] = 'Jazyk riešenia';
 $lang['tasks_test_fieldset_legend'] = 'Testy';
 $lang['tasks_countdown_message_time_info'] = '{d<}<strong>{dn} {dl}</strong> a {d>}<strong>{hnn}{sep}{mnn}{sep}{snn}</strong> do konca odovzdávania ...';
 $lang['tasks_countdown_message_expired'] = 'Odovzdávanie riešení bolo ukončené.';
+$lang['tasks_download_solution_now_disabled'] = 'Prepáčte, ale v tomto okamihu je zablokované sťahovanie riešení. Skúste to neskôr.';
