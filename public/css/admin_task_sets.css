@@ -17,7 +17,7 @@ div.filter_wrap { margin-bottom: 10px; border-bottom: 1px solid silver; padding-
 
 #tasks_sortable { list-style-type: none; }
 #tasks_sortable li { margin: 3px 0; padding: 5px; border-radius: 5px; }
-#tasks_sortable li.placeholder { height: 20px; }
+#tasks_sortable li.placeholder { opacity: 0.6; }
 
 ul.comments_list { list-style-type: none; margin-left: 5px; }
 ul.comments_list.level_1 { margin-left: 0; }

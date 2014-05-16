@@ -31,9 +31,7 @@ jQuery(document).ready(function($) {
         }
     };
     
-    $('#filter_form_id').activeForm({
-        speed: 0
-    });
+    $('#filter_form_id').activeForm();
     
     $('#filter_form_id div.download_file_buttons').setActiveFormDisplayCondition(function() {
         return this.findElement('select[name="zip[file]"]').val() !== '';

@@ -202,7 +202,7 @@
                         {foreach $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get_iterated() as $task}
                             {$tasks_sorting[] = $task->id|intval}
                             <li id="task_{$task->id|intval}" class="ui-state-default task_sorting_item">
-                                <h4><span class="ui-icon ui-icon-arrowthick-2-n-s" style="float: left;"></span> {overlay table='tasks' table_id=$task->id column='name' default=$task->name}</h4>
+                                <h4 class="task_item_handler"><span class="ui-icon ui-icon-arrowthick-2-n-s" style="float: left;"></span> {overlay table='tasks' table_id=$task->id column='name' default=$task->name}</h4>
                                 <div class="columns">
                                     <div class="col_50p">
                                         {if $task_set->content_type eq 'task_set'}

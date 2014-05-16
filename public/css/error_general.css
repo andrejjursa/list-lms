@@ -1,0 +1,27 @@
+@import url('content_styles.css');
+
+* { margin: 0; padding: 0; }
+
+html {
+    height: 100%;
+    background-color: silver; 
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    background-repeat: no-repeat;
+    background: -webkit-linear-gradient(top, silver 60%, #ffcccc);
+    background: -moz-linear-gradient(top, silver 60%, #ffcccc);
+    background: -ms-linear-gradient(top, silver 60%, #ffcccc);
+    background: -o-linear-gradient(top, silver 60%, #ffcccc);
+    background: linear-gradient(top, silver 60%, #ffcccc);
+}
+
+body { font-size: 14px; font-family: Verdana, Arial; margin: 0; padding: 0; }
+
+#mainwrap { min-width: 900px; max-width: 1200px; margin: 0 auto; margin-top: 50px; text-align: center; background-color: white; border: 1px solid black; border-radius: 4px; box-shadow: 0px 0px 50px 20px gray; }
+
+div.flash_message { color: blue; margin: 5px; padding: 5px; border: 1px solid blue; background-color: #d0d8ff; border-radius: 5px; box-shadow: 0px 0px 2px 2px blue inset; }
+div.flash_message.message_success { border-color: green; box-shadow: 0px 0px 2px 2px green inset; background-color: #ADFF9A; color: green; }
+div.flash_message.message_error { border-color: red; box-shadow: 0px 0px 2px 2px red inset; background-color: #FFAFAF; color: red; }

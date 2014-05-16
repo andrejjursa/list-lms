@@ -39,7 +39,6 @@ jQuery(document).ready(function($) {
     var filter_last_course_id = '';
     
     $('#filter_form_id').activeForm({
-        speed: 0,
         hiddenClass: 'hidden'
     }).setDisplayCondition('div.group_field', function() {
         var filter_course_id = this.findElement('select[name="filter[course]"]').val();

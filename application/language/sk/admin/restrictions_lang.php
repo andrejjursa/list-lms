@@ -1,0 +1,33 @@
+<?php
+
+$lang['admin_restrictions_page_title'] = 'Obmedzenia';
+$lang['admin_restrictions_fieldset_legend_new_restriction'] = 'Nové obmedzenie';
+$lang['admin_restrictions_fieldset_legend_all_restriction'] = 'Všetky obmedzenia';
+$lang['admin_restrictions_form_label_ip_addresses'] = 'IP Adresy';
+$lang['admin_restrictions_form_label_ip_addresses_hint'] = 'Môže byť čiarkou oddelovaný zoznam IP adries, môžete písať celé IP adresy alebo rozsah IP adries. Môžete tiež použiť náhradné znaky (wildcard).<br />Príklad: 10.0.0.1, 10.0.0.10:10.0.0.50, 10.10.*.*';
+$lang['admin_restrictions_form_label_start_time'] = 'Čas začiatku obmedzenia';
+$lang['admin_restrictions_form_label_end_time'] = 'Čas konca obmedzenia';
+$lang['admin_restrictions_form_button_submit'] = 'Vytvoriť obmedzenie';
+$lang['admin_restrictions_form_button_update'] = 'Upraviť obmedzenie';
+$lang['admin_restrictions_form_field_ip_addresses'] = 'IP adresy';
+$lang['admin_restrictions_form_field_start_time'] = 'čas začiatku obmedzenia';
+$lang['admin_restrictions_form_field_end_time'] = 'čas konca obmedzenia';
+$lang['admin_restrictions_form_validation_message_ip_addresses'] = 'Pole <strong>%s</strong> musí obsahovať platnú konfigurácie IP adries.';
+$lang['admin_restrictions_form_validation_message_time_compare'] = 'Čas začiatku musí byť skorší ako čas konca.';
+$lang['admin_restrictions_flash_message_creation_success'] = 'Obmedzenie úspešne vytvorené.';
+$lang['admin_restrictions_flash_message_creation_failed'] = 'Vytvorenie obmedzenia zlyhalo.';
+$lang['admin_restrictions_flash_messages_update_successful'] = 'Obmedzenie úspešne upravené.';
+$lang['admin_restrictions_flash_messages_update_failed'] = 'Proces úpravy obmedzenia zlyhal.';
+$lang['admin_restrictions_messages_restriction_delete_successfully'] = 'Obmedzenie úspešne vymazané.';
+$lang['admin_restrictions_messages_restriction_deletion_failed'] = 'Proces zmazania obmedzenia zlyhal.';
+$lang['admin_restrictions_message_old_deleted'] = 'Spolu %d obmedzení vymazaných.';
+$lang['admin_restrictions_message_nothing_old_deleted'] = 'Nie sú žiadne staré obmedzenia na vymazanie.';
+$lang['admin_restrictions_table_header_start_time'] = 'Čas začiatku';
+$lang['admin_restrictions_table_header_end_time'] = 'Čas konca';
+$lang['admin_restrictions_table_header_ip_addresses'] = 'IP Adresy';
+$lang['admin_restrictions_table_header_controlls'] = 'Ovládanie';
+$lang['admin_restrictions_table_content_button_edit'] = 'Upraviť';
+$lang['admin_restrictions_table_content_button_delete'] = 'Vymazať';
+$lang['admin_restrictions_js_messages_delete_question'] = 'Ste si istý, že chcete vymazať toto obmedzenie?';
+$lang['admin_restrictions_error_message_restriction_not_found'] = 'Obmedzenie sa nenašlo.';
+$lang['admin_restrictions_button_clear_old'] = 'Vyčistiť staré obmedzenia';
