@@ -148,6 +148,7 @@
 </div>
 <div class="buttons">
     <input type="submit" name="submit_button" value="{translate line='admin_task_sets_form_button_submit'}" class="button" />
+    <a href="{internal_url url='help/show/admin_task_sets/new_task_set'}" class="button help">{translate line='admin_task_sets_help_button_new_task_set'}</a>
     <input type="hidden" name="post_selected_task_set_type_id" value="{$smarty.post.task_set.task_set_type_id|intval}" />
     <input type="hidden" name="post_selected_group_id_id" value="{$smarty.post.task_set.group_id|intval}" />
     <input type="hidden" name="post_selected_room_id_id" value="{$smarty.post.task_set.room_id|intval}" />
