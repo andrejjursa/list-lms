@@ -45,8 +45,9 @@ jQuery(document).ready(function($) {
     });
     $('form div.field.task_set_room_field').setActiveFormDisplayCondition(function() {
         var course_id = $('#taks_set_course_id_id').val();
+        var content_type = $('#task_set_content_type_id').val();
         var group_id = $('#taks_set_group_id_id').val() === undefined ? $('form input[name=post_selected_group_id_id]').val() : $('#taks_set_group_id_id').val();
-        if (course_id !== '' && group_id !== undefined && group_id !== null && group_id !== '' && group_id !== '0') {
+        if (course_id !== '' && group_id !== undefined && group_id !== null && group_id !== '' && group_id !== '0' && content_type === 'task_set') {
             if (group_id !== last_group_id) {
                 last_group_id = group_id;
                 var selected_id = $('form input[name=post_selected_room_id_id]').val() !== undefined ? $('form input[name=post_selected_room_id_id]').val() : '';

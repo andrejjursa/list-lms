@@ -11,6 +11,12 @@ jQuery(document).ready(function($) {
     } catch (e) {
         console.log(e);
     }
+    
+    jQuery(document).on('click', 'a.button.help', function(event) {
+        event.preventDefault();
+        var url = jQuery(this).attr('href');
+        window.open(url, '_blank', 'channelmode=no, directories=no, fullscreen=no, height=600, left=0, location=no, menubar=no, resizable=yes, scrollbars=yes, status=yes, titlebar=yes, toolbar=no, top=0, width=800');
+    });
 });
 
 (function($){
