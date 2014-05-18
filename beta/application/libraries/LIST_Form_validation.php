@@ -183,6 +183,10 @@ class LIST_Form_validation extends CI_Form_validation {
         $pattern = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
         return preg_match($pattern, $str) ? TRUE : FALSE;
     }
+    
+    public function prep_for_form($data = '') {
+        return $data;
+    }
 
 
     /**

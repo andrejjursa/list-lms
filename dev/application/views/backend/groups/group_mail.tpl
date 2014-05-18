@@ -13,7 +13,7 @@
             </div>
             <div class="field">
                 <label for="group_mail_body_id" class="required">{translate line='admin_groups_group_email_form_label_body'}:</label>
-                <div class="input"><textarea name="group_mail[body]" id="group_mail_body_id" class="tinymce">{$smarty.post.group_mail.body}</textarea></div>
+                <div class="input"><textarea name="group_mail[body]" id="group_mail_body_id" class="tinymce">{$smarty.post.group_mail.body|htmlspecialchars}</textarea></div>
                 {form_error field='group_mail[body]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="field">

@@ -19,7 +19,7 @@
             </div>
             <div class="field">
                 <label for="test_instructions_id">{translate line='admin_tests_test_form_label_instructions'}:</label>
-                <p class="input"><textarea name="test[instructions]" class="tinymce" id="test_instructions_id">{$smarty.post.test.instructions|default:$test->instructions|add_base_url}</textarea></p>
+                <p class="input"><textarea name="test[instructions]" class="tinymce" id="test_instructions_id">{$smarty.post.test.instructions|default:$test->instructions|add_base_url|htmlspecialchars}</textarea></p>
                 {include file='partials/backend_general/overlay_editor.tpl' table='tests' table_id=$test->id column='instructions' editor_type='textarea' class='tinymce' inline}
             </div>
             <div class="field">

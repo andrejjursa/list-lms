@@ -14,7 +14,7 @@
                 </div>
                 <div class="field">
                     <label for="course_mail_body_id" class="required">{translate line='admin_courses_mail_to_course_form_label_body'}:</label>
-                    <div class="input"><textarea name="course_mail[body]" id="course_mail_body_id" class="tinymce">{$smarty.post.course_mail.body}</textarea></div>
+                    <div class="input"><textarea name="course_mail[body]" id="course_mail_body_id" class="tinymce">{$smarty.post.course_mail.body|htmlspecialchars}</textarea></div>
                     {form_error field='course_mail[body]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>
                 <div class="field">

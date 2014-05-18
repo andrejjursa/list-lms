@@ -1,7 +1,7 @@
 {include file='partials/backend_general/flash_messages.tpl' inline}
 <div class="field">
     <label for="">{translate line='admin_task_sets_comments_form_label_text'}:</label>
-    <div class="input"><textarea name="comment[text]">{$smarty.post.comment.text}</textarea></div>
+    <div class="input"><textarea name="comment[text]">{$smarty.post.comment.text|escape:'html'}</textarea></div>
     <p class="input"><em>{translate line='admin_task_sets_comments_form_label_text_hint'}</em></p>
     {form_error field='comment[text]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
 </div>
