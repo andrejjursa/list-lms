@@ -19,6 +19,13 @@
                     <p class="input"><select name="filter_group" size="1" id="filter_group_id"></select><input type="hidden" name="filter[group]" value="{$filter.group|intval}" /></p>
                 </div>
                 <div class="field">
+                    <label>{translate line='admin_solutions_filter_label_content_type'}:</label>{$options = ['task_set' => 'lang:admin_solutions_filter_label_content_type_type_task_set', 'project' => 'lang:admin_solutions_filter_label_content_type_type_project']}
+                    <p class="input"><select name="filter[content_type]">{list_html_options options=$options selected=$filter.content_type|default:'task_set'}</select></p>
+                </div>
+                <div class="task_set_type_field_else">
+                    <input type="hidden" name="filter[task_set_type]" value="" />
+                </div>
+                <div class="field task_set_type_field">
                     <label>{translate line='admin_solutions_filter_label_task_set_type'}:</label>
                     <p class="input"><select name="filter[task_set_type]">{list_html_options options=$task_set_types selected=$filter.task_set_type}</select></p>
                 </div>

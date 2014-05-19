@@ -13,7 +13,9 @@ class Projects extends LIST_Controller {
         parent::__construct();
         $this->_init_language_for_student();
         $this->_load_student_langfile();
-        $this->usermanager->student_login_protected_redirect();
+        if ($this->router->method != 'overview') {
+            $this->usermanager->student_login_protected_redirect();
+        }
     }
     
     public function index() {
@@ -43,6 +45,37 @@ class Projects extends LIST_Controller {
             $this->parser->assign(array('course' => $course));
         }
         $this->parser->parse('frontend/projects/index.tpl', array(), FALSE, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : FALSE, $cache_id);
+    }
+    
+    public function overview($task_set_id_url = NULL, $language = NULL) {
+        $task_set_id = url_get_id($task_set_id_url);
+        $this->parser->add_css_file('frontend_projects.css');
+        if (!is_null($language)) {
+            $this->_init_specific_language($language);
+        }
+        if ($this->_is_cache_enabled()) {
+            $this->smarty->caching = Smarty::CACHING_LIFETIME_SAVED;
+        }
+        $cache_id = 'project_' . $task_set_id . '|lang_' . $this->lang->get_current_idiom();
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/projects/overview.tpl'), $cache_id)) {
+            $project_all = $this->get_task_set_overview($task_set_id, $course);
+            $project = $this->filter_valid_task_sets($project_all);
+            if ($course->exists()) {
+                if ($this->_is_cache_enabled() && $this->filter_next_task_set_publication_min_cache_lifetime > 0 && $this->filter_next_task_set_publication_min_cache_lifetime <= $this->smarty->cache_lifetime) {
+                    $this->smarty->setCacheLifetime($this->filter_next_task_set_publication_min_cache_lifetime + 1);
+                    $this->parser->setCacheLifetimeForTemplateObject('frontend/projects/overview.tpl', $this->filter_next_task_set_publication_min_cache_lifetime + 1);
+                }
+                $this->lang->init_overlays('task_sets', $project, array('name', 'instructions'));
+                $project = count($project) == 1 ? $project[0] : new Task_set();
+                $this->parser->assign('project', $project);
+                $tasks = $project->task;
+                $tasks->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc');
+                $tasks->get_iterated();
+                $this->parser->assign('tasks', $tasks);
+            }
+            $this->parser->assign(array('course' => $course));
+        }
+        $this->parser->parse('frontend/projects/overview.tpl', array(), FALSE, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : FALSE, $cache_id);
     }
     
     public function selection($task_set_id_url = NULL) {
@@ -381,6 +414,24 @@ class Projects extends LIST_Controller {
             $task_set->order_by_with_overlay('name', 'asc');
             $task_set->get_by_id((int)$task_set_id);
         }
+        
+        return $task_set;
+    }
+    
+    private function get_task_set_overview($task_set_id, &$course) {
+        $task_set = new Task_set();
+        $task_set->where('published', 1);
+        $task_set->include_related_count('task', 'total_tasks');
+        $task_set->where('content_type', 'project');
+        $task_set->order_by('publish_start_time', 'asc');
+        $task_set->order_by('upload_end_time', 'asc');
+        $task_set->order_by_with_overlay('name', 'asc');
+        $task_set->get_by_id((int)$task_set_id);
+        
+        $course = new Course();
+        $course->where_related('task_set', 'id', (int)$task_set->id);
+        $course->include_related('period');
+        $course->get();
         
         return $task_set;
     }

@@ -248,6 +248,10 @@ class Solutions extends LIST_Controller {
         
         $task_set->get_by_id($task_set_id);
         
+        if ($task_set->exists() && $task_set->content_type == 'project') {
+            $this->inject_task_set_authors($task_set->id);
+        }
+        
         $this->inject_students($task_set_id);
         $this->inject_task_set_possible_groups($task_set_id);
         $this->inject_stored_solution_list_filter($task_set_id);
@@ -507,6 +511,7 @@ class Solutions extends LIST_Controller {
         /*$task_sets->include_related('course/task_set_type');
         $task_sets->where('(`course_task_set_types`.`id` = `task_sets`.`task_set_type_id`)');*/
         //$task_sets->where('((`course_course_task_set_type_rel`.`task_set_type_id` = `task_sets`.`task_set_type_id` AND `task_sets`.`task_set_type_id` != 0) OR `task_sets`.`task_set_type_id` = 0)');
+        $task_sets->where('content_type', isset($filter['content_type']) ? $filter['content_type'] : 'task_set');
         if (isset($filter['course']) && intval($filter['course']) > 0) {
             $task_sets->where_related_course('id', intval($filter['course']));
         }
@@ -525,7 +530,7 @@ class Solutions extends LIST_Controller {
                 $task_sets->group_end();
             $task_sets->group_end();
         }
-        if (isset($filter['task_set_type']) && intval($filter['task_set_type']) > 0) {
+        if (isset($filter['content_type']) && $filter['content_type'] == 'task_set' && isset($filter['task_set_type']) && intval($filter['task_set_type']) > 0) {
             $task_sets->where_related_task_set_type('id', intval($filter['task_set_type']));
         }
         $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
@@ -570,6 +575,11 @@ class Solutions extends LIST_Controller {
                 $solutions->where_related('student/participant/group', 'id', (int)$filter['group']);
             }
             $solutions->where_related('student/participant/course', 'id', $task_set->course_id);
+            if ($task_set->content_type == 'project' && isset($filter['author']) && $filter['author'] !== 'all' && $filter['author'] !== '') {
+                $solutions->where_related('student/project_selection/task_set', 'id', $task_set->id);
+                $solutions->where_related('student/project_selection/task/author', 'id', (int)$filter['author']);
+                $solutions->group_by('id');
+            }
             $solutions->get_iterated();
         }
         
@@ -1124,6 +1134,20 @@ class Solutions extends LIST_Controller {
         }
         
         $this->parser->assign('possible_groups', $data);
+    }
+    
+    private function inject_task_set_authors($task_set_id) {
+        $teachers = new Teacher();
+        $teachers->where_related('task/task_set', 'id', (int)$task_set_id);
+        $teachers->order_by_as_fullname('fullname');
+        $teachers->get_iterated();
+        
+        $authors = array();
+        foreach ($teachers as $teacher) {
+            $authors[$teacher->id] = $teacher->fullname;
+        }
+        
+        $this->parser->assign('authors', $authors);
     }
     
     private function get_valuation_table_data($course_id, $group_id = NULL, $condensed = FALSE) {

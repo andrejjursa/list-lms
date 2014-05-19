@@ -31,6 +31,15 @@
                         <p class="input"><em>{translate line='admin_solutions_solution_list_filter_label_group_not_found'}</em></p>
                     </div>
                     {/if}
+                    {if $task_set->content_type eq 'project'}
+                    <div class="field">
+                        <label>{translate line='admin_solutions_filter_label_author'}:</label>
+                        <p class="input"><select name="filter[author]">
+                            <option value="all"></option>
+                            {html_options options=$authors selected=$filter.author|default:$list_teacher_account.id}
+                        </select></p>
+                    </div>
+                    {/if}
                     <div class="buttons">
                         <input type="submit" name="filter_submit" value="{translate line='admin_solutions_filter_submit'}" class="button" />
                         <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />

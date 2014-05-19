@@ -6,6 +6,7 @@ $lang['projects_task_page_header'] = 'Projekty - zadanie';
 $lang['projects_no_active_course'] = 'Nemáš zvolený aktívny kurz, pre pokračovanie si jeden zvol.';
 $lang['projects_no_project_found'] = 'Požadovaný projekt sa nenašieľ.';
 $lang['projects_no_task_found'] = 'Požadované zadanie sa nenašlo.';
+$lang['projects_no_course'] = 'Žiaden projekt sa nenašieľ alebo nie je publikovaný.';
 $lang['projects_list_table_header_name'] = 'Názov';
 $lang['projects_list_table_header_selected'] = 'Zvolená úloha';
 $lang['projects_list_table_header_solutions'] = 'Riešení';

@@ -4,9 +4,13 @@
 
 $lang['admin_solutions_page_title'] = 'Riešenia zostáv úloh';
 $lang['admin_solutions_fieldset_legend_task_sets'] = 'Zostavy úloh';
-$lang['admin_solutions_filter_label_course'] = 'Filrovať podla kurzu';
-$lang['admin_solutions_filter_label_group'] = 'Filtrovať podla skupiny';
-$lang['admin_solutions_filter_label_task_set_type'] = 'Filtrovať podla typu zostavy úloh';
+$lang['admin_solutions_filter_label_course'] = 'Filrovať podľa kurzu';
+$lang['admin_solutions_filter_label_group'] = 'Filtrovať podľa skupiny';
+$lang['admin_solutions_filter_label_task_set_type'] = 'Filtrovať podľa typu zostavy úloh';
+$lang['admin_solutions_filter_label_content_type'] = 'Filtrovať podľa typu obsahu';
+$lang['admin_solutions_filter_label_content_type_type_task_set'] = 'Zostava úloh';
+$lang['admin_solutions_filter_label_content_type_type_project'] = 'Projekt';
+$lang['admin_solutions_filter_label_author'] = 'Autor';
 $lang['admin_solutions_filter_submit'] = 'Použiť';
 $lang['admin_solutions_table_header_task_set_name'] = 'Názov zostavy úloh';
 $lang['admin_solutions_table_header_task_set_course'] = 'Kurz zostavy úloh';

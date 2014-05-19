@@ -73,6 +73,7 @@ $lang['admin_task_sets_table_button_open'] = 'Open';
 $lang['admin_task_sets_table_button_discussion'] = 'Discussion';
 $lang['admin_task_sets_table_button_clone_task_set'] = 'Clone';
 $lang['admin_task_sets_table_button_preview'] = 'Preview';
+$lang['admin_task_sets_table_button_overview'] = 'Public overview of project';
 $lang['admin_task_sets_table_field_published_yes'] = 'Yes';
 $lang['admin_task_sets_table_field_published_no'] = 'No';
 $lang['admin_task_sets_error_task_set_not_found'] = 'Requested task set was not found!';

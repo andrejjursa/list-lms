@@ -73,6 +73,7 @@ $lang['admin_task_sets_table_button_open'] = 'Otvoriť';
 $lang['admin_task_sets_table_button_discussion'] = 'Diskusia';
 $lang['admin_task_sets_table_button_clone_task_set'] = 'Klonovať';
 $lang['admin_task_sets_table_button_preview'] = 'Náhľad';
+$lang['admin_task_sets_table_button_overview'] = 'Verejný prehľad projektu';
 $lang['admin_task_sets_table_field_published_yes'] = 'Áno';
 $lang['admin_task_sets_table_field_published_no'] = 'Nie';
 $lang['admin_task_sets_error_task_set_not_found'] = 'Požadovaná zostava úloh sa nenašla!';

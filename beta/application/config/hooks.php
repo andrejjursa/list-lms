@@ -89,12 +89,14 @@ $hook['post_controller'] = array(
                 'select_project' => array(
                     'frontend/projects/index.tpl' => $student_cache_id,
                     'frontend/projects/selection.tpl' => $no_student_id,
-                    'frontend/projects/task.tpl' => $no_student_id,        
+                    'frontend/projects/task.tpl' => $no_student_id,
+                    'frontend/projects/overview.tpl' => $no_student_id,
                 ),
                 'reset_task_cache' => array(
                     'frontend/projects/task.tpl' => function($CI) {
                         return $CI->usermanager->get_student_cache_id('task_set_' . $CI->output->get_internal_value('task_set_id') . '|task_' . $CI->output->get_internal_value('task_id'));
                     },
+                    'frontend/projects/overview.tpl' => $no_student_id,
                 ),
                 'upload_solution' => array(
                     'frontend/projects/index.tpl' => $student_cache_id,
@@ -264,21 +266,25 @@ $hook['post_controller'] = array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/courses/course_details.tpl' => $no_student_id,
                     'frontend/projects/index.tpl' => $no_student_id,
+                    'frontend/projects/overview.tpl' => $no_student_id,
                 ),
                 'delete_teacher' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/courses/course_details.tpl' => $no_student_id,
                     'frontend/projects/index.tpl' => $no_student_id,
+                    'frontend/projects/overview.tpl' => $no_student_id,
                 ),
                 'save_basic_information' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/courses/course_details.tpl' => $no_student_id,
                     'frontend/projects/index.tpl' => $no_student_id,
+                    'frontend/projects/overview.tpl' => $no_student_id,
                 ),
                 'save_email' => array(
                     'frontend/tasks/index.tpl' => $no_student_id,
                     'frontend/courses/course_details.tpl' => $no_student_id,
                     'frontend/projects/index.tpl' => $no_student_id,
+                    'frontend/projects/overview.tpl' => $no_student_id,
                 ),
             ),
         ),

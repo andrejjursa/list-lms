@@ -14,12 +14,12 @@
             {if $filter.fields.publish_start_time}<th class="sort:publish_start_time:desc">{translate line='admin_task_sets_table_header_publish_start_time'}</th>{/if}
             {if $filter.fields.upload_end_time}<th class="sort:upload_end_time:desc">{translate line='admin_task_sets_table_header_upload_end_time'}</th>{/if}
             {if $filter.fields.project_selection_deadline}<th class="sort:project_selection_deadline:desc">{translate line='admin_task_sets_table_header_project_selection_deadline'}</th>{/if}
-            <th colspan="6" class="controlls"><div id="open_fields_config_id">{translate line='admin_task_sets_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
+            <th colspan="7" class="controlls"><div id="open_fields_config_id">{translate line='admin_task_sets_table_header_controlls'}</div>{include file='partials/backend_general/fields_filter.tpl' fields=$filter.fields inline}</th>
         </tr>
     </thead>
     <tfoot id="table_pagination_footer_id">
         <tr>
-            <td colspan="{7 + $filter.fields|sum_array}">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
+            <td colspan="{8 + $filter.fields|sum_array}">{include file='partials/backend_general/pagination.tpl' paged=$task_sets->paged inline}</td>
         </tr>
     </tfoot>
     <tbody>
@@ -77,6 +77,7 @@
             <td class="controlls"><a href="{internal_url url="admin_task_sets/open/task_set_id/{$task_set->id}"}" class="button special open_task_set_button" title="{translate line='admin_task_sets_table_button_open'}"><span class="list-icon list-icon-task-set-open"></span></a></td>
             <td class="controlls"><a href="{internal_url url="admin_task_sets/edit/task_set_id/{$task_set->id}"}" class="button" title="{translate line='admin_task_sets_table_button_edit'}"><span class="list-icon list-icon-edit"></span></a></td>
             <td class="controlls"><a href="{internal_url url="admin_task_sets/delete/task_set_id/{$task_set->id}"}" class="button delete" title="{translate line='admin_task_sets_table_button_delete'}"><span class="list-icon list-icon-delete"></span></a></td>
+            <td class="controlls">{if $task_set->content_type eq 'project'}<a href="{internal_url url="projects/overview/{$task_set->id}{overlay|text_convert_for_url table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}/{$this->lang->get_current_idiom()}"}" target="_blank" class="button special" title="{translate line='admin_task_sets_table_button_overview'}"><span class="list-icon list-icon-page-preview"></span></a>{/if}</td>
         </tr>
         {/foreach}
     </tbody>

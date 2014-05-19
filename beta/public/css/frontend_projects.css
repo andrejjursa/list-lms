@@ -45,3 +45,8 @@ table.solutions_table thead th.version { width: 45px; }
 table.solutions_table thead th.size { width: 100px; }
 table.solutions_table thead th.modified { width: 200px; }
 table.solutions_table tbody td { padding: 4px; border-bottom: 1px dashed silver; }
+
+fieldset > div.author { border-top: 1px solid black; }
+fieldset > div.students { border-top: 1px solid black; }
+fieldset > div.students span:after { content: ','; }
+fieldset > div.students span.last_student:after { content: ''; }
