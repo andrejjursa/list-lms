@@ -6,6 +6,7 @@ $lang['projects_task_page_header'] = 'Projects - task';
 $lang['projects_no_active_course'] = 'You have not selected active course, please select one to continue.';
 $lang['projects_no_project_found'] = 'Requested project was not found.';
 $lang['projects_no_task_found'] = 'Requested task not found.';
+$lang['projects_no_course'] = 'No project found or it is not published.';
 $lang['projects_list_table_header_name'] = 'Name';
 $lang['projects_list_table_header_selected'] = 'Selected task';
 $lang['projects_list_table_header_solutions'] = 'Solutions';

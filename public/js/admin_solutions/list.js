@@ -53,6 +53,11 @@ jQuery(document).ready(function($) {
         return false;
     }).setDisplayCondition('div.group_field_else', function() {
         return !this.isDisplayed('div.group_field');
+    }).setDisplayCondition('div.task_set_type_field', function() {
+        var filter_content_type = this.findElement('select[name="filter[content_type]"]').val();
+        return filter_content_type === 'task_set';
+    }).setDisplayCondition('div.task_set_type_field_else', function() {
+        return !this.isDisplayed('div.task_set_type_field');
     });
     $('#filter_form_id').activeForm().applyConditions();
     
