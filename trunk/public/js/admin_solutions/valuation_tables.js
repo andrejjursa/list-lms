@@ -10,20 +10,21 @@ jQuery(document).ready(function($) {
             //update_content_width();
             //sort_table('#table_content_id table.valuation_table', '#filter_form_id');
             var oTable = $('#valutation_table').dataTable({
-                'bPaginate': false,
-                'sScrollX': '100%',
-                'sScrollY': '400px',
-                'sScrillXInner': '1000px',
-                'bScrollCollapse': true,
-                'aaSorting': [[ 1, 'asc' ]],
-                'oLanguage': lang.dataTables
+                'paging': false,
+                'scrollX': '100%',
+                'scrollY': '400px',
+                'scrollCollapse': true,
+                'order': [[ 1, 'asc' ]],
+                'language': lang.dataTables,
+                dom: '<"top"ifClp<"clear">>rt',
+                colVis: {
+                    exclude: [ 0, 1 ]
+                }
             });
             
-            new FixedColumns( oTable, {
-                'sLeftWidth': 'relative',
-                'iLeftColumns': 2,
-                'iRightColumns': 1,
-                'iLeftWidth': 25
+            new $.fn.dataTable.FixedColumns( oTable, {
+                leftColumns: 2,
+                rightColumns: 1
             });
         };
         api_ajax_load(url, target, 'post', data, onSuccess);

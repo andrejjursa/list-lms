@@ -417,3 +417,19 @@ function get_lastname_from_fullname($fullname) {
     }
     return '';
 }
+
+function valuation_table_col_points_to_data_order($points) {
+    if ($points === '*') {
+        return -1000000;
+    }
+    if ($points === 'x') {
+        return -999999;
+    }
+    if ($points === '-') {
+        return -999998;
+    }
+    if ($points === '!') {
+        return -999997;
+    }
+    return (double)$points;
+}

@@ -608,10 +608,13 @@ class Solutions extends LIST_Controller {
         $this->inject_courses();
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_solutions/valuation_tables.js');
+        $this->parser->add_css_file('dataTables.fixedColumns.css');
+        $this->parser->add_css_file('dataTables.colVis.css');
         $this->parser->add_css_file('admin_solutions.css');
         $this->_add_dataTables();
         $this->parser->add_js_file('jquery.DataTables.FixedColumns.js');
         $this->parser->add_js_file('jquery-migrate-1.2.1.min.js');
+        $this->parser->add_js_file('dataTables.colVis.min.js');
         $this->parser->parse('backend/solutions/valuation_tables.tpl');
     }
     
