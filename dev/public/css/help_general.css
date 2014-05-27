@@ -28,3 +28,7 @@ div.flash_message { color: blue; margin: 5px; padding: 5px; border: 1px solid bl
 div.flash_message.message_success { border-color: green; box-shadow: 0px 0px 2px 2px green inset; background-color: #ADFF9A; color: green; }
 div.flash_message.message_error { border-color: red; box-shadow: 0px 0px 2px 2px red inset; background-color: #FFAFAF; color: red; }
 
+fieldset { margin: 5px; border: 1px solid gray; padding: 10px; border-radius: 5px; background-color: #E8E8E8; box-shadow: 5px 5px 10px silver; }
+fieldset > legend { border: 1px solid gray; margin-left: 5px; width: 50%; padding: 4px; border-radius: 5px; background-color: #E8E8E8; font-weight: bold; }
+
+hr.break { visibility: hidden; height: 1em; }

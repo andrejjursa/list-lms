@@ -8,19 +8,24 @@ jQuery(document).ready(function($){
             openClick : false,
             ulWidth : 200,
             effects : {
-                effectSpeedOpen : 150,
-                effectSpeedClose : 150,
-                effectTypeOpen : 'show',
-                effectTypeClose : 'hide',
+                effectSpeedOpen : 100,
+                effectSpeedClose : 100,
+                effectTypeOpen : 'slide',
+                effectTypeClose : 'slide',
                 effectOpen : 'linear',
                 effectClose : 'linear'
             },
             TimeBeforeOpening : 100,
             TimeBeforeClosing : 11,
-            animatedText : false,
+            animatedText : true,
             paddingLeft: 5
         });
     }
+    $('#jMenu a.manual_index').click(function(event) {
+        event.preventDefault();
+        var url = jQuery(this).attr('href');
+        window.open(url, '_blank', 'channelmode=no, directories=no, fullscreen=no, height=768, left=0, location=no, menubar=no, resizable=yes, scrollbars=yes, status=yes, titlebar=yes, toolbar=no, top=0, width=1024');
+    });
     $('a.adminmenu_logout').click(function(event) {
         if (!confirm(logout_question_text)) {
             event.preventDefault();

@@ -19,12 +19,23 @@ class Help extends LIST_Controller {
         $this->_load_student_langfile();
     }
     
+    public function backend() {
+        $this->usermanager->teacher_login_protected_redirect();
+        
+        $this->config->load('manual');
+        
+        $this->parser->assign('index', $this->config->item('backend_index'));
+        
+        $this->parser->parse('frontend/help/manual.tpl');
+    }
+    
     public function show($controller, $topic, $idiom = NULL) {
         $file_path = $controller . '/' . $topic . '.html';
         $path = APPPATH . 'manual/' . (is_null($idiom) ? $this->lang->get_current_idiom() : $idiom) . '/' . $file_path;
         if (file_exists($path)) {
             $help_content = file_get_contents($path);
-            $this->parser->parse('frontend/help/show.tpl', array('help_content' => $help_content));
+            $help_content_parsed = $this->parser->string_parse($help_content);
+            $this->parser->parse('frontend/help/show.tpl', array('help_content' => $help_content_parsed));
         } else {
             $options = array();
             $dirs = scandir(APPPATH . 'manual');

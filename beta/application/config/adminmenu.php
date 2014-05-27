@@ -160,6 +160,13 @@ $config['adminmenu'] = array(
             ),
         ),
     ),
+    array(
+        'title' => 'lang:adminmenu_title_manual_index',
+        'pagetag' => 'manual_index',
+        'link' => 'help/backend',
+        'class' => 'manual_index',
+        'sub' => NULL,
+    ),
 );
 
 ?>

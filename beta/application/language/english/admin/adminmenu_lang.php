@@ -28,6 +28,7 @@ $lang['adminmenu_title_valuation_tables'] = 'Valuation tables';
 $lang['adminmenu_title_comparation'] = 'Comparation';
 $lang['adminmenu_title_java_comparator'] = 'Java comparator';
 $lang['adminmenu_title_restrictions'] = 'Restrictions';
+$lang['adminmenu_title_manual_index'] = 'User manual';
 
 $lang['adminmenu_open_task_set_message'] = 'Open task set: %s (%s tasks)';
 $lang['adminmenu_open_task_set_nothing_opened'] = 'Nothing opened';
