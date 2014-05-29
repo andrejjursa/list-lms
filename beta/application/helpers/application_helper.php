@@ -305,6 +305,12 @@ function remove_base_url_from_overlay_array($overlay_array, $column_name) {
     return $overlay_array;
 }
 
+/**
+ * Copy all files and folders from one directory to another. Target directory will be created if it is not exist yet.
+ * @param string $from source directory.
+ * @param string $to target directory.
+ * @return boolean TRUE, if proccess of copying was completted successfully, FALSE otherwise.
+ */
 function clone_directory($from, $to) {
     set_time_limit(1200);
     if ($from == $to) { return FALSE; }
@@ -327,6 +333,11 @@ function clone_directory($from, $to) {
     return TRUE;
 }
 
+/**
+ * Converts number to time. Must be lower than 86400 to be converted.
+ * @param integer $number number.
+ * @return string|integer returns string representation of time from given number or input number if it is greater or equal than 86400.
+ */
 function is_time($number) {
     if (is_numeric($number) && intval($number) >= 0 && intval($number) < 86400) {
         $time = intval($number);
@@ -338,6 +349,11 @@ function is_time($number) {
     return $number;
 }
 
+/**
+ * Returns abbreviation of input text.
+ * @param string $input input text.
+ * @return string abbreviation.
+ */
 function abbreviation($input) {
     $letters = array();
     $words = explode(' ', $input);
@@ -361,10 +377,20 @@ function abbreviation($input) {
     return $shortname;
 }
 
+/**
+ * Converts all space characters to &nbsp; entity.
+ * @param string $input input text.
+ * @return string output text with converted spaces.
+ */
 function space_to_nbsp($input) {
     return preg_replace('/\s+/', '&nbsp;', $input);
 }
 
+/**
+ * Returns id from url part. ID must be first number before underscore character.
+ * @param string $url_part url part.
+ * @return integer|null integer value of ID or NULL if nothing is found.
+ */
 function url_get_id($url_part) {
     if (is_null($url_part) || trim($url_part) === '') { return NULL; }
     $id = '';
@@ -384,6 +410,12 @@ function url_get_id($url_part) {
     return NULL;
 }
 
+/**
+ * Normalizes text to be used in url.
+ * @param string $text text to normalize for url.
+ * @param string $prepend_if_possible optional string to prepend.
+ * @return string normalized text.
+ */
 function text_convert_for_url($text, $prepend_if_possible = '_') {
     $text1 = mb_strtolower($text);
     $text2 = normalize($text1);
@@ -398,10 +430,20 @@ function text_convert_for_url($text, $prepend_if_possible = '_') {
     return $text4 !== '' ? $prepend_if_possible . $text4 : '';
 }
 
+/**
+ * Converts first letter in text to upper case and the rest to lower case.
+ * @param string $text text to convert.
+ * @return string converted text.
+ */
 function str_to_first_upper($text) {
     return mb_strtoupper(mb_substr($text, 0, 1)) . mb_strtolower(mb_substr($text, 1));
 }
 
+/**
+ * Returns first name from full name.
+ * @param string $fullname full name.
+ * @return string first name.
+ */
 function get_firstname_from_fullname($fullname) {
     $end = mb_strrpos($fullname, ' ');
     if ($end !== FALSE) {
@@ -410,6 +452,11 @@ function get_firstname_from_fullname($fullname) {
     return $fullname;
 }
 
+/**
+ * Returns last name from full name.
+ * @param string $fullname full name.
+ * @return string last name.
+ */
 function get_lastname_from_fullname($fullname) {
     $end = mb_strrpos($fullname, ' ');
     if ($end !== FALSE) {
@@ -418,6 +465,11 @@ function get_lastname_from_fullname($fullname) {
     return '';
 }
 
+/**
+ * This function will replace some characters in evaluation table for numeric value.
+ * @param string|double $points numeric points or string chars.
+ * @return double numeric value.
+ */
 function valuation_table_col_points_to_data_order($points) {
     if ($points === '*') {
         return -1000000;
@@ -432,4 +484,22 @@ function valuation_table_col_points_to_data_order($points) {
         return -999997;
     }
     return (double)$points;
+}
+
+/**
+ * This function will indent text by given number of space characters.
+ * @param string $text input text.
+ * @param integer $for number of space characters.
+ * @return string indented text.
+ */
+function text_indent($text, $for = 2) {
+    $lines = explode("\n", $text);
+    $output = '';
+    for ($i = 0; $i < count($lines); $i++) {
+        $output .= str_repeat(' ', $for) . rtrim($lines[$i]);
+        if ($i < count($lines) - 1) {
+            $output .= PHP_EOL;
+        }
+    }
+    return $output;
 }

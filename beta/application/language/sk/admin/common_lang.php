@@ -19,6 +19,7 @@ $lang['common_pagination_rows_per_page'] = 'Záznamov na stránku';
 $lang['common_fields_filter_caption'] = 'Vyberte polia';
 
 $lang['common_datetime_format'] = '%d.%m.%Y %H:%M:%S';
+$lang['common_date_format'] = '%d.%m.%Y';
 
 $lang['common_table_header_created'] = 'Vytvorené';
 $lang['common_table_header_updated'] = 'Upravené';

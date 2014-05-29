@@ -90,6 +90,19 @@ class Settings extends LIST_Controller {
         return (bool)preg_match('/^(\.[a-z]+[a-z0-9]*){0,1}$/i', $str);
     }
     
+    public function changelog() {
+        $this->_select_teacher_menu_pagetag('settings_changelog');
+        $this->load->library('changelog');
+        try {
+            $this->changelog->read(FCPATH . 'changelog.txt');
+            $this->changelog->parse();
+        } catch (Exception $error) {
+            $this->parser->assign('error', $error->getMessage());
+        }
+        $this->parser->add_css_file('admin_settings.css');
+        $this->parser->parse('backend/settings/changelog.tpl', array('log' => $this->changelog->get()));
+    }
+
     private function bool_val($value) {
         if (is_numeric($value)) { return (bool)$value; }
         if (is_string($value)) { return strtolower($value) == 'true'; }

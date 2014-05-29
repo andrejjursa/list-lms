@@ -73,6 +73,8 @@ div.backend_body > fieldset > legend, fieldset.basefieldset > legend { border: 1
 div.backend_body > h4, div.backend_body > h3, div.backend_body > h2 { margin: 5px; text-shadow: 0 0 4px gray; color: black; }
 
 div.backend_footer { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; }
+div.backend_footer a { color: green; text-decoration: none; }
+div.backend_footer a:hover { color: darkgreen; text-decoration: underline; }
 
 form div.field_login,
 form div.buttons_login { margin: 4px 0; clear: both; }

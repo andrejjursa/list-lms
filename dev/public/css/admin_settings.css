@@ -1,1 +1,14 @@
 fieldset hr { border: 0; border-top: 1px solid gray; border-collapse: collapse; clear: both; width: 99%; }
+
+div.changelog_version { border-bottom: 1px solid silver; padding-bottom: 5px; margin-bottom: 5px; }
+div.changelog_version:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+div.changelog_version p.version { font-size: 1.3em; }
+div.changelog_version div.version_reports { margin-top: 5px; }
+div.changelog_version div.version_reports div.report { margin-bottom: 5px; }
+div.changelog_version div.version_reports div.report:last-child { margin-bottom: 0; }
+div.changelog_version div.version_reports div.report p.type { margin-left: 1em; font-size: 1.1em; font-weight: bold; }
+div.changelog_version div.version_reports div.report p.text { margin-left: 2em; margin-top: 2px; }
+div.changelog_version div.version_reports div.report.report_type_new p.text { color: green; }
+div.changelog_version div.version_reports div.report.report_type_change p.text { color: blue; }
+div.changelog_version div.version_reports div.report.report_type_fix p.text { color: magenta; }
+div.changelog_version div.version_reports div.report.report_type_remove p.text { color: red; }
