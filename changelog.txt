@@ -1,0 +1,34 @@
+################################################################################
+# Changelog file syntax:                                                       #
+#                                                                              #
+# Each command must start without whitechars on the beginning of line.         #
+#                                                                              #
+# Each version must begin with VERSION <version> | <date: YYYY-MM-DD>          #
+# After version reports version must be ended with END VERSION                 #
+#                                                                              #
+# You can write comment, it starts with # and it must be first character in    #
+# line.                                                                        #
+#                                                                              #
+# Each report must start with it type: NEW, FIX, CHANGE, REMOVE                #
+# Optionally, there may be language overlay for previos report                 #
+# which is written as [lang:<language idiom>] just after type                  #
+# on the next line after default report text.                                  #
+#                                                                              #
+# Multiline reports can be written as well, they must start with ML <type>     #
+# and end with END <type>. Optionally, language overlay may be added.          #
+# In multiline report, text is written between starting and ending line, and   #
+# in the body of this report comments can't be used.                           #
+################################################################################
+
+VERSION 1.0.8 | 2014-05-29
+
+NEW Pridaný changelog súbor a parser na jeho zobrazovanie.
+NEW [lang:english] Added changelog file and parser for its rendering.
+
+NEW Pridaná stránka do administrácie na zobrazovanie changelog súboru.
+NEW [lang:english] Added page into administration to display changelog file.
+
+CHANGE V pätičke stránky administrácie sa verzia systému zobrazuje ako linka na stránku s changelog súborom.
+CHANGE [lang:english] In administration page footer is now version of system displayed as link to page with changelog.
+
+END VERSION
