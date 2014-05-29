@@ -122,7 +122,7 @@ class Comparator extends LIST_Controller {
                         $file = $task_set->get_student_files($student, $version);
                         if (count($file) == 1) {
                             $file = $file[$version];
-                            $subdir = '/' . $file['file_name'] . '_sid-' . $file['student_id'] . '_ver-' . $file['version'];
+                            $subdir = '/' . normalize($file['file_name']) . '_sid-' . $file['student_id'] . '_ver-' . $file['version'];
                             $extract_path = $path_source . $subdir;
                             @mkdir($extract_path, DIR_WRITE_MODE, TRUE);
                             $status = $task_set->extract_student_zip_to_folder($file['file'], $extract_path, array('java'));
