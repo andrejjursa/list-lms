@@ -7,12 +7,8 @@
             <tr>
                 <th rowspan="2" class="static">{translate line='admin_solutions_valuation_tables_table_header_student_firstname'}</th>
                 <th rowspan="2" class="static">{translate line='admin_solutions_valuation_tables_table_header_student_lastname'}</th>
-                {if count($table_data.header.content_type_task_set.items) gt 0}
                 <th class="content_type_task_sets centering" colspan="{$table_data.header.content_type_task_set.items|count + 1}">{$table_data.header.content_type_task_set.content_type_name}</th>
-                {/if}
-                {if count($table_data.header.content_type_project.items) gt 0}
                 <th class="content_type_projects centering" colspan="{$table_data.header.content_type_project.items|count + 1}">{$table_data.header.content_type_project.content_type_name}</th>
-                {/if}
                 <th rowspan="2" class="total_sum">{translate line='admin_solutions_valuation_tables_table_header_total'}</th>
             </tr>
             <tr>
@@ -23,15 +19,11 @@
                         <th class="type_{$header_item.type} ctype_task_set" title="{$header_item.name|escape:'html'}{if $header_item.title} | {$header_item.title|escape:'html'}{/if}">{$header_item.name|abbreviation}</th>
                     {/if}
                 {/foreach}
-                {if count($table_data.header.content_type_task_set.items) gt 0}
-                    <th class="summary ctype_task_set">{translate line='admin_solutions_valuation_tables_table_header_task_sets_subtotal'}</th>
-                {/if}
+                <th class="summary ctype_task_set">{translate line='admin_solutions_valuation_tables_table_header_task_sets_subtotal'}</th>
                 {foreach $table_data.header.content_type_project.items as $header_item}
                     <th class="type_{$header_item.type} ctype_project" title="{$header_item.name|escape:'html'}">{$header_item.name|abbreviation}</th>
                 {/foreach}
-                {if count($table_data.header.content_type_project.items) gt 0}
                 <th class="summary ctype_project">{translate line='admin_solutions_valuation_tables_table_header_projects_subtotal'}</th>
-                {/if}
             </tr>
             {else}
             <tr>
@@ -52,14 +44,14 @@
                     {foreach $row.task_sets_points as $item}
                         <td class="type_{$item.type} flag_{$item.flag} ctype_task_set" title="{translate line="admin_solutions_valuation_tables_table_body_flag_{$item.flag}"}" data-order="{$item.points|valuation_table_col_points_to_data_order}" data-sort="{$item.points|valuation_table_col_points_to_data_order}">{$item.points}</td>
                     {/foreach}
-                    <td class="type_summary ctype_task_set">{$row.task_sets_points_total}</td>
                 {/if}
+                <td class="type_summary ctype_task_set">{$row.task_sets_points_total}</td>
                 {if count($row.projects_points) gt 0}
                     {foreach $row.projects_points as $item}
                         <td class="type_{$item.type} flag_{$item.flag} ctype_project" title="{translate line="admin_solutions_valuation_tables_table_body_flag_{$item.flag}"}" data-order="{$item.points|valuation_table_col_points_to_data_order}" data-sort="{$item.points|valuation_table_col_points_to_data_order}">{$item.points}</td>
                     {/foreach}
-                    <td class="type_summary ctype_project">{$row.projects_points_total}</td>
                 {/if}
+                <td class="type_summary ctype_project">{$row.projects_points_total}</td>
                 {else}
                 <td>{translate line='admin_solutions_valuation_tables_table_body_no_content'}</td>
                 {/if}

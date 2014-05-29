@@ -31,4 +31,7 @@ NEW [lang:english] Added page into administration to display changelog file.
 CHANGE V pätičke stránky administrácie sa verzia systému zobrazuje ako linka na stránku s changelog súborom.
 CHANGE [lang:english] In administration page footer is now version of system displayed as link to page with changelog.
 
+FIX V tabuľke hodnotení sa opäť zobrazujú projekty, keď je tabuľka v zjednodušenom formáte.
+FIX [lang:english] In evaluation table there are again visible projects when table is in simplified format.
+
 END VERSION
