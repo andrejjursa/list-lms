@@ -1,7 +1,7 @@
 {include file='partials/backend_general/flash_messages.tpl' inline}
 <div class="field">
     <label for="participant_course_id" class="required">{translate line='admin_participants_form_label_course'}:</label>
-    <p class="input"><select name="participant[course]" size="1" id="participant_course_id">{list_html_options options=$courses selected=$smarty.post.participant.course|intval}</select></p>
+    <p class="input"><select name="participant[course]" size="1" id="participant_course_id">{list_html_options options=$courses selected=$smarty.post.participant.course|default:$list_teacher_account.prefered_course_id|intval}</select></p>
     {form_error field='participant[course]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
 </div>
 <div class="field group_field" style="display: none;">

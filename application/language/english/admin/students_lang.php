@@ -27,6 +27,7 @@ $lang['admin_students_form_error_email_not_available'] = 'The <strong>%s</strong
 $lang['admin_students_button_csv_import'] = 'Import students from CSV file';
 $lang['admin_students_filter_form_label_fullname'] = 'Filter by full name';
 $lang['admin_students_filter_form_label_email'] = 'Filter by e-mail';
+$lang['admin_students_filter_form_label_course'] = 'Filter by course';
 $lang['admin_students_filter_form_submit_button'] = 'Apply';
 $lang['admin_students_failed_to_force_login'] = 'Failed to enforce student login.';
 $lang['admin_students_csv_import_page_title'] = 'Students manager - CSV import';
