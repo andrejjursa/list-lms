@@ -159,6 +159,13 @@ $config['adminmenu'] = array(
                 'sub' => NULL,
             ),
             array(
+                'title' => 'lang:adminmenu_title_activity_logs',
+                'pagetag' => 'logs',
+                'link' => 'admin_logs',
+                'class' => '',
+                'sub' => NULL,
+            ),
+            array(
                 'title' => 'lang:adminmenu_title_application_changelog',
                 'pagetag' => 'settings_changelog',
                 'link' => 'admin_settings/changelog',

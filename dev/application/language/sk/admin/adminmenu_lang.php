@@ -30,6 +30,7 @@ $lang['adminmenu_title_java_comparator'] = 'Porovnávač Java';
 $lang['adminmenu_title_restrictions'] = 'Obmedzenia';
 $lang['adminmenu_title_application_changelog'] = 'Záznam zmien';
 $lang['adminmenu_title_manual_index'] = 'Použív. manuál';
+$lang['adminmenu_title_activity_logs'] = 'Záznamy aktivít';
 
 $lang['adminmenu_open_task_set_message'] = 'Otvorená zostava úloh: %s (%s úloh)';
 $lang['adminmenu_open_task_set_nothing_opened'] = 'Nič nie je otvorené';

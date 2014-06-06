@@ -95,6 +95,8 @@ class Usermanager {
             unset($userdata['updated']);
             $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_STUDENT, $userdata);
             $this->validate_student_login_verification(TRUE);
+            $log = new Log();
+            $log->add_student_login_log($this->CI->lang->line('students_login_successful_log_message'), NULL, $this->get_student_id());
             return TRUE;
         } else {
             $this->validate_student_login_verification(FALSE);
@@ -116,6 +118,8 @@ class Usermanager {
             unset($userdata['updated']);
             $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_STUDENT, $userdata);
             $this->validate_student_login_verification(TRUE);
+            $log = new Log();
+            $log->add_student_login_log($this->CI->lang->line('students_login_forced_log_message'), $this->get_teacher_id(), $this->get_student_id());
             return TRUE;
         } else {
             return FALSE;

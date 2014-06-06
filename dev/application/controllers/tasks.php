@@ -175,6 +175,10 @@ class Tasks extends LIST_Controller {
                 $filename = decode_from_url($file);
                 $file_info = $task_set->get_specific_file_info($filename);
                 if ($file_info !== FALSE) {
+                    $log = new Log();
+                    if (!$this->usermanager->is_teacher_session_valid()) {
+                        $log->add_student_solution_download_log($this->lang->line('tasks_log_message_student_solution_download'), $this->usermanager->get_student_id(), $filename, $task_set->id);
+                    }
                     $filename = $file_info['file_name'] . '_' . $file_info['version'] . '.zip';
                     $finfo = finfo_open(FILEINFO_MIME_TYPE);
                     $mime_type = finfo_file($finfo, $file_info['filepath']);
