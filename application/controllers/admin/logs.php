@@ -54,7 +54,7 @@ class Logs extends LIST_Controller {
                 $solution->include_related('task_set');
                 $solution->include_related('task_set/course');
                 $solution->include_related('task_set/course/period');
-                $solution->get_by_id($log->affected_table_primary_id);
+                $solution->get_by_id((int)$log->affected_row_primary_id);
                 $this->parser->assign('solution', $solution);
             } elseif ($log->log_type == Log::LOG_TYPE_STUDENT_SOLUTION_DOWNLOAD) {
                 $additional_data = unserialize($log->additional_data);
