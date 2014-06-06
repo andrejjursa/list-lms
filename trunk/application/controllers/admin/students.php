@@ -24,6 +24,7 @@ class Students extends LIST_Controller {
         $this->parser->add_js_file('admin_students/list.js');
         $this->parser->add_css_file('admin_students.css');
         $this->inject_stored_filter();
+        $this->inject_courses();
         $this->parser->parse('backend/students/index.tpl');
     }
     
@@ -40,6 +41,10 @@ class Students extends LIST_Controller {
         }
         if (isset($filter['email']) && trim($filter['email']) != '') {
             $students->like('email', trim($filter['email']));
+        }
+        if (isset($filter['course']) && $filter['course'] !== '') {
+            $students->where_related('participant/course', 'id', (int)$filter['course']);
+            $students->where_related('participant', 'allowed', 1);
         }
         $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
         if ($filter['order_by_field'] == 'fullname') {

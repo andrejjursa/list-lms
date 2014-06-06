@@ -18,7 +18,7 @@
     <div class="col_50p">
         <div class="field">
             <label for="taks_set_course_id_id" class="required">{translate line='admin_task_sets_form_label_course_id'}:</label>
-            <p class="input"><select name="task_set[course_id]" size="1" id="taks_set_course_id_id">{list_html_options options=$courses selected=$smarty.post.task_set.course_id|intval}</select></p>
+            <p class="input"><select name="task_set[course_id]" size="1" id="taks_set_course_id_id">{list_html_options options=$courses selected=$smarty.post.task_set.course_id|default:$list_teacher_account.prefered_course_id|intval}</select></p>
             {form_error field='task_set[course_id]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
         </div>
         <div class="field task_set_type_field" style="display: none;">

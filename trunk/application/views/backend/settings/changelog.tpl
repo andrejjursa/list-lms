@@ -15,7 +15,7 @@
                         {foreach $content.reports as $report}
                         <div class="report report_type_{$report->getType()|strtolower}">
                             <p class="type">{translate line="admin_settings_changelog_type_{$report->getType()|strtolower}"}:</p>
-                            <p class="text">{$report->getText($this->lang->get_current_idiom())|nl2br}</p>
+                            <p class="text">{$report->getText($this->lang->get_current_idiom())|changelog_to_html}</p>
                         </div>
                         {/foreach}
                     </div>

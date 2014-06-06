@@ -27,6 +27,7 @@ $lang['admin_students_form_error_email_not_available'] = 'Pole <strong>%s</stron
 $lang['admin_students_button_csv_import'] = 'Importovať študentov zo súboru CSV';
 $lang['admin_students_filter_form_label_fullname'] = 'Filtrovať podľa celého mena';
 $lang['admin_students_filter_form_label_email'] = 'Filtrovať podľa e-mailu';
+$lang['admin_students_filter_form_label_course'] = 'Filtrovať podľa kurzu';
 $lang['admin_students_filter_form_submit_button'] = 'Použiť';
 $lang['admin_students_failed_to_force_login'] = 'Zlyhalo vynútenie študentského prihlásenia.';
 $lang['admin_students_csv_import_page_title'] = 'Správa študentov - import z CSV';

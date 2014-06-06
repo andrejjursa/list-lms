@@ -1,3 +1,3 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-$config['list_version'] = '1.0.8';
+$config['list_version'] = '1.0.8a';

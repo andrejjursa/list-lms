@@ -24,6 +24,13 @@
                     <label for="filter_email_id">{translate line='admin_students_filter_form_label_email'}:</label>
                     <p class="input"><input type="text" name="filter[email]" value="{$filter.email|escape:'html'}" id="filter_email_id" /></p>
                 </div>
+                <div class="field">
+                    <label for="filter_course_id">{translate line='admin_students_filter_form_label_course'}:</label>
+                    <p class="input"><select name="filter[course]" id="filter_course_id" size="1">
+                        <option></option>
+                        {list_html_options options=$courses selected=$filter.course|intval}
+                    </select></p>
+                </div>
                 <div class="buttons">
                     <input type="submit" name="filter_submit" value="{translate line='admin_students_filter_form_submit_button'}" class="button" />
                     <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />

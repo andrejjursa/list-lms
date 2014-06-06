@@ -91,6 +91,7 @@ class Settings extends LIST_Controller {
     }
     
     public function changelog() {
+        $this->load->helper('changelog');
         $this->_select_teacher_menu_pagetag('settings_changelog');
         $this->load->library('changelog');
         try {
