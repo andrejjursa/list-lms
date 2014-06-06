@@ -20,6 +20,26 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.0.8a | 2014-06-06
+
+ML NEW
+Do nasledujúcich formulárov sa automaticky vypĺňa preferovaný kurz:
+- formulár na vytvorenie novej skupiny,
+- formulár na vytvorenie novej zostavy úloh / projektu,
+- formulár na pridávanie študentov do kurzu.
+END NEW
+ML NEW [lang:english]
+To the following forms are now prefered course automatically filled:
+- form for new group,
+- form for new task set / project,
+- form for adding students into course.
+END NEW
+
+NEW V správe študentov možno vyhľadávať študentov podľa ich účasti v kurze.
+NEW [lang:english] In student manager it is now possible to filter students by course.
+
+END VERSION
+
 VERSION 1.0.8 | 2014-05-29
 
 NEW Pridaný changelog súbor a parser na jeho zobrazovanie.
