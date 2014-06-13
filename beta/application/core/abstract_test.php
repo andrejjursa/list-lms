@@ -541,6 +541,25 @@ abstract class abstract_test {
         
         return rtrim($output);
     }
+    
+    /**
+     * Converts html special chars and protect &lt;br /&gt; tags.
+     * @param string $output test output.
+     * @return string converted output.
+     */
+    protected function encode_output($output) {
+        $find = array(
+            '/\&lt\;br[\s]*[\/]?\&gt\;/i',
+            '/\&lt\;pre[\s]*\&gt\;/i',
+            '/\&lt\;\/pre[\s]*\&gt\;/i',
+        );
+        $replace = array(
+            '<br />',
+            '<pre>',
+            '</pre>',
+        );
+        return preg_replace($find, $replace, htmlspecialchars($output));
+    }
 }
 
 class TestException extends Exception {

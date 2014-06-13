@@ -15,6 +15,59 @@
                         </select>
                     </div>
                 </div>
+                <div class="columns">
+                    <div class="col_50p">
+                        <div class="field">
+                            <label>{translate line='admin_logs_filter_field_label_interval_start'}:</label>
+                            <div class="input">
+                                <input type="text" name="filter[interval_start]" value="{$filter.interval_start|escape:'html'}" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>{translate line='admin_logs_filter_field_label_interval_end'}:</label>
+                            <div class="input">
+                                <input type="text" name="filter[interval_end]" value="{$filter.interval_end|escape:'html'}" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>{translate line='admin_logs_filter_field_label_ip_address'}:</label>
+                            <div class="input">
+                                <input type="text" name="filter[ip_address]" value="{$filter.ip_address|escape:'html'}" />
+                            </div>
+                            <p class="input"><em>{translate line='admin_logs_filter_field_label_ip_address_hint'}</em></p>
+                        </div>
+                    </div>
+                    <div class="col_50p">
+                        <div class="field">
+                            <label>{translate line='admin_logs_filter_field_label_course'}:</label>
+                            <div class="input">
+                                <select name="filter[course]" size="1">
+                                    <option></option>
+                                    {list_html_options options=$courses selected=$filter.course}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>{translate line='admin_logs_filter_field_label_student'}:</label>
+                            <div class="input">
+                                <select name="filter[student]" size="1">
+                                    <option></option>
+                                    {list_html_options options=$students selected=$filter.student}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>{translate line='admin_logs_filter_field_label_teacher'}:</label>
+                            <div class="input">
+                                <select name="filter[teacher]" size="1">
+                                    <option></option>
+                                    {list_html_options options=$teachers selected=$filter.teacher}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
                 <div class="buttons">
                     <input type="submit" value="{translate line='admin_logs_filter_submit_button'}" class="button" />
                     <input type="hidden" name="filter[page]" value="{$filter.page|default:1|intval}" />
