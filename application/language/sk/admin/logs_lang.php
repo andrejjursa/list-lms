@@ -23,6 +23,13 @@ $lang['admin_logs_table_content_no_logs'] = 'Momentálne tu nie sú žiadne záz
 $lang['admin_logs_table_button_details'] = 'Detaily';
 
 $lang['admin_logs_filter_field_label_type'] = 'Filtrovať podľa typu';
+$lang['admin_logs_filter_field_label_interval_start'] = 'Filtrovať podľa časového intervalu [štart]';
+$lang['admin_logs_filter_field_label_interval_end'] = 'Filtrovať podľa časového intervalu [koniec]';
+$lang['admin_logs_filter_field_label_ip_address'] = 'Filtrovať podľa IP adresy';
+$lang['admin_logs_filter_field_label_ip_address_hint'] = 'Musíte uviesť platnú a presnú IP adresu alebo dve platné a presné IP adresy ako rozsah pre filtrovanie. <strong>Príklad:</strong> 10.0.0.1-10.0.0.100';
+$lang['admin_logs_filter_field_label_course'] = 'Filtrovať podľa študentskej relácie s kurzom';
+$lang['admin_logs_filter_field_label_student'] = 'Filtrovať podľa študenta';
+$lang['admin_logs_filter_field_label_teacher'] = 'Filtrovať podľa učiteľa';
 $lang['admin_logs_filter_submit_button'] = 'Použiť';
 
 $lang['admin_logs_log_not_found'] = 'Záznam sa nenašiel.';

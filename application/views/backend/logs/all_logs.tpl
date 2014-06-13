@@ -31,7 +31,7 @@
         </tr>
         {foreachelse}
         <tr>
-            <td colspan="8">{include file='partials/backend_general/error_box.tpl' message='admin_logs_table_content_no_logs' inline}</td>
+            <td colspan="8">{include file='partials/backend_general/error_box.tpl' message='lang:admin_logs_table_content_no_logs' inline}</td>
         </tr>
         {/foreach}
     </tbody>
