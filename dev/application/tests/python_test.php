@@ -52,7 +52,7 @@ class python_test extends abstract_test {
         
         $lines = (int)$this->get_current_test_configuration_value('max_output_lines');
                 
-        return $this->truncate_lines($output, $lines);
+        return $this->encode_output($this->truncate_lines($output, $lines));
     }
     
     protected function save_unit_test_config($new_config) {

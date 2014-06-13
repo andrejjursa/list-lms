@@ -47,4 +47,10 @@ jQuery(document).ready(function($){
         });
     });
     
+    $('#filter_form_id input[name=\'filter[interval_start]\'], #filter_form_id input[name=\'filter[interval_end]\']').datetimepicker({
+        showSecond: true,
+        dateFormat: 'yy-mm-dd',
+        timeFormat: 'HH:mm:ss'
+    });
+    
 });

@@ -50,7 +50,7 @@ class go_test extends abstract_test {
         
         $this->delete_test_directory();
         
-        return $output;
+        return $this->encode_output($output);
     }
     
     protected function save_unit_test_config($new_config) {

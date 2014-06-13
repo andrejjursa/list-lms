@@ -23,6 +23,13 @@ $lang['admin_logs_table_content_no_logs'] = 'There is no logs here for now.';
 $lang['admin_logs_table_button_details'] = 'Details';
 
 $lang['admin_logs_filter_field_label_type'] = 'Filter by type';
+$lang['admin_logs_filter_field_label_interval_start'] = 'Filter by time interval [start]';
+$lang['admin_logs_filter_field_label_interval_end'] = 'Filter by time interval [end]';
+$lang['admin_logs_filter_field_label_ip_address'] = 'Filter by IP address';
+$lang['admin_logs_filter_field_label_ip_address_hint'] = 'You must provide valid and exact IP address or you can provide two valid and exact IP addresses as a range for filtering. <strong>Example:</strong> 10.0.0.1-10.0.0.100';
+$lang['admin_logs_filter_field_label_course'] = 'Filter by student related course';
+$lang['admin_logs_filter_field_label_student'] = 'Filter by student';
+$lang['admin_logs_filter_field_label_teacher'] = 'Filter by teacher';
 $lang['admin_logs_filter_submit_button'] = 'Apply';
 
 $lang['admin_logs_log_not_found'] = 'Log not found.';
