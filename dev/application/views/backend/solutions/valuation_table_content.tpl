@@ -1,6 +1,5 @@
 {if $course->exists()}
     <h3>{translate_text text=$course->name} / {translate_text text=$course->period_name}{if $group->exists()} / {translate_text text=$group->name}{/if}</h3>
-    
     <table id="valutation_table" width="100%">
         <thead>
             {if count($table_data.header.content_type_task_set.items) gt 0 or count($table_data.header.content_type_project.items) gt 0}
@@ -37,8 +36,8 @@
         <tbody>
             {foreach $table_data.content as $row}
             <tr class="gradeA">
-                <td><a href="mailto:{$row.email}">{$row.fullname|get_firstname_from_fullname}</a></td>
-                <td><a href="mailto:{$row.email}">{$row.fullname|get_lastname_from_fullname}</a></td>
+                <td class="type_name"><a href="mailto:{$row.email}">{$row.fullname|get_firstname_from_fullname}</a></td>
+                <td class="type_name"><a href="mailto:{$row.email}">{$row.fullname|get_lastname_from_fullname}</a></td>
                 {if count($row.task_sets_points) gt 0 or count($row.projects_points) gt 0}
                 {if count($row.task_sets_points) gt 0}
                     {foreach $row.task_sets_points as $item}

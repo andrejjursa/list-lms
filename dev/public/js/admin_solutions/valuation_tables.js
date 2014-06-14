@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
         var onSuccess = function() {
             //update_content_width();
             //sort_table('#table_content_id table.valuation_table', '#filter_form_id');
-            var oTable = $('#valutation_table').dataTable({
+            /*var oTable = $('#valutation_table').dataTable({
                 'paging': false,
                 'scrollX': '100%',
                 'scrollY': '400px',
@@ -25,7 +25,7 @@ jQuery(document).ready(function($) {
             new $.fn.dataTable.FixedColumns( oTable, {
                 leftColumns: 2,
                 rightColumns: 1
-            });
+            });*/
         };
         api_ajax_load(url, target, 'post', data, onSuccess);
     };
