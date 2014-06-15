@@ -78,7 +78,7 @@
     
     /*#table_content_id { position: relative; height: 600px; }*/
     /*#valutation_table_wrapper { margin-top: 10px; position: absolute; left: 0px; right: 0px; }*/
-    #valutation_table tbody tr td { padding: 3px; }
+    #valutation_table tbody tr td { padding: 3px; text-align: center; }
     #valutation_table tbody tr td.type_task_set.flag_notSubmitted { color: red; }
     #valutation_table tbody tr td.type_task_set.flag_notInGroup { color: darkslategrey; }
     #valutation_table tbody tr td.type_task_set.flag_revalidate { color: blue; }
