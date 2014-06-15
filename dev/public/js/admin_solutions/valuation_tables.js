@@ -92,4 +92,69 @@ jQuery(document).ready(function($) {
         $(this).parent().removeClass('clicked');
     });
     
+    var sort_table_by_col = function(col_position, direction, sort_type) {
+        if (typeof sort_type === 'undefined') { sort_type = 'numeric'; }
+        
+        var sorting = [];
+        
+        var temporary_location = $('<div></div>').css('display', 'none');
+        temporary_location.appendTo('body');
+        
+        $('#valutation_table tbody tr').each(function(){
+            var index = $(this).attr('data-row');
+            var value = $(this).find('td[data-position="' + col_position + '"]').attr('data-order');
+            sorting.push({idx: index, val: value});
+            $(this).appendTo(temporary_location);
+        });
+        
+        console.log(sorting);
+        
+        sorting.sort(function(a, b) {
+            if (sort_type === 'numeric') {
+                if (parseFloat(a.val) > parseFloat(b.val)) {
+                    return direction === 'asc' ? 1 : -1;
+                }
+                if (parseFloat(a.val) < parseFloat(b.val)) {
+                    return direction === 'asc' ? -1 : 1;
+                }
+            } else {
+                if (a.val > b.val) {
+                    return direction === 'asc' ? 1 : -1;
+                }
+                if (a.val < b.val) {
+                    return direction === 'asc' ? -1 : 1;
+                }
+            }
+            return 0;
+        });
+        
+        console.log(sorting);
+        
+        var table = $('#valutation_table tbody');
+        
+        for(var idx in sorting) {
+            var row = sorting[idx];
+            var row_obj = temporary_location.find('tr[data-row="' + row.idx + '"]');
+            row_obj.appendTo(table);
+        }
+        
+        temporary_location.remove();
+    };
+    
+    var last_order_by = '';
+    var last_order_by_direction = 'asc';
+    
+    $(document).on('click', '#valutation_table thead tr th[data-position]', function() {
+        var column_to_sort = $(this).attr('data-position');
+        var sort_type = 'numeric';
+        var direction = 'desc';
+        if (column_to_sort <= 2) { sort_type = 'alpha'; direction = 'asc'; }
+        if (last_order_by === column_to_sort) {
+            direction = last_order_by_direction === 'asc' ? 'desc' : 'asc';
+        }
+        sort_table_by_col(column_to_sort, direction, sort_type);
+        last_order_by = column_to_sort;
+        last_order_by_direction = direction;
+    });
+    
 });

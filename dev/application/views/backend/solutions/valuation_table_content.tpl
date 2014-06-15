@@ -34,8 +34,9 @@
             {/if}
         </thead>
         <tbody>
+            {$col_index = 1}
             {foreach $table_data.content as $row}{$col_position = 3}
-            <tr class="gradeA">
+            <tr data-row="{$col_index}">
                 <td class="type_name" data-order="{$row.fullname|get_firstname_from_fullname|normalize|strtolower}" data-position="1"><a href="mailto:{$row.email}">{$row.fullname|get_firstname_from_fullname}</a></td>
                 <td class="type_name" data-order="{$row.fullname|get_lastname_from_fullname|normalize|strtolower}" data-position="2"><a href="mailto:{$row.email}">{$row.fullname|get_lastname_from_fullname}</a></td>
                 {if count($row.task_sets_points) gt 0 or count($row.projects_points) gt 0}
@@ -55,7 +56,7 @@
                 <td data-position="{$col_position}" data-order="0">{translate line='admin_solutions_valuation_tables_table_body_no_content'}</td>{$col_position = $col_position + 1}
                 {/if}
                 <td class="type_summary" data-order="{$row.total_points}" data-position="{$col_position}">{$row.total_points}</td>
-            </tr>
+            </tr>{$col_index = $col_index + 1}
             {/foreach}
         </tbody>
     </table>
