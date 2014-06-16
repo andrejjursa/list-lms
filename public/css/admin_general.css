@@ -6,7 +6,7 @@ table { border-collapse: collapse; }
 nav { background-color:#322f32; padding: 0 10px; margin-top: 10px; box-shadow: 0px 0px 5px 5px #322f32; }
 #pagewrap_id { min-width: 800px; }
 #headerwrap_id { position: fixed; top: 0px; width: 100%; background-color: white; z-index: 100; min-width: 800px; }
-div.header_margin { margin-top: 140px !important; }
+/*div.header_margin { margin-top: 140px !important; }*/
 
 .button { transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; padding: 4px 10px; border: 1px solid green; border-radius: 30px; background-color: #B6FBA6; color: black; box-shadow: -3px -3px 3px gray inset; text-decoration: none; font-size: 0.9em; white-space: nowrap; }
 a.button { padding-top: 3px; display: inline-block; }
@@ -65,6 +65,8 @@ ul.ui-menu li a { color: green !important; }
 
 div.loginbox { width: 400px; margin: 150px auto 0 auto; padding: 20px; border: 1px solid black; border-radius: 15px; box-shadow: 15px 15px 15px silver; }
 div.loginbox h1 { margin: 0 0 15px 0; text-shadow: 0 0 4px gray; color: black; }
+
+#body_id { position: absolute; top: 130px; left: 0; right: 0; bottom: 0; overflow-y: scroll; }
 
 div.backend_body { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; }
 

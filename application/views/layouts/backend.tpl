@@ -48,8 +48,10 @@
                 <p>Long-term Internet Storage of Tasks</p>
                 <nav>{make_adminmenu menu=$list_adminmenu current=$list_adminmenu_current}</nav>
             </div>
-            <div class="backend_body header_margin">{block name='main_content'}{/block}</div>
-            <div class="backend_footer">{translate|sprintf:'Andrej Jursa':2013:{translate line='common_copyright_faculty'}:"<a href=\"{internal_url url='admin_settings/changelog'}\">{$this->config->item('list_version')}</a>" line='commont_copyright_text'}</div>
+            <div id="body_id">
+                <div class="backend_body header_margin">{block name='main_content'}{/block}</div>
+                <div class="backend_footer">{translate|sprintf:'Andrej Jursa':2013:{translate line='common_copyright_faculty'}:"<a href=\"{internal_url url='admin_settings/changelog'}\">{$this->config->item('list_version')}</a>" line='commont_copyright_text'}</div>
+            </div>
         </div>
     </body>
 </html>
