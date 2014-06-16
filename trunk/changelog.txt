@@ -20,6 +20,16 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.0.9b | 2014-06-16
+
+CHANGE Tvar tabuľky hodnotení bol opäť vrátený do pôvodného stavu bez pluginu jQuery DataTables.
+CHANGE [lang:english] Evaluation table was again returned to it original shape without jQuery DataTables plugin.
+
+NEW Tabuľka hodnotení má teraz natívne javascriptové triedenie po stĺpcoch a zobrazovanie/skrývanie stĺpcov.
+NEW [lang:english] Evaluation table have now native javascript based sorting by column and show/hide column.
+
+END VERSION
+
 VERSION 1.0.9a | 2014-06-13
 
 ML NEW

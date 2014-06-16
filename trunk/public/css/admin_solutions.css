@@ -76,26 +76,55 @@
     #table_content_id { width: 100%; }
     #table_content_id h3 { margin-top: 10px; }
     
-    #table_content_id { position: relative; height: 600px; }
-    #valutation_table_wrapper { margin-top: 10px; position: absolute; left: 0px; right: 0px; }
-    #valutation_table tbody tr td a { color: blue; text-decoration: underline; }
+    /*#table_content_id { position: relative; height: 600px; }*/
+    /*#valutation_table_wrapper { margin-top: 10px; position: absolute; left: 0px; right: 0px; }*/
+    #valutation_table tbody tr td { padding: 3px; text-align: center; }
     #valutation_table tbody tr td.type_task_set.flag_notSubmitted { color: red; }
     #valutation_table tbody tr td.type_task_set.flag_notInGroup { color: darkslategrey; }
     #valutation_table tbody tr td.type_task_set.flag_revalidate { color: blue; }
     #valutation_table tbody tr td.type_task_set.flag_notConsidered { color: magenta; }
     #valutation_table tbody tr td.type_summary,
     #valutation_table tbody tr td.type_task_set_type { font-weight: bold; }
-    #valutation_table_wrapper thead tr th.content_type_task_sets { background-color: #f4ffa4; }
-    #valutation_table_wrapper thead tr th.content_type_projects { background-color: #ffc6c6; }
-    #valutation_table_wrapper thead tr th.static { background-color: #50a050; }
-    #valutation_table_wrapper thead tr th.total_sum { background-color: #96BFFF; }
-    #valutation_table_wrapper thead tr th.ctype_task_set.type_task_set { background-color: #f4ff84; }
-    #valutation_table_wrapper thead tr th.ctype_task_set.type_task_set_type { background-color: #ffff33; }
-    #valutation_table_wrapper thead tr th.ctype_task_set.summary { background-color: #eeee34; }
-    #valutation_table_wrapper thead tr th.ctype_project.type_task_set { background-color: #ff9696; }
-    #valutation_table_wrapper thead tr th.ctype_project.summary { background-color: #ff6666; }
-    #valutation_table_wrapper thead tr th { text-align: left; font-weight: bold; }
-    #valutation_table_wrapper thead tr th.centering { text-align: center; }
+    #valutation_table tbody tr td a { text-decoration: none; color: green; }
+    #valutation_table tbody tr td a:hover { text-decoration: underline; }
+    #valutation_table tbody tr:nth-child(2n) td { background-color: #dddddd; }
+    #valutation_table tbody tr:nth-child(2n+1) td { background-color: #cccccc; }
+    #valutation_table tbody tr:nth-child(2n) td.index { background-color: #ccffcc; }
+    #valutation_table tbody tr:nth-child(2n+1) td.index { background-color: #99ffcc; }
+    #valutation_table tbody tr:nth-child(2n) td.type_name { background-color: #ccffcc; }
+    #valutation_table tbody tr:nth-child(2n+1) td.type_name { background-color: #99ff99; }
+    #valutation_table tbody tr:nth-child(2n) td.type_task_set_type { background-color: #ffffcc; }
+    #valutation_table tbody tr:nth-child(2n+1) td.type_task_set_type { background-color: #ffff99; }
+    #valutation_table tbody tr:nth-child(2n) td.type_summary { background-color: #ccffff; }
+    #valutation_table tbody tr:nth-child(2n+1) td.type_summary { background-color: #99ffff; }
+    #valutation_table tbody tr:nth-child(2n) td.type_summary.ctype_task_set { background-color: #ffffcc; }
+    #valutation_table tbody tr:nth-child(2n+1) td.type_summary.ctype_task_set { background-color: #ffff99; }
+    #valutation_table tbody tr:nth-child(2n) td.type_summary.ctype_project { background-color: #ffcccc; }
+    #valutation_table tbody tr:nth-child(2n+1) td.type_summary.ctype_project { background-color: #ff9999; }
+    #valutation_table thead tr th { padding: 3px; text-align: center; font-weight: bold; }
+    #valutation_table thead tr th.content_type_task_sets { background-color: #f4ffa4; }
+    #valutation_table thead tr th.content_type_projects { background-color: #ffc6c6; }
+    #valutation_table thead tr th.index { background-color: #66ffcc; }
+    #valutation_table thead tr th.static { background-color: #50a050; }
+    #valutation_table thead tr th.total_sum { background-color: #96BFFF; }
+    #valutation_table thead tr th.ctype_task_set.type_task_set { background-color: #f4ff84; }
+    #valutation_table thead tr th.ctype_task_set.type_task_set_type { background-color: #ffff33; }
+    #valutation_table thead tr th.ctype_task_set.summary { background-color: #eeee34; }
+    #valutation_table thead tr th.ctype_project.type_task_set { background-color: #ff9696; }
+    #valutation_table thead tr th.ctype_project.summary { background-color: #ff6666; }
+    #valutation_table thead tr th[data-position] { cursor: pointer; }
+    #valutation_table thead tr th.sort-asc:after { content: '\0000a0\0025B2' }
+    #valutation_table thead tr th.sort-desc:after { content: '\0000a0\0025BC' }
+    
+    ul.show_hide_menu li.name > a { background-color: #50a050 !important; color: black !important; }
+    ul.show_hide_menu li.task_sets > a { background-color: #f4ff84 !important; color: black !important; }
+    ul.show_hide_menu li.task_sets li.section > a { background-color: #ffff33 !important; color: black !important; }
+    ul.show_hide_menu li.task_sets li.task_set > a { background-color: #f4ff84 !important; color: black !important; }
+    ul.show_hide_menu li.task_sets li.subtotal > a { background-color: #eeee34 !important; color: black !important; }
+    ul.show_hide_menu li.projects > a { background-color: #ffc6c6 !important; color: black !important; }
+    ul.show_hide_menu li.projects li.project > a { background-color: #ff9696 !important; color: black !important; }
+    ul.show_hide_menu li.projects li.subtotal > a { background-color: #ff6666 !important; color: black !important; }
+    ul.show_hide_menu li.total > a { background-color: #96BFFF !important; color: black !important; }
 
     #tests_execution_area_id h4 { margin: 15px 5px 10px 5px; font-size: 1.1em; font-weight: bold; }
     #tests_execution_area_id div.test_execution_div { overflow-x: auto; max-width: 100%; }

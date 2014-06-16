@@ -1207,8 +1207,8 @@ class Solutions extends LIST_Controller {
                 $content_type_task_set->group_end();
             }
             $content_type_task_set->get();
+            $header_items = array();
             if ($content_type_task_set->result_count() > 0) {
-                $header_items = array();
                 $last_task_set_type_id = NULL;
                 foreach ($content_type_task_set->all as $task_set) {
                     $permissions = new Task_set_permission();
@@ -1253,11 +1253,11 @@ class Solutions extends LIST_Controller {
                     }
                     $task_sets_ids[] = $task_set->id;
                 }
-                $table_data['header']['content_type_task_set'] = array(
-                    'content_type_name' => $this->lang->line('admin_solutions_valuation_tables_header_content_type_task_sets'),
-                    'items' => $header_items,
-                );
             }
+            $table_data['header']['content_type_task_set'] = array(
+                'content_type_name' => $this->lang->line('admin_solutions_valuation_tables_header_content_type_task_sets'),
+                'items' => $header_items,
+            );
             
             $content_type_project = new Task_set();
             $content_type_project->where('content_type', 'project');
@@ -1266,8 +1266,8 @@ class Solutions extends LIST_Controller {
             $content_type_project->order_by_related_with_constant('task_set_type', 'name', 'asc');
             $content_type_project->order_by('publish_start_time', 'asc');
             $content_type_project->get();
+            $header_items = array();
             if ($content_type_project->result_count() > 0) {
-                $header_items = array();
                 foreach ($content_type_project->all as $project) {
                     if (!$condensed) {
                         $header_items[] = array(
@@ -1279,11 +1279,12 @@ class Solutions extends LIST_Controller {
                     }
                     $projects_ids[] = $project->id;
                 }
-                $table_data['header']['content_type_project'] = array(
-                    'content_type_name' => $this->lang->line('admin_solutions_valuation_tables_header_content_type_project'),
-                    'items' => $header_items,
-                );
+                
             }
+            $table_data['header']['content_type_project'] = array(
+                'content_type_name' => $this->lang->line('admin_solutions_valuation_tables_header_content_type_project'),
+                'items' => $header_items,
+            );
             
             foreach($students as $student) {
                 $student_line = array(
