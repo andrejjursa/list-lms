@@ -44,7 +44,7 @@
                                 {translate line='tasks_table_no_uploading'}
                             {/if}
                         </td>
-                        <td class="td_points{if $task_set->solution_not_considered} not_considered{/if}">{$task_set->solution_points|default:0|floatval} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if}</td>
+                        <td class="td_points{if $task_set->solution_not_considered} not_considered{elseif $task_set->solution_revalidate} revalidate{/if}"{if !$task_set->solution_not_considered and $task_set->solution_revalidate} title="{translate line='tasks_table_points_in_revalidation_process'}"{/if}>{$task_set->solution_points|default:0|floatval} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if}</td>
                         <td class="td_comment">
                             {if !is_null($task_set->solution_id) AND !is_null($task_set->solution_points)}
                                 {if trim($task_set->solution_comment)}
@@ -98,6 +98,35 @@
                     <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval}</td>
                 </tr>
                 {/foreach}
+            </tbody>
+        </table>
+    </div>
+    <div class="title"><h4>{translate line='tasks_left_bar_projects_points_title'}</h4></div>
+    <div class="tasks_points">
+        <table class="points_table">
+            {$project_points = 0}{$project_total = 0}
+            {capture name='projects_points_body' assign='projects_points_body'}
+                {foreach $projects as $project}
+                <tr>
+                    <td class="td_task_set_type">{overlay|truncate:15 table='task_set' column='name' table_id=$project->id default=$project->name}</td>
+                    <td class="td_points">{$project->solution_points|floatval}&nbsp;/&nbsp;{$project->points_override|floatval}</td>{$project_points = $project_points + $project->solution_points|floatval}{$project_total = $project_total + $project->points_override|floatval}
+                </tr>
+                {/foreach}
+            {/capture}
+            <thead>
+                <tr>
+                    <th class="th_task_set_type">{translate line='tasks_left_bar_projects_points_header_project'}</th>
+                    <th class="th_points">{translate line='tasks_left_bar_points_table_header_points'}</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td class="td_task_set_type">{translate line='tasks_left_bar_points_table_footer_sum_points'}</td>
+                    <td class="td_points">{$project_points|floatval}&nbsp;/&nbsp;{$project_total|floatval}</td>
+                </tr>
+            </tfoot>
+            <tbody>
+                {$projects_points_body}
             </tbody>
         </table>
     </div>

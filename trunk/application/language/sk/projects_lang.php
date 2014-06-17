@@ -17,6 +17,7 @@ $lang['projects_list_table_body_click_to_display_comment'] = 'Kliknutím zobraz�
 $lang['projects_list_table_body_no_projects_yet'] = 'V súčasnosti tu pre teba nie sú žiadne projekty.';
 $lang['projects_list_table_body_no_task_selected'] = 'Nie je nič vybrané';
 $lang['projects_list_table_body_click_to_select_preview_tasks'] = 'Klikni sem pre výber/náhľad zadaní.';
+$lang['projects_table_points_in_revalidation_process'] = 'Tvoje posledné riešenie ešte nebolo ohodnotené učiteľom.';
 $lang['projects_project_tasks_table_header_task_name'] = 'Názov zadania';
 $lang['projects_project_tasks_table_header_free_selections'] = 'Voľných výberov';
 $lang['projects_project_tasks_table_header_students_working_on'] = 'Študenti pracujúci na zadaní';

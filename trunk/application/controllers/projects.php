@@ -264,7 +264,10 @@ class Projects extends LIST_Controller {
         $task_set = new Task_set();
         $task_set->where_related($course);
         $task_set->where('published', 1);
-        $task_set->where('publish_start_time <=', $date);
+        $task_set->group_start();
+            $task_set->where('publish_start_time <=', $date);
+            $task_set->or_where('publish_start_time', NULL);
+        $task_set->group_end();
         $task_set->get_by_id($task_set_id);
         
         $task = $task_set->task->include_join_fields()->get_by_id($task_id);

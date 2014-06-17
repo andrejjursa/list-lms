@@ -31,7 +31,7 @@
                         <td colspan="2">{$project->upload_end_time|date_format:{translate line='common_datetime_format'}}</td>
                     </tr>
                     <tr class="{$line_class}">{if $project->solution_not_considered eq 0}{$points = $points + $project->solution_points|default:0|floatval}{/if}{$max_points = $max_points + $project->points_override|default:0|floatval}
-                        <td class="pl_points{if $project->solution_not_considered} not_considered{/if}">{$project->solution_points|default:0|floatval} / {$project->points_override|default:0|floatval}</td>
+                        <td class="pl_points{if $project->solution_not_considered} not_considered{elseif $project->solution_revalidate} revalidate{/if}"{if !$project->solution_not_considered and $project->solution_revalidate} title="{translate line='projects_table_points_in_revalidation_process'}"{/if}>{$project->solution_points|default:0|floatval} / {$project->points_override|default:0|floatval}</td>
                         {if !is_null($project->solution_id) AND !is_null($project->solution_points)}
                         <td>
                             {if trim($project->solution_comment)}
@@ -39,7 +39,7 @@
                                     <a href="javascript:void(0);" title="{translate line='projects_list_table_body_click_to_display_comment'}" class="click_enlarge_comment" for="project_comment_{$project->id}">{$project->solution_comment|strip_tags|truncate:40}</a>
                                     <div class="whole_comment" id="project_comment_{$project->id}" title="{overlay table='task_sets' table_id=$project->id column='name' default=$project->name} | {$project->solution_points|default:0|floatval} / {$project->points_override|default:0|floatval} | {$project->solution_teacher_fullname}"><div class="comment_body">{$project->solution_comment|nl2br}</div></div>
                                 {else}
-                                    {$task_set->solution_comment|nl2br}
+                                    {$project->solution_comment|nl2br}
                                 {/if}
                                 <hr />
                             {/if}

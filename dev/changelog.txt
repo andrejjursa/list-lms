@@ -20,6 +20,22 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.0.9c | 2014-06-17
+
+NEW V zozname zadaní a projektov sa teraz zobrazuje červeným podčiarknutým písmom počet bodov, ak posledné riešenie ešte nebolo oznámkované učiteľom.
+NEW [lang:english] In list of task sets and projects are now points displayed with red underline font if very last solution of student is not evaluated by teacher jet.
+
+NEW V zozname zadaní bola pridaná do ľavého stĺpca tabuľka s bodmi za projekty.
+NEW [lang:english] In list of task set there was added table with points for projects into left panel.
+
+FIX Teraz je možné odovzdávať riešenia aj do projektov, ktoré nemajú nastavený čas publikovania.
+FIX [lang:english] Now is possible to upload solution for projects, which does not have set publish time.
+
+FIX V zozname projektov sa teraz správne zobrazuje komentár kratší ako 40 znakov.
+FIX [lang:english] In list of project there is now correctly displayed teacher comment if it is shorter than 40 characters.
+
+END VERSION
+
 VERSION 1.0.9b | 2014-06-16
 
 CHANGE Tvar tabuľky hodnotení bol opäť vrátený do pôvodného stavu bez pluginu jQuery DataTables.

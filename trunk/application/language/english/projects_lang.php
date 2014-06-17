@@ -22,6 +22,7 @@ $lang['projects_project_tasks_table_header_free_selections'] = 'Free selections'
 $lang['projects_project_tasks_table_header_students_working_on'] = 'Students currently working on task';
 $lang['projects_project_tasks_table_body_free_out_of'] = '%d from %d';
 $lang['projects_project_tasks_table_body_no_students'] = 'No one is working on this task.';
+$lang['projects_table_points_in_revalidation_process'] = 'Your very last solution was not evaluated jet by teacher.';
 $lang['projects_selection_time_limit_information'] = 'You can select your projects task until %s.';
 $lang['projects_task_task_files_title'] = 'Files';
 $lang['projects_task_author'] = '<strong>Author</strong> %s';

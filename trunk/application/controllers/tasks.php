@@ -43,6 +43,24 @@ class Tasks extends LIST_Controller {
                 $this->parser->assign('points', $points);
             }
             $this->parser->assign(array('course' => $course));
+            
+            $projects = new Task_set();
+            if ($course->exists()) {
+                $projects->where('content_type', 'project');
+                $projects->include_related('solution');
+                $projects->add_join_condition('`solutions`.`student_id` = ?', array($this->usermanager->get_student_id()));
+                $projects->include_related('course');
+                $projects->include_related('course/period');
+                $projects->where('published', 1);
+                $projects->group_start();
+                    $projects->where('publish_start_time <=', date('Y-m-d H:i:s'));
+                    $projects->or_where('publish_start_time', NULL);
+                $projects->group_end();
+                $projects->where_related('course', $course);
+                $projects->order_by('publish_start_time');
+                $projects->get_iterated();
+            }
+            $this->parser->assign('projects', $projects);
         }
         $this->parser->parse('frontend/tasks/index.tpl', array(), FALSE, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : FALSE, $cache_id);
     }
