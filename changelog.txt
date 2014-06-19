@@ -20,6 +20,29 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.0.9d | 2014-06-19
+
+NEW Tabuľku záznamu aktivít je teraz možné triediť podľa jednotlivých stĺpcov.
+NEW [lang:english] It is now possible to sort logs table by columns.
+
+ML CHANGE
+Upravené filrovanie podľa IP adresy v zázname aktivít:
+- je možno filtrovať podľa presných IP adries,
+- je možno filtrovať podľa rozsahu IP adries,
+- je možno filtrovať podľa IP adresy zadanej s wildcard znakom (*): 192.198.*.* (bude sa filtrovať ako rozsah 192.168.0.0-192.168.255.255),
+- je možno filtrovať podľa viacerých IP adries, rozsahov IP adries a IP adries s wildcard znakmy, keď sa tieto zadajú oddelené čiarkov.
+END CHANGE
+
+ML CHANGE [lang:english]
+Changed filter of logs by IP address:
+- it is possible to filter by exact IP address,
+- it is possible to filter by range of IP addresses,
+- it is possible to filter by IP address containing wildcard characters (*): 192.168.*.* (will be filtered as range 192.168.0.0-192.168.255.255),
+- it is possible to pass more than one IP address, range or IP address with wildcard characters, when you separate them with comma.
+END CHANGE
+
+END VERSION
+
 VERSION 1.0.9c | 2014-06-17
 
 NEW V zozname zadaní a projektov sa teraz zobrazuje červeným podčiarknutým písmom počet bodov, ak posledné riešenie ešte nebolo oznámkované učiteľom.

@@ -1,13 +1,13 @@
 <table class="logs_table">
     <thead>
         <tr>
-            <th>{translate line='admin_logs_table_header_type'}</th>
-            <th>{translate line='admin_logs_table_header_ip_address'}</th>
-            <th>{translate line='admin_logs_table_header_language'}</th>
-            <th>{translate line='admin_logs_table_header_message'}</th>
-            <th>{translate line='admin_logs_table_header_student'}</th>
-            <th>{translate line='admin_logs_table_header_teacher'}</th>
-            <th>{translate line='admin_logs_table_header_created'}</th>
+            <th class="sort:log_type">{translate line='admin_logs_table_header_type'}</th>
+            <th class="sort:ip_address">{translate line='admin_logs_table_header_ip_address'}</th>
+            <th class="sort:language">{translate line='admin_logs_table_header_language'}</th>
+            <th class="sort:message">{translate line='admin_logs_table_header_message'}</th>
+            <th class="sort:student">{translate line='admin_logs_table_header_student'}</th>
+            <th class="sort:teacher">{translate line='admin_logs_table_header_teacher'}</th>
+            <th class="sort:created:desc">{translate line='admin_logs_table_header_created'}</th>
             <th class="controlls">{translate line='admin_logs_table_header_controlls'}</th>
         </tr>
     </thead>

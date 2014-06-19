@@ -5,7 +5,9 @@ jQuery(document).ready(function($){
     var reload_logs = function() {
         var url = global_base_url + 'index.php/admin_logs/all_logs';
         var data = $('#filter_form_id').serializeArray();
-        api_ajax_load(url, '#table_content_id', 'post', data);
+        api_ajax_load(url, '#table_content_id', 'post', data, function(){
+            sort_table('table.logs_table', '#filter_form_id');
+        });
     };
     
     reload_logs();
