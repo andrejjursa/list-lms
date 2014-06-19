@@ -10,8 +10,9 @@ class Logs extends LIST_Controller {
     const STORED_FILTER_SESSION_NAME = 'admin_logs_filter_data';
     
     const PATTERN_IP_ADDRESS_SINGLE = '/^(?P<firstIP>[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})$/';
-    const PATTERN_IP_ADDRESS_RANGE = '/^(?P<firstIP>[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})\-(?P<secondIP>[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})$/';
+    const PATTERN_IP_ADDRESS_RANGE = '/^(?P<firstIP>[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})(\-|\:)(?P<secondIP>[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})$/';
     const PATTERN_INTERVAL_DATETIME = '/^[0-9]{4}\-[0-9]{2}\-[0-9]{2} [0-9]{2}\:[0-9]{2}\:[0-9]{2}$/';
+    const PATTERN_IP_ADDRESS_WILDCARD = '/^(?P<firstIP>([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.\*|[0-9]{1,3}\.[0-9]{1,3}\.\*\.\*|[0-9]{1,3}\.\*\.\*\.\*|\*\.\*\.\*\.\*))$/';
     
     public function __construct() {
         parent::__construct();
@@ -43,13 +44,50 @@ class Logs extends LIST_Controller {
         if (isset($filter['type']) && $filter['type'] > 0) {
             $logs->where('log_type', $filter['type']);
         }
-        if (isset($filter['ip_address'])) {
-            if (preg_match(self::PATTERN_IP_ADDRESS_SINGLE, $filter['ip_address'], $matches)) {
-                $logs->where('INET_ATON(`logs`.`ip_address`) = INET_ATON(\'' . $matches['firstIP'] . '\')');
-            } else if (preg_match(self::PATTERN_IP_ADDRESS_RANGE, $filter['ip_address'], $matches)) {
-                $logs->where('INET_ATON(`logs`.`ip_address`) >= INET_ATON(\'' . $matches['firstIP'] . '\')');
-                $logs->where('INET_ATON(`logs`.`ip_address`) <= INET_ATON(\'' . $matches['secondIP'] . '\')');
+        if (isset($filter['ip_address']) && trim($filter['ip_address']) !== '') {
+            $addresses = explode(',', $filter['ip_address']);
+            $at_least_one_valid = FALSE;
+            $logs->group_start();
+            foreach ($addresses as $address) {
+                if (preg_match(self::PATTERN_IP_ADDRESS_SINGLE, trim($address), $matches)) {
+                    $logs->or_where('INET_ATON(`logs`.`ip_address`) = INET_ATON(\'' . $matches['firstIP'] . '\')');
+                    $at_least_one_valid = TRUE;
+                } else if (preg_match(self::PATTERN_IP_ADDRESS_RANGE, trim($address), $matches)) {
+                    $logs->or_group_start();
+                    $logs->where('INET_ATON(`logs`.`ip_address`) >= INET_ATON(\'' . $matches['firstIP'] . '\')');
+                    $logs->where('INET_ATON(`logs`.`ip_address`) <= INET_ATON(\'' . $matches['secondIP'] . '\')');
+                    $logs->group_end();
+                    $at_least_one_valid = TRUE;
+                } else if (preg_match(self::PATTERN_IP_ADDRESS_WILDCARD, trim($address), $matches)) {
+                    $segments = explode('.', $matches['firstIP']);
+                    $build_ip_start = '';
+                    $build_ip_end = '';
+                    $wildcard_found = FALSE;
+                    for ($i=0; $i < 4; $i++) {
+                        if (!$wildcard_found) {
+                            if ($segments[$i] == '*') {
+                                $wildcard_found = TRUE;
+                            } else {
+                                $build_ip_start .= ($build_ip_start !== '' ? '.' : '') . $segments[$i];
+                                $build_ip_end .= ($build_ip_end !== '' ? '.' : '') . $segments[$i];
+                            }
+                        }
+                        if ($wildcard_found) {
+                            $build_ip_start .= ($build_ip_start !== '' ? '.' : '') . '0';
+                            $build_ip_end .= ($build_ip_end !== '' ? '.' : '') . '255';
+                        }
+                    }
+                    $logs->or_group_start();
+                    $logs->where('INET_ATON(`logs`.`ip_address`) >= INET_ATON(\'' . $build_ip_start . '\')');
+                    $logs->where('INET_ATON(`logs`.`ip_address`) <= INET_ATON(\'' . $build_ip_end . '\')');
+                    $logs->group_end();
+                    $at_least_one_valid = TRUE;
+                }
             }
+            if (!$at_least_one_valid) {
+                $logs->where('logs.ip_address = `logs`.`ip_address`');
+            }
+            $logs->group_end();
         }
         if (isset($filter['interval_start']) && preg_match(self::PATTERN_INTERVAL_DATETIME, $filter['interval_start'])) {
             $logs->where('created >=', $filter['interval_start']);
@@ -67,7 +105,22 @@ class Logs extends LIST_Controller {
         if (isset($filter['teacher']) && (int)$filter['teacher'] > 0) {
             $logs->where_related('teacher', 'id', (int)$filter['teacher']);
         }
-        $logs->order_by('created', 'desc');
+        $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
+        if ($filter['order_by_field'] == 'created') {
+            $logs->order_by('created', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'log_type') {
+            $logs->order_by('log_type', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'ip_address') {
+            $logs->order_by_func('INET_ATON', array('@ip_address'), $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'language') {
+            $logs->order_by('language', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'message') {
+            $logs->order_by('message', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'student') {
+            $logs->order_by_related_as_fullname('student', 'id', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'teacher') {
+            $logs->order_by_related_as_fullname('teacher', 'id', $order_by_direction);
+        }
         $logs->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
         $this->parser->parse('backend/logs/all_logs.tpl', array('logs' => $logs));
     }
