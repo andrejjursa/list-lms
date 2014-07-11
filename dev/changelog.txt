@@ -20,6 +20,16 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.0.9e | 2014-07-12
+
+FIX Opravené menu zoznamu preferovaných kurzov a jazykov v hlavičke administrácie, teraz už nebudú prekryté hlavnou navigáciou.
+FIX [lang:english] Fixed menu of list of prefered courses and language menu in the header of administration, so now is not overlayed with main navigation.
+
+CHANGE Pridaná responzívna podpora pre layout administrácie, aby sa zlepšilo používanie na menších rozlíšeniach.
+CHANGE [lang:english] Added responsive layout support for administration, for better user experience on smaller resolutions.
+
+END VERSION
+
 VERSION 1.0.9d | 2014-06-19
 
 NEW Tabuľku záznamu aktivít je teraz možné triediť podľa jednotlivých stĺpcov.
