@@ -601,4 +601,16 @@ class Cli extends CI_Controller {
             }
         }
     }
+    
+    public function test_moss() {
+        $this->load->library('mosslib');
+        $this->load->helper('moss');
+        
+        $this->mosslib->setLanguage('java');
+        $this->mosslib->setCommentString('Development test for MOSS integration into system.');
+                
+        moss_add_all_files('private/moss/test1/', array('java'));
+        
+        print_r($this->mosslib->send());
+    }
 }
