@@ -71,47 +71,27 @@
                 </div>
                 {form_error field='moss_setup[l]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
-            {*<div class="field">
-                <label>{translate line='admin_comparator_list_solutions_form_label_threshold'}:</label>
-                <div class="input"><input type="text" name="comparator_setup[threshold]" value="{$smarty.post.comparator_setup.threshold|default:'0.76'|escape:'html'}" /></div>
-                <p class="input"><em>{translate line='admin_comparator_list_solutions_form_label_threshold_hint'}</em></p>
-                {form_error field='comparator_setup[threshold]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            <div class="field">
+                <label class="required">{translate line='admin_moss_list_solutions_form_label_sensitivity'}:</label>
+                <div class="input">
+                    <input type="text" name="moss_setup[m]" value="{$smarty.post.moss_setup.m|default:10}">
+                </div>
+                <p class="input"><em>{translate line='admin_moss_list_solutions_form_label_sensitivity_hint'}</em></p>
+                {form_error field='moss_setup[m]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="field">
-                <label>{translate line='admin_comparator_list_solutions_form_label_min_tree_size'}:</label>
-                <div class="input"><input type="text" name="comparator_setup[min_tree_size]" value="{$smarty.post.comparator_setup.min_tree_size|default:'6'|escape:'html'}" /></div>
-                <p class="input"><em>{translate line='admin_comparator_list_solutions_form_label_min_tree_size_hint'}</em></p>
-                {form_error field='comparator_setup[min_tree_size]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
-            </div>
-            <div class="field">
-                <label>{translate line='admin_comparator_list_solutions_form_label_max_cutted_tree_size'}:</label>
-                <div class="input"><input type="text" name="comparator_setup[max_cutted_tree_size]" value="{$smarty.post.comparator_setup.max_cutted_tree_size|default:'10'|escape:'html'}" /></div>
-                <p class="input"><em>{translate line='admin_comparator_list_solutions_form_label_max_cutted_tree_size_hint'}</em></p>
-                {form_error field='comparator_setup[max_cutted_tree_size]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
-            </div>
-            <div class="field">
-                <label>{translate line='admin_comparator_list_solutions_form_label_branching_factor'}:</label>
-                <div class="input"><input type="text" name="comparator_setup[branching_factor]" value="{$smarty.post.comparator_setup.branching_factor|default:'6000000'|escape:'html'}" /></div>
-                <p class="input"><em>{translate line='admin_comparator_list_solutions_form_label_branching_factor_hint'}</em></p>
-                {form_error field='comparator_setup[branching_factor]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
-            </div>
-            <div class="field">
-                <label>{translate line='admin_comparator_list_solutions_form_label_minimum_similarity'}:</label>
-                <div class="input"><input type="text" name="comparator_setup[min_similarity]" value="{$smarty.post.comparator_setup.min_similarity|default:'0.3'|escape:'html'}" /></div>
-                <p class="input"><em>{translate line='admin_comparator_list_solutions_form_label_minimum_similarity_hint'}</em></p>
-                {form_error field='comparator_setup[min_similarity]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
-            </div>
-            <div class="field">
-                <label>{translate line='admin_comparator_list_solutions_form_label_timeout'}:</label>
-                <div class="input"><input type="text" name="comparator_setup[timeout]" value="{$smarty.post.comparator_setup.timeout|default:'5'|escape:'html'}" /></div>
-                <p class="input"><em>{translate line='admin_comparator_list_solutions_form_label_timeout_hint'}</em></p>
-                {form_error field='comparator_setup[timeout]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                <label class="required">{translate line='admin_moss_list_solutions_form_label_matching_files'}:</label>
+                <div class="input">
+                    <input type="text" name="moss_setup[n]" value="{$smarty.post.moss_setup.n|default:250}">
+                </div>
+                <p class="input"><em>{translate line='admin_moss_list_solutions_form_label_matching_files_hint'}</em></p>
+                {form_error field='moss_setup[n]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="buttons">
-                <input type="submit" value="{translate line='admin_comparator_list_solutions_form_button_submit'}" class="button" />
+                <input type="submit" value="{translate line='admin_moss_list_solutions_form_button_submit'}" class="button" />
                 <input type="hidden" name="task_sets_setup[course]" value="{$course->id}" />
                 <input type="hidden" name="task_sets_setup[task_set]" value="{$task_set->id}" />
-            </div>*}
+            </div>
         </form>
     {else}
         {include file='partials/backend_general/error_box.tpl' message='lang:admin_moss_list_solutions_error_no_solutions' inline}

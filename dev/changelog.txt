@@ -20,9 +20,10 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
-VERSION 1.0.10 | 2014-07-13
+VERSION 1.1.0 | 2014-07-16
 
 NEW Pridaný porovnávač zdrojových kódov MOSS.
+NEW [lang:english] MOSS source code comparator was integrated into LIST.
 
 END VERSION
 

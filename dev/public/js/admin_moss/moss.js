@@ -50,7 +50,7 @@ jQuery(document).ready(function($) {
 });
 
 var exec_comparator = function(path, config) {
-    var url = global_base_url + 'index.php/admin_comparator/execute/';
+    var url = global_base_url + 'index.php/admin_moss/execute/';
     var data = {
         'path': path
     };

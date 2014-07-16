@@ -8,6 +8,8 @@
 class moss extends LIST_Controller {
     
     const STORED_FILTER_SESSION_NAME = 'admin_moss_filter_data';
+    const MOSS_WORKING_DIRECTORY = 'private/moss/';
+    const SECONDS_TO_BE_CONSIDERED_OLD = 21600; // 6 hours
     
     public function __construct() {
         parent::__construct();
@@ -26,6 +28,8 @@ class moss extends LIST_Controller {
         
         $this->inject_courses();
         $this->inject_all_task_sets();
+        
+        $this->clear_old_directories();
         
         $this->parser->add_css_file('admin_moss.css');
         $this->parser->add_js_file('jquery.activeform.js');
@@ -83,6 +87,202 @@ class moss extends LIST_Controller {
         }
         
         $this->parser->parse('backend/moss/list_solutions.tpl');
+    }
+    
+    public function run_comparation() {
+        $task_sets_setup_data = $this->input->post('task_sets_setup');
+        $solutions_data = $this->input->post('solutions');
+        $moss_setup_data = $this->input->post('moss_setup');
+        $moss_base_files_data = $this->input->post('moss_base_files');
+        
+        $course = new Course();
+        $course->get_by_id((int)$task_sets_setup_data['course']);
+        
+        $task_set = new Task_set();
+        $task_set->where_related($course);
+        $task_set->get_by_id(isset($task_sets_setup_data['task_set']) ? (int)$task_sets_setup_data['task_set'] : 0);
+        
+        $this->config->load('moss');
+        
+        $languages = $this->config->item('moss_langs_for_list');
+        asort($languages);
+        
+        $this->parser->assign(array(
+            'course' => $course,
+            'task_set' => $task_set,
+            'languages' => $languages,
+        ));
+        
+        if ($course->exists() && $task_set->exists()) {
+            $this->load->library('form_validation');
+            
+            $this->form_validation->set_rules('solutions', 'lang:admin_moss_list_solutions_form_field_solution_selection', 'callback__selected_solutions');
+            $this->form_validation->set_rules('moss_setup[l]', 'lang:admin_moss_list_solutions_form_field_language', 'required');
+            $this->form_validation->set_rules('moss_setup[m]', 'lang:admin_moss_list_solutions_form_field_sensitivity', 'required|integer|greater_than[1]');
+            $this->form_validation->set_rules('moss_setup[n]', 'lang:admin_moss_list_solutions_form_field_matching_files', 'required|integer|greater_than[1]');
+            
+            $this->form_validation->set_message('_selected_solutions', $this->lang->line('admin_moss_list_solutions_validation_callback_selected_solutions'));
+            if ($this->form_validation->run()) {
+                $solutions = new Solution();
+                $solutions->include_related('student');
+                $solutions->where_related($task_set);
+                $solutions->order_by_related_as_fullname('student', 'fullname', 'asc');
+                $solutions->get_iterated();
+                $this->parser->assign('solutions', $solutions);
+                
+                $tasks = new Task();
+                $tasks->where_related($task_set);
+                $tasks->get_iterated();
+
+                $base_files_list = array();
+
+                foreach ($tasks as $task) {
+                    $base_files_list[$task->id] = array(
+                        'task_id' => $task->id,
+                        'task_name' => $this->lang->get_overlay_with_default('tasks', $task->id, 'name', $task->name),
+                        'files' => $this->construct_base_files_for_task($task->id),
+                    );
+                }
+                
+                $this->parser->assign('base_files_list', $base_files_list);
+                
+                $path = $this->get_random_hash_folder($course->id, $task_set->id);
+                
+                $path_source = $path . '/source';
+                $path_base = $path . '/base';
+                
+                @mkdir($path_source, DIR_WRITE_MODE, TRUE);
+                @mkdir($path_base, DIR_WRITE_MODE, TRUE);
+                
+                $all_extracted = TRUE;
+                
+                $moss_langs_extensions = $this->config->item('moss_langs_file_extensions');
+                
+                if (isset($moss_langs_extensions[$moss_setup_data['l']])) {
+                    $file_extensions = $moss_langs_extensions[$moss_setup_data['l']];
+                } else {
+                    $all_extracted = FALSE;
+                }
+                
+                foreach ($solutions_data as $id => $config) {
+                    if (!$all_extracted) { break; }
+                    if (isset($config['selected']) && $config['selected'] == 1) {
+                        set_time_limit(120);
+                        $version = isset($config['version']) ? $config['version'] : 0;
+                        $student = isset($config['student']) ? $config['student'] : 0;
+                        $file = $task_set->get_student_files($student, $version);
+                        if (count($file) == 1) {
+                            $file = $file[$version];
+                            $subdir = '/' . normalize($file['file_name']) . '_sid-' . $file['student_id'] . '_ver-' . $file['version'];
+                            $extract_path = $path_source . $subdir;
+                            @mkdir($extract_path, DIR_WRITE_MODE, TRUE);
+                            $status = $task_set->extract_student_zip_to_folder($file['file'], $extract_path, $file_extensions);
+                            $all_extracted = $all_extracted && $status;
+                        }
+                    }
+                }
+                
+                if (count($moss_base_files_data)) { foreach ($moss_base_files_data as $task_id => $path_array) {
+                    if (!$all_extracted) { break; }
+                    if (is_array($path_array) && count($path_array)) { foreach ($path_array as $path_hash => $file_path) {
+                        if (!$all_extracted) { break; }
+                        if (preg_match('/\.zip(?P<indexNumberBox>\[(?P<zipIndexNumber>[0-9]+)\])$/', $file_path, $matches)) {
+                            $zipfile = mb_substr($file_path, 0, mb_strlen($file_path) - mb_strlen($matches['indexNumberBox']));
+                            $zipindex = (int)$matches['zipIndexNumber'];
+                            $zip = new ZipArchive();
+                            if ($zip->open($zipfile)) {
+                                set_time_limit(120);
+                                @mkdir($path_base . '/' . $task_id . '/' . $path_hash, DIR_WRITE_MODE, TRUE);
+                                if (!$zip->extractTo($path_base . '/' . $task_id . '/' . $path_hash, $zip->getNameIndex($zipindex))) {
+                                    $all_extracted = FALSE;
+                                }
+                                $zip->close();
+                            } else {
+                                $all_extracted = FALSE;
+                            }
+                        } else {
+                            set_time_limit(120);
+                            @mkdir($path_base . '/' . $task_id . '/' . $path_hash, DIR_WRITE_MODE, TRUE);
+                            $path_info = pathinfo($file_path);
+                            if (!copy($file_path, $path_base . '/' . $task_id . '/' . $path_hash . '/' . $path_info['basename'])) {
+                                $all_extracted = FALSE;
+                            }
+                        }
+                    }}
+                }}
+                
+                if (!$all_extracted) {
+                    unlink_recursive($path, TRUE);
+                }
+                
+                $this->parser->assign('all_extracted', $all_extracted);
+                $this->parser->assign('path', $path);
+                $this->parser->assign('moss_config', $moss_setup_data);
+                
+                $this->parser->parse('backend/moss/run_comparation.tpl');
+            } else {
+                $this->list_solutions();
+            }
+        }
+    }
+    
+    public function execute() {
+        set_time_limit(0);
+        
+        $path = $this->input->post('path');
+        $config = $this->input->post('config');
+        
+        $this->load->library('mosslib');
+        $this->load->helper('moss');
+        
+        $this->mosslib->setLanguage($config['l']);
+        $this->mosslib->setIngoreLimit((int)$config['m']);
+        $this->mosslib->setResultLimit((int)$config['n']);
+        
+        $this->load->config('moss');
+        
+        $moss_lang_file_extensions = $this->config->item('moss_langs_file_extensions');
+        $extensions = $moss_lang_file_extensions[$config['l']];
+        
+        moss_add_all_files($path . '/source/', $extensions);
+        moss_add_all_base_files($path . '/base/', $extensions);
+        
+        $results = $this->mosslib->send();
+        
+        echo '<a href="' . $results . '" class="button" target="_blank">' . $this->lang->line('admin_moss_execute_results_button_text') . '</a>';
+        
+        unlink_recursive($path, TRUE);
+    }
+    
+    public function _selected_solutions($solutions) {
+        if (!is_array($solutions) || count($solutions) == 0) { return FALSE; }
+        
+        $output = FALSE;
+        
+        foreach ($solutions as $id => $config) {
+            if (isset($config['selected']) && $config['selected'] == 1) {
+                $output = TRUE;
+                break;
+            }
+        }
+        
+        return $output;
+    }
+    
+    private function get_random_hash_folder($course, $task_set) {
+        $path = self::MOSS_WORKING_DIRECTORY;
+        $path = ltrim($path, '\\/') . '/';
+        
+        $folder_name = '';
+        
+        do {
+            $hash = md5(date('U') . '-' . rand(10000000, 99999999) . '-' . $course . '-' . $task_set);
+            $folder_name = $course . '_' . $task_set . '_' . $hash;
+        } while (file_exists($path . $folder_name));
+        
+        @mkdir($path . $folder_name, DIR_WRITE_MODE, TRUE);
+        
+        return $path . $folder_name;
     }
     
     private function inject_courses() {
@@ -212,6 +412,26 @@ class moss extends LIST_Controller {
                 } else {
                     if (in_array($path_info['extension'], $extensions)) {
                         $output[$path] = substr($path, $base_path_length);
+                    }
+                }
+            }
+        }
+    }
+    
+    private function clear_old_directories() {
+        $path = self::MOSS_WORKING_DIRECTORY;
+        $path = ltrim($path, '\\/') . '/';
+        
+        $directories = scandir($path);
+        
+        $current_time = time();
+        
+        if (is_array($directories) && count($directories) > 0) {
+            foreach ($directories as $directory) {
+                if (is_dir($path . $directory) && $directory != '.' && $directory != '..') {
+                    $last_mod_time = filemtime($path . $directory);
+                    if ($current_time - $last_mod_time >= self::SECONDS_TO_BE_CONSIDERED_OLD) {
+                        unlink_recursive($path . $directory, TRUE);
                     }
                 }
             }
