@@ -433,6 +433,38 @@ class Cli extends CI_Controller {
         }
         echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
         
+        // ----------- MOSS WORKING DIRECTORIES --------------------------------
+        
+        $path_to_moss_files = 'private/moss/';
+        $time_for_moss_folders_to_remain_untouched = 21600;
+        
+        echo ' Clearing old MOSS comparator working directories:' . "\n";
+        
+        $dirs = scandir($path_to_moss_files);
+        $deleted = 0;
+        $total_dirs = 0;
+        
+        if (is_array($dirs) && count($dirs) > 0) {
+            foreach($dirs as $dir) {
+                if (is_dir($path_to_moss_files . $dir) && $dir != '.' && $dir != '..') {
+                    $total_dirs++;
+                    echo '  ' . $dir;
+                    $dir_mod_time = filemtime($path_to_moss_files . $dir);
+                    if ($current_time - $dir_mod_time >= $time_for_moss_folders_to_remain_untouched) {
+                        $deleted++;
+                        unlink_recursive($path_to_moss_files . $dir, TRUE);
+                        echo ':  OLD - deleting' . "\n";
+                    } else {
+                        echo ':  SAFE' . "\n";
+                    }
+                }
+            }
+        } 
+        if ($total_dirs == 0) {
+            echo '  No directories ...' . "\n";
+        }
+        echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        
         // ----------- EXTRACTED SOLUTIONS DIRECTORIES -------------------------
         
         $path_to_extracted_solutions = 'private/extracted_solutions/';

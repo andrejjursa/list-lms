@@ -123,6 +123,13 @@ $config['adminmenu'] = array(
         'class' => 'inactive',
         'sub' => array(
             array(
+                'title' => 'lang:adminmenu_title_moss_comparator',
+                'pagetag' => 'moss',
+                'link' => 'admin_moss',
+                'class' => '',
+                'sub' => NULL,
+            ),
+            array(
                 'title' => 'lang:adminmenu_title_java_comparator',
                 'pagetag' => 'comparator',
                 'link' => 'admin_comparator',

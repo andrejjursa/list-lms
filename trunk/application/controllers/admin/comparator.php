@@ -233,7 +233,7 @@ class Comparator extends LIST_Controller {
             $folder_name = $course . '_' . $task_set . '_' . $hash;
         } while (file_exists($path . $folder_name));
         
-        @mkdir($path, DIR_WRITE_MODE, TRUE);
+        @mkdir($path . $folder_name, DIR_WRITE_MODE, TRUE);
         
         return $path . $folder_name;
     }
