@@ -34,9 +34,9 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus
 
 ul.ui-menu li a { color: green !important; }
 
-#teacher_quick_langmenu { display: none; position: absolute; }
+#teacher_quick_langmenu { display: none; position: absolute; z-index: 1001; }
 #top_meta_informations div.teacher_quick_langmenu { display: inline-block; }
-#teacher_quick_prefered_course_menu { display: none; position: absolute; }
+#teacher_quick_prefered_course_menu { display: none; position: absolute; z-index: 1001; }
 #top_meta_informations div.teacher_quick_prefered_course_menu { display: inline-block; }
 
 #jMenu { display:table; margin:0; padding:0; position: relative; z-index: 1000; }
@@ -66,7 +66,7 @@ ul.ui-menu li a { color: green !important; }
 div.loginbox { width: 400px; margin: 150px auto 0 auto; padding: 20px; border: 1px solid black; border-radius: 15px; box-shadow: 15px 15px 15px silver; }
 div.loginbox h1 { margin: 0 0 15px 0; text-shadow: 0 0 4px gray; color: black; }
 
-#body_id { position: absolute; top: 130px; left: 0; right: 0; bottom: 0; overflow-y: scroll; }
+#body_id { position: absolute; top: 140px; left: 0; right: 0; bottom: 0; overflow-y: auto; }
 
 div.backend_body { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; }
 
@@ -143,3 +143,28 @@ div.overflow { position: relative; overflow: hidden; width: 100%; }
 div.overflow div.extend { overflow-x: auto; } 
 
 ul.error-notification-dialog-list { margin-left: 1em; }
+
+@media only screen and (max-width: 960px) {
+    #pagewrap_id { width: 960px; min-width: 960px; }
+    #headerwrap_id { width: 960px; position: static; }
+    #body_id { width: 960px; position: static; overflow: initial; }
+}
+
+/*@media only screen and (max-width: 450px) {
+    body { font-size: 0.6em; }
+    
+    #pagewrap_id { width: 450px; min-width: 450px; }
+    #headerwrap_id { width: 450px; min-width: 450px; }
+    #body_id { width: 450px; min-width: 450px; position: relative; top: 0; }
+    #body_id div.backend_body, #body_id div.backend_footer { border: 0 none; box-shadow: none; margin: 0; padding: 5px 0 0 0; }
+    #body_id div.backend_footer { border: 1px solid black; padding: 5px; }
+    div.backend_body fieldset, fieldset.basefieldset { margin: 5px 0; }
+    #headerwrap_id nav #jMenu { font-size: 1.6em; display: block; }
+    #headerwrap_id nav #jMenu li a { font-size: 0.6em; }
+    #headerwrap_id nav #jMenu li { display: block; width: 100%; }
+    
+    input[type=text], input[type=password], textarea, select { padding: 0; }
+    select optgroup, select option { font-size: 0.8em; }
+    select optgroup option { font-size: 1em; }
+    select optgroup optgroup { font-size: 1em; }
+}*/
