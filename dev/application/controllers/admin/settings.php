@@ -21,12 +21,13 @@ class Settings extends LIST_Controller {
     public function index() {
         $this->_select_teacher_menu_pagetag('settings');
         $config = $this->configurator->get_config_array('config');
+        $moss = $this->configurator->get_config_array('moss');
         $languages = $this->lang->get_list_of_languages();
         $this->inject_number_of_cache_records();
         $this->inject_number_of_compiled_templates();
         $this->parser->add_css_file('admin_settings.css');
         $this->parser->add_js_file('admin_settings/form.js');
-        $this->parser->parse('backend/settings/index.tpl', array('config' => $config, 'languages' => $languages));
+        $this->parser->parse('backend/settings/index.tpl', array('config' => $config, 'languages' => $languages, 'moss' => $moss));
     }
     
     public function save() {
@@ -48,9 +49,11 @@ class Settings extends LIST_Controller {
         $this->form_validation->set_rules('config[email][priority]', 'lang:admin_settings_form_field_email_priority', 'required|integer|greater_than[0]|lower_than[6]');
         $this->form_validation->set_rules('config[email][smtp_port]', 'lang:admin_settings_form_field_email_smtp_port', 'integer|greater_than[0]');
         $this->form_validation->set_rules('config[email][smtp_timeout]', 'lang:admin_settings_form_field_email_smtp_timeout', 'integer|greater_than[0]');
+        $this->form_validation->set_rules('moss[moss_user_id]', 'lang:admin_settings_form_field_moss_user_id', 'required|integer|greater_than[0]');
         
         if ($this->form_validation->run()) {
             $config = $this->protect_config_array($this->input->post('config'));
+            $moss = $this->protect_moss_array($this->input->post('moss'));
             if (is_mod_rewrite_enabled()) {
                 $config['rewrite_engine_enabled'] = $this->bool_val($config['rewrite_engine_enabled']);
             } else {
@@ -68,6 +71,7 @@ class Settings extends LIST_Controller {
             $config['email']['priority'] = intval($config['email']['priority']);
             $config['email_multirecipient_batch_mode'] = $this->bool_val($config['email_multirecipient_batch_mode']);
             $this->configurator->set_config_array('config', $config);
+            $this->configurator->set_config_array('moss', $moss);
             redirect(create_internal_url('admin_settings/index'));
         } else {
             $this->index();
@@ -125,6 +129,21 @@ class Settings extends LIST_Controller {
             'email',
             'email_multirecipient_batch_mode',
             'student_mail_change',
+        );
+        
+        $output = array();
+        if (count($config) > 0) { foreach ($config as $key => $value) {
+            if (in_array($key, $allowed_keys)) {
+                $output[$key] = $value;
+            }
+        }}
+        
+        return $output;
+    }
+    
+    private function protect_moss_array($config) {
+        $allowed_keys = array(
+            'moss_user_id',
         );
         
         $output = array();

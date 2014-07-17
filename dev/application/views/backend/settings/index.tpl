@@ -123,6 +123,13 @@
                 </p>
             </div>
             <hr />
+            <div class="field">
+                <label for="moss_moss_user_id_id" class="required">{translate line='admin_settings_form_label_moss_user_id'}:</label>
+                <p class="input"><input type="text" name="moss[moss_user_id]" id="moss_moss_user_id_id" value="{$smarty.post.moss.moss_user_id|default:$moss.moss_user_id|escape:'html'}" /></p>
+                <p class="input"><em>{translate line='admin_settings_form_label_moss_user_id_hint'}</em></p>
+                {form_error field='moss[moss_user_id]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <hr />
             <div class="buttons">
                 <input type="submit" class="button" name="save_settings" value="{translate line='admin_settings_form_save_button_text'}" />
             </div>

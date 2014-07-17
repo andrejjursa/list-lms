@@ -25,16 +25,18 @@ class moss extends LIST_Controller {
         $this->_select_teacher_menu_pagetag('moss');
         
         $this->inject_stored_filter();
-        
+
         $this->inject_courses();
         $this->inject_all_task_sets();
-        
+
         $this->clear_old_directories();
-        
+
         $this->parser->add_css_file('admin_moss.css');
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_moss/moss.js');
         
+        $this->parser->assign('moss_enabled', $this->is_moss_user_id_set());
+
         $this->parser->parse('backend/moss/index.tpl');
     }
     
@@ -60,6 +62,8 @@ class moss extends LIST_Controller {
             'task_set' => $task_set,
             'languages' => $languages,
         ));
+        
+        $this->parser->assign('moss_enabled', $this->is_moss_user_id_set());
         
         if ($course->exists() && $task_set->exists()) {
             $solutions = new Solution();
@@ -113,6 +117,8 @@ class moss extends LIST_Controller {
             'languages' => $languages,
         ));
         
+        $this->parser->assign('moss_enabled', $this->is_moss_user_id_set());
+        
         if ($course->exists() && $task_set->exists()) {
             $this->load->library('form_validation');
             
@@ -122,7 +128,7 @@ class moss extends LIST_Controller {
             $this->form_validation->set_rules('moss_setup[n]', 'lang:admin_moss_list_solutions_form_field_matching_files', 'required|integer|greater_than[1]');
             
             $this->form_validation->set_message('_selected_solutions', $this->lang->line('admin_moss_list_solutions_validation_callback_selected_solutions'));
-            if ($this->form_validation->run()) {
+            if ($this->form_validation->run() && $this->is_moss_user_id_set()) {
                 $solutions = new Solution();
                 $solutions->include_related('student');
                 $solutions->where_related($task_set);
@@ -182,7 +188,7 @@ class moss extends LIST_Controller {
                     }
                 }
                 
-                if (count($moss_base_files_data)) { foreach ($moss_base_files_data as $task_id => $path_array) {
+                if (is_array($moss_base_files_data) && count($moss_base_files_data)) { foreach ($moss_base_files_data as $task_id => $path_array) {
                     if (!$all_extracted) { break; }
                     if (is_array($path_array) && count($path_array)) { foreach ($path_array as $path_hash => $file_path) {
                         if (!$all_extracted) { break; }
@@ -228,30 +234,36 @@ class moss extends LIST_Controller {
     
     public function execute() {
         set_time_limit(0);
-        
+
         $path = $this->input->post('path');
         $config = $this->input->post('config');
+
+        if ($this->is_moss_user_id_set()) {
+            $this->load->library('mosslib');
+            $this->load->helper('moss');
+
+            $this->mosslib->setLanguage($config['l']);
+            $this->mosslib->setIngoreLimit((int)$config['m']);
+            $this->mosslib->setResultLimit((int)$config['n']);
+
+            $this->load->config('moss');
+
+            $moss_lang_file_extensions = $this->config->item('moss_langs_file_extensions');
+            $extensions = $moss_lang_file_extensions[$config['l']];
+
+            moss_add_all_files($path . '/source/', $extensions);
+            moss_add_all_base_files($path . '/base/', $extensions);
+
+            $results = $this->mosslib->send();
+
+            echo '<a href="' . $results . '" class="button" target="_blank">' . $this->lang->line('admin_moss_execute_results_button_text') . '</a>';
+        } else {
+            echo '<p>' . $this->lang->line('admin_moss_general_error_user_id_not_set') . '</p>';
+        }
         
-        $this->load->library('mosslib');
-        $this->load->helper('moss');
-        
-        $this->mosslib->setLanguage($config['l']);
-        $this->mosslib->setIngoreLimit((int)$config['m']);
-        $this->mosslib->setResultLimit((int)$config['n']);
-        
-        $this->load->config('moss');
-        
-        $moss_lang_file_extensions = $this->config->item('moss_langs_file_extensions');
-        $extensions = $moss_lang_file_extensions[$config['l']];
-        
-        moss_add_all_files($path . '/source/', $extensions);
-        moss_add_all_base_files($path . '/base/', $extensions);
-        
-        $results = $this->mosslib->send();
-        
-        echo '<a href="' . $results . '" class="button" target="_blank">' . $this->lang->line('admin_moss_execute_results_button_text') . '</a>';
-        
-        unlink_recursive($path, TRUE);
+        if (mb_substr($path, 0, mb_strlen(self::MOSS_WORKING_DIRECTORY)) == self::MOSS_WORKING_DIRECTORY && mb_strlen(self::MOSS_WORKING_DIRECTORY) < mb_strlen($path)) {
+            @unlink_recursive($path, TRUE);
+        }
     }
     
     public function _selected_solutions($solutions) {
@@ -436,6 +448,11 @@ class moss extends LIST_Controller {
                 }
             }
         }
+    }
+    
+    protected function is_moss_user_id_set() {
+        $this->load->config('moss');
+        return preg_match('/^[0-9]+$/', $this->config->item('moss_user_id')) && (int)$this->config->item('moss_user_id') > 0;
     }
     
 }

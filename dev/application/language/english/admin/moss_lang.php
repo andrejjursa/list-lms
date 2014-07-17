@@ -38,3 +38,5 @@ $lang['admin_moss_run_comparation_please_stand_by_message'] = 'Sending request f
 $lang['admin_moss_run_comparation_error_files_not_exracted'] = 'Not all files were extracted / copied successfully. Comparation can\'t be executed.';
 
 $lang['admin_moss_execute_results_button_text'] = 'Display results';
+
+$lang['admin_moss_general_error_user_id_not_set'] = 'MOSS user id is not set. You need to set user id in L.I.S.T. setting to enable this module.';

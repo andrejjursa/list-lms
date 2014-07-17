@@ -38,3 +38,5 @@ $lang['admin_moss_run_comparation_please_stand_by_message'] = 'Posielam požiada
 $lang['admin_moss_run_comparation_error_files_not_exracted'] = 'Nie všetky súbory boli rozbalené / skopírované úspešne. Porovnávanie nemôže začať.';
 
 $lang['admin_moss_execute_results_button_text'] = 'Zobraziť výsledky';
+
+$lang['admin_moss_general_error_user_id_not_set'] = 'Id používateľa MOSS-u nie je zadané. Je nutné zadať id používateľa v nastaveniach L.I.S.T.-u aby sa povolil tento modul.';

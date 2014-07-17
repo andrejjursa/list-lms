@@ -2,6 +2,7 @@
 {block title}{translate line='admin_moss_page_title'}{/block}
 {block main_content}
     <h2>{translate line='admin_moss_page_title'}</h2>
+    {if $moss_enabled}
     <fieldset>
         <legend>{translate line='admin_moss_fieldset_legend_task_set'}</legend>
         <form action="{internal_url url='admin_moss/list_solutions'}" method="post" class="task_set_form">
@@ -37,6 +38,9 @@
         <legend>{translate line='admin_moss_fieldset_legend_protocol'}</legend>
         <div id="solutions_table_content"></div>
     </fieldset>
+    {else}
+        {include file='partials/backend_general/error_box.tpl' message='lang:admin_moss_general_error_user_id_not_set' inline}
+    {/if}
 {/block}
 {block custom_head}<script tyle="text/javascript">
     var all_task_sets = {$task_sets|json_encode};
