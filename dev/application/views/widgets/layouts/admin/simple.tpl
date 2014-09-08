@@ -10,3 +10,10 @@
         <a href="{internal_url url="admin_widget/delete/{$widget_id}"}" class="widget_delete_link widget_id:{$widget_id}" title="{translate line='admin_widget_link_title_delete'}"><span class="list-icon list-icon-delete"></span></a>
     </div>
 </div>
+<script type="text/javascript">
+    {if $list_internal_css_files}
+        {foreach $list_internal_css_files as $css_file}
+            widget_styles.push('{$css_file.html|addslashes}');
+        {/foreach}
+    {/if}
+</script>

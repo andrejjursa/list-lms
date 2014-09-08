@@ -1,9 +1,30 @@
+var widget_styles = [];
+var widget_loaded_styles = [];
+
 jQuery(document).ready(function($) {
+    
+    var widget_to_load = 0;
+    
+    var widget_on_load = function() {
+        widget_to_load--;
+        for (var i in widget_loaded_styles) {
+            $(widget_loaded_styles[i]).remove();
+        }
+        for (var i in widget_styles) {
+            var widget_style = $(widget_styles[i]);
+            var style_href = widget_style.attr('href');
+            if ($('head link[href="' + style_href + '"]').length === 0) {
+                widget_style.appendTo('head');
+                widget_loaded_styles.push(widget_style);
+            }
+        }
+    };
     
     var reload_single_widget = function(id) {
         var url = global_base_url + 'index.php/admin_widget/showWidget/' + id;
         var target = '#widget_container_' + id;
-        api_ajax_load(url, target);
+        widget_to_load++;
+        api_ajax_load(url, target, 'post', [], widget_on_load, widget_on_load);
     };
     
     var reload_widgets = function() {
