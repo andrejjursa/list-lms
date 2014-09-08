@@ -53,7 +53,7 @@ function moss_add_all_base_files($cd_path, $directory, $extensions = array()) {
             foreach ($dirs as $dir) {
                 if ($dir != '.' && $dir != '..') {
                     $dir_path = rtrim($directory, '/\\') . DIRECTORY_SEPARATOR . $dir;
-                    moss_add_all_files($dir_path . (is_dir($dir_path) ? DIRECTORY_SEPARATOR : ''), $extensions);
+                    moss_add_all_base_files($cd_path, $dir_path . (is_dir($dir_path) ? DIRECTORY_SEPARATOR : ''), $extensions);
                 }
             }
         }
