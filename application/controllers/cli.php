@@ -251,7 +251,7 @@ class Cli extends CI_Controller {
         $this->load->database();
         $this->load->helper('lamsfet');
         echo 'This script will repair all broken links in tasks.' . "\n\n";
-        echo 'Please specifi the broken prefix here.' . "\n\n";
+        echo 'Please specify the broken prefix here.' . "\n\n";
         echo 'Example:' . "\n";
         echo 'Your installation is: http://www.domain.com/list/' . "\n";
         echo 'Your links in tasks starts with: list/index.php/....' . "\n";
