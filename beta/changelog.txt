@@ -20,6 +20,19 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.1.1 | 2014-09-08
+
+NEW Pridaný widget na zobrazenie posledných zmien v LIST-e.
+NEW [lang:english] Added widget for displaying last changes in LIST.
+
+CHANGE Porovnávač súborov MOSS teraz dostáva kratšie linky. Výsledky by mali byt prehľadnejšie.
+CHANGE [lang:english] MOSS files comparator is getting shorter links now. Results would be more readable.
+
+FIX Porovnávač súborov MOSS teraz korektne dostane základné súbory (vzory). Už sa nebudú brať ako súbory na testovanie podobnosti.
+FIX [lang:english] MOSS files comparator will obtain now base files (patterns) correctly. They will not be handled as files to compare anymore.
+
+END VERSION
+
 VERSION 1.1.0 | 2014-07-17
 
 NEW Pridaný porovnávač zdrojových kódov MOSS.

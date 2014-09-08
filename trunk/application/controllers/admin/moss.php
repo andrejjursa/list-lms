@@ -251,10 +251,13 @@ class moss extends LIST_Controller {
             $moss_lang_file_extensions = $this->config->item('moss_langs_file_extensions');
             $extensions = $moss_lang_file_extensions[$config['l']];
 
-            moss_add_all_files($path . '/source/', $extensions);
-            moss_add_all_base_files($path . '/base/', $extensions);
+            moss_add_all_files(rtrim($path, '/\\') . '/', 'source/', $extensions);
+            moss_add_all_base_files(rtrim($path, '/\\') . '/', 'base/', $extensions);
 
+            $current_path = getcwd();
+            chdir($path);
             $results = $this->mosslib->send();
+            chdir($current_path);
 
             echo '<a href="' . $results . '" class="button" target="_blank">' . $this->lang->line('admin_moss_execute_results_button_text') . '</a>';
         } else {
