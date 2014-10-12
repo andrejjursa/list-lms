@@ -20,6 +20,15 @@ class python_test extends abstract_test {
             'configure_validator' => 'validator_unit_test',
             'configure_uploader' => 'uploader_unit_test',
         ),
+        'io_test' => array(
+            'name' => 'lang:python_tests_subtype_io_test_name',
+            'method' => 'run_io_test',
+            'configure_view' => 'tests/python/configure_io.tpl',
+            'configure_js' => 'tests/python/configure_io.js',
+            'configure_before_save' => 'save_io_test_config',
+            'configure_validator' => 'validator_io_test',
+            'configure_uploader' => 'uploader_io_test',
+        ),
     );
 
     public function get_test_type_name() {
@@ -77,6 +86,59 @@ class python_test extends abstract_test {
                 $valid = FALSE;
             } else {
                 $new_config['zip_file'] = 'unit_test/' . $data['file_name'];
+            }
+        }
+        return $valid;
+    }
+    
+    protected function run_io_test($save_score = FALSE, $score_token = '', $score_student = NULL) {
+        return '';
+    }
+    
+    protected function save_io_test_config($new_config) {
+        $old_config = $this->get_current_test_configuration();
+        return array_merge($old_config, $new_config);
+    }
+    
+    protected function validator_io_test() {
+        //$this->CI->form_validation->set_rules('configuration[class_to_run]', 'lang:python_tests_config_validation_unit_test_class_to_run', 'required|regex_match[' . self::UNIT_TEST_CLASS_TO_RUN_REGEXP . ']');
+        //$this->CI->form_validation->set_rules('configuration[max_output_lines]', 'lang:python_tests_config_validation_unit_test_output_maximum_lines', 'required|integer|greater_than_equal[0]');
+        return TRUE;
+    }
+    
+    protected function uploader_io_test(&$new_config) {
+        $valid = TRUE;
+        if ($this->was_file_sent('input_file')) {
+            $data = $this->upload_file('io_test', 'input_file', 'txt', array(
+                'overwrite' => TRUE,
+                'file_name' => 'test_input.txt',
+            ));
+            if ($data === FALSE) {
+                $valid = FALSE;
+            } else {
+                $new_config['input_file'] = 'io_test/' . $data['file_name'];
+            }
+        }
+        if ($this->was_file_sent('target_file')) {
+            $data = $this->upload_file('io_test', 'target_file', 'txt', array(
+                'overwrite' => TRUE,
+                'file_name' => 'test_target.txt',
+            ));
+            if ($data === FALSE) {
+                $valid = FALSE;
+            } else {
+                $new_config['target_file'] = 'io_test/' . $data['file_name'];
+            }
+        }
+        if ($this->was_file_sent('judge_source')) {
+            $data = $this->upload_file('io_test', 'judge_source', 'py', array(
+                'overwrite' => TRUE,
+                'file_name' => 'test_judge.py',
+            ));
+            if ($data === FALSE) {
+                $valid = FALSE;
+            } else {
+                $new_config['judge_source'] = 'io_test/' . $data['file_name'];
             }
         }
         return $valid;

@@ -200,6 +200,19 @@ abstract class abstract_test {
     }
     
     /**
+     * Returns path to js file or NULL if not set.
+     * This path must be defined in $this->test_subtypes[current_subtype]['configure_js'].
+     * @return string|NULL path to js file or NULL if not set.
+     * @throws TestException can be thrown if test object is not initialized.
+     */
+    public function get_configure_js() {
+        if (is_null($this->get_current_test_subtype())) {
+            throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1310001);
+        }
+        return isset($this->test_subtypes[$this->get_current_test_subtype()]['configure_js']) ? $this->test_subtypes[$this->get_current_test_subtype()]['configure_js'] : NULL;
+    }
+    
+    /**
      * This method will be run in configuration save process to set validators or validate post input and return validation result.
      * Will use method defined in $this->test_subtypes[current_subtype]['configure_validator'].
      * @return boolean if this method returns FALSE, save action will be stoped and configuration form will be displayed again.
