@@ -15,3 +15,4 @@ $lang['tests_general_error_configure_uploader_not_exists'] = 'Upload handler met
 $lang['tests_general_error_file_not_found'] = 'File not found: %s';
 $lang['tests_general_error_not_a_zip_file'] = 'File is not a zip archive: %s';
 $lang['tests_general_error_single_file_zip_error'] = 'Uploaded file failed to be ZIPed.';
+$lang['tests_general_error_file_copy_error'] = 'File %s can\'t be copied into %s.';

@@ -8,9 +8,12 @@
 cd $1
 
 if [[ "$3" == "JAVA" ]] ; then
-  /opt/lampp/htdocs/list-svn/dev/test_scripts/testjava $2 ;
+  /opt/lampp/htdocs/list-svn/dev/test_scripts/testjava $2 $4 ;
 fi
 if [[ "$3" == "PYTHON" ]] ; then
-  /opt/lampp/htdocs/list-svn/dev/test_scripts/testpython $2 ;
+  /opt/lampp/htdocs/list-svn/dev/test_scripts/testpython $2 $4 ;
 fi
-
+if [[ "$3" == "PYTHONIO" ]] ; then
+  echo "PYTHONIO found ..."
+  /opt/lampp/htdocs/list-svn/dev/test_scripts/testpythonio $2 $4 $5 ;
+fi

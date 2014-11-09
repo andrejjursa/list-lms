@@ -454,6 +454,17 @@ abstract class abstract_test {
         }
     }
     
+    protected function copy_file_to($file, $subdirectory='') {
+        if (file_exists($file)) {
+            $this->create_directory(ltrim($this->current_test_directory . $subdirectory, '\\/'));
+            if (!@copy($file, ltrim($this->current_test_directory . $subdirectory, '\\/') . '/' . basename($file))) {
+                throw new TestException(sprintf($this->CI->lang->line('tests_general_error_file_copy_error'), basename($file), ltrim($this->current_test_directory . $subdirectory, '\\/') . '/'), 1800003);
+            }
+        } else {
+            throw new TestException(sprintf($this->CI->lang->line('tests_general_error_file_not_found'), $file), 1800001);
+        }
+    }
+    
     /**
      * Adds information about score into database.
      * @param int $score score value from 0 to 100, or more for bonus points.
