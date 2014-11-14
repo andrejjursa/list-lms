@@ -124,6 +124,13 @@ $cache = array (
       array (
       ),
     ),
+    'solution_version' => 
+    array (
+      'field' => 'solution_version',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -163,6 +170,17 @@ $cache = array (
   ),
   'has_many' => 
   array (
+    'solution_version' => 
+    array (
+      'class' => 'solution_version',
+      'other_field' => 'solution',
+      'join_self_as' => 'solution',
+      'join_other_as' => 'solution_version',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
   ),
   '_field_tracking' => 
   array (

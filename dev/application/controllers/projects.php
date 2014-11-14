@@ -283,7 +283,8 @@ class Projects extends LIST_Controller {
                 $config['upload_path'] = 'private/uploads/solutions/task_set_' . intval($task_set_id) . '/';
                 $config['allowed_types'] = 'zip';
                 $config['max_size'] = intval($this->config->item('maximum_solition_filesize'));
-                $config['file_name'] = $student->id . '_' . $this->normalize_student_name($student) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $task_set->get_student_file_next_version($student->id) . '.zip';
+                $current_version = $task_set->get_student_file_next_version($student->id);
+                $config['file_name'] = $student->id . '_' . $this->normalize_student_name($student) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $current_version . '.zip';
                 @mkdir($config['upload_path'], DIR_READ_MODE);
                 $this->load->library('upload', $config);
                 
@@ -306,6 +307,10 @@ class Projects extends LIST_Controller {
                             'task_set' => $task_set,
                         ));
                     }
+                    $solution_version = new Solution_version();
+                    $solution_version->ip_address = $_SERVER["REMOTE_ADDR"];
+                    $solution_version->version = $current_version;
+                    $solution_version->save($solution);
                     if ($this->db->trans_status()) {
                         $log = new Log();
                         $log->add_student_solution_upload_log(sprintf($this->lang->line('projects_task_solution_upload_log_message'), $config['file_name']), $student, $solution->id);
