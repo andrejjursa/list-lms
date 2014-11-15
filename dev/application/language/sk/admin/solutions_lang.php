@@ -108,6 +108,10 @@ $lang['admin_solutions_valuation_next_solution_message_this_solution_is_not_valu
 $lang['admin_solutions_valuation_student_no_group'] = 'Bez skupiny';
 $lang['admin_solutions_validation_filter_hint_resize'] = 'Môžete meniť výšku náhľadu kódu tahaním za spodný okraj (nad scrollbar-om).';
 
+$lang['admin_solutions_valuation_version_metadata_ip_address'] = 'IP adresa';
+$lang['admin_solutions_valuation_version_metadata_ip_address_unknown'] = 'Neznáma';
+$lang['admin_solutions_valuation_version_metadata_download_lock'] = 'Zakázať sťahovanie';
+
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámy autor';
 $lang['admin_solutions_tasks_list_internal_comment_from_task_set_header'] = 'Interný komentár zo zostavy úloh';

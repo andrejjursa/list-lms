@@ -97,7 +97,11 @@
                             {foreach $solution_files as $file}
                                 <tr>
                                     <td class="version">{$file@key}</td>
+                                    {if isset($versions_metadata[$file@key]) && $versions_metadata[$file@key]->download_lock}
+                                    <td class="file"><span class="download_lock">{$file.file_name}_{$file@key}.zip</span></td>
+                                    {else}
                                     <td class="file"><a href="{internal_url url="tasks/download_solution/{$project->id|intval}/{$file.file|encode_for_url}"}" target="_blank">{$file.file_name}_{$file@key}.zip</a></td>
+                                    {/if}
                                     <td class="size">{$file.size}</td>
                                     <td class="modified">{$file.last_modified|date_format:{translate line='common_datetime_format'}}</td>
                                 </tr>

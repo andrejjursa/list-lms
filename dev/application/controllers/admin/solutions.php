@@ -471,6 +471,31 @@ class Solutions extends LIST_Controller {
         $this->parser->parse('backend/solutions/list_of_file_content.tpl', array('files' => $files));
     }
     
+    public function get_solution_version_metadata($task_set_id, $solution_id, $solution_file) {
+        $task_set = new Task_set();
+        $task_set->where_related('solution', 'id', $solution_id);
+        $task_set->include_related('solution/student', 'id');
+        $task_set->get_by_id($task_set_id);
+        if ($task_set->exists()) {
+            $file_name = decode_from_url($solution_file);
+            $file_info = $task_set->get_specific_file_info($file_name);
+            $solution_version = new Solution_version();
+            $solution_version->where('version', $file_info['version']);
+            $solution_version->where_related('solution', 'id', $solution_id);
+            $solution_version->get();
+            if (!$solution_version->exists()) {
+                $solution_version = new Solution_version();
+                $solution_version->version = (int)$file_info['version'];
+                $solution_version->solution_id = (int)$solution_id;
+                $solution_version->save();
+            }
+            //$solution_version->check_last_query();
+            $this->parser->assign('solution_version', $solution_version);
+            $this->parser->assign('task_set', $task_set);
+        }
+        $this->parser->parse('backend/solutions/version_metadata.tpl');
+    }
+    
     public function show_file_content($task_set_id, $solution_id, $solution_file, $zip_index) {
         $this->output->set_content_type('text/plain');
         $task_set = new Task_set();

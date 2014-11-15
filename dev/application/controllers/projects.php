@@ -135,10 +135,20 @@ class Projects extends LIST_Controller {
                 $students->where_related('project_selection', 'task_set_id', $project->id);
                 $students->where_related('project_selection', 'task_id', $task->id);
                 $students->get_iterated();
+                $solution_versions = new Solution_version();
+                $solution_versions->where_related('solution/task_set', 'id', $task_set_id);
+                $solution_versions->where_related('solution', 'student_id', $this->usermanager->get_student_id());
+                $query = $solution_versions->get_raw();
+                $versions_metadata = array();
+                if ($query->num_rows()) { foreach ($query->result() as $row) {
+                    $versions_metadata[$row->version] = clone $row;
+                }}
+                $query->free_result();
                 $this->parser->assign('task', $task);
                 $this->parser->assign('students', $students);
                 $this->parser->assign('project_selection', $project_selection);
                 $this->parser->assign('solution_files', $project->get_student_files($student->id));
+                $this->parser->assign('versions_metadata', $versions_metadata);
             }
             $this->parser->assign(array('course' => $course));
         }
