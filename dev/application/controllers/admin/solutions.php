@@ -496,6 +496,43 @@ class Solutions extends LIST_Controller {
         $this->parser->parse('backend/solutions/version_metadata.tpl');
     }
     
+    public function solution_version_switch_download_lock($solution_version_id) {
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        
+        $output = new stdClass();
+        $output->status = FALSE;
+        $output->value = FALSE;
+        $output->message = $this->lang->line('admin_solutions_valuation_version_metadata_download_lock_error_cant_found');
+        
+        $solution_version = new Solution_version();
+        $solution_version->include_related('solution');
+        $solution_version->get_by_id((int)$solution_version_id);
+        
+        if ($solution_version->exists()) {
+            $output->value = $solution_version->download_lock == 0 ? FALSE : TRUE;
+            $solution_version->download_lock = $solution_version->download_lock == 0 ? 1 : 0;
+            if ($solution_version->save()) {
+                $output->value = $solution_version->download_lock == 0 ? FALSE : TRUE;
+                $output->status = TRUE;
+                if ($output->value) {
+                    $output->message = $this->lang->line('admin_solutions_valuation_version_metadata_download_lock_enabled');
+                } else {
+                    $output->message = $this->lang->line('admin_solutions_valuation_version_metadata_download_lock_disabled');
+                }
+                $this->db->trans_commit();
+                $this->_action_success();
+                $this->output->set_internal_value('student_id', (int)$solution_version->solution_student_id);
+            } else {
+                $output->message = $this->lang->line('admin_solutions_valuation_version_metadata_download_lock_error_cant_save');
+                $this->db->trans_rollback();
+            }
+        }
+        
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+    
     public function show_file_content($task_set_id, $solution_id, $solution_file, $zip_index) {
         $this->output->set_content_type('text/plain');
         $task_set = new Task_set();
@@ -647,177 +684,6 @@ class Solutions extends LIST_Controller {
         $filter = $this->input->post('filter');
         $this->store_valuation_tables_filter($filter);
         $this->inject_stored_valuation_tables_filter();
-        /*
-        $course = new Course();
-        $course->include_related('period', 'name');
-        $course->get_by_id(intval(@$filter['course']));
-        
-        $group = new Group();
-        $group->get_by_id(@$filter['group']);
-        
-        if ($course->exists()) {
-            $task_set_types = new Task_set_type();
-            $task_set_types->where_related_course($course);
-            $task_set_types->order_by_with_constant('name', 'asc');
-            $task_set_types->get_iterated();
-                        
-            $students = new Student();
-            $students->include_related('participant/group', 'id');
-            $students->where_related('participant/course', 'id', $course->id);
-            if ($group->exists()) {
-                $students->where_related('participant/group', 'id', $group->id);
-            }
-            $students->where_related('participant', 'allowed', 1);
-            if ($filter['order_by_field'] == 'students') {
-                $students->order_by_as_fullname('fullname', $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc');
-            }
-            $students->get_iterated();
-            
-            $student_ids = array(0);
-            
-            $points_table = array();
-            
-            foreach($students as $student) { 
-                $student_ids[] = $student->id;
-                $points_table[$student->id]['student']['fullname'] = $student->fullname;
-                $points_table[$student->id]['student']['email'] = $student->email;
-                $points_table[$student->id]['student']['group'] = $student->participant_group_id;
-            }
-            
-            $task_sets = new Task_set();
-            $task_sets->select('*');
-            $task_sets->select_subquery('(SELECT SUM(`points_total`) FROM `task_task_set_rel` WHERE `task_task_set_rel`.`task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'counted_points_sum');
-            $task_sets->select_subquery('(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `${parent}`.`id` AND `tsp`.`enabled` = 1)', 'permissions_count');
-            $task_sets->include_related('group', 'name');
-            $task_sets->where_related('course', 'id', $course->id);
-            if ($group->exists()) {
-                $task_sets->group_start();
-                    $task_sets->or_group_start();
-                        $task_sets->group_start();
-                            $task_sets->or_where_related('group', 'id', $group->id);
-                            $task_sets->or_where_related('group', 'id', NULL);
-                        $task_sets->group_end();
-                        $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
-                    $task_sets->group_end();
-                    $task_sets->or_group_start();
-                        $task_sets->where_related('task_set_permission', 'enabled', 1);
-                        $task_sets->where_related('task_set_permission', 'group_id', $group->id);
-                    $task_sets->group_end();
-                $task_sets->group_end();
-            }
-            $task_sets->where('published', 1);
-            $task_sets->order_by_related_with_constant('task_set_type', 'name', 'asc');
-            $task_sets->order_by_with_overlay('name', 'asc');
-            $task_sets->get_iterated();
-            
-            $task_set_ids = array(0);
-            $task_set_types_points_max = array();
-            $header = array();
-            
-            foreach ($task_set_types as $task_set_type) {
-                $header[$task_set_type->id] = array(
-                    'name' => $task_set_type->name,
-                    'task_sets' => array(),
-                );
-            }
-            
-            foreach($task_sets as $task_set) { 
-                $task_set_ids[] = $task_set->id;
-                $points = floatval(!is_null($task_set->points_override) ? $task_set->points_override : $task_set->counted_points_sum);
-                $task_set_types_points_max[$task_set->task_set_type_id] = isset($task_set_types_points_max[$task_set->task_set_type_id]) ? $task_set_types_points_max[$task_set->task_set_type_id] + $points : $points;
-                if ($task_set->permissions_count > 0) {
-                    $task_set_permissions = $task_set->task_set_permissions->include_related('group')->where('enabled', 1)->order_by_related_with_constant('group', 'name', 'asc')->get_iterated();
-                    $group_name = array();
-                    $group_id = array();
-                    foreach ($task_set_permissions as $task_set_permission) {
-                        $group_name[] = $task_set_permission->group_name;
-                        $group_id[] = $task_set_permission->group_id;
-                    }
-                } else {
-                    $group_name = $task_set->group_name;
-                    $group_id = $task_set->group_id;
-                }
-                $header[$task_set->task_set_type_id]['task_sets'][$task_set->id] = array(
-                    'name' => $task_set->name,
-                    'group_name' => $group_name,
-                    'group_id' => $group_id,
-                    'points' => $points,
-                );
-            }
-            $total_points = array_sum($task_set_types_points_max);
-            
-            $solutions = new Solution();
-            $solutions->include_related('task_set/task_set_type', 'id');
-            $solutions->where_in_related('task_set', 'id', $task_set_ids);
-            $solutions->where_in_related('student', 'id', $student_ids);
-            $solutions->order_by_related('student', 'fullname', 'asc');
-            $solutions->order_by_related('student', 'email', 'asc');
-            $solutions->order_by_related_with_constant('task_set/task_set_type', 'name', 'asc');
-            $solutions->order_by_related_with_overlay('task_set', 'name', 'asc');
-            $solutions->get_iterated();
-            
-            foreach ($solutions as $solution) {
-                $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id][$solution->task_set_id] = array(
-                    'points' => $solution->points,
-                    'revalidate' => $solution->revalidate,
-                    'not_considered' => $solution->not_considered,
-                );
-                if (!(bool)$solution->not_considered) {
-                    $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total'] = isset($points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total']) ? $points_table[$solution->student_id]['points'][$solution->task_set_task_set_type_id]['total'] + floatval($solution->points) : floatval($solution->points);
-                    $points_table[$solution->student_id]['points']['total'] = isset($points_table[$solution->student_id]['points']['total']) ? $points_table[$solution->student_id]['points']['total'] + floatval($solution->points) : floatval($solution->points);
-                }
-            }
-            
-            if (count($points_table) > 0) {
-                if (substr($filter['order_by_field'], 0, 14) == 'task_set_type_') {
-                    $task_set_type_id = intval(substr($filter['order_by_field'], 14));
-                    $order_array = array();
-                    foreach ($points_table as $key => $line) {
-                        $order_array[$key] = @$line['points'][$task_set_type_id]['total'];
-                    }
-                    $direction = $filter['order_by_direction'] == 'desc' ? SORT_DESC : SORT_ASC;
-                    array_multisort($order_array, $direction, SORT_NUMERIC, $points_table);
-                } elseif ($filter['order_by_field'] == 'total') {
-                    $order_array = array();
-                    foreach ($points_table as $key => $line) {
-                        $order_array[$key] = @$line['points']['total'];
-                    }
-                    $direction = $filter['order_by_direction'] == 'desc' ? SORT_DESC : SORT_ASC;
-                    array_multisort($order_array, $direction, SORT_NUMERIC, $points_table);
-                } elseif (substr($filter['order_by_field'], 0, 9) == 'task_set_') {
-                    list($task_set_type_id, $task_set_id) = explode('_', substr($filter['order_by_field'], 9));
-                    $order_array = array();
-                    $category_order_array = array();
-                    foreach ($points_table as $key => $line) {
-                        if (isset($line['points'][$task_set_type_id]) && array_key_exists($task_set_id, $line['points'][$task_set_type_id])) {
-                            if (is_null(@$line['points'][$task_set_type_id][$task_set_id]['points'])) {
-                                $category_order_array[$key] = 2;
-                            } else {
-                                if (@$line['points'][$task_set_type_id][$task_set_id]['not_considered']) {
-                                    $category_order_array[$key] = 3;
-                                } else {
-                                    $category_order_array[$key] = 4;
-                                }
-                            }
-                        } else {
-                            if (!is_null(@$header[$task_set_type_id]['task_sets'][$task_set_id]['group_id']) && $line['student']['group'] != @$header[$task_set_type_id]['task_sets'][$task_set_id]['group_id']) {
-                                $category_order_array[$key] = 1;
-                            } else {
-                                $category_order_array[$key] = 0;
-                            }
-                        }
-                        $order_array[$key] = @$line['points'][$task_set_type_id][$task_set_id]['points'];
-                    }
-                    $direction = $filter['order_by_direction'] == 'desc' ? SORT_DESC : SORT_ASC;
-                    array_multisort($category_order_array, $direction, SORT_NUMERIC, $order_array, $direction, SORT_NUMERIC, $points_table);
-                }
-            }
-            
-            $this->parser->assign('task_set_types_points_max', $task_set_types_points_max);
-            $this->parser->assign('total_points', $total_points);
-            $this->parser->assign('header', $header);
-            $this->parser->assign('points_table', $points_table);
-        }*/
         
         $this->parser->assign('table_data', $this->get_valuation_table_data(intval(@$filter['course']), @$filter['group'], (bool)@$filter['simple']));
         

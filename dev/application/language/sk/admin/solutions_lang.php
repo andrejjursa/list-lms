@@ -111,6 +111,11 @@ $lang['admin_solutions_validation_filter_hint_resize'] = 'Môžete meniť výšk
 $lang['admin_solutions_valuation_version_metadata_ip_address'] = 'IP adresa';
 $lang['admin_solutions_valuation_version_metadata_ip_address_unknown'] = 'Neznáma';
 $lang['admin_solutions_valuation_version_metadata_download_lock'] = 'Zakázať sťahovanie';
+$lang['admin_solutions_valuation_version_metadata_download_lock_error_cant_found'] = 'Nemožno nájsť záznam verzie, ktorý sa má zmeniť.';
+$lang['admin_solutions_valuation_version_metadata_download_lock_error_cant_save'] = 'Nemožno uložiť zmenené nastavenie zákazu sťahovania do databázy.';
+$lang['admin_solutions_valuation_version_metadata_download_lock_enabled'] = 'Zakázanie sťahovania povolené.';
+$lang['admin_solutions_valuation_version_metadata_download_lock_disabled'] = 'Zakázanie sťahovania zrušené.';
+$lang['admin_solutions_valuation_version_metadata_download_lock_switch_failed'] = 'Prepnutie zákazu sťahovania zlyhalo.';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámy autor';

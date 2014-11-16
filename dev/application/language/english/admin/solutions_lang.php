@@ -111,6 +111,11 @@ $lang['admin_solutions_validation_filter_hint_resize'] = 'You can resize code pr
 $lang['admin_solutions_valuation_version_metadata_ip_address'] = 'IP address';
 $lang['admin_solutions_valuation_version_metadata_ip_address_unknown'] = 'Unknown';
 $lang['admin_solutions_valuation_version_metadata_download_lock'] = 'Disable downloading';
+$lang['admin_solutions_valuation_version_metadata_download_lock_error_cant_found'] = 'Can\'t found version record to chanve.';
+$lang['admin_solutions_valuation_version_metadata_download_lock_error_cant_save'] = 'Can\'t save changed download lock into database.';
+$lang['admin_solutions_valuation_version_metadata_download_lock_enabled'] = 'Download lock enabled.';
+$lang['admin_solutions_valuation_version_metadata_download_lock_disabled'] = 'Download lock disabled.';
+$lang['admin_solutions_valuation_version_metadata_download_lock_switch_failed'] = 'Download lock switch failed.';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Instructions for student';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Unknown author';

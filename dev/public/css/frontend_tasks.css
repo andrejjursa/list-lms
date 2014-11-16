@@ -55,6 +55,8 @@ table.solutions_table thead th.version { width: 45px; }
 table.solutions_table thead th.size { width: 100px; }
 table.solutions_table thead th.modified { width: 200px; }
 table.solutions_table tbody td { padding: 4px; border-bottom: 1px dashed silver; }
+table.solutions_table tbody td span.download_lock { color: lightcoral; text-decoration: line-through; text-decoration-color: lightcoral; -moz-text-decoration-color: lightcoral; }
+table.solutions_table tbody td span.download_lock::selection { color: white; background-color: black; text-decoration-color: white; -moz-text-decoration-color: white; }
 
 ul.comments_list { list-style-type: none; margin-left: 5px; }
 ul.comments_list.level_1 { margin-left: 0; }

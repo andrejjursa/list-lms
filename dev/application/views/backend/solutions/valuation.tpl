@@ -192,7 +192,8 @@
     var student_id = {$solution->student_id|intval};
     var messages = {
         test_no_selection: '{translate|addslashes line='admin_solutions_validation_test_messages_test_not_selected'}',
-        test_being_executed: '{translate|addslashes line='admin_solutions_validation_test_messages_test_being_executed'}'
+        test_being_executed: '{translate|addslashes line='admin_solutions_validation_test_messages_test_being_executed'}',
+        download_lock_switch_failed: '{translate|addslashes line='admin_solutions_valuation_version_metadata_download_lock_switch_failed'}'
     };
     var urls = {
         get_next_solution: '{internal_url|add_to_url:$add_url url="admin_solutions/get_next_solution/{$solution->task_set->id|intval}/{$solution->id|intval}"}',

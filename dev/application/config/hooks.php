@@ -260,6 +260,10 @@ $hook['post_controller'] = array(
                     'frontend/tasks/index.tpl' => $admin_student_cache_id,
                     'frontend/projects/index.tpl' => $admin_student_cache_id,
                 ),
+                'solution_version_switch_download_lock' => array(
+                    'frontend/tasks/task.tpl' => $admin_student_cache_id,
+                    'frontend/projects/task.tpl' => $admin_student_cache_id,
+                ),
             ),
             'teachers' => array(
                 'update_teacher' => array(
