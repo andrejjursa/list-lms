@@ -95,6 +95,10 @@ class Tests extends LIST_Controller {
         }
         $this->_add_tinymce4();
         $this->parser->add_js_file('admin_tests/configure_test.js');
+        $test_js = $test_class->get_configure_js();
+        if (!is_null($test_js)) {
+            $this->parser->add_js_file($test_js);
+        }
         $this->parser->parse('backend/tests/configure_test.tpl', array(
             'test' => $test,
             'test_config_view' => $test_config_view,

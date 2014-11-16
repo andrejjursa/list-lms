@@ -17,4 +17,8 @@ if [[ "$3" == "PYTHON" ]] ; then
   $MY_DIR/testpython $2 $4 ;
   retval=$?
 fi
+if [[ "$3" == "PYTHONIO" ]] ; then
+  $MY_DIR/testpythonio $2 $4 $5 ;
+  retval=$?
+fi
 exit $retval

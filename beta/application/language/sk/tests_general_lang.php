@@ -15,3 +15,4 @@ $lang['tests_general_error_configure_uploader_not_exists'] = 'Správcovská met�
 $lang['tests_general_error_file_not_found'] = 'Súbor sa nenašieľ: %s';
 $lang['tests_general_error_not_a_zip_file'] = 'Súbor nie je zip archív: %s';
 $lang['tests_general_error_single_file_zip_error'] = 'Odoslaný súbor sa nepodarilo zoZIPovať.';
+$lang['tests_general_error_file_copy_error'] = 'Súbor %s sa nedá skopírovať do %s.';

@@ -146,6 +146,7 @@
     #valuation_files_id div.codepreview_container { width: 100%; height: 450px; overflow: scroll; }
     #valuation_files_id pre.codepreview,
     #valuation_files_id pre.codepreviewNohighlight {  }
+    #valuation_files_id div.version_metadata_panel { max-height: 200px; overflow-y: auto; }
 }
 @media only screen and (min-width: 1024px) {
     #valuation_files_id div.filter_wrap { width: 300px; border-bottom: 0 none; float: left; }
@@ -157,6 +158,7 @@
     #valuation_files_id #file_content_id { margin-left: 310px; width: auto; }
     #valuation_files_id #file_content_id pre.prettyprint { border: 0 none; padding: 0; }
     #valuation_files_id div.clear { clear: both; }
+    #valuation_files_id div.hint { margin-top: 8px; }
 }
 @media only screen and (max-width: 1024px) {
     #valuation_files_id { font-size: 0.7em; }
@@ -167,4 +169,5 @@
     #valuation_files_id div.filter_wrap form div.field label { width: 43% }
     #valuation_files_id div.filter_wrap form div.field p.input,
     #valuation_files_id div.filter_wrap form div.field div.input { margin-left: 43.1%; }
+    #valuation_files_id div.hint { clear: both; margin-top: 5px; }
 }

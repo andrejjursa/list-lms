@@ -200,6 +200,19 @@ abstract class abstract_test {
     }
     
     /**
+     * Returns path to js file or NULL if not set.
+     * This path must be defined in $this->test_subtypes[current_subtype]['configure_js'].
+     * @return string|NULL path to js file or NULL if not set.
+     * @throws TestException can be thrown if test object is not initialized.
+     */
+    public function get_configure_js() {
+        if (is_null($this->get_current_test_subtype())) {
+            throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1310001);
+        }
+        return isset($this->test_subtypes[$this->get_current_test_subtype()]['configure_js']) ? $this->test_subtypes[$this->get_current_test_subtype()]['configure_js'] : NULL;
+    }
+    
+    /**
      * This method will be run in configuration save process to set validators or validate post input and return validation result.
      * Will use method defined in $this->test_subtypes[current_subtype]['configure_validator'].
      * @return boolean if this method returns FALSE, save action will be stoped and configuration form will be displayed again.
@@ -438,6 +451,17 @@ abstract class abstract_test {
             }
         } else {
             throw new TestException(sprintf($this->CI->lang->line('tests_general_error_file_not_found'), $zip_file), 1800001);
+        }
+    }
+    
+    protected function copy_file_to($file, $subdirectory='') {
+        if (file_exists($file)) {
+            $this->create_directory(ltrim($this->current_test_directory . $subdirectory, '\\/'));
+            if (!@copy($file, ltrim($this->current_test_directory . $subdirectory, '\\/') . '/' . basename($file))) {
+                throw new TestException(sprintf($this->CI->lang->line('tests_general_error_file_copy_error'), basename($file), ltrim($this->current_test_directory . $subdirectory, '\\/') . '/'), 1800003);
+            }
+        } else {
+            throw new TestException(sprintf($this->CI->lang->line('tests_general_error_file_not_found'), $file), 1800001);
         }
     }
     

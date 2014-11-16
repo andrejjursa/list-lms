@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# test configuration variables:
+TIMEOUT=90000
+PYTHON_ARGS=""
+#
+cat ../test_data/test_input.txt | nice /opt/lampp/htdocs/list-svn/dev/test_scripts/run_with_timeout $TIMEOUT /usr/bin/python $PYTHON_ARGS $1.py
+cd .. ;

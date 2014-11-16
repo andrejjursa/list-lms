@@ -90,4 +90,5 @@ $lang['tasks_test_fieldset_legend'] = 'Testy';
 $lang['tasks_countdown_message_time_info'] = '{d<}<strong>{dn} {dl}</strong> a {d>}<strong>{hnn}{sep}{mnn}{sep}{snn}</strong> do konca odovzdávania ...';
 $lang['tasks_countdown_message_expired'] = 'Odovzdávanie riešení bolo ukončené.';
 $lang['tasks_download_solution_now_disabled'] = 'Prepáčte, ale v tomto okamihu je zablokované sťahovanie riešení. Skúste to neskôr.';
+$lang['tasks_download_solution_version_disabled'] = 'Prepáčte, ale stiahnutie tejto verzie riešenia bolo zakázané učiteľom.';
 $lang['tasks_log_message_student_solution_download'] = 'Študent sťahuje verziu riešenia zo zostavy úloh.';

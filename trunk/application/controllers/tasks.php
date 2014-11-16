@@ -87,11 +87,21 @@ class Tasks extends LIST_Controller {
                     $this->load->helper('tests');
                     $test_types_subtypes = get_all_supported_test_types_and_subtypes();
                     $this->lang->init_overlays('task_sets', $filtered_task_set, array('name', 'instructions'));
+                    $solution_versions = new Solution_version();
+                    $solution_versions->where_related('solution/task_set', 'id', $task_set_id);
+                    $solution_versions->where_related('solution', 'student_id', $this->usermanager->get_student_id());
+                    $query = $solution_versions->get_raw();
+                    $versions_metadata = array();
+                    if ($query->num_rows()) { foreach ($query->result() as $row) {
+                        $versions_metadata[$row->version] = clone $row;
+                    }}
+                    $query->free_result();
                     $this->parser->assign('task_set', $filtered_task_set);
                     $this->parser->assign('task_set_can_upload', $this->can_upload_file($filtered_task_set, $course));
                     $this->parser->assign('solution_files', $filtered_task_set->get_student_files($student->id));
                     $this->parser->assign('test_types', $test_types_subtypes['types']);
                     $this->parser->assign('test_subtypes', $test_types_subtypes['subtypes']);
+                    $this->parser->assign('versions_metadata', $versions_metadata);
                 } else {
                     $this->messages->add_message('lang:tasks_task_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
                     redirect(create_internal_url('tasks/index'));
@@ -119,7 +129,8 @@ class Tasks extends LIST_Controller {
             $config['upload_path'] = 'private/uploads/solutions/task_set_' . intval($task_set_id) . '/';
             $config['allowed_types'] = 'zip' . (count($allowed_file_types_array) ? '|' . implode('|', $allowed_file_types_array) : '');
             $config['max_size'] = intval($this->config->item('maximum_solition_filesize'));
-            $config['file_name'] = $student->id . '_' . $this->normalize_student_name($student) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $filtered_task_set->get_student_file_next_version($student->id) . '.zip';
+            $current_version = $filtered_task_set->get_student_file_next_version($student->id);
+            $config['file_name'] = $student->id . '_' . $this->normalize_student_name($student) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $current_version . '.zip';
             @mkdir($config['upload_path'], DIR_READ_MODE);
             $this->load->library('upload', $config);
             
@@ -162,6 +173,10 @@ class Tasks extends LIST_Controller {
                         'task_set' => $filtered_task_set,
                     ));
                 }
+                $solution_version = new Solution_version();
+                $solution_version->ip_address = $_SERVER["REMOTE_ADDR"];
+                $solution_version->version = $current_version;
+                $solution_version->save($solution);
                 if ($this->db->trans_status()) {
                     $log = new Log();
                     $log->add_student_solution_upload_log(sprintf($this->lang->line('tasks_task_solution_upload_log_message'), $config['file_name']), $student, $solution->id);
@@ -193,33 +208,52 @@ class Tasks extends LIST_Controller {
                 $filename = decode_from_url($file);
                 $file_info = $task_set->get_specific_file_info($filename);
                 if ($file_info !== FALSE) {
-                    $log = new Log();
+                    $allow_download = TRUE;
                     if (!$this->usermanager->is_teacher_session_valid()) {
-                        $log->add_student_solution_download_log($this->lang->line('tasks_log_message_student_solution_download'), $this->usermanager->get_student_id(), $filename, $task_set->id);
+                        $solution_version = new Solution_version();
+                        $solution_version->where('version', $file_info['version']);
+                        $solution_version->where_related('solution/task_set', 'id', $task_set_id);
+                        $solution_version->get();
+                        if ($solution_version->exists()) {
+                            if ((bool)$solution_version->download_lock) {
+                                $allow_download = FALSE;
+                            }
+                        }
                     }
-                    $filename = $file_info['file_name'] . '_' . $file_info['version'] . '.zip';
-                    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                    $mime_type = finfo_file($finfo, $file_info['filepath']);
-                    finfo_close($finfo);
-                    header('Content-Description: File Transfer');
-                    header('Content-Type: ' . $mime_type);
-                    header('Content-Disposition: attachment; filename='.$filename);
-                    header('Content-Transfer-Encoding: binary');
-                    header('Expires: 0');
-                    header('Cache-Control: must-revalidate');
-                    header('Pragma: public');
-                    header('Content-Length: ' . filesize($file_info['filepath']));
-                    ob_clean();
-                    flush();
-                    $f = fopen($file_info['filepath'], 'r');
-                    while (!feof($f)) {
-                        echo fread($f, 1024);
+                    if ($allow_download) {
+                        $log = new Log();
+                        if (!$this->usermanager->is_teacher_session_valid()) {
+                            $log->add_student_solution_download_log($this->lang->line('tasks_log_message_student_solution_download'), $this->usermanager->get_student_id(), $filename, $task_set->id);
+                        }
+                        $filename = $file_info['file_name'] . '_' . $file_info['version'] . '.zip';
+                        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                        $mime_type = finfo_file($finfo, $file_info['filepath']);
+                        finfo_close($finfo);
+                        header('Content-Description: File Transfer');
+                        header('Content-Type: ' . $mime_type);
+                        header('Content-Disposition: attachment; filename='.$filename);
+                        header('Content-Transfer-Encoding: binary');
+                        header('Expires: 0');
+                        header('Cache-Control: must-revalidate');
+                        header('Pragma: public');
+                        header('Content-Length: ' . filesize($file_info['filepath']));
+                        ob_clean();
+                        flush();
+                        $f = fopen($file_info['filepath'], 'r');
+                        while (!feof($f)) {
+                            echo fread($f, 1024);
+                        }
+                        fclose($f);
+                        exit;
+                    } else {
+                        $this->parser->parse('frontend/tasks/download_solution.tpl', array('version_download_disabled' => TRUE));
                     }
-                    fclose($f);
-                    exit;
+                } else {
+                    $this->output->set_status_header(404, 'Not found');
                 }
+            } else {
+                $this->output->set_status_header(404, 'Not found');
             }
-            $this->output->set_status_header(404, 'Not found');
         } else {
             $this->parser->parse('frontend/tasks/download_solution.tpl');
         }

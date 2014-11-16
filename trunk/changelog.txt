@@ -20,6 +20,16 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.1.2 | 2014-11-16
+
+NEW Pridaná podpora pre vstupno/výstupné testy pre programovací jazyk Python.
+NEW [lang:english] Added support for input/output tests for Python programming language.
+
+NEW Každé odoslané riešenie teraz vytvára záznam, v ktorom je zapísaná IP adresa odosielateľa. Pri hodnotení je možné individuálne zakázať študentovi sťahovanie zvolenej verzie riešenia.
+NEW [lang:english] Each uploaded solution is now creating record about IP address of submitter. In evaluation it is now possible to disable downloading of solution version for individual student.
+
+END VERSION
+
 VERSION 1.1.1 | 2014-09-08
 
 NEW Pridaný widget na zobrazenie posledných zmien v LIST-e.
