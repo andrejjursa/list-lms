@@ -13,6 +13,11 @@ class Solution extends DataMapper {
         'teacher',
     );
     
+    public $has_many = array(
+        'solution_version',
+    );
+
+
     /**
      * Delete this object from database or specified relations.
      * If this object is deleted, all student files will be deleted as well.

@@ -163,7 +163,11 @@
                             <tr>
                                 {if $show_tests}<td class="select"><input type="radio" name="test[version]" value="{$file@key}" /></td>{/if}
                                 <td class="version">{$file@key}</td>
+                                {if isset($versions_metadata[$file@key]) && $versions_metadata[$file@key]->download_lock}
+                                <td class="file"><span class="download_lock">{$file.file_name}_{$file@key}.zip</span></td>
+                                {else}
                                 <td class="file"><a href="{internal_url url="tasks/download_solution/{$task_set->id|intval}/{$file.file|encode_for_url}"}" target="_blank">{$file.file_name}_{$file@key}.zip</a></td>
+                                {/if}
                                 <td class="size">{$file.size}</td>
                                 <td class="modified">{$file.last_modified|date_format:{translate line='tasks_date_format'}}</td>
                             </tr>

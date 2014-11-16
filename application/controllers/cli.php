@@ -610,6 +610,17 @@ class Cli extends CI_Controller {
      * Create new cache files for DataMapper if production cache is enabled.
      */
     private function _recreate_production_cache() {
+        $result = $this->db->get('migrations', 1);
+        if ($result->num_rows() == 1) {
+            if ($result->row()->version != $this->_get_last_migration_version()) {
+                echo '  Current migration version isn\'t the latest one.' . "\n" . '  Cache will be rebuild on first hit.' . "\n";
+                return;
+            }
+        } else {
+            echo '  Migrations database table doe\'s not exists. Cache can\'t be recreated.' . "\n";
+            return;
+        }
+        
         $this->config->load('datamapper', TRUE);
         $production_cache = $this->config->item('production_cache', 'datamapper');
         if (!empty($production_cache) && file_exists($production_cache) && is_dir($production_cache)) {
@@ -632,5 +643,24 @@ class Cli extends CI_Controller {
                 }
             }
         }
+    }
+    
+    private function _get_last_migration_version() {
+        $last = -1;
+        $dir = scandir(APPPATH . 'migrations');
+        foreach ($dir as $file) {
+            if (is_file(APPPATH . 'migrations/' . $file)) {
+                $ext = pathinfo($file, PATHINFO_EXTENSION);
+                if (strtolower($ext) == 'php') {
+                    $filename = basename($file, '.' . $ext);
+                    $matches = array();
+                    if (preg_match('/^(?P<version>[0-9]+)\_/', $filename, $matches)) {
+                        $version = (int)$matches['version'];
+                        $last = max(array($last, $version));
+                    }
+                }
+            }
+        }
+        return $last;
     }
 }
