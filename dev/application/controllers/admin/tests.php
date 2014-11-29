@@ -14,9 +14,29 @@ class Tests extends LIST_Controller {
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
         $this->_init_teacher_quick_prefered_course_menu();
-        if ($this->router->method != 'run_test_for_task' && $this->router->method != 'request_token' && $this->router->method != 'evaluate_test_result') {
+        if ($this->router->method != 'run_test_for_task' && $this->router->method != 'request_token' && $this->router->method != 'evaluate_test_result' && $this->router->method != 'enqueue_test') {
             $this->usermanager->teacher_login_protected_redirect();
         }
+    }
+    
+    public function enqueue_test() {
+        $post_test = $this->input->post('test');
+        $post_select_test_type = $this->input->post('select_test_type');
+        
+        $output = new stdClass();
+        $output->status = FALSE;
+        $output->message = '';
+        $output->test = $post_test;
+        $output->select_test_type = $post_select_test_type;
+        
+        if ($post_select_test_type !== '') {
+            //if ()
+        } else {
+            $output->message = $this->lang->line('admin_tests_enqueue_test_error_not_test_type_selected');
+        }
+        
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
     }
     
     public function new_test_form($task_id) {

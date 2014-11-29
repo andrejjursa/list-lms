@@ -84,7 +84,30 @@ jQuery(document).ready(function($) {
         $('#tabs li.comments_tab a').trigger('click');
     }
     
-    var tests_token = '';
+    $('#select_test_type_id').change(function(event) {
+        event.preventDefault();
+        
+        var test_type = $(this).val();
+        
+        $('.solution_tests_table .test_header').each(function() {
+            if (test_type === '' || $(this).hasClass('test_type_' + test_type)) {
+                $(this).find('input[type=checkbox]').prop('checked', true).prop('disabled', false);
+            } else {
+                $(this).find('input[type=checkbox]').prop('checked', false).prop('disabled', true);
+            }
+        });
+    });
+    
+    $('#tests_form_id').submit(function(event) {
+        event.preventDefault();
+        
+        var data = $(this).serializeArray();
+        var url = global_base_url + 'index.php/fetests/enqueue_test';
+        
+        api_ajax_update(url, 'post', data);
+    });
+    
+    /*var tests_token = '';
     
     var tests_to_run = 0;
     
@@ -239,7 +262,7 @@ jQuery(document).ready(function($) {
                 setTimeout(test_finalization_check, 100);
             }
         }
-    };
+    };*/
     
     var resize_test_result_content = function(output_to_element_id) {
         $(window).on('resize', function() {
