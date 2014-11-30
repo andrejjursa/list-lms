@@ -147,7 +147,9 @@
                         <div id="tests_execution_area_id"></div>
                     </fieldset>
                     {/capture}
-                    {if $show_tests}<form action="" method="post" id="tests_form_id">{/if}
+                    {if $show_tests}<form action="" method="post" id="tests_form_id">
+                    <input type="hidden" name="test[task_set_id]" value="{$task_set->id|intval}" />
+                    <input type="hidden" name="test[student_id]" value="{$this->usermanager->get_student_id()|intval}" />{/if}
                     <table class="solutions_table">
                         <thead>
                             <tr>
@@ -179,7 +181,9 @@
                         </tbody>
                     </table>
                     {if $show_tests}{$tests_table}{/if}
-                    {if $show_tests}</form>{/if}
+                    {if $show_tests}</form>
+                    <div id="tests_queue_container_id">
+                    </div>{/if}
                     <script type="text/javascript">
                         var tests_object = {$tests_for_json|json_encode};
                     </script>

@@ -14,8 +14,12 @@ class Tests extends LIST_Controller {
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
         $this->_init_teacher_quick_prefered_course_menu();
-        if ($this->router->method != 'run_test_for_task' && $this->router->method != 'request_token' && $this->router->method != 'evaluate_test_result' && $this->router->method != 'enqueue_test') {
+        if ($this->router->method != 'run_test_for_task' && $this->router->method != 'request_token' &&
+            $this->router->method != 'evaluate_test_result' && $this->router->method != 'enqueue_test' &&
+            $this->router->method != 'get_student_test_queue') {
             $this->usermanager->teacher_login_protected_redirect();
+        } else {
+            $this->usermanager->student_login_protected_redirect();
         }
     }
     
@@ -26,17 +30,109 @@ class Tests extends LIST_Controller {
         $output = new stdClass();
         $output->status = FALSE;
         $output->message = '';
-        $output->test = $post_test;
-        $output->select_test_type = $post_select_test_type;
         
         if ($post_select_test_type !== '') {
-            //if ()
+            if (isset($post_test['version']) && (int)$post_test['version'] > 0) {
+                if (isset($post_test['id']) && is_array($post_test['id']) && count($post_test['id']) > 0) {
+                    if (isset($post_test['task_set_id']) && (int)$post_test['task_set_id'] > 0 && isset($post_test['student_id']) && (int)$post_test['student_id'] > 0) {
+                        $this->_transaction_isolation();
+                        $this->db->trans_begin();
+                        $tests = new Test();
+                        $tests->where_in('id', $post_test['id']);
+                        $tests->where('type', $post_select_test_type);
+                        $tests->get_iterated();
+                        if ($tests->exists()) {
+                            $task_set = new Task_set();
+                            $task_set->get_by_id((int)$post_test['task_set_id']);
+                            $student = new Student();
+                            $student->get_by_id((int)$post_test['student_id']);
+                            if ($task_set->exists() && $student->exists()) {
+                                $test_queue = new Test_queue();
+                                $test_queue->priority = $task_set->test_priority;
+                                $test_queue->original_priority = $task_set->test_priority;
+                                $test_queue->test_type = $post_select_test_type;
+                                $test_queue->version = (int)$post_test['version'];
+                                $test_queue->start = date('Y-m-d h:i:s');
+                                $test_queue->points = 0;
+                                $test_queue->bonus = 0;
+                                $test_queue->status = 0;
+                                if ($test_queue->save(array('student' => $student, 'task_set' => $task_set))) {
+                                    $errors = 0;
+                                    foreach ($tests as $test) {
+                                        if (!$test_queue->save($test)) {
+                                            $errors++;
+                                        }
+                                    }
+                                    if ($errors == 0) {
+                                        $this->db->trans_commit();
+                                        $output->status = TRUE;
+                                        $output->message = $this->lang->line('admin_tests_enqueue_test_success');
+                                    } else {
+                                        $this->db->trans_rollback();
+                                        $output->message = $this->lang->line('admin_tests_enqueue_test_error_cant_add_to_queue');
+                                    }
+                                } else {
+                                    $this->db->trans_rollback();
+                                    $output->message = $this->lang->line('admin_tests_enqueue_test_error_cant_add_to_queue');
+                                }
+                            } else {
+                                $this->db->trans_rollback();
+                                $output->message = $this->lang->line('admin_tests_enqueue_test_error_task_set_or_student_not_found');
+                            }
+                        } else {
+                            $this->db->trans_rollback();
+                            $output->message = $this->lang->line('admin_tests_enqueue_test_error_no_tests_selected');
+                        }
+                    } else {
+                        $output->message = $this->lang->line('admin_tests_enqueue_test_error_task_set_or_student_not_found');
+                    }
+                } else {
+                    $output->message = $this->lang->line('admin_tests_enqueue_test_error_no_tests_selected');
+                }
+            } else {
+                $output->message = $this->lang->line('admin_tests_enqueue_test_error_no_version_selected');
+            }
         } else {
             $output->message = $this->lang->line('admin_tests_enqueue_test_error_not_test_type_selected');
         }
         
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
+    }
+    
+    public function get_student_test_queue($task_set_id, $student_id) {
+        $task_set = new Task_set();
+        $task_set->get_by_id((int)$task_set_id);
+        $student = new Student();
+        $student->get_by_id((int)$student_id);
+        
+        $test_queue = new Test_queue();
+        if ($task_set->exists() && $student->exists()) {
+            $test = new Test();
+            $test->select_func('COUNT', array('@id'), 'tests_count');
+            $test->where_related('test_queue', 'id', '${parent}.id');
+            $test_queue->select('*');
+            //$test_queue->select_func('COUNT', array('@test/id'), 'tests_count');
+            $test_queue->select_subquery($test, 'tests_count');
+            $test_queue->where_related($task_set);
+            $test_queue->where_related($student);
+            $test_queue->order_by('status', 'desc');
+            $test_queue->order_by('start', 'asc');
+            $test_queue->get_iterated();
+        }
+        
+        //$test_queue->check_last_query();
+        
+        $this->load->helper('tests');
+        
+        $test_types = get_all_supported_test_types();
+        
+        $this->parser->parse('backend/tests/get_student_test_queue.tpl', array(
+            'test_queue' => $test_queue,
+            'task_set' => $task_set,
+            'student' => $student,
+            'test_types' => $test_types,
+        ));
     }
     
     public function new_test_form($task_id) {

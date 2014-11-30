@@ -8,14 +8,18 @@ $cache = array (
     2 => 'created',
     3 => 'start',
     4 => 'finish',
-    5 => 'task_set_id',
-    6 => 'student_id',
-    7 => 'task_id',
-    8 => 'teacher_id',
-    9 => 'priority',
-    10 => 'worker',
-    11 => 'percent_points',
-    12 => 'percent_bonus',
+    5 => 'test_type',
+    6 => 'task_set_id',
+    7 => 'student_id',
+    8 => 'version',
+    9 => 'task_id',
+    10 => 'teacher_id',
+    11 => 'priority',
+    12 => 'original_priority',
+    13 => 'worker',
+    14 => 'points',
+    15 => 'bonus',
+    16 => 'status',
   ),
   'validation' => 
   array (
@@ -55,6 +59,13 @@ $cache = array (
       array (
       ),
     ),
+    'test_type' => 
+    array (
+      'field' => 'test_type',
+      'rules' => 
+      array (
+      ),
+    ),
     'task_set_id' => 
     array (
       'field' => 'task_set_id',
@@ -65,6 +76,13 @@ $cache = array (
     'student_id' => 
     array (
       'field' => 'student_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'version' => 
+    array (
+      'field' => 'version',
       'rules' => 
       array (
       ),
@@ -90,6 +108,13 @@ $cache = array (
       array (
       ),
     ),
+    'original_priority' => 
+    array (
+      'field' => 'original_priority',
+      'rules' => 
+      array (
+      ),
+    ),
     'worker' => 
     array (
       'field' => 'worker',
@@ -97,16 +122,23 @@ $cache = array (
       array (
       ),
     ),
-    'percent_points' => 
+    'points' => 
     array (
-      'field' => 'percent_points',
+      'field' => 'points',
       'rules' => 
       array (
       ),
     ),
-    'percent_bonus' => 
+    'bonus' => 
     array (
-      'field' => 'percent_bonus',
+      'field' => 'bonus',
+      'rules' => 
+      array (
+      ),
+    ),
+    'status' => 
+    array (
+      'field' => 'status',
       'rules' => 
       array (
       ),

@@ -98,13 +98,49 @@ jQuery(document).ready(function($) {
         });
     });
     
+    var reload_tests_queue = function() {
+        var target_div = $('#tests_queue_container_id');
+        if (target_div.length === 1) {
+            var url = global_base_url + 'index.php/fetests/get_student_test_queue/' + task_id + '/' + student_id;
+            api_ajax_load(url, '#tests_queue_container_id');
+        }
+    };
+    
+    var can_reload_tests_queue = true;
+    
+    var reload_interval = null;
+    
+    var start_tests_queue_reloading = function() {
+        var target_div = $('#tests_queue_container_id');
+        if (target_div.length === 1 && can_reload_tests_queue) {
+            reload_interval = setInterval(function() {
+                if (can_reload_tests_queue) {
+                    reload_tests_queue();
+                }
+            }, 30000);
+        }
+    };
+    
+    reload_tests_queue();
+    start_tests_queue_reloading();
+    
     $('#tests_form_id').submit(function(event) {
         event.preventDefault();
         
         var data = $(this).serializeArray();
         var url = global_base_url + 'index.php/fetests/enqueue_test';
         
-        api_ajax_update(url, 'post', data);
+        api_ajax_update(url, 'post', data, function(result) {
+            if (typeof result.message !== 'undefined' && typeof result.status !== 'undefined') {
+                if (result.status) {
+                    show_notification(result.message, 'success');
+                    reload_tests_queue();
+                    start_tests_queue_reloading();
+                } else {
+                    show_notification(result.message, 'error');
+                }
+            }
+        });
     });
     
     /*var tests_token = '';

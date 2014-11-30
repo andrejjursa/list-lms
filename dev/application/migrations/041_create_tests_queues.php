@@ -23,6 +23,10 @@ class Migration_create_tests_queues extends CI_Migration {
                 'finish' => array(
                     'type' => 'timestamp',
                 ),
+                'test_type' => array(
+                    'type' => 'varchar',
+                    'constraint' => '64',
+                ),
                 'task_set_id' => array(
                     'type' => 'int',
                     'constraint' => '11',
@@ -34,6 +38,11 @@ class Migration_create_tests_queues extends CI_Migration {
                     'constraint' => '11',
                     'unsigned' => TRUE,
                     'null' => TRUE,
+                ),
+                'version' => array(
+                    'type' => 'int',
+                    'constraint' => '11',
+                    'unsigned' => TRUE,
                 ),
                 'task_id' => array(
                     'type' => 'int',
@@ -53,17 +62,28 @@ class Migration_create_tests_queues extends CI_Migration {
                     'unsigned' => TRUE,
                     'default' => 2,
                 ),
+                'original_priority' => array(
+                    'type' => 'int',
+                    'constraint' => '4',
+                    'unsigned' => TRUE,
+                    'default' => 2,
+                ),
                 'worker' => array(
                     'type' => 'int',
                     'constraint' => '11',
                     'unsigned' => TRUE,
                     'null' => TRUE,
                 ),
-                'percent_points' => array(
+                'points' => array(
                     'type' => 'double',
                 ),
-                'percent_bonus' => array(
+                'bonus' => array(
                     'type' => 'double',
+                ),
+                'status' => array(
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'constraint' => '4',
                 ),
             )
         );
@@ -103,6 +123,11 @@ class Migration_create_tests_queues extends CI_Migration {
                     'unsigned' => TRUE,
                     'null' => TRUE,
                 ),
+                'result' => array(
+                    'type' => 'int',
+                    'constraint' => '8',
+                    'unsigned' => TRUE,
+                ),
                 'result_text' => array(
                     'type' => 'text',
                     'null' => TRUE,
@@ -111,6 +136,12 @@ class Migration_create_tests_queues extends CI_Migration {
                     'type' => 'double',
                 ),
                 'percent_bonus' => array(
+                    'type' => 'double',
+                ),
+                'points' => array(
+                    'type' => 'double',
+                ),
+                'bonus' => array(
                     'type' => 'double',
                 ),
             )
@@ -126,7 +157,7 @@ class Migration_create_tests_queues extends CI_Migration {
     
     public function down() {
         $this->dbforge->drop_table('tests_queue');
-        $this->dbforge->drop_column('task_sets', 'priority');
+        $this->dbforge->drop_column('task_sets', 'test_priority');
         $this->dbforge->drop_table('test_test_queue_rel');
     }
     
