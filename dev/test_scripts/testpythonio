@@ -23,6 +23,7 @@ rm -f out/$OUTPUT_FILE 2> /dev/null
 rm -rf out/test_data 2> /dev/null
 chgrp testovac out/*
 cd out
+pwd >> ../$OUTPUT_FILE
 echo "------------------------Testing code $1.py...<br />" >> ../$OUTPUT_FILE
 sudo -u testovac /opt/lampp/htdocs/list-svn/dev/test_scripts/testpythonio2 $1 > ../$PROGRAM_OUTPUT_FILE 2>> ../$OUTPUT_FILE
 STATUS=$?

@@ -20,6 +20,9 @@ class Migration_create_tests_queues extends CI_Migration {
                 'start' => array(
                     'type' => 'timestamp',
                 ),  
+                'exec_start' => array(
+                    'type' => 'timestamp',
+                ),  
                 'finish' => array(
                     'type' => 'timestamp',
                 ),
@@ -85,6 +88,10 @@ class Migration_create_tests_queues extends CI_Migration {
                     'unsigned' => TRUE,
                     'constraint' => '4',
                 ),
+                'system_language' => array(
+                    'type' => 'varchar',
+                    'constraint' => '32',
+                )
             )
         );
         

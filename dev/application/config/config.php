@@ -469,6 +469,14 @@ $config['email_address']['system']['email'] = 'noreply@list.sk';
 */
 $config['student_mail_change'] = TRUE;
 
+/**
+|--------------------------------------------------------------------------
+| Path for test workers where they can store locking files.
+|--------------------------------------------------------------------------
+*/
+
+$config['test_worker_locking_directory'] = '';
+
 /* End of file config.php */
 
 /* Location: ./application/config/config.php */

@@ -117,12 +117,43 @@ jQuery(document).ready(function($) {
                 if (can_reload_tests_queue) {
                     reload_tests_queue();
                 }
-            }, 30000);
+            }, 15000);
         }
     };
     
     reload_tests_queue();
     start_tests_queue_reloading();
+    
+    var reload_lock = false;
+    
+    $(document).on('click', 'a.reload_test_queue', function(event) {
+        event.preventDefault();
+        if (!reload_lock) {
+            reload_tests_queue();
+            reload_lock = true;
+            setTimeout(function() { reload_lock = false; }, 2000);
+        }
+    });
+    
+    $(document).on('click', 'a.open_test_queue_results', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        $.fancybox(url, {
+            type: 'iframe',
+            width: '100%',
+            height: '100%',
+            autoSize: false,
+            autoHeight: false,
+            autoWidth: false,
+            helpers: {
+                overlay: {
+                    css: {
+                        background: 'rgba(255,255,255,0)'
+                    }
+                }
+            }
+        });
+    });
     
     $('#tests_form_id').submit(function(event) {
         event.preventDefault();

@@ -68,6 +68,7 @@ $lang['admin_tests_student_test_queue_unknown_status'] = 'Neznámy';
 $lang['admin_tests_student_test_queue_status_0'] = 'Čaká sa';
 $lang['admin_tests_student_test_queue_status_1'] = 'Vykonáva sa';
 $lang['admin_tests_student_test_queue_status_2'] = 'Hotovo';
+$lang['admin_tests_student_test_queue_status_3'] = 'Chyba';
 $lang['admin_tests_student_test_queue_table_header_test_type'] = 'Typ:testov';
 $lang['admin_tests_student_test_queue_table_header_version'] = 'Verzia';
 $lang['admin_tests_student_test_queue_table_header_start'] = 'Štart';

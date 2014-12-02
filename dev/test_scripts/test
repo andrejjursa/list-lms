@@ -7,6 +7,8 @@
 #
 cd $1
 
+echo $1
+
 if [[ "$3" == "JAVA" ]] ; then
   /opt/lampp/htdocs/list-svn/dev/test_scripts/testjava $2 $4 ;
 fi

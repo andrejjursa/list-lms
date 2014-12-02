@@ -1,0 +1,13 @@
+#!/bin/bash
+# using:
+# parameter 1 = seconds to wait between executions
+# parameter 2 = number of workers
+
+while true; do
+	for ((worker_id = 1; worker_id <= $2; worker_id++))
+	do
+		exec /opt/lampp/bin/php ../index.php cli_test index $worker_id &
+		sleep 0.1
+	done
+	sleep $1
+done

@@ -92,3 +92,4 @@ $lang['tasks_countdown_message_expired'] = 'Odovzdávanie riešení bolo ukonče
 $lang['tasks_download_solution_now_disabled'] = 'Prepáčte, ale v tomto okamihu je zablokované sťahovanie riešení. Skúste to neskôr.';
 $lang['tasks_download_solution_version_disabled'] = 'Prepáčte, ale stiahnutie tejto verzie riešenia bolo zakázané učiteľom.';
 $lang['tasks_log_message_student_solution_download'] = 'Študent sťahuje verziu riešenia zo zostavy úloh.';
+$lang['tasks_test_result_error_test_queue_not_found'] = 'Výsledok testu sa nenašiel.';

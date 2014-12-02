@@ -68,6 +68,7 @@ $lang['admin_tests_student_test_queue_unknown_status'] = 'Unknown';
 $lang['admin_tests_student_test_queue_status_0'] = 'Waiting';
 $lang['admin_tests_student_test_queue_status_1'] = 'Being executed';
 $lang['admin_tests_student_test_queue_status_2'] = 'Finished';
+$lang['admin_tests_student_test_queue_status_3'] = 'Error';
 $lang['admin_tests_student_test_queue_table_header_test_type'] = 'Type:tests';
 $lang['admin_tests_student_test_queue_table_header_version'] = 'Version';
 $lang['admin_tests_student_test_queue_table_header_start'] = 'Start';

@@ -112,6 +112,30 @@ class Tasks extends LIST_Controller {
         $this->parser->parse('frontend/tasks/task.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
+    public function test_result($test_queue_id) {
+        $test_queue = new Test_queue();
+        $test_queue->where_related('student', 'id', $this->usermanager->get_student_id());
+        $test_queue->include_related('task_set');
+        $test_queue->include_related('task_set/course');
+        $test_queue->include_related('task_set/course/period');
+        $test_queue->get((int)$test_queue_id);
+        
+        $tasks = new Task();
+        if ($test_queue->exists()) {
+            $tasks->distinct();
+            $tasks->where_related('task_set', 'id', $test_queue->task_set_id);
+            $tasks->order_by('task_task_set_rel.sorting', 'asc');
+            $tasks->get_iterated();
+            
+            $tests = $test_queue->test->include_join_fields()->get_iterated();
+            
+        }
+        
+        $this->parser->parse('frontend/tasks/test_result.tpl', array(
+            'test_queue' => $test_queue,
+        ));
+    }
+
     public function reset_task_cache($task_set_id) {
         $this->usermanager->student_login_protected_redirect();
         $this->_action_success();

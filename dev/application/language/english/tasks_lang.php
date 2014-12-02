@@ -92,3 +92,4 @@ $lang['tasks_countdown_message_expired'] = 'Solution submission reached its dead
 $lang['tasks_download_solution_now_disabled'] = 'Sorry, but solution download is currently disabled. Try again later.';
 $lang['tasks_download_solution_version_disabled'] = 'Sorry, but download of this version of solution is disabled by teacher.';
 $lang['tasks_log_message_student_solution_download'] = 'Student is downloading version of solution from task set.';
+$lang['tasks_test_result_error_test_queue_not_found'] = 'Test result not found.';

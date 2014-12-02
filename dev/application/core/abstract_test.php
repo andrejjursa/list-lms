@@ -13,6 +13,7 @@ abstract class abstract_test {
     private $current_test = NULL;
     private $zip_file_path = NULL;
     private $current_test_directory;
+    private $last_test_score = 0;
     
     public function __construct() {
         $this->CI =& get_instance();
@@ -35,6 +36,14 @@ abstract class abstract_test {
         return $this->test_type;
     }
     
+    /**
+     * Returns last test score.
+     * @return int test score;
+     */
+    public function get_last_test_score() {
+        return $this->last_test_score;
+    }
+
     /**
      * Return array of all possible subtypes in format 'subtype' => 'subtype_name'.
      * Will iterate $this->test_subtypes, which have to be array of subtypes, where subtype is in key.
@@ -473,15 +482,20 @@ abstract class abstract_test {
      * @return void returns nothing.
      */
     protected function save_test_result($score, $student_id, $token) {
-        if (!$this->current_test['enable_scoring']) { return; }
+        if (!$this->current_test['enable_scoring']) { 
+            $this->last_test_score = 0;
+            return;           
+        }
+        $this->last_test_score = $score;
         
+        /*
         $this->CI->load->model('test_score');
         
         if (is_object($student_id) && $student_id instanceOf DataMapper) {
             $student_id = (int)$student_id->id;
         }
         
-        $this->CI->test_score->set_score_for_task($student_id, $this->current_test['task_id'], $token, $score, $this->test_type);
+        $this->CI->test_score->set_score_for_task($student_id, $this->current_test['task_id'], $token, $score, $this->test_type);*/
     }
 
     /**

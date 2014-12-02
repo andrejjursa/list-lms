@@ -18,8 +18,6 @@ class Tests extends LIST_Controller {
             $this->router->method != 'evaluate_test_result' && $this->router->method != 'enqueue_test' &&
             $this->router->method != 'get_student_test_queue') {
             $this->usermanager->teacher_login_protected_redirect();
-        } else {
-            $this->usermanager->student_login_protected_redirect();
         }
     }
     
@@ -56,6 +54,7 @@ class Tests extends LIST_Controller {
                                 $test_queue->points = 0;
                                 $test_queue->bonus = 0;
                                 $test_queue->status = 0;
+                                $test_queue->system_language = $this->lang->get_current_idiom();
                                 if ($test_queue->save(array('student' => $student, 'task_set' => $task_set))) {
                                     $errors = 0;
                                     foreach ($tests as $test) {
@@ -117,6 +116,7 @@ class Tests extends LIST_Controller {
             $test_queue->where_related($task_set);
             $test_queue->where_related($student);
             $test_queue->order_by('status', 'desc');
+            $test_queue->order_by('finish', 'desc');
             $test_queue->order_by('start', 'asc');
             $test_queue->get_iterated();
         }

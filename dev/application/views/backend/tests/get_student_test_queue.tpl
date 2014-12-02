@@ -1,4 +1,5 @@
 <fieldset class="basefieldset">
+    <legend><a href="javascript:void(0);" class="button reload_test_queue">Reload</a></legend>
     <table class="tests_queue_table">
         <thead>
             <tr>
@@ -9,6 +10,7 @@
                 <th>{translate line='admin_tests_student_test_queue_table_header_worker'}</th>
                 <th>{translate line='admin_tests_student_test_queue_table_header_priority'}</th>
                 <th>{translate line='admin_tests_student_test_queue_table_header_status'}</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +23,11 @@
                 <td>{$test_item->worker|default:{translate line='admin_tests_student_test_queue_worker_not_assigned'}}</td>
                 <td>{$test_item->priority|intval}</td>
                 <td>{translate|default:{translate line='admin_tests_student_test_queue_unknown_status'} line="admin_tests_student_test_queue_status_{$test_item->status}"}</td>
+                <td>
+                    {if $test_item->status eq 2}
+                    <a href="{internal_url url="tasks/test_result/{$test_item->id|intval}"}" class="button special open_test_queue_results">...</a>
+                    {/if}
+                </td>
             </tr>
             {/foreach}
         </tbody>

@@ -43,6 +43,7 @@ table.tests_queue_table tbody tr td { padding: 4px 3px; }
 table.tests_queue_table tbody tr.test_status_0 { background-color: silver; color: brown; }
 table.tests_queue_table tbody tr.test_status_1 { background-color: silver; color: navy; }
 table.tests_queue_table tbody tr.test_status_2 { background-color: white; color: darkgreen; border: 1px dashed silver; }
+table.tests_queue_table tbody tr.test_status_3 { background-color: gray; color: red; border: 1px solid red; }
 table.tests_queue_table tbody tr:last-child td:first-child { border-bottom-left-radius: 3px; }
 table.tests_queue_table tbody tr:last-child td:last-child { border-bottom-right-radius: 3px; }
 
