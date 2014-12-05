@@ -22,6 +22,9 @@ $cache = array (
     16 => 'bonus',
     17 => 'status',
     18 => 'system_language',
+    19 => 'age',
+    20 => 'result_html',
+    21 => 'result_message',
   ),
   'validation' => 
   array (
@@ -155,6 +158,27 @@ $cache = array (
     'system_language' => 
     array (
       'field' => 'system_language',
+      'rules' => 
+      array (
+      ),
+    ),
+    'age' => 
+    array (
+      'field' => 'age',
+      'rules' => 
+      array (
+      ),
+    ),
+    'result_html' => 
+    array (
+      'field' => 'result_html',
+      'rules' => 
+      array (
+      ),
+    ),
+    'result_message' => 
+    array (
+      'field' => 'result_message',
       'rules' => 
       array (
       ),

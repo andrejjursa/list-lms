@@ -241,7 +241,7 @@ class LIST_Lang extends CI_Lang {
         if (count($rows) > 0) {
             $ids = array();
             foreach ($rows as $row) {
-                $row_id = is_object($row) ? $row->id : $row['id'];
+                $row_id = is_object($row) ? $row->id : (is_array($row) ? $row['id'] : $row);
                 $ids[] = intval($row_id);
             }
             $this->load_overlays($table, $ids);

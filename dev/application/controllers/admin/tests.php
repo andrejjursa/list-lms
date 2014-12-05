@@ -50,7 +50,7 @@ class Tests extends LIST_Controller {
                                 $test_queue->original_priority = $task_set->test_priority;
                                 $test_queue->test_type = $post_select_test_type;
                                 $test_queue->version = (int)$post_test['version'];
-                                $test_queue->start = date('Y-m-d h:i:s');
+                                $test_queue->start = date('Y-m-d H:i:s');
                                 $test_queue->points = 0;
                                 $test_queue->bonus = 0;
                                 $test_queue->status = 0;

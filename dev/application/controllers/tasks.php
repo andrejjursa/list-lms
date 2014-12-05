@@ -113,12 +113,14 @@ class Tasks extends LIST_Controller {
     }
     
     public function test_result($test_queue_id) {
+        $this->parser->add_css_file('frontend_tasks.css');
+        
         $test_queue = new Test_queue();
         $test_queue->where_related('student', 'id', $this->usermanager->get_student_id());
         $test_queue->include_related('task_set');
         $test_queue->include_related('task_set/course');
         $test_queue->include_related('task_set/course/period');
-        $test_queue->get((int)$test_queue_id);
+        $test_queue->get_by_id((int)$test_queue_id);
         
         $tasks = new Task();
         if ($test_queue->exists()) {
@@ -127,12 +129,42 @@ class Tasks extends LIST_Controller {
             $tasks->order_by('task_task_set_rel.sorting', 'asc');
             $tasks->get_iterated();
             
-            $tests = $test_queue->test->include_join_fields()->get_iterated();
+            $tests = $test_queue->test->include_join_fields()->order_by('id', 'asc')->get_iterated();
             
+            $tests_per_task = array();
+            
+            $overlays_tests = array();
+            
+            foreach ($tests as $test) {
+                $test_line = array(
+                    'id' => $test->id,
+                    'name' => $test->name,
+                    'task_id' => $test->task_id,
+                    'result' => $test->join_result,
+                    'result_text' => $test->join_result_text,
+                    'percent_points' => $test->join_percent_points,
+                    'percent_bonus' => $test->join_percent_bonus,
+                    'points' => $test->join_points,
+                    'bonus' => $test->join_bonus,
+                );
+                $overlays_tests[] = $test->id;
+                
+                $tests_per_task[$test->task_id][] = $test_line;
+            }
+            
+            $this->lang->init_overlays('tests', $overlays_tests, array('name'));
+            
+            $this->parser->assign('tests_per_task', $tests_per_task);
         }
+        
+        $this->load->helper('tests');
+        
+        $test_types = get_all_supported_test_types();
         
         $this->parser->parse('frontend/tasks/test_result.tpl', array(
             'test_queue' => $test_queue,
+            'tasks' => $tasks,
+            'test_types' => $test_types,
         ));
     }
 
