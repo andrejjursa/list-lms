@@ -83,6 +83,7 @@ class Cli_test extends CI_Controller {
                     $score_points = array();
                     $bonus_percent = array();
                     $bonus_points = array();
+					$total_tests_count = $tests->result_count();
                     foreach ($tests as $test) {
                         $files = $task_set->get_student_files($student->id, (int)$version);
                         if (isset($files[(int)$version]['filepath']) && file_exists($files[(int)$version]['filepath'])) {
@@ -243,6 +244,13 @@ class Cli_test extends CI_Controller {
                         $test_queue->finish = date('Y-m-d H:i:s');
                         $test_queue->save();
                         $this->db->trans_commit();
+					} else if ($total_tests_count) {
+						$test_queue->worker = NULL;
+						$test_queue->status = 2;
+						$test_queue->finish = date('Y-m-d H:i:s');
+						$test_queue->result_message = $this->lang->line('admin_tests_test_result_testing_finished');
+						$test_queue->save();
+						$this->db->trans_commit();
                     } else {
                         $this->db->trans_rollback();
                         $test_queue->worker = NULL;

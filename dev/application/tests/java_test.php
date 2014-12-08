@@ -48,7 +48,7 @@ class java_test extends abstract_test {
             $this->save_test_result($exit_code, $score_student, $score_token);
         }
         
-        $this->delete_test_directory();
+        //$this->delete_test_directory();
         
         $lines = (int)$this->get_current_test_configuration_value('max_output_lines');
                 

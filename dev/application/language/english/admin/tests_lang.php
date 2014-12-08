@@ -53,6 +53,7 @@ $lang['admin_tests_test_result_no_test_selected'] = 'No test selected!';
 $lang['admin_tests_test_result_new_points_added'] = 'New points awarded for this tests.';
 $lang['admin_tests_test_result_configuration_error'] = 'Test configuration error!';
 $lang['admin_tests_test_result_execution_error'] = 'Error in execution scripts. Run test again.';
+$lang['admin_tests_test_result_testing_finished'] = 'Tests execution finished.';
 $lang['admin_tests_evaluation_table_header_task_name'] = 'Task';
 $lang['admin_tests_evaluation_table_header_percentage'] = 'Percentage';
 $lang['admin_tests_evaluation_table_header_points'] = 'Points';
