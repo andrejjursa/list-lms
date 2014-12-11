@@ -254,7 +254,7 @@ class Task_sets extends LIST_Controller {
         $this->db->trans_begin();
         if ($this->form_validation->run()) {
             $task_set = new Task_set();
-            $task_set->from_array($task_set_data, array('content_type', 'name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment'));
+            $task_set->from_array($task_set_data, array('content_type', 'name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment', 'test_priority'));
             $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
             $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
             $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
@@ -408,7 +408,7 @@ class Task_sets extends LIST_Controller {
         
         if ($this->form_validation->run()) {   
             $task_set_upload_end_time = $task_set->upload_end_time;
-            $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment'));
+            $task_set->from_array($task_set_data, array('name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment', 'test_priority'));
             $task_set->instructions = remove_base_url($task_set_data['instructions']);
             $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
             $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
