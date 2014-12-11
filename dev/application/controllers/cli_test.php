@@ -102,30 +102,32 @@ class Cli_test extends CI_Controller {
 
                             //echo 'Test queue ' . $test_queue->id . ' is done with test ' . $test->id . ' ... ' . PHP_EOL;
 
-                            $this->db->select('*');
-                            $task_id = $test->task_id;
-                            $this->db->where('task_set_id', $task_set->id);
-                            $this->db->where('task_id', (int)$task_id);
-                            $query = $this->db->get('task_task_set_rel');
-                            if ($query->num_rows() > 0) {
-                                $task_rel = $query->row_object();
-                                $min = (double)$task_rel->test_min_points;
-                                $max = (double)$task_rel->test_max_points;
-                                $percent = (double)$test_score / 100.0;
-                                $points = (1.0 - $percent) * $min + $percent * $max;
-                                if ($task_rel->bonus_task == 0) {
-                                    $score_percent[$task_id] = isset($score_percent[$task_id]) ? $score_percent[$task_id] + $percent : $percent;
-                                    $score_points[$task_id] = isset($score_points[$task_id]) ? $score_points[$task_id] + $points : $points;
-                                    $test_queue->set_join_field($test, 'percent_points', $test_score);
-                                    $test_queue->set_join_field($test, 'points', $points);
-                                } else {
-                                    $bonus_percent[$task_id] = isset($bonus_percent[$task_id]) ? $bonus_percent[$task_id] + $percent : $percent;
-                                    $bonus_points[$task_id] = isset($bonus_points[$task_id]) ? $bonus_points[$task_id] + $points : $points;
-                                    $test_queue->set_join_field($test, 'percent_bonus', $test_score);
-                                    $test_queue->set_join_field($test, 'bonus', $points);
+                            if ($run_evaluation && $test->enable_scoring > 0) {
+                                $this->db->select('*');
+                                $task_id = $test->task_id;
+                                $this->db->where('task_set_id', $task_set->id);
+                                $this->db->where('task_id', (int)$task_id);
+                                $query = $this->db->get('task_task_set_rel');
+                                if ($query->num_rows() > 0) {
+                                    $task_rel = $query->row_object();
+                                    $min = (double)$task_rel->test_min_points;
+                                    $max = (double)$task_rel->test_max_points;
+                                    $percent = (double)$test_score / 100.0;
+                                    $points = (1.0 - $percent) * $min + $percent * $max;
+                                    if ($task_rel->bonus_task == 0) {
+                                        $score_percent[$task_id] = isset($score_percent[$task_id]) ? $score_percent[$task_id] + $percent : $percent;
+                                        $score_points[$task_id] = isset($score_points[$task_id]) ? $score_points[$task_id] + $points : $points;
+                                        $test_queue->set_join_field($test, 'percent_points', $test_score);
+                                        $test_queue->set_join_field($test, 'points', $points);
+                                    } else {
+                                        $bonus_percent[$task_id] = isset($bonus_percent[$task_id]) ? $bonus_percent[$task_id] + $percent : $percent;
+                                        $bonus_points[$task_id] = isset($bonus_points[$task_id]) ? $bonus_points[$task_id] + $points : $points;
+                                        $test_queue->set_join_field($test, 'percent_bonus', $test_score);
+                                        $test_queue->set_join_field($test, 'bonus', $points);
+                                    }
                                 }
+                                $query->free_result();
                             }
-                            $query->free_result();
                         } else {
                             $this->db->trans_rollback();
                             $test_queue->worker = NULL;
@@ -153,7 +155,7 @@ class Cli_test extends CI_Controller {
 
                     $min_points_limit = -$course->default_points_to_remove;
 
-                    if ($test_count > 0) {
+                    if ($test_count > 0 && $run_evaluation) {
                         $max_results = $task_set->test_max_allowed < count($score_points) ? $task_set->test_max_allowed : count($score_points);
 
                         arsort($score_points, SORT_NUMERIC);
@@ -212,7 +214,7 @@ class Cli_test extends CI_Controller {
 
                             if ($save_solution) {
                                 $solution->save();
-                                $this->parser->clearCache('application/views/frontend/tasks/index.tpl');
+                                $this->parser->clearCache('frontend/tasks/index.tpl');
                                 $test_queue->result_message = $this->lang->line('admin_tests_test_result_new_points_added');
                             } else {
                                 if (!$solution_not_considered) {
@@ -244,13 +246,13 @@ class Cli_test extends CI_Controller {
                         $test_queue->finish = date('Y-m-d H:i:s');
                         $test_queue->save();
                         $this->db->trans_commit();
-					} else if ($total_tests_count) {
-						$test_queue->worker = NULL;
-						$test_queue->status = 2;
-						$test_queue->finish = date('Y-m-d H:i:s');
-						$test_queue->result_message = $this->lang->line('admin_tests_test_result_testing_finished');
-						$test_queue->save();
-						$this->db->trans_commit();
+                    } else if ($total_tests_count && !$run_evaluation) {
+                        $test_queue->worker = NULL;
+                        $test_queue->status = 2;
+                        $test_queue->finish = date('Y-m-d H:i:s');
+                        $test_queue->result_message = $this->lang->line('admin_tests_test_result_testing_finished');
+                        $test_queue->save();
+                        $this->db->trans_commit();
                     } else {
                         $this->db->trans_rollback();
                         $test_queue->worker = NULL;
