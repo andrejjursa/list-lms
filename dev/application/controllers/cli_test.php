@@ -61,7 +61,7 @@ class Cli_test extends CI_Controller {
         }
         if ($test_queue->exists() && $execute_tests) {
             
-            $this->db->query('SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;');
+            $this->db->query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITED;');
             $this->db->trans_begin();
             $this->lang->reinitialize_for_idiom($test_queue->system_language);
             $this->lang->load('admin/tests');
@@ -340,6 +340,19 @@ class Cli_test extends CI_Controller {
         }
         
         $this->db->trans_complete();
+
+	$max_timeout = $this->config->item('test_maximum_execution_timeout');
+        $test_locks_path = rtrim($this->config->item('test_worker_locking_directory'),'/\\') . DIRECTORY_SEPARATOR;
+
+	$lock_files = scandir($test_locks_path);
+	foreach ($lock_files as $lock_file) {
+		if (preg_match('/^worker\_[1-9][0-9]*\_lock\.txt$/', $lock_file)) {
+			$mod_time = filemtime($test_locks_path . $lock_file);
+			if ($mod_time < time() - $max_timeout * 60) {
+				unlink($test_locks_path . $lock_file);
+			}
+		}
+	}
     }
     
 }

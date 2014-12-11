@@ -12,11 +12,16 @@ WAIT_TIME=$(( $1 / 2 ))
 
 echo "Executing workers: $2 workers will be run approximately each $1 seconds."
 
+rm -f /opt/lampp/htdocs/list-svn/dev/test_locks/*
+
 while true; do
 	for ((worker_id = 1; worker_id <= $2; worker_id++))
 	do
-		exec /opt/lampp/bin/php ../index.php cli_test index $worker_id &
-		sleep 0.005
+		FILEPATH=/opt/lampp/list-svn/dev/test_locks/worker_{$worker_id}_lock.txt
+		if test ! -f $FILEPATH; then
+			exec /opt/lampp/bin/php ../index.php cli_test index $worker_id &
+			sleep 0.005
+		fi
 	done
 	sleep $WAIT_TIME
 	exec /opt/lampp/bin/php ../index.php cli_test aging &
