@@ -61,7 +61,7 @@ class Cli_test extends CI_Controller {
         }
         if ($test_queue->exists() && $execute_tests) {
             
-            $this->db->query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITED;');
+            $this->db->query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;');
             $this->db->trans_begin();
             $this->lang->reinitialize_for_idiom($test_queue->system_language);
             $this->lang->load('admin/tests');
