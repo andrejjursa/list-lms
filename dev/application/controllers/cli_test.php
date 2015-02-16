@@ -83,7 +83,7 @@ class Cli_test extends CI_Controller {
                     $score_points = array();
                     $bonus_percent = array();
                     $bonus_points = array();
-					$total_tests_count = $tests->result_count();
+                    $total_tests_count = $tests->result_count();
                     foreach ($tests as $test) {
                         $files = $task_set->get_student_files($student->id, (int)$version);
                         if (isset($files[(int)$version]['filepath']) && file_exists($files[(int)$version]['filepath'])) {
