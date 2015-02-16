@@ -40,7 +40,7 @@ class Cli_test extends CI_Controller {
             $test_queue->order_by('start', 'asc');
             $test_queue->limit(1);
             $sql_query = $test_queue->get_sql();
-            $sql_query = rtrim($sql_query, '; ' . "\n\r") . ' FOR UPDATE';
+            $sql_query = rtrim($sql_query, '; ' . "\n\r") . ' FOR UPDATE;';
             $test_queue->query($sql_query);
             if ($test_queue->exists()) {
                 $test_queue->worker = (int)$worker_id;
