@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Test configuration variables:
+JAVADIR="/list_test_files"
+OUTPUT_FILE="$JAVADIR/test.out"
+COMPILATION_LOG="/list_compilation_process/list_compilation_log.txt"
+ENCODING="-encoding UTF-8"
+JAVAC_ARGS="-Xlint:unchecked -cp /usr/share/java/junit4.jar:. *.java"
+TIMEOUT=$2
+TESTCLASS=$1
+JAVA_ARGS="-Xmx128m -cp /usr/share/java/junit4.jar:."
+
+# Remove all .class files:
+rm -f *.class 2> /dev/null
+rm -f */*.class 2> /dev/null
+rm -f */*/*.class 2> /dev/null
+
+# Initialization:
+cd $JAVADIR
+
+# STAGE 1 Compilation:
+echo "<pre>" > $OUTPUT_FILE
+echo "Stage 1 / 2: source code compilation ..." >> $OUTPUT_FILE
+cp /list_shared_files/LISTTests.java $JAVADIR/.
+/usr/bin/javac $JAVAC_ARGS $ENCODING 2> $COMPILATION_LOG
+exitcode=$?
+cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE
+grep "unmappable character for encoding UTF-8" $COMPILATION_LOG > /dev/null
+if [[ $? -eq 0 ]] ; then
+	echo "<br />  Failed to compile source codes with encoding UTF-8, retrying with CP1250.<br />" >> $OUTPUT_FILE
+	/usr/bin/javac $JAVAC_ARGS -encoding cp1250 2> $COMPILATION_LOG
+	exitcode=$?
+fi
+cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE
+if [[ $exitcode -ne 0 ]] ; then
+	echo "<br />Stage 1 failed. Compilation unsuccessful. Please correct the above errors before the tests will be run.</pre>" >> $OUTPUT_FILE
+	exit 0
+fi
+
+# STAGE 2 Run:
+echo "<br />Stage 2 / 2: running tests ..." >> $OUTPUT_FILE
+rm -f *.java 2> /dev/null
+echo "----- Running test file Test$TESTCLASS.class<br />" >> $OUTPUT_FILE
+nice run_with_timeout $TIMEOUT /usr/bin/java $JAVA_ARGS org.junit.runner.JUnitCore Test$TESTCLASS | grep --text -v "at junit." | grep --text -v "at org.junit." | grep --text -v "at sun.reflect." | grep --text -v "at java.lang.reflect.Method.invoke" >> $OUTPUT_FILE
+if [ -f "$JAVADIR/evaluation.percent.txt" ] ; then
+	return_val=`cat "$JAVADIR/evaluation.percent.txt"`
+	echo "----- Task completed with: $return_val %" >> $OUTPUT_FILE
+else
+	return_val=0
+fi
+echo "----- Testing finished.</pre>" >> $OUTPUT_FILE
+exit $return_val
