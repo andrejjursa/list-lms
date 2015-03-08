@@ -28,3 +28,6 @@ RUN chmod 777 /usr/local/bin/run_with_timeout
 
 ADD run_java_junit /usr/local/bin/
 RUN chmod 777 /usr/local/bin/run_java_junit
+
+ADD run_python_punit /usr/local/bin/
+RUN chmod 777 /usr/local/bin/run_python_punit

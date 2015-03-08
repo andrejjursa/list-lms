@@ -38,7 +38,7 @@ if [[ $exitcode -ne 0 ]] ; then
 fi
 
 # STAGE 2 Run:
-echo "<br />Stage 2 / 2: running tests ..." >> $OUTPUT_FILE
+echo "<br />Stage 2 / 2: running test ..." >> $OUTPUT_FILE
 rm -f *.java 2> /dev/null
 echo "----- Running test file Test$TESTCLASS.class<br />" >> $OUTPUT_FILE
 nice run_with_timeout $TIMEOUT /usr/bin/java $JAVA_ARGS org.junit.runner.JUnitCore Test$TESTCLASS | grep --text -v "at junit." | grep --text -v "at org.junit." | grep --text -v "at sun.reflect." | grep --text -v "at java.lang.reflect.Method.invoke" >> $OUTPUT_FILE
