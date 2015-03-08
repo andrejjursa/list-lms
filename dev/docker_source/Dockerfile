@@ -31,3 +31,6 @@ RUN chmod 777 /usr/local/bin/run_java_junit
 
 ADD run_python_punit /usr/local/bin/
 RUN chmod 777 /usr/local/bin/run_python_punit
+
+ADD run_python_io /usr/local/bin/
+RUN chmod 777 /usr/local/bin/run_python_io
