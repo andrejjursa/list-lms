@@ -12,7 +12,7 @@ TIMEOUT=$2
 RUNFILE="$PYTHON_PATH/$FILENAME.py"
 TEST_INPUT="$PYTHON_PATH/test_data/test_input.txt"
 TEST_TARGET="$PYTHON_PATH/test_data/test_target.txt"
-TEST_JUDGE_SCRIPT="$PYTHON_PATH/test_judge.py"
+TEST_JUDGE_SCRIPT="$PYTHON_PATH/test_data/test_judge.py"
 #
 #
 #
@@ -39,8 +39,6 @@ if [[ $STATUS == 0 ]] ; then
 		fi
 	fi
 	if [[ "$3" == "judge-type-script" ]] ; then
-		cd test_data
-		#cat ../program.out | nice /var/www/list-svn/svn/dev/test_scripts/development/run_with_timeout 300000 /usr/bin/python test_judge.py test_input.txt >> $OUTPUT_FILE 2>> $OUTPUT_FILE
 		cat $PROGRAM_OUTPUT_FILE | nice run_with_timeout 300000 /usr/bin/python3.4 $TEST_JUDGE_SCRIPT $TEST_INPUT >> $OUTPUT_FILE 2>> $OUTPUT_FILE
 		JUDGE_STATUS=$?
 		cd .. ;
