@@ -1,6 +1,9 @@
 build:
 	docker build -t list/sandbox .
 
+rebuild:
+	docker build --no-cache=true --pull=true -t list/sandbox .
+
 run:
 	docker run -t -i --rm=true list/sandbox
 

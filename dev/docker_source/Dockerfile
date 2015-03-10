@@ -8,6 +8,7 @@ RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y openjdk-7-jdk junit4
 RUN apt-get install -y python3
+RUN apt-get install -y vim
 
 RUN apt-get install -y lib32z1 lib32ncurses5 lib32bz2-1.0 
 
