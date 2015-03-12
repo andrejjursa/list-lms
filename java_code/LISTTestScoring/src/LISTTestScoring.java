@@ -31,12 +31,12 @@ public class LISTTestScoring {
     public LISTTestScoring() {
         if (!loadEncryptPhrase()) {
             System.err.println("Can't found pre-generated encryption phrase source file. Terminating test execution.");
-            System.exit(10001);
+            System.exit(101);
         }
         
         if (!deleteEncryptPhrase()) {
             System.err.println("Can't delete pre-generated encryption phrase source file. Terminating test execution.");
-            System.exit(10002);
+            System.exit(102);
         }
     }
     
@@ -102,7 +102,7 @@ public class LISTTestScoring {
     private String getJSONscoring() {
         StringBuilder sb = new StringBuilder();
         
-        sb.append('{');
+        sb.append('[');
         boolean first = true;
         for (String scoreName: scoringTable.keySet()) {
             if (!first) { sb.append(','); }
@@ -120,7 +120,7 @@ public class LISTTestScoring {
             sb.append('}');
             first = false;
         }
-        sb.append('}');
+        sb.append(']');
         
         return sb.toString();
     }
@@ -213,6 +213,7 @@ class Score {
     public void setMaximum(double maximum) {
         this.maximum = maximum;
         if (this.maximum < 0) { this.maximum = 0; }
+        if (this.current > this.maximum) { this.current = this.maximum; }
     }
     
     public void addCurrent(double add) {
