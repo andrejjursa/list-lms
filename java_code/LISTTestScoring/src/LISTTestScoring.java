@@ -10,6 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.File;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -28,13 +29,18 @@ public class LISTTestScoring {
     private final HashMap<String, Score> scoringTable = new HashMap<String, Score>();
     
     public LISTTestScoring() {
-        if (!loadEncrypthPhrase()) {
+        if (!loadEncryptPhrase()) {
             System.err.println("Can't found pre-generated encryption phrase source file. Terminating test execution.");
             System.exit(10001);
         }
+        
+        if (!deleteEncryptPhrase()) {
+            System.err.println("Can't delete pre-generated encryption phrase source file. Terminating test execution.");
+            System.exit(10002);
+        }
     }
     
-    private boolean loadEncrypthPhrase() {
+    private boolean loadEncryptPhrase() {
         try {
             FileReader fr = new FileReader("__list_encrypt_phrase.txt");
             BufferedReader br = new BufferedReader(fr);
@@ -52,20 +58,24 @@ public class LISTTestScoring {
         }
     }
     
+    private boolean deleteEncryptPhrase() {
+        File epFile = new File("__list_encrypt_phrase.txt");
+        if (epFile.exists()) {
+            return epFile.delete();
+        }
+        return false;
+    }
+    
     public void updateScore(String scoreName, double scoreToAdd, double scoreMaximum) {
         if (scoringTable.containsKey(scoreName)) {
-            scoringTable.get(scoreName).current += scoreToAdd;
-            scoringTable.get(scoreName).maximum = scoreMaximum;
-            if (scoringTable.get(scoreName).current <= 0.0) {
-                scoringTable.get(scoreName).current = 0.0;
-            } else if (scoringTable.get(scoreName).current >= scoreMaximum) {
-                scoringTable.get(scoreName).current = scoreMaximum;
-            }
+            scoringTable.get(scoreName).setMaximum(scoreMaximum);
+            scoringTable.get(scoreName).addCurrent(scoreToAdd);
         } else {
-            Score newScore = new Score(scoreToAdd <= scoreMaximum ? (scoreToAdd >= 0.0 ? scoreToAdd : 0.0) : scoreMaximum, scoreMaximum);
+            Score newScore = new Score(scoreToAdd, scoreMaximum);
             scoringTable.put(scoreName, newScore);
         }
         
+        reportScore(scoreName);
         writeScore();
     }
     
@@ -76,7 +86,17 @@ public class LISTTestScoring {
         Score newScore = new Score(scoreToSet <= scoreMaximum ? (scoreToSet >= 0.0 ? scoreToSet : 0.0) : scoreMaximum, scoreMaximum);
         scoringTable.put(scoreName, newScore);
         
+        reportScore(scoreName);
         writeScore();
+    }
+    
+    private void reportScore(String scoreName) {
+        System.out.println("==========");
+        System.out.print("Score \"");
+        System.out.print(scoreName);
+        System.out.print("\": ");
+        System.out.println(scoringTable.get(scoreName).toString());
+        System.out.println("==========");
     }
     
     private String getJSONscoring() {
@@ -93,10 +113,10 @@ public class LISTTestScoring {
             sb.append('"');
             sb.append(',');
             sb.append("\"current\":");
-            sb.append(scoringTable.get(scoreName).current);
+            sb.append(scoringTable.get(scoreName).getCurrent());
             sb.append(',');
             sb.append("\"maximum\":");
-            sb.append(scoringTable.get(scoreName).maximum);
+            sb.append(scoringTable.get(scoreName).getMaximum());
             sb.append('}');
             first = false;
         }
@@ -165,13 +185,48 @@ public class LISTTestScoring {
 }
 
 class Score {
-    public double current = 0.0;
-    public double maximum = 0.0;
+    private double current = 0.0;
+    private double maximum = 0.0;
 
     public Score(double attrCurrent, double attrMaximum) {
         current = attrCurrent;
         maximum = attrMaximum;
+        if (maximum < 0) { maximum = 0; }
+        if (current < 0) { current = 0; }
+        if (current > maximum) { current = maximum; }
     }    
+
+    public double getCurrent() {
+        return current;
+    }
+
+    public double getMaximum() {
+        return maximum;
+    }
+
+    public void setCurrent(double current) {
+        this.current = current;
+        if (this.current < 0) { this.current = 0; }
+        if (this.current > maximum) { this.current = maximum; }
+    }
+
+    public void setMaximum(double maximum) {
+        this.maximum = maximum;
+        if (this.maximum < 0) { this.maximum = 0; }
+    }
+    
+    public void addCurrent(double add) {
+        setCurrent(getCurrent() + add);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(current);
+        sb.append('/');
+        sb.append(maximum);
+        return sb.toString();
+    }
 }
 
 class Base64 {
