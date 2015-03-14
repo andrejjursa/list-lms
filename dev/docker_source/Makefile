@@ -1,4 +1,4 @@
-build:
+update:
 	docker build -t list/sandbox .
 
 rebuild:

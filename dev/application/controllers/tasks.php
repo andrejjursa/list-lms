@@ -257,7 +257,8 @@ class Tasks extends LIST_Controller {
     }
     
     public function download_solution($task_set_id, $file) {
-        if (!Restriction::check_restriction_for_ip_address() || $this->usermanager->is_teacher_session_valid()) {
+        if (($this->usermanager->is_student_session_valid() && !Restriction::check_restriction_for_ip_address())
+           || $this->usermanager->is_teacher_session_valid()) {
             $task_set = new Task_set();
             $task_set->get_by_id(intval($task_set_id));
             if ($task_set->exists()) {
