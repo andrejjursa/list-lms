@@ -1,0 +1,23 @@
+#!/bin/bash
+##############################################################
+# Usage:
+# ./execute_test <type> <file/class> <timeout> <path>
+##############################################################
+
+
+TESTFILE=$2
+TEST_TYPE=$1
+TIMEOUT=$3
+TEST_PATH=$4
+MY_PATH=$( cd "$( dirname "$0" )" && pwd )
+
+if [[ "$TEST_TYPE" == "jUnit" ]] ; then
+	$MY_PATH/prepare_jUnit_test $TESTFILE $TIMEOUT $TEST_PATH
+	exit $?
+elif [[ "$TEST_TYPE" == "pyUnit" ]] ; then
+	echo "pyUnit"
+elif [[ "$TEST_TYPE" == "pythonIO" ]] ; then
+	echo "pythonIO"
+fi
+
+exit 150

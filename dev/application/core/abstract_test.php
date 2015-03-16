@@ -293,7 +293,7 @@ abstract class abstract_test {
         
         $path .= 'test_scripts/';
         
-        if (file_exists($path . ENVIRONMENT)) {
+        if (file_exists($path . ENVIRONMENT . '/execute_test')) {
             $path .= ENVIRONMENT . '/';
         }
         

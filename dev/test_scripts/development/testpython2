@@ -1,0 +1,11 @@
+#!/bin/bash
+# usage: testpython MODULE
+# should be run from the directory private/test_to_execute/<unique random hash>
+#
+# test configuration variables:
+#
+TIMEOUT=90000
+PYTHON_ARGS=""
+#
+nice /var/www/list-svn/svn/dev/test_scripts/development/run_with_timeout $TIMEOUT /usr/bin/python $PYTHON_ARGS Test$1.py 
+cd .. ;

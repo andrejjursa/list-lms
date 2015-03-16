@@ -38,11 +38,12 @@ class java_test extends abstract_test {
         }
         
         $scripts_directory = $this->get_test_scripts_directory();
-        $exec_command = $scripts_directory . 'test ' . rtrim(getcwd(), '\\/') . DIRECTORY_SEPARATOR . $working_directory . ' ' . $class_to_run . ' JAVA ' . $this->get_test_timeout();
+        //$exec_command = $scripts_directory . 'test ' . rtrim(getcwd(), '\\/') . DIRECTORY_SEPARATOR . $working_directory . ' ' . $class_to_run . ' JAVA ' . $this->get_test_timeout();
+        $exec_command = $scripts_directory . 'execute_test jUnit ' . $class_to_run . ' ' . $this->get_test_timeout() . ' ' . rtrim(getcwd(), '\\/') . DIRECTORY_SEPARATOR . $working_directory;
         $output_data = array();
         $exit_code = 0;
         @exec($exec_command, $output_data, $exit_code);
-        $output = $this->read_output_file('test.out');
+        $output = $this->read_output_file('__list_output.txt');
         
         if ($save_score) {
             $this->save_test_result($exit_code, $score_student, $score_token);

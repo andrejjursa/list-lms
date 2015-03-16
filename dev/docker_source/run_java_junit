@@ -2,7 +2,7 @@
 
 # Test configuration variables:
 JAVADIR="/list_test_files"
-OUTPUT_FILE="$JAVADIR/test.out"
+OUTPUT_FILE="$JAVADIR/__list_output.txt"
 COMPILATION_LOG="/list_compilation_process/list_compilation_log.txt"
 ENCODING="-encoding UTF-8"
 JAVAC_ARGS="-Xlint:unchecked -cp /usr/share/java/junit4.jar:. *.java"
@@ -11,9 +11,9 @@ TESTCLASS=$1
 JAVA_ARGS="-Xmx128m -cp /usr/share/java/junit4.jar:."
 
 # Remove all .class files:
-rm -f *.class 2> /dev/null
-rm -f */*.class 2> /dev/null
-rm -f */*/*.class 2> /dev/null
+rm -f "$JAVADIR/*.class" 2> /dev/null
+rm -f "$JAVADIR/*/*.class" 2> /dev/null
+rm -f "$JAVADIR/*/*/*.class" 2> /dev/null
 
 # Initialization:
 cd $JAVADIR
@@ -30,11 +30,12 @@ if [[ $? -eq 0 ]] ; then
 	echo "<br />  Failed to compile source codes with encoding UTF-8, retrying with CP1250.<br />" >> $OUTPUT_FILE
 	/usr/bin/javac $JAVAC_ARGS -encoding cp1250 2> $COMPILATION_LOG
 	exitcode=$?
+	cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE
+
 fi
-cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE
 if [[ $exitcode -ne 0 ]] ; then
 	echo "<br />Stage 1 failed. Compilation unsuccessful. Please correct the above errors before the tests will be run.</pre>" >> $OUTPUT_FILE
-	exit 0
+	exit 100
 fi
 
 # STAGE 2 Run:

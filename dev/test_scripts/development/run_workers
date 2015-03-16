@@ -1,0 +1,30 @@
+#!/bin/bash
+# using:
+# parameter 1 = seconds to wait between executions
+# parameter 2 = number of workers
+
+if test "$#" -lt 2; then
+	echo "Incorrect number of arguments, use run_workers <seconds to wait> <number of workers>"
+	exit
+fi
+
+WAIT_TIME=$(( $1 / 2 ))
+
+echo "Executing workers: $2 workers will be run approximately each $1 seconds."
+
+rm -f /var/www/list-svn/svn/dev/test_locks/*
+
+while true; do
+	for ((worker_id = 1; worker_id <= $2; worker_id++))
+	do
+		FILEPATH=/var/www/list-svn/svn/dev/test_locks/worker_{$worker_id}_lock.txt
+		if test ! -f $FILEPATH; then
+			exec php ../../index.php cli_test index $worker_id &
+			sleep 0.005
+		fi
+	done
+	sleep $WAIT_TIME
+	exec php ../../index.php cli_test aging &
+	sleep $WAIT_TIME
+done
+

@@ -1,6 +1,6 @@
 #!/bin/bash
 PYTHON_DIR="/list_test_files"
-OUTPUT_FILE="$PYTHON_DIR/test.out"
+OUTPUT_FILE="$PYTHON_DIR/__list_output.txt"
 TESTCLASS=$1
 TIMEOUT=$2
 PYTHON_ARGS=""

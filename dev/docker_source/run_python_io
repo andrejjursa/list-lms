@@ -4,7 +4,7 @@
 # test configuration variables:
 #
 PYTHON_PATH="/list_test_files"
-OUTPUT_FILE="$PYTHON_PATH/test.out"
+OUTPUT_FILE="$PYTHON_PATH/__list_output.txt"
 PYTHON_ARGS=""
 PROGRAM_OUTPUT_FILE="$PYTHON_PATH/program.out"
 FILENAME=$1
