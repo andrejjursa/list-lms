@@ -5,11 +5,11 @@ TIMEOUT=$2
 OUTPUT_FILE="$PYTHON_DIR/__list_output.txt"
 CURRENT_PATH=$( cd "$( dirname "$0" )" && pwd )
 
-mkdir "$PYTHON_DIR/__list_output" 2> /dev/null
-chgrp testovac "$PYTHON_DIR/__list_output" 2> /dev/null
-chmod g*rwx "$PYTHON_DIR/__list_output" 2> /dev/null
-chgrp testovac $PYTHON_DIR /dev/null
-chmod g+r $PYTHON_DIR
+mkdir $PYTHON_DIR/__list_output 2> /dev/null
+chgrp testovac $PYTHON_DIR/__list_output 2> /dev/null
+chmod g*rwx $PYTHON_DIR/__list_output 2> /dev/null
+chgrp testovac $PYTHON_DIR/. /dev/null
+chmod g+r $PYTHON_DIR/.
 
 cd $PYTHON_DIR
 
@@ -17,10 +17,10 @@ cd $PYTHON_DIR
 echo "<pre>" > $OUTPUT_FILE
 echo "Stage 1 / 1: running test ..." >> $OUTPUT_FILE
 echo "----- Running test file Test$TESTFILE.py<br />" >> $OUTPUT_FILE
-cp -r "$PYTHON_DIR/*" "$PYTHON_DIR/__list_output" 2> /dev/null
-rm -f "$PYTHON_DIR/__list_output/__list_output.txt" 2> /dev/null
-chgrp testovac "$PYTHON_DIR/__list_output/*" 2> /dev/null
-cd "$PYTHON_DIR/__list_test"
+cp -r $PYTHON_DIR/* $PYTHON_DIR/__list_output 2> /dev/null
+rm -f $PYTHON_DIR/__list_output/__list_output.txt 2> /dev/null
+chgrp testovac $PYTHON_DIR/__list_output/* 2> /dev/null
+cd $PYTHON_DIR/__list_test
 sudo -u testovac "$CURRENT_PATH/execute_pyUnit_test" $TESTFILE $TIMEOUT $CURRENT_PATH >> $OUTPUT_FILE 2>> $OUTPUT_FILE
 exitcode=$?
 cd $CURRENT_PATH

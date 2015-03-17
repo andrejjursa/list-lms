@@ -12,8 +12,8 @@ class Cli_test extends CI_Controller {
     }
     
     public function index($worker_id = 0) {
-        $max_timeout = $this->config->item('test_maximum_execution_timeout');
-        $test_locks_path = rtrim($this->config->item('test_worker_locking_directory'),'/\\') . DIRECTORY_SEPARATOR;
+        //$max_timeout = $this->config->item('test_maximum_execution_timeout');
+        /*$test_locks_path = rtrim($this->config->item('test_worker_locking_directory'),'/\\') . DIRECTORY_SEPARATOR;
         if (file_exists($test_locks_path . 'worker_' . (int)$worker_id . '_lock.txt')) {
             $mtime = filemtime($test_locks_path . 'worker_' . (int)$worker_id . '_lock.txt');
             if ($mtime >= time() - $max_timeout * 60) {
@@ -21,7 +21,7 @@ class Cli_test extends CI_Controller {
             }
         }
         $f = fopen($test_locks_path . 'worker_' . (int)$worker_id . '_lock.txt', 'w');
-        fclose($f);
+        fclose($f);*/
         $test_queue = new Test_queue();
         $execute_tests = FALSE;
         try {
@@ -280,7 +280,7 @@ class Cli_test extends CI_Controller {
             }
         }
         
-        @unlink($test_locks_path . 'worker_' . (int)$worker_id . '_lock.txt');
+        //@unlink($test_locks_path . 'worker_' . (int)$worker_id . '_lock.txt');
     }
     
     public function aging() {
@@ -355,6 +355,45 @@ class Cli_test extends CI_Controller {
 			}
 		}
 	}
+    }
+    
+    public function reset_all() {
+        echo 'Reseting old tests that may be freezed.' . PHP_EOL;
+        
+        $this->db->query('SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;');
+        $this->db->trans_start();
+        
+        $test_queue = new Test_queue();
+        $test_queue->where('status', 1);
+        $test_queue->get_iterated();
+        
+        if ($test_queue->result_count() > 0) {
+            echo 'Found ' . $test_queue->result_count() . ' old tests.' . PHP_EOL;
+            foreach ($test_queue as $single_test) {
+                $tests = $single_test->test->get_iterated();
+                foreach ($tests as $test) {
+                    $set = array(
+                        'result' => 0,
+                        'result_text' => NULL,
+                        'percent_points' => 0,
+                        'percent_bonus' => 0,
+                        'points' => 0,
+                        'bonus' => 0,
+                    );
+                    $this->db->set($set);
+                    $this->db->where('test_id', $test->id);
+                    $this->db->where('test_queue_id', $single_test->id);
+                    $this->db->update('test_test_queue_rel');
+                }
+                $single_test->status = 0;
+                $single_test->save();
+            }
+            echo 'All old tests were reset.' . PHP_EOL;
+        } else {
+            echo 'Nothing found.' . PHP_EOL;
+        }
+        
+        $this->db->trans_complete();
     }
     
 }

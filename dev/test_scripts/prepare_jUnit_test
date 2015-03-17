@@ -10,22 +10,22 @@ JAVAC_ARGS="-Xlint:unchecked -cp /usr/share/java/junit4.jar:. *.java"
 CURRENT_PATH=$( cd "$( dirname "$0" )" && pwd )
 
 # Remove all .class files:
-rm -f "$TEST_PATH/*.class" 2> /dev/null
-rm -f "$TEST_PATH/*/*.class" 2> /dev/null
-rm -f "$TEST_PATH/*/*/*.class" 2> /dev/null
+rm -f $TEST_PATH/*.class 2> /dev/null
+rm -f $TEST_PATH/*/*.class 2> /dev/null
+rm -f $TEST_PATH/*/*/*.class 2> /dev/null
 
 cd $TEST_PATH
 
-mkdir "$TEST_PATH/__list_out" > /dev/null
-chgrp testovac "$TEST_PATH/__list_out" > /dev/null
-chmod g+rwx "$TEST_PATH/__list_out" > /dev/null
-chgrp testovac "$TEST_PATH/." > /dev/null
-chmod g+r "$TEST_PATH/." > /dev/null
+mkdir $TEST_PATH/__list_out > /dev/null
+chgrp testovac $TEST_PATH/__list_out > /dev/null
+chmod g+rwx $TEST_PATH/__list_out > /dev/null
+chgrp testovac $TEST_PATH/. > /dev/null
+chmod g+r $TEST_PATH/. > /dev/null
 
 # STAGE 1 Compilation:
 echo "<pre>" > $OUTPUT_FILE
 echo "Stage 1 / 2: source code compilation ..." >> $OUTPUT_FILE
-cp "$CURRENT_PATH/LISTTests.java" "$TEST_PATH/."
+cp $CURRENT_PATH/LISTTests.java $TEST_PATH/.
 /usr/bin/javac $JAVAC_ARGS $ENCODING 2> $COMPILATION_LOG
 exitcode=$?
 cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE
@@ -45,13 +45,13 @@ fi
 cd $CURRENT_PATH
 # STAGE 2 Run:
 echo "<br />Stage 2 / 2: running test ..." >> $OUTPUT_FILE
-rm -f "$TEST_PATH/*.java" 2> /dev/null
-cp -f "$TEST_PATH/* $TEST_PATH/__list_out" 2> /dev/null
-rm -f "$TEST_PATH/__list_out/__list_output.txt" 2> /dev/null
-chgrp testovac "$TEST_PATH/__list_output/*" 2> /dev/null
-cd "$TEST_PATH/__list_out"
+rm -f $TEST_PATH/*.java 2> /dev/null
+cp -f $TEST_PATH/* $TEST_PATH/__list_out 2> /dev/null
+rm -f $TEST_PATH/__list_out/__list_output.txt 2> /dev/null
+chgrp testovac $TEST_PATH/__list_output/* 2> /dev/null
+cd $TEST_PATH/__list_out
+echo "----- Running test file Test$TESTCLASS.class<br />" >> $OUTPUT_FILE
 sudo -u testovac $CURRENT_PATH/execute_jUnit_test $TESTCLASS $TIMEOUT $CURRENT_PATH >> $OUTPUT_FILE 2>> $OUTPUT_FILE
 exitcode=$?
-echo "----- Running test file Test$TESTCLASS.class<br />" >> $OUTPUT_FILE
 echo "----- Testing finished.</pre>" >> $OUTPUT_FILE
 exit $exitcode

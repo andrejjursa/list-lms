@@ -27,11 +27,11 @@ ADD LISTTests.java /list_shared_files/
 ADD run_with_timeout /usr/local/bin/
 RUN chmod 777 /usr/local/bin/run_with_timeout
 
-ADD run_java_junit /usr/local/bin/
-RUN chmod 777 /usr/local/bin/run_java_junit
+ADD run_java_jUnit /usr/local/bin/
+RUN chmod 777 /usr/local/bin/run_java_jUnit
 
-ADD run_python_punit /usr/local/bin/
-RUN chmod 777 /usr/local/bin/run_python_punit
+ADD run_python_pyUnit /usr/local/bin/
+RUN chmod 777 /usr/local/bin/run_python_pyUnit
 
 ADD run_python_io /usr/local/bin/
 RUN chmod 777 /usr/local/bin/run_python_io
