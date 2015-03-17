@@ -113,6 +113,7 @@ class Tasks extends LIST_Controller {
     }
     
     public function test_result($test_queue_id) {
+        $this->usermanager->student_login_protected_redirect();
         $this->parser->add_css_file('frontend_tasks.css');
         
         $test_queue = new Test_queue();
