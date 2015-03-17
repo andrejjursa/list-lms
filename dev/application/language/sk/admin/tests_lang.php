@@ -66,6 +66,7 @@ $lang['admin_tests_enqueue_test_error_no_version_selected'] = 'Chyba: verzia rie
 $lang['admin_tests_enqueue_test_error_no_tests_selected'] = 'Chyba: neboli zvolené testy.';
 $lang['admin_tests_enqueue_test_error_task_set_or_student_not_found'] = 'Chyba: odoslané dáta neobsahujú informácie o zostave úloh alebo študentovi.';
 $lang['admin_tests_enqueue_test_error_cant_add_to_queue'] = 'Chyba: nomožno zaradiť testy do fronty, skúste to neskôr.';
+$lang['admin_tests_enqueue_test_error_maximum_enqueues_reached'] = 'Chyba: nemožno zaradiť viacej testov, limit (%s) bol dosiahnutý.';
 $lang['admin_tests_enqueue_test_success'] = 'Test bol úspešne zaradený na vykonanie.';
 $lang['admin_tests_student_test_queue_worker_not_assigned'] = 'Žiadny vykonávač!';
 $lang['admin_tests_student_test_queue_not_finished'] = 'Ešte neukončené!';

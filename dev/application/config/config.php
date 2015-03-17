@@ -479,6 +479,7 @@ $config['test_worker_locking_directory'] = '';
 $config['test_aging_ticks_to_priority_increase'] = 10;
 $config['test_aging_max_tests_to_raise_priority'] = 5;
 $config['test_maximum_execution_timeout'] = 30;
+$config['test_maximum_enqueued_pe_student'] = 5;
 
 /* End of file config.php */
 

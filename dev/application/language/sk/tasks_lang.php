@@ -19,6 +19,7 @@ $lang['tasks_table_task_set_type_sum_points_total'] = 'Získal(a) si %s bodov z 
 $lang['tasks_task_page_header'] = 'Detaily úlohy';
 $lang['tasks_task_tabs_task'] = 'Úloha';
 $lang['tasks_task_tabs_solutions'] = 'Riešenia';
+$lang['tasks_task_tabs_test_results'] = 'Výsledky testov';
 $lang['tasks_task_tabs_comments'] = 'Komentáre';
 $lang['tasks_task_task_set_not_found'] = 'Úloha sa nenašla.';
 $lang['tasks_task_points_for_task'] = 'Táto časť je za <strong>%s</strong> bodov.';

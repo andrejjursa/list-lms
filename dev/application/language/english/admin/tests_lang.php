@@ -66,6 +66,7 @@ $lang['admin_tests_enqueue_test_error_no_version_selected'] = 'Error: version of
 $lang['admin_tests_enqueue_test_error_no_tests_selected'] = 'Error: no tests selected.';
 $lang['admin_tests_enqueue_test_error_task_set_or_student_not_found'] = 'Error: submited data do not contain information about task set or student.';
 $lang['admin_tests_enqueue_test_error_cant_add_to_queue'] = 'Error: can\'t enqueue tests, try again later.';
+$lang['admin_tests_enqueue_test_error_maximum_enqueues_reached'] = 'Error: can\'t enqueue more tests, limit (%s) reached.';
 $lang['admin_tests_enqueue_test_success'] = 'Test were secessfully enqueued for execution.';
 $lang['admin_tests_student_test_queue_worker_not_assigned'] = 'No worker yet!';
 $lang['admin_tests_student_test_queue_not_finished'] = 'Not finished yet!';

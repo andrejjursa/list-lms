@@ -19,6 +19,7 @@ $lang['tasks_table_task_set_type_sum_points_total'] = 'You have earned %s points
 $lang['tasks_task_page_header'] = 'Task details';
 $lang['tasks_task_tabs_task'] = 'Task';
 $lang['tasks_task_tabs_solutions'] = 'Solutions';
+$lang['tasks_task_tabs_test_results'] = 'Results of tests';
 $lang['tasks_task_tabs_comments'] = 'Comments';
 $lang['tasks_task_task_set_not_found'] = 'Task not found.';
 $lang['tasks_task_points_for_task'] = 'This part is for <strong>%s</strong> points.';
