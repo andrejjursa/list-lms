@@ -9,15 +9,18 @@ TESTFILE=$2
 TEST_TYPE=$1
 TIMEOUT=$3
 TEST_PATH=$4
+TEST_JUDGE_TYPE=$5
 MY_PATH=$( cd "$( dirname "$0" )" && pwd )
 
 if [[ "$TEST_TYPE" == "jUnit" ]] ; then
 	$MY_PATH/prepare_jUnit_test $TESTFILE $TIMEOUT $TEST_PATH
 	exit $?
 elif [[ "$TEST_TYPE" == "pyUnit" ]] ; then
-	echo "pyUnit"
+	$MY_PATH/prepare_pyUnit_test $TESTFILE $TIMEOUT $TEST_PATH
+	exit $?
 elif [[ "$TEST_TYPE" == "pythonIO" ]] ; then
-	echo "pythonIO"
+	$MY_PATH/prepare_pythonIO_test $TESTFILE $TIMEOUT $TEST_PATH $TEST_JUDGE_TYPE
+	exit $?
 fi
 
 exit 150
