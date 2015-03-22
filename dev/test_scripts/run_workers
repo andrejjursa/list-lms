@@ -44,3 +44,4 @@ function run_workers_async {
 
 run_workers_async $1 $2 &
 echo "Workers are run asynchronous, you can terminate this run by command: kill $!"
+echo "Last control script for worker have pid $!." > workers_info.txt
