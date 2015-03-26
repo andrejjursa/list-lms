@@ -121,7 +121,14 @@ abstract class abstract_test {
     public function get_input_zip_file() {
         return $this->zip_file_path;
     }
-    
+
+
+    public function get_sandbox_type() {
+        $sandbox_type = strtolower($this->CI->config->item('test_sandbox'));
+        $allowed_types = array('implicit', 'docker');
+        return in_array($sandbox_type, $allowed_types) ? $sandbox_type : 'implicit';
+    }
+
     /**
      * Returns path to directory, where source files from student and test will be copied and run.
      * @return string path to directory.

@@ -481,6 +481,15 @@ $config['test_aging_max_tests_to_raise_priority'] = 5;
 $config['test_maximum_execution_timeout'] = 30;
 $config['test_maximum_enqueued_pe_student'] = 5;
 
+/**
+|--------------------------------------------------------------------------
+| Type of sandbox for tests.
+| implicit - use implicit sandbox (run test with different user)
+| docker - use docker sandbox (must be installed and have image created)
+|--------------------------------------------------------------------------
+ */
+$config['test_sandbox'] = 'implicit';
+
 /* End of file config.php */
 
 /* Location: ./application/config/config.php */

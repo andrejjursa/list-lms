@@ -5,22 +5,36 @@
 ##############################################################
 
 
-TESTFILE=$2
+SANDBOX=$2
+TESTFILE=$3
 TEST_TYPE=$1
-TIMEOUT=$3
-TEST_PATH=$4
-TEST_JUDGE_TYPE=$5
+TIMEOUT=$4
+TEST_PATH=$5
+TEST_JUDGE_TYPE=$6
 MY_PATH=$( cd "$( dirname "$0" )" && pwd )
 
-if [[ "$TEST_TYPE" == "jUnit" ]] ; then
-	$MY_PATH/prepare_jUnit_test $TESTFILE $TIMEOUT $TEST_PATH
-	exit $?
-elif [[ "$TEST_TYPE" == "pyUnit" ]] ; then
-	$MY_PATH/prepare_pyUnit_test $TESTFILE $TIMEOUT $TEST_PATH
-	exit $?
-elif [[ "$TEST_TYPE" == "pythonIO" ]] ; then
-	$MY_PATH/prepare_pythonIO_test $TESTFILE $TIMEOUT $TEST_PATH $TEST_JUDGE_TYPE
-	exit $?
+if [[ "$SANDBOX" == "implicit" ]] ; then
+	if [[ "$TEST_TYPE" == "jUnit" ]] ; then
+		$MY_PATH/prepare_jUnit_test $TESTFILE $TIMEOUT $TEST_PATH
+		exit $?
+	elif [[ "$TEST_TYPE" == "pyUnit" ]] ; then
+		$MY_PATH/prepare_pyUnit_test $TESTFILE $TIMEOUT $TEST_PATH
+		exit $?
+	elif [[ "$TEST_TYPE" == "pythonIO" ]] ; then
+		$MY_PATH/prepare_pythonIO_test $TESTFILE $TIMEOUT $TEST_PATH $TEST_JUDGE_TYPE
+		exit $?
+	fi
+elif [[ "$SANDBOX" == "docker" ]] ; then
+	if [[ "$TEST_TYPE" == "jUnit" ]] ; then
+		docker run --rm=true --volume="$TEST_PATH:/list_test_files" list/sandbox run_java_jUnit $TESTFILE $TIMEOUT
+		exit $?
+	elif [[ "$TEST_TYPE" == "pyUnit" ]] ; then
+		docker run --rm=true --volume="$TEST_PATH:/list_test_files" list/sandbox run_python_pyUnit $TESTFILE $TIMEOUT
+		exit $?
+	elif [[ "$TEST_TYPE" == "pythonIO" ]] ; then
+		docker run --rm=true --volume="$TEST_PATH:/list_test_files" list/sandbox run_python_io $TESTFILE $TIMEOUT $TEST_JUDGE_TYPE
+		exit $?
+	fi
 fi
 
 exit 150
