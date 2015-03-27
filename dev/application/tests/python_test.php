@@ -40,6 +40,7 @@ class python_test extends abstract_test {
         $this->extract_zip_to($this->get_input_zip_file());
         $this->extract_zip_to($this->get_current_test_source_directory() . $this->get_current_test_configuration_value('zip_file'));
         $sandbox = $this->get_sandbox_type();
+        $enc_phrase = $this->create_encryption_phrase($working_directory);
         
         $class_to_run = $this->get_current_test_configuration_value('class_to_run');
         if (!preg_match(self::UNIT_TEST_CLASS_TO_RUN_REGEXP, $class_to_run)) {
@@ -58,7 +59,7 @@ class python_test extends abstract_test {
         if ($save_score) {
             $this->save_test_result($exit_code, $score_student, $score_token);
         }
-        
+
         $this->delete_test_directory();
         
         $lines = (int)$this->get_current_test_configuration_value('max_output_lines');

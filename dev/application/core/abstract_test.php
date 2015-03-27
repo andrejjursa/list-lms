@@ -290,6 +290,36 @@ abstract class abstract_test {
         }
         return $new_config;
     }
+
+    /**
+     * @param $path path to directory with test files extracted.
+     * @return null|string encryption phrase as string or NULL on error.
+     */
+    protected function create_encryption_phrase($path) {
+        if (file_exists($path) && is_dir($path)) {
+            $filepath = rtrim($path, '/\\') . DIRECTORY_SEPARATOR . '__list_encrypt_phrase.txt';
+            $lexicon = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.?!\\/\'"^&*(){}[];,%$#@~';
+            $phrase = '';
+            for ($i = 0; $i < 8192; $i++) {
+                $char_index = rand(0, strlen($lexicon) - 1);
+                $phrase .= $lexicon[$char_index];
+            }
+            $f = NULL;
+            try {
+                $f = fopen($filepath, 'w');
+                fwrite($f, $phrase);
+                fclose($f);
+                return $phrase;
+            } catch (Exception $e) {
+                if ($f !== NULL && file_exists($filepath)) {
+                    fclose($f);
+                }
+                return NULL;
+            }
+        } else {
+            return NULL;
+        }
+    }
     
     /**
      * Return path of directory with test execution scripts.

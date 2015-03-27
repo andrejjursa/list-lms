@@ -12,16 +12,6 @@ class Cli_test extends CI_Controller {
     }
     
     public function index($worker_id = 0) {
-        //$max_timeout = $this->config->item('test_maximum_execution_timeout');
-        /*$test_locks_path = rtrim($this->config->item('test_worker_locking_directory'),'/\\') . DIRECTORY_SEPARATOR;
-        if (file_exists($test_locks_path . 'worker_' . (int)$worker_id . '_lock.txt')) {
-            $mtime = filemtime($test_locks_path . 'worker_' . (int)$worker_id . '_lock.txt');
-            if ($mtime >= time() - $max_timeout * 60) {
-                die();
-            }
-        }
-        $f = fopen($test_locks_path . 'worker_' . (int)$worker_id . '_lock.txt', 'w');
-        fclose($f);*/
         $test_queue = new Test_queue();
         $execute_tests = FALSE;
         try {
@@ -95,7 +85,7 @@ class Cli_test extends CI_Controller {
                                 $test_output = $test_object->run($files[(int)$version]['filepath'], $run_evaluation && $test->enable_scoring > 0, $student->id, $token);
                                 $test_score = $test_object->get_last_test_score();
                             } catch (Exception $e) {
-                                $test_output = $e->message;
+                                $test_output = $e->getMessage();
                                 $test_score = 0;
                             }
                             $test_queue->set_join_field($test, 'result_text', $test_output);
@@ -134,7 +124,6 @@ class Cli_test extends CI_Controller {
                             $test_queue->status = 3;
                             $test_queue->finish = date('Y-m-d H:i:s');
                             $test_queue->save();
-                            @unlink($test_locks_path . 'worker_' . (int)$worker_id . '_lock.txt');
                             die();
                         }
                     }
@@ -379,6 +368,7 @@ class Cli_test extends CI_Controller {
                         'percent_bonus' => 0,
                         'points' => 0,
                         'bonus' => 0,
+                        'evaluation_table' => NULL,
                     );
                     $this->db->set($set);
                     $this->db->where('test_id', $test->id);
@@ -386,6 +376,7 @@ class Cli_test extends CI_Controller {
                     $this->db->update('test_test_queue_rel');
                 }
                 $single_test->status = 0;
+                $single_test->worker = NULL;
                 $single_test->save();
             }
             echo 'All old tests were reset.' . PHP_EOL;

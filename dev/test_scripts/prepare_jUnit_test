@@ -25,7 +25,7 @@ chmod g+r $TEST_PATH/. > /dev/null
 # STAGE 1 Compilation:
 echo "<pre>" > $OUTPUT_FILE
 echo "Stage 1 / 2: source code compilation ..." >> $OUTPUT_FILE
-cp $CURRENT_PATH/LISTTests.java $TEST_PATH/.
+cp $CURRENT_PATH/test_important_files/java/*.java $TEST_PATH/.
 /usr/bin/javac $JAVAC_ARGS $ENCODING 2> $COMPILATION_LOG
 exitcode=$?
 cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE

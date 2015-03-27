@@ -12,6 +12,7 @@ cd $PYTHON_DIR
 echo "<pre>" > $OUTPUT_FILE
 echo "Stage 1 / 1: running test ..." >> $OUTPUT_FILE
 echo "----- Running test file Test$TESTCLASS.py<br />" >> $OUTPUT_FILE
+cp /list_shared_files/python/*.py $PYTHON_DIR/.
 nice run_with_timeout $TIMEOUT /usr/bin/python3.4 $PYTHON_ARGS "Test$TESTCLASS.py" >> $OUTPUT_FILE 2>> $OUTPUT_FILE
 RETURN_VALUE=$?
 echo "----- Task completed with: $RETURN_VALUE %" >> $OUTPUT_FILE

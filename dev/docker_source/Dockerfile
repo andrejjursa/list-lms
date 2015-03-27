@@ -22,8 +22,6 @@ RUN chmod 777 /list_compilation_process
 RUN mkdir /list_shared_files
 RUN chmod 777 /list_shared_files
 
-ADD LISTTests.java /list_shared_files/
-
 ADD run_with_timeout /usr/local/bin/
 RUN chmod 777 /usr/local/bin/run_with_timeout
 
@@ -35,3 +33,13 @@ RUN chmod 777 /usr/local/bin/run_python_pyUnit
 
 ADD run_python_io /usr/local/bin/
 RUN chmod 777 /usr/local/bin/run_python_io
+
+RUN mkdir /list_shared_files/java
+RUN chmod 777 /list_shared_files/java
+
+RUN mkdir /list_shared_files/python
+RUN chmod 777 /list_shared_files/python
+
+ADD java/* /list_shared_files/java/
+
+ADD python/* /list_shared_files/python/

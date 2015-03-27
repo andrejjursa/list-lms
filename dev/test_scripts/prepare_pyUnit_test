@@ -17,6 +17,7 @@ cd $PYTHON_DIR
 echo "<pre>" > $OUTPUT_FILE
 echo "Stage 1 / 1: running test ..." >> $OUTPUT_FILE
 echo "----- Running test file Test$TESTFILE.py<br />" >> $OUTPUT_FILE
+cp $CURRENT_PATH/test_important_files/python/*.py $PYTHON_DIR/.
 cp -r $PYTHON_DIR/* $PYTHON_DIR/__list_output 2> /dev/null
 rm -f $PYTHON_DIR/__list_output/__list_output.txt 2> /dev/null
 chgrp testovac $PYTHON_DIR/__list_output/* 2> /dev/null

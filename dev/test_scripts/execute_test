@@ -25,6 +25,13 @@ if [[ "$SANDBOX" == "implicit" ]] ; then
 		exit $?
 	fi
 elif [[ "$SANDBOX" == "docker" ]] ; then
+	docker run --rm=true list/sandbox echo "" > /dev/null 2> /dev/null
+	dockerrunning=$?
+	if [[ $dockerrunning > 0 ]]; then
+		echo "Docker servis is not running! Switching task to implicit sandbox."
+		$MY_PATH/execute_test $1 implicit $3 $4 $5 $6
+		exit $?
+	fi
 	if [[ "$TEST_TYPE" == "jUnit" ]] ; then
 		docker run --rm=true --volume="$TEST_PATH:/list_test_files" list/sandbox run_java_jUnit $TESTFILE $TIMEOUT
 		exit $?
