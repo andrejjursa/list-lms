@@ -16,8 +16,10 @@ class Tests extends LIST_Controller {
         $this->_init_teacher_quick_prefered_course_menu();
         if ($this->router->method != 'run_test_for_task' && $this->router->method != 'request_token' &&
             $this->router->method != 'evaluate_test_result' && $this->router->method != 'enqueue_test' &&
-            $this->router->method != 'get_student_test_queue') {
+            $this->router->method != 'get_student_test_queue' && $this->router->method != 'get_student_test_queue_all') {
             $this->usermanager->teacher_login_protected_redirect();
+        } else {
+            $this->usermanager->student_login_protected_redirect();
         }
     }
     
