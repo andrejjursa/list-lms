@@ -42,12 +42,7 @@ fi
 echo "<br />Stage 2 / 2: running test ..." >> $OUTPUT_FILE
 rm -f *.java 2> /dev/null
 echo "----- Running test file Test$TESTCLASS.class<br />" >> $OUTPUT_FILE
-nice run_with_timeout $TIMEOUT /usr/bin/java $JAVA_ARGS org.junit.runner.JUnitCore Test$TESTCLASS | grep --text -v "at junit." | grep --text -v "at org.junit." | grep --text -v "at sun.reflect." | grep --text -v "at java.lang.reflect.Method.invoke" >> $OUTPUT_FILE
-if [ -f "$JAVADIR/evaluation.percent.txt" ] ; then
-	return_val=`cat "$JAVADIR/evaluation.percent.txt"`
-	echo "----- Task completed with: $return_val %" >> $OUTPUT_FILE
-else
-	return_val=0
-fi
+nice run_with_timeout $TIMEOUT /usr/bin/java $JAVA_ARGS org.junit.runner.JUnitCore Test$TESTCLASS | grep --text -v "at junit." | grep --text -v "at org.junit." | grep --text -v "at sun.reflect." | grep --text -v "at java.lang.reflect.Method.invoke" >> $OUTPUT_FILE 2>> $OUTPUT_FILE
+return_val=$?
 echo "----- Testing finished.</pre>" >> $OUTPUT_FILE
 exit $return_val

@@ -66,7 +66,7 @@ public class LISTTestScoring {
         return false;
     }
     
-    public void updateScore(String scoreName, double scoreToAdd, double scoreMaximum) {
+    public synchronized void updateScore(String scoreName, double scoreToAdd, double scoreMaximum) {
         if (scoringTable.containsKey(scoreName)) {
             scoringTable.get(scoreName).setMaximum(scoreMaximum);
             scoringTable.get(scoreName).addCurrent(scoreToAdd);
@@ -79,7 +79,7 @@ public class LISTTestScoring {
         writeScore();
     }
     
-    public void setScore(String scoreName, double scoreToSet, double scoreMaximum) {
+    public synchronized void setScore(String scoreName, double scoreToSet, double scoreMaximum) {
         if (scoringTable.containsKey(scoreName)) {
             scoringTable.remove(scoreName);
         }
@@ -168,7 +168,7 @@ public class LISTTestScoring {
         return sb.toString();
     }
     
-    private void writeScore() {
+    private synchronized void writeScore() {
         try {
             FileWriter fw = new FileWriter("__list_score.txt");
             BufferedWriter bw = new BufferedWriter(fw);
@@ -282,16 +282,6 @@ class Base64 {
  
         }
         return lines;
- 
-    }
-    public static void main(String[] args) {
- 
-        for (int i = 0; i < args.length; i++) {
- 
-            System.err.println("encoding \"" + args[i] + "\"");
-            System.out.println(encode(args[i]));
- 
-        }
  
     }
  
