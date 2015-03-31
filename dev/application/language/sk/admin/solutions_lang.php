@@ -116,6 +116,7 @@ $lang['admin_solutions_valuation_version_metadata_download_lock_error_cant_save'
 $lang['admin_solutions_valuation_version_metadata_download_lock_enabled'] = 'Zakázanie sťahovania povolené.';
 $lang['admin_solutions_valuation_version_metadata_download_lock_disabled'] = 'Zakázanie sťahovania zrušené.';
 $lang['admin_solutions_valuation_version_metadata_download_lock_switch_failed'] = 'Prepnutie zákazu sťahovania zlyhalo.';
+$lang['admin_solutions_valuation_version_metadata_file_last_modification'] = 'Posledná modifikácia súboru';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámy autor';

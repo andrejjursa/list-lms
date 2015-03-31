@@ -479,6 +479,7 @@ class Solutions extends LIST_Controller {
         if ($task_set->exists()) {
             $file_name = decode_from_url($solution_file);
             $file_info = $task_set->get_specific_file_info($file_name);
+            $this->parser->assign('file_last_modified', $file_info['last_modified']);
             $solution_version = new Solution_version();
             $solution_version->where('version', $file_info['version']);
             $solution_version->where_related('solution', 'id', $solution_id);

@@ -116,6 +116,7 @@ $lang['admin_solutions_valuation_version_metadata_download_lock_error_cant_save'
 $lang['admin_solutions_valuation_version_metadata_download_lock_enabled'] = 'Download lock enabled.';
 $lang['admin_solutions_valuation_version_metadata_download_lock_disabled'] = 'Download lock disabled.';
 $lang['admin_solutions_valuation_version_metadata_download_lock_switch_failed'] = 'Download lock switch failed.';
+$lang['admin_solutions_valuation_version_metadata_file_last_modification'] = 'File last modification';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Instructions for student';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Unknown author';

@@ -20,13 +20,16 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
-VERSION 1.2.0 | 2015-03-14
+VERSION 1.2.0 | 2015-03-31
 
 CHANGE Spúšťanie testovania študentských riešení prerobené na prioritnú frontu.
 CHANGE [lang:english] Execution of tests for student solutions reworked to priority queue.
 
 FIX Stiahnutie riešenia zostavy úloh je podmienené prihlásením študenta alebo učiteľa.
 FIX [lang:english] Task set solution download is protected by student or teacher authentification.
+
+NEW V metadátach súboru riešenia pri hodnotení sa zobrazuje dátum a čas poslednej zmeny zip súboru.
+NEW [lang:english] Metadata of task set solution in evalution dialog is now showing date and time of last modification of zip archive.
 
 END VERSION
 
