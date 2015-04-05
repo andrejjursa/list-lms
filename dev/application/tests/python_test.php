@@ -40,7 +40,7 @@ class python_test extends abstract_test {
         $this->extract_zip_to($this->get_input_zip_file());
         $this->extract_zip_to($this->get_current_test_source_directory() . $this->get_current_test_configuration_value('zip_file'));
         $sandbox = $this->get_sandbox_type();
-        $enc_phrase = $this->create_encryption_phrase($working_directory);
+        $this->create_encryption_phrase($working_directory);
         
         $class_to_run = $this->get_current_test_configuration_value('class_to_run');
         if (!preg_match(self::UNIT_TEST_CLASS_TO_RUN_REGEXP, $class_to_run)) {
@@ -54,11 +54,20 @@ class python_test extends abstract_test {
         $output_data = array();
         $exit_code = 0;
         @exec($exec_command, $output_data, $exit_code);
-        $output = $this->read_output_file('__list_output.txt');
-        
-        if ($save_score) {
-            $this->save_test_result($exit_code, $score_student, $score_token);
+        $output = $this->read_output_file(self::TEST_OUTPUT_FILE);
+        $scoring = $this->read_output_file(self::TEST_SCORING_FILE);
+
+        if (!empty($scoring)) {
+            try {
+                $this->decode_scoring($scoring);
+            } catch (Exception $e) {
+                $output .= '<br /><br /><span style="color: red;">' . $e->getMessage() . '</span>';
+            }
         }
+        
+        /*if ($save_score) {
+            $this->save_test_result($exit_code, $score_student, $score_token);
+        }*/
 
         $this->delete_test_directory();
         
@@ -118,10 +127,18 @@ class python_test extends abstract_test {
         $output_data = array();
         $exit_code = 0;
         @exec($exec_command, $output_data, $exit_code);
-        $output = $this->read_output_file('__list_output.txt');
+        $output = $this->read_output_file(self::TEST_OUTPUT_FILE);
         
-        if ($save_score && $this->get_current_test_configuration_value('scoring_percents') && $exit_code == 0) {
+        /*if ($save_score && $this->get_current_test_configuration_value('scoring_percents') && $exit_code == 0) {
             $this->save_test_result((int)$this->get_current_test_configuration_value('scoring_percents'), $score_student, $score_token);
+        }*/
+
+        if ((double)$this->get_current_test_configuration_value('scoring_percents') > 0) {
+            if ($exit_code == 0) {
+                $this->construct_io_test_result((double)$this->get_current_test_configuration_value('scoring_percents'), (double)$this->get_current_test_configuration_value('scoring_percents'));
+            } else {
+                $this->construct_io_test_result(0, (double)$this->get_current_test_configuration_value('scoring_percents'));
+            }
         }
         
         $this->delete_test_directory();

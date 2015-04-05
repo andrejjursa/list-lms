@@ -147,6 +147,7 @@ class Tasks extends LIST_Controller {
                     'percent_bonus' => $test->join_percent_bonus,
                     'points' => $test->join_points,
                     'bonus' => $test->join_bonus,
+                    'evaluation_table' => is_null($test->join_evaluation_table) ? array() : unserialize($test->join_evaluation_table),
                 );
                 $overlays_tests[] = $test->id;
                 

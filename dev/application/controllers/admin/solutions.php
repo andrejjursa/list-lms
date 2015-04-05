@@ -437,7 +437,7 @@ class Solutions extends LIST_Controller {
                 if ($solution->comment != $solution_data['comment'] || $solution->points != floatval($solution_data['points']) || $solution->not_considered != intval($solution_data['not_considered'])) {
                     $solution->teacher_id = $this->usermanager->get_teacher_id();
                 }
-                $solution->from_array($solution_data, array('points', 'comment', 'not_considered'));
+                $solution->from_array($solution_data, array('points', 'comment', 'not_considered', 'disable_evaluation_by_tests'));
                 $solution->revalidate = 0;
                 if ($solution->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();

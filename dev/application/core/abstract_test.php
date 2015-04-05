@@ -14,6 +14,11 @@ abstract class abstract_test {
     private $zip_file_path = NULL;
     private $current_test_directory;
     private $last_test_score = 0;
+    private $encryption_phrase = '';
+    private $test_scoring = NULL;
+
+    const TEST_OUTPUT_FILE = '__list_output.txt';
+    const TEST_SCORING_FILE = '__list_score.txt';
     
     public function __construct() {
         $this->CI =& get_instance();
@@ -41,7 +46,15 @@ abstract class abstract_test {
      * @return int test score;
      */
     public function get_last_test_score() {
-        return $this->last_test_score;
+        $score_total = 0;
+        if (is_array($this->test_scoring) && count($this->test_scoring)) {
+            foreach ($this->test_scoring as $test_scoring_object) {
+                $score_total += (double)$test_scoring_object->current;
+            }
+            if ($score_total > 100) { $score_total = 100; }
+            elseif ($score_total < 0) { $score_total = 0; }
+        }
+        return $score_total;
     }
 
     /**
@@ -122,8 +135,12 @@ abstract class abstract_test {
         return $this->zip_file_path;
     }
 
-
-    public function get_sandbox_type() {
+    /**
+     * Safely returns current sandbox type.
+     * @return string sandbox type.
+     */
+    public function get_sandbox_type()
+    {
         $sandbox_type = strtolower($this->CI->config->item('test_sandbox'));
         $allowed_types = array('implicit', 'docker');
         return in_array($sandbox_type, $allowed_types) ? $sandbox_type : 'implicit';
@@ -185,6 +202,7 @@ abstract class abstract_test {
      * @throws TestException can be thrown if test object is not initialized, source file is not found or run method is not found.
      */
     public function run($input_zip_file, $save_score = FALSE, $score_token = '', $score_student = NULL) {
+        $this->test_scoring = NULL;
         if (is_null($this->get_current_test_subtype())) {
             throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1100001);
         }
@@ -292,6 +310,76 @@ abstract class abstract_test {
     }
 
     /**
+     * Call this function to get last test scoring array.
+     * @return string|null serialized array of scoring objects or null on error.
+     */
+    public function get_last_test_scoring() {
+        if (!is_null($this->test_scoring)) {
+            return serialize($this->test_scoring);
+        }
+        return $this->test_scoring;
+    }
+
+    /**
+     * Call this function to construct evaluation table data for I/O test scoring.
+     * @param $percents current value achieved.
+     * @param $maximum maximum value.
+     */
+    protected function construct_io_test_result($percents, $maximum) {
+        $score = new stdClass();
+        $score->name = 'lang:tasks_test_result_score_name_io_test';
+        $score->current = (double)$percents;
+        $score->maximum = (double)$maximum;
+        $score->maximum = $score->maximum > 100 ? 100 : ($score->maximum < 0 ? 0 : $score->maximum);
+        $score->current = $score->current > $score->maximum ? $score->maximum : ($score->current < 0 ? 0 : $score->current);
+        $this->test_scoring = array(
+            $score
+        );
+    }
+
+    /**
+     * Decode scoring and return it as decoded JSON array.
+     * @param $score encrypted scoring string.
+     * @return mixed decoded scoring array.
+     * @throws Exception on error like MD5 checksum does not match the score or there is wrong format of scoring output text.
+     */
+    protected function decode_scoring($score) {
+        $lines = explode("\n", $score);
+        if (count($lines)) { foreach ($lines as $key => $value) {
+            $lines[$key] = base64_decode(trim($value));
+        }}
+        $this->test_scoring = NULL;
+        if (count($lines) == 2) {
+            if (mb_strlen($lines[0]) == 32) {
+                $md5 = $this->decode_scoring_single_line($lines[0]);
+                $json = $this->decode_scoring_single_line($lines[1], 32);
+                if (md5($json) == $md5) {
+                    $this->test_scoring = json_decode($json);
+                    return $this->test_scoring;
+                }
+                throw new Exception('MD5 checksum does not match!');
+            }
+        }
+        throw new Exception('Wrong output format!');
+    }
+
+    /**
+     * Decode single line of encrypted scoring.
+     * @param $text scoring text to decode.
+     * @param int $offset offset in encryption phrase.
+     * @return string doceded scoring text.
+     */
+    private function decode_scoring_single_line($text, $offset = 0) {
+        $output = '';
+
+        for ($i = 0; $i < mb_strlen($text); $i++) {
+            $output .= chr(ord(mb_substr($text, $i, 1)) ^ ord(mb_substr($this->encryption_phrase, $i + $offset % mb_strlen($this->encryption_phrase))));
+        }
+
+        return $output;
+    }
+
+    /**
      * @param $path path to directory with test files extracted.
      * @return null|string encryption phrase as string or NULL on error.
      */
@@ -309,14 +397,17 @@ abstract class abstract_test {
                 $f = fopen($filepath, 'w');
                 fwrite($f, $phrase);
                 fclose($f);
+                $this->encryption_phrase = $phrase;
                 return $phrase;
             } catch (Exception $e) {
                 if ($f !== NULL && file_exists($filepath)) {
                     fclose($f);
                 }
+                $this->encryption_phrase = NULL;
                 return NULL;
             }
         } else {
+            $this->encryption_phrase = NULL;
             return NULL;
         }
     }

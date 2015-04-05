@@ -86,6 +86,7 @@ $lang['admin_solutions_valuation_form_label_points'] = 'Points';
 $lang['admin_solutions_valuation_form_label_points_hint'] = 'Sum of points for tasks in this task set is <strong>%s</strong>.';
 $lang['admin_solutions_valuation_form_label_comment'] = 'Comment';
 $lang['admin_solutions_valuation_form_label_not_considered'] = 'Do not consider this solution in valuation';
+$lang['admin_solutions_valuation_form_label_disable_evaluation_by_tests'] = 'Disable evaluation by tests';
 $lang['admin_solutions_valuation_form_button_submit'] = 'Save';
 $lang['admin_solutions_valuation_form_button_go_to_next_solution'] = 'Go to next solution';
 $lang['admin_solutions_valuation_form_field_points'] = 'points';

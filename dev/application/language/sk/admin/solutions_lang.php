@@ -86,6 +86,7 @@ $lang['admin_solutions_valuation_form_label_points'] = 'Body';
 $lang['admin_solutions_valuation_form_label_points_hint'] = 'Suma bodov za úlohy v tejto zostave úloh je <strong>%s</strong>.';
 $lang['admin_solutions_valuation_form_label_comment'] = 'Komentár';
 $lang['admin_solutions_valuation_form_label_not_considered'] = 'Nebrať do úvahy toto riešenie pri hodnotení';
+$lang['admin_solutions_valuation_form_label_disable_evaluation_by_tests'] = 'Zakázať hodnotenie testami';
 $lang['admin_solutions_valuation_form_button_submit'] = 'Uložiť';
 $lang['admin_solutions_valuation_form_button_go_to_next_solution'] = 'Prejsť na ďalšie riešenie';
 $lang['admin_solutions_valuation_form_field_points'] = 'body';

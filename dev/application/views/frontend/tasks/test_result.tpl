@@ -60,9 +60,39 @@
                         </tr>
                         <tr>
                             <td colspan="5">
-                                <div class="test_result_text" data-test-id="{$test.id}">
+                                <div class="test_result_text{if is_array($test.evaluation_table) and count($test.evaluation_table)} with_evaluation_table{/if}" data-test-id="{$test.id}">
                                     {$test.result_text}
                                 </div>
+                                {if is_array($test.evaluation_table) and count($test.evaluation_table)}
+                                <div class="test_evaluation_table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>{translate line='tasks_test_result_evaluation_table_score_name'}</th>
+                                                <th>{translate line='tasks_test_result_evaluation_table_score_current'}</th>
+                                                <th>{translate line='tasks_test_result_evaluation_table_score_maximum'}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>{$test_eval_current_total = 0}{$test_eval_maximum_total = 0}
+                                            {foreach $test.evaluation_table as $evaluation_table_object}
+                                            <tr>
+                                                <td>{translate_text text=$evaluation_table_object->name}</td>
+                                                <td>{$evaluation_table_object->current|doubleval} %{$test_eval_current_total = $test_eval_current_total + $evaluation_table_object->current|doubleval}</td>
+                                                <td>{$evaluation_table_object->maximum|doubleval} %{$test_eval_maximum_total = $test_eval_maximum_total + $evaluation_table_object->maximum|doubleval}</td>
+                                            </tr>
+                                            {/foreach}
+                                        </tbody>
+                                        <tfoot>{if $test_eval_current_total > 100}{$test_eval_current_total = 100}{elseif $test_eval_current_total < 0}{$test_eval_current_total = 0}{/if}
+                                            <tr>{if $test_eval_maximum_total > 100}{$test_eval_maximum_total = 100}{elseif $test_eval_maximum_total < 0}{$test_eval_maximum_total = 0}{/if}
+                                                <td>{translate line='tasks_test_result_evaluation_table_score_summary'}:</td>
+                                                <td>{$test_eval_current_total} %</td>
+                                                <td>{$test_eval_maximum_total} %</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="clear_evaluation_table"></div>
+                                {/if}
                             </td>
                         </tr>
                     {/foreach}

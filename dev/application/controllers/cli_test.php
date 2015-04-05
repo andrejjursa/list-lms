@@ -89,6 +89,7 @@ class Cli_test extends CI_Controller {
                                 $test_score = 0;
                             }
                             $test_queue->set_join_field($test, 'result_text', $test_output);
+                            $test_queue->set_join_field($test, 'evaluation_table', $test_object->get_last_test_scoring());
 
                             //echo 'Test queue ' . $test_queue->id . ' is done with test ' . $test->id . ' ... ' . PHP_EOL;
 
@@ -177,15 +178,18 @@ class Cli_test extends CI_Controller {
 
                             if ($solution->exists()) {
                                 if ($solution->not_considered == 0) {
-                                    if ($solution->points < $total_score || is_null($solution->points)) {
-                                        $solution->points = $total_score;
-                                        $solution->comment = '';
-                                        $solution->teacher_id = NULL;
-                                        $solution->best_version = (int)$version;
-                                        $solution->revalidate = 0;
-                                        $save_solution = TRUE;
+                                    if ($solution->disable_evaluation_by_tests == 0) {
+                                        if ($solution->points < $total_score || is_null($solution->points)) {
+                                            $solution->points = $total_score;
+                                            $solution->teacher_id = NULL;
+                                            $solution->best_version = (int)$version;
+                                            $solution->revalidate = 0;
+                                            $save_solution = TRUE;
+                                        } else {
+                                            $best_old_score = $solution->points;
+                                        }
                                     } else {
-                                        $best_old_score = $solution->points;
+                                        $solution_disable_evaluation = TRUE;
                                     }
                                 } else {
                                     $solution_not_considered = TRUE;
@@ -206,10 +210,14 @@ class Cli_test extends CI_Controller {
                                 $this->parser->clearCache('frontend/tasks/index.tpl');
                                 $test_queue->result_message = $this->lang->line('admin_tests_test_result_new_points_added');
                             } else {
-                                if (!$solution_not_considered) {
-                                    $test_queue->result_message = sprintf($this->lang->line('admin_tests_test_result_nothing_to_update'), $total_score, $best_old_score);
+                                if (!$solution_disable_evaluation) {
+                                    if (!$solution_not_considered) {
+                                        $test_queue->result_message = sprintf($this->lang->line('admin_tests_test_result_nothing_to_update'), $total_score, $best_old_score);
+                                    } else {
+                                        $test_queue->result_message = $this->lang->line('admin_tests_test_result_solution_not_considered');
+                                    }
                                 } else {
-                                    $test_queue->result_message = $this->lang->line('admin_tests_test_result_solution_not_considered');
+                                    $this->result_message = $this->lang->line('admin_tests_test_result_solution_disable_evaluation');
                                 }
                             }
                             $test_queue->points = $total_score - $total_bonus;

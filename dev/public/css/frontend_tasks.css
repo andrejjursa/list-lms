@@ -132,3 +132,8 @@ table.tests_result_table thead tr th:last-child { border-top-right-radius: 3px; 
 table.tests_result_table tbody tr td { padding: 3px; }
 table.tests_result_table tbody tr td.number { width: 75px; }
 table.tests_result_table tbody tr { border-bottom: 1px dashed silver; }
+table.tests_result_table tbody td div.test_result_text.with_evaluation_table { width: 60%; float: left; }
+table.tests_result_table tbody td div.test_evaluation_table { margin-left: 60%; }
+table.tests_result_table tbody td div.test_evaluation_table table { width: 100%; border-collapse: collapse; }
+table.tests_result_table tbody td div.test_evaluation_table table tfoot { color: #008000; }
+table.tests_result_table tbody td div.clear_evaluation_table { clear: both; }

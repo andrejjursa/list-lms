@@ -15,6 +15,7 @@ $cache = array (
     9 => 'not_considered',
     10 => 'ip_address',
     11 => 'best_version',
+    12 => 'disable_evaluation_by_tests',
   ),
   'validation' => 
   array (
@@ -99,6 +100,13 @@ $cache = array (
     'best_version' => 
     array (
       'field' => 'best_version',
+      'rules' => 
+      array (
+      ),
+    ),
+    'disable_evaluation_by_tests' => 
+    array (
+      'field' => 'disable_evaluation_by_tests',
       'rules' => 
       array (
       ),

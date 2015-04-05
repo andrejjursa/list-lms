@@ -20,7 +20,7 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
-VERSION 1.2.0 | 2015-03-31
+VERSION 1.2.0 | 2015-04-05
 
 CHANGE Spúšťanie testovania študentských riešení prerobené na prioritnú frontu.
 CHANGE [lang:english] Execution of tests for student solutions reworked to priority queue.
@@ -30,6 +30,9 @@ FIX [lang:english] Task set solution download is protected by student or teacher
 
 NEW V metadátach súboru riešenia pri hodnotení sa zobrazuje dátum a čas poslednej zmeny zip súboru.
 NEW [lang:english] Metadata of task set solution in evalution dialog is now showing date and time of last modification of zip archive.
+
+NEW Je možné zakázať hodnotenie riešení študentovej úlohy pomocou testov (v okne hodnotenia riešenia).
+NEW [lang:english] Now is possible to disable evaluation by tests for student solution (in solution evaluation window).
 
 END VERSION
 

@@ -54,6 +54,7 @@ $lang['admin_tests_test_result_new_points_added'] = 'Nové body boli udelené za
 $lang['admin_tests_test_result_configuration_error'] = 'Chyba konfigurácie testu!';
 $lang['admin_tests_test_result_execution_error'] = 'Chyba vykonávacieho skriptu. Spustite test znovu.';
 $lang['admin_tests_test_result_testing_finished'] = 'Vykonávanie testov dokončené.';
+$lang['admin_tests_test_result_solution_disable_evaluation'] = 'Hodnotenie testami je zakázané.';
 $lang['admin_tests_evaluation_table_header_task_name'] = 'Úloha';
 $lang['admin_tests_evaluation_table_header_percentage'] = 'Percento';
 $lang['admin_tests_evaluation_table_header_points'] = 'Body';
