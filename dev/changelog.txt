@@ -25,6 +25,9 @@ VERSION 1.2.0 | 2015-04-05
 CHANGE Spúšťanie testovania študentských riešení prerobené na prioritnú frontu.
 CHANGE [lang:english] Execution of tests for student solutions reworked to priority queue.
 
+CHANGE Automatické hodnotenie riešenia už nemaže učiteľov komentár k riešeniu.
+CHANGE [lang:english] Automated evaluation of solution is now leaving teacher comment for this solution untouched.
+
 FIX Stiahnutie riešenia zostavy úloh je podmienené prihlásením študenta alebo učiteľa.
 FIX [lang:english] Task set solution download is protected by student or teacher authentification.
 
