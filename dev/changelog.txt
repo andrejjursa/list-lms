@@ -20,7 +20,7 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
-VERSION 1.2.0 | 2015-04-05
+VERSION 1.2.0 | 2015-04-08
 
 CHANGE Spúšťanie testovania študentských riešení prerobené na prioritnú frontu.
 CHANGE [lang:english] Execution of tests for student solutions reworked to priority queue.
@@ -36,6 +36,13 @@ NEW [lang:english] Metadata of task set solution in evalution dialog is now show
 
 NEW Je možné zakázať hodnotenie riešení študentovej úlohy pomocou testov (v okne hodnotenia riešenia).
 NEW [lang:english] Now is possible to disable evaluation by tests for student solution (in solution evaluation window).
+
+END VERSION
+
+VERSION 1.1.2a | 2015-04-08
+
+FIX Opravená chyba, ktorá spôsobovala problémy pri zadávaní hromadného hodnotenia zostavy so zadaním 0 bodov (pri prvom hodnotení).
+FIX [lang:english] Fixed bug which caused problem with saving batch evaluation of task set when teacher set 0 points (only in first evaluation).
 
 END VERSION
 

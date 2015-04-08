@@ -87,7 +87,7 @@ class Solutions extends LIST_Controller {
                     $solution->where_related_student('id', $student->id);
                     $solution->where_related_task_set('id', $task_set->id);
                     $solution->get();
-                    if ($solution->points != floatval($solution_data['points']) || $solution->not_considered != intval(@$solution_data['not_considered'])) {
+                    if (is_null($solution->points) || floatval($solution->points) !== floatval($solution_data['points']) || $solution->not_considered != intval(@$solution_data['not_considered'])) {
                         $solution->teacher_id = $this->usermanager->get_teacher_id();
                         $solution->points = floatval($solution_data['points']);
                         $solution->revalidate = 0;
