@@ -1,0 +1,22 @@
+#!/bin/bash
+
+TYPE=$1
+FILE=$2
+TIMEOUT=$3
+JUDGE=$4
+
+chgrp -R test_runner /list_test_files/*
+chmod -R g+rwx /list_test_files/*
+chgrp test_runner /list_test_files
+chmod g+rwx /list_test_files
+
+if [[ "$TYPE" == "jUnit" ]] ; then
+	sudo -u test_runner run_java_jUnit $FILE $TIMEOUT
+	exit $?
+elif [[ "$TYPE" == "pyUnit" ]] ; then
+	sudo -u test_runner run_python_pyUnit $FILE $TIMEOUT
+	exit $?
+elif [[ "$TYPE" == "pyIO" ]] ; then
+	sudo -u test_runner run_python_io $FILE $TIMEOUT $JUDGE
+	exit $?
+fi

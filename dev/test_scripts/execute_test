@@ -33,13 +33,13 @@ elif [[ "$SANDBOX" == "docker" ]] ; then
 		exit $?
 	fi
 	if [[ "$TEST_TYPE" == "jUnit" ]] ; then
-		docker run --rm=true --volume="$TEST_PATH:/list_test_files" list/sandbox run_java_jUnit $TESTFILE $TIMEOUT
+		docker run --rm=true --volume="$TEST_PATH:/list_test_files" list/sandbox run_test jUnit $TESTFILE $TIMEOUT
 		exit $?
 	elif [[ "$TEST_TYPE" == "pyUnit" ]] ; then
-		docker run --rm=true --volume="$TEST_PATH:/list_test_files" list/sandbox run_python_pyUnit $TESTFILE $TIMEOUT
+		docker run --rm=true --volume="$TEST_PATH:/list_test_files" list/sandbox run_test pyUnit $TESTFILE $TIMEOUT
 		exit $?
 	elif [[ "$TEST_TYPE" == "pythonIO" ]] ; then
-		docker run --rm=true --volume="$TEST_PATH:/list_test_files" list/sandbox run_python_io $TESTFILE $TIMEOUT $TEST_JUDGE_TYPE
+		docker run --rm=true --volume="$TEST_PATH:/list_test_files" list/sandbox run_test pyIO $TESTFILE $TIMEOUT $TEST_JUDGE_TYPE
 		exit $?
 	fi
 fi

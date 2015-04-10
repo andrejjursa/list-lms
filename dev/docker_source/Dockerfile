@@ -12,34 +12,52 @@ RUN apt-get install -y vim
 
 RUN apt-get install -y lib32z1 lib32ncurses5 lib32bz2-1.0 
 
+RUN adduser test_runner
+
 RUN mkdir /list_test_files
-RUN chmod 777 /list_test_files
+RUN chmod a+xr,a-w,u+w,g+w /list_test_files
+RUN chgrp test_runner /list_test_files
 VOLUME /list_test_files
 
 RUN mkdir /list_compilation_process
-RUN chmod 777 /list_compilation_process
+RUN chmod a+xr,a-w,u+w,g+w /list_compilation_process
+RUN chgrp test_runner /list_compilation_process 
 
 RUN mkdir /list_shared_files
-RUN chmod 777 /list_shared_files
+RUN chmod a+xr,a-w,u+w /list_shared_files
+RUN chgrp test_runner /list_shared_files
 
 ADD run_with_timeout /usr/local/bin/
-RUN chmod 777 /usr/local/bin/run_with_timeout
+RUN chmod a+xr,a-w,u+w /usr/local/bin/run_with_timeout
+RUN chgrp test_runner /usr/local/bin/run_with_timeout
 
 ADD run_java_jUnit /usr/local/bin/
-RUN chmod 777 /usr/local/bin/run_java_jUnit
+RUN chmod a+xr,a-w,u+w /usr/local/bin/run_java_jUnit
+RUN chgrp test_runner /usr/local/bin/run_java_jUnit
 
 ADD run_python_pyUnit /usr/local/bin/
-RUN chmod 777 /usr/local/bin/run_python_pyUnit
+RUN chmod a+xr,a-w,u+w /usr/local/bin/run_python_pyUnit
+RUN chgrp test_runner /usr/local/bin/run_python_pyUnit
 
 ADD run_python_io /usr/local/bin/
-RUN chmod 777 /usr/local/bin/run_python_io
+RUN chmod a+xr,a-w,u+w /usr/local/bin/run_python_io
+RUN chgrp test_runner /usr/local/bin/run_python_io
+
+ADD run_test /usr/local/bin/
+RUN chmod a-xrw,u+xrw /usr/local/bin/run_test
 
 RUN mkdir /list_shared_files/java
-RUN chmod 777 /list_shared_files/java
+RUN chmod a+xr,a-w,u+w /list_shared_files/java
+RUN chgrp test_runner /list_shared_files/java
 
 RUN mkdir /list_shared_files/python
-RUN chmod 777 /list_shared_files/python
+RUN chmod a+xr,a-w,u+w /list_shared_files/python
+RUN chgrp test_runner /list_shared_files/python
 
 ADD java/* /list_shared_files/java/
+RUN chgrp -R test_runner /list_shared_files/java/*
+RUN chmod -R a+r,a-wx,u+wx /list_shared_files/java/*
 
 ADD python/* /list_shared_files/python/
+RUN chgrp -R test_runner /list_shared_files/python/*
+RUN chmod -R a+r,a-wx,u+wx /list_shared_files/python/*

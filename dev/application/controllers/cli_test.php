@@ -173,6 +173,7 @@ class Cli_test extends CI_Controller {
 
                             $save_solution = FALSE;
                             $solution_not_considered = FALSE;
+			    $solution_disable_evaluation = FALSE;
 
                             $best_old_score = $min_points_limit;
 
@@ -217,7 +218,7 @@ class Cli_test extends CI_Controller {
                                         $test_queue->result_message = $this->lang->line('admin_tests_test_result_solution_not_considered');
                                     }
                                 } else {
-                                    $this->result_message = $this->lang->line('admin_tests_test_result_solution_disable_evaluation');
+                                    $test_queue->result_message = $this->lang->line('admin_tests_test_result_solution_disable_evaluation');
                                 }
                             }
                             $test_queue->points = $total_score - $total_bonus;
