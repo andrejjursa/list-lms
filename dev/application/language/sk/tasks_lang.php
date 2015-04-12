@@ -110,6 +110,7 @@ $lang['tasks_test_result_table_points_percent'] = 'Body %';
 $lang['tasks_test_result_table_points'] = 'Body';
 $lang['tasks_test_result_table_bonus_percent'] = 'Bonus %';
 $lang['tasks_test_result_table_bonus'] = 'Bonus';
+$lang['tasks_test_result_table_result'] = 'Výstupný&nbsp;kód';
 $lang['tasks_test_result_evaluation_table_score_name'] = 'Názov hodnotenia';
 $lang['tasks_test_result_evaluation_table_score_current'] = 'Získané %';
 $lang['tasks_test_result_evaluation_table_score_maximum'] = 'Maximálne %';

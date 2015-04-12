@@ -110,6 +110,7 @@ $lang['tasks_test_result_table_points_percent'] = 'Points %';
 $lang['tasks_test_result_table_points'] = 'Points';
 $lang['tasks_test_result_table_bonus_percent'] = 'Bonus %';
 $lang['tasks_test_result_table_bonus'] = 'Bonus';
+$lang['tasks_test_result_table_result'] = 'Exit&nbsp;code';
 $lang['tasks_test_result_evaluation_table_score_name'] = 'Score name';
 $lang['tasks_test_result_evaluation_table_score_current'] = 'Achieved %';
 $lang['tasks_test_result_evaluation_table_score_maximum'] = 'Maximum %';

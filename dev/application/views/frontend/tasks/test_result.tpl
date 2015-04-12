@@ -47,6 +47,7 @@
                         <th>{translate line='tasks_test_result_table_points'}</th>
                         <th>{translate line='tasks_test_result_table_bonus_percent'}</th>
                         <th>{translate line='tasks_test_result_table_bonus'}</th>
+                        <th>{translate line='tasks_test_result_table_result'}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,9 +58,10 @@
                             <td class="number">{$test.points}</td>
                             <td class="number">{$test.percent_bonus}%</td>
                             <td class="number">{$test.bonus}</td>
+                            <td class="number"{if $test.result > 0} style="color: red;"{/if}>{$test.result}</td>
                         </tr>
                         <tr>
-                            <td colspan="5">
+                            <td colspan="6">
                                 <div class="test_result_text{if is_array($test.evaluation_table) and count($test.evaluation_table)} with_evaluation_table{/if}" data-test-id="{$test.id}">
                                     {$test.result_text}
                                 </div>

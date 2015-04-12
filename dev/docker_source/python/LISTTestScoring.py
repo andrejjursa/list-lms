@@ -30,28 +30,33 @@ class LISTTestScoring:
 			return not os.path.isfile('__list_encrypt_phrase.txt')
 		return False
 
-	def updateScore(self, scoreName, scoreToAdd, scoreMaximum):
-		if scoreName in self.__scoreTable:
-			self.__scoreTable[scoreName].setMaximum(scoreMaximum)
-			self.__scoreTable[scoreName].addCurrent(scoreToAdd)
+	def updateScore(self, scoreName, scoreToAdd, scoreMaximum = None):
+		if scoreMaximum is not None:
+			if scoreName in self.__scoreTable:
+				self.__scoreTable[scoreName].setMaximum(scoreMaximum)
+				self.__scoreTable[scoreName].addCurrent(scoreToAdd)
+			else:
+				score = ScoreItem(scoreToAdd, scoreMaximum)
+				self.__scoreTable[scoreName] = score
 		else:
-			score = ScoreItem(scoreToAdd, scoreMaximum)
+			if scoreName in self.__scoreTable:
+				self.__scoreTable[scoreName].addCurrent(scoreToAdd)
+			else:
+				print('Scoring error, you are trying to modify non-existing score name: ' + scoreName)		
+		self.__writeScore()
+
+	def setScore(self, scoreName, scoreToSet, scoreMaximum = None):
+		if scoreMaximum is not None:
+			if scoreName in self.__scoreTable:
+				del self.__scoreTable[scoreName]
+			score = ScoreItem(scoreToSet, scoreMaximum)
 			self.__scoreTable[scoreName] = score
-		self.__reportScore(scoreName)
+		else:
+			if scoreName in self.__scoreTable:
+				self.__scoreTable[scoreName].setCurrent(scoreToSet)
+			else:
+				print('Scoring error, you are trying to modify non-existing score name: ' + scoreName)
 		self.__writeScore()
-
-	def setScore(self, scoreName, scoreToSet, scoreMaximum):
-		if scoreName in self.__scoreTable:
-			del self.__scoreTable[scoreName]
-		score = ScoreItem(scoreToSet, scoreMaximum)
-		self.__scoreTable[scoreName] = score
-		self.__reportScore(scoreName)
-		self.__writeScore()
-
-	def __reportScore(self, scoreName):
-		print('==========')
-		print('Score "{0}": {1}'.format(scoreName, str(self.__scoreTable[scoreName])))
-		print('==========')
 
 	def __getJSONscoring(self):
 		items = list()

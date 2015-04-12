@@ -75,7 +75,16 @@ public class LISTTestScoring {
             scoringTable.put(scoreName, newScore);
         }
         
-        reportScore(scoreName);
+        writeScore();
+    }
+
+    public synchronized void updateScore(String scoreName, double scoreToAdd) {
+        if (scoringTable.containsKey(scoreName)) {
+            scoringTable.get(scoreName).addCurrent(scoreToAdd);
+        } else {
+            System.err.println("Scoring error, you are trying to modify non-existing score name: " + scoreName);
+        }
+
         writeScore();
     }
     
@@ -86,19 +95,19 @@ public class LISTTestScoring {
         Score newScore = new Score(scoreToSet <= scoreMaximum ? (scoreToSet >= 0.0 ? scoreToSet : 0.0) : scoreMaximum, scoreMaximum);
         scoringTable.put(scoreName, newScore);
         
-        reportScore(scoreName);
         writeScore();
     }
-    
-    private void reportScore(String scoreName) {
-        System.out.println("==========");
-        System.out.print("Score \"");
-        System.out.print(scoreName);
-        System.out.print("\": ");
-        System.out.println(scoringTable.get(scoreName).toString());
-        System.out.println("==========");
+
+    public synchronized void setScore(String scoreName, double scoreToSet) {
+        if (scoringTable.containsKey(scoreName)) {
+            scoringTable.get(scoreName).setCurrent(scoreToSet);
+        } else {
+            System.err.println("Scoring error, you are trying to modify non-existing score name: " + scoreName);
+        }
+
+        writeScore();
     }
-    
+   
     private String getJSONscoring() {
         StringBuilder sb = new StringBuilder();
         

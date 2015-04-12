@@ -14,12 +14,16 @@ class Tests extends LIST_Controller {
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
         $this->_init_teacher_quick_prefered_course_menu();
-        if ($this->router->method != 'run_test_for_task' && $this->router->method != 'request_token' &&
-            $this->router->method != 'evaluate_test_result' && $this->router->method != 'enqueue_test' &&
-            $this->router->method != 'get_student_test_queue' && $this->router->method != 'get_student_test_queue_all') {
-            $this->usermanager->teacher_login_protected_redirect();
-        } else {
+        if ($this->router->method == 'run_test_for_task' || $this->router->method == 'request_token' &&
+            $this->router->method == 'evaluate_test_result') {
+            if (!$this->usermanager->is_student_session_valid() && !$this->usermanager->is_teacher_session_valid()) {
+                die();
+            }
+        } elseif ($this->router->method == 'enqueue_test' || $this->router->method == 'get_student_test_queue' ||
+            $this->router->method == 'get_student_test_queue_all') {
             $this->usermanager->student_login_protected_redirect();
+        } else {
+            $this->usermanager->teacher_login_protected_redirect();
         }
     }
     

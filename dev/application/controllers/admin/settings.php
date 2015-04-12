@@ -50,6 +50,9 @@ class Settings extends LIST_Controller {
         $this->form_validation->set_rules('config[email][smtp_port]', 'lang:admin_settings_form_field_email_smtp_port', 'integer|greater_than[0]');
         $this->form_validation->set_rules('config[email][smtp_timeout]', 'lang:admin_settings_form_field_email_smtp_timeout', 'integer|greater_than[0]');
         $this->form_validation->set_rules('moss[moss_user_id]', 'lang:admin_settings_form_field_moss_user_id', 'required|integer|greater_than[0]');
+        $this->form_validation->set_rules('config[test_aging_ticks_to_priority_increase]', 'lang:admin_settings_form_field_test_aging_ticks_to_priority_increase', 'required|integer|greater_than_equal[5]');
+        $this->form_validation->set_rules('config[test_aging_max_tests_to_raise_priority]', 'lang:admin_settings_form_field_test_aging_max_tests_to_raise_priority', 'required|integer|greater_than_equal[5]');
+        $this->form_validation->set_rules('config[test_maximum_enqueued_pe_student]', 'lang:admin_settings_form_field_test_maximum_enqueued_pe_student', 'required|integer|greater_than_equal[3]');
         
         if ($this->form_validation->run()) {
             $config = $this->protect_config_array($this->input->post('config'));
@@ -70,6 +73,12 @@ class Settings extends LIST_Controller {
             $config['email']['smtp_timeout'] = intval($config['email']['smtp_timeout']);
             $config['email']['priority'] = intval($config['email']['priority']);
             $config['email_multirecipient_batch_mode'] = $this->bool_val($config['email_multirecipient_batch_mode']);
+            $config['test_aging_ticks_to_priority_increase'] = intval($config['test_aging_ticks_to_priority_increase']);
+            $config['test_aging_max_tests_to_raise_priority'] = intval($config['test_aging_max_tests_to_raise_priority']);
+            $config['test_maximum_enqueued_pe_student'] = intval($config['test_maximum_enqueued_pe_student']);
+            if (!in_array($config['test_sandbox'], array('implicit', 'docker'))) {
+                $config['test_sandbox'] = 'implicit';
+            }
             $this->configurator->set_config_array('config', $config);
             $this->configurator->set_config_array('moss', $moss);
             redirect(create_internal_url('admin_settings/index'));
@@ -129,6 +138,10 @@ class Settings extends LIST_Controller {
             'email',
             'email_multirecipient_batch_mode',
             'student_mail_change',
+            'test_aging_ticks_to_priority_increase',
+            'test_aging_max_tests_to_raise_priority',
+            'test_maximum_enqueued_pe_student',
+            'test_sandbox'
         );
         
         $output = array();
