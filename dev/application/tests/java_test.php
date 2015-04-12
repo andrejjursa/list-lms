@@ -47,6 +47,7 @@ class java_test extends abstract_test {
         @exec($exec_command, $output_data, $exit_code);
         $output = $this->read_output_file(self::TEST_OUTPUT_FILE);
         $scoring = $this->read_output_file(self::TEST_SCORING_FILE);
+        $this->set_last_exit_code($exit_code);
 
         if (!empty($scoring)) {
             try {

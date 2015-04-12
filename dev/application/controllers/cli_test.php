@@ -90,6 +90,7 @@ class Cli_test extends CI_Controller {
                             }
                             $test_queue->set_join_field($test, 'result_text', $test_output);
                             $test_queue->set_join_field($test, 'evaluation_table', $test_object->get_last_test_scoring());
+                            $test_queue->set_join_field($test, 'result', $test_object->get_last_exit_code());
 
                             //echo 'Test queue ' . $test_queue->id . ' is done with test ' . $test->id . ' ... ' . PHP_EOL;
 
@@ -173,7 +174,7 @@ class Cli_test extends CI_Controller {
 
                             $save_solution = FALSE;
                             $solution_not_considered = FALSE;
-			    $solution_disable_evaluation = FALSE;
+                            $solution_disable_evaluation = FALSE;
 
                             $best_old_score = $min_points_limit;
 

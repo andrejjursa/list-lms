@@ -15,7 +15,7 @@ function exec_worker {
 	lockfile -r 0 $2 > /dev/null 2> /dev/null
 	locked=$?
 	if [ $locked -eq 0 ] ; then
-		php $PATH_TO_SCRIPT/index.php cli_test index $1
+		sudo -u www-data php $PATH_TO_SCRIPT/index.php cli_test index $1
 		rm -f $2
 	fi
 }
@@ -26,7 +26,7 @@ echo "Executing workers: $2 workers will be run approximately each $1 seconds."
 
 rm -f $PATH_TO_LOCK_DIR/*
 
-php $PATH_TO_SCRIPT/index.php cli_test reset_all
+sudo -u www-data php $PATH_TO_SCRIPT/index.php cli_test reset_all
 
 function run_workers_async {
 	while true; do
@@ -37,7 +37,7 @@ function run_workers_async {
 			sleep 0.005
 		done
 		sleep $WAIT_TIME
-		php $PATH_TO_SCRIPT/index.php cli_test aging &
+		sudo -u www-data php $PATH_TO_SCRIPT/index.php cli_test aging &
 		sleep $WAIT_TIME
 	done
 }

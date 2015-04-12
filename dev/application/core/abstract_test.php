@@ -16,6 +16,7 @@ abstract class abstract_test {
     private $last_test_score = 0;
     private $encryption_phrase = '';
     private $test_scoring = NULL;
+    private $last_exit_code = 0;
 
     const TEST_OUTPUT_FILE = '__list_output.txt';
     const TEST_SCORING_FILE = '__list_score.txt';
@@ -203,6 +204,7 @@ abstract class abstract_test {
      */
     public function run($input_zip_file, $save_score = FALSE, $score_token = '', $score_student = NULL) {
         $this->test_scoring = NULL;
+        $this->last_exit_code = 0;
         if (is_null($this->get_current_test_subtype())) {
             throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1100001);
         }
@@ -318,6 +320,22 @@ abstract class abstract_test {
             return serialize($this->test_scoring);
         }
         return $this->test_scoring;
+    }
+
+    /**
+     * This function will return last exit code for last test run.
+     * @return int last exit code
+     */
+    public function get_last_exit_code() {
+        return $this->last_exit_code;
+    }
+
+    /**
+     * Call this function from test to set last exit code.
+     * @param int $exit_code exit code to remember.
+     */
+    protected function set_last_exit_code($exit_code) {
+        $this->last_exit_code = $exit_code;
     }
 
     /**

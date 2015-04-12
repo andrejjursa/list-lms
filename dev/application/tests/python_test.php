@@ -56,6 +56,7 @@ class python_test extends abstract_test {
         @exec($exec_command, $output_data, $exit_code);
         $output = $this->read_output_file(self::TEST_OUTPUT_FILE);
         $scoring = $this->read_output_file(self::TEST_SCORING_FILE);
+        $this->set_last_exit_code($exit_code);
 
         if (!empty($scoring)) {
             try {
@@ -128,6 +129,7 @@ class python_test extends abstract_test {
         $exit_code = 0;
         @exec($exec_command, $output_data, $exit_code);
         $output = $this->read_output_file(self::TEST_OUTPUT_FILE);
+        $this->set_last_exit_code($exit_code);
         
         /*if ($save_score && $this->get_current_test_configuration_value('scoring_percents') && $exit_code == 0) {
             $this->save_test_result((int)$this->get_current_test_configuration_value('scoring_percents'), $score_student, $score_token);

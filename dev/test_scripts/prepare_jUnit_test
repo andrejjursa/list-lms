@@ -25,7 +25,7 @@ chmod g+r $TEST_PATH/. > /dev/null
 # STAGE 1 Compilation:
 echo "<pre>" > $OUTPUT_FILE
 echo "Stage 1 / 2: source code compilation ..." >> $OUTPUT_FILE
-cp $CURRENT_PATH/test_important_files/java/*.java $TEST_PATH/.
+cp $CURRENT_PATH/../docker_source/java/*.java $TEST_PATH/.
 /usr/bin/javac $JAVAC_ARGS $ENCODING 2> $COMPILATION_LOG
 exitcode=$?
 cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE
@@ -48,10 +48,13 @@ echo "<br />Stage 2 / 2: running test ..." >> $OUTPUT_FILE
 rm -f $TEST_PATH/*.java 2> /dev/null
 cp -f $TEST_PATH/* $TEST_PATH/__list_out 2> /dev/null
 rm -f $TEST_PATH/__list_out/__list_output.txt 2> /dev/null
-chgrp testovac $TEST_PATH/__list_output/* 2> /dev/null
+rm -f $TEST_PATH/__list_out/__list_compilation_log.txt 2> /dev/null
+chgrp -R testovac $TEST_PATH/__list_output/* 2> /dev/null
+chmod -R g+w $TEST_PATH/__list_output/* 2> /dev/null
 cd $TEST_PATH/__list_out
 echo "----- Running test file Test$TESTCLASS.class<br />" >> $OUTPUT_FILE
 sudo -u testovac $CURRENT_PATH/execute_jUnit_test $TESTCLASS $TIMEOUT $CURRENT_PATH >> $OUTPUT_FILE 2>> $OUTPUT_FILE
 exitcode=$?
+cp -f $TEST_PATH/__list_out/__list_score.txt $TEST_PATH/__list_score.txt 2> /dev/null
 echo "----- Testing finished.</pre>" >> $OUTPUT_FILE
 exit $exitcode
