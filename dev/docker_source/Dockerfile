@@ -54,10 +54,12 @@ RUN mkdir /list_shared_files/python
 RUN chmod a+xr,a-w,u+w /list_shared_files/python
 RUN chgrp test_runner /list_shared_files/python
 
-ADD java/* /list_shared_files/java/
+ADD java /list_shared_files/java/
 RUN chgrp -R test_runner /list_shared_files/java/*
-RUN chmod -R a+r,a-wx,u+wx /list_shared_files/java/*
+RUN chmod -R a+r,a-wx,u+w /list_shared_files/java/*
+RUN find /list_shared_files/java/ -type d -exec chmod a+x {} +
 
-ADD python/* /list_shared_files/python/
+ADD python /list_shared_files/python/
 RUN chgrp -R test_runner /list_shared_files/python/*
-RUN chmod -R a+r,a-wx,u+wx /list_shared_files/python/*
+RUN chmod -R a+r,a-wx,u+w /list_shared_files/python/*
+RUN find /list_shared_files/python/ -type d -exec chmod a+x {} +
