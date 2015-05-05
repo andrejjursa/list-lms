@@ -51,8 +51,8 @@ class Cli_test extends CI_Controller {
         }
         if ($test_queue->exists() && $execute_tests) {
             
-            $this->db->query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;');
-            $this->db->trans_begin();
+            //$this->db->query('SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;');
+            //$this->db->trans_begin();
             $this->lang->reinitialize_for_idiom($test_queue->system_language);
             $this->lang->load('admin/tests');
             $task_set = new Task_set();
@@ -121,7 +121,7 @@ class Cli_test extends CI_Controller {
                                 $query->free_result();
                             }
                         } else {
-                            $this->db->trans_rollback();
+                            //$this->db->trans_rollback();
                             $test_queue->worker = NULL;
                             $test_queue->status = 3;
                             $test_queue->finish = date('Y-m-d H:i:s');
@@ -244,16 +244,16 @@ class Cli_test extends CI_Controller {
                         $test_queue->status = 2;
                         $test_queue->finish = date('Y-m-d H:i:s');
                         $test_queue->save();
-                        $this->db->trans_commit();
+                        //$this->db->trans_commit();
                     } else if ($total_tests_count && !$run_evaluation) {
                         $test_queue->worker = NULL;
                         $test_queue->status = 2;
                         $test_queue->finish = date('Y-m-d H:i:s');
                         $test_queue->result_message = $this->lang->line('admin_tests_test_result_testing_finished');
                         $test_queue->save();
-                        $this->db->trans_commit();
+                        //$this->db->trans_commit();
                     } else {
-                        $this->db->trans_rollback();
+                        //$this->db->trans_rollback();
                         $test_queue->worker = NULL;
                         $test_queue->status = 3;
                         $test_queue->finish = date('Y-m-d H:i:s');
@@ -261,7 +261,7 @@ class Cli_test extends CI_Controller {
                         $test_queue->save();
                     }
                 } else {
-                    $this->db->trans_rollback();
+                    //$this->db->trans_rollback();
                     $test_queue->worker = NULL;
                     $test_queue->status = 3;
                     $test_queue->finish = date('Y-m-d H:i:s');
@@ -269,7 +269,7 @@ class Cli_test extends CI_Controller {
                     $test_queue->save();
                 }
             } catch (Exception $e) {
-                $this->db->trans_rollback();
+                //$this->db->trans_rollback();
                 $test_queue->worker = NULL;
                 $test_queue->status = 3;
                 $test_queue->finish = date('Y-m-d H:i:s');
