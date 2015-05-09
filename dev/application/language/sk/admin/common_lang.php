@@ -30,3 +30,5 @@ $lang['commont_copyright_text'] = 'L.I.S.T. verzia %4$s. Pôvodne navrhol a vytv
 $lang['common_copyright_faculty'] = 'Univerzita Komenského v Bratislave, Fakulta matematiky, fyziky a informatiky';
 
 $lang['common_jquery_countdown_localisation_file'] = 'language/sk/jquery.countdown-sk.js';
+
+$lang['common_list_test_scoring_name'] = 'Skóre hodnotenia testu';

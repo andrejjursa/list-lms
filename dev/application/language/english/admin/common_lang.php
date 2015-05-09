@@ -30,3 +30,5 @@ $lang['commont_copyright_text'] = 'L.I.S.T. version %4$s. Originaly designed and
 $lang['common_copyright_faculty'] = 'Comenius University in Bratislava, Faculty of mathematics, physics and informatics';
 
 $lang['common_jquery_countdown_localisation_file'] = '';
+
+$lang['common_list_test_scoring_name'] = 'Test evaluation score';
