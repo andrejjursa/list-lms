@@ -122,6 +122,10 @@ jQuery(document).ready(function($) {
         var content_type = $('#task_set_content_type_id').val();
         return content_type === 'project';
     });
+    $('form div.field.task_set_test_priority').setActiveFormDisplayCondition(function() {
+        var content_type = $('#task_set_content_type_id').val();
+        return content_type === 'task_set';
+    });
     $('form').activeForm().applyConditions();
     
     $('#task_set_publish_start_time_id').datetimepicker({

@@ -110,6 +110,13 @@ $cache = array (
       array (
       ),
     ),
+    'test_queue' => 
+    array (
+      'field' => 'test_queue',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -127,6 +134,17 @@ $cache = array (
   ),
   'has_many' => 
   array (
+    'test_queue' => 
+    array (
+      'join_table' => 'test_test_queue_rel',
+      'class' => 'test_queue',
+      'other_field' => 'test',
+      'join_self_as' => 'test',
+      'join_other_as' => 'test_queue',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
   ),
   '_field_tracking' => 
   array (

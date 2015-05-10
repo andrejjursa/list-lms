@@ -6,6 +6,13 @@ class Test extends DataMapper {
         'task',
     );
     
+    public $has_many = array(
+        'test_queue' => array(
+            'join_table' => 'test_test_queue_rel',
+        ),
+    );
+
+
     /**
      * Delete this test or related object.
      * If no parameters are set, this method deletes current test and all files associated with this test.

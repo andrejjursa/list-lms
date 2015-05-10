@@ -30,6 +30,8 @@ class java_test extends abstract_test {
         $working_directory = $this->make_test_directory();
         $this->extract_zip_to($this->get_input_zip_file());
         $this->extract_zip_to($this->get_current_test_source_directory() . $this->get_current_test_configuration_value('zip_file'));
+        $sandbox = $this->get_sandbox_type();
+        $this->create_encryption_phrase($working_directory);
         
         $class_to_run = $this->get_current_test_configuration_value('class_to_run');
         if (!preg_match(self::UNIT_TEST_CLASS_TO_RUN_REGEXP, $class_to_run)) {
@@ -38,15 +40,26 @@ class java_test extends abstract_test {
         }
         
         $scripts_directory = $this->get_test_scripts_directory();
-        $exec_command = $scripts_directory . 'test ' . rtrim(getcwd(), '\\/') . DIRECTORY_SEPARATOR . $working_directory . ' ' . $class_to_run . ' JAVA ' . $this->get_test_timeout();
+        //$exec_command = $scripts_directory . 'test ' . rtrim(getcwd(), '\\/') . DIRECTORY_SEPARATOR . $working_directory . ' ' . $class_to_run . ' JAVA ' . $this->get_test_timeout();
+        $exec_command = $scripts_directory . 'execute_test jUnit ' . $sandbox . ' ' . $class_to_run . ' ' . $this->get_test_timeout() . ' ' . rtrim(getcwd(), '\\/') . DIRECTORY_SEPARATOR . $working_directory;
         $output_data = array();
         $exit_code = 0;
         @exec($exec_command, $output_data, $exit_code);
-        $output = $this->read_output_file('test.out');
-        
-        if ($save_score) {
-            $this->save_test_result($exit_code, $score_student, $score_token);
+        $output = $this->read_output_file(self::TEST_OUTPUT_FILE);
+        $scoring = $this->read_output_file(self::TEST_SCORING_FILE);
+        $this->set_last_exit_code($exit_code);
+
+        if (!empty($scoring)) {
+            try {
+                $this->decode_scoring($scoring);
+            } catch (Exception $e) {
+                $output .= '<br /><br /><span style="color: red;">' . $e->getMessage() . '</span>';
+            }
         }
+        
+        /*if ($save_score) {
+            $this->save_test_result($exit_code, $score_student, $score_token);
+        }*/
         
         $this->delete_test_directory();
         

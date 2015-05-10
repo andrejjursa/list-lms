@@ -86,6 +86,7 @@ $lang['admin_solutions_valuation_form_label_points'] = 'Points';
 $lang['admin_solutions_valuation_form_label_points_hint'] = 'Sum of points for tasks in this task set is <strong>%s</strong>.';
 $lang['admin_solutions_valuation_form_label_comment'] = 'Comment';
 $lang['admin_solutions_valuation_form_label_not_considered'] = 'Do not consider this solution in valuation';
+$lang['admin_solutions_valuation_form_label_disable_evaluation_by_tests'] = 'Disable evaluation by tests';
 $lang['admin_solutions_valuation_form_button_submit'] = 'Save';
 $lang['admin_solutions_valuation_form_button_go_to_next_solution'] = 'Go to next solution';
 $lang['admin_solutions_valuation_form_field_points'] = 'points';
@@ -116,6 +117,7 @@ $lang['admin_solutions_valuation_version_metadata_download_lock_error_cant_save'
 $lang['admin_solutions_valuation_version_metadata_download_lock_enabled'] = 'Download lock enabled.';
 $lang['admin_solutions_valuation_version_metadata_download_lock_disabled'] = 'Download lock disabled.';
 $lang['admin_solutions_valuation_version_metadata_download_lock_switch_failed'] = 'Download lock switch failed.';
+$lang['admin_solutions_valuation_version_metadata_file_last_modification'] = 'File last modification';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Instructions for student';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Unknown author';

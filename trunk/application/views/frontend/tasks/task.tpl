@@ -10,6 +10,7 @@
                 <ul style="height: 37px;">
                     <li><a href="#tabs-task">{translate line='tasks_task_tabs_task'}</a></li>
                     <li><a href="#tabs-solution">{translate line='tasks_task_tabs_solutions'}</a></li>
+                    <li><a href="{internal_url url="fetests/get_student_test_queue_all/{$task_set->id}/{$this->usermanager->get_student_id()|intval}"}">{translate line='tasks_task_tabs_test_results'}</a></li>
                     {if $task_set->comments_enabled}<li class="comments_tab"><a href="{internal_url url="tasks/show_comments/{$task_set->id}"}">{translate line='tasks_task_tabs_comments'}</a></li>{/if}
                 </ul>
                 <div id="tabs-task">
@@ -147,7 +148,9 @@
                         <div id="tests_execution_area_id"></div>
                     </fieldset>
                     {/capture}
-                    {if $show_tests}<form action="" method="post" id="tests_form_id">{/if}
+                    {if $show_tests}<form action="" method="post" id="tests_form_id">
+                    <input type="hidden" name="test[task_set_id]" value="{$task_set->id|intval}" />
+                    <input type="hidden" name="test[student_id]" value="{$this->usermanager->get_student_id()|intval}" />{/if}
                     <table class="solutions_table">
                         <thead>
                             <tr>
@@ -179,7 +182,9 @@
                         </tbody>
                     </table>
                     {if $show_tests}{$tests_table}{/if}
-                    {if $show_tests}</form>{/if}
+                    {if $show_tests}</form>
+                    <div id="tests_queue_container_id">
+                    </div>{/if}
                     <script type="text/javascript">
                         var tests_object = {$tests_for_json|json_encode};
                     </script>

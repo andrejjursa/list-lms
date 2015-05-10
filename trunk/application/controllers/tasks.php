@@ -112,6 +112,64 @@ class Tasks extends LIST_Controller {
         $this->parser->parse('frontend/tasks/task.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
+    public function test_result($test_queue_id) {
+        $this->usermanager->student_login_protected_redirect();
+        $this->parser->add_css_file('frontend_tasks.css');
+        
+        $test_queue = new Test_queue();
+        $test_queue->where_related('student', 'id', $this->usermanager->get_student_id());
+        $test_queue->include_related('task_set');
+        $test_queue->include_related('task_set/course');
+        $test_queue->include_related('task_set/course/period');
+        $test_queue->get_by_id((int)$test_queue_id);
+        
+        $tasks = new Task();
+        if ($test_queue->exists()) {
+            $tasks->distinct();
+            $tasks->where_related('task_set', 'id', $test_queue->task_set_id);
+            $tasks->order_by('task_task_set_rel.sorting', 'asc');
+            $tasks->get_iterated();
+            
+            $tests = $test_queue->test->include_join_fields()->order_by('id', 'asc')->get_iterated();
+            
+            $tests_per_task = array();
+            
+            $overlays_tests = array();
+            
+            foreach ($tests as $test) {
+                $test_line = array(
+                    'id' => $test->id,
+                    'name' => $test->name,
+                    'task_id' => $test->task_id,
+                    'result' => $test->join_result,
+                    'result_text' => $test->join_result_text,
+                    'percent_points' => $test->join_percent_points,
+                    'percent_bonus' => $test->join_percent_bonus,
+                    'points' => $test->join_points,
+                    'bonus' => $test->join_bonus,
+                    'evaluation_table' => is_null($test->join_evaluation_table) ? array() : unserialize($test->join_evaluation_table),
+                );
+                $overlays_tests[] = $test->id;
+                
+                $tests_per_task[$test->task_id][] = $test_line;
+            }
+            
+            $this->lang->init_overlays('tests', $overlays_tests, array('name'));
+            
+            $this->parser->assign('tests_per_task', $tests_per_task);
+        }
+        
+        $this->load->helper('tests');
+        
+        $test_types = get_all_supported_test_types();
+        
+        $this->parser->parse('frontend/tasks/test_result.tpl', array(
+            'test_queue' => $test_queue,
+            'tasks' => $tasks,
+            'test_types' => $test_types,
+        ));
+    }
+
     public function reset_task_cache($task_set_id) {
         $this->usermanager->student_login_protected_redirect();
         $this->_action_success();
@@ -201,7 +259,8 @@ class Tasks extends LIST_Controller {
     }
     
     public function download_solution($task_set_id, $file) {
-        if (!Restriction::check_restriction_for_ip_address() || $this->usermanager->is_teacher_session_valid()) {
+        if (($this->usermanager->is_student_session_valid() && !Restriction::check_restriction_for_ip_address())
+           || $this->usermanager->is_teacher_session_valid()) {
             $task_set = new Task_set();
             $task_set->get_by_id(intval($task_set_id));
             if ($task_set->exists()) {

@@ -29,6 +29,7 @@ class Teacher extends DataMapper {
         ),
         'log',
         'admin_widget',
+        'test_queue',
     );
     public $has_one = array(
         'prefered_course' => array(

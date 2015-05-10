@@ -35,6 +35,21 @@ table.points_table tfoot tr td { background-color: #99ff99; padding: 4px 3px; te
 table.points_table tfoot tr td.td_task_set_type { border-bottom-left-radius: 3px; }
 table.points_table tfoot tr td.td_points { text-align: right; width: 1px; border-bottom-right-radius: 3px; }
 
+table.tests_queue_table { width: 100%; border-collapse: collapse; }
+table.tests_queue_table thead tr th { background-color: #99ff99; padding: 4px 3px; font-weight: bold; text-align: left; }
+table.tests_queue_table thead tr th:first-child { border-top-left-radius: 3px; }
+table.tests_queue_table thead tr th:last-child { border-top-right-radius: 3px; }
+table.tests_queue_table tbody tr td { padding: 4px 3px; }
+table.tests_queue_table tbody tr.test_status_0 { background-color: silver; color: brown; }
+table.tests_queue_table tbody tr.test_status_1 { background-color: silver; color: navy; }
+table.tests_queue_table tbody tr.test_status_2 { background-color: white; color: darkgreen; border: 1px dashed silver; }
+table.tests_queue_table tbody tr.test_status_3 { background-color: gray; color: red; border: 1px solid red; }
+table.tests_queue_table tbody tr.recently_finished { font-style: italic; }
+table.tests_queue_table tbody tr.recently_finished.test_status_2 { color: forestgreen; }
+table.tests_queue_table tbody tr.recently_finished.test_status_3 { color: firebrick; }
+table.tests_queue_table tbody tr:last-child td:first-child { border-bottom-left-radius: 3px; }
+table.tests_queue_table tbody tr:last-child td:last-child { border-bottom-right-radius: 3px; }
+
 div.instructions_text { padding: 4px; border-bottom: 1px solid gray; }
 div.task_text { padding: 4px; border-bottom: 1px solid gray; }
 div.task_points { padding: 4px; border-bottom: 1px solid gray; }
@@ -103,3 +118,22 @@ table.tests_evaluation_table tfoot td { padding: 5px; }
 table.tests_evaluation_table tbody td { padding: 5px; }
 table.tests_evaluation_table tbody tr { border-bottom: 1px dashed black; }
 table.tests_evaluation_table tbody tr:last-child { border-bottom: 0; }
+
+table.tests_result_sum_table { width: 100%; border-collapse: collapse; }
+table.tests_result_sum_table tbody tr th { max-width: 20%; text-align: right; font-weight: bold; padding: 3px; background-color: silver; vertical-align: top; width: 250px; }
+table.tests_result_sum_table tbody tr td { padding: 3px; text-align: left; }
+table.tests_result_sum_table tbody tr:first-child th { border-top-left-radius: 3px; }
+table.tests_result_sum_table tbody tr:last-child th { border-bottom-left-radius: 3px; }
+
+table.tests_result_table { width: 100%; border-collapse: collapse; }
+table.tests_result_table thead tr th { text-align: left; font-weight: bold; background-color: #99ff99; padding: 4px 3px; }
+table.tests_result_table thead tr th:first-child { border-top-left-radius: 3px; }
+table.tests_result_table thead tr th:last-child { border-top-right-radius: 3px; }
+table.tests_result_table tbody tr td { padding: 3px; }
+table.tests_result_table tbody tr td.number { width: 75px; }
+table.tests_result_table tbody tr { border-bottom: 1px dashed silver; }
+table.tests_result_table tbody td div.test_result_text.with_evaluation_table { width: 60%; float: left; }
+table.tests_result_table tbody td div.test_evaluation_table { margin-left: 60%; }
+table.tests_result_table tbody td div.test_evaluation_table table { width: 100%; border-collapse: collapse; }
+table.tests_result_table tbody td div.test_evaluation_table table tfoot { color: #008000; }
+table.tests_result_table tbody td div.clear_evaluation_table { clear: both; }

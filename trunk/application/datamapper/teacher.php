@@ -135,6 +135,13 @@ $cache = array (
       array (
       ),
     ),
+    'test_queue' => 
+    array (
+      'field' => 'test_queue',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -225,6 +232,17 @@ $cache = array (
       'other_field' => 'teacher',
       'join_self_as' => 'teacher',
       'join_other_as' => 'admin_widget',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'test_queue' => 
+    array (
+      'class' => 'test_queue',
+      'other_field' => 'teacher',
+      'join_self_as' => 'teacher',
+      'join_other_as' => 'test_queue',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

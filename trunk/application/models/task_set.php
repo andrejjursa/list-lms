@@ -35,6 +35,7 @@ class Task_set extends DataMapper {
             'join_other_as' => 'comment_subscriber_teacher',
             'join_table' => 'task_set_comment_subscription_rel',
         ),
+        'test_queue',
     );
     
     public $has_one = array(

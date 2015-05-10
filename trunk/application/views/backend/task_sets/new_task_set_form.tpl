@@ -123,6 +123,14 @@
             <p class="input"><em>{translate line='admin_task_sets_form_label_test_max_allowed_hint'}</em></p>
             {form_error field='task_set[test_max_allowed]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
         </div>
+        <div class="field task_set_test_priority">
+            <label for="task_set_test_priority_id">{translate line='admin_task_sets_form_label_test_priority'}:</label>
+            <div class="input">
+                <select name="task_set[test_priority]" size="1" id="task_set_test_priority_id">
+                    {list_html_options options=[1=>'lang:admin_task_sets_test_priority_level_1', 2=>'lang:admin_task_sets_test_priority_level_2',3=>'lang:admin_task_sets_test_priority_level_3'] selected=$smarty.post.task_set.task_priority|default:2}
+                </select>
+            </div>
+        </div>
         <div class="field">
             <label for="task_set_deadline_notification_emails_id">{translate line='admin_task_sets_form_label_deadline_notification_emails'}:</label>
             <p class="input"><input type="text" name="task_set[deadline_notification_emails]" id="task_set_deadline_notification_emails_id" value="{$smarty.post.task_set.deadline_notification_emails|escape:'html'}" /></p>

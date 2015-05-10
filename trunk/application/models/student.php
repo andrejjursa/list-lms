@@ -22,6 +22,7 @@ class Student extends DataMapper {
         ),
         'log',
         'project_selection',
+        'test_queue',
     );
     
     public $has_one = array(
