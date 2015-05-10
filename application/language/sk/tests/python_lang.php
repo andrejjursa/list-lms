@@ -28,3 +28,6 @@ $lang['python_tests_config_form_io_test_scoring_percents_hint'] = 'Ak je tento t
 $lang['python_test_config_validation_io_test_file_to_run'] = 'py súbor na spustenie';
 $lang['python_test_config_validation_io_test_scoring_percents'] = 'percentá za úspešný test';
 $lang['python_tests_run_error_io_test_file_not_set'] = 'Nie je nastavený súbor na spustenie.';
+$lang['python_tests_config_form_scoring_class_label'] = 'Stiahnuť hodnotiacu triedu';
+$lang['python_tests_config_form_scoring_class_zip'] = 'Kliknite sem pre stiahnutie hodnotiacej triedy.';
+$lang['python_tests_config_form_scoring_class_zip_hint'] = 'Táto trieda musí byť v rovnakom adresári ako trieda Vášho testu. Použite <strong>import LISTTestScoring</strong> na importovanie tejto triedy. Vytvorte privátnu inštanciu tejto triedy vo Vašej triede pyUnit. Uistite sa, že táto trieda je inštancovaná iba raz a to predtým, ako môže byť vykonaný kód študenta.';

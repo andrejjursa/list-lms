@@ -130,6 +130,31 @@
                 {form_error field='moss[moss_user_id]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <hr />
+            <div class="field">
+                <label for="config_test_aging_ticks_to_priority_increase_id" class="required">{translate line='admin_settings_form_label_test_aging_ticks_to_priority_increase'}:</label>
+                <p class="input"><input type="text" name="config[test_aging_ticks_to_priority_increase]" id="config_test_aging_ticks_to_priority_increase_id" value="{$smarty.post.config.test_aging_ticks_to_priority_increase|default:$config.test_aging_ticks_to_priority_increase|escape:'html'}" /></p>
+                {form_error field='config[test_aging_ticks_to_priority_increase]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
+                <label for="config_test_aging_max_tests_to_raise_priority_id" class="required">{translate line='admin_settings_form_label_test_aging_max_tests_to_raise_priority'}:</label>
+                <p class="input"><input type="text" name="config[test_aging_max_tests_to_raise_priority]" id="config_test_aging_max_tests_to_raise_priority_id" value="{$smarty.post.config.test_aging_max_tests_to_raise_priority|default:$config.test_aging_max_tests_to_raise_priority|escape:'html'}" /></p>
+                {form_error field='config[test_aging_max_tests_to_raise_priority]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
+                <label for="config_test_maximum_enqueued_pe_student_id" class="required">{translate line='admin_settings_form_label_test_maximum_enqueued_pe_student'}:</label>
+                <p class="input"><input type="text" name="config[test_maximum_enqueued_pe_student]" id="config_test_maximum_enqueued_pe_student_id" value="{$smarty.post.config.test_maximum_enqueued_pe_student|default:$config.test_maximum_enqueued_pe_student|escape:'html'}" /></p>
+                {form_error field='config[test_maximum_enqueued_pe_student]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
+                <label for="config_test_sandbox_id" class="required">{translate line='admin_settings_form_label_test_sandbox'}:</label>
+                <p class="input">{$test_sanbox_options=['implicit'=>'lang:admin_settings_form_test_sanbox_implicit', 'docker'=>'lang:admin_settings_form_test_sandbox_docker']}
+                    <select name="config[test_sandbox]" size="1" id="config_test_sandbox_id">
+                        {list_html_options options=$test_sanbox_options selected=$smarty.post.config.test_sandbox|default:$config.test_sandbox}
+                    </select>
+                </p>
+                {form_error field='config[test_sandbox]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <hr />
             <div class="buttons">
                 <input type="submit" class="button" name="save_settings" value="{translate line='admin_settings_form_save_button_text'}" />
             </div>

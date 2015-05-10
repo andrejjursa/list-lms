@@ -26,18 +26,21 @@ class Configurator {
     
     /**
      * Returns content of config file by config variable.
-     * @param string $config name of config file without extension.
-     * @param string $config_variable name of configuration array (variable name with dollar sign).
+     * @param string $__config name of config file without extension.
+     * @param string $__config_variable name of configuration array (variable name with dollar sign).
+     * @param boolean $__base_file determines if content will be read for base file or file in environment.
      * @return array<mixed> config array.
      */
-    public function get_config_array_custom($config, $config_variable = '$config') {
-        $file = APPPATH . 'config/' . ENVIRONMENT . '/' . $config . '.php';
-        if (!file_exists($file)) {
-            $file = APPPATH . 'config/' . $config . '.php';
+    public function get_config_array_custom($__config, $__config_variable = '$config', $__base_file = FALSE) {
+        $__file = APPPATH . 'config/' . (!$__base_file ? (ENVIRONMENT . '/') : '') . $__config . '.php';
+        if (!file_exists($__file)) {
+            $__file = APPPATH . 'config/' . $__config . '.php';
         }
-        if (file_exists($file)) {
-            include $file;
-            return eval('isset(' . $config_variable . ') ? ' . $config_variable . ' : array();');
+        if (file_exists($__file)) {
+            include $__file;
+            $__output = array();
+            eval('$__output = isset(' . $__config_variable . ') ? ' . $__config_variable . ' : array();');
+            return $__output;
         }
         return array();
     }
@@ -83,10 +86,11 @@ class Configurator {
      * Determines and return config file arangement.
      * @param string $config name of config file without extension.
      * @param string $config_variable name of configuration array (variable name with dollar sign).
+     * @param boolean $base_file determines if arangement will be read for base file or file in environment.
      * @return array<mixed> determined arangement of config file.
      */
-    public function get_config_file_arangement($config, $config_variable = '$config') {
-        $file = APPPATH . 'config/' . ENVIRONMENT . '/' . $config . '.php';
+    public function get_config_file_arangement($config, $config_variable = '$config', $base_file = FALSE) {
+        $file = APPPATH . 'config/' . (!$base_file ? (ENVIRONMENT . '/') : '') . $config . '.php';
         if (!file_exists($file)) {
             $file = APPPATH . 'config/' . $config . '.php';
         }
@@ -94,6 +98,33 @@ class Configurator {
         if (is_null($tokens)) { return FALSE; }
         $arangement = $this->get_config_file_arangement_from_tokens($tokens, $config_variable);
         return $arangement;
+    }
+
+    /**
+     * Merges base config file with actual environment config file.
+     * @param string $config name of config file without extension.
+     * @param string $config_variable name of configuration array (variable name with dollar sign).
+     * @return bool returns TRUE if files are merged successfully.
+     */
+    public function merge_config_files($config, $config_variable = '$config') {
+        $file_env = APPPATH . 'config/' . ENVIRONMENT . '/' . $config . '.php';
+        $file_orig = APPPATH . 'config/' . $config . '.php';
+        if (file_exists($file_env) && file_exists($file_orig)) {
+            $orig_data = $this->get_config_array_custom($config, $config_variable, TRUE);
+            $env_data = $this->get_config_array_custom($config, $config_variable, FALSE);
+            $data_to_save = $this->merge_array($orig_data, $env_data);
+            $orig_arrangement = $this->get_config_file_arangement($config, $config_variable, TRUE);
+            try {
+                $content = $this->make_config_file_content($data_to_save, $orig_arrangement, $config_variable);
+                $f = fopen($file_env, 'w');
+                fputs($f, $content);
+                fclose($f);
+                return TRUE;
+            } catch (Exception $e) {
+                return FALSE;
+            }
+        }
+        return TRUE;
     }
 
 

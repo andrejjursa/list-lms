@@ -469,6 +469,25 @@ $config['email_address']['system']['email'] = 'noreply@list.sk';
 */
 $config['student_mail_change'] = TRUE;
 
+/**
+|--------------------------------------------------------------------------
+| Path for test workers where they can store locking files.
+|--------------------------------------------------------------------------
+*/
+
+$config['test_aging_ticks_to_priority_increase'] = 10;
+$config['test_aging_max_tests_to_raise_priority'] = 5;
+$config['test_maximum_enqueued_pe_student'] = 5;
+
+/**
+|--------------------------------------------------------------------------
+| Type of sandbox for tests.
+| implicit - use implicit sandbox (run test with different user)
+| docker - use docker sandbox (must be installed and have image created)
+|--------------------------------------------------------------------------
+ */
+$config['test_sandbox'] = 'implicit';
+
 /* End of file config.php */
 
 /* Location: ./application/config/config.php */

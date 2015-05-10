@@ -11,3 +11,6 @@ $lang['java_tests_config_form_unit_test_output_maximum_lines_hint'] = 'Nastav na
 $lang['java_tests_config_validation_unit_test_class_to_run'] = 'názov súboru s testom';
 $lang['java_tests_config_validation_unit_test_output_maximum_lines'] = 'maximum riadkov vo výstupe';
 $lang['java_tests_run_error_unit_test_class_not_set'] = 'Názov súboru s testom nebol zadaný.';
+$lang['java_tests_config_form_scoring_class_label'] = 'Stiahnuť hodnotiaci balíček';
+$lang['java_tests_config_form_scoring_class_zip'] = 'Kliknite sem na stiahnutie hodnotiaceho balíčka.';
+$lang['java_tests_config_form_scoring_class_zip_hint'] = 'Rozbalte tento balíček do adresára, v ktorom máte svoju triedu testu jUnit. Použite <strong>import LISTTestScoring.LISTTestScoring;</strong> na importovanie tejto triedy balíčka do Vášho kódu. Potom vytvorte <strong>private static LISTTestScoring</strong> premennú vo Vašej triede jUnit. Na jej inštancovanie vytvorte <strong>public static void</strong> metódu bez argumentov, anotujte ju pomocou <strong>@BeforeClass</strong> a tu inštancujte triedu balíčka. Neinštancujte túto triedu inde!';

@@ -105,6 +105,11 @@ $hook['post_controller'] = array(
                     },
                 ),
             ),
+            'cli_test' => array(
+                'index' => array(
+                    'frontend/tasks/index.tpl' => $admin_student_cache_id,
+                ),
+            ),
         ),
         'admin/' => array(
             'periods' => array(

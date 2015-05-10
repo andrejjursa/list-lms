@@ -34,6 +34,10 @@
                         <label for="solution_not_considered_id">{translate line='admin_solutions_valuation_form_label_not_considered'}:</label>
                         <p class="input"><input type="checkbox" value="1" name="solution[not_considered]" id="solution_not_considered_id"{if $smarty.post.solution.not_considered|default:$solution->not_considered} checked="checked"{/if} /></p>
                     </div>
+                    <div class="field">
+                        <label for="solution_disable_evaluation_by_tests_id">{translate line='admin_solutions_valuation_form_label_disable_evaluation_by_tests'}:</label>
+                        <p class="input"><input type="checkbox" value="1" name="solution[disable_evaluation_by_tests]" id="solution_disable_evaluation_by_tests_id"{if $smarty.post.solution.disable_evaluation_by_tests|default:$solution->disable_evaluation_by_tests} checked="checked"{/if} /></p>
+                    </div>
                     <div class="buttons">
                         <input type="submit" name="submit_button" value="{translate line='admin_solutions_valuation_form_button_submit'}" class="button" />
                         <a href="javascript:void(0);" class="button special go_to_next_solution">{translate line='admin_solutions_valuation_form_button_go_to_next_solution'}</a>

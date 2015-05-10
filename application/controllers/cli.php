@@ -31,7 +31,262 @@ class Cli extends CI_Controller {
         echo '  apply_lockdown' . "\n";
         echo '  fix_broken_link' . "\n";
         echo '  send_deadline_notifications' . "\n";
-        echo '  garbage_collector';
+        echo '  garbage_collector' . "\n";
+        echo '  merge_configuration' . "\n";
+        echo '  upgrade_java_tests';
+    }
+
+    public function upgrade_java_tests() {
+        $this->load->database();
+        $tests = new Test();
+        $tests->include_related('task');
+        $tests->where('type', 'java');
+        $tests->where('subtype', 'unit_test');
+        $tests->order_by_related('task', 'name', 'asc');
+        $tests->order_by('name', 'asc');
+        $tests->get_iterated();
+
+        $unsuccessful_files = array();
+
+        if ($tests->exists()) {
+            echo 'Found ' . $tests->result_count() . ' java unit tests to check, starting process now.' . PHP_EOL;
+            $this->load->library('cli_progress_bar');
+            $this->cli_progress_bar->init($tests->result_count());
+            $this->cli_progress_bar->increment(0);
+            $this->load->helper('application');
+            foreach ($tests as $test) {
+                $this->cli_progress_bar->print_text('Task "' . $test->task_name . '" test "' . $test->name . '" ...', true);
+                $path_to_dir = APPPATH . '../private/uploads/unit_tests/test_' . $test->id;
+                $path_to_file = $path_to_dir . '/unit_test/unit_test.zip';
+                $backup_file = $path_to_dir . '/unit_test/unit_test.backup-' . date('U') . '-' . date('Y-m-d-H-i-s') . '.zip';
+                if (file_exists($path_to_file)) {
+                    copy($path_to_file, $backup_file);
+                    if (file_exists($backup_file)) {
+                        $this->cli_progress_bar->tick();
+                        do {
+                            $temp_directory = $path_to_dir . '/temp_' . date('U') . '-' . rand(1000, 9999);
+                        } while (file_exists($temp_directory) && is_dir($temp_directory));
+                        mkdir($temp_directory);
+                        if (file_exists($temp_directory) && is_dir($temp_directory)) {
+                            $this->cli_progress_bar->tick();
+                            $zip = new ZipArchive();
+                            if ($zip->open($path_to_file)) {
+                                $zip->extractTo($temp_directory);
+                                $zip->close();
+                                $configuration = @unserialize($test->configuration);
+                                if (is_array($configuration) && array_key_exists('class_to_run', $configuration)) {
+                                    $this->cli_progress_bar->tick();
+                                    if ($this->upgrade_single_java_unit_test($temp_directory, 'Test' . $configuration['class_to_run'] . '.java')) {
+                                        $this->cli_progress_bar->tick();
+                                        $zip = new ZipArchive();
+                                        if ($zip->open($path_to_file)) {
+                                            if ($zip->addFile($temp_directory . '/' . 'Test' . $configuration['class_to_run'] . '.java', 'Test' . $configuration['class_to_run'] . '.java')) {
+                                                $this->cli_progress_bar->print_text('  ... Done');
+                                            } else {
+                                                $this->cli_progress_bar->print_text('  Can\'t update zip archive.');
+                                                $unsuccessful_files[] = $path_to_file;
+                                            }
+                                            $zip->close();
+                                        } else {
+                                            $this->cli_progress_bar->print_text('  Can\'t open zip archive.');
+                                            $unsuccessful_files[] = $path_to_file;
+                                        }
+                                    } else {
+                                        $unsuccessful_files[] = $path_to_file;
+                                    }
+                                } else {
+                                    $this->cli_progress_bar->print_text('  Can\'t read test configuration.');
+                                    $unsuccessful_files[] = $path_to_file;
+                                }
+                            } else {
+                                $this->cli_progress_bar->print_text('  Can\'t open zip archive.');
+                                $unsuccessful_files[] = $path_to_file;
+                            }
+                            unlink_recursive($temp_directory, true);
+                        } else {
+                            $this->cli_progress_bar->print_text('  Can\'t create temporary directory.');
+                            $unsuccessful_files[] = $path_to_file;
+                        }
+                    } else {
+                        $this->cli_progress_bar->print_text('  Can\'t back up zip file.');
+                        $unsuccessful_files[] = $path_to_file;
+                    }
+                } else {
+                    $this->cli_progress_bar->print_text('  Can\'t find zip file.');
+                }
+                $this->cli_progress_bar->increment();
+            }
+        } else {
+            echo 'No java unit tests found.';
+        }
+
+        if (count($unsuccessful_files)) {
+            echo PHP_EOL . 'Some files can\'t be processed:' . PHP_EOL;
+            foreach ($unsuccessful_files as $file) {
+                echo '  ' . $file . PHP_EOL;
+            }
+        }
+    }
+
+    private function upgrade_single_java_unit_test($temp_directory, $filename) {
+        $file = $temp_directory . '/' . $filename;
+        if (file_exists($file) && is_file($file)) {
+            $lines = explode("\n", file_get_contents($file));
+            $importLines = $this->find_text_in_lines('import ', $lines);
+            $classLines = $this->find_text_in_lines('class', $lines);
+            $beforeClassLines = $this->find_text_in_lines('@BeforeClass', $lines);
+            $LISTTestsLines = $this->find_text_in_lines('LISTTests', $lines);
+
+            if (count(($LISTTestsLines['lines']))) {
+                $scoring_var_name = 'scoring';
+                $test_class_name = $this->get_test_class_name($classLines['texts'], $test_class_line);
+                foreach($LISTTestsLines['lines'] as $line_number) {
+                    $line = $lines[$line_number];
+                    $line = preg_replace('/LISTTests[ ]*\.[ ]*addTaskEvaluation[ ]*\(/', $test_class_name.'.'.$scoring_var_name.'.updateScore("lang:common_list_test_scoring_name",', $line);
+                    $line = preg_replace('/LISTTests[ ]*\.[ ]*setTaskEvaluation[ ]*\(/', $test_class_name.'.'.$scoring_var_name.'.setScore("lang:common_list_test_scoring_name",', $line);
+                    $lines[$line_number] = $line;
+                }
+
+                $add_BeforeClass_import = TRUE;
+                if (count($importLines)) {
+                    foreach ($importLines['lines'] as $line_number) {
+                        $line = $lines[$line_number];
+                        if (preg_match('/import[ ]+org\.junit\.\*/', $line) || preg_match('/import[ ]+org\.junit\.BeforeClass/', $line)) {
+                            $add_BeforeClass_import = FALSE;
+                            break;
+                        }
+                    }
+                }
+
+                $before_class_body  = "\t\t" . $scoring_var_name . ' = new LISTTestScoring();' . "\n";
+                $before_class_body .= "\t\t" . $scoring_var_name . '.setScore("lang:common_list_test_scoring_name", 0, 100);' . "\n";
+
+                $add_custom_BeforeClass_procedure = TRUE;
+                if (count($beforeClassLines['lines']) == 1) {
+                    $add_custom_BeforeClass_procedure = FALSE;
+                }
+
+                if ($test_class_line) {
+                    $line = $lines[$test_class_line + 1];
+
+                    $line .= "\n\t" . 'private static LISTTestScoring ' . $scoring_var_name . ' = null;' . "\n";
+                    if ($add_custom_BeforeClass_procedure) {
+                        $line .= "\n\t" . '@BeforeClass' . "\n\t" . 'public static void initScoring() {' . "\n";
+                        $line .= $before_class_body;
+                        $line .= "\t" . '}' . "\n";
+                    }
+                    $lines[$test_class_line + 1] = $line;
+
+                    $imports = 'import LISTTestScoring.LISTTestScoring;' . "\n";
+                    if ($add_BeforeClass_import) {
+                        $imports .= 'import org.junit.BeforeClass;' . "\n";
+                    }
+
+                    $lines[$test_class_line] = $imports . "\n" . $lines[$test_class_line];
+                }
+
+                if (!$add_custom_BeforeClass_procedure) {
+                    $ln = $beforeClassLines['lines'][0];
+                    $line = $lines[$ln];
+                    while (!preg_match('/public[ ]+static[ ]+void[ ]+[a-zA-Z0-9\_]+[ ]*\(\)/', $line)) {
+                        $ln++;
+                        if (count($lines) > $ln) {
+                            $line = $lines[$ln];
+                        } else {
+                            $this->cli_progress_bar->print_text('  Can\'t find body of existing @BeforeClass method.');
+                            return FALSE;
+                        }
+                    }
+                    $line_after = $lines[$ln + 1];
+                    if (trim($line_after) == '{') {
+                        $line_after .= "\n" . $before_class_body;
+                    } elseif (substr(trim($line_after), 0, 1) == '{') {
+                        $line_after = '{' . "\n" . $before_class_body . mb_substr(trim($line_after), 1);
+                    } else {
+                        $line_after = $before_class_body . $line_after;
+                    }
+                    $lines[$ln + 1] = $line_after;
+                }
+
+                $new_file = '';
+                foreach ($lines as $line) {
+                    $new_file .= $line . "\n";
+                }
+                file_put_contents($file, $new_file);
+            } else {
+                $this->cli_progress_bar->print_text('  ... This test does not require upgrade.');
+            }
+        } else {
+            $this->cli_progress_bar->print_text('  Can\'t find java file "' . $filename . '".');
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    private function find_text_in_lines($text, &$lines) {
+        $output = array('lines' => array(), 'texts' => array());
+        for($i = 0; $i < count($lines); $i++) {
+            if (strpos($lines[$i], $text) !== FALSE) {
+                $output['lines'][] = $i;
+                $output['texts'][$i] = $lines[$i];
+            }
+        }
+        return $output;
+    }
+
+    private function get_test_class_name(&$matches, &$line_number) {
+        $line_number = NULL;
+        if (count($matches)) {
+            foreach ($matches as $key => $line) {
+                $pos_public = strpos($line, 'public');
+                $pos_class = strpos($line, 'class');
+                if ($pos_public !== FALSE && $pos_class !== FALSE && $pos_public < $pos_class) {
+                    $line_remaining = trim(substr($line, $pos_class + 5));
+                    $words = explode(' ', $line_remaining);
+                    if (count($words)) {
+                        foreach ($words as $word) {
+                            if (substr($word, 0, 4) == 'Test') {
+                                $line_number = (int)$key;
+                                return $word;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return NULL;
+    }
+
+    /**
+     * Merges configuration of environment and base config files.
+     */
+    public function merge_configuration() {
+        $to_merge = array('config' => '$config', 'moss' => '$config');
+        $this->load->library('configurator');
+        $this->load->library('cli_progress_bar');
+        $this->cli_progress_bar->init(count($to_merge));
+        foreach ($to_merge as $file => $variable) {
+            $to_print = 'Merging ' . $file . '.php ...';
+            $to_print .= ($this->configurator->merge_config_files($file, $variable) ? ' OK' : ' FAILED');
+            $this->cli_progress_bar->print_text($to_print);
+            $this->cli_progress_bar->increment();
+        }
+        $this->cli_progress_bar->finish();
+    }
+
+    public function test_bar() {
+        $this->load->library('cli_progress_bar');
+        $this->cli_progress_bar->init(150);
+        $this->cli_progress_bar->tick();
+        for ($i = 0; $i <= 150; $i++) {
+            for ($e = 0; $e < 4; $e++) {
+                $this->cli_progress_bar->tick();
+                sleep(1);
+            }
+            $this->cli_progress_bar->increment();
+            $this->cli_progress_bar->print_text("Finished iteration $i ...");
+        }
+        $this->cli_progress_bar->finish();
     }
 
     /**
@@ -400,13 +655,17 @@ class Cli extends CI_Controller {
         $this->load->helper('application');
         
         $current_time = time();
+
+        $this->load->library('cli_progress_bar');
+        $this->cli_progress_bar->init(5);
         
         // ----------- COMPARATOR WORKING DIRECTORIES --------------------------
         
         $path_to_comparator_files = 'public/comparator/';
         $time_for_comparator_folders_to_remain_untouched = 21600;
         
-        echo ' Clearing old Java comparator working directories:' . "\n";
+        //echo ' Clearing old Java comparator working directories:' . "\n";
+        $this->cli_progress_bar->print_text(' Clearing old Java comparator working directories:');
         
         $dirs = scandir($path_to_comparator_files);
         $deleted = 0;
@@ -416,29 +675,36 @@ class Cli extends CI_Controller {
             foreach($dirs as $dir) {
                 if (is_dir($path_to_comparator_files . $dir) && $dir != '.' && $dir != '..') {
                     $total_dirs++;
-                    echo '  ' . $dir;
+                    $to_print = '  ' . $dir;
                     $dir_mod_time = filemtime($path_to_comparator_files . $dir);
                     if ($current_time - $dir_mod_time >= $time_for_comparator_folders_to_remain_untouched) {
                         $deleted++;
                         unlink_recursive($path_to_comparator_files . $dir, TRUE);
-                        echo ':  OLD - deleting' . "\n";
+                        $to_print .= ':  OLD - deleting' . "\n";
                     } else {
-                        echo ':  SAFE' . "\n";
+                        $to_print .= ':  SAFE' . "\n";
                     }
+                    $this->cli_progress_bar->print_text($to_print, TRUE);
+                } else {
+                    $this->cli_progress_bar->tick();
                 }
             }
         } 
         if ($total_dirs == 0) {
-            echo '  No directories ...' . "\n";
+            //echo '  No directories ...' . "\n";
+            $this->cli_progress_bar->print_text('  No directories ...');
         }
-        echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.');
+        $this->cli_progress_bar->increment();
         
         // ----------- MOSS WORKING DIRECTORIES --------------------------------
         
         $path_to_moss_files = 'private/moss/';
         $time_for_moss_folders_to_remain_untouched = 21600;
         
-        echo ' Clearing old MOSS comparator working directories:' . "\n";
+        //echo ' Clearing old MOSS comparator working directories:' . "\n";
+        $this->cli_progress_bar->print_text(' Clearing old MOSS comparator working directories:');
         
         $dirs = scandir($path_to_moss_files);
         $deleted = 0;
@@ -448,29 +714,36 @@ class Cli extends CI_Controller {
             foreach($dirs as $dir) {
                 if (is_dir($path_to_moss_files . $dir) && $dir != '.' && $dir != '..') {
                     $total_dirs++;
-                    echo '  ' . $dir;
+                    $to_print = '  ' . $dir;
                     $dir_mod_time = filemtime($path_to_moss_files . $dir);
                     if ($current_time - $dir_mod_time >= $time_for_moss_folders_to_remain_untouched) {
                         $deleted++;
                         unlink_recursive($path_to_moss_files . $dir, TRUE);
-                        echo ':  OLD - deleting' . "\n";
+                        $to_print .= ':  OLD - deleting' . "\n";
                     } else {
-                        echo ':  SAFE' . "\n";
+                        $to_print .= ':  SAFE' . "\n";
                     }
+                    $this->cli_progress_bar->print_text($to_print, TRUE);
+                } else {
+                    $this->cli_progress_bar->tick();
                 }
             }
         } 
         if ($total_dirs == 0) {
-            echo '  No directories ...' . "\n";
+            //echo '  No directories ...' . "\n";
+            $this->cli_progress_bar->print_text('  No directories ...');
         }
-        echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.');
+        $this->cli_progress_bar->increment();
         
         // ----------- EXTRACTED SOLUTIONS DIRECTORIES -------------------------
         
         $path_to_extracted_solutions = 'private/extracted_solutions/';
         $time_for_extracted_solutions_to_remain_untouched = 1800;
         
-        echo ' Clearing old extracted solutions working directories:' . "\n";
+        //echo ' Clearing old extracted solutions working directories:' . "\n";
+        $this->cli_progress_bar->print_text(' Clearing old extracted solutions working directories:');
         
         $dirs = scandir($path_to_extracted_solutions);
         $deleted = 0;
@@ -480,29 +753,36 @@ class Cli extends CI_Controller {
             foreach($dirs as $dir) {
                 if (is_dir($path_to_extracted_solutions . $dir) && $dir != '.' && $dir != '..') {
                     $total_dirs++;
-                    echo '  ' . $dir;
+                    $to_print = '  ' . $dir;
                     $dir_mod_time = filemtime($path_to_extracted_solutions . $dir);
                     if ($current_time - $dir_mod_time >= $time_for_extracted_solutions_to_remain_untouched) {
                         $deleted++;
                         unlink_recursive($path_to_extracted_solutions . $dir, TRUE);
-                        echo ':  OLD - deleting' . "\n";
+                        $to_print .= ':  OLD - deleting' . "\n";
                     } else {
-                        echo ':  SAFE' . "\n";
+                        $to_print .= ':  SAFE' . "\n";
                     }
+                    $this->cli_progress_bar->print_text($to_print, TRUE);
+                } else {
+                    $this->cli_progress_bar->tick();
                 }
             }
         } 
         if ($total_dirs == 0) {
-            echo '  No directories ...' . "\n";
+            //echo '  No directories ...' . "\n";
+            $this->cli_progress_bar->print_text('  No directories ...');
         }
-        echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.');
+        $this->cli_progress_bar->increment();
         
         // ----------- TEST TO EXECUTE DIRECTORIES -----------------------------
         
         $path_to_test_to_execute = 'private/test_to_execute/';
         $time_for_test_to_execute_to_remain_untouched = 3600;
         
-        echo ' Clearing old test to execute working directories:' . "\n";
+        //echo ' Clearing old test to execute working directories:' . "\n";
+        $this->cli_progress_bar->print_text(' Clearing old test to execute working directories:');
         
         $dirs = scandir($path_to_test_to_execute);
         $deleted = 0;
@@ -512,38 +792,52 @@ class Cli extends CI_Controller {
             foreach($dirs as $dir) {
                 if (is_dir($path_to_test_to_execute . $dir) && $dir != '.' && $dir != '..') {
                     $total_dirs++;
-                    echo '  ' . $dir;
+                    $to_print = '  ' . $dir;
                     $dir_mod_time = filemtime($path_to_test_to_execute . $dir);
                     if ($current_time - $dir_mod_time >= $time_for_test_to_execute_to_remain_untouched) {
                         $deleted++;
                         unlink_recursive($path_to_test_to_execute . $dir, TRUE);
-                        echo ':  OLD - deleting' . "\n";
+                        $to_print .= ':  OLD - deleting' . "\n";
                     } else {
-                        echo ':  SAFE' . "\n";
+                        $to_print .= ':  SAFE' . "\n";
                     }
+                    $this->cli_progress_bar->print_text($to_print, TRUE);
+                } else {
+                    $this->cli_progress_bar->tick();
                 }
             }
         } 
         if ($total_dirs == 0) {
-            echo '  No directories ...' . "\n";
+            //echo '  No directories ...' . "\n";
+            $this->cli_progress_bar->print_text('  No directories ...');
         }
-        echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.');
+        $this->cli_progress_bar->increment();
         
         // ----------- TEST TO EXECUTE DIRECTORIES -----------------------------
         
         $total_number = 0;
-        echo ' Clearing unfinished uploads of task files:' . "\n";
+        //echo ' Clearing unfinished uploads of task files:' . "\n";
+        $this->cli_progress_bar->print_text(' Clearing unfinished uploads of task files:');
         $deleted = $this->find_and_delete_old_upload_part('private/uploads/task_files/', '', 172800, $current_time, $total_number);
         if ($total_number == 0) {
-            echo '  No files ...' . "\n";
+            //echo '  No files ...' . "\n";
+            $this->cli_progress_bar->print_text('  No files ...');
         }
-        echo ' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.' . "\n";
+        //echo ' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.' . "\n";
+        $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.');
+        $this->cli_progress_bar->increment();
+        $this->cli_progress_bar->finish();
         
         echo 'Done ...' . "\n";
     }
     
     private function find_and_delete_old_upload_part($path_base, $path_add, $max_time, $current_time, &$count_of_parts) {
         $deleted = 0;
+
+        $this->load->library('cli_progress_bar');
+
         
         $files = scandir($path_base . $path_add);
         if (is_array($files) && count($files) > 0) {
@@ -556,15 +850,16 @@ class Cli extends CI_Controller {
                         $ext = substr($file, $ext_pos + 1);
                         if ($ext == 'upload_part') {
                             $count_of_parts++;
-                            echo '  ' . $path_add . $file;
+                            $to_print = '  ' . $path_add . $file;
                             $filemtime = filemtime($path_base . $path_add . $file);
                             if ($current_time - $filemtime >= $max_time) {
-                                echo ':  OLD - deleting' . "\n";
+                                $to_print .= ':  OLD - deleting' . "\n";
                                 $deleted++;
                                 @unlink($path_base . $path_add . $file);
                             } else {
-                                echo ':  SAFE' . "\n";
+                                $to_print .= ':  SAFE' . "\n";
                             }
+                            $this->cli_progress_bar->print_text($to_print, TRUE);
                         }
                     }
                 }

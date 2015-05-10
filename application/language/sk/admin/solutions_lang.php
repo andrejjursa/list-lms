@@ -86,6 +86,7 @@ $lang['admin_solutions_valuation_form_label_points'] = 'Body';
 $lang['admin_solutions_valuation_form_label_points_hint'] = 'Suma bodov za úlohy v tejto zostave úloh je <strong>%s</strong>.';
 $lang['admin_solutions_valuation_form_label_comment'] = 'Komentár';
 $lang['admin_solutions_valuation_form_label_not_considered'] = 'Nebrať do úvahy toto riešenie pri hodnotení';
+$lang['admin_solutions_valuation_form_label_disable_evaluation_by_tests'] = 'Zakázať hodnotenie testami';
 $lang['admin_solutions_valuation_form_button_submit'] = 'Uložiť';
 $lang['admin_solutions_valuation_form_button_go_to_next_solution'] = 'Prejsť na ďalšie riešenie';
 $lang['admin_solutions_valuation_form_field_points'] = 'body';
@@ -116,6 +117,7 @@ $lang['admin_solutions_valuation_version_metadata_download_lock_error_cant_save'
 $lang['admin_solutions_valuation_version_metadata_download_lock_enabled'] = 'Zakázanie sťahovania povolené.';
 $lang['admin_solutions_valuation_version_metadata_download_lock_disabled'] = 'Zakázanie sťahovania zrušené.';
 $lang['admin_solutions_valuation_version_metadata_download_lock_switch_failed'] = 'Prepnutie zákazu sťahovania zlyhalo.';
+$lang['admin_solutions_valuation_version_metadata_file_last_modification'] = 'Posledná modifikácia súboru';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámy autor';

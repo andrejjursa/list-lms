@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "Cleaning up unnecessary intermediate images from docker, stand by."
+docker images -a | grep --text "<none>" | awk '{print $3}' | xargs docker rmi 2> /dev/null
+echo "Process finished."

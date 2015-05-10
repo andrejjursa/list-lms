@@ -29,6 +29,7 @@ $cache = array (
     23 => 'deadline_notified',
     24 => 'deadline_notification_emails_handler',
     25 => 'project_selection_deadline',
+    26 => 'test_priority',
   ),
   'validation' => 
   array (
@@ -215,6 +216,13 @@ $cache = array (
       array (
       ),
     ),
+    'test_priority' => 
+    array (
+      'field' => 'test_priority',
+      'rules' => 
+      array (
+      ),
+    ),
     'task_set_type' => 
     array (
       'field' => 'task_set_type',
@@ -288,6 +296,13 @@ $cache = array (
     'comment_subscriber_teacher' => 
     array (
       'field' => 'comment_subscriber_teacher',
+      'rules' => 
+      array (
+      ),
+    ),
+    'test_queue' => 
+    array (
+      'field' => 'test_queue',
       'rules' => 
       array (
       ),
@@ -414,6 +429,17 @@ $cache = array (
       'other_field' => 'task_set',
       'join_self_as' => 'task_set',
       'join_other_as' => 'project_selection',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'test_queue' => 
+    array (
+      'class' => 'test_queue',
+      'other_field' => 'task_set',
+      'join_self_as' => 'task_set',
+      'join_other_as' => 'test_queue',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
