@@ -12,3 +12,8 @@ hint_lang='python_tests_config_form_unit_test_output_maximum_lines_hint'
 field_name='max_output_lines'
 default_text='0'
 inline}
+<div class="field">
+    <label>{translate line="python_tests_config_form_scoring_class_label"}:</label>
+    <p class="input"><a href="{$base_url}/test_sources/python/LISTTestScoring.zip">{translate line="python_tests_config_form_scoring_class_zip"}</a></p>
+    <p class="input"><em>{translate line="python_tests_config_form_scoring_class_zip_hint"}</em></p>
+</div>

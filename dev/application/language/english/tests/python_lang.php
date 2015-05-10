@@ -28,3 +28,6 @@ $lang['python_tests_config_form_io_test_scoring_percents_hint'] = 'If this test 
 $lang['python_test_config_validation_io_test_file_to_run'] = 'py file to run';
 $lang['python_test_config_validation_io_test_scoring_percents'] = 'percents for successful test pass';
 $lang['python_tests_run_error_io_test_file_not_set'] = 'File to run is not set.';
+$lang['python_tests_config_form_scoring_class_label'] = 'Download evaluation class';
+$lang['python_tests_config_form_scoring_class_zip'] = 'Click here to download evaluation class.';
+$lang['python_tests_config_form_scoring_class_zip_hint'] = 'This class must be in the same directory as your test code. Use <strong>import LISTTestScoring</strong> to import this class. Make private instance of this class in your pyUnit class. Make sure this class is instantiated only once and before student code can be executed.';

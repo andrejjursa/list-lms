@@ -20,7 +20,7 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
-VERSION 1.2.0 | 2015-05-03
+VERSION 1.2.0 | 2015-05-09
 
 CHANGE Spúšťanie testovania študentských riešení prerobené na prioritnú frontu.
 CHANGE [lang:english] Execution of tests for student solutions reworked to priority queue.
@@ -39,6 +39,12 @@ NEW [lang:english] Now is possible to disable evaluation by tests for student so
 
 NEW Do CLI pribudla možnosť spojiť konfiguračné súbory (základné súbor s konfiguračným súborom z prostredia), príkazom merge_configuration.
 NEW [lang:english] New command of CLI, merge_configuration, which will merge konfiguration files (base file with environment variant).
+
+NEW Do CLI pribudla možnosť automaticky previesť staré hodnotené testy pre java jUnit do nového hodnotiaceho frameworku.
+NEW [lang:english] New command of CLI controller allows you to transfer old java jUnit tests with evaluation to new evaluation framework.
+
+NEW Do konfigurácií testov pre javu (jUnit) a python (pyUnit) pribudli linky na stiahnutie potrebných súborov pre implementovanie hodnotenia cez nový framework.
+NEW [lang:english] To the configurations of tests for java (jUnit) and python (pyUnit) were added links for download of files needed to implement evaluation which will use new evaluation framework.
 
 END VERSION
 
