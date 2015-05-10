@@ -25,6 +25,8 @@ $cache = array (
     19 => 'age',
     20 => 'result_html',
     21 => 'result_message',
+    22 => 'single_test_exec_start',
+    23 => 'restarts',
   ),
   'validation' => 
   array (
@@ -179,6 +181,20 @@ $cache = array (
     'result_message' => 
     array (
       'field' => 'result_message',
+      'rules' => 
+      array (
+      ),
+    ),
+    'single_test_exec_start' => 
+    array (
+      'field' => 'single_test_exec_start',
+      'rules' => 
+      array (
+      ),
+    ),
+    'restarts' => 
+    array (
+      'field' => 'restarts',
       'rules' => 
       array (
       ),

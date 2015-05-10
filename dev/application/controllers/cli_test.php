@@ -75,6 +75,8 @@ class Cli_test extends CI_Controller {
                     $bonus_points = array();
                     $total_tests_count = $tests->result_count();
                     foreach ($tests as $test) {
+                        $test_queue->single_test_exec_start = date('Y-m-d H:i:s');
+                        $test_queue->save();
                         $files = $task_set->get_student_files($student->id, (int)$version);
                         if (isset($files[(int)$version]['filepath']) && file_exists($files[(int)$version]['filepath'])) {
                             $test_object = $this->load->test($test->type);
