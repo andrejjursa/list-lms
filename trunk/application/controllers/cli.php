@@ -177,13 +177,15 @@ class Cli extends CI_Controller {
                     }
                     $lines[$test_class_line + 1] = $line;
 
-                    $imports = 'import LISTTestScoring.LISTTestScoring;' . "\n";
-                    if ($add_BeforeClass_import) {
-                        $imports .= 'import org.junit.BeforeClass;' . "\n";
-                    }
-
-                    $lines[$test_class_line] = $imports . "\n" . $lines[$test_class_line];
                 }
+
+		$imports = 'import LISTTestScoring.LISTTestScoring;' . "\n";
+                if ($add_BeforeClass_import) {
+                    $imports .= 'import org.junit.BeforeClass;' . "\n";
+                }
+
+                $lines[0] = $imports . "\n" . $lines[0];
+
 
                 if (!$add_custom_BeforeClass_procedure) {
                     $ln = $beforeClassLines['lines'][0];
