@@ -21,7 +21,8 @@ cd $JAVADIR
 # STAGE 1 Compilation:
 echo "<pre>" > $OUTPUT_FILE
 echo "Stage 1 / 2: source code compilation ..." >> $OUTPUT_FILE
-cp -R /list_shared_files/java/*.java $JAVADIR/.
+mkdir LISTTestScoring 2> /dev/null
+cp /list_shared_files/java/LISTTestScoring/LISTTestScoring.java $JAVADIR/LISTTestScoring/LISTTestScoring.java 2> /dev/null
 /usr/bin/javac $JAVAC_ARGS $ENCODING 2> $COMPILATION_LOG
 exitcode=$?
 cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE
