@@ -49,8 +49,9 @@ rm -f $TEST_PATH/*.java 2> /dev/null
 cp -fr $TEST_PATH/* $TEST_PATH/__list_out 2> /dev/null
 rm -f $TEST_PATH/__list_out/__list_output.txt 2> /dev/null
 rm -f $TEST_PATH/__list_out/__list_compilation_log.txt 2> /dev/null
-chgrp -R testovac $TEST_PATH/__list_output/* 2> /dev/null
-chmod -R g+w $TEST_PATH/__list_output/* 2> /dev/null
+chgrp -R testovac $TEST_PATH/__list_out/* 2> /dev/null
+chmod -R g+w $TEST_PATH/__list_out/* 2> /dev/null
+find $TEST_PATH/__list_out/ -type d -exec chmod a+x,g+x {} +
 cd $TEST_PATH/__list_out
 echo "----- Running test file Test$TESTCLASS.class<br />" >> $OUTPUT_FILE
 sudo -u testovac $CURRENT_PATH/execute_jUnit_test $TESTCLASS $TIMEOUT $CURRENT_PATH >> $OUTPUT_FILE 2>> $OUTPUT_FILE
