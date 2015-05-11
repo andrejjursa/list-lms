@@ -53,6 +53,7 @@ class Settings extends LIST_Controller {
         $this->form_validation->set_rules('config[test_aging_ticks_to_priority_increase]', 'lang:admin_settings_form_field_test_aging_ticks_to_priority_increase', 'required|integer|greater_than_equal[5]');
         $this->form_validation->set_rules('config[test_aging_max_tests_to_raise_priority]', 'lang:admin_settings_form_field_test_aging_max_tests_to_raise_priority', 'required|integer|greater_than_equal[5]');
         $this->form_validation->set_rules('config[test_maximum_enqueued_pe_student]', 'lang:admin_settings_form_field_test_maximum_enqueued_pe_student', 'required|integer|greater_than_equal[3]');
+        $this->form_validation->set_rules('config[test_queue_done_error_lifetime]', 'lang:admin_settings_form_field_test_queue_done_error_lifetime', 'required|integer|greater_than_equal[60]');
         
         if ($this->form_validation->run()) {
             $config = $this->protect_config_array($this->input->post('config'));
@@ -81,6 +82,7 @@ class Settings extends LIST_Controller {
             }
             $this->configurator->set_config_array('config', $config);
             $this->configurator->set_config_array('moss', $moss);
+            sleep(3);
             redirect(create_internal_url('admin_settings/index'));
         } else {
             $this->index();
@@ -141,7 +143,8 @@ class Settings extends LIST_Controller {
             'test_aging_ticks_to_priority_increase',
             'test_aging_max_tests_to_raise_priority',
             'test_maximum_enqueued_pe_student',
-            'test_sandbox'
+            'test_sandbox',
+            'test_queue_done_error_lifetime'
         );
         
         $output = array();

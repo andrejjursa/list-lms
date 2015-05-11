@@ -22,7 +22,7 @@ cd $JAVADIR
 echo "<pre>" > $OUTPUT_FILE
 echo "Stage 1 / 2: source code compilation ..." >> $OUTPUT_FILE
 mkdir LISTTestScoring 2> /dev/null
-cp /list_shared_files/java/LISTTestScoring/LISTTestScoring.java $JAVADIR/LISTTestScoring/LISTTestScoring.java 2> /dev/null
+#cp /list_shared_files/java/LISTTestScoring/LISTTestScoring.java $JAVADIR/LISTTestScoring/LISTTestScoring.java 2> /dev/null 2>> $OUTPUT_FILE
 /usr/bin/javac $JAVAC_ARGS $ENCODING 2> $COMPILATION_LOG
 exitcode=$?
 cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE

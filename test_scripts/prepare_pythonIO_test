@@ -24,6 +24,7 @@ echo "----- Running user code from file $TESTFILE.py<br />" >> $OUTPUT_FILE
 cp -r $PYTHON_DIR/* $PYTHON_DIR/__list_output > /dev/null 2> /dev/null
 rm -f "$PYTHON_DIR/__list_output/__list_output.txt" > /dev/null 2> /dev/null
 rm -rf "$PYTHON_DIR/__list_output/test_data" > /dev/null 2> /dev/null
+rm -f $PYTHON_DIR/__list_encrypt_phrase.txt 2> /dev/null
 chgrp testovac "$PYTHON_DIR/_list_output/*" > /dev/null 2> /dev/null
 cd "$PYTHON_DIR/__list_output/" > /dev/null 2> /dev/null
 cat $TEST_INPUT | sudo -u testovac "$CURRENT_PATH/exec_pythonIO_test" $TESTFILE $TIMEOUT $CURRENT_PATH >> $PROGRAM_OUTPUT_FILE 2>> $OUTPUT_FILE
