@@ -5,18 +5,18 @@ FILE=$2
 TIMEOUT=$3
 JUDGE=$4
 
-chgrp -R test_runner /list_test_files/*
-chmod -R g+rwx /list_test_files/*
-chgrp test_runner /list_test_files
-chmod g+rwx /list_test_files
+chgrp -R test_runner /list_test_files/* 2> /dev/null
+chmod -R g+rwx /list_test_files/* 2> /dev/null
+chgrp test_runner /list_test_files 2> /dev/null
+chmod g+rwx /list_test_files 2> /dev/null
 
 if [[ "$TYPE" == "jUnit" ]] ; then
-	sudo -u test_runner run_java_jUnit $FILE $TIMEOUT
+	sudo -u test_runner run_java_jUnit $FILE $TIMEOUT 2> /dev/null
 	exit $?
 elif [[ "$TYPE" == "pyUnit" ]] ; then
-	sudo -u test_runner run_python_pyUnit $FILE $TIMEOUT
+	sudo -u test_runner run_python_pyUnit $FILE $TIMEOUT 2> /dev/null
 	exit $?
 elif [[ "$TYPE" == "pyIO" ]] ; then
-	sudo -u test_runner run_python_io $FILE $TIMEOUT $JUDGE
+	sudo -u test_runner run_python_io $FILE $TIMEOUT $JUDGE 2> /dev/null
 	exit $?
 fi

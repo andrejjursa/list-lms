@@ -30,6 +30,7 @@ class java_test extends abstract_test {
         $working_directory = $this->make_test_directory();
         $this->extract_zip_to($this->get_input_zip_file());
         $this->extract_zip_to($this->get_current_test_source_directory() . $this->get_current_test_configuration_value('zip_file'));
+        $this->copy_file_to('test_sources/private/java/LISTTestScoring/LISTTestScoring.java', 'LISTTestScoring');
         $sandbox = $this->get_sandbox_type();
         $this->create_encryption_phrase($working_directory);
         
@@ -40,7 +41,6 @@ class java_test extends abstract_test {
         }
         
         $scripts_directory = $this->get_test_scripts_directory();
-        //$exec_command = $scripts_directory . 'test ' . rtrim(getcwd(), '\\/') . DIRECTORY_SEPARATOR . $working_directory . ' ' . $class_to_run . ' JAVA ' . $this->get_test_timeout();
         $exec_command = $scripts_directory . 'execute_test jUnit ' . $sandbox . ' ' . $class_to_run . ' ' . $this->get_test_timeout() . ' ' . rtrim(getcwd(), '\\/') . DIRECTORY_SEPARATOR . $working_directory;
         $output_data = array();
         $exit_code = 0;
@@ -56,10 +56,6 @@ class java_test extends abstract_test {
                 $output .= '<br /><br /><span style="color: red;">' . $e->getMessage() . '</span>';
             }
         }
-        
-        /*if ($save_score) {
-            $this->save_test_result($exit_code, $score_student, $score_token);
-        }*/
         
         $this->delete_test_directory();
         

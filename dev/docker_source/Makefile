@@ -1,8 +1,8 @@
 update:
-	docker build -t list/sandbox .
+	docker build --rm=true -t list/sandbox .
 
 rebuild:
-	docker build --no-cache=true --pull=true -t list/sandbox .
+	docker build --rm=true --no-cache=true --pull=true -t list/sandbox .
 
 run:
 	docker run -t -i --rm=true list/sandbox

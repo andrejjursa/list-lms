@@ -23,10 +23,6 @@ RUN mkdir /list_compilation_process
 RUN chmod a+xr,a-w,u+w,g+w /list_compilation_process
 RUN chgrp test_runner /list_compilation_process 
 
-RUN mkdir /list_shared_files
-RUN chmod a+xr,a-w,u+w /list_shared_files
-RUN chgrp test_runner /list_shared_files
-
 ADD run_with_timeout /usr/local/bin/
 RUN chmod a+xr,a-w,u+w /usr/local/bin/run_with_timeout
 RUN chgrp test_runner /usr/local/bin/run_with_timeout
@@ -45,21 +41,3 @@ RUN chgrp test_runner /usr/local/bin/run_python_io
 
 ADD run_test /usr/local/bin/
 RUN chmod a-xrw,u+xrw /usr/local/bin/run_test
-
-RUN mkdir /list_shared_files/java
-RUN chmod a+xr,a-w,u+w /list_shared_files/java
-RUN chgrp test_runner /list_shared_files/java
-
-RUN mkdir /list_shared_files/python
-RUN chmod a+xr,a-w,u+w /list_shared_files/python
-RUN chgrp test_runner /list_shared_files/python
-
-ADD java /list_shared_files/java/
-RUN chgrp -R test_runner /list_shared_files/java/*
-RUN chmod -R a+r,a-wx,u+w /list_shared_files/java/*
-RUN find /list_shared_files/java/ -type d -exec chmod a+x {} +
-
-ADD python /list_shared_files/python/
-RUN chgrp -R test_runner /list_shared_files/python/*
-RUN chmod -R a+r,a-wx,u+w /list_shared_files/python/*
-RUN find /list_shared_files/python/ -type d -exec chmod a+x {} +

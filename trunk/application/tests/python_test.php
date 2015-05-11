@@ -39,6 +39,7 @@ class python_test extends abstract_test {
         $working_directory = $this->make_test_directory();
         $this->extract_zip_to($this->get_input_zip_file());
         $this->extract_zip_to($this->get_current_test_source_directory() . $this->get_current_test_configuration_value('zip_file'));
+        $this->copy_file_to('test_sources/private/python/LISTTestScoring.py');
         $sandbox = $this->get_sandbox_type();
         $this->create_encryption_phrase($working_directory);
         

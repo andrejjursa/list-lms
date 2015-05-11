@@ -20,6 +20,16 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.2.0a | 2015-05-11
+
+NEW Dokončené testy teraz zostávajú v databáze po obmedzený čas, minimálne hodinu, toto je nastaviteľné v nastaveniach LISTu.
+NEW [lang:english] Finished tests are now remaining in database for limited time, minimum one hour, this can be set up in LIST settings.
+
+FIX Opravené spúšťanie testov v Docker sandboxe.
+FIX [lang:english] Execution of tests inside Docker sandbox fixed.
+
+END VERSION
+
 VERSION 1.2.0 | 2015-05-09
 
 CHANGE Spúšťanie testovania študentských riešení prerobené na prioritnú frontu.

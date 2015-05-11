@@ -287,6 +287,15 @@ class Cli_test extends CI_Controller {
     public function aging() {
         $max_ticks = (int)$this->config->item('test_aging_ticks_to_priority_increase');
         $max_raising = (int)$this->config->item('test_aging_max_tests_to_raise_priority');
+
+        $max_lifetime = (int)$this->config->item('test_queue_done_error_lifetime');
+        $max_lifetime = $max_lifetime < 60 ? 60 : $max_lifetime;
+
+        $old_test_queue = new Test_queue();
+        $old_test_queue->where('status >=', 2);
+        $old_test_queue->where('finish + INTERVAL ' . $max_lifetime . ' MINUTE < NOW()', NULL, TRUE);
+        $old_test_queue->get();
+        $old_test_queue->delete_all();
         
         if ($max_ticks < 10) { $max_ticks = 10; }
         if ($max_raising <= 0) { $max_raising = 1; }

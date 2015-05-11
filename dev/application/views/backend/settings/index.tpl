@@ -146,6 +146,11 @@
                 {form_error field='config[test_maximum_enqueued_pe_student]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="field">
+                <label for="config_test_queue_done_error_lifetime_id" class="required">{translate line='admin_settings_form_label_test_queue_done_error_lifetime'}:</label>
+                <p class="input"><input type="text" name="config[test_queue_done_error_lifetime]" id="config_test_queue_done_error_lifetime_id" value="{$smarty.post.config.test_queue_done_error_lifetime|default:$config.test_queue_done_error_lifetime|escape:'html'}" /></p>
+                {form_error field='config[test_queue_done_error_lifetime]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+            </div>
+            <div class="field">
                 <label for="config_test_sandbox_id" class="required">{translate line='admin_settings_form_label_test_sandbox'}:</label>
                 <p class="input">{$test_sanbox_options=['implicit'=>'lang:admin_settings_form_test_sanbox_implicit', 'docker'=>'lang:admin_settings_form_test_sandbox_docker']}
                     <select name="config[test_sandbox]" size="1" id="config_test_sandbox_id">

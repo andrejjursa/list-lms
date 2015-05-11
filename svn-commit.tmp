@@ -1,0 +1,4 @@
+Fixed typo in SQL query.
+--This line, and those below, will be ignored--
+
+M    dev/application/controllers/cli_test.php

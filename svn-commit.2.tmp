@@ -1,0 +1,20 @@
+Fixed bug with batch evaluation, when 0 is used as first evaluation of student solution.
+--This line, and those below, will be ignored--
+
+_M   dev
+A    dev/.idea
+A    dev/.idea/.name
+A    dev/.idea/deployment.xml
+A    dev/.idea/dev.iml
+A    dev/.idea/encodings.xml
+A    dev/.idea/misc.xml
+A    dev/.idea/modules.xml
+A    dev/.idea/scopes
+A    dev/.idea/scopes/scope_settings.xml
+A    dev/.idea/vcs.xml
+A    dev/.idea/workspace.xml
+M    dev/application/controllers/admin/solutions.php
+M    dev/changelog.txt
+M    trunk/application/config/list.php
+M    trunk/application/controllers/admin/solutions.php
+M    trunk/changelog.txt
