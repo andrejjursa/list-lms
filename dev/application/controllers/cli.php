@@ -167,7 +167,11 @@ class Cli extends CI_Controller {
                 }
 
                 if ($test_class_line) {
-                    $line = $lines[$test_class_line + 1];
+			$plus_line = 1;
+			if (substr(trim($lines[$test_class_line]), -1) == '{') {
+				$plus_line = 0;
+			}
+                    $line = $lines[$test_class_line + $plus_line];
 
                     $line .= "\n\t" . 'private static LISTTestScoring ' . $scoring_var_name . ' = null;' . "\n";
                     if ($add_custom_BeforeClass_procedure) {
@@ -175,7 +179,7 @@ class Cli extends CI_Controller {
                         $line .= $before_class_body;
                         $line .= "\t" . '}' . "\n";
                     }
-                    $lines[$test_class_line + 1] = $line;
+                    $lines[$test_class_line + $plus_line] = $line;
 
                 }
 
