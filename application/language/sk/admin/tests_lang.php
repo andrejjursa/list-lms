@@ -83,6 +83,7 @@ $lang['admin_tests_student_test_queue_table_header_finish'] = 'Ukončenie';
 $lang['admin_tests_student_test_queue_table_header_worker'] = 'ID vykonávača';
 $lang['admin_tests_student_test_queue_table_header_priority'] = 'Priorita';
 $lang['admin_tests_student_test_queue_table_header_status'] = 'Stav';
+$lang['admin_tests_student_test_queue_table_body_button_detail'] = 'Detaily';
 $lang['admin_tests_student_test_queue_reload_button'] = 'Znovu načítať';
 $lang['admin_tests_student_test_queue_status_header_done'] = 'Dokončené testy';
 $lang['admin_tests_student_test_queue_status_header_executing'] = 'Práve vykonávané testy';

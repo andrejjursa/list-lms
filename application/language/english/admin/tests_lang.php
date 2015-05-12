@@ -83,6 +83,7 @@ $lang['admin_tests_student_test_queue_table_header_finish'] = 'Finish';
 $lang['admin_tests_student_test_queue_table_header_worker'] = 'Worker ID';
 $lang['admin_tests_student_test_queue_table_header_priority'] = 'Priority';
 $lang['admin_tests_student_test_queue_table_header_status'] = 'Status';
+$lang['admin_tests_student_test_queue_table_body_button_detail'] = 'Details';
 $lang['admin_tests_student_test_queue_reload_button'] = 'Reload';
 $lang['admin_tests_student_test_queue_status_header_done'] = 'Finished tests';
 $lang['admin_tests_student_test_queue_status_header_executing'] = 'Currently executing tests';

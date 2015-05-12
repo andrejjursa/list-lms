@@ -10,7 +10,7 @@
     <td>{$test_item->priority|intval}</td>
     <td>{translate|default:{translate line='admin_tests_student_test_queue_unknown_status'} line="admin_tests_student_test_queue_status_{$test_item->status}"}</td>
     <td>
-        <a href="{internal_url url="tasks/test_result/{$test_item->id|intval}"}" class="button special open_test_queue_results">...</a>
+        <a href="{internal_url url="tasks/test_result/{$test_item->id|intval}"}" class="button special open_test_queue_results">{translate line='admin_tests_student_test_queue_table_body_button_detail'}</a>
     </td>
 </tr>
 {/capture}
