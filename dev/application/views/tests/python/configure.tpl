@@ -14,6 +14,6 @@ default_text='0'
 inline}
 <div class="field">
     <label>{translate line="python_tests_config_form_scoring_class_label"}:</label>
-    <p class="input"><a href="{$base_url}/test_sources/python/LISTTestScoring.zip">{translate line="python_tests_config_form_scoring_class_zip"}</a></p>
+    <p class="input"><a href="{'/test_sources/python/LISTTestScoring.zip'|base_url}">{translate line="python_tests_config_form_scoring_class_zip"}</a></p>
     <p class="input"><em>{translate line="python_tests_config_form_scoring_class_zip_hint"}</em></p>
 </div>

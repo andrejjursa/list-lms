@@ -14,6 +14,6 @@ default_text='0'
 inline}
 <div class="field">
     <label>{translate line="java_tests_config_form_scoring_class_label"}:</label>
-    <p class="input"><a href="{$base_url}/test_sources/java/LISTTestScoring.zip">{translate line="java_tests_config_form_scoring_class_zip"}</a></p>
+    <p class="input"><a href="{'/test_sources/java/LISTTestScoring.zip'|base_url}">{translate line="java_tests_config_form_scoring_class_zip"}</a></p>
     <p class="input"><em>{translate line="java_tests_config_form_scoring_class_zip_hint"}</em></p>
 </div>
