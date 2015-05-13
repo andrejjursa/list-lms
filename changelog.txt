@@ -20,6 +20,13 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.2.0b | 2015-05-13
+
+FIX Fixed bug in download links for prototype evaluation libraries of new testing/evaluating framework.
+FIX [lang:sk] Opravený problém s linkami na stiahnutie prototypov hodnotiacich knižníc nového testovacieho/hodnotiaceho frameworku.
+
+END VERSION
+
 VERSION 1.2.0a | 2015-05-11
 
 NEW Dokončené testy teraz zostávajú v databáze po obmedzený čas, minimálne hodinu, toto je nastaviteľné v nastaveniach LISTu.
