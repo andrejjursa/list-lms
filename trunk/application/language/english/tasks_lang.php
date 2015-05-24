@@ -105,6 +105,7 @@ $lang['tasks_test_result_sum_table_status_3'] = 'Error';
 $lang['tasks_test_result_sum_table_points'] = 'Sum of points';
 $lang['tasks_test_result_sum_table_bonus'] = 'Sum of bonuses';
 $lang['tasks_test_result_sum_table_message'] = 'Result message';
+$lang['tasks_test_result_sum_table_not_evaluated'] = 'This test was not evaluated.';
 $lang['tasks_test_result_table_test_name'] = 'Test name';
 $lang['tasks_test_result_table_points_percent'] = 'Points %';
 $lang['tasks_test_result_table_points'] = 'Points';

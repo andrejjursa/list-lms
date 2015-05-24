@@ -21,11 +21,11 @@
                     </tr>
                     <tr>
                         <th>{translate line='tasks_test_result_sum_table_points'}:</th>
-                        <td>{$test_queue->points}</td>
+                        <td>{if empty($test_queue->result_html)}{translate line='tasks_test_result_sum_table_not_evaluated'}{else}{$test_queue->points}{/if}</td>
                     </tr>
                     <tr>
                         <th>{translate line='tasks_test_result_sum_table_bonus'}:</th>
-                        <td>{$test_queue->bonus}</td>
+                        <td>{if empty($test_queue->result_html)}{translate line='tasks_test_result_sum_table_not_evaluated'}{else}{$test_queue->bonus}{/if}</td>
                     </tr>
                     <tr>
                         <th>{translate line='tasks_test_result_sum_table_message'}:</th>
