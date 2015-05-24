@@ -20,6 +20,16 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.2.1 | 2015-05-24
+
+CHANGE Už sa nezobrazujú dielčie body v prehľade výsledkov testu.
+CHANGE [lang:english] Partial poinst for each test run are no longer displayed in test results screen.
+
+FIX Opravený problém, ktorý spôsoboval akumuláciu záporných dielčích bodov za testy a tým vytváral nesprávne hodnotenie.
+FIX [lang:english] Fixed problem, which caused acumulation of negative partial points per task and awarding incorrect evaluation.
+
+END VERSION
+
 VERSION 1.2.0c | 2015-05-24
 
 CHANGE Ak testy nie sú hodnotené, nebude sa viac ukazovať v ich výsledkoch dosiahnuté skóre ako 0, ale zobrazí sa informácia o nehodnotení testu.

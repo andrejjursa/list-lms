@@ -109,15 +109,19 @@ class Cli_test extends CI_Controller {
                                     $percent = (double)$test_score / 100.0;
                                     $points = (1.0 - $percent) * $min + $percent * $max;
                                     if ($task_rel->bonus_task == 0) {
-                                        $score_percent[$task_id] = isset($score_percent[$task_id]) ? $score_percent[$task_id] + $percent : $percent;
-                                        $score_points[$task_id] = isset($score_points[$task_id]) ? $score_points[$task_id] + $points : $points;
                                         $test_queue->set_join_field($test, 'percent_points', $test_score);
                                         $test_queue->set_join_field($test, 'points', $points);
+                                        $score_percent[$task_id] = isset($score_percent[$task_id]) ? $score_percent[$task_id] + $percent : $percent;
+                                        $percent = (double)$score_percent[$task_id];
+                                        $points = (1.0 - $percent) * $min + $percent * $max;
+                                        $score_points[$task_id] = /*isset($score_points[$task_id]) ? $score_points[$task_id] + $points :*/ $points;
                                     } else {
-                                        $bonus_percent[$task_id] = isset($bonus_percent[$task_id]) ? $bonus_percent[$task_id] + $percent : $percent;
-                                        $bonus_points[$task_id] = isset($bonus_points[$task_id]) ? $bonus_points[$task_id] + $points : $points;
                                         $test_queue->set_join_field($test, 'percent_bonus', $test_score);
                                         $test_queue->set_join_field($test, 'bonus', $points);
+                                        $bonus_percent[$task_id] = isset($bonus_percent[$task_id]) ? $bonus_percent[$task_id] + $percent : $percent;
+                                        $percent = (double)$bonus_percent[$task_id];
+                                        $points = (1.0 - $percent) * $min + $percent * $max;
+                                        $bonus_points[$task_id] = /*isset($bonus_points[$task_id]) ? $bonus_points[$task_id] + $points :*/ $points;
                                     }
                                 }
                                 $query->free_result();
