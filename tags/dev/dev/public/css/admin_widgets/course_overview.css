@@ -1,0 +1,6 @@
+div.widget_course_overview_content { width: 100%; min-width: 400px; font-size: 85%; padding-bottom: 2px; }
+div.widget_course_overview_content div.widget_course_overview_content_left,
+div.widget_course_overview_content div.widget_course_overview_content_right { width: 49.9%; float: left; }
+div.widget_course_overview_content div.widget_course_overwiew_clear { clear: both; }
+div.widget_course_overview_content a { color: green; text-decoration: underline; }
+div.widget_course_overview_content a:hover { color: darkgreen; }

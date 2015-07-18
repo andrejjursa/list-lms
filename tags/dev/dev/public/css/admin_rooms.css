@@ -1,0 +1,11 @@
+table.rooms_table { width: 100%; }
+table.rooms_table th { text-align: left; }
+table.rooms_table th.controlls { width: 1px; text-align: center; }
+table.rooms_table td.controlls { width: 1px;}
+table.rooms_table tbody td { padding: 2px; }
+table.rooms_table tbody td:first-child { border-right: 1px dashed gray; }
+table.rooms_table tbody td:nth-child(2) { padding-left: 5px; }
+table.rooms_table tbody tr:nth-child(even) { background-color: rgba(255,255,255,128); }
+table.rooms_table thead tr th { padding: 2px; background-color: rgba(192,192,192,128); }
+table.rooms_table thead tr th:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+table.rooms_table thead tr th:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }

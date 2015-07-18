@@ -1,0 +1,14 @@
+.text_content h1 { font-size: 1.8em; font-weight: bold; margin: 0.1em 0; text-shadow: none; }
+.text_content h2 { font-size: 1.6em; font-weight: bold; margin: 0.14em 0; text-shadow: none; }
+.text_content h3 { font-size: 1.5em; font-weight: bold; margin: 0.16em 0; text-shadow: none; }
+.text_content h4 { font-size: 1.4em; font-weight: bold; margin: 0.18em 0; text-shadow: none; }
+.text_content h5 { font-size: 1.2em; font-weight: bold; margin: 0.2em 0; text-shadow: none; }
+.text_content h6 { font-size: 1em; font-weight: bold; margin: 0.3em 0; text-shadow: none; }
+.text_content p { margin: 0.3em 0; }
+.text_content li { margin: 0.3em 0; }
+.text_content ul { margin-left: 4em; }
+.text_content ol { margin-left: 4em; }
+.text_content { word-wrap: break-word; word-break: keep-all; }
+.text_content pre.prettyprint { overflow-x: auto; word-break: initial; word-wrap: initial; }
+.text_content a { color: green !important; text-decoration: underline; }
+.text_content a:hover { color: darkgreen !important; }

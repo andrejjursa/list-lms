@@ -1,0 +1,262 @@
+################################################################################
+# Changelog file syntax:                                                       #
+#                                                                              #
+# Each command must start without whitechars on the beginning of line.         #
+#                                                                              #
+# Each version must begin with VERSION <version> | <date: YYYY-MM-DD>          #
+# After version reports version must be ended with END VERSION                 #
+#                                                                              #
+# You can write comment, it starts with # and it must be first character in    #
+# line.                                                                        #
+#                                                                              #
+# Each report must start with it type: NEW, FIX, CHANGE, REMOVE                #
+# Optionally, there may be language overlay for previos report                 #
+# which is written as [lang:<language idiom>] just after type                  #
+# on the next line after default report text.                                  #
+#                                                                              #
+# Multiline reports can be written as well, they must start with ML <type>     #
+# and end with END <type>. Optionally, language overlay may be added.          #
+# In multiline report, text is written between starting and ending line, and   #
+# in the body of this report comments can't be used.                           #
+################################################################################
+
+VERSION 1.2.1 | 2015-05-24
+
+CHANGE Už sa nezobrazujú dielčie body v prehľade výsledkov testu.
+CHANGE [lang:english] Partial poinst for each test run are no longer displayed in test results screen.
+
+FIX Opravený problém, ktorý spôsoboval akumuláciu záporných dielčích bodov za testy a tým vytváral nesprávne hodnotenie.
+FIX [lang:english] Fixed problem, which caused acumulation of negative partial points per task and awarding incorrect evaluation.
+
+END VERSION
+
+VERSION 1.2.0c | 2015-05-24
+
+CHANGE Ak testy nie sú hodnotené, nebude sa viac ukazovať v ich výsledkoch dosiahnuté skóre ako 0, ale zobrazí sa informácia o nehodnotení testu.
+CHANGE [lang:english] If tests are not evaluated, thee will not be score as 0 in test results anymore, but information about non-evaluated test run will be displayed.
+
+END VERSION
+
+VERSION 1.2.0b | 2015-05-13
+
+FIX Fixed bug in download links for prototype evaluation libraries of new testing/evaluating framework.
+FIX [lang:sk] Opravený problém s linkami na stiahnutie prototypov hodnotiacich knižníc nového testovacieho/hodnotiaceho frameworku.
+
+END VERSION
+
+VERSION 1.2.0a | 2015-05-11
+
+NEW Dokončené testy teraz zostávajú v databáze po obmedzený čas, minimálne hodinu, toto je nastaviteľné v nastaveniach LISTu.
+NEW [lang:english] Finished tests are now remaining in database for limited time, minimum one hour, this can be set up in LIST settings.
+
+FIX Opravené spúšťanie testov v Docker sandboxe.
+FIX [lang:english] Execution of tests inside Docker sandbox fixed.
+
+END VERSION
+
+VERSION 1.2.0 | 2015-05-09
+
+CHANGE Spúšťanie testovania študentských riešení prerobené na prioritnú frontu.
+CHANGE [lang:english] Execution of tests for student solutions reworked to priority queue.
+
+CHANGE Automatické hodnotenie riešenia už nemaže učiteľov komentár k riešeniu.
+CHANGE [lang:english] Automated evaluation of solution is now leaving teacher comment for this solution untouched.
+
+FIX Stiahnutie riešenia zostavy úloh je podmienené prihlásením študenta alebo učiteľa.
+FIX [lang:english] Task set solution download is protected by student or teacher authentification.
+
+NEW V metadátach súboru riešenia pri hodnotení sa zobrazuje dátum a čas poslednej zmeny zip súboru.
+NEW [lang:english] Metadata of task set solution in evalution dialog is now showing date and time of last modification of zip archive.
+
+NEW Je možné zakázať hodnotenie riešení študentovej úlohy pomocou testov (v okne hodnotenia riešenia).
+NEW [lang:english] Now is possible to disable evaluation by tests for student solution (in solution evaluation window).
+
+NEW Do CLI pribudla možnosť spojiť konfiguračné súbory (základné súbor s konfiguračným súborom z prostredia), príkazom merge_configuration.
+NEW [lang:english] New command of CLI, merge_configuration, which will merge konfiguration files (base file with environment variant).
+
+NEW Do CLI pribudla možnosť automaticky previesť staré hodnotené testy pre java jUnit do nového hodnotiaceho frameworku.
+NEW [lang:english] New command of CLI controller allows you to transfer old java jUnit tests with evaluation to new evaluation framework.
+
+NEW Do konfigurácií testov pre javu (jUnit) a python (pyUnit) pribudli linky na stiahnutie potrebných súborov pre implementovanie hodnotenia cez nový framework.
+NEW [lang:english] To the configurations of tests for java (jUnit) and python (pyUnit) were added links for download of files needed to implement evaluation which will use new evaluation framework.
+
+END VERSION
+
+VERSION 1.1.2a | 2015-04-08
+
+FIX Opravená chyba, ktorá spôsobovala problémy pri zadávaní hromadného hodnotenia zostavy so zadaním 0 bodov (pri prvom hodnotení).
+FIX [lang:english] Fixed bug which caused problem with saving batch evaluation of task set when teacher set 0 points (only in first evaluation).
+
+END VERSION
+
+VERSION 1.1.2 | 2014-11-16
+
+NEW Pridaná podpora pre vstupno/výstupné testy pre programovací jazyk Python.
+NEW [lang:english] Added support for input/output tests for Python programming language.
+
+NEW Každé odoslané riešenie teraz vytvára záznam, v ktorom je zapísaná IP adresa odosielateľa. Pri hodnotení je možné individuálne zakázať študentovi sťahovanie zvolenej verzie riešenia.
+NEW [lang:english] Each uploaded solution is now creating record about IP address of submitter. In evaluation it is now possible to disable downloading of solution version for individual student.
+
+END VERSION
+
+VERSION 1.1.1 | 2014-09-08
+
+NEW Pridaný widget na zobrazenie posledných zmien v LIST-e.
+NEW [lang:english] Added widget for displaying last changes in LIST.
+
+CHANGE Porovnávač súborov MOSS teraz dostáva kratšie linky. Výsledky by mali byt prehľadnejšie.
+CHANGE [lang:english] MOSS files comparator is getting shorter links now. Results would be more readable.
+
+FIX Porovnávač súborov MOSS teraz korektne dostane základné súbory (vzory). Už sa nebudú brať ako súbory na testovanie podobnosti.
+FIX [lang:english] MOSS files comparator will obtain now base files (patterns) correctly. They will not be handled as files to compare anymore.
+
+END VERSION
+
+VERSION 1.1.0 | 2014-07-17
+
+NEW Pridaný porovnávač zdrojových kódov MOSS.
+NEW [lang:english] MOSS source code comparator was integrated into LIST.
+
+END VERSION
+
+VERSION 1.0.9e | 2014-07-12
+
+FIX Opravené menu zoznamu preferovaných kurzov a jazykov v hlavičke administrácie, teraz už nebudú prekryté hlavnou navigáciou.
+FIX [lang:english] Fixed menu of list of prefered courses and language menu in the header of administration, so now is not overlayed with main navigation.
+
+CHANGE Pridaná responzívna podpora pre layout administrácie, aby sa zlepšilo používanie na menších rozlíšeniach.
+CHANGE [lang:english] Added responsive layout support for administration, for better user experience on smaller resolutions.
+
+END VERSION
+
+VERSION 1.0.9d | 2014-06-19
+
+NEW Tabuľku záznamu aktivít je teraz možné triediť podľa jednotlivých stĺpcov.
+NEW [lang:english] It is now possible to sort logs table by columns.
+
+ML CHANGE
+Upravené filrovanie podľa IP adresy v zázname aktivít:
+- je možno filtrovať podľa presných IP adries,
+- je možno filtrovať podľa rozsahu IP adries,
+- je možno filtrovať podľa IP adresy zadanej s wildcard znakom (*): 192.198.*.* (bude sa filtrovať ako rozsah 192.168.0.0-192.168.255.255),
+- je možno filtrovať podľa viacerých IP adries, rozsahov IP adries a IP adries s wildcard znakmy, keď sa tieto zadajú oddelené čiarkov.
+END CHANGE
+
+ML CHANGE [lang:english]
+Changed filter of logs by IP address:
+- it is possible to filter by exact IP address,
+- it is possible to filter by range of IP addresses,
+- it is possible to filter by IP address containing wildcard characters (*): 192.168.*.* (will be filtered as range 192.168.0.0-192.168.255.255),
+- it is possible to pass more than one IP address, range or IP address with wildcard characters, when you separate them with comma.
+END CHANGE
+
+END VERSION
+
+VERSION 1.0.9c | 2014-06-17
+
+NEW V zozname zadaní a projektov sa teraz zobrazuje červeným podčiarknutým písmom počet bodov, ak posledné riešenie ešte nebolo oznámkované učiteľom.
+NEW [lang:english] In list of task sets and projects are now points displayed with red underline font if very last solution of student is not evaluated by teacher jet.
+
+NEW V zozname zadaní bola pridaná do ľavého stĺpca tabuľka s bodmi za projekty.
+NEW [lang:english] In list of task set there was added table with points for projects into left panel.
+
+FIX Teraz je možné odovzdávať riešenia aj do projektov, ktoré nemajú nastavený čas publikovania.
+FIX [lang:english] Now is possible to upload solution for projects, which does not have set publish time.
+
+FIX V zozname projektov sa teraz správne zobrazuje komentár kratší ako 40 znakov.
+FIX [lang:english] In list of project there is now correctly displayed teacher comment if it is shorter than 40 characters.
+
+END VERSION
+
+VERSION 1.0.9b | 2014-06-16
+
+CHANGE Tvar tabuľky hodnotení bol opäť vrátený do pôvodného stavu bez pluginu jQuery DataTables.
+CHANGE [lang:english] Evaluation table was again returned to it original shape without jQuery DataTables plugin.
+
+NEW Tabuľka hodnotení má teraz natívne javascriptové triedenie po stĺpcoch a zobrazovanie/skrývanie stĺpcov.
+NEW [lang:english] Evaluation table have now native javascript based sorting by column and show/hide column.
+
+END VERSION
+
+VERSION 1.0.9a | 2014-06-13
+
+ML NEW
+Pridaných niekoľko filtrov do záznamu aktivít:
+- filtrovanie podľa času od - do,
+- filtrovanie podľa IP adresy alebo rozsahu,
+- filtrovanie podľa kurzu relatívneho s štedentami,
+- filtrovanie podľa študenta,
+- filtrovanie podľa učiteľa.
+END NEW
+ML NEW [lang:english]
+Added some filters to logs:
+- filter by time interval from - to,
+- filter by IP address or range,
+- filter by course relative to students,
+- filter by student,
+- filter by teacher.
+END NEW
+
+CHANGE Zobrazovanie výsledkov testov upravené pomocou htmlspecialchars, zachovajú sa len tagy pre a br.
+CHANGE [lang:english] Displaying test results encoded with htmlspecialchars, only pre and br tags are preserved.
+
+FIX Opravené zobrazenie správy o prázdnom zozname záznamov aktivít v tabuľke záznamu aktivít.
+FIX [lang:english] Fixed displaying of message about empty log list in list table.
+
+END VERSION
+
+VERSION 1.0.9 | 2014-06-06
+
+ML NEW
+Pridané logy pre nasledovné akcie:
+- prihlásenie sa študenta do študentského rozhrania,
+- vynútené prihlásenie študenta administrátorom (z manažéra študentov),
+- stiahnutie súboru riešenia študentom zo študentského rozhrania.
+END NEW
+ML NEW [lang:english]
+Added logs for these actions:
+- student login into student interface,
+- enforced login of student by administrator (from student management),
+- solution file download by student from student interface.
+END NEW
+
+NEW Pridaný zoznam záznamov o aktivite uživateľov.
+NEW [lang:english] Added list of users activity logs.
+
+END VERSION
+
+VERSION 1.0.8a | 2014-06-06
+
+ML NEW
+Do nasledujúcich formulárov sa automaticky vypĺňa preferovaný kurz:
+- formulár na vytvorenie novej skupiny,
+- formulár na vytvorenie novej zostavy úloh / projektu,
+- formulár na pridávanie študentov do kurzu.
+END NEW
+ML NEW [lang:english]
+To the following forms are now prefered course automatically filled:
+- form for new group,
+- form for new task set / project,
+- form for adding students into course.
+END NEW
+
+NEW V správe študentov možno vyhľadávať študentov podľa ich účasti v kurze.
+NEW [lang:english] In student manager it is now possible to filter students by course.
+
+END VERSION
+
+VERSION 1.0.8 | 2014-05-29
+
+NEW Pridaný changelog súbor a parser na jeho zobrazovanie.
+NEW [lang:english] Added changelog file and parser for its rendering.
+
+NEW Pridaná stránka do administrácie na zobrazovanie changelog súboru.
+NEW [lang:english] Added page into administration to display changelog file.
+
+CHANGE V pätičke stránky administrácie sa verzia systému zobrazuje ako linka na stránku s changelog súborom.
+CHANGE [lang:english] In administration page footer is now version of system displayed as link to page with changelog.
+
+FIX V tabuľke hodnotení sa opäť zobrazujú projekty, keď je tabuľka v zjednodušenom formáte.
+FIX [lang:english] In evaluation table there are again visible projects when table is in simplified format.
+
+END VERSION

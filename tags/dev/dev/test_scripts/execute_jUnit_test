@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#################################
+# Do not run manually
+#################################
+
+TESTCLASS=$1
+TIMEOUT=$2
+BIN_PATH=$3
+JAVA_ARGS="-Xmx128m -cp /usr/share/java/junit4.jar:."
+#
+nice $BIN_PATH/run_with_timeout $TIMEOUT /usr/bin/java $JAVA_ARGS org.junit.runner.JUnitCore Test$TESTCLASS | grep --text -v "at junit." |grep --text -v "at org.junit." |grep --text -v "at sun.reflect." |grep --text -v "at java.lang.reflect.Method.invoke"
+exit $?
