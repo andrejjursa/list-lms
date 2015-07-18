@@ -1,0 +1,5 @@
+#category_tree_id ul { list-style-type: none; }
+#category_tree_id ul li { display: block; }
+#category_tree_id ul.tree_level_1 ul li { padding-left: 10px; }
+#category_tree_id ul li div.tree_line span.controlls { display: none; }
+#category_tree_id ul li div.tree_line:hover span.controlls { display: inline; }

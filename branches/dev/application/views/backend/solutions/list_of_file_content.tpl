@@ -1,0 +1,1 @@
+<option value=""></option>{foreach $files as $file}{if mb_substr($file, -1) ne '/' and mb_substr($file, -1) ne '\\'}<option value="{$file@key}">{$file}</option>{/if}{/foreach}

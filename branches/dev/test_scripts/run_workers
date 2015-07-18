@@ -1,0 +1,47 @@
+#/bin/bash
+# using:
+# parameter 1 = seconds to wait between executions
+# parameter 2 = number of workers
+
+PATH_TO_SCRIPT=".."
+PATH_TO_LOCK_DIR="../test_locks"
+
+if test "$#" -lt 2; then
+	echo "Incorrect number of arguments, use run_workers <seconds to wait> <number of workers>"
+	exit
+fi
+
+function exec_worker {
+	lockfile -r 0 $2 > /dev/null 2> /dev/null
+	locked=$?
+	if [ $locked -eq 0 ] ; then
+		sudo -u www-data php $PATH_TO_SCRIPT/index.php cli_test index $1
+		rm -f $2
+	fi
+}
+
+WAIT_TIME=$( bc -l <<< "$1/2" )
+
+echo "Executing workers: $2 workers will be run approximately each $1 seconds."
+
+rm -f $PATH_TO_LOCK_DIR/*
+
+sudo -u www-data php $PATH_TO_SCRIPT/index.php cli_test reset_all
+
+function run_workers_async {
+	while true; do
+		for ((worker_id = 1; worker_id <= $2; worker_id++))
+		do
+			FILEPATH=$PATH_TO_LOCK_DIR/worker_${worker_id}_lock.lock
+			exec_worker $worker_id $FILEPATH &
+			sleep 0.005
+		done
+		sleep $WAIT_TIME
+		sudo -u www-data php $PATH_TO_SCRIPT/index.php cli_test aging &
+		sleep $WAIT_TIME
+	done
+}
+
+run_workers_async $1 $2 &
+echo "Workers are run asynchronous, you can terminate this run by command: kill $!"
+echo "Last control script for worker have pid $!." > workers_info.txt
