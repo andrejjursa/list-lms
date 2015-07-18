@@ -1,7 +1,0 @@
-#popupwrap { margin: 10px; border: 1px solid black; background-color: white; border-radius: 4px; box-shadow: 0px 0px 8px 4px gray; min-width: 800px; }
-#popupwrap > div.internal_padding { padding: 5px; }
-#popupwrap > div.internal_padding > fieldset { background-color: #f0f0f0; border: 1px solid black; border-radius: 10px; padding: 10px; margin: 4px 0; box-shadow: 3px 3px 6px gray; }
-#popupwrap > div.internal_padding > fieldset > legend { background-color: #f0f0f0; border: 1px solid black; min-width: 50%; padding: 3px 10px; border-radius: 50px; font-weight: bold; }
-#popupwrap > div.internal_padding > h1 { margin-bottom: 10px; text-shadow: 2px 2px 2px silver; }
-
-body { background-color: white; }

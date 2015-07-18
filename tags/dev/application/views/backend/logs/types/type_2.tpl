@@ -1,1 +1,0 @@
-{include file='backend/logs/types/type_1.tpl' inline}
