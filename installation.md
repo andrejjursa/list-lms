@@ -1,0 +1,121 @@
+# Installation instructions #
+
+This short manual helps you set up LIST installation.
+
+Please, check [system requirements](requirements.md) before start.
+
+## Directory permissions ##
+
+  * application
+    * cache
+      * smarty
+        * **compiled** directory must be writable
+    * config
+      * production
+        * **config.php** must be writable
+        * **lockdown.php** must be writable
+        * **mimes.php** must be writable
+    * **datamapper** directory must be writable
+    * **logs** directory must be writable
+  * private
+    * **extracted\_solutions** must be writable
+    * uploads
+      * **csv\_imports** must be writable
+      * **solutions** must be writable
+      * **task\_files** must be writable
+      * **unit\_tests** must be writable
+  * public
+    * images\_users
+      * **students** directory must be writable
+      * **teachers** directory must be writable
+
+## Configuration ##
+
+### application/config/production/database.php ###
+
+```
+$db['default']['hostname'] = <YOUR DATABASE HOST>;
+$db['default']['username'] = <YOUR DATABASE USER NAME>;
+$db['default']['password'] = <YOUR DATABASE PASSWORD>;
+$db['default']['database'] = <YOUR DATABASE NAME>;
+$db['default']['dbdriver'] = 'mysqli';
+$db['default']['dbprefix'] = '';
+$db['default']['pconnect'] = TRUE;
+$db['default']['db_debug'] = TRUE;
+$db['default']['cache_on'] = FALSE;
+$db['default']['cachedir'] = '';
+$db['default']['char_set'] = 'utf8';
+$db['default']['dbcollat'] = 'utf8_general_ci';
+$db['default']['swap_pre'] = '';
+$db['default']['autoinit'] = TRUE;
+$db['default']['stricton'] = FALSE;
+```
+
+Do not change anything else in this configuration, only first four fields.
+
+### application/config/production/config.php ###
+
+```
+$config['base_url'] = <URL TO YOUR INSTALLATION>;
+```
+
+Here you can set the URL of your installation. Make sure it ends with character **/**.
+
+**Example:**
+```
+$config['base_url'] = 'http://www.myserver.com/list/';
+```
+
+
+---
+
+
+```
+$config['email_address']['system']['name'] = <YOUR NAME IN SYSTEM E-MAIL>;
+$config['email_address']['system']['email'] = <YOUR SYSTEM E-MAIL ADDRESS>;
+```
+
+Set these two values (on the bottom of the config.php) to values you prefered.
+
+**Example:**
+```
+$config['email_address']['system']['name'] = 'LIST e-mail';
+$config['email_address']['system']['email'] = 'list@mydomain.com';
+```
+
+### .htacces in root ###
+
+In root directory, there is file names _**.htaccess**. Rename this file to **.htaccess** and make sure your server have allowed override files._
+
+If you have list installed in subdirectory of your document root, make sure you have changed this line in .htaccess file:
+```
+    RewriteBase /
+```
+to:
+```
+    RewriteBase /<PATH TO YOUR INSTALLATION IN DOCUMENT ROOT>/
+```
+Address here must start and end with **/** character.
+
+**Example:**
+```
+    RewriteBase /list/
+```
+
+## Database structure ##
+
+To create database structure, you need to use cli controller from command line interface. To do so, go to LIST root directory and use this command:
+```
+php index.php cli update_database
+```
+Make sure, you are loged in as www-data user or root (because this script will need to delete production cache from application/datamapper directory).
+
+
+---
+
+
+To create new teacher account (teachers are administrators of LIST), simple run this command from LIST root directory:
+```
+php index.php cli new_teacher
+```
+You will be prompted to enter all data needed for teacher account from command line.
