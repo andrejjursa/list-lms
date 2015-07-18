@@ -1,0 +1,1 @@
+{translate line='widget_admin_last_changes_no_configuration'}

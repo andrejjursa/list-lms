@@ -1,0 +1,1 @@
+{list_html_options options=$rooms selected=$selected_id|default:$task_set->room_id|intval}
