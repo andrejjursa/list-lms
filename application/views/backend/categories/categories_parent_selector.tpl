@@ -1,6 +1,0 @@
-{function name='categories_tree_options' structure=[] selected=NULL chain='' prefix=''}{if $structure}
-{foreach $structure as $data}<option value="{$prefix}{$data.category->id}"{if "{$prefix}{$data.category->id}" eq $selected} selected="selected"{/if}>{$chain}{translate_text|escape:'html' text=$data.category->name}</option>{capture name='chain_capture' assign='new_chain'}{$chain}&nbsp;&nbsp;{/capture}{categories_tree_options structure=$data.subcategories selected=$selected chain=$new_chain prefix=$prefix}{/foreach}
-{/if}{/function}
-{function name='categories_tree_options_multiple' structure=[] selected=[] chain='' prefix=''}{if $structure}
-{foreach $structure as $data}<option value="{$prefix}{$data.category->id}"{if in_array("{$prefix}{$data.category->id}", $selected)} selected="selected"{/if}>{$chain}{translate_text|escape:'html' text=$data.category->name}</option>{capture name='chain_capture' assign='new_chain'}{$chain}&nbsp;&nbsp;{/capture}{categories_tree_options_multiple structure=$data.subcategories selected=$selected chain=$new_chain prefix=$prefix}{/foreach}
-{/if}{/function}
