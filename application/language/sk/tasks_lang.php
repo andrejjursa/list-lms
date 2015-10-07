@@ -117,3 +117,4 @@ $lang['tasks_test_result_evaluation_table_score_current'] = 'Získané %';
 $lang['tasks_test_result_evaluation_table_score_maximum'] = 'Maximálne %';
 $lang['tasks_test_result_evaluation_table_score_summary'] = 'Sumár';
 $lang['tasks_test_result_score_name_io_test'] = 'Vstupno/výstupný test';
+$lang['tasks_test_result_score_name_general_test'] = 'Hodnotenie testu';

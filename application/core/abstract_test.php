@@ -342,10 +342,11 @@ abstract class abstract_test {
      * Call this function to construct evaluation table data for I/O test scoring.
      * @param $percents current value achieved.
      * @param $maximum maximum value.
+     * @param $name name of test.
      */
-    protected function construct_io_test_result($percents, $maximum) {
+    protected function construct_io_test_result($percents, $maximum, $name='lang:tasks_test_result_score_name_io_test') {
         $score = new stdClass();
-        $score->name = 'lang:tasks_test_result_score_name_io_test';
+        $score->name = $name;
         $score->current = (double)$percents;
         $score->maximum = (double)$maximum;
         $score->maximum = $score->maximum > 100 ? 100 : ($score->maximum < 0 ? 0 : $score->maximum);

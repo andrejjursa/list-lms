@@ -117,3 +117,4 @@ $lang['tasks_test_result_evaluation_table_score_current'] = 'Achieved %';
 $lang['tasks_test_result_evaluation_table_score_maximum'] = 'Maximum %';
 $lang['tasks_test_result_evaluation_table_score_summary'] = 'Summary';
 $lang['tasks_test_result_score_name_io_test'] = 'Input/output test';
+$lang['tasks_test_result_score_name_general_test'] = 'Test score';

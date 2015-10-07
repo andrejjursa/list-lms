@@ -1,0 +1,16 @@
+#!/bin/bash
+TEST_SOURCE_FILE=$1
+STUDENT_SOURCE_FILE=$2
+TIMEOUT=$3
+WORKING_PATH=$4
+
+############### TEST SCRIPT EXECUTION NOT IMPLEMENTED JET ###################
+
+FAKE_OUTPUT_FILE="$WORKING_PATH/__list_output.txt"
+FAKE_SCORING_FILE="$WORKING_PATH/__list_score.txt"
+
+echo "50" > $FAKE_SCORING_FILE
+echo "Execution not implemented<br />" >> $FAKE_OUTPUT_FILE
+echo "Test script name: $TEST_SOURCE_FILE<br />" >> $FAKE_OUTPUT_FILE
+echo "Student file: $STUDENT_SOURCE_FILE<br />" >> $FAKE_OUTPUT_FILE
+echo "TIMEOUT: $TIMEOUT ms" >> $FAKE_OUTPUT_FILE 
