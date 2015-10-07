@@ -7,3 +7,4 @@ application/public/images_users/*
 !application/public/images_users/no_avatar.jpg
 application/logs/*
 !application/logs/index.html
+docker_source/test_volume/*
