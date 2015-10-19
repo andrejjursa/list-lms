@@ -9,10 +9,6 @@ RUN_FILE=strykoFedorLietajuciPes
 OUTPUT_FILE="$WORKING_PATH/__list_output.txt"
 SCORING_FILE="$WORKING_PATH/__list_score.txt"
 
-echo "test started `date` with args $1 $2 $3 $4 BIN_PATH=$BIN_PATH" >> /tmp/ttt
-ls -la $4 >>/tmp/ttt
-echo "---" >>/tmp/ttt
-
 cd $WORKING_PATH
 rm -f $RUN_FILE *.o
 mv $TEST_SOURCE_FILE $TEST_SOURCE_FILE'.pending'
