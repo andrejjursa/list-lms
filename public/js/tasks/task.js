@@ -195,5 +195,19 @@ jQuery(document).ready(function($) {
             div.show();
         });
     };
-    
+   
+    $(document).on('click', 'input[type=checkbox]', function(e) {
+        if ($(this).hasClass('select_all_test_from_task')) {
+            var task_id = $(this).attr('data-task');
+            $('input[type=checkbox][data-task="' + task_id + '"].test_select_checkbox').prop('checked', $(this).prop('checked'));
+
+        } else if ($(this).hasClass('test_select_checkbox')) {
+            var task_id = $(this).attr('data-task');
+            var all_checked = true;
+            $('input[type=checkbox][data-task="' + task_id + '"].test_select_checkbox').each(function() {
+                all_checked = all_checked && $(this).prop('checked');
+            });
+            $('input[type=checkbox][data-task="' + task_id + '"].select_all_test_from_task').prop('checked', all_checked);
+        }
+    }); 
 });

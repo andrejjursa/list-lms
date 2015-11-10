@@ -122,12 +122,13 @@
                                 {if $tests->exists()}{$show_tests = true}
                                 {$tests_for_json[$task->id].name = "{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}" scope='global'}
                                 <tr class="task_header test_task_{$task->id}">
-                                    <td colspan="{if $test_scoring}5{else}4{/if}" class="task_name">{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}{if $task->join_bonus_task} <span class="bonus_task">({translate line='tasks_task_is_bonus_task'})</span>{/if}</td>
+					<td class="task_name"><input type="checkbox" class="select_all_test_from_task" checked="checked" data-task="{$task->id}" /></td>
+                                    <td colspan="{if $test_scoring}4{else}3{/if}" class="task_name">{$task@iteration}. {overlay table='tasks' table_id=$task->id column='name' default=$task->name}{if $task->join_bonus_task} <span class="bonus_task">({translate line='tasks_task_is_bonus_task'})</span>{/if}</td>
                                 </tr>
                                 {/if}
                                 {foreach $tests->all as $test}
                                 <tr class="test_header test_type_{$test->type} test_task_{$task->id}">
-                                    <td class="test_select"><input type="checkbox" name="test[id][]" value="{$test->id|intval}" checked="checked" /></td>
+                                    <td class="test_select"><input type="checkbox" name="test[id][]" value="{$test->id|intval}" checked="checked" data-task="{$task->id}" class="test_select_checkbox" /></td>
                                     <td class="test_name">{overlay table='tests' table_id=$test->id column='name' default=$test->name}</td>
                                     <td class="test_type">{$test_types[$test->type]}</td>
                                     <td class="test_subtype">{$test_subtypes[$test->type][$test->subtype]}</td>
