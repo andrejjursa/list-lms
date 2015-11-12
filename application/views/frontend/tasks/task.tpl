@@ -103,7 +103,7 @@
                         <table class="solution_tests_table">
                             <thead>
                                 <tr>
-                                    <th class="test_select">&nbsp;</th>
+                                    <th class="test_select"><input type="checkbox" class="select_all_tests" checked="checked" /></th>
                                     <th class="test_name">{translate line='tasks_test_table_header_test_name'}</th>
                                     <th class="test_type">{translate line='tasks_test_table_header_test_type'}</th>
                                     <th class="test_subtype">{translate line='tasks_test_table_header_test_subtype'}</th>
