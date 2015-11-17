@@ -6,21 +6,23 @@ WORKING_PATH=$4
 BIN_PATH=`pwd`/test_scripts
 RUN_FILE=strykoFedorLietajuciPes
 
-OUTPUT_FILE="$WORKING_PATH/__list_output.txt"
-SCORING_FILE="$WORKING_PATH/__list_score.txt"
+COPTIONS=-Wno-write-strings
+
+OUTPUT_FILE=$WORKING_PATH'__list_output.txt'
+SCORING_FILE=$WORKING_PATH'__list_score.txt'
 
 cd $WORKING_PATH
 rm -f $RUN_FILE *.o
 mv $TEST_SOURCE_FILE $TEST_SOURCE_FILE'.pending'
 echo "----- compiling... ----- <pre>" >> $OUTPUT_FILE
 if [[ "`echo *.cpp`" != "*.cpp" ]] ; then
-  g++ -c *.cpp >> $OUTPUT_FILE 2>> $OUTPUT_FILE
+  g++ $COPTIONS -c *.cpp >> $OUTPUT_FILE 2>> $OUTPUT_FILE
   RV1=$?
 else
   RV1=0
 fi 
 if [[ "`echo *.CPP`" != "*.CPP" ]] ; then
-  g++ -c *.CPP >> $OUTPUT_FILE 2>> $OUTPUT_FILE
+  g++ $COPTIONS -c *.CPP >> $OUTPUT_FILE 2>> $OUTPUT_FILE
   RV2=$?
   echo "comp2: $RV2" >> $OUTPUT_FILE
 else
@@ -31,7 +33,7 @@ if [[ $RV1 -ne 0 || $RV2 -ne 0 ]] ; then
 else
   strip --strip-symbol main *.o
   mv $TEST_SOURCE_FILE'.pending' $TEST_SOURCE_FILE
-  if ! g++ -c $TEST_SOURCE_FILE ; then
+  if ! g++ $COPTIONS -c $TEST_SOURCE_FILE ; then
     echo "</pre><br>----- compiling of test failed, this is our fault! please send us a mail! -----<pre>" >> $OUTPUT_FILE
   else
     echo "</pre><br>----- linking with test... -----<br><pre>" >> $OUTPUT_FILE 
@@ -40,8 +42,9 @@ else
       echo "</pre><br>----- linking did not work out well, please fix your errors, upload a new version and try again ----<br><pre>" >> $OUTPUT_FILE
     else
       echo "</pre><br>----- running test, timeout time is $TIMEOUT ms... -----<br><pre>" >> $OUTPUT_FILE
-      $BIN_PATH/run_with_timeout $TIMEOUT $WORKING_PATH/$RUN_FILE $SCORING_FILE >> $OUTPUT_FILE 2>> $OUTPUT_FILE 
-#>> $OUTPUT_FILE 2>> $OUTPUT_FILE
+      chgrp testovac . 
+      chmod g+w .
+      sudo -u testovac $BIN_PATH/run_cpp_simple_test $BIN_PATH $TIMEOUT $WORKING_PATH$RUN_FILE $SCORING_FILE  >> $OUTPUT_FILE 2>> $OUTPUT_FILE
       echo "</pre><br>----- run finished with `cat $SCORING_FILE` % success -----<br>" >> $OUTPUT_FILE
     fi
   fi
