@@ -20,6 +20,16 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.2.4 | 2016-01-07
+
+NEW Do zoznamu účastníkov kurzu boli pridané tlačidlá na prihlásenie sa za študenta.
+NEW [lang:english] Added buttons to list of cource participants which are authenticate teacher into student interface with selected student account.
+
+FIX V tabuľke hodnotení bola opravená chyba, ktorá spôsobovala chybné počítanie bodov v prípade, že študent počas semestra zmenil skupinu v kurze.
+FIX [lang:english] Fixed bug in evaluation table which caused incorrect computation of points for students changing groups during semester.
+
+END VERSION
+
 VERSION 1.2.3 | 2015-11-10
 
 NEW Pridané checkboxy na vyberanie všetkých testov v jednej úlohe.

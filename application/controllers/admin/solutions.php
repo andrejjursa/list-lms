@@ -1068,10 +1068,31 @@ class Solutions extends LIST_Controller {
                 $students->where_related('participant/group', 'id', (int)$group_id);
             }
             $students->get_iterated();
-            
+
+            $task_sets_out_of_group_ids = array(0);
             $task_sets_data = array();
             $task_sets_ids = array();
             $projects_ids = array();
+
+            if ($group->exists()) {
+                $students_filter = new Student();
+                $students_filter->select('id');
+                $students_filter->where_related('participant/course', 'id', $course->id);
+                $students_filter->where_related('participant', 'allowed', 1);
+                $students_filter->where_related('participant/group', 'id', (int)$group->id);
+
+                $solutions_filter = new Solution();
+                $solutions_filter->select('id');
+                $solutions_filter->where_in_subquery('student_id', $students_filter);
+
+                $task_sets_out_of_group = new Task_set();
+                $task_sets_out_of_group->select('id');
+                $task_sets_out_of_group->where_in_subquery('id', $solutions_filter);
+                $task_sets_out_of_group->where('published', 1);
+                $task_sets_out_of_group->get();
+                $task_sets_out_of_group_ids = $task_sets_out_of_group->all_to_single_array('id');
+                $task_sets_out_of_group_ids[] = 0;
+            }
             
             $content_type_task_set = new Task_set();
             $content_type_task_set->select('id, name, content_type, group_id, task_set_type_id');
@@ -1096,6 +1117,7 @@ class Solutions extends LIST_Controller {
                         $content_type_task_set->where_related('task_set_permission', 'group_id', (int)$group_id);
                         $content_type_task_set->where_related('task_set_permission', 'enabled', 1);
                     $content_type_task_set->group_end();
+                    $content_type_task_set->or_where_in('id', $task_sets_out_of_group_ids);
                 $content_type_task_set->group_end();
             }
             $content_type_task_set->get();
@@ -1213,7 +1235,7 @@ class Solutions extends LIST_Controller {
                         );
                     }
                 }
-                                
+
                 $task_sets_points_array = array();
                 if ($content_type_task_set->result_count() > 0) {
                     $task_sets_points = 0;
@@ -1230,61 +1252,59 @@ class Solutions extends LIST_Controller {
                             $last_task_set_type_key = count($task_sets_points_array) - 1;
                         }
                         $points = 0;
-                        if (is_null($task_sets_data[$task_set->id]['group_id'][0]) || in_array($student->participant_group_id, $task_sets_data[$task_set->id]['group_id'])) {
-                            if (isset($solutions_data[$task_set->id])) {
-                                if ($solutions_data[$task_set->id]['not_considered']) {
+                        if (isset($solutions_data[$task_set->id])) {
+                            if ($solutions_data[$task_set->id]['not_considered']) {
+                                if (!$condensed) {
+                                    $task_sets_points_array[] = array(
+                                        'type' => 'task_set',
+                                        'points' => '*',
+                                        'flag' => 'notConsidered',
+                                    );
+                                }
+                            } else {
+                                if (is_null($solutions_data[$task_set->id]['points'])) {
                                     if (!$condensed) {
                                         $task_sets_points_array[] = array(
                                             'type' => 'task_set',
-                                            'points' => '*',
-                                            'flag' => 'notConsidered',
+                                            'points' => '!',
+                                            'flag' => 'revalidate',
                                         );
                                     }
-                                } else {
-                                    if (is_null($solutions_data[$task_set->id]['points'])) {
-                                        if (!$condensed) {
-                                            $task_sets_points_array[] = array(
-                                                'type' => 'task_set',
-                                                'points' => '!',
-                                                'flag' => 'revalidate',
-                                            );
-                                        }
-                                    } elseif ($solutions_data[$task_set->id]['revalidate']) {
-                                        if (!$condensed) {
-                                            $task_sets_points_array[] = array(
-                                                'type' => 'task_set',
-                                                'points' => $solutions_data[$task_set->id]['points'],
-                                                'flag' => 'revalidate',
-                                            );
-                                        }
-                                        $points = floatval($solutions_data[$task_set->id]['points']);
-                                    } else {
-                                        if (!$condensed) {
-                                            $task_sets_points_array[] = array(
-                                                'type' => 'task_set',
-                                                'points' => $solutions_data[$task_set->id]['points'],
-                                                'flag' => 'ok',
-                                            );
-                                        }
-                                        $points = floatval($solutions_data[$task_set->id]['points']);
+                                } elseif ($solutions_data[$task_set->id]['revalidate']) {
+                                    if (!$condensed) {
+                                        $task_sets_points_array[] = array(
+                                            'type' => 'task_set',
+                                            'points' => $solutions_data[$task_set->id]['points'],
+                                            'flag' => 'revalidate',
+                                        );
                                     }
+                                    $points = floatval($solutions_data[$task_set->id]['points']);
+                                } else {
+                                    if (!$condensed) {
+                                        $task_sets_points_array[] = array(
+                                            'type' => 'task_set',
+                                            'points' => $solutions_data[$task_set->id]['points'],
+                                            'flag' => 'ok',
+                                        );
+                                    }
+                                    $points = floatval($solutions_data[$task_set->id]['points']);
                                 }
-                            } else {
-                                if (!$condensed) {
+                            }
+                        } else {
+                            if (!$condensed) {
+                                if (!is_null($task_sets_data[$task_set->id]['group_id'][0]) && !in_array($student->participant_group_id, $task_sets_data[$task_set->id]['group_id'])) {
+                                    $task_sets_points_array[] = array(
+                                        'type' => 'task_set',
+                                        'points' => '-',
+                                        'flag' => 'notInGroup',
+                                    );
+                                } else {
                                     $task_sets_points_array[] = array(
                                         'type' => 'task_set',
                                         'points' => 'x',
                                         'flag' => 'notSubmitted',
                                     );
                                 }
-                            }
-                        } else {
-                            if (!$condensed) {
-                                $task_sets_points_array[] = array(
-                                    'type' => 'task_set',
-                                    'points' => '-',
-                                    'flag' => 'notInGroup',
-                                );
                             }
                         }
                         $task_sets_points += $points;
