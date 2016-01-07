@@ -13,6 +13,7 @@ class Participants extends LIST_Controller {
         parent::__construct();
         $this->_init_language_for_teacher();
         $this->_load_teacher_langfile();
+	$this->_load_teacher_langfile('students');
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
         $this->_init_teacher_quick_prefered_course_menu();
