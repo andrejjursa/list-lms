@@ -17,3 +17,4 @@ docker_source/test_volume/*
 test_locks/*
 !test_locks/.gitkeep
 test_scripts/workers_info.txt
+.idea/*
