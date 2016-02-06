@@ -82,7 +82,6 @@ jQuery(document).ready(function($) {
         if (confirm(messages.clone_question)) {
             var url = $(this).attr('href');
             api_ajax_update(url, 'post', {}, function(output) {
-                console.log(output);
                 if (output.result !== undefined && output.message !== undefined) {
                     show_notification(output.message, output.result ? 'success' : 'error');
                     if (output.result === true) {
@@ -131,6 +130,23 @@ jQuery(document).ready(function($) {
                     css: {
                         background: 'rgba(255,255,255,0)'
                     }
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '#table_content_id a.change_publication_status', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        console.log(url);
+        api_ajax_update(url, 'post', {}, function(output) {
+            console.log(output);
+            if (typeof output.status !== undefined && typeof output.status !== undefined) {
+                if (output.status) {
+                    reload_all_task_sets();
+                    show_notification(output.message, 'success');
+                } else {
+                    show_notification(output.message, 'error');
                 }
             }
         });

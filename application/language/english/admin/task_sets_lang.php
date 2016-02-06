@@ -163,3 +163,4 @@ $lang['admin_task_sets_project_selection_fieldset_legend_not_selected'] = 'Stude
 $lang['admin_task_sets_project_selection_hint'] = 'Here you can see tasks with list of students which have selected it. Gray list item means that student already submit solution and project selection can\'t be changed. You can change student\'s project by draging and droping student list item into different task list. <strong>WARNING: Currently there is no possibility to move student item back to list of students without task selected!</strong>';
 $lang['admin_task_sets_project_selection_select_question'] = 'Are you sure to select this task for given student?';
 $lang['admin_task_sets_help_button_new_task_set'] = 'Help me with new task set form';
+$lang['admin_task_sets_publication_status_switched'] = 'Publication status of "%s" was switched.';

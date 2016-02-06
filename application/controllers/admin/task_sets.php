@@ -493,6 +493,30 @@ class Task_sets extends LIST_Controller {
             $this->output->set_output(json_encode(FALSE));
         }
     }
+
+    public function change_publication_status($task_set_id = null) {
+        $output = new stdClass();
+        $output->message = '';
+        $output->status = FALSE;
+
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $task_set = new Task_set();
+        $task_set->get_by_id((int)$task_set_id);
+
+        if ($task_set->exists()) {
+            $task_set->published = 1 - (int)$task_set->published;
+            $task_set->save();
+            $this->db->trans_commit();
+            $output->message = sprintf($this->lang->line('admin_task_sets_publication_status_switched'), $this->lang->get_overlay_with_default('task_sets', $task_set->id, 'name', $task_set->title));
+            $output->status = TRUE;
+        } else {
+            $this->db->trans_rollback();
+            $output->message = $this->lang->line('admin_task_sets_error_task_set_not_found');
+        }
+
+        $this->output->set_output(json_encode($output));
+    }
     
     public function preview($task_set_id = null) {
         $task_set = new Task_set();

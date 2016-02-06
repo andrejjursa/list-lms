@@ -163,3 +163,4 @@ $lang['admin_task_sets_project_selection_fieldset_legend_not_selected'] = 'Štud
 $lang['admin_task_sets_project_selection_hint'] = 'Tu môžete vidieť zoznam úloh s zoznamom študentov, ktorí majú úlohu vybranú. Šedá položka zoznamu znamená, že študent už odoslal riešenie úlohy a nie je už viac možné zmeniť jeho vybranú úlohu. Zmeniť úlohu študentovi môžete uchopením a potiahnutím položky s menom študenta do zoznamu príslušnej úlohy. <strong>POZOR: Momentálne nie je možné študentovu položku vrátiť nazad do zoznamu študentov bez vybranej úlohy!</strong>';
 $lang['admin_task_sets_project_selection_select_question'] = 'Ste si istý(á), že chcete vybrať túto úlohu pre daného študenta?';
 $lang['admin_task_sets_help_button_new_task_set'] = 'Pomoc s formulárom novej zostavy';
+$lang['admin_task_sets_publication_status_switched'] = 'Stav publikovania zostavy "%s" sa zmenil.';
