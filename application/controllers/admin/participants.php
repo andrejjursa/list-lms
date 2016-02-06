@@ -120,7 +120,7 @@ class Participants extends LIST_Controller {
                     $output['message'] = $this->lang->line('admin_participants_message_course_not_set');
                     $process_ok = FALSE;
                 }
-                if ($course->participant->where('allowed', 1)->count() > intval($course->capacity)) {
+                if ($course->participant->where('allowed', 1)->count() >= intval($course->capacity)) {
                     $output['message'] = $this->lang->line('admin_participants_message_course_is_full');
                     $process_ok = FALSE;
                 }
@@ -146,7 +146,7 @@ class Participants extends LIST_Controller {
                 $group->where_related_participant('allowed', 1);
                 $group->get_by_id(intval($participant->group_id));
                 if ($group->exists()) {
-                     if (intval($group->participant_count) > intval($group->group_capacity)) {
+                     if (intval($group->participant_count) >= intval($group->group_capacity)) {
                         $output['message'] = $this->lang->line('admin_participants_message_group_is_full');
                         $process_ok = FALSE;
                     }

@@ -69,15 +69,37 @@ class Courses extends LIST_Controller {
         if ($course->exists()) {
             if ($course->is_subscription_allowed()) {
                 if ($student->participant->where_related($course)->count() == 0) {
-                    $participant = new Participant();
-                    $participant->allowed = 0;
-                    $participant->save(array($student, $course));
-                    $this->db->trans_commit();
-                    $output->message = sprintf($this->lang->line('courses_message_signed_up_for_course'), $this->lang->text($course->name));
-                    $this->parser->assign('course', $course);
-                    $output->content = $this->parser->parse('frontend/courses/single_course.tpl', array(), TRUE);
-                    $output->status = TRUE;
-                    $this->_action_success();
+                    if ($course->auto_accept_students == 1) {
+                        $participants = new Participant();
+                        $participants->where_related_course($course);
+                        $participants->where('allowed', 1);
+                        $participants_count = $participants->count();
+                        if ($participants_count >= (int)$course->capacity) {
+                            $output->message = $this->lang->line('courses_message_course_is_full');
+                            $output->status = FALSE;
+                            $this->db->trans_rollback();
+                        } else {
+                            $participant = new Participant();
+                            $participant->allowed = 1;
+                            $participant->save(array($student, $course));
+                            $this->db->trans_commit();
+                            $output->message = sprintf($this->lang->line('courses_message_signed_up_for_course_approved'), $this->lang->text($course->name));
+                            $this->parser->assign('course', $course);
+                            $output->content = $this->parser->parse('frontend/courses/single_course.tpl', array(), TRUE);
+                            $output->status = TRUE;
+                            $this->_action_success();
+                        }
+                    } else {
+                        $participant = new Participant();
+                        $participant->allowed = 0;
+                        $participant->save(array($student, $course));
+                        $this->db->trans_commit();
+                        $output->message = sprintf($this->lang->line('courses_message_signed_up_for_course'), $this->lang->text($course->name));
+                        $this->parser->assign('course', $course);
+                        $output->content = $this->parser->parse('frontend/courses/single_course.tpl', array(), TRUE);
+                        $output->status = TRUE;
+                        $this->_action_success();
+                    }
                 } else {
                     $output->message = $this->lang->line('courses_message_already_in_course_or_waiting_for_approwal');
                     $this->db->trans_rollback();
