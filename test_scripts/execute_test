@@ -23,6 +23,9 @@ if [[ "$SANDBOX" == "implicit" ]] ; then
 	elif [[ "$TEST_TYPE" == "pythonIO" ]] ; then
 		$MY_PATH/prepare_pythonIO_test $TESTFILE $TIMEOUT $TEST_PATH $TEST_JUDGE_TYPE
 		exit $?
+	elif [[ "$TEST_TYPE" == "hUnit" ]] ; then
+		$MY_PATH/prepare_hUnit_test $TESTFILE $TIMEOUT $TEST_PATH
+		exit $?
 	fi
 elif [[ "$SANDBOX" == "docker" ]] ; then
 	docker run --rm=true list/sandbox echo "" > /dev/null 2> /dev/null
@@ -40,6 +43,9 @@ elif [[ "$SANDBOX" == "docker" ]] ; then
 		exit $?
 	elif [[ "$TEST_TYPE" == "pythonIO" ]] ; then
 		docker run --rm=true --net="none" --volume="$TEST_PATH:/list_test_files" list/sandbox run_test pyIO $TESTFILE $TIMEOUT $TEST_JUDGE_TYPE
+		exit $?
+	elif [[ "$TEST_TYPE" == "hUnit" ]] ; then
+		$MY_PATH/execute_test $1 implicit $3 $4 $5 $6
 		exit $?
 	fi
 fi

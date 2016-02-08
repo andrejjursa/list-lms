@@ -39,7 +39,8 @@ class Task_sets extends LIST_Controller {
     public function new_task_set_form() {
         $this->inject_courses();
         $this->inject_test_types();
-        $this->parser->parse('backend/task_sets/new_task_set_form.tpl');
+        $url_params = $this->uri->ruri_to_assoc(3);
+        $this->parser->parse('backend/task_sets/new_task_set_form.tpl', array('url_params' => $url_params));
     }
     
     public function get_task_set_types($course_id, $selected_id = NULL, $task_set_id = NULL) {
@@ -215,7 +216,7 @@ class Task_sets extends LIST_Controller {
         $this->load->library('form_validation');
         
         $task_set_data = $this->input->post('task_set');
-        
+
         $this->form_validation->set_rules('task_set[content_type]', 'lang:admin_task_sets_form_field_content_type', 'required');
         
         if (isset($task_set_data['content_type']) && $task_set_data['content_type'] == 'task_set') {
@@ -276,6 +277,9 @@ class Task_sets extends LIST_Controller {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 $this->_action_success();
+                if ($this->input->post('open_task_set') == 'true') {
+                    redirect(create_internal_url('admin_task_sets/new_task_set_form/force_open_task_set_id/' . (int)$task_set->id));
+                }
             } else {
                 $this->db->trans_rollback();
                 $this->messages->add_message('lang:admin_task_sets_flash_message_save_fail', Messages::MESSAGE_TYPE_ERROR);
@@ -508,7 +512,7 @@ class Task_sets extends LIST_Controller {
             $task_set->published = 1 - (int)$task_set->published;
             $task_set->save();
             $this->db->trans_commit();
-            $output->message = sprintf($this->lang->line('admin_task_sets_publication_status_switched'), $this->lang->get_overlay_with_default('task_sets', $task_set->id, 'name', $task_set->title));
+            $output->message = sprintf($this->lang->line('admin_task_sets_publication_status_switched'), $this->lang->get_overlay_with_default('task_sets', $task_set->id, 'name', $task_set->name));
             $output->status = TRUE;
         } else {
             $this->db->trans_rollback();
