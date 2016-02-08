@@ -514,6 +514,7 @@ class Task_sets extends LIST_Controller {
             $this->db->trans_commit();
             $output->message = sprintf($this->lang->line('admin_task_sets_publication_status_switched'), $this->lang->get_overlay_with_default('task_sets', $task_set->id, 'name', $task_set->name));
             $output->status = TRUE;
+            $this->_action_success();
         } else {
             $this->db->trans_rollback();
             $output->message = $this->lang->line('admin_task_sets_error_task_set_not_found');
