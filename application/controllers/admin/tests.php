@@ -273,7 +273,7 @@ class Tests extends LIST_Controller {
                 $test->name = trim($test_data['name']);
                 $test->type = $test_data['type'];
                 $test->subtype = $test_data['subtype'];
-                $test->enabled = 0;
+                $test->enabled = 1;
                 $test->configuration = serialize(array());
                 if ($test->save($task) && $this->db->trans_status()) {
                     $this->db->trans_commit();

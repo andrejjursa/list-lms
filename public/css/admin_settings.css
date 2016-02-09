@@ -12,3 +12,5 @@ div.changelog_version div.version_reports div.report.report_type_new p.text { co
 div.changelog_version div.version_reports div.report.report_type_change p.text { color: blue; }
 div.changelog_version div.version_reports div.report.report_type_fix p.text { color: magenta; }
 div.changelog_version div.version_reports div.report.report_type_remove p.text { color: red; }
+
+div.version_info { width: 60%; margin: 0 auto; border: 1px solid black; padding: 5px; border-radius: 10px; margin-top: 25px; box-shadow: black 10px 10px 10px; }

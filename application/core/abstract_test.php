@@ -477,7 +477,7 @@ abstract class abstract_test {
         foreach ($path_segments as $path_segment) {
             $path_to_create .= ($path_to_create != '' ? DIRECTORY_SEPARATOR : '') . $path_segment;
             if (!file_exists($path_to_create)) {
-                if (!mkdir($path_to_create, DIR_READ_MODE)) {
+                if (!mkdir($path_to_create, DIR_READ_MODE, TRUE)) {
                     throw new TestException(sprintf($this->CI->lang->line('tests_general_error_cant_create_path'), $path_to_create), 1200001);
                 }
             }

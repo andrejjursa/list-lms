@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#################################
+# Do not run manually
+#################################
+
+TESTFILE=$1
+TIMEOUT=$2
+BIN_PATH=$3
+#
+nice $BIN_PATH/run_with_timeout $TIMEOUT ./$TESTFILE.o
+exit $?

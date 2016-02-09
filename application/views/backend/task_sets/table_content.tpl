@@ -27,7 +27,7 @@
         {if $task_set->task_set_permission_count ne 0}
             {$task_set_permissions = $task_set->task_set_permission->where('enabled', 1)->include_related('group')->order_by_related_with_constant('group', 'name', 'asc')->get()}
         {/if}
-        <tr{if $opened_task_set->exists() and $opened_task_set->id eq $task_set->id} class="opened_task_set"{/if}>
+        <tr class="{if $opened_task_set->exists() and $opened_task_set->id eq $task_set->id}opened_task_set{/if} {if $task_set->published ne 1}not_published_task_set{/if}">
             <td>{$task_set->id|intval}</td>
             {if $filter.fields.created}<td>{$task_set->created|date_format:{translate line='common_datetime_format'}}</td>{/if}
             {if $filter.fields.updated}<td>{$task_set->updated|date_format:{translate line='common_datetime_format'}}</td>{/if}
@@ -47,7 +47,10 @@
             </td>{/if}
             {if $filter.fields.task_set_type}<td>{translate_text text=$task_set->task_set_type_name}</td>{/if}
             {if $filter.fields.tasks}<td>{$task_set->task_count}</td>{/if}
-            {if $filter.fields.published}<td>{if $task_set->published eq 1}{translate line='admin_task_sets_table_field_published_yes'}{else}{translate line='admin_task_sets_table_field_published_no'}{/if}</td>{/if}
+            {if $filter.fields.published}<td>
+                {if $task_set->published eq 1}<span class="published_yes">{translate line='admin_task_sets_table_field_published_yes'}{else}<span class="published_no">{translate line='admin_task_sets_table_field_published_no'}{/if}</span>
+                <a href="{internal_url url="admin_task_sets/change_publication_status/{$task_set->id|intval}"}" class="change_publication_status">[{if $task_set->published eq 1}-{else}+{/if}]</a>
+                </td>{/if}
             {if $filter.fields.publish_start_time}<td>
                 {if $task_set->task_set_permission_count eq 0}
                     {$task_set->publish_start_time|date_format:{translate line='common_datetime_format'}}

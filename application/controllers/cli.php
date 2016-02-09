@@ -33,7 +33,8 @@ class Cli extends CI_Controller {
         echo '  send_deadline_notifications' . "\n";
         echo '  garbage_collector' . "\n";
         echo '  merge_configuration' . "\n";
-        echo '  upgrade_java_tests';
+        echo '  upgrade_java_tests' . "\n";
+	echo '  clear_cache';
     }
 
     public function upgrade_java_tests() {
@@ -261,6 +262,14 @@ class Cli extends CI_Controller {
             }
         }
         return NULL;
+    }
+
+    public function clear_cache() {
+        $this->load->database();
+        echo 'Clearing cache ...' . "\n";
+        $this->parser->clearAllCache();
+        echo 'Clearing compiled versions of templates ...' . "\n";
+        $this->parser->clearCompiledTemplate();
     }
 
     /**

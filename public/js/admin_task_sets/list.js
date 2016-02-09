@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
     
     make_switchable_form('#new_task_set_form_id');
     make_filter_form('#filter_form_id');
-    
+
     var reload_all_task_sets = function() {
         var url = global_base_url + 'index.php/admin_task_sets/get_all_task_sets';
         var data = $('#filter_form_id').serializeArray();
@@ -24,19 +24,43 @@ jQuery(document).ready(function($) {
         };
         api_ajax_load(url, '#table_content_id', 'post', data, onSuccess);
     };
-    
-    $('#new_task_set_form_id').submit(function(event) {
+
+    var force_open_task_set = function(url) {
+        api_ajax_load(url, '#header_open_task_set_id', 'get', {}, function() {
+            reload_all_task_sets();
+            show_notification(messages.after_open, 'success');
+        });
+    };
+
+    var submit_form = function(event, open_task_set) {
         event.preventDefault();
-        var url = $(this).attr('action');
-        var data = $(this).serializeArray();
+        var url = $('#new_task_set_form_id').attr('action');
+        var data = $('#new_task_set_form_id').serializeArray();
+        data.push({'name': 'open_task_set', 'value': open_task_set});
         var success = function() {
             if ($('#new_task_set_form_id .flash_message.message_success').length > 0) {
-                reload_all_task_sets();
+                if (typeof open_task_set_id !== 'undefined' && open_task_set_id !== null) {
+                    force_open_task_set(global_base_url + 'admin_task_sets/open/task_set_id/' + open_task_set_id);
+                } else {
+                    reload_all_task_sets();
+                }
             }
             $.getScript(global_base_url + 'public/js/admin_task_sets/form.js');
             $('#new_task_set_form_id').formErrorWarning();
         };
         api_ajax_load(url, '#new_task_set_form_id', 'post', data, success);
+    };
+
+    $(document).on('click', '#new_task_set_form_id input.button[type=submit][name=submit_button]', function(event) {
+        submit_form(event, false);
+    });
+
+    $(document).on('click', '#new_task_set_form_id input.button[type=submit][name=submit_and_open_button]', function(event) {
+        submit_form(event, true);
+    });
+
+    $('#new_task_set_form_id').submit(function(event) {
+        submit_form(event, false);
     });
     
     $('#filter_form_id').submit(function(event) {
@@ -71,10 +95,7 @@ jQuery(document).ready(function($) {
     $(document).on('click', '#table_content_id a.open_task_set_button', function(event) {
         event.preventDefault();
         var url = $(this).attr('href');
-        api_ajax_load(url, '#header_open_task_set_id', 'get', {}, function() {
-            reload_all_task_sets();
-            show_notification(messages.after_open, 'success');
-        });
+        force_open_task_set(url);
     });
     
     $(document).on('click', '#table_content_id a.clone_task_set', function(event) {
@@ -82,7 +103,6 @@ jQuery(document).ready(function($) {
         if (confirm(messages.clone_question)) {
             var url = $(this).attr('href');
             api_ajax_update(url, 'post', {}, function(output) {
-                console.log(output);
                 if (output.result !== undefined && output.message !== undefined) {
                     show_notification(output.message, output.result ? 'success' : 'error');
                     if (output.result === true) {
@@ -131,6 +151,23 @@ jQuery(document).ready(function($) {
                     css: {
                         background: 'rgba(255,255,255,0)'
                     }
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '#table_content_id a.change_publication_status', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        console.log(url);
+        api_ajax_update(url, 'post', {}, function(output) {
+            console.log(output);
+            if (typeof output.status !== undefined && typeof output.status !== undefined) {
+                if (output.status) {
+                    reload_all_task_sets();
+                    show_notification(output.message, 'success');
+                } else {
+                    show_notification(output.message, 'error');
                 }
             }
         });
