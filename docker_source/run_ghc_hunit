@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Test configuration variables:
+TESTDIR="/list_test_files"
+OUTPUT_FILE="$TESTDIR/__list_output.txt"
+SCORE_FILE="$TESTDIR/__list_score.txt"
+COMPILATION_LOG="/list_compilation_process/list_compilation_log.txt"
+TIMEOUT=$2
+TESTCLASS=$1
+
+# Initialization:
+cd $TESTDIR
+
+# STAGE 1 Compilation:
+echo "<pre>" > $OUTPUT_FILE
+echo "Stage 1 / 2: source code compilation ..." >> $OUTPUT_FILE
+ghc $FILE -o $FILE.o > $COMPILATION_LOG 2> $COMPILATION_LOG
+exitcode=$?
+cat $COMPILATION_LOG >> $OUTPUT_FILE
+if [[ $exitcode -ne 0 ]] ; then
+	echo "<br />Stage 1 failed. Compilation unsuccessful. Please correct the above errors before the tests will be run.</pre>" >> $OUTPUT_FILE
+	exit 100
+fi
+
+# STAGE 2 Run:
+echo "<br />Stage 2 / 2: running test ..." >> $OUTPUT_FILE
+rm -f *.hs 2> /dev/null
+rm -f *.hs~ 2> /dev/null
+echo "----- Running test file $TESTCLASS<br />" >> $OUTPUT_FILE
+nice run_with_timeout $TIMEOUT $FILE.o > $SCORE_FILE 2> $SCORE_FILE
+return_val=$?
+cat $SCORE_FILE >> $OUTPUT_FILE
+echo "----- Testing finished.</pre>" >> $OUTPUT_FILE
+exit $return_val

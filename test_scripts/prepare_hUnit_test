@@ -33,7 +33,6 @@ cd $CURRENT_PATH
 echo "<br />Stage 2 / 2: running test ..." >> $OUTPUT_FILE
 rm -f $TEST_PATH/*.hs 2> /dev/null
 rm -f $TEST_PATH/*.hs~ 2> /dev/null
-rm -f $TEST_PATH/*.hi 2> /dev/null
 cp -fr $TEST_PATH/* $TEST_PATH/__list_out 2> /dev/null
 rm -f $TEST_PATH/__list_out/__list_output.txt 2> /dev/null
 rm -f $TEST_PATH/__list_out/__list_compilation_log.txt 2> /dev/null

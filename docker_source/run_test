@@ -19,4 +19,7 @@ elif [[ "$TYPE" == "pyUnit" ]] ; then
 elif [[ "$TYPE" == "pyIO" ]] ; then
 	sudo -u test_runner run_python_io $FILE $TIMEOUT $JUDGE 2> /dev/null
 	exit $?
+elif [[ "$TYPE" == "hUnit" ]] ; then
+	sudo -u test_runner run_ghc_hunit $FILE $TIMEOUT 2> /dev/null
+	exit $?
 fi

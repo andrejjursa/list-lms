@@ -40,5 +40,9 @@ ADD run_python_io /usr/local/bin/
 RUN chmod a+xr,a-w,u+w /usr/local/bin/run_python_io
 RUN chgrp test_runner /usr/local/bin/run_python_io
 
+ADD run_ghc_hunit /usr/local/bin/
+RUN chmod a+xr,a-w,u+w /usr/local/bin/run_ghc_hunit
+RUN chgrp test_runner /usr/local/bin/run_ghc_hunit
+
 ADD run_test /usr/local/bin/
 RUN chmod a-xrw,u+xrw /usr/local/bin/run_test
