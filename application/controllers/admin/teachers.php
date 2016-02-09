@@ -26,6 +26,19 @@ class Teachers extends LIST_Controller {
                 redirect(create_internal_url($redirects['teacher']));
             }
         } else {
+            $this->load->helper('changelog');
+            $this->load->library('changelog');
+            $this->config->item('list_version');
+            $this->_load_teacher_langfile('settings');
+            $version = $this->config->item('list_version');
+            try {
+		$this->changelog->read(FCPATH . 'changelog.txt');
+                $this->changelog->parse();
+                $this->parser->assign('list_version_info', $this->changelog->get($version));
+                $this->parser->assign('version', $version);
+                $this->parser->add_css_file('admin_settings.css');
+            } catch (Exception $e) {
+            }
             $this->parser->add_js_file('admin_teachers/login.js?1');
             $this->parser->parse('backend/teachers/login.tpl', array('uri_params' => $uri_params));
         }
