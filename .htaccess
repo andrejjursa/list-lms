@@ -2,7 +2,7 @@
     SetEnv MOD_REWRITE_ENABLED yes
 
     RewriteEngine on
-    RewriteBase /git/
+    RewriteBase /list/
     
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
