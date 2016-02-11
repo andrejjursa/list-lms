@@ -15,6 +15,7 @@ class Messages {
     const MESSAGE_TYPE_DEFAULT = 'default';
     const MESSAGE_TYPE_SUCCESS = 'success';
     const MESSAGE_TYPE_ERROR = 'error';
+    const MESSAGE_TYPE_SCRIPT = 'script';
     
     const FLASH_MESSAGES_NAME = 'flash_messages';
     

@@ -10,10 +10,12 @@ $lang['courses_message_signed_up_and_waiting'] = 'Prihlásený(á), čaká sa na
 $lang['courses_message_course_not_found'] = 'Zvolený kurz sa nenašiel.';
 $lang['courses_message_already_in_course_or_waiting_for_approwal'] = 'Už ste v kurze alebo čakáte na schválenie.';
 $lang['courses_message_signed_up_for_course'] = 'Si zapísaný(á) na kurz %s. Počkaj na schválenie učiteľom.';
+$lang['courses_message_signed_up_for_course_approved'] = 'Si zapísaný(á) na kurz %s.';
 $lang['courses_messages_unknown_error'] = 'Vyskytla sa neznáma chyba. Prosím zopakujte pokus neskôr.';
 $lang['courses_message_switched_to_course'] = 'Úspešne prepnuté na kurz %s.';
 $lang['courses_message_cant_switch_to_unsigned_course'] = 'Nie je možné prepnúť na kurz. Buď ste neni členom kurzu alebo členstvo v kurze ešte nebolo schválené.';
 $lang['courses_message_subscription_disallowed'] = 'Prihlasovanie sa na tento kurz je zakázané.';
+$lang['courses_message_course_is_full'] = 'Vybraný kurz je plný.';
 
 $lang['courses_detail_page_title'] = 'Detaily kurzu';
 $lang['courses_detail_description_missing'] = 'Tento kurz nemá popis.';

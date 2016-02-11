@@ -15,6 +15,7 @@ $cache = array (
     9 => 'allow_subscription_to',
     10 => 'test_scoring_deadline',
     11 => 'hide_in_lists',
+    12 => 'auto_accept_students',
   ),
   'validation' => 
   array (
@@ -99,6 +100,13 @@ $cache = array (
     'hide_in_lists' => 
     array (
       'field' => 'hide_in_lists',
+      'rules' => 
+      array (
+      ),
+    ),
+    'auto_accept_students' => 
+    array (
+      'field' => 'auto_accept_students',
       'rules' => 
       array (
       ),

@@ -9,6 +9,7 @@ RUN apt-get upgrade -y
 RUN apt-get install -y openjdk-7-jdk junit4
 RUN apt-get install -y python3
 RUN apt-get install -y vim
+RUN apt-get install -y haskell-platform
 
 RUN apt-get install -y lib32z1 lib32ncurses5 lib32bz2-1.0 
 
@@ -38,6 +39,10 @@ RUN chgrp test_runner /usr/local/bin/run_python_pyUnit
 ADD run_python_io /usr/local/bin/
 RUN chmod a+xr,a-w,u+w /usr/local/bin/run_python_io
 RUN chgrp test_runner /usr/local/bin/run_python_io
+
+ADD run_ghc_hunit /usr/local/bin/
+RUN chmod a+xr,a-w,u+w /usr/local/bin/run_ghc_hunit
+RUN chgrp test_runner /usr/local/bin/run_ghc_hunit
 
 ADD run_test /usr/local/bin/
 RUN chmod a-xrw,u+xrw /usr/local/bin/run_test

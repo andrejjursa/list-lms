@@ -33,5 +33,22 @@
     </head>
     <body>
         <div class="loginbox">{block name='main_content'}{/block}</div>
+	{if $list_version_info and is_array($list_version_info) and count($list_version_info)}
+		<div class="version_info">
+			<div class="changelog_version">
+				<p class="version">{translate line='admin_settings_changelog_version'} {$version} ({$list_version_info.date|date_format:{translate line='common_date_format'}})</p>
+				{if $list_version_info.reports}
+				<div class="version_reports">
+					{foreach $list_version_info.reports as $report}
+					<div class="report report_type_{$report->getType()|strtolower}">
+						<p class="type">{translate line="admin_settings_changelog_type_{$report->getType()|strtolower}"}:</p>
+						<p class="text">{$report->getText($this->lang->get_current_idiom())|changelog_to_html}</p>
+					</div>
+					{/foreach}
+				</div>
+				{/if}
+			</div>
+		</div>
+	{/if}
     </body>
 </html>

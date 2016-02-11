@@ -20,6 +20,31 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.3.0 | 2016-02-09
+
+NEW V kurzoch je možné nastaviť automatické akceptovanie nových účastníkov.
+NEW [lang:english] In courses there is new option to automatically accept all students wanting to attend it.
+
+NEW Stav publikovania zostavy úloh je teraz možné zmeniť priamo zo zoznamu zostáv úloh. (Tlačidlá [+] a [-])
+NEW [lang:english] Publication status of task set can be changed directly from table of task sets now. (Buttons [+] and [-])
+
+NEW Novú zostavu úloh teraz možno uložiť s okamžitým otvorením na vkladanie úloh.
+NEW [lang:english] New task set can be saved with opening for tasks insertion now.
+
+NEW Testy pre haskell (GHC).
+NEW [lang:english] Tests for haskell (GHC).
+
+CHANGE V tabuľke zostáv úloh sa riadky označia červenou farbou, ak zostava nie je publikovaná.
+CHANGE [lang:english] In table of task sets lines will be marked with red color if particular task set is not published.
+
+CHANGE Odteraz sú nové testy sú automaticky povolené.
+CHANGE [lang:english] From now new tests are enabled by default.
+
+FIX Opravený problém, ktorý mohol spôsobyť nemožnosť zapísať N-tého študenta do kurzu alebo skupiny pre určenej pre maximálne N študentov.
+FIX [lang:english] Fixed problem where Nth student can't be applied to course targeted or group targeted for N students.
+
+END VERSION
+
 VERSION 1.2.4 | 2016-01-07
 
 NEW Do zoznamu účastníkov kurzu boli pridané tlačidlá na prihlásenie sa za študenta.

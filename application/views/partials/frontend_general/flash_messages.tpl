@@ -12,6 +12,12 @@
     <div class="flash_message message_error">
         {translate_text text=$flash_message.message}
     </div>
+    {elseif $flash_message.type eq 'script'}
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            {$flash_message.message}
+        });
+    </script>
     {/if}
 {/foreach}
 {$list_flash_messages = [] scope=global}
