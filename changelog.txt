@@ -20,7 +20,7 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
-VERSION 1.3.0 | 2016-02-06
+VERSION 1.3.0 | 2016-02-09
 
 NEW V kurzoch je možné nastaviť automatické akceptovanie nových účastníkov.
 NEW [lang:english] In courses there is new option to automatically accept all students wanting to attend it.
@@ -36,6 +36,9 @@ NEW [lang:english] Tests for haskell (GHC).
 
 CHANGE V tabuľke zostáv úloh sa riadky označia červenou farbou, ak zostava nie je publikovaná.
 CHANGE [lang:english] In table of task sets lines will be marked with red color if particular task set is not published.
+
+CHANGE Odteraz sú nové testy sú automaticky povolené.
+CHANGE [lang:english] From now new tests are enabled by default.
 
 FIX Opravený problém, ktorý mohol spôsobyť nemožnosť zapísať N-tého študenta do kurzu alebo skupiny pre určenej pre maximálne N študentov.
 FIX [lang:english] Fixed problem where Nth student can't be applied to course targeted or group targeted for N students.
