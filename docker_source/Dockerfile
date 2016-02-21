@@ -11,7 +11,7 @@ RUN apt-get install -y python3
 RUN apt-get install -y vim
 RUN apt-get install -y haskell-platform
 
-RUN apt-get install -y lib32z1 lib32ncurses5 lib32bz2-1.0 
+RUN apt-get install -y lib32z1 lib32ncurses5 libbz2-1.0 
 
 RUN adduser test_runner
 
