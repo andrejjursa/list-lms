@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:15.10
 
 MAINTAINER Andrej Jursa <jursa@freevision.sk>
 
@@ -6,12 +6,12 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y openjdk-7-jdk junit4
+RUN apt-get install -y openjdk-8-jdk junit4
 RUN apt-get install -y python3
 RUN apt-get install -y vim
 RUN apt-get install -y haskell-platform
 
-RUN apt-get install -y lib32z1 lib32ncurses5 lib32bz2-1.0 
+RUN apt-get install -y lib32z1 lib32ncurses5 libbz2-1.0 
 
 RUN adduser test_runner
 
