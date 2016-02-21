@@ -20,6 +20,16 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.3.0a | 2016-02-21
+
+CHANGE Zmena základného frameworku podporujúceho novšie PHP.
+CHANGE [lang:english] Change of base framework supporting newer PHP.
+
+FIX Úpravy sandboxu aby bol schopný fungovat na ubuntu server 15.10.
+FIX [lang:english] Changes in sandbox to work correctly on ubuntu server 15.10.
+
+END VERSION
+
 VERSION 1.3.0 | 2016-02-09
 
 NEW V kurzoch je možné nastaviť automatické akceptovanie nových účastníkov.
