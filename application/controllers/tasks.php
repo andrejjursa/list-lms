@@ -759,7 +759,7 @@ class Tasks extends LIST_Controller {
         
         foreach ($solutions as $solution) {
             $points[$solution->task_set_id] = array(
-                'points' => $solution->points,
+                'points' => $solution->points + $solution->tests_points,
                 'considered' => !(bool)$solution->not_considered,
             );
         }

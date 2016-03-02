@@ -20,6 +20,12 @@
             <div id="tabs-form">
                 <form action="{internal_url|add_to_url:$add_url url="admin_solutions/update_valuation/{$solution->task_set->id|intval}/{$solution->id|intval}"}" method="post" id="valuation_form_id">
                     <div class="field">
+                        <label for="solution_tests_points_id">{translate line="admin_solutions_valuation_form_label_tests_points"}:</label>
+                        <p class="input"><input type="text" name="solution[tests_points]" value="{$smarty.post.solution.tests_points|default:$solution->tests_points|escape:'html'}" id="solution_tests_points_id" /></p>
+                        <p class="input"><em>{translate line='admin_solutions_valuation_form_label_tests_points_hint'}</em></p>
+                        {form_error field='solution[tests_points]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                    </div>
+                    <div class="field">
                         <label for="solution_points_id" class="required">{translate line='admin_solutions_valuation_form_label_points'}:</label>
                         <p class="input"><input type="text" name="solution[points]" value="{$smarty.post.solution.points|default:$solution->points|escape:'html'}" id="solution_points_id" /></p>{capture name='total_points' assign='total_points'}{if !is_null($solution->task_set->points_override)}{$solution->task_set->points_override}{else}{$solution->task_set_total_points}{/if}{/capture}
                         <p class="input"><em>{translate|sprintf:{$total_points|floatval} line='admin_solutions_valuation_form_label_points_hint'}</em></p>

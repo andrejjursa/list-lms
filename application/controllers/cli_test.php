@@ -187,14 +187,14 @@ class Cli_test extends CI_Controller {
                             if ($solution->exists()) {
                                 if ($solution->not_considered == 0) {
                                     if ($solution->disable_evaluation_by_tests == 0) {
-                                        if ($solution->points < $total_score || is_null($solution->points)) {
-                                            $solution->points = $total_score;
+                                        if ($solution->tests_points < $total_score || is_null($solution->tests_points)) {
+                                            $solution->tests_points = $total_score;
                                             $solution->teacher_id = NULL;
                                             $solution->best_version = (int)$version;
                                             $solution->revalidate = 0;
                                             $save_solution = TRUE;
                                         } else {
-                                            $best_old_score = $solution->points;
+                                            $best_old_score = $solution->tests_points;
                                         }
                                     } else {
                                         $solution_disable_evaluation = TRUE;
@@ -203,7 +203,7 @@ class Cli_test extends CI_Controller {
                                     $solution_not_considered = TRUE;
                                 }
                             } else {
-                                $solution->points = $total_score;
+                                $solution->tests_points = $total_score;
                                 $solution->comment = '';
                                 $solution->teacher_id = NULL;
                                 $solution->best_version = (int)$version;

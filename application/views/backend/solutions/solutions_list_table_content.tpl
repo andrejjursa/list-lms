@@ -13,10 +13,10 @@
     </td>
     <td>{$task_set->get_student_files_count($solution->student_id)|intval}</td>
     <td>{$solution->ip_address}</td>
-    {if is_null($solution->points)}
+    {if is_null($solution->points) and is_null($solution->tests_points)}
     <td colspan="3">{translate line='admin_solutions_list_solution_not_valuated'}</td>
     {else}
-    <td>{$solution->points|floatval}</td>
+    <td>{$solution->points|floatval + $solution->tests_points|floatval}</td>
     <td><span title="{$solution->comment|strip_tags|escape:'html'}">{$solution->comment|strip_tags|truncate:20}</span></td>
     <td>{$solution->teacher_fullname} ({$solution->teacher_email})</td>
     {/if}
