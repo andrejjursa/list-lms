@@ -420,11 +420,21 @@ class Solutions extends LIST_Controller {
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
-    
+
+    public function _tests_points_value_check($value) {
+        if ($value === '') {
+            return TRUE;
+        } else {
+            return $this->form_validation->floatpoint($value);
+        }
+    }
+
     public function update_valuation($task_set_id, $solution_id) {
         $this->load->library('form_validation');
         
         $this->form_validation->set_rules('solution[points]', 'lang:admin_solutions_valuation_form_field_points', 'required|floatpoint');
+        $this->form_validation->set_rules('solution[tests_points]', 'lang:admin_solutions_valuation_form_field_tests_points', 'trim|callback__tests_points_value_check');
+        $this->form_validation->set_message('_tests_points_value_check', $this->lang->line('admin_solutions_valuation_form_field_tests_points_value_check_error'));
         
         if ($this->form_validation->run()) {
             $this->_transaction_isolation();
@@ -438,6 +448,7 @@ class Solutions extends LIST_Controller {
                     $solution->teacher_id = $this->usermanager->get_teacher_id();
                 }
                 $solution->from_array($solution_data, array('points', 'comment', 'not_considered', 'disable_evaluation_by_tests'));
+                $solution->tests_points = isset($solution_data['tests_points']) && $solution_data['tests_points'] !== '' ? $solution_data['tests_points'] : NULL;
                 $solution->revalidate = 0;
                 if ($solution->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
@@ -1216,7 +1227,7 @@ class Solutions extends LIST_Controller {
                 
                 if ($content_type_task_set->result_count() > 0 || $content_type_project->result_count() > 0) {
                     $solutions = new Solution();
-                    $solutions->select('task_set_id, points, not_considered, revalidate');
+                    $solutions->select('task_set_id, points, tests_points, not_considered, revalidate');
                     $solutions->where_related_student($student);
                     $solutions->group_start();
                         if (count($task_sets_ids) > 0) {
@@ -1229,7 +1240,7 @@ class Solutions extends LIST_Controller {
                     $solutions->get_iterated();
                     foreach ($solutions as $solution) {
                         $solutions_data[$solution->task_set_id] = array(
-                            'points' => $solution->points,
+                            'points' => is_null($solution->points) && is_null($solution->tests_points) ? NULL : ($solution->points + $solution->tests_points),
                             'not_considered' => $solution->not_considered,
                             'revalidate' => $solution->revalidate,
                         );

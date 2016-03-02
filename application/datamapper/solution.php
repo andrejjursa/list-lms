@@ -10,12 +10,13 @@ $cache = array (
     4 => 'student_id',
     5 => 'teacher_id',
     6 => 'comment',
-    7 => 'points',
+    7 => 'tests_points',
     8 => 'revalidate',
     9 => 'not_considered',
     10 => 'ip_address',
     11 => 'best_version',
     12 => 'disable_evaluation_by_tests',
+    13 => 'points',
   ),
   'validation' => 
   array (
@@ -69,9 +70,9 @@ $cache = array (
       array (
       ),
     ),
-    'points' => 
+    'tests_points' => 
     array (
-      'field' => 'points',
+      'field' => 'tests_points',
       'rules' => 
       array (
       ),
@@ -107,6 +108,13 @@ $cache = array (
     'disable_evaluation_by_tests' => 
     array (
       'field' => 'disable_evaluation_by_tests',
+      'rules' => 
+      array (
+      ),
+    ),
+    'points' => 
+    array (
+      'field' => 'points',
       'rules' => 
       array (
       ),

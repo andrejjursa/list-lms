@@ -44,13 +44,13 @@
                                 {translate line='tasks_table_no_uploading'}
                             {/if}
                         </td>
-                        <td class="td_points{if $task_set->solution_not_considered} not_considered{elseif $task_set->solution_revalidate} revalidate{/if}"{if !$task_set->solution_not_considered and $task_set->solution_revalidate} title="{translate line='tasks_table_points_in_revalidation_process'}"{/if}>{$task_set->solution_points|default:0|floatval} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if}</td>
+                        <td class="td_points{if $task_set->solution_not_considered} not_considered{elseif $task_set->solution_revalidate} revalidate{/if}"{if !$task_set->solution_not_considered and $task_set->solution_revalidate} title="{translate line='tasks_table_points_in_revalidation_process'}"{/if}>{$task_set->solution_points|default:0|floatval + $task_set->solution_tests_points|default:0|floatval} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if}</td>
                         <td class="td_comment">
-                            {if !is_null($task_set->solution_id) AND !is_null($task_set->solution_points)}
+                            {if !is_null($task_set->solution_id) AND (!is_null($task_set->solution_points) OR !is_null($task_set->solution_tests_points))}
                                 {if trim($task_set->solution_comment)}
                                     {if $task_set->solution_comment|mb_strlen > 40}
                                         <a href="javascript:void(0);" title="{translate line='tasks_table_click_to_display_comment'}" class="click_enlarge_comment" for="task_set_comment_{$task_set->id}">{$task_set->solution_comment|strip_tags|truncate:40}</a>
-                                        <div class="whole_comment" id="task_set_comment_{$task_set->id}" title="{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name} | {$task_set->solution_points|default:0|floatval} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if} | {$task_set->solution_teacher_fullname}"><div class="comment_body">{$task_set->solution_comment|nl2br}</div></div>
+                                        <div class="whole_comment" id="task_set_comment_{$task_set->id}" title="{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name} | {$task_set->solution_points|default:0|floatval + $task_set->solution_tests_points|default:0|floatval} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if} | {$task_set->solution_teacher_fullname}"><div class="comment_body">{$task_set->solution_comment|nl2br}</div></div>
                                     {else}
                                         {$task_set->solution_comment|nl2br}
                                     {/if}
