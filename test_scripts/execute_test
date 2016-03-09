@@ -28,7 +28,7 @@ if [[ "$SANDBOX" == "implicit" ]] ; then
 		exit $?
 	fi
 elif [[ "$SANDBOX" == "docker" ]] ; then
-	docker run --rm=true list/sandbox echo "" > /dev/null 2> /dev/null
+	docker run --rm=true --net="none" list/sandbox echo "" > /dev/null 2> /dev/null
 	dockerrunning=$?
 	if [[ $dockerrunning > 0 ]]; then
 		echo "Docker servis is not running! Switching task to implicit sandbox."
