@@ -44,7 +44,7 @@
                                 {translate line='tasks_table_no_uploading'}
                             {/if}
                         </td>
-                        <td class="td_points{if $task_set->solution_not_considered} not_considered{elseif $task_set->solution_revalidate} revalidate{/if}"{if !$task_set->solution_not_considered and $task_set->solution_revalidate} title="{translate line='tasks_table_points_in_revalidation_process'}"{/if}>{$task_set->solution_points|default:0|floatval + $task_set->solution_tests_points|default:0|floatval} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if}</td>
+                        <td class="td_points{if $task_set->solution_not_considered} not_considered{elseif $task_set->solution_revalidate} revalidate{/if}"{if !$task_set->solution_not_considered and $task_set->solution_revalidate} title="{translate line='tasks_table_points_in_revalidation_process'}"{/if}>{if is_null($task_set->solution_points) and is_null($task_set->solution_tests_points)}-{else}{$task_set->solution_points|default:0|floatval + $task_set->solution_tests_points|default:0|floatval}{/if} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if}</td>
                         <td class="td_comment">
                             {if !is_null($task_set->solution_id) AND (!is_null($task_set->solution_points) OR !is_null($task_set->solution_tests_points))}
                                 {if trim($task_set->solution_comment)}
