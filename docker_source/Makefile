@@ -9,3 +9,6 @@ run:
 
 test:
 	docker run -t -i --rm=true --net="none" --volume="$(PWD)/test_volume:/list_test_files" list/sandbox
+
+echotest: 
+	docker run --rm=true --net="none" list/sandbox echo "Just testing ..."
