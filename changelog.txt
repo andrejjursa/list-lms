@@ -20,6 +20,13 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.3.1b | 2016-03-14
+
+FIX Doplnený chýbajúci scrollbar v testoch.
+FIX [lang:english] Added missing scrollbar in tests.
+
+END VERSION
+
 VERSION 1.3.1a | 2016-03-09
 
 CHANGE Neohodnotené zostavy sa študentom zobrazujú obodované ako - / k, kde k je počet bodov za zostavu.
