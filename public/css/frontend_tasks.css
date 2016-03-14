@@ -105,7 +105,7 @@ table.solution_tests_table tbody tr.test_instructions td.test_instructions { bor
 table.solution_tests_table tfoot td { padding: 4px; background-color: #99ff99; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }
 
 #tests_execution_area_id h4 { margin: 15px 5px 10px 5px; font-size: 1.1em; font-weight: bold; }
-#tests_execution_area_id div.test_execution_div { overflow-x: auto; max-width: 100%; }
+#tests_execution_area_id div.test_execution_div { overflow-x: scroll; max-width: 100%; }
 
 table.tests_evaluation_table { margin-top: 10px; border-collapse: collapse; width: 100%; }
 table.tests_evaluation_table thead { background-color: silver; }
