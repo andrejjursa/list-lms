@@ -105,7 +105,7 @@ table.solution_tests_table tbody tr.test_instructions td.test_instructions { bor
 table.solution_tests_table tfoot td { padding: 4px; background-color: #99ff99; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }
 
 #tests_execution_area_id h4 { margin: 15px 5px 10px 5px; font-size: 1.1em; font-weight: bold; }
-#tests_execution_area_id div.test_execution_div { overflow-x: scroll; max-width: 100%; }
+#tests_execution_area_id div.test_execution_div { overflow-x: auto; max-width: 100%; }
 
 table.tests_evaluation_table { margin-top: 10px; border-collapse: collapse; width: 100%; }
 table.tests_evaluation_table thead { background-color: silver; }
@@ -132,6 +132,7 @@ table.tests_result_table thead tr th:last-child { border-top-right-radius: 3px; 
 table.tests_result_table tbody tr td { padding: 3px; }
 table.tests_result_table tbody tr td.number { width: 75px; }
 table.tests_result_table tbody tr { border-bottom: 1px dashed silver; }
+table.tests_result_table tbody tr div.test_result_text { overflow-x: scroll; }
 table.tests_result_table tbody td div.test_result_text.with_evaluation_table { width: 60%; float: left; }
 table.tests_result_table tbody td div.test_evaluation_table { margin-left: 60%; }
 table.tests_result_table tbody td div.test_evaluation_table table { width: 100%; border-collapse: collapse; }
