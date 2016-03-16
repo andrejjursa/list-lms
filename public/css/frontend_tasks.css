@@ -21,6 +21,9 @@ table.task_sets_table tbody td.td_task_set_type { background-color: #99ff99; pad
 table.task_sets_table tbody td.td_task_set_type_points { background-color: #99ff99; padding-left: 20px; font-weight: bold; border-bottom: 1px solid black; }
 table.task_sets_table tbody td div.whole_comment { display: none; }
 table.task_sets_table tbody td.td_points.revalidate { color: red; text-decoration: underline; }
+table.task_sets_table tbody tr.task_after_deadline td { color: gray; }
+table.task_sets_table tbody tr.task_after_deadline td.td_name a { color: darkgreen; }
+table.task_sets_table tbody tr.task_after_deadline td.td_name a:hover { color: darkblue; }
 div.points_total { padding: 5px 13px; margin: 15px 0 5px 0; background-color: #99ff99; border-radius: 3px; }
 div.comment_body { background-color: white; padding: 15px; color: black; }
 div.comment_body a { color: green; }
