@@ -25,12 +25,18 @@
                     </tr>
                 </tfoot>
                 <tbody>
+                    {$current_time = date('Y-m-d H:i:s')}
                     {foreach $task_set_types as $task_set_type}{if $task_set_in_types[$task_set_type->id]}
                     <tr>
                         <td colspan="4" class="td_task_set_type">{translate_text|str_to_first_upper text=$task_set_type->name}</td>
                     </tr>
                     {foreach $task_set_in_types[$task_set_type->id] as $task_set}
-                    <tr class="{cycle values="tr_background_odd,tr_background_even" name=$task_set_type->name}">
+                    {if $task_set->join_upload_solution eq 1 and !is_null($task_set->pb_upload_end_time) and $task_set->pb_upload_end_time lt $current_time}
+                        {$after_deadline = 1}
+                    {else}
+                        {$after_deadline = 0}
+                    {/if}
+                    <tr class="{cycle values="tr_background_odd,tr_background_even" name=$task_set_type->name}{if $after_deadline} task_after_deadline{/if}">
                         <td class="td_name">{capture name='task_set_name' assign='task_set_name'}{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}{/capture}
                             <a href="{internal_url url="tasks/task/{$task_set->id}{$task_set_name|text_convert_for_url}"}">{$task_set_name}</a>
                             {$files_count = $task_set->get_student_files_count($list_student_account_model->id)}{if $files_count gt 0}

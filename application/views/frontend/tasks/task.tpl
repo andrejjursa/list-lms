@@ -165,7 +165,7 @@
                         <tbody>
                         {foreach $solution_files as $file}
                             <tr>
-                                {if $show_tests}<td class="select"><input type="radio" name="test[version]" value="{$file@key}" /></td>{/if}
+                                {if $show_tests}<td class="select"><input type="radio" name="test[version]" value="{$file@key}"{if $file@last} checked="checked"{/if} /></td>{/if}
                                 <td class="version">{$file@key}</td>
                                 {if isset($versions_metadata[$file@key]) && $versions_metadata[$file@key]->download_lock}
                                 <td class="file"><span class="download_lock">{$file.file_name}_{$file@key}.zip</span></td>

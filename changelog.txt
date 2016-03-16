@@ -20,6 +20,19 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.3.1b | 2016-03-16
+
+CHANGE Posledná verzia riešenia v zozname riešení je automaticky označené na testovanie.
+CHANGE [lang:english] Last version of solution in solution list is automatically selected for testing.
+
+CHANGE Ak je úloha po termíne odosielania, zobrazí sa v zozname šedou farbou.
+CHANGE [lang:english] If task is after it deadline, it will be shown in list with gray color.
+
+FIX Doplnený chýbajúci scrollbar v testoch.
+FIX [lang:english] Added missing scrollbar in tests.
+
+END VERSION
+
 VERSION 1.3.1a | 2016-03-09
 
 CHANGE Neohodnotené zostavy sa študentom zobrazujú obodované ako - / k, kde k je počet bodov za zostavu.
