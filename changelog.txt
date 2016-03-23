@@ -20,6 +20,16 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.3.1c | 2016-03-23
+
+CHANGE Nové testy budú mať východzí timeout nastavený na 15 sekúnd.
+CHANGE [lang:english] New tests will have default timeout set to 15 seconds.
+
+CHANGE Text z výsledku testu môže mať teraz kapacitu až 16MiB.
+CHANGE [lang:english] Text from test result can have capacity 16MiB now.
+
+END VERSION
+
 VERSION 1.3.1b | 2016-03-16
 
 CHANGE Posledná verzia riešenia v zozname riešení je automaticky označené na testovanie.
