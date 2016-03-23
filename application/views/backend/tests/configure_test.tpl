@@ -24,7 +24,7 @@
             </div>
             <div class="field">
                 <label for="test_timeout_id" class="required">{translate line='admin_tests_test_form_label_timeout'}:</label>
-                <p class="input"><input type="text" name="test[timeout]" value="{$smarty.post.test.timeout|default:$test->timeout|default:90000|escape:'html'}" id="test_timeout_id" /></p>
+                <p class="input"><input type="text" name="test[timeout]" value="{$smarty.post.test.timeout|default:$test->timeout|default:15000|escape:'html'}" id="test_timeout_id" /></p>
                 <p class="input"><em>{translate line='admin_tests_test_form_label_timeout_hint'}</em></p>
                 {form_error field='test[timeout]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
