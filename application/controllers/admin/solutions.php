@@ -569,19 +569,26 @@ class Solutions extends LIST_Controller {
         $this->store_task_set_selection_filter($filter);
         
         $this->db->query('CREATE TEMPORARY TABLE course_task_set_type_rel_override AS ( SELECT ctstr.course_id, ctstr.task_set_type_id, ctstr.upload_solution FROM course_task_set_type_rel ctstr ) UNION ( SELECT cs.id as course_id, 0 AS task_set_type_id, 1 AS upload_solution FROM (SELECT id FROM courses) cs )');
-        
+       
+        $solutions = new Solution();
+        $solutions->select_func('COUNT', 'id', 'cnt');
+        $solutions->where_related('student/participant/course', 'id', '${parent}.course_id');
+        $solutions->where_related('task_set', 'id', '${parent}.id');
+ 
         $task_sets = new Task_set();
         //$task_sets->select('`task_sets`.*, `course_course_task_set_type_rel`.`upload_solution` AS `join_upload_solution`');
         $task_sets->select('`task_sets`.*');
         $task_sets->select_subquery('(SELECT `sq_ctst`.`upload_solution` FROM course_task_set_type_rel_override AS `sq_ctst` WHERE `sq_ctst`.`course_id` = `${parent}`.`course_id` AND `sq_ctst`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
         $task_sets->include_related_count('task_set_permission');
         $task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
-        $task_sets->include_related_count('solution');
+        //$task_sets->include_related_count('solution');
+        $task_sets->select_subquery($solutions, 'solution_count');
         $task_sets->include_related_count('task');
-        $task_sets->include_related('course', array('name', 'default_points_to_remove'));
+        $task_sets->include_related('course', array('name', 'default_points_to_remove', 'id'));
         $task_sets->include_related('course/period', 'name');
         $task_sets->include_related('group', 'name');
         $task_sets->include_related('task_set_type', 'name');
+        //$task_sets->where_related('solution/student/participant/course', 'id', 'courses.id');
         /*$task_sets->include_related('course/task_set_type');
         $task_sets->where('(`course_task_set_types`.`id` = `task_sets`.`task_set_type_id`)');*/
         //$task_sets->where('((`course_course_task_set_type_rel`.`task_set_type_id` = `task_sets`.`task_set_type_id` AND `task_sets`.`task_set_type_id` != 0) OR `task_sets`.`task_set_type_id` = 0)');
@@ -627,6 +634,7 @@ class Solutions extends LIST_Controller {
             $task_sets->order_by('content_type', $order_by_direction);
         }
         $task_sets->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
+        //$task_sets->check_last_query();
         $this->lang->init_overlays('task_sets', $task_sets->all_to_array(), array('name'));
         $this->parser->parse('backend/solutions/task_set_list.tpl', array('task_sets' => $task_sets));
     }
