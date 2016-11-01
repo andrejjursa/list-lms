@@ -443,7 +443,10 @@
 					$course->delete($task_set_type);
 
 					$task_sets = new Task_set();
-					$task_sets->where_related_course('id', $course_id)->get_iterated();
+					$task_sets
+                        ->where_related_course('id', $course_id)
+                        ->where_related_task_set_type('id', $task_set_type_id)
+                        ->get_iterated();
 					foreach ($task_sets as $task_set) {
 						$task_set->delete($task_set_type);
 					}
