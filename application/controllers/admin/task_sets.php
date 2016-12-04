@@ -524,6 +524,7 @@ class Task_sets extends LIST_Controller {
     }
     
     public function preview($task_set_id = null) {
+        $this->_add_mathjax();
         $task_set = new Task_set();
         $task_set->get_by_id((int)$task_set_id);
         

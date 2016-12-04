@@ -32,3 +32,5 @@ $lang['common_copyright_faculty'] = 'Comenius University in Bratislava, Faculty 
 $lang['common_jquery_countdown_localisation_file'] = '';
 
 $lang['common_list_test_scoring_name'] = 'Test evaluation score';
+
+$lang['common_mathjax_hint'] = 'To enter mathematic equations in tex language use these delimiters in text:<br />for inline equation: <strong>\\(</strong> equation <strong>\\)</strong><br />for equation on new line: <strong>\\[</strong> equation <strong>\\]</strong><br />For more information about supported commands read <a href="http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm" target="_blank">http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm</a>';

@@ -277,6 +277,7 @@ class Tasks extends LIST_Controller {
     }
     
     public function preview() {
+        $this->_add_mathjax();
         $url = $this->uri->ruri_to_assoc(3);
         $task_id = isset($url['task_id']) ? intval($url['task_id']) : 0;
         $task = new Task();
@@ -405,6 +406,7 @@ class Tasks extends LIST_Controller {
     }
     
     public function add_to_task_set() {
+        $this->_add_mathjax();
         $url = $this->uri->ruri_to_assoc(3);
         $task_id = isset($url['task_id']) ? intval($url['task_id']) : (intval($this->input->post('task_id')));
         $task = new Task();

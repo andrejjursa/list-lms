@@ -66,6 +66,7 @@ class Tasks extends LIST_Controller {
     }
     
     public function task($task_set_id_url = NULL) {
+        $this->_add_mathjax();
         $task_set_id = url_get_id($task_set_id_url);
         $this->usermanager->student_login_protected_redirect();
         $this->_initialize_student_menu();

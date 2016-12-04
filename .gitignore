@@ -2,6 +2,7 @@ application/config/development
 application/config/testing
 application/config/production
 application/cache/smarty/*
+public/js/mathjax
 private/moss/*
 !private/moss/.gitkeep
 private/extracted_solutions/*
@@ -25,3 +26,5 @@ test_locks/*
 !test_locks/.gitkeep
 test_scripts/workers_info.txt
 .idea/*
+
+/vendor/

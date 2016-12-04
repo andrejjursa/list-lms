@@ -1,0 +1,14 @@
+{
+    "name": "andrejjursa/list-lms",
+    "description": "LIST learning management system for Department of Applied Informatics, Faculty of Mathematics, Physics and Informatics, Comenius University in Bratislava, Slovakia.",
+    "authors": [
+        {
+            "name": "Andrej Jursa",
+            "email": "dragoo@thelambda.sk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "mathjax/mathjax": "dev-master"
+    }
+}

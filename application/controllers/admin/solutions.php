@@ -34,6 +34,7 @@ class Solutions extends LIST_Controller {
     }
     
     public function batch_valuation($task_set_id) {
+        $this->_add_mathjax();
         $this->_select_teacher_menu_pagetag('solutions');
         $task_set = new Task_set();
         $task_set->include_related('course', 'name', TRUE);
@@ -331,6 +332,7 @@ class Solutions extends LIST_Controller {
     }
     
     public function display_tasks_list($task_set_id) {
+        $this->_add_mathjax();
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         if ($task_set->exists()) {
@@ -343,6 +345,7 @@ class Solutions extends LIST_Controller {
     }
 
     public function valuation($task_set_id, $solution_id) {
+        $this->_add_mathjax();
         $solution = new Solution();
         $solution->select('`solutions`.*');
         $solution->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `task_sets`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'task_set_total_points');

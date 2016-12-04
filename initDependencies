@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [ "$(id -u)" != "0" ]; then
+    echo "Run this script as root!"
+    exit 1
+fi
+
+dpkg --get-selections | grep composer > /dev/null 2> /dev/null
+if [ $? == "1" ]; then
+    echo "Package composer can't be found!"
+    exit 1
+fi
+
+composer install
+
+CD="$(pwd)"
+mathjax="vendor/mathjax/mathjax"
+pmathjax="public/js/mathjax"
+
+echo "Copying references to mathjax ..."
+rm -rf "$CD/$pmathjax" 2> /dev/null > /dev/null
+mkdir "$CD/$pmathjax" > /dev/null 2> /dev/null
+ln -s "$CD/$mathjax/MathJax.js" "$CD/$pmathjax/MathJax.js"
+ln -sd "$CD/$mathjax/config" "$CD/$pmathjax/config"
+ln -sd "$CD/$mathjax/fonts" "$CD/$pmathjax/fonts"
+ln -sd "$CD/$mathjax/extensions" "$CD/$pmathjax/extensions"
+ln -sd "$CD/$mathjax/jax" "$CD/$pmathjax/jax"
+ln -sd "$CD/$mathjax/localization" "$CD/$pmathjax/localization"
+echo "... done."
