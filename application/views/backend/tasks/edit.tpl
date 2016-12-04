@@ -27,6 +27,7 @@
                 <div class="field">
                     <label for="task_text_id" class="required">{translate line='admin_tasks_form_label_text'}:</label>
                     <p class="input"><textarea name="task[text]" id="task_text_id" class="tinymce">{$smarty.post.task.text|default:$task->text|add_base_url|htmlspecialchars}</textarea></p>
+                    <p class="input"><em>{translate line='common_mathjax_hint'}</em></p>
                     {form_error field='task[text]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                     {include file='partials/backend_general/overlay_editor.tpl' table='tasks' table_id=$smarty.post.task_id|default:$task->id column='text' editor_type='textarea' class='tinymce' inline}
                 </div>

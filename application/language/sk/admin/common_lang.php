@@ -32,3 +32,5 @@ $lang['common_copyright_faculty'] = 'Univerzita Komenského v Bratislave, Fakult
 $lang['common_jquery_countdown_localisation_file'] = 'language/sk/jquery.countdown-sk.js';
 
 $lang['common_list_test_scoring_name'] = 'Skóre hodnotenia testu';
+
+$lang['common_mathjax_hint'] = 'Na zadávanie matematických rovníc v jazyku tex použite v texte tieto oddelovače:<br />pre inline výraz: <strong>\\(</strong> rovnica <strong>\\)</strong><br />pre výraz na novom riadku: <strong>\\[</strong> rovnica <strong>\\]</strong><br />Pre viac informácií o podporovaných značkách si prečítajte <a href="http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm" target="_blank">http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm</a>';

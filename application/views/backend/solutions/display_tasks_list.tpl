@@ -43,5 +43,8 @@ jQuery(document).ready(function($) {
     if (typeof prettyPrint !== 'undefined') {
         prettyPrint();
     }
+    if (typeof MathJax !== 'undefined') {
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
 });
 </script>

@@ -2,6 +2,7 @@ application/config/development
 application/config/testing
 application/config/production
 application/cache/smarty/*
+public/js/mathjax
 private/moss/*
 !private/moss/.gitkeep
 private/extracted_solutions/*

@@ -262,6 +262,22 @@ class LIST_Parser extends CI_Parser {
             'file' => $file,
         );
     }
+
+    public function add_js($content, $attributes = array()) {
+        $defaults = array(
+            'type'  => 'text/javascript'
+        );
+
+        $attributes = array_merge($defaults, $attributes);
+
+        $html = '<script type="'.$attributes['type'].'">' . PHP_EOL . trim($content) . PHP_EOL . '</script>';
+
+        $this->js_files[] = array(
+            'html' => $html,
+            'attributes' => NULL,
+            'file' => NULL,
+        );
+    }
     
     /**
      * Clear the list of CSS files attached to template

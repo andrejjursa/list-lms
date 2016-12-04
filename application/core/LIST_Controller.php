@@ -261,6 +261,10 @@ class LIST_Controller extends CI_Controller {
         }
     }
 
+    protected function _add_mathjax() {
+        $this->parser->add_js_file('mathjax/MathJax.js?config=TeX-AMS_CHTML-full');
+    }
+
     /**
      * Injects all possible languages to smarty parser.
      */
