@@ -15,6 +15,7 @@
             <div class="field">
                 <label for="task_text_id" class="required">{translate line='admin_tasks_form_label_text'}:</label>
                 <p class="input"><textarea name="task[text]" id="task_text_id" class="tinymce">{$smarty.post.task.text|htmlspecialchars}</textarea></p>
+                <p class="input"><em>{translate line='common_mathjax_hint'}</em></p>
                 {form_error field='task[text]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
             <div class="field">
