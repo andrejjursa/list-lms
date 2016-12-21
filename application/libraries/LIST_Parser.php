@@ -196,6 +196,10 @@ class LIST_Parser extends CI_Parser {
         
         $this->CI->smarty->assign('list_internal_css_files', $this->css_files);
         $this->CI->smarty->assign('list_internal_js_files', $this->js_files);
+
+        if (ENVIRONMENT == 'development') {
+            $this->CI->smarty->clearCompiledTemplate();
+        }
         
         // Load our template into our string for judgement
         $template_string = $this->CI->smarty->fetch($template, $cache_id);

@@ -165,3 +165,5 @@ $lang['admin_task_sets_project_selection_hint'] = 'Here you can see tasks with l
 $lang['admin_task_sets_project_selection_select_question'] = 'Are you sure to select this task for given student?';
 $lang['admin_task_sets_help_button_new_task_set'] = 'Help me with new task set form';
 $lang['admin_task_sets_publication_status_switched'] = 'Publication status of <em>%s</em> was switched.';
+$lang['admin_task_sets_sorting_page_header'] = 'Task sets - sorting';
+$lang['admin_task_sets_sorting_error_course_not_selected'] = 'Course is not selected!';
