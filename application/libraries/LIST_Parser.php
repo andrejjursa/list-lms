@@ -5,6 +5,8 @@
  *
  * Smarty templating for Codeigniter
  *
+ * @method assign($tpl_var, $value = null, $nocache = false)
+ *
  * @package   CI Smarty
  * @author    Dwayne Charrington
  * @copyright Copyright (c) 2012 Dwayne Charrington and Github contributors
