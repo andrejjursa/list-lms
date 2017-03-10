@@ -275,6 +275,7 @@ class Tests extends LIST_Controller {
                 $test->subtype = $test_data['subtype'];
                 $test->enabled = 1;
                 $test->configuration = serialize(array());
+                $test->enable_scoring = true;
                 if ($test->save($task) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     @mkdir('private/uploads/unit_tests/test_' . $test->id, DIR_READ_MODE);
