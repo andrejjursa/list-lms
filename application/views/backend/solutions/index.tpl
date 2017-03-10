@@ -58,6 +58,7 @@
             </tfoot>
             <tbody id="table_content_id"></tbody>
         </table>
+        {get_task_sets_color_legend(true)}
     </fieldset>
     <div id="remove_points_dialog_id" title="{translate line='admin_solutions_remove_points_dialog_title'}" style="display: none;">
         <form method="post">

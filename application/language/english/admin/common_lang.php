@@ -34,3 +34,13 @@ $lang['common_jquery_countdown_localisation_file'] = '';
 $lang['common_list_test_scoring_name'] = 'Test evaluation score';
 
 $lang['common_mathjax_hint'] = 'To enter mathematic equations in tex language use these delimiters in text:<br />for inline equation: <strong>\\(</strong> equation <strong>\\)</strong><br />for equation on new line: <strong>\\[</strong> equation <strong>\\]</strong><br />For more information about supported commands read <a href="http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm" target="_blank">http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm</a>';
+
+$lang['common_task_sets_colors_table'] = 'Colors legend:';
+$lang['common_task_sets_colors_long_after_deadline'] = 'Long after deadline';
+$lang['common_task_sets_colors_after_deadline'] = 'After deadline';
+$lang['common_task_sets_colors_day_before_deadline'] = 'A day before deadline';
+$lang['common_task_sets_colors_two_days_before_deadline'] = 'Two days before deadline';
+$lang['common_task_sets_colors_week_before_deadline'] = 'A week before deadline';
+$lang['common_task_sets_colors_after_deadline_with_submits'] = 'After deadline with solutions';
+$lang['common_task_sets_colors_not_published'] = 'Not published';
+$lang['common_task_sets_colors_long_before_deadline'] = 'Long before deadline';
