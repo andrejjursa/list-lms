@@ -455,24 +455,9 @@ class Task_set extends DataMapper {
             $upload_end_time = $this->upload_end_time;
         }
 
-        if (!is_null($upload_end_time) && trim($upload_end_time) !== '') {
-            if (strtotime($upload_end_time . ' +7 days') < date('U')) {
-                return 'task_set_time_long_after_deadline';
-            }
-            if (strtotime($upload_end_time) < date('U')) {
-                return 'task_set_time_after_deadline';
-            }
-            if (strtotime($upload_end_time . ' -1 day') <= date('U')) {
-                return 'task_set_time_day_before_deadline';
-            }
-            if (strtotime($upload_end_time . ' -2 days') <= date('U')) {
-                return 'task_set_time_two_days_before_deadline';
-            }
-            if (strtotime($upload_end_time . ' -7 days') <= date('U')) {
-                return 'task_set_time_week_before_deadline';
-            }
-        }
-        return '';
+        $this->load->helper('task_sets');
+
+        return get_task_set_timed_class($upload_end_time, true, 0);
     }
 
     private function get_related_permissions() {

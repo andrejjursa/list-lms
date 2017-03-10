@@ -22,6 +22,7 @@ class Task_sets extends LIST_Controller {
 
     public function index() {
         $this->_select_teacher_menu_pagetag('task_sets');
+        $this->load->helper('task_sets');
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_task_sets/list.js');
         $this->parser->add_js_file('admin_task_sets/form.js');

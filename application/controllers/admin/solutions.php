@@ -24,6 +24,7 @@ class Solutions extends LIST_Controller {
     
     public function index() {
         $this->_select_teacher_menu_pagetag('solutions');
+        $this->load->helper('task_sets');
         $this->inject_stored_task_set_selection_filter();
         $this->inject_courses();
         $this->inject_all_task_set_types();
