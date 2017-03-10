@@ -59,6 +59,7 @@
                 </form>
             </div>
             <div id="table_content_id"></div>
+            {get_task_sets_color_legend(true)}
 	</fieldset>
 {/block}
 {block custom_head}<script type="text/javascript">

@@ -17,6 +17,7 @@ class Tasks extends LIST_Controller {
 
     public function index() {
         $this->usermanager->student_login_protected_redirect();
+        $this->load->helper('task_sets');
         $this->_initialize_student_menu();
         $this->_select_student_menu_pagetag('tasks');
         $this->parser->add_css_file('frontend_tasks.css');

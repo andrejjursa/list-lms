@@ -12,6 +12,10 @@ class Task_set extends DataMapper {
     
     private $filter_tasks_count_sql = '(SELECT COUNT(*) AS count FROM (`tasks`) LEFT OUTER JOIN `task_task_set_rel` task_task_set_rel ON `tasks`.`id` = `task_task_set_rel`.`task_id` LEFT OUTER JOIN `task_sets` `task_sets_subquery` ON `task_sets_subquery`.`id` = `task_task_set_rel`.`task_set_id` WHERE `task_sets_subquery`.`id` = `task_sets`.`id`)';
     private $max_solution_version = 0;
+
+    private $related_permissions = array();
+
+    private $related_task_set_type = array();
     
     public $has_many = array(
         'task' => array(
@@ -416,6 +420,90 @@ class Task_set extends DataMapper {
                 }
             }
         }
+    }
+
+    public function get_task_set_time_class($permission_id = null) {
+        $task_set_type = $this->get_related_task_set_type();
+
+        if ($this->content_type == 'task_set' && (!isset($task_set_type->upload_solution) || !$task_set_type->upload_solution)) {
+            return '';
+        }
+
+        $permissions = $this->get_related_permissions();
+
+        $upload_end_time = null;
+        if (count($permissions) > 0) {
+            if ($permission_id !== null && isset($permissions[$permission_id])) {
+                $upload_end_time = $permissions[$permission_id]->upload_end_time;
+            } else {
+                $most_soon_end_time = 0;
+                $all_after = true;
+                foreach ($permissions as $permission) {
+                    if (strtotime($permission->upload_end_time . ' +7 days') < date('U')) {
+                        if (strtotime($permission->upload_end_time) > $most_soon_end_time) {
+                            $upload_end_time = $permission->upload_end_time;
+                        } else {
+                            $all_after = false;
+                        }
+                    }
+                }
+                if (!$all_after) {
+                    $upload_end_time = null;
+                }
+            }
+        } else {
+            $upload_end_time = $this->upload_end_time;
+        }
+
+        $this->load->helper('task_sets');
+
+        return get_task_set_timed_class($upload_end_time, true, 0);
+    }
+
+    private function get_related_permissions() {
+        if (is_null($this->id)) {
+            return array();
+        }
+        if (!isset($this->related_permissions[$this->id])) {
+            $task_set_permissions = new Task_set_permission();
+            $task_set_permissions->where_related('task_set', 'id', $this->id);
+            $task_set_permissions->where('enabled', 1);
+            $task_set_permissions->get_iterated();
+
+            $this->related_permissions = array();
+
+            foreach ($task_set_permissions as $task_set_permission) {
+                $this->related_permissions[$this->id][$task_set_permission->id] = (object) $task_set_permission->to_array();
+            }
+        }
+        return $this->related_permissions[$this->id];
+    }
+
+    private function get_related_task_set_type() {
+        if (is_null($this->id)) {
+            return (object) array();
+        }
+        if (!isset($this->related_task_set_type[$this->id])) {
+            $task_set_type = new Task_set_type();
+            if (isset($this->course_id)) {
+                $task_set_type->select('*');
+                $task_set_type->select('course_task_set_type_rel.upload_solution');
+                $task_set_type->where_related('task_set', 'id', $this->id);
+                $task_set_type->where_related('course', 'id', $this->course_id);
+                $task_set_type->limit(1);
+                $task_set_type->get();
+                //$task_set_type->check_last_query();
+            }
+
+            if ($task_set_type->exists()) {
+                $this->related_task_set_type[$this->id] = (object) $task_set_type->to_array();
+                $this->related_task_set_type[$this->id]->upload_solution = (bool) $task_set_type->upload_solution;
+            } else {
+                $this->related_task_set_type[$this->id] = (object) array();
+            }
+        }
+
+        return $this->related_task_set_type[$this->id];
     }
 
     /**
