@@ -25,6 +25,9 @@ VERSION 1.3.3 | 2017-03-10
 NEW Farebné označenie zostáv úloh podľa času pred a po limite odovzdávania.
 NEW [lang:english] Task sets are marked by color according to submission deadline time.
 
+FIX Opravený problém, pri ktorom sa mohla zostava zobraziť v administrácii bez niektorých informácií ak mala zadefinované špeciálne oprávnenia, ktoré boli všetky zakázané.
+FIX [lang:english] Fixed problem with task sets display without some information in administration if they have special permissions while each of this permission is disabled.
+
 CHANGE Nový test je automaticky označený ako hodnotený.
 CHANGE [lang:english] New test is automatically set as enabled for automatic grading.
 

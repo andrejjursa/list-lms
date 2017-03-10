@@ -582,8 +582,10 @@ class Solutions extends LIST_Controller {
         //$task_sets->select('`task_sets`.*, `course_course_task_set_type_rel`.`upload_solution` AS `join_upload_solution`');
         $task_sets->select('`task_sets`.*');
         $task_sets->select_subquery('(SELECT `sq_ctst`.`upload_solution` FROM course_task_set_type_rel_override AS `sq_ctst` WHERE `sq_ctst`.`course_id` = `${parent}`.`course_id` AND `sq_ctst`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
-        $task_sets->include_related_count('task_set_permission');
-        $task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
+        //$task_sets->include_related_count('task_set_permission');
+        //$task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
+        $task_sets->select('*');
+        $task_sets->select_subquery('(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = ${parent}.`id` AND `tsp`.`enabled` = 1)', 'task_set_permission_count');
         //$task_sets->include_related_count('solution');
         $task_sets->select_subquery($solutions, 'solution_count');
         $task_sets->include_related_count('task');

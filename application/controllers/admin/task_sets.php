@@ -140,8 +140,10 @@ class Task_sets extends LIST_Controller {
         $this->store_filter($filter);
         $this->inject_stored_filter();
         $task_sets = new Task_set();
-        $task_sets->include_related_count('task_set_permission');
-        $task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
+        $task_sets->select('*');
+        $task_sets->select_subquery('(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = ${parent}.`id` AND `tsp`.`enabled` = 1)', 'task_set_permission_count');
+        //$task_sets->include_related_count('task_set_permission');
+        //$task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
         $task_sets->include_related('course', 'name', TRUE);
         $task_sets->include_related('course/period', 'name', TRUE);
         $task_sets->include_related('group', 'name', TRUE);
