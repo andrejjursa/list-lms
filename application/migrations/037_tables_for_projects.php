@@ -30,9 +30,11 @@ class Migration_tables_for_projects extends CI_Migration {
                 ), 
                 'updated' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),  
                 'created' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),
                 'student_id' => array(
                     'type' => 'INT',

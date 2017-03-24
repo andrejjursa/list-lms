@@ -13,18 +13,23 @@ class Migration_create_tests_queues extends CI_Migration {
                 ),
                 'updated' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),  
                 'created' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),
                 'start' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),  
                 'exec_start' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),  
                 'finish' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),
                 'test_type' => array(
                     'type' => 'varchar',
