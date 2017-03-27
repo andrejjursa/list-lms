@@ -48,7 +48,7 @@ int wait_timeout(int timeout, pid_t pid)
     usleep(100000);
     t+=100;
     if (test_timeout(timeout, pid)) { kill(pid, 9); return 1; }
-    if (t > 4 * timeout) { kill(pid, 9); return 1; }
+    if (t > 4L * timeout) { kill(pid, 9); return 1; }
     if (pid != waitpid(pid, &status, WNOHANG)) continue;
     if (WIFEXITED(status)) break;
   } while (1);
