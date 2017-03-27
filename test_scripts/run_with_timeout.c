@@ -49,7 +49,7 @@ int wait_timeout(int timeout, pid_t pid)
     t+=100;
     int tmout = test_timeout(timeout, pid);
     if (tmout) { kill(pid, 9); return tmout; }
-    if (t > 4 * timeout) { kill(pid, 9); return 1; }
+    if (t > 4L * timeout) { kill(pid, 9); return 1; }
     if (pid != waitpid(pid, &status, WNOHANG)) continue;
     if (WIFEXITED(status)) break;
   } while (1);
