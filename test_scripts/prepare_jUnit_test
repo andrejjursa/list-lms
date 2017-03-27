@@ -6,7 +6,7 @@ TEST_PATH=$3
 OUTPUT_FILE="$TEST_PATH/__list_output.txt"
 COMPILATION_LOG="$TEST_PATH/__list_compilation_log.txt"
 ENCODING="-encoding UTF-8"
-JAVAC_ARGS="-Xlint:unchecked -cp /usr/share/java/junit4.jar:. *.java"
+JAVAC_ARGS="-Xlint:unchecked -cp /usr/share/java/junit4.jar:."
 CURRENT_PATH=$( cd "$( dirname "$0" )" && pwd )
 
 # Remove all .class files:
@@ -26,13 +26,13 @@ chmod g+r $TEST_PATH/. > /dev/null
 echo "<pre>" > $OUTPUT_FILE
 echo "Stage 1 / 2: source code compilation ..." >> $OUTPUT_FILE
 #cp -r $CURRENT_PATH/../docker_source/java/* $TEST_PATH/.
-/usr/bin/javac $JAVAC_ARGS $ENCODING 2> $COMPILATION_LOG
+/usr/bin/javac $JAVAC_ARGS Test${TESTCLASS}.java $ENCODING 2> $COMPILATION_LOG
 exitcode=$?
 cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE
 grep "unmappable character for encoding UTF-8" $COMPILATION_LOG > /dev/null
 if [[ $? -eq 0 ]] ; then
 	echo "<br /> Failed to compile source codes with encoding UTF-8, retrying with CP1250.<br />" >> $OUTPUT_FILE
-	/usr/bin/javac $JAVAC_ARGS -encoding cp1250 2> $COMPILATION_LOG
+	/usr/bin/javac $JAVAC_ARGS Test${TESTCLASS}.java -encoding cp1250 2> $COMPILATION_LOG
 	exitcode=$?
 	cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE
 
