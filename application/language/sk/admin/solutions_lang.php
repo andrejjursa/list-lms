@@ -54,6 +54,7 @@ $lang['admin_solutions_list_h3_all_groups'] = 'Všetky skupiny';
 $lang['admin_solutions_list_task_set_not_found'] = 'Zostava úloh sa nenašla.';
 $lang['admin_solutions_list_fieldset_legend_add_solution_record'] = 'Pridať záznam o riešení';
 $lang['admin_solutions_list_fieldset_legend_all_solutions'] = 'Všetky riešenia';
+$lang['admin_solutions_list_fieldset_legend_valuation_charts'] = 'Prehľad bodov';
 $lang['admin_solutions_list_solution_not_valuated'] = 'Nehodnotené.';
 $lang['admin_solutions_list_table_header_student'] = 'Študent';
 $lang['admin_solutions_list_table_header_group'] = 'Skupina';
@@ -75,6 +76,9 @@ $lang['admin_solutions_list_form_field_points'] = 'body';
 $lang['admin_solutions_list_new_solution_created'] = 'Záznam o riešení bol vytvorený úspešne.';
 $lang['admin_solutions_list_new_solution_error_solution_exists'] = 'Pre tohoto študenta a zostavu úloh už existoval záznam o riešení.';
 $lang['admin_solutions_list_new_solution_error_student_not_in_course_or_group'] = 'Vybraný študent nepatrí do kurzu alebo skupiny pripojenej k tejto zostave úloh.';
+$lang['admin_solutions_list_chart_title'] = 'Histogram bodovania';
+$lang['admin_solutions_list_chart_xaxis'] = 'Rozsah bodov';
+$lang['admin_solutions_list_chart_yaxis'] = 'Počet študentov spadajúcich do rozsahu';
 $lang['admin_solutions_solution_list_filter_label_group_not_found'] = 'Táto zostava úloh je priradená ku konkrétnej skupine, preto nie je možné vybrať inú skupinu na filtrovanie.';
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Formulár';

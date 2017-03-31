@@ -3,6 +3,7 @@ application/config/testing
 application/config/production
 application/cache/smarty/*
 public/js/mathjax
+public/js/highcharts
 private/moss/*
 !private/moss/.gitkeep
 private/extracted_solutions/*
@@ -28,3 +29,4 @@ test_scripts/workers_info.txt
 .idea/*
 
 /vendor/
+/node_modules/
