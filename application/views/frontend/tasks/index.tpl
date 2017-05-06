@@ -36,10 +36,11 @@
                     {else}
                         {$after_deadline = 0}
                     {/if}
-                    <tr class="{cycle values="tr_background_odd,tr_background_even" name=$task_set_type->name}{if $after_deadline} task_after_deadline{/if}">
+                    {$files_count = $task_set->get_student_files_count($list_student_account_model->id)}
+                    <tr class="{cycle values="tr_background_odd,tr_background_even" name=$task_set_type->name} {get_task_set_timed_class($task_set->pb_upload_end_time, $task_set->join_upload_solution, $files_count)}">
                         <td class="td_name">{capture name='task_set_name' assign='task_set_name'}{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}{/capture}
                             <a href="{internal_url url="tasks/task/{$task_set->id}{$task_set_name|text_convert_for_url}"}">{$task_set_name}</a>
-                            {$files_count = $task_set->get_student_files_count($list_student_account_model->id)}{if $files_count gt 0}
+                            {if $files_count gt 0}
                             <br /><sub>{translate|sprintf:$files_count line='tasks_table_student_solutions_count'}</sub>
                             {/if}
                         </td>
@@ -75,6 +76,8 @@
                     {/if}{/foreach}
                 </tbody>
             </table>
+
+            {get_task_sets_color_legend()}
         </fieldset>
     {else}
         {include file='partials/frontend_general/flash_messages.tpl' inline}

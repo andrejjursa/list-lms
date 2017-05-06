@@ -24,6 +24,7 @@ class Solutions extends LIST_Controller {
     
     public function index() {
         $this->_select_teacher_menu_pagetag('solutions');
+        $this->load->helper('task_sets');
         $this->inject_stored_task_set_selection_filter();
         $this->inject_courses();
         $this->inject_all_task_set_types();
@@ -258,8 +259,11 @@ class Solutions extends LIST_Controller {
         $this->inject_stored_solution_list_filter($task_set_id);
         $this->parser->add_js_file('admin_solutions/solutions_list.js');
         $this->parser->add_css_file('admin_solutions.css');
+        $this->_add_highcharts();
         $this->parser->parse('backend/solutions/solutions_list.tpl', array('task_set' => $task_set));
     }
+
+
         
     public function create_solution($task_set_id) {
         $this->load->library('form_validation');
@@ -582,8 +586,10 @@ class Solutions extends LIST_Controller {
         //$task_sets->select('`task_sets`.*, `course_course_task_set_type_rel`.`upload_solution` AS `join_upload_solution`');
         $task_sets->select('`task_sets`.*');
         $task_sets->select_subquery('(SELECT `sq_ctst`.`upload_solution` FROM course_task_set_type_rel_override AS `sq_ctst` WHERE `sq_ctst`.`course_id` = `${parent}`.`course_id` AND `sq_ctst`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
-        $task_sets->include_related_count('task_set_permission');
-        $task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
+        //$task_sets->include_related_count('task_set_permission');
+        //$task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
+        $task_sets->select('*');
+        $task_sets->select_subquery('(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = ${parent}.`id` AND `tsp`.`enabled` = 1)', 'task_set_permission_count');
         //$task_sets->include_related_count('solution');
         $task_sets->select_subquery($solutions, 'solution_count');
         $task_sets->include_related_count('task');
@@ -669,6 +675,51 @@ class Solutions extends LIST_Controller {
         }
         
         $this->parser->parse('backend/solutions/solutions_list_table_content.tpl', array('task_set' => $task_set, 'solutions' => $solutions));
+    }
+
+    public function get_points_overview($task_set_id = NULL) {
+        $filter = $this->input->post('filter');
+
+        $task_set = new Task_set();
+        $task_set->get_by_id($task_set_id);
+
+        $solutions = new Solution();
+        if ($task_set->exists()) {
+            $solutions->where_related($task_set);
+            //$solutions->include_related('student');
+            //$solutions->include_related('teacher');
+            //$solutions->order_by_related_as_fullname('student', 'fullname', 'asc');
+            //$solutions->include_related('student/participant/group');
+            if (isset($filter['group']) && (int)$filter['group'] > 0) {
+                $solutions->where_related('student/participant/group', 'id', (int)$filter['group']);
+            }
+            $solutions->where_related('student/participant/course', 'id', $task_set->course_id);
+            if ($task_set->content_type == 'project' && isset($filter['author']) && $filter['author'] !== 'all' && $filter['author'] !== '') {
+                $solutions->where_related('student/project_selection/task_set', 'id', $task_set->id);
+                $solutions->where_related('student/project_selection/task/author', 'id', (int)$filter['author']);
+                $solutions->group_by('id');
+            }
+            $solutions->not_group_start();
+                $solutions->or_where('points', null);
+                $solutions->or_where('tests_points', null);
+            $solutions->group_end();
+            $solutions->where('not_considered', 0);
+            $solutions->get_iterated();
+        }
+
+        $data = array();
+
+        foreach ($solutions as $solution) {
+            $points_total = (string)((double)$solution->points + (double)$solution->tests_points);
+            if (!isset($data[$points_total])) {
+                $data[$points_total] = 1;
+            } else {
+                $data[$points_total]++;
+            }
+        }
+
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($data));
     }
     
     public function get_groups_from_course($course_id, $selected_id = NULL) {

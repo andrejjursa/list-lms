@@ -635,7 +635,7 @@ class Cli extends CI_Controller {
                     } else {
                         foreach ($emails as $email) {
                             $this->email->to($email);
-                            $this->email->subject('TEST');
+                            $this->email->subject('LIST: ' . $this->lang->line('cli_deadline_notification_subject'));
                             $this->email->send();
                         }
                     }

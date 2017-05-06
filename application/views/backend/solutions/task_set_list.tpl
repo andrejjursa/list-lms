@@ -2,7 +2,7 @@
     {if $task_set->task_set_permission_count ne 0}
         {$task_set_permissions = $task_set->task_set_permission->where('enabled', 1)->include_related('group')->order_by_related_with_constant('group', 'name', 'asc')->get()}
     {/if}
-    <tr>
+    <tr class="{if $task_set->published eq 1}{$task_set->get_task_set_time_class()}{/if}">
         <td>{$task_set->id|intval}</td>
         <td>{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}</td>
         <td>{translate line="admin_solutions_table_body_content_type_{$task_set->content_type}"}</td>
@@ -13,7 +13,7 @@
             {else}
                 <ol>
                 {foreach $task_set_permissions->all as $task_set_permission}
-                    <li><span title="{translate_text text=$task_set_permission->group_name}">{translate_text|abbreviation text=$task_set_permission->group_name}</span></li>
+                    <li class="{if $task_set->published eq 1}{$task_set->get_task_set_time_class($task_set_permission->id)}{/if}"><span title="{translate_text text=$task_set_permission->group_name}">{translate_text|abbreviation text=$task_set_permission->group_name}</span></li>
                 {/foreach}
                 </ol>
             {/if}
@@ -28,7 +28,7 @@
                 {else}
                     <ol>
                     {foreach $task_set_permissions->all as $task_set_permission}
-                        <li>{$task_set_permission->upload_end_time|date_format:{translate line='admin_solutions_datetime_format'}|default:{translate line='admin_solutions_no_time_information'}}</li>
+                        <li class="{if $task_set->published eq 1}{$task_set->get_task_set_time_class($task_set_permission->id)}{/if}">{$task_set_permission->upload_end_time|date_format:{translate line='admin_solutions_datetime_format'}|default:{translate line='admin_solutions_no_time_information'}}</li>
                     {/foreach}
                     </ol>
                 {/if}

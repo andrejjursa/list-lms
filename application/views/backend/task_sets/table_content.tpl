@@ -27,7 +27,7 @@
         {if $task_set->task_set_permission_count ne 0}
             {$task_set_permissions = $task_set->task_set_permission->where('enabled', 1)->include_related('group')->order_by_related_with_constant('group', 'name', 'asc')->get()}
         {/if}
-        <tr class="{if $opened_task_set->exists() and $opened_task_set->id eq $task_set->id}opened_task_set{/if} {if $task_set->published ne 1}not_published_task_set{/if}">
+        <tr class="{if $opened_task_set->exists() and $opened_task_set->id eq $task_set->id}opened_task_set{/if} {if $task_set->published ne 1}not_published_task_set{else} {$task_set->get_task_set_time_class()} {/if}">
             <td>{$task_set->id|intval}</td>
             {if $filter.fields.created}<td>{$task_set->created|date_format:{translate line='common_datetime_format'}}</td>{/if}
             {if $filter.fields.updated}<td>{$task_set->updated|date_format:{translate line='common_datetime_format'}}</td>{/if}
@@ -40,7 +40,7 @@
                 {else}
                     <ol>
                     {foreach $task_set_permissions->all as $task_set_permission}
-                        <li><span title="{translate_text text=$task_set_permission->group_name}">{translate_text|abbreviation text=$task_set_permission->group_name}</span></li>
+                        <li class="{if $task_set->published eq 1}{$task_set->get_task_set_time_class($task_set_permission->id)}{/if}"><span title="{translate_text text=$task_set_permission->group_name}">{translate_text|abbreviation text=$task_set_permission->group_name}</span></li>
                     {/foreach}
                     </ol>
                 {/if}
@@ -57,7 +57,7 @@
                 {else}
                     <ol>
                     {foreach $task_set_permissions->all as $task_set_permission}
-                        <li>{$task_set_permission->publish_start_time|date_format:{translate line='common_datetime_format'}}</li>
+                        <li class="{if $task_set->published eq 1}{$task_set->get_task_set_time_class($task_set_permission->id)}{/if}">{$task_set_permission->publish_start_time|date_format:{translate line='common_datetime_format'}}</li>
                     {/foreach}
                     </ol>
                 {/if}
@@ -68,7 +68,7 @@
                 {else}
                     <ol>
                     {foreach $task_set_permissions->all as $task_set_permission}
-                        <li>{$task_set_permission->upload_end_time|date_format:{translate line='common_datetime_format'}}</li>
+                        <li class="{if $task_set->published eq 1}{$task_set->get_task_set_time_class($task_set_permission->id)}{/if}">{$task_set_permission->upload_end_time|date_format:{translate line='common_datetime_format'}}</li>
                     {/foreach}
                     </ol>
                 {/if}

@@ -34,3 +34,13 @@ $lang['common_jquery_countdown_localisation_file'] = 'language/sk/jquery.countdo
 $lang['common_list_test_scoring_name'] = 'Skóre hodnotenia testu';
 
 $lang['common_mathjax_hint'] = 'Na zadávanie matematických rovníc v jazyku tex použite v texte tieto oddelovače:<br />pre inline výraz: <strong>\\(</strong> rovnica <strong>\\)</strong><br />pre výraz na novom riadku: <strong>\\[</strong> rovnica <strong>\\]</strong><br />Pre viac informácií o podporovaných značkách si prečítajte <a href="http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm" target="_blank">http://www.onemathematicalcat.org/MathJaxDocumentation/TeXSyntax.htm</a>';
+
+$lang['common_task_sets_colors_table'] = 'Legenda farieb:';
+$lang['common_task_sets_colors_long_after_deadline'] = 'Dlho po deadline';
+$lang['common_task_sets_colors_after_deadline'] = 'Po deadline';
+$lang['common_task_sets_colors_day_before_deadline'] = 'Deň pred deadlineom';
+$lang['common_task_sets_colors_two_days_before_deadline'] = 'Dva dni pred deadlineom';
+$lang['common_task_sets_colors_week_before_deadline'] = 'Týždeň pred deadlineom';
+$lang['common_task_sets_colors_after_deadline_with_submits'] = 'Po deadline s riešeniami';
+$lang['common_task_sets_colors_not_published'] = 'Nie je publikované';
+$lang['common_task_sets_colors_long_before_deadline'] = 'Dlho pred deadlineom';

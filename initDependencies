@@ -5,13 +5,29 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 
-dpkg --get-selections | grep composer | grep install > /dev/null 2> /dev/null
+dpkg --get-selections | grep composer | grep -v deinstall > /dev/null 2> /dev/null
 if [ $? == "1" ]; then
     echo "Package composer can't be found!"
     exit 1
 fi
 
+dpkg --get-selections | grep npm | grep -v deinstall > /dev/null 2> /dev/null
+if [ $? == "1" ]; then
+    echo "Package npm can't be found!"
+    exit 1
+fi
+
+echo "Installation of dependencies with composer ..."
+
 composer install
+
+echo "... done."
+
+echo "Installation of dependencies with npm ..."
+
+npm install
+
+echo "... done."
 
 CD="$(pwd)"
 mathjax="vendor/mathjax/mathjax"
@@ -27,3 +43,22 @@ ln -sd "$CD/$mathjax/extensions" "$CD/$pmathjax/extensions"
 ln -sd "$CD/$mathjax/jax" "$CD/$pmathjax/jax"
 ln -sd "$CD/$mathjax/localization" "$CD/$pmathjax/localization"
 echo "... done."
+
+highcharts="node_modules/highcharts"
+phighcharts="public/js/highcharts"
+
+echo "Copying references to highcharts ..."
+rm -rf "$CD/$phighcharts" 2> /dev/null > /dev/null
+mkdir "$CD/$phighcharts" > /dev/null 2> /dev/null
+ln -s "$CD/$highcharts/highcharts.js" "$CD/$phighcharts/highcharts.js"
+ln -s "$CD/$highcharts/highcharts-3d.js" "$CD/$phighcharts/highcharts-3d.js"
+ln -s "$CD/$highcharts/highcharts-more.js" "$CD/$phighcharts/highcharts-more.js"
+ln -s "$CD/$highcharts/highmaps.js" "$CD/$phighcharts/highmaps.js"
+ln -s "$CD/$highcharts/highstock.js" "$CD/$phighcharts/highstock.js"
+ln -sd "$CD/$highcharts/adapters" "$CD/$phighcharts/adapters"
+ln -sd "$CD/$highcharts/css" "$CD/$phighcharts/css"
+ln -sd "$CD/$highcharts/js" "$CD/$phighcharts/js"
+ln -sd "$CD/$highcharts/lib" "$CD/$phighcharts/lib"
+ln -sd "$CD/$highcharts/modules" "$CD/$phighcharts/modules"
+ln -sd "$CD/$highcharts/themes" "$CD/$phighcharts/themes"
+echo "... dobe."

@@ -20,6 +20,29 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.3.4 | 2017-03-31
+
+NEW Pridaná knižnica highcharts a histogram bodov zobrazený pri hodnotení zostavy úloh.
+NEW [lang:english] Highcharts library added as well as histogram of points displayed in task set valuation view.
+
+END VERSION
+
+VERSION 1.3.3 | 2017-03-10
+
+NEW Farebné označenie zostáv úloh podľa času pred a po limite odovzdávania.
+NEW [lang:english] Task sets are marked by color according to submission deadline time.
+
+CHANGE Nový test je automaticky označený ako hodnotený.
+CHANGE [lang:english] New test is automatically set as enabled for automatic grading.
+
+FIX Opravený problém, pri ktorom sa mohla zostava zobraziť v administrácii bez niektorých informácií ak mala zadefinované špeciálne oprávnenia, ktoré boli všetky zakázané.
+FIX [lang:english] Fixed problem with task sets display without some information in administration if they have special permissions while each of this permission is disabled.
+
+FIX Opravený problém s predmetom emailovej správy o ukončení odosielania riešení pre zostavu úloh.
+FIX [lang:english] Fixed problem with subject of email message about reach of task set submission deadline.
+
+END VERSION
+
 VERSION 1.3.2 | 2016-12-04
 
 NEW Added MathJax javascript library to support TeX and LaTeX math in task texts.

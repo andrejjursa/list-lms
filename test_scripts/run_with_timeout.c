@@ -26,8 +26,8 @@ int test_timeout(int timeout, pid_t pid) {
 	sprintf(file_path, "/proc/%u/stat", pid);
 	process_file = fopen(file_path, "r");
 	if (process_file == NULL) {
-		printf("FATAL ERROR: process statistics file not found, terminating test run ...\n");
-		return 1;
+		printf("FATAL ERROR: process statistics file not found, program probably crashed, terminating test run ...\n");
+		return 2;
 	}
 	//                    1  2  3  4  5  6  7  8  9  10  11  12  13  14  15  16  | 1      2      3      4      5      6      7      8      9      10     11     12     13     14      15     16
 	fscanf(process_file, "%d %s %c %d %d %d %d %d %u %lu %lu %lu %lu %lu %lu %lu", &ntmp, &stmp, &ctmp, &ntmp, &ntmp, &ntmp, &ntmp, &ntmp, &utmp, &itmp, &itmp, &itmp, &itmp, &utime, &itmp, &cutime);
@@ -47,8 +47,9 @@ int wait_timeout(int timeout, pid_t pid)
   do {
     usleep(100000);
     t+=100;
-    if (test_timeout(timeout, pid)) { kill(pid, 9); return 1; }
-    if (t > 4 * timeout) { kill(pid, 9); return 1; }
+    int tmout = test_timeout(timeout, pid);
+    if (tmout) { kill(pid, 9); return tmout; }
+    if (t > 4L * timeout) { kill(pid, 9); return 1; }
     if (pid != waitpid(pid, &status, WNOHANG)) continue;
     if (WIFEXITED(status)) break;
   } while (1);
@@ -81,7 +82,7 @@ int main(int argc, char **args)
   else 
   {
     rv = 50;
-    if (wait_timeout(timeout, pid))
+    if (wait_timeout(timeout, pid) == 1)
       printf("\n**** TIMEOUT %d ms PASSED, PROCESS TERMINATED ****\n", timeout);
   }
 

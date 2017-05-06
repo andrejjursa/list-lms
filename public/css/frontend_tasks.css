@@ -24,6 +24,12 @@ table.task_sets_table tbody td.td_points.revalidate { color: red; text-decoratio
 table.task_sets_table tbody tr.task_after_deadline td { color: gray; }
 table.task_sets_table tbody tr.task_after_deadline td.td_name a { color: darkgreen; }
 table.task_sets_table tbody tr.task_after_deadline td.td_name a:hover { color: darkblue; }
+table.task_sets_table tbody tr.task_set_time_after_deadline_with_submits td { color: mediumblue; }
+table.task_sets_table tbody tr.task_set_time_long_after_deadline td { color: dimgray; }
+table.task_sets_table tbody tr.task_set_time_after_deadline td { color: red; }
+table.task_sets_table tbody tr.task_set_time_day_before_deadline td { color: orange; }
+table.task_sets_table tbody tr.task_set_time_two_days_before_deadline td { color: olive; }
+table.task_sets_table tbody tr.task_set_time_week_before_deadline td { color: darkcyan; }
 div.points_total { padding: 5px 13px; margin: 15px 0 5px 0; background-color: #99ff99; border-radius: 3px; }
 div.comment_body { background-color: white; padding: 15px; color: black; }
 div.comment_body a { color: green; }
