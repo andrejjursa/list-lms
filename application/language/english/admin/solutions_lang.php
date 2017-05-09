@@ -54,6 +54,7 @@ $lang['admin_solutions_list_h3_all_groups'] = 'All groups';
 $lang['admin_solutions_list_task_set_not_found'] = 'Task set not found.';
 $lang['admin_solutions_list_fieldset_legend_add_solution_record'] = 'Add solution record';
 $lang['admin_solutions_list_fieldset_legend_all_solutions'] = 'All solutions';
+$lang['admin_solutions_list_fieldset_legend_valuation_charts'] = 'Points overview';
 $lang['admin_solutions_list_solution_not_valuated'] = 'Not valuated.';
 $lang['admin_solutions_list_table_header_student'] = 'Student';
 $lang['admin_solutions_list_table_header_group'] = 'Group';
@@ -75,6 +76,9 @@ $lang['admin_solutions_list_form_field_points'] = 'points';
 $lang['admin_solutions_list_new_solution_created'] = 'Solution record created successfully.';
 $lang['admin_solutions_list_new_solution_error_solution_exists'] = 'Solution records already existed for this student and task set.';
 $lang['admin_solutions_list_new_solution_error_student_not_in_course_or_group'] = 'Selected student does not belongs to this course or group attached to this task set.';
+$lang['admin_solutions_list_chart_title'] = 'Histogram of points';
+$lang['admin_solutions_list_chart_xaxis'] = 'Points range';
+$lang['admin_solutions_list_chart_yaxis'] = 'Number of students in points range';
 $lang['admin_solutions_solution_list_filter_label_group_not_found'] = 'This task set is related to specific group, you can\'t select different one for filtering.';
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Form';
