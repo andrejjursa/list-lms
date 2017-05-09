@@ -114,7 +114,7 @@ jQuery(document).ready(function($) {
 
         for (var bavg in barsObject) {
             xs.push(bavg);
-            labels.push(barsObject[bavg].bmin + ' - ' + barsObject[bavg].bmax);
+            labels.push(barsObject[bavg].bmin + ' ' + chartmessages.to + ' ' + barsObject[bavg].bmax);
             ys.push(barsObject[bavg].count);
         }
 

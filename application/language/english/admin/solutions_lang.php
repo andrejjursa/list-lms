@@ -79,6 +79,7 @@ $lang['admin_solutions_list_new_solution_error_student_not_in_course_or_group'] 
 $lang['admin_solutions_list_chart_title'] = 'Histogram of points';
 $lang['admin_solutions_list_chart_xaxis'] = 'Points range';
 $lang['admin_solutions_list_chart_yaxis'] = 'Number of students in points range';
+$lang['admin_solutions_list_chart_to'] = 'to';
 $lang['admin_solutions_solution_list_filter_label_group_not_found'] = 'This task set is related to specific group, you can\'t select different one for filtering.';
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Form';
