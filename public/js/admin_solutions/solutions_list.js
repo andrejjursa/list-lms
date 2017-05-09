@@ -72,7 +72,7 @@ jQuery(document).ready(function($) {
             'labels': [],
             'y': []
         };
-        var dataXMin = 0;
+        var dataXMin = Infinity;
         var dataXMax = -Infinity;
         var haveData = false;
         for (var x in data) {
@@ -86,8 +86,8 @@ jQuery(document).ready(function($) {
         }
 
         var diff = dataXMax - dataXMin;
-        var bars = Math.ceil(diff) * 2;
-        var barsWidth = diff / bars;
+        var bars = Math.max(Math.ceil(diff) * 2, 1);
+        var barsWidth = (diff / bars).toFixed(3);
 
         var barsObject = {};
 
@@ -96,8 +96,8 @@ jQuery(document).ready(function($) {
             var bmax = (b + 1) * barsWidth + dataXMin;
             var bavg = (bmin + bmax) / 2;
             barsObject[bavg] = {
-                'bmin': bmin,
-                'bmax': bmax,
+                'bmin': bmin.toFixed(3),
+                'bmax': bmax.toFixed(3),
                 'count': 0,
             };
             for (var x in data) {
