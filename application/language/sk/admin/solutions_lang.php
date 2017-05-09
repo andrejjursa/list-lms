@@ -79,6 +79,7 @@ $lang['admin_solutions_list_new_solution_error_student_not_in_course_or_group'] 
 $lang['admin_solutions_list_chart_title'] = 'Histogram bodovania';
 $lang['admin_solutions_list_chart_xaxis'] = 'Rozsah bodov';
 $lang['admin_solutions_list_chart_yaxis'] = 'Počet študentov spadajúcich do rozsahu';
+$lang['admin_solutions_list_chart_to'] = 'až';
 $lang['admin_solutions_solution_list_filter_label_group_not_found'] = 'Táto zostava úloh je priradená ku konkrétnej skupine, preto nie je možné vybrať inú skupinu na filtrovanie.';
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Formulár';
