@@ -94,6 +94,7 @@ jQuery(document).ready(function($) {
         for (var b = 0; b < bars; b++) {
             var bmin = b * barsWidth + dataXMin;
             var bmax = (b + 1) * barsWidth + dataXMin;
+            if (b + 1 == bars) { bmax = dataXMax; }
             var bavg = (bmin + bmax) / 2;
             barsObject[bavg] = {
                 'bmin': bmin.toFixed(3),
