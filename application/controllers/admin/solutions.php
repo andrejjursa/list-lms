@@ -683,8 +683,11 @@ class Solutions extends LIST_Controller {
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
 
-        $solutions = new Solution();
+        $data = array();
+
         if ($task_set->exists()) {
+            $solutions = new Solution();
+
             $solutions->where_related($task_set);
             //$solutions->include_related('student');
             //$solutions->include_related('teacher');
@@ -699,27 +702,29 @@ class Solutions extends LIST_Controller {
                 $solutions->where_related('student/project_selection/task/author', 'id', (int)$filter['author']);
                 $solutions->group_by('id');
             }
-            $solutions->not_group_start();
-                $solutions->or_where('points', null);
-                $solutions->or_where('tests_points', null);
+            $solutions->group_start();
+                $solutions->group_start('NOT');
+                    $solutions->where('points', null);
+                $solutions->group_end();
+                $solutions->group_start('NOT', 'OR ');
+                    $solutions->where('tests_points', null);
+                $solutions->group_end();
             $solutions->group_end();
             $solutions->where('not_considered', 0);
             $solutions->get_iterated();
-        }
 
-        $data = array();
-
-        foreach ($solutions as $solution) {
-            $points_total = (string)((double)$solution->points + (double)$solution->tests_points);
-            if (!isset($data[$points_total])) {
-                $data[$points_total] = 1;
-            } else {
-                $data[$points_total]++;
+            foreach ($solutions as $solution) {
+                $points_total = (string)((double)$solution->points + (double)$solution->tests_points);
+                if (!isset($data[$points_total])) {
+                    $data[$points_total] = 1;
+                } else {
+                    $data[$points_total]++;
+                }
             }
         }
 
         $this->output->set_content_type('application/json');
-        $this->output->set_output(json_encode($data));
+        $this->output->set_output(json_encode($data, JSON_FORCE_OBJECT));
     }
     
     public function get_groups_from_course($course_id, $selected_id = NULL) {

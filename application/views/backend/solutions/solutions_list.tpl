@@ -86,6 +86,7 @@
         'chartTitle': '{translate line="admin_solutions_list_chart_title"}',
         'xAxis': '{translate line="admin_solutions_list_chart_xaxis"}',
         'yAxis': '{translate line="admin_solutions_list_chart_yaxis"}',
+        'to': '{translate line="admin_solutions_list_chart_to"}'
     };
 </script>
 {/block}
