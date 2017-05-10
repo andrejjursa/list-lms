@@ -296,7 +296,7 @@ class Solutions extends LIST_Controller {
                 
                 $solution = new Solution();
                 $solution->from_array($solution_data, array('student_id', 'comment'));
-                if (trim($solution_data['points']) != '' && is_float($solution_data['points'])) {
+                if (trim($solution_data['points']) != '') {
                     $solution->points = floatval($solution_data['points']);
                 } else {
                     $solution->points = NULL;
