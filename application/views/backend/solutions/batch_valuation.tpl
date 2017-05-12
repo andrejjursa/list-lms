@@ -24,6 +24,10 @@
             <form action="{internal_url url="admin_solutions/batch_save_solutions/{$task_set->id}"}" method="post" id="batch_valuation_form_id"></form>
         </fieldset>
         <fieldset>
+            <legend>{translate line="admin_solutions_list_fieldset_legend_valuation_charts"}</legend>
+            <div id="valuationCharts"></div>
+        </fieldset>
+        <fieldset>
             <legend>{translate line="admin_solutions_batch_valuation_fieldset_legend_task_set_content"}</legend>
             <div id="task_set_content_id"></div>
         </fieldset>
@@ -33,4 +37,10 @@
 {/block}
 {block custom_head}<script type="text/javascript">
     var task_set_id = {$task_set->id|intval};
+    var chartmessages = {
+        'chartTitle': '{translate line="admin_solutions_list_chart_title"}',
+        'xAxis': '{translate line="admin_solutions_list_chart_xaxis"}',
+        'yAxis': '{translate line="admin_solutions_list_chart_yaxis"}',
+        'to': '{translate line="admin_solutions_list_chart_to"}'
+    };
 </script>{/block}

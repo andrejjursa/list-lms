@@ -24,10 +24,12 @@ jQuery(document).ready(function($) {
     };
     
     refresh_valuation_list();
+    refresh_points_overview();
     
     $('#filter_form_id').submit(function(event) {
         event.preventDefault();
         refresh_valuation_list();
+        refresh_points_overview();
     });
     
     $('#batch_valuation_form_id').submit(function(event) {
