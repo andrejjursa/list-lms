@@ -20,6 +20,16 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.3.5 | 2017-05-12
+
+CHANGE Upravený rozsah histogramov.
+CHANGE [lang:english] Histograms range changed.
+
+NEW Bodový histogram pridaný do hromadného hodnotenia.
+NEW [lang:english] Points histogram added into batch valuation view.
+
+END VERSION
+
 VERSION 1.3.4b | 2017-05-10
 
 FIX Opravený problém spôsobujúci chybné určenie horného limitu posledného baru v histograme bodov v niektorých situáciach.
