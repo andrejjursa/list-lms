@@ -44,6 +44,8 @@ class Solutions extends LIST_Controller {
         $task_set->get_by_id($task_set_id);
         $this->inject_task_set_possible_groups($task_set_id);
         $this->inject_batch_valuation_filter((int)$task_set_id);
+        $this->_add_highcharts();
+        $this->parser->add_js_file('admin_solutions/histogram.js');
         $this->parser->add_js_file('admin_solutions/batch_valuation_list.js');
         $this->parser->add_css_file('admin_solutions.css');
         $this->_add_prettify();
@@ -257,6 +259,7 @@ class Solutions extends LIST_Controller {
         $this->inject_students($task_set_id);
         $this->inject_task_set_possible_groups($task_set_id);
         $this->inject_stored_solution_list_filter($task_set_id);
+        $this->parser->add_js_file('admin_solutions/histogram.js');
         $this->parser->add_js_file('admin_solutions/solutions_list.js');
         $this->parser->add_css_file('admin_solutions.css');
         $this->_add_highcharts();
