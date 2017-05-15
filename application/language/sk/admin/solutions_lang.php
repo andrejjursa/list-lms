@@ -11,6 +11,7 @@ $lang['admin_solutions_filter_label_content_type'] = 'Filtrovať podľa typu obs
 $lang['admin_solutions_filter_label_content_type_type_task_set'] = 'Zostava úloh';
 $lang['admin_solutions_filter_label_content_type_type_project'] = 'Projekt';
 $lang['admin_solutions_filter_label_author'] = 'Autor';
+$lang['admin_solutions_filter_label_hide_old'] = 'Skryť zostavy, ktoré sú 2 týždne po deadline';
 $lang['admin_solutions_filter_submit'] = 'Použiť';
 $lang['admin_solutions_table_header_task_set_name'] = 'Názov zostavy úloh';
 $lang['admin_solutions_table_header_task_set_course'] = 'Kurz zostavy úloh';
