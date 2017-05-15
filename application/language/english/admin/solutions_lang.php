@@ -11,6 +11,7 @@ $lang['admin_solutions_filter_label_content_type'] = 'Filter by content type';
 $lang['admin_solutions_filter_label_content_type_type_task_set'] = 'Task set';
 $lang['admin_solutions_filter_label_content_type_type_project'] = 'Project';
 $lang['admin_solutions_filter_label_author'] = 'Author';
+$lang['admin_solutions_filter_label_hide_old'] = 'Hide task sets with deadline older than 2 weeks';
 $lang['admin_solutions_filter_submit'] = 'Apply';
 $lang['admin_solutions_table_header_task_set_name'] = 'Name of task set';
 $lang['admin_solutions_table_header_task_set_course'] = 'Course of task set';

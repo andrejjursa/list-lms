@@ -576,6 +576,9 @@ class Solutions extends LIST_Controller {
 
     public function get_task_set_list() {
         $filter = $this->input->post('filter');
+        if (!array_key_exists('hide_old', $filter)) {
+            $filter['hide_old'] = 0;
+        }
         $this->store_task_set_selection_filter($filter);
         
         $this->db->query('CREATE TEMPORARY TABLE course_task_set_type_rel_override AS ( SELECT ctstr.course_id, ctstr.task_set_type_id, ctstr.upload_solution FROM course_task_set_type_rel ctstr ) UNION ( SELECT cs.id as course_id, 0 AS task_set_type_id, 1 AS upload_solution FROM (SELECT id FROM courses) cs )');
@@ -621,6 +624,26 @@ class Solutions extends LIST_Controller {
                     $task_sets->where_related('task_set_permission/group', 'id', intval($filter['group']));
                     $task_sets->where_related('task_set_permission', 'enabled', 1);
                 $task_sets->group_end();
+            $task_sets->group_end();
+        }
+        if (isset($filter['hide_old']) && boolval($filter['hide_old'])) {
+            $old = date('Y-m-d H:i:s', strtotime('now -2 weeks'));
+            $task_sets->group_start();
+            $task_sets->group_start();
+            $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_sets->group_start();
+            $task_sets->where('upload_end_time', null);
+            $task_sets->or_where('upload_end_time >', $old);
+            $task_sets->group_end();
+            $task_sets->group_end();
+            $task_sets->or_group_start();
+            $task_sets->where('content_type !=', 'project');
+            $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_sets->group_start();
+            $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 AND `tsp`.`upload_end_time` IS NULL)');
+            $task_sets->or_where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 AND `tsp`.`upload_end_time` > \'' . $old . '\')');
+            $task_sets->group_end();
+            $task_sets->group_end();
             $task_sets->group_end();
         }
         if (isset($filter['content_type']) && $filter['content_type'] == 'task_set' && isset($filter['task_set_type']) && intval($filter['task_set_type']) > 0) {
