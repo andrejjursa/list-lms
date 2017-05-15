@@ -183,6 +183,7 @@ class Task_sets extends LIST_Controller {
                     $task_sets->group_end();
                 $task_sets->group_end();
                 $task_sets->or_group_start();
+                    $task_sets->where('content_type !=', 'project');
                     $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
                     $task_sets->group_start();
                         $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 AND `tsp`.`upload_end_time` IS NULL)');
