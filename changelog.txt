@@ -20,6 +20,16 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.3.7 | 2017-05-20
+
+CHANGE Zmenený spôsob výpočtu histogramu bodov na korektnejšiu verziu.
+CHANGE [lang:english] Changed process of computation of points histogram to more correct version.
+
+NEW Pridaná stredná hodnota a rozsahy štandardnej odchylky do histogramu bodov.
+NEW [lang:english] Added mean value and ranges of standard deviation into points histogram.
+
+END VERSION
+
 VERSION 1.3.6 | 2017-05-15
 
 NEW Pridaný filter zostáv úloh s deadline-om starým dva a viac týždňov (zoznam zostáv a hodnotenie riešení).
