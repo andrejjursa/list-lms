@@ -25,7 +25,7 @@
         </fieldset>
         <fieldset>
             <legend>{translate line="admin_solutions_list_fieldset_legend_valuation_charts"}</legend>
-            <div id="valuationCharts"></div>
+            <div id="valuationCharts" style="height: 500px;"></div>
         </fieldset>
         <fieldset>
             <legend>{translate line="admin_solutions_batch_valuation_fieldset_legend_task_set_content"}</legend>

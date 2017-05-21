@@ -73,7 +73,7 @@
         </fieldset>
         <fieldset>
             <legend>{translate line="admin_solutions_list_fieldset_legend_valuation_charts"}</legend>
-            <div id="valuationCharts"></div>
+            <div id="valuationCharts" style="height: 500px;"></div>
         </fieldset>
     {else}
         {include file='partials/backend_general/error_box.tpl' message='lang:admin_solutions_list_task_set_not_found' back_url={internal_url url='admin_solutions'} inline}     
