@@ -159,12 +159,3 @@ var prepare_graph_statistical_data = function(statistics) {
 
     return output;
 };
-
-var normal_distribution = function(x, mean, sd) {
-    var denominator1 = Math.sqrt(2 * Math.PI * sd * sd);
-    var denominator2 = 2 * sd * sd;
-    var nominator = - (x - mean) * (x - mean);
-    var exponent = nominator / denominator2;
-    var e = Math.pow(Math.E, exponent);
-    return e / denominator1;
-};
