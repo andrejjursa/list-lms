@@ -48,7 +48,8 @@ var refresh_points_overview = function() {
                         type: 'column',
                         data: histogram(data, step),
                         pointPlacement: 'between',
-                        pointRange: step
+                        pointPadding: 0,
+                        groupPadding: 0
                     }
                 ]
             });
@@ -87,9 +88,7 @@ function histogram(data, step) {
 var compute_statistics = function (data, step) {
     var output = {
         mean: 0,
-        sd: 0,
-        min: Infinity,
-        max: -Infinity
+        sd: 0
     };
 
     if (data.length == 0) {
@@ -101,12 +100,8 @@ var compute_statistics = function (data, step) {
         var nx = parseFloat(x);
         count += parseInt(data[x]);
         sum += nx * parseInt(data[x]);
-        output.min = Math.min(output.min, nx);
-        output.max = Math.max(output.max, nx);
     }
     output.mean = sum / count;
-    output.min = Math.floor(output.min / step) * step;
-    output.max = Math.floor(output.max / step) * step + step;
 
     var variances = 0;
     for (var x in data) {
