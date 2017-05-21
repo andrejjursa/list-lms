@@ -1,11 +1,15 @@
 var refresh_points_overview = function() {
+    var step = 0.5;
     var targetID = '#valuationCharts';
     var formID = '#filter_form_id';
     if (arguments.length >= 1) {
-        targetID = arguments[0];
+        step = arguments[0];
     }
     if (arguments.length >= 2) {
-        formID = arguments[1];
+        targetID = arguments[1];
+    }
+    if (arguments.length >= 3) {
+        formID = arguments[2];
     }
     var data = jQuery(formID).serializeArray();
     var url = global_base_url + 'index.php/admin_solutions/get_points_overview/' + task_set_id;
@@ -16,7 +20,6 @@ var refresh_points_overview = function() {
         data: data,
         success: function(data) {
             $(targetID).html('');
-            var step = 0.5;
             var statistics = compute_statistics(data, step);
             var additionalData = prepare_graph_statistical_data(statistics);
 
