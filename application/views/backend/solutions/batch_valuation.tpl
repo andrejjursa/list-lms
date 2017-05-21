@@ -41,6 +41,7 @@
         'chartTitle': '{translate line="admin_solutions_list_chart_title"}',
         'xAxis': '{translate line="admin_solutions_list_chart_xaxis"}',
         'yAxis': '{translate line="admin_solutions_list_chart_yaxis"}',
-        'to': '{translate line="admin_solutions_list_chart_to"}'
+        'to': '{translate line="admin_solutions_list_chart_to"}',
+        'subtitle': '{overlay|default:'' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}'
     };
 </script>{/block}

@@ -24,6 +24,9 @@ var refresh_points_overview = function() {
                 title: {
                     text: chartmessages.chartTitle
                 },
+                subtitle: {
+                    text: chartmessages.subtitle
+                },
                 plotOptions: {
                     marker: { enabled: false }
                 },
