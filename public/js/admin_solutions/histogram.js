@@ -1,11 +1,15 @@
 var refresh_points_overview = function() {
+    var step = 0.5;
     var targetID = '#valuationCharts';
     var formID = '#filter_form_id';
     if (arguments.length >= 1) {
-        targetID = arguments[0];
+        step = arguments[0];
     }
     if (arguments.length >= 2) {
-        formID = arguments[1];
+        targetID = arguments[1];
+    }
+    if (arguments.length >= 3) {
+        formID = arguments[2];
     }
     var data = jQuery(formID).serializeArray();
     var url = global_base_url + 'index.php/admin_solutions/get_points_overview/' + task_set_id;
@@ -16,13 +20,18 @@ var refresh_points_overview = function() {
         data: data,
         success: function(data) {
             $(targetID).html('');
-            var step = 0.5;
             var statistics = compute_statistics(data, step);
             var additionalData = prepare_graph_statistical_data(statistics);
 
             Highcharts.chart('valuationCharts', {
                 title: {
                     text: chartmessages.chartTitle
+                },
+                subtitle: {
+                    text: chartmessages.subtitle
+                },
+                tooltip: {
+                    useHTML: true
                 },
                 plotOptions: {
                     marker: { enabled: false }
@@ -45,13 +54,43 @@ var refresh_points_overview = function() {
                         type: 'column',
                         data: histogram(data, step),
                         pointPlacement: 'between',
-                        pointRange: step
+                        pointPadding: 0,
+                        groupPadding: 0,
+                        color: 'rgba(0,192,255,0.8)',
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormatter: function () {
+                                return '<table><tr><td style="padding: 0.1em;"><span style="color: ' + this.color + '">\u25CF</span> ' + chartmessages.range + ':</td><td style="padding: 0.1em;"><strong>' + this.x + ' - ' + (this.x + step) + '</strong></td></tr><tr><td style="padding: 0.1em;"><span style="color: ' + this.color + '">\u25CF</span> ' + chartmessages.sum + ':</td><td style="padding: 0.1em;"><strong>' + this.y + '</strong></td></tr></table>';
+                            }
+                        }
+                    },
+                    {
+                        name: chartmessages.pointseries.name,
+                        color: 'red',
+                        type: 'scatter',
+                        data: pointdata(data),
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormatter: function() {
+                                return '<table><tr><td style="padding: 0.1em;"><span style="color: ' + this.color + '">\u25CF</span> ' + chartmessages.pointseries.x + ':</td><td style="padding: 0.1em;"><strong>' + this.x + '</strong></td></tr><tr><td style="padding: 0.1em;"><span style="color: ' + this.color + '">\u25CF</span> ' + chartmessages.pointseries.y + ':</td><td style="padding: 0.1em;"><strong>' + this.y + '</strong></td></tr></table>';
+                            }
+                        }
                     }
                 ]
             });
         }
     });
 };
+
+function pointdata(data) {
+    var pointdata = [];
+
+    for (var x in data) {
+        pointdata.push([parseFloat(x), parseFloat(data[x])]);
+    }
+
+    return pointdata;
+}
 
 function histogram(data, step) {
     var histo = {},
@@ -84,9 +123,7 @@ function histogram(data, step) {
 var compute_statistics = function (data, step) {
     var output = {
         mean: 0,
-        sd: 0,
-        min: Infinity,
-        max: -Infinity
+        sd: 0
     };
 
     if (data.length == 0) {
@@ -98,12 +135,8 @@ var compute_statistics = function (data, step) {
         var nx = parseFloat(x);
         count += parseInt(data[x]);
         sum += nx * parseInt(data[x]);
-        output.min = Math.min(output.min, nx);
-        output.max = Math.max(output.max, nx);
     }
     output.mean = sum / count;
-    output.min = Math.floor(output.min / step) * step;
-    output.max = Math.floor(output.max / step) * step + step;
 
     var variances = 0;
     for (var x in data) {
@@ -128,40 +161,34 @@ var prepare_graph_statistical_data = function(statistics) {
     }
 
     output.plotLines = [
-        {value: statistics.mean.toFixed(3), width: 2, color: '#666', zIndex: 10, dashStyle: 'Dash', label: {
+        {value: statistics.mean.toFixed(3), width: 2, color: '#666', zIndex: 1, dashStyle: 'Dash', label: {
             text: 'm', rotation: 0, align: 'center', x: 0, y: -5, style: {fontSize: '10px'}
         }}
     ];
 
-    for (var i = -3; i <= 3; i++) {
-        if (i != 0) {
-            var s = parseFloat((statistics.sd * i).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
+    if (statistics.sd > 0) {
+        for (var i = -3; i <= 3; i++) {
+            if (i != 0) {
+                var s = parseFloat((statistics.sd * i).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
                 var plotLine = {
-                    value: s.toFixed(3), width: 1, color: '#999', zIndex: 10, dashStyle: 'Dash', label: {
+                    value: s.toFixed(3), width: 1, color: '#999', zIndex: 1, dashStyle: 'Dash', label: {
                         text: i + 's', rotation: 0, align: 'center', x: 0, y: -5, style: {fontSize: '10px'}
                     }
                 };
                 output.plotLines.push(plotLine);
+            }
+        }
+
+        for (var i = 1; i <= 3; i++) {
+            var sp = parseFloat((statistics.sd * i).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
+            var sm = parseFloat((statistics.sd * (-i)).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
+            var plotBand = {
+                from: sm.toFixed(3), to: sp.toFixed(3), color: 'rgba(184,210,236,.2)', zIndex: 0
+            };
+            output.plotBands.push(plotBand);
         }
     }
 
-    for (var i = 1; i <= 3; i++) {
-        var sp = parseFloat((statistics.sd * i).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
-        var sm = parseFloat((statistics.sd * (-i)).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
-        var plotBand = {
-            from: sm.toFixed(3), to: sp.toFixed(3), color: 'rgba(184,210,236,.2)', zIndex: 0
-        };
-        output.plotBands.push(plotBand);
-    }
 
     return output;
-};
-
-var normal_distribution = function(x, mean, sd) {
-    var denominator1 = Math.sqrt(2 * Math.PI * sd * sd);
-    var denominator2 = 2 * sd * sd;
-    var nominator = - (x - mean) * (x - mean);
-    var exponent = nominator / denominator2;
-    var e = Math.pow(Math.E, exponent);
-    return e / denominator1;
 };

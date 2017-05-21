@@ -20,6 +20,31 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.3.8 | 2017-05-21
+
+NEW Histogram bodov teraz obsahuje podnadpis - názov zostavy.
+NEW [lang:english] Points histogram contains subtitle now - name of task set.
+
+CHANGE Histogram bodov má rozsah binov rovný svojmu rozsahu na x-ovej ose.
+CHANGE [lang:english] Points histogram now have full size of bin according to bin x-axis range.
+
+CHANGE Tooltipy v histograme bodov sú viac zmysluplné.
+CHANGE [lang:english] Tooltips in points histogram are now more meaningful.
+
+CHANGE Histogram bodov má novú farbu a prekrýva zvyslé čiary pre strednú hodnotu a smerodajné odchýlky.
+CHANGE [lang:english] Points histogram have new color and now is overlaying vertical lines for mean value and standard deviations.
+
+NEW Do histogramu bodov boli pridané aj samostatné body (červenou farbou).
+NEW [lang:endlish] Separate points (drawn by red color) are added into points histogram now.
+
+CHANGE Histogram bodov má výšku 500px.
+CHANGE [lang:english] Points histogram have new height of 500px.
+
+NEW Šírku binov v histograme bodov je možné nastaviť zo select boxu.
+NEW [lang:english] Size of bins in points histogram is now selectable from select box.
+
+END VERSION
+
 VERSION 1.3.7 | 2017-05-20
 
 CHANGE Zmenený spôsob výpočtu histogramu bodov na korektnejšiu verziu.

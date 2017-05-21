@@ -1,7 +1,10 @@
+var histogram_bin_size = 0.5;
+
 jQuery(document).ready(function($) {
-    
     make_switchable_form('#new_solution_form_id');
     make_filter_form('#filter_form_id');
+
+    histogram_bin_size = parseFloat($('#histogram_size_id').val());
     
     var url_anchor = api_read_url_anchor();
     if (url_anchor.substring(0, 6) === 'group_') {
@@ -20,15 +23,24 @@ jQuery(document).ready(function($) {
     };
 
 
+    $('#histogramForm').submit(function(event) {
+        event.preventDefault();
+    });
+
+    $('#histogram_size_id').change(function() {
+        histogram_bin_size = parseFloat($(this).val());
+        refresh_all_solutions();
+        refresh_points_overview(histogram_bin_size);
+    });
     
     $('#filter_form_id').submit(function(event) {
         event.preventDefault();
         refresh_all_solutions();
-        refresh_points_overview();
+        refresh_points_overview(histogram_bin_size);
     });
     
     refresh_all_solutions();
-    refresh_points_overview();
+    refresh_points_overview(histogram_bin_size);
     
     $('#new_solution_form_id').submit(function(event) {
         event.preventDefault();
@@ -37,7 +49,7 @@ jQuery(document).ready(function($) {
         var success = function() {
             if ($('#new_solution_form_id .flash_message.message_success').length > 0) {
                 refresh_all_solutions();
-                refresh_points_overview();
+                refresh_points_overview(histogram_bin_size);
             }
             $('#new_solution_form_id').formErrorWarning();
             var last_created_id = $('#new_solution_form_id input[type=hidden][name=last_created_solution_id]');
@@ -71,7 +83,7 @@ jQuery(document).ready(function($) {
             },
             beforeClose: function() {
                 refresh_all_solutions();
-                refresh_points_overview();
+                refresh_points_overview(histogram_bin_size);
                 return true;
             }
         });
