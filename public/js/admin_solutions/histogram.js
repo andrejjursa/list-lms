@@ -53,6 +53,7 @@ var refresh_points_overview = function() {
                         pointPlacement: 'between',
                         pointPadding: 0,
                         groupPadding: 0,
+                        color: 'rgba(0,192,255,0.8)',
                         tooltip: {
                             headerFormat: '',
                             pointFormatter: function () {
@@ -136,7 +137,7 @@ var prepare_graph_statistical_data = function(statistics) {
     }
 
     output.plotLines = [
-        {value: statistics.mean.toFixed(3), width: 2, color: '#666', zIndex: 10, dashStyle: 'Dash', label: {
+        {value: statistics.mean.toFixed(3), width: 2, color: '#666', zIndex: 1, dashStyle: 'Dash', label: {
             text: 'm', rotation: 0, align: 'center', x: 0, y: -5, style: {fontSize: '10px'}
         }}
     ];
@@ -145,7 +146,7 @@ var prepare_graph_statistical_data = function(statistics) {
         if (i != 0) {
             var s = parseFloat((statistics.sd * i).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
                 var plotLine = {
-                    value: s.toFixed(3), width: 1, color: '#999', zIndex: 10, dashStyle: 'Dash', label: {
+                    value: s.toFixed(3), width: 1, color: '#999', zIndex: 1, dashStyle: 'Dash', label: {
                         text: i + 's', rotation: 0, align: 'center', x: 0, y: -5, style: {fontSize: '10px'}
                     }
                 };
