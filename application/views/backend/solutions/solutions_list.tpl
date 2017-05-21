@@ -73,7 +73,30 @@
         </fieldset>
         <fieldset>
             <legend>{translate line="admin_solutions_list_fieldset_legend_valuation_charts"}</legend>
-            <div id="valuationCharts"></div>
+            <div id="valuationCharts" style="height: 500px;"></div>
+            <form id="histogramForm">
+                <div class="field">
+                    <label>{translate line='admin_solutions_histogram_bin_size'}:</label>
+                    <p class="input">
+                        <select name="histogram[size]" size="1" id="histogram_size_id">
+                            <option value="0.25">0.25</option>
+                            <option value="0.5" selected="selected">0.5</option>
+                            <option value="0.75">0.75</option>
+                            <option value="1.0">1.0</option>
+                            <option value="1.25">1.25</option>
+                            <option value="1.5">1.5</option>
+                            <option value="1.75">1.75</option>
+                            <option value="2.0">2.0</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="field">
+                    <label>{translate line='admin_solutions_histogram_hints'}:</label>
+                    <p class="input">
+                        <em>{translate line='admin_solutions_histogram_hint_text'}</em>
+                    </p>
+                </div>
+            </form>
         </fieldset>
     {else}
         {include file='partials/backend_general/error_box.tpl' message='lang:admin_solutions_list_task_set_not_found' back_url={internal_url url='admin_solutions'} inline}     
@@ -86,7 +109,15 @@
         'chartTitle': '{translate line="admin_solutions_list_chart_title"}',
         'xAxis': '{translate line="admin_solutions_list_chart_xaxis"}',
         'yAxis': '{translate line="admin_solutions_list_chart_yaxis"}',
-        'to': '{translate line="admin_solutions_list_chart_to"}'
+        'to': '{translate line="admin_solutions_list_chart_to"}',
+        'range': '{translate line="admin_solutions_list_chart_tootlip_range"}',
+        'sum': '{translate line="admin_solutions_list_chart_tootlip_sum"}',
+        'subtitle': '{overlay|default:'' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}',
+        'pointseries': {
+            'name': '{translate line="admin_solutions_list_chart_pointseries_name"}',
+            'x': '{translate line="admin_solutions_list_chart_pointseries_tooltip_x"}',
+            'y': '{translate line="admin_solutions_list_chart_pointseries_tooltip_y"}'
+        }
     };
 </script>
 {/block}
