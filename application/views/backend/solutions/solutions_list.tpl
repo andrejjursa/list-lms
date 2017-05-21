@@ -87,6 +87,8 @@
         'xAxis': '{translate line="admin_solutions_list_chart_xaxis"}',
         'yAxis': '{translate line="admin_solutions_list_chart_yaxis"}',
         'to': '{translate line="admin_solutions_list_chart_to"}',
+        'range': '{translate line="admin_solutions_list_chart_tootlip_range"}',
+        'sum': '{translate line="admin_solutions_list_chart_tootlip_sum"}',
         'subtitle': '{overlay|default:'' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}'
     };
 </script>

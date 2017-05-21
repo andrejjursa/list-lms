@@ -27,6 +27,9 @@ var refresh_points_overview = function() {
                 subtitle: {
                     text: chartmessages.subtitle
                 },
+                tooltip: {
+                    useHTML: true
+                },
                 plotOptions: {
                     marker: { enabled: false }
                 },
@@ -49,7 +52,14 @@ var refresh_points_overview = function() {
                         data: histogram(data, step),
                         pointPlacement: 'between',
                         pointPadding: 0,
-                        groupPadding: 0
+                        groupPadding: 0,
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormatter: function () {
+                                console.log(this);
+                                return '<table><tr><td style="padding: 0.1em;"><span style="color: ' + this.color + '">\u25CF</span> ' + chartmessages.range + ':</td><td style="padding: 0.1em;"><strong>' + this.x + ' - ' + (this.x + step) + '</strong></td></tr><tr><td style="padding: 0.1em;"><span style="color: ' + this.color + '">\u25CF</span> ' + chartmessages.sum + ':</td><td style="padding: 0.1em;"><strong>' + this.y + '</strong></td></tr></table>';
+                            }
+                        }
                     }
                 ]
             });
