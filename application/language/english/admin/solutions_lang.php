@@ -83,6 +83,9 @@ $lang['admin_solutions_list_chart_yaxis'] = 'Number of students in points range'
 $lang['admin_solutions_list_chart_to'] = 'to';
 $lang['admin_solutions_list_chart_tootlip_range'] = 'Range';
 $lang['admin_solutions_list_chart_tootlip_sum'] = 'In range';
+$lang['admin_solutions_list_chart_pointseries_name'] = 'Separate points sum';
+$lang['admin_solutions_list_chart_pointseries_tooltip_x'] = 'Sum of points';
+$lang['admin_solutions_list_chart_pointseries_tooltip_y'] = 'Number of students';
 $lang['admin_solutions_solution_list_filter_label_group_not_found'] = 'This task set is related to specific group, you can\'t select different one for filtering.';
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Form';

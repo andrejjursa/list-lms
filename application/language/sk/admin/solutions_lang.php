@@ -83,6 +83,9 @@ $lang['admin_solutions_list_chart_yaxis'] = 'Počet študentov spadajúcich do r
 $lang['admin_solutions_list_chart_to'] = 'až';
 $lang['admin_solutions_list_chart_tootlip_range'] = 'Rozsah';
 $lang['admin_solutions_list_chart_tootlip_sum'] = 'V rozsahu';
+$lang['admin_solutions_list_chart_pointseries_name'] = 'Samostatné sumy bodov';
+$lang['admin_solutions_list_chart_pointseries_tooltip_x'] = 'Suma bodov';
+$lang['admin_solutions_list_chart_pointseries_tooltip_y'] = 'Počet študentov';
 $lang['admin_solutions_solution_list_filter_label_group_not_found'] = 'Táto zostava úloh je priradená ku konkrétnej skupine, preto nie je možné vybrať inú skupinu na filtrovanie.';
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Formulár';

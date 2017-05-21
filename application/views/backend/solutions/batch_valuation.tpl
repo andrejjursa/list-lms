@@ -44,6 +44,11 @@
         'to': '{translate line="admin_solutions_list_chart_to"}',
         'range': '{translate line="admin_solutions_list_chart_tootlip_range"}',
         'sum': '{translate line="admin_solutions_list_chart_tootlip_sum"}',
-        'subtitle': '{overlay|default:'' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}'
+        'subtitle': '{overlay|default:'' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}',
+        'pointseries': {
+            'name': '{translate line="admin_solutions_list_chart_pointseries_name"}',
+            'x': '{translate line="admin_solutions_list_chart_pointseries_tooltip_x"}',
+            'y': '{translate line="admin_solutions_list_chart_pointseries_tooltip_y"}'
+        }
     };
 </script>{/block}

@@ -57,8 +57,19 @@ var refresh_points_overview = function() {
                         tooltip: {
                             headerFormat: '',
                             pointFormatter: function () {
-                                console.log(this);
                                 return '<table><tr><td style="padding: 0.1em;"><span style="color: ' + this.color + '">\u25CF</span> ' + chartmessages.range + ':</td><td style="padding: 0.1em;"><strong>' + this.x + ' - ' + (this.x + step) + '</strong></td></tr><tr><td style="padding: 0.1em;"><span style="color: ' + this.color + '">\u25CF</span> ' + chartmessages.sum + ':</td><td style="padding: 0.1em;"><strong>' + this.y + '</strong></td></tr></table>';
+                            }
+                        }
+                    },
+                    {
+                        name: chartmessages.pointseries.name,
+                        color: 'red',
+                        type: 'scatter',
+                        data: pointdata(data),
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormatter: function() {
+                                return '<table><tr><td style="padding: 0.1em;"><span style="color: ' + this.color + '">\u25CF</span> ' + chartmessages.pointseries.x + ':</td><td style="padding: 0.1em;"><strong>' + this.x + '</strong></td></tr><tr><td style="padding: 0.1em;"><span style="color: ' + this.color + '">\u25CF</span> ' + chartmessages.pointseries.y + ':</td><td style="padding: 0.1em;"><strong>' + this.y + '</strong></td></tr></table>';
                             }
                         }
                     }
@@ -67,6 +78,16 @@ var refresh_points_overview = function() {
         }
     });
 };
+
+function pointdata(data) {
+    var pointdata = [];
+
+    for (var x in data) {
+        pointdata.push([parseFloat(x), parseFloat(data[x])]);
+    }
+
+    return pointdata;
+}
 
 function histogram(data, step) {
     var histo = {},
