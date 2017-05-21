@@ -142,26 +142,29 @@ var prepare_graph_statistical_data = function(statistics) {
         }}
     ];
 
-    for (var i = -3; i <= 3; i++) {
-        if (i != 0) {
-            var s = parseFloat((statistics.sd * i).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
+    if (statistics.sd > 0) {
+        for (var i = -3; i <= 3; i++) {
+            if (i != 0) {
+                var s = parseFloat((statistics.sd * i).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
                 var plotLine = {
                     value: s.toFixed(3), width: 1, color: '#999', zIndex: 1, dashStyle: 'Dash', label: {
                         text: i + 's', rotation: 0, align: 'center', x: 0, y: -5, style: {fontSize: '10px'}
                     }
                 };
                 output.plotLines.push(plotLine);
+            }
+        }
+
+        for (var i = 1; i <= 3; i++) {
+            var sp = parseFloat((statistics.sd * i).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
+            var sm = parseFloat((statistics.sd * (-i)).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
+            var plotBand = {
+                from: sm.toFixed(3), to: sp.toFixed(3), color: 'rgba(184,210,236,.2)', zIndex: 0
+            };
+            output.plotBands.push(plotBand);
         }
     }
 
-    for (var i = 1; i <= 3; i++) {
-        var sp = parseFloat((statistics.sd * i).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
-        var sm = parseFloat((statistics.sd * (-i)).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
-        var plotBand = {
-            from: sm.toFixed(3), to: sp.toFixed(3), color: 'rgba(184,210,236,.2)', zIndex: 0
-        };
-        output.plotBands.push(plotBand);
-    }
 
     return output;
 };
