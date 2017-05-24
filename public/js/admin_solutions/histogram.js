@@ -20,7 +20,7 @@ var refresh_points_overview = function() {
         data: data,
         success: function(data) {
             $(targetID).html('');
-            var statistics = compute_statistics(data, step);
+            var statistics = compute_statistics(data);
             var additionalData = prepare_graph_statistical_data(statistics);
 
             Highcharts.chart('valuationCharts', {
@@ -146,7 +146,7 @@ function histogram(data, step) {
     return arr;
 }
 
-var compute_statistics = function (data, step) {
+var compute_statistics = function (data) {
     var output = {
         mean: 0,
         sd: 0
