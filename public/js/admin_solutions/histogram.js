@@ -41,7 +41,9 @@ var refresh_points_overview = function() {
                         text: chartmessages.xAxis
                     },
                     plotLines: additionalData.plotLines,
-                    plotBands: additionalData.plotBands
+                    plotBands: additionalData.plotBands,
+                    softMin: computeMin(data, step),
+                    softMax: computeMax(data, step)
                 },
                 yAxis: {
                     title: {
@@ -56,6 +58,8 @@ var refresh_points_overview = function() {
                         pointPlacement: 'between',
                         pointPadding: 0,
                         groupPadding: 0,
+                        //minPointLength: step,
+                        pointRange: step,
                         color: 'rgba(0,192,255,0.8)',
                         tooltip: {
                             headerFormat: '',
@@ -81,6 +85,28 @@ var refresh_points_overview = function() {
         }
     });
 };
+
+function computeMin(data, step) {
+    var min = Infinity;
+
+    for (var i in data) {
+        min = Math.min(min, Math.floor(parseFloat(i) / step) * step);
+    }
+
+    min -= step;
+
+    return min;
+}
+
+function computeMax(data, step) {
+    var max = -Infinity;
+
+    for (var i in data) {
+        max = Math.max(max, Math.floor(parseFloat(i) / step) * step + step);
+    }
+
+    return max;
+}
 
 function pointdata(data) {
     var pointdata = [];
