@@ -113,6 +113,8 @@
         'range': '{translate line="admin_solutions_list_chart_tootlip_range"}',
         'sum': '{translate line="admin_solutions_list_chart_tootlip_sum"}',
         'subtitle': '{overlay|default:'' table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}',
+        'mean': '{translate line="admin_solutions_list_chart_mean"}',
+        'sd': '{translate line="admin_solutions_list_chart_sd"}',
         'pointseries': {
             'name': '{translate line="admin_solutions_list_chart_pointseries_name"}',
             'x': '{translate line="admin_solutions_list_chart_pointseries_tooltip_x"}',

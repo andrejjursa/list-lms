@@ -553,6 +553,10 @@ class Task_sets extends LIST_Controller {
         $this->_add_mathjax();
         $task_set = new Task_set();
         $task_set->get_by_id((int)$task_set_id);
+
+        $this->_add_mathjax();
+        $this->_add_prettify();
+        $this->parser->add_js_file('admin_task_sets/preview.js');
         
         $this->parser->parse('backend/task_sets/preview.tpl', array('task_set' => $task_set));
     }

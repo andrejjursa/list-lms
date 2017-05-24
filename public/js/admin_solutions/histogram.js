@@ -20,7 +20,7 @@ var refresh_points_overview = function() {
         data: data,
         success: function(data) {
             $(targetID).html('');
-            var statistics = compute_statistics(data, step);
+            var statistics = compute_statistics(data);
             var additionalData = prepare_graph_statistical_data(statistics);
 
             Highcharts.chart('valuationCharts', {
@@ -38,10 +38,12 @@ var refresh_points_overview = function() {
                 },
                 xAxis: {
                     title: {
-                        text: chartmessages.xAxis
+                        text: chartmessages.xAxis + ' (' + chartmessages.mean + '[m] = ' + statistics.mean.toFixed(3) + (statistics.sd > 0 ? ', ' + chartmessages.sd + '[s] = ' + statistics.sd.toFixed(3) : '') + ')'
                     },
                     plotLines: additionalData.plotLines,
-                    plotBands: additionalData.plotBands
+                    plotBands: additionalData.plotBands,
+                    softMin: computeMin(data, step),
+                    softMax: computeMax(data, step)
                 },
                 yAxis: {
                     title: {
@@ -56,6 +58,10 @@ var refresh_points_overview = function() {
                         pointPlacement: 'between',
                         pointPadding: 0,
                         groupPadding: 0,
+                        pointInterval: step,
+                        borderColor: '#909090',
+                        //minPointLength: step,
+                        pointRange: step,
                         color: 'rgba(0,192,255,0.8)',
                         tooltip: {
                             headerFormat: '',
@@ -81,6 +87,28 @@ var refresh_points_overview = function() {
         }
     });
 };
+
+function computeMin(data, step) {
+    var min = Infinity;
+
+    for (var i in data) {
+        min = Math.min(min, Math.floor(parseFloat(i) / step) * step);
+    }
+
+    min -= step;
+
+    return min;
+}
+
+function computeMax(data, step) {
+    var max = -Infinity;
+
+    for (var i in data) {
+        max = Math.max(max, Math.floor(parseFloat(i) / step) * step + step);
+    }
+
+    return max;
+}
 
 function pointdata(data) {
     var pointdata = [];
@@ -120,7 +148,7 @@ function histogram(data, step) {
     return arr;
 }
 
-var compute_statistics = function (data, step) {
+var compute_statistics = function (data) {
     var output = {
         mean: 0,
         sd: 0
@@ -161,7 +189,7 @@ var prepare_graph_statistical_data = function(statistics) {
     }
 
     output.plotLines = [
-        {value: statistics.mean.toFixed(3), width: 2, color: '#666', zIndex: 1, dashStyle: 'Dash', label: {
+        {value: statistics.mean.toFixed(3), width: 1, color: '#333', zIndex: 1, dashStyle: 'Dash', label: {
             text: 'm', rotation: 0, align: 'center', x: 0, y: -5, style: {fontSize: '10px'}
         }}
     ];
@@ -183,12 +211,13 @@ var prepare_graph_statistical_data = function(statistics) {
             var sp = parseFloat((statistics.sd * i).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
             var sm = parseFloat((statistics.sd * (-i)).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
             var plotBand = {
-                from: sm.toFixed(3), to: sp.toFixed(3), color: 'rgba(184,210,236,.2)', zIndex: 0
+                from: sm.toFixed(3), to: sp.toFixed(3), color: 'rgba(184,210,236,.25)', zIndex: 0
             };
             output.plotBands.push(plotBand);
         }
     }
 
+    console.log(output);
 
     return output;
 };

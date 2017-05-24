@@ -20,6 +20,22 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.3.9 | 2017-05-24
+
+FIX Opravené rozsahy stĺpcov v bodovom histograme.
+FIX [lang:english] Fixed range of columns in the point histogram.
+
+NEW Do popisu x-ovej osi v bodovom histograme pribudla informácia o strednej hodnote a smerodajnej odchýlke.
+NEW [lang:english] Added information about mean value and standard deviation into x-axis label of the point histogram.
+
+FIX Opravené chýbajúce automatické dosadenie preferovaného kurzu do filtra zoznamu študentov.
+FIX [lang:english] Fixed missing automatic injection of prefered course into filter of students.
+
+FIX Pridaný chýbajúci Google PrettyPrint do náhladu zostavy úloh.
+FIX [lang:english] Added missing Google PrettyPrint into task set preview.
+
+END VERSION
+
 VERSION 1.3.8 | 2017-05-21
 
 NEW Histogram bodov teraz obsahuje podnadpis - názov zostavy.
