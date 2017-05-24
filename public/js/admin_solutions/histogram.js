@@ -38,7 +38,7 @@ var refresh_points_overview = function() {
                 },
                 xAxis: {
                     title: {
-                        text: chartmessages.xAxis
+                        text: chartmessages.xAxis + ' (' + chartmessages.mean + '[m] = ' + statistics.mean.toFixed(3) + (statistics.sd > 0 ? ', ' + chartmessages.sd + '[s] = ' + statistics.sd.toFixed(3) : '') + ')'
                     },
                     plotLines: additionalData.plotLines,
                     plotBands: additionalData.plotBands,
@@ -58,6 +58,8 @@ var refresh_points_overview = function() {
                         pointPlacement: 'between',
                         pointPadding: 0,
                         groupPadding: 0,
+                        pointInterval: step,
+                        borderColor: '#909090',
                         //minPointLength: step,
                         pointRange: step,
                         color: 'rgba(0,192,255,0.8)',
@@ -187,7 +189,7 @@ var prepare_graph_statistical_data = function(statistics) {
     }
 
     output.plotLines = [
-        {value: statistics.mean.toFixed(3), width: 2, color: '#666', zIndex: 1, dashStyle: 'Dash', label: {
+        {value: statistics.mean.toFixed(3), width: 1, color: '#333', zIndex: 1, dashStyle: 'Dash', label: {
             text: 'm', rotation: 0, align: 'center', x: 0, y: -5, style: {fontSize: '10px'}
         }}
     ];
@@ -209,12 +211,13 @@ var prepare_graph_statistical_data = function(statistics) {
             var sp = parseFloat((statistics.sd * i).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
             var sm = parseFloat((statistics.sd * (-i)).toFixed(3)) + parseFloat(statistics.mean.toFixed(3));
             var plotBand = {
-                from: sm.toFixed(3), to: sp.toFixed(3), color: 'rgba(184,210,236,.2)', zIndex: 0
+                from: sm.toFixed(3), to: sp.toFixed(3), color: 'rgba(184,210,236,.25)', zIndex: 0
             };
             output.plotBands.push(plotBand);
         }
     }
 
+    console.log(output);
 
     return output;
 };
