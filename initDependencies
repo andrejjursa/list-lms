@@ -1,4 +1,9 @@
 #!/bin/bash
+#-----------------------------
+#
+# If first argument is set to dev, it will install development dependencies as well as production dependencies.
+#
+#-----------------------------
 
 if [ "$(id -u)" != "0" ]; then
     echo "Run this script as root!"
@@ -17,15 +22,23 @@ if [ $? == "1" ]; then
     exit 1
 fi
 
+COMPOSER_PARAMS=""
+NPM_PARAMS=""
+
+if [ "$1" != "dev" ]; then
+    COMPOSER_PARAMS="--no-dev"
+    NPM_PARAMS="--production"
+fi
+
 echo "Installation of dependencies with composer ..."
 
-composer install
+composer install $COMPOSER_PARAMS
 
 echo "... done."
 
 echo "Installation of dependencies with npm ..."
 
-npm install
+npm install $NPM_PARAMS
 
 echo "... done."
 
