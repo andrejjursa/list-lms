@@ -11,7 +11,7 @@
         <span title="{translate line='admin_solutions_valuation_student_no_group'}">{translate|abbreviation line='admin_solutions_valuation_student_no_group'}</span>
         {/if}
     </td>
-    <td>{$task_set->get_student_files_count($solution->student_id)|intval}</td>
+    <td>{$task_set->get_student_files_count($solution->student_id)|intval}{if $solution->isSolutionSuspicious()} <span class="suspiciousSolution" title="{translate line='admin_solutions_valuation_suspicious_solution_ip_addresses'}: {', '|implode:$solution->getSolutionVersionsDistinctIPAddresses()}">!</span>{/if}</td>
     <td>{$solution->ip_address}</td>
     {if is_null($solution->points) and is_null($solution->tests_points)}
     <td colspan="3">{translate line='admin_solutions_list_solution_not_valuated'}</td>
