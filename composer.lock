@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7c86d31a3d28ecd35b0c7e008cc07e07",
+    "hash": "8e5ceef5fae0aa723bc5e9ff1e979b5b",
     "packages": [
         {
             "name": "mathjax/mathjax",
