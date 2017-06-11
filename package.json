@@ -1,6 +1,6 @@
 {
   "name": "LIST",
-  "version": "1.3.10",
+  "version": "1.3.10a",
   "description": "Longterm internet storage of tasks - learning management system.",
   "main": "index.js",
   "scripts": {
