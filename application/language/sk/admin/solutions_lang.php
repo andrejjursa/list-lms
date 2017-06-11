@@ -139,6 +139,8 @@ $lang['admin_solutions_valuation_version_metadata_download_lock_disabled'] = 'Za
 $lang['admin_solutions_valuation_version_metadata_download_lock_switch_failed'] = 'Prepnutie zákazu sťahovania zlyhalo.';
 $lang['admin_solutions_valuation_version_metadata_file_last_modification'] = 'Posledná modifikácia súboru';
 
+$lang['admin_solutions_valuation_suspicious_solution_ip_addresses'] = 'Podozrivé riešenie, odoslané z viac ako jednej IP adresy';
+
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámy autor';
 $lang['admin_solutions_tasks_list_internal_comment_from_task_set_header'] = 'Interný komentár zo zostavy úloh';

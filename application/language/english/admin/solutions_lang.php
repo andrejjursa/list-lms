@@ -139,6 +139,8 @@ $lang['admin_solutions_valuation_version_metadata_download_lock_disabled'] = 'Do
 $lang['admin_solutions_valuation_version_metadata_download_lock_switch_failed'] = 'Download lock switch failed.';
 $lang['admin_solutions_valuation_version_metadata_file_last_modification'] = 'File last modification';
 
+$lang['admin_solutions_valuation_suspicious_solution_ip_addresses'] = 'Suspicious solution, submitted from more than one IP address';
+
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Instructions for student';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Unknown author';
 $lang['admin_solutions_tasks_list_internal_comment_from_task_set_header'] = 'Internal comment from task set';
