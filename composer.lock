@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2b548703f3f78297eda0261a1e5bf291",
+    "hash": "7c86d31a3d28ecd35b0c7e008cc07e07",
     "packages": [
         {
             "name": "mathjax/mathjax",
-            "version": "dev-master",
+            "version": "2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathjax/MathJax.git",
-                "reference": "6273842a9746731b9ecca0de18ec9fd50a36df99"
+                "reference": "d71cc40666d213dceeb9353822a3b530656d9a4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathjax/MathJax/zipball/6273842a9746731b9ecca0de18ec9fd50a36df99",
-                "reference": "6273842a9746731b9ecca0de18ec9fd50a36df99",
+                "url": "https://api.github.com/repos/mathjax/MathJax/zipball/d71cc40666d213dceeb9353822a3b530656d9a4b",
+                "reference": "d71cc40666d213dceeb9353822a3b530656d9a4b",
                 "shasum": ""
             },
             "type": "library",
@@ -40,15 +40,13 @@
                 "latex",
                 "math"
             ],
-            "time": "2016-10-14 12:37:21"
+            "time": "2017-04-25 08:29:36"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "mathjax/mathjax": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
