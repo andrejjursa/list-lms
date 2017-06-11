@@ -50,6 +50,7 @@ class Solution extends DataMapper {
             $solution_versions->distinct();
             $solution_versions->select('ip_address');
             $solution_versions->where_related_solution($this);
+            $solution_versions->where('ip_address !=', '');
             $solution_versions->order_by('ip_address');
             $solution_versions->get_iterated();
             $this->solution_versions_ip_address_cache[$this->id] = [];
