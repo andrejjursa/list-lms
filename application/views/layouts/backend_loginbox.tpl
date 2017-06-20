@@ -11,6 +11,7 @@
             var global_base_url = "{'/'|base_url}";
             var login_form_url = "{internal_url|addslashes url='admin_teachers/login/current_url/###URL###'}";
             var jqueryui_datepicker_region = "{translate|addslashes line='common_jqueryui_datepicker_region'|default:'en'}";
+            var list_version = "{''|add_file_version}";
         </script>
         <script type="text/javascript" src="{'/public/js/jquery.js'|base_url|add_file_version}"></script>
         <script type="text/javascript" src="{$list_lang_js_messages|base_url|add_file_version}"></script>
