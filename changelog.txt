@@ -20,6 +20,22 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.3.11 | 2017-06-20
+
+CHANGE Google code prettify updatnuty na najnovšiu verziu.
+CHANGE [lang:english] Google code prettify updated to newest version.
+
+CHANGE Pridané štýly pre code prettified pre a code elementy v TinyMCE editore.
+CHANGE [lang:english] Added styles for code prettified pre and code elements in TinyMCE editor.
+
+CHANGE Code prettify je možné v TinyMCE editore použiť aj na code element.
+CHANGE [lang:english] Code prettify is now possible to use on code element in TinyMCE editor.
+
+NEW TinyMCE editor teraz ponúka možnosť označený text obaliť značkamy pre LaTeX inline a display mód rovnice.
+NEW [lang:english] TinyMCE editor now offers to wrap selected text into LaTeX inline and display mode equation markers.
+
+END VERSION
+
 VERSION 1.3.10a | 2017-06-11
 
 FIX Fixed marking legal solutions as suspicious when they are submitted from one IP address and one or several submits are made by teacher.
