@@ -242,7 +242,7 @@ class LIST_Controller extends CI_Controller {
      * This method add google prettify syntax highlighter to template.
      */
     protected function _add_prettify() {
-        $this->parser->add_js_file('prettify/prettify.js');
+        $this->parser->add_js_file('google-code-prettify/prettify.js');
         $this->parser->add_css_file('prettify.css');
     }
     

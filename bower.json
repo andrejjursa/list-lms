@@ -1,0 +1,20 @@
+{
+  "name": "list",
+  "description": "Longterm internet storage of tasks - learning management system.",
+  "main": "index.js",
+  "authors": [
+    "Andrej Jursa"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/andrejjursa/list-lms",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "google-code-prettify": "^1.0.5"
+  }
+}

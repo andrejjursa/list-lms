@@ -9,6 +9,7 @@
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";
             var login_form_url = '{internal_url|addslashes url='students/login/current_url/###URL###'}';
+            var list_version = "{''|add_file_version}";
         </script>
         <script type="text/javascript" src="{'/public/js/jquery.js'|base_url|add_file_version}"></script>
         {foreach $list_internal_css_files as $file nocache}{$file.html}{/foreach}
