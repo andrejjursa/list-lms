@@ -98,6 +98,7 @@ $lang['admin_task_sets_filter_form_field_tasks'] = 'Tasks';
 $lang['admin_task_sets_filter_form_field_tasks_option_all'] = 'All task sets';
 $lang['admin_task_sets_filter_form_field_tasks_option_without_tasks'] = 'Task sets without tasks';
 $lang['admin_task_sets_filter_form_field_tasks_option_with_tasks'] = 'Task sets with tasks';
+$lang['admin_task_sets_filter_form_field_hidde_old'] = 'Hide task sets with deadline older than 2 weeks';
 $lang['admin_task_sets_filter_form_field_name'] = 'Name';
 $lang['admin_task_sets_filter_option_without_group'] = 'Task sets without group';
 $lang['admin_task_sets_tabs_label_about_task_set'] = 'About task set';

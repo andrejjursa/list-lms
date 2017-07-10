@@ -17,6 +17,8 @@ class Solution extends DataMapper {
         'solution_version',
     );
 
+    private $solution_versions_ip_address_cache = [];
+
 
     /**
      * Delete this object from database or specified relations.
@@ -39,6 +41,30 @@ class Solution extends DataMapper {
                 }}
             }
         }
+    }
+
+    public function getSolutionVersionsDistinctIPAddresses() {
+        if ($this->id === null) { return []; }
+        if (!isset($this->solution_versions_ip_address_cache[$this->id])) {
+            $solution_versions = new Solution_version();
+            $solution_versions->distinct();
+            $solution_versions->select('ip_address');
+            $solution_versions->where_related_solution($this);
+            $solution_versions->where('ip_address !=', '');
+            $solution_versions->order_by('ip_address');
+            $solution_versions->get_iterated();
+            $this->solution_versions_ip_address_cache[$this->id] = [];
+            foreach ($solution_versions as $solution_version) {
+                $this->solution_versions_ip_address_cache[$this->id][] = $solution_version->ip_address;
+            }
+        }
+        return $this->solution_versions_ip_address_cache[$this->id];
+    }
+
+    public function isSolutionSuspicious() {
+        $ip_adresses = $this->getSolutionVersionsDistinctIPAddresses();
+
+        return count($ip_adresses) > 1;
     }
     
 }

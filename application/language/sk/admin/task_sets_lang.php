@@ -98,6 +98,7 @@ $lang['admin_task_sets_filter_form_field_tasks'] = 'Úlohy';
 $lang['admin_task_sets_filter_form_field_tasks_option_all'] = 'Všetky zostavy úloh';
 $lang['admin_task_sets_filter_form_field_tasks_option_without_tasks'] = 'Zostavy úloh neobsahujúce úlohy';
 $lang['admin_task_sets_filter_form_field_tasks_option_with_tasks'] = 'Zostavy úloh obsahujúce úlohy';
+$lang['admin_task_sets_filter_form_field_hidde_old'] = 'Skryť zostavy, ktoré sú 2 týždne po deadline';
 $lang['admin_task_sets_filter_form_field_name'] = 'Názov';
 $lang['admin_task_sets_filter_option_without_group'] = 'Zostavy úloh bez skupiny';
 $lang['admin_task_sets_tabs_label_about_task_set'] = 'O zostave úloh';

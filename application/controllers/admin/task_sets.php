@@ -202,6 +202,9 @@ class Task_sets extends LIST_Controller {
             array('name' => 'project_selection_deadline', 'caption' => 'lang:admin_task_sets_table_header_project_selection_deadline'),
         );
         $filter = $this->input->post('filter');
+        if (!array_key_exists('hide_old', $filter)) {
+            $filter['hide_old'] = 0;
+        }
         $this->store_task_sets_filter($filter);
         $this->inject_stored_task_sets_filter();
         $task_sets = new Task_set();
@@ -232,6 +235,26 @@ class Task_sets extends LIST_Controller {
                     $task_sets->group_end();
                 $task_sets->group_end();
             }
+        }
+        if (isset($filter['hide_old']) && boolval($filter['hide_old'])) {
+            $old = date('Y-m-d H:i:s', strtotime('now -2 weeks'));
+            $task_sets->group_start();
+                $task_sets->group_start();
+                    $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                    $task_sets->group_start();
+                        $task_sets->where('upload_end_time', null);
+                        $task_sets->or_where('upload_end_time >', $old);
+                    $task_sets->group_end();
+                $task_sets->group_end();
+                $task_sets->or_group_start();
+                    $task_sets->where('content_type !=', 'project');
+                    $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                    $task_sets->group_start();
+                        $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 AND `tsp`.`upload_end_time` IS NULL)');
+                        $task_sets->or_where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 AND `tsp`.`upload_end_time` > \'' . $old . '\')');
+                    $task_sets->group_end();
+                $task_sets->group_end();
+            $task_sets->group_end();
         }
         if (isset($filter['task_set_type']) && intval($filter['task_set_type']) > 0) {
             $task_sets->where_related_task_set_type('id', intval($filter['task_set_type']));
@@ -594,7 +617,11 @@ class Task_sets extends LIST_Controller {
         $this->_add_mathjax();
         $task_set = new Task_set();
         $task_set->get_by_id((int)$task_set_id);
-        
+
+        $this->_add_mathjax();
+        $this->_add_prettify();
+        $this->parser->add_js_file('admin_task_sets/preview.js');
+
         $this->parser->parse('backend/task_sets/preview.tpl', array('task_set' => $task_set));
     }
 
@@ -1069,7 +1096,7 @@ class Task_sets extends LIST_Controller {
         $filter = $this->filter->restore_filter(self::STORED_SORTING_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
         $this->parser->assign('filter', $filter);
     }
-    
+
     private function inject_languages() {
         $languages = $this->lang->get_list_of_languages();
         $this->parser->assign('languages', $languages);

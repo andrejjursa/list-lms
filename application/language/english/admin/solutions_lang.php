@@ -11,6 +11,7 @@ $lang['admin_solutions_filter_label_content_type'] = 'Filter by content type';
 $lang['admin_solutions_filter_label_content_type_type_task_set'] = 'Task set';
 $lang['admin_solutions_filter_label_content_type_type_project'] = 'Project';
 $lang['admin_solutions_filter_label_author'] = 'Author';
+$lang['admin_solutions_filter_label_hide_old'] = 'Hide task sets with deadline older than 2 weeks';
 $lang['admin_solutions_filter_submit'] = 'Apply';
 $lang['admin_solutions_table_header_task_set_name'] = 'Name of task set';
 $lang['admin_solutions_table_header_task_set_course'] = 'Course of task set';
@@ -79,6 +80,17 @@ $lang['admin_solutions_list_new_solution_error_student_not_in_course_or_group'] 
 $lang['admin_solutions_list_chart_title'] = 'Histogram of points';
 $lang['admin_solutions_list_chart_xaxis'] = 'Points range';
 $lang['admin_solutions_list_chart_yaxis'] = 'Number of students in points range';
+$lang['admin_solutions_list_chart_to'] = 'to';
+$lang['admin_solutions_list_chart_tootlip_range'] = 'Range';
+$lang['admin_solutions_list_chart_tootlip_sum'] = 'In range';
+$lang['admin_solutions_list_chart_pointseries_name'] = 'Separate points sum';
+$lang['admin_solutions_list_chart_pointseries_tooltip_x'] = 'Sum of points';
+$lang['admin_solutions_list_chart_pointseries_tooltip_y'] = 'Number of students';
+$lang['admin_solutions_list_chart_mean'] = 'mean value';
+$lang['admin_solutions_list_chart_sd'] = 'standard deviation';
+$lang['admin_solutions_histogram_bin_size'] = 'Histogram bin size';
+$lang['admin_solutions_histogram_hints'] = 'Histogram hints';
+$lang['admin_solutions_histogram_hint_text'] = '<strong>m</strong> - mean value of data<br><strong>-xs to xs</strong> - range of x-times standard deviation around mean value';
 $lang['admin_solutions_solution_list_filter_label_group_not_found'] = 'This task set is related to specific group, you can\'t select different one for filtering.';
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Form';
@@ -126,6 +138,8 @@ $lang['admin_solutions_valuation_version_metadata_download_lock_enabled'] = 'Dow
 $lang['admin_solutions_valuation_version_metadata_download_lock_disabled'] = 'Download lock disabled.';
 $lang['admin_solutions_valuation_version_metadata_download_lock_switch_failed'] = 'Download lock switch failed.';
 $lang['admin_solutions_valuation_version_metadata_file_last_modification'] = 'File last modification';
+
+$lang['admin_solutions_valuation_suspicious_solution_ip_addresses'] = 'Suspicious solution, submitted from more than one IP address';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Instructions for student';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Unknown author';

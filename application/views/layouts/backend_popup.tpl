@@ -13,6 +13,7 @@
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";
             var jqueryui_datepicker_region = "{translate|addslashes line='common_jqueryui_datepicker_region'|default:'en'}";
+            var list_version = "{''|add_file_version}";
         </script>
         <script type="text/javascript" src="{'/public/js/jquery.js'|base_url|add_file_version}"></script>
         <script type="text/javascript" src="{$list_lang_js_messages|base_url|add_file_version}"></script>

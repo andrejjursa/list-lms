@@ -11,6 +11,7 @@ $lang['admin_solutions_filter_label_content_type'] = 'Filtrovať podľa typu obs
 $lang['admin_solutions_filter_label_content_type_type_task_set'] = 'Zostava úloh';
 $lang['admin_solutions_filter_label_content_type_type_project'] = 'Projekt';
 $lang['admin_solutions_filter_label_author'] = 'Autor';
+$lang['admin_solutions_filter_label_hide_old'] = 'Skryť zostavy, ktoré sú 2 týždne po deadline';
 $lang['admin_solutions_filter_submit'] = 'Použiť';
 $lang['admin_solutions_table_header_task_set_name'] = 'Názov zostavy úloh';
 $lang['admin_solutions_table_header_task_set_course'] = 'Kurz zostavy úloh';
@@ -79,6 +80,17 @@ $lang['admin_solutions_list_new_solution_error_student_not_in_course_or_group'] 
 $lang['admin_solutions_list_chart_title'] = 'Histogram bodovania';
 $lang['admin_solutions_list_chart_xaxis'] = 'Rozsah bodov';
 $lang['admin_solutions_list_chart_yaxis'] = 'Počet študentov spadajúcich do rozsahu';
+$lang['admin_solutions_list_chart_to'] = 'až';
+$lang['admin_solutions_list_chart_tootlip_range'] = 'Rozsah';
+$lang['admin_solutions_list_chart_tootlip_sum'] = 'V rozsahu';
+$lang['admin_solutions_list_chart_pointseries_name'] = 'Samostatné sumy bodov';
+$lang['admin_solutions_list_chart_pointseries_tooltip_x'] = 'Suma bodov';
+$lang['admin_solutions_list_chart_pointseries_tooltip_y'] = 'Počet študentov';
+$lang['admin_solutions_list_chart_mean'] = 'stredná hodnota';
+$lang['admin_solutions_list_chart_sd'] = 'smerodajná odchýlka';
+$lang['admin_solutions_histogram_bin_size'] = 'Šírka binu v histograme';
+$lang['admin_solutions_histogram_hints'] = 'Nápoveda k histogramu';
+$lang['admin_solutions_histogram_hint_text'] = '<strong>m</strong> - stredná hodnota dát<br><strong>-xs to xs</strong> - rozsah x-násobku smerodajnej odchýlky okolo strednej hodnoty';
 $lang['admin_solutions_solution_list_filter_label_group_not_found'] = 'Táto zostava úloh je priradená ku konkrétnej skupine, preto nie je možné vybrať inú skupinu na filtrovanie.';
 
 $lang['admin_solutions_valuation_tabs_label_form'] = 'Formulár';
@@ -126,6 +138,8 @@ $lang['admin_solutions_valuation_version_metadata_download_lock_enabled'] = 'Zak
 $lang['admin_solutions_valuation_version_metadata_download_lock_disabled'] = 'Zakázanie sťahovania zrušené.';
 $lang['admin_solutions_valuation_version_metadata_download_lock_switch_failed'] = 'Prepnutie zákazu sťahovania zlyhalo.';
 $lang['admin_solutions_valuation_version_metadata_file_last_modification'] = 'Posledná modifikácia súboru';
+
+$lang['admin_solutions_valuation_suspicious_solution_ip_addresses'] = 'Podozrivé riešenie, odoslané z viac ako jednej IP adresy';
 
 $lang['admin_solutions_tasks_list_instructions_header'] = 'Inštrukcie pre študenta';
 $lang['admin_solutions_tasks_list_task_unknown_author'] = 'Neznámy autor';

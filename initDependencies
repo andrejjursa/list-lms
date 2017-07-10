@@ -1,4 +1,9 @@
 #!/bin/bash
+#-----------------------------
+#
+# If first argument is set to dev, it will install development dependencies as well as production dependencies.
+#
+#-----------------------------
 
 if [ "$(id -u)" != "0" ]; then
     echo "Run this script as root!"
@@ -17,19 +22,42 @@ if [ $? == "1" ]; then
     exit 1
 fi
 
+COMPOSER_PARAMS=""
+NPM_PARAMS=""
+BOWER_PARAMS="--allow-root"
+
+if [ "$1" != "dev" ]; then
+    COMPOSER_PARAMS="--no-dev"
+    NPM_PARAMS="--production"
+    BOWER_PARAMS="$BOWER_PARAMS --production"
+fi
+
 echo "Installation of dependencies with composer ..."
 
-composer install
+echo "Running: composer install $COMPOSER_PARAMS"
+
+composer install $COMPOSER_PARAMS
 
 echo "... done."
 
 echo "Installation of dependencies with npm ..."
 
-npm install
+echo "Running: npm install $NPM_PARAMS"
+
+npm install $NPM_PARAMS
+
+echo "... done."
+
+echo "Installation of dependencies with bower ..."
+
+echo "Running: node_modules/bower/bin/bower install $BOWER_PARAMS"
+
+node_modules/bower/bin/bower install $BOWER_PARAMS
 
 echo "... done."
 
 CD="$(pwd)"
+
 mathjax="vendor/mathjax/mathjax"
 pmathjax="public/js/mathjax"
 
@@ -62,3 +90,14 @@ ln -sd "$CD/$highcharts/lib" "$CD/$phighcharts/lib"
 ln -sd "$CD/$highcharts/modules" "$CD/$phighcharts/modules"
 ln -sd "$CD/$highcharts/themes" "$CD/$phighcharts/themes"
 echo "... dobe."
+
+prettify="bower_components/google-code-prettify/src"
+pprettify="public/js/google-code-prettify"
+pprettifycss="public/css"
+
+echo "Copying references to google-code-prettify ..."
+rm -f "$CD/$pprettify" 2> /dev/null > /dev/null
+rm -f "$CD/$pprettifycss/prettify.css" 2> /dev/null > /dev/null
+ln -sd "$CD/$prettify" "$CD/$pprettify"
+ln -s "$CD/$prettify/prettify.css" "$CD/$pprettifycss/prettify.css"
+echo "... done."
