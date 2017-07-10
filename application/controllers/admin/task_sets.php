@@ -101,6 +101,87 @@ class Task_sets extends LIST_Controller {
         $this->parser->parse('backend/task_sets/all_task_sets_sorting.tpl');
     }
 
+    public function update_sorting() {
+        $output = new stdClass();
+        $output->status = false;
+        $output->message = '';
+        $output->content = '';
+
+        $task_set_type_id = $this->input->post('task_set_type_id');
+        $course_id = $this->input->post('course_id');
+        $order = $this->input->post('order');
+
+
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+
+        $course = new Course((int)$course_id);
+        $task_set_type = new Task_set_type((int)$task_set_type_id);
+
+        if ($course->exists() && $task_set_type->exists()) {
+            $task_sets = new Task_set();
+            $task_sets->where_related_course($course);
+            $task_sets->where_related_task_set_type($task_set_type);
+            $task_sets->where('content_type', 'task_set');
+
+            $task_sets->hide_updated_field();
+            $task_sets->update('sorting', count($order) + 1);
+            $task_sets->show_updated_field();
+
+            $sort_order = 1;
+            foreach ($order as $task_set_id) {
+                $task_set = new Task_set();
+                $task_set->where_related_course($course);
+                $task_set->where_related_task_set_type($task_set_type);
+                $task_set->where('id', $task_set_id);
+                $task_set->hide_updated_field();
+                $task_set->update('sorting', $sort_order++);
+                $task_set->show_updated_field();
+            }
+
+            $task_sets = new Task_set();
+            $task_sets->select(array('id, name'));
+            $task_sets->where_related_course($course);
+            $task_sets->where_related_task_set_type($task_set_type);
+            $task_sets->where('content_type', 'task_set');
+            $task_sets->order_by('sorting', 'asc');
+            $task_sets->get_iterated();
+
+            $this->db->trans_commit();
+            $output->status = true;
+            $output->message = $this->lang->line('admin_task_sets_sorting_update_successful');
+            $task_set_type_name = $this->lang->text($this->lang->get_overlay_with_default('task_set_types', $task_set_type_id, 'name', $task_set_type->name));
+            $course_name = $this->lang->text($this->lang->get_overlay_with_default('courses', $course_id, 'name', $course->name));
+            $output->message = sprintf($output->message, $task_set_type_name, $course_name);
+
+            $items = array();
+
+            foreach ($task_sets as $task_set) {
+                $items[] = array(
+                    'id' => $task_set->id,
+                    'name' => $task_set->name,
+                );
+            }
+
+            $output->content = $this->parser->parse('backend/task_sets/partial/single_type_task_sets_sorting.tpl', array(
+                'task_set_type_id' => $task_set_type_id,
+                'course' => $course,
+                'task_set_type_data' => array(
+                    'items' => $items,
+                ),
+            ), true);
+
+            $this->_action_success();
+        } else{
+            $this->db->trans_rollback();
+            $output->status = false;
+            $output->message = $this->lang->line('admin_task_sets_sorting_error_course_or_task_set_type_not_found');
+        }
+
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+
     public function new_task_set_form() {
         $this->inject_courses();
         $this->inject_test_types();

@@ -168,3 +168,5 @@ $lang['admin_task_sets_help_button_new_task_set'] = 'Pomoc s formulárom novej z
 $lang['admin_task_sets_publication_status_switched'] = 'Stav publikovania zostavy <em>%s</em> sa zmenil.';
 $lang['admin_task_sets_sorting_page_header'] = 'Zostavy úloh - zotriedenie';
 $lang['admin_task_sets_sorting_error_course_not_selected'] = 'Kurz nie je zvolený!';
+$lang['admin_task_sets_sorting_error_course_or_task_set_type_not_found'] = 'Chyba: predmetný kurz alebo typ zostavy úloh nebol nájdený!';
+$lang['admin_task_sets_sorting_update_successful'] = 'Zoradenie zostáv pre typ zostavy úloh <em>%s</em> v kurze <em>%s</em> bolo úspešné.';

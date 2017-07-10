@@ -168,3 +168,5 @@ $lang['admin_task_sets_help_button_new_task_set'] = 'Help me with new task set f
 $lang['admin_task_sets_publication_status_switched'] = 'Publication status of <em>%s</em> was switched.';
 $lang['admin_task_sets_sorting_page_header'] = 'Task sets - sorting';
 $lang['admin_task_sets_sorting_error_course_not_selected'] = 'Course is not selected!';
+$lang['admin_task_sets_sorting_error_course_or_task_set_type_not_found'] = 'Error: selected course or task set type was not found!';
+$lang['admin_task_sets_sorting_update_successful'] = 'Task sets sorting for task set type <em>%s</em> in course <em>%s</em> was successful.';

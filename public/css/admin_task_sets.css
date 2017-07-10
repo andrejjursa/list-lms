@@ -72,3 +72,7 @@ div.project_selection_list { border: 1px dashed black; padding: 10px; border-rad
 div.project_selection_list.not_selected_list { background-color: #ffdede; }
 div.project_selection_list div.project_selection_student { border: 1px solid black; background-color: white; padding: 3px; border-radius: 4px; margin: 2px 0; }
 div.project_selection_list div.project_selection_student.operations_disabled { border-color: gray; background-color: silver; color: gray; }
+
+fieldset.sorting_list ul.sorting_list { list-style-type: none; }
+fieldset.sorting_list ul.sorting_list li.sorted_item { border: 1px solid green; background-color: #6DC052; margin: 1px 0; padding: 2px; cursor: pointer; }
+fieldset.sorting_list ul.sorting_list li.task-set-sorting-placeholder { height: 1.1em; margin: 1px 0; padding: 2px; border: 1px solid gray; background-color: silver; }

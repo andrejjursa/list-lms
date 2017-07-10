@@ -16,6 +16,8 @@ class Task_set extends DataMapper {
     private $related_permissions = array();
 
     private $related_task_set_type = array();
+
+    private static $updated_field_key = null;
     
     public $has_many = array(
         'task' => array(
@@ -492,7 +494,6 @@ class Task_set extends DataMapper {
                 $task_set_type->where_related('course', 'id', $this->course_id);
                 $task_set_type->limit(1);
                 $task_set_type->get();
-                //$task_set_type->check_last_query();
             }
 
             if ($task_set_type->exists()) {
@@ -519,5 +520,25 @@ class Task_set extends DataMapper {
             $i++;
         } while (file_exists($path . $filename));
         return $path . $filename;
+    }
+
+    /**
+     * Hide updated field so it will not be changed during update.
+     */
+    public function hide_updated_field() {
+        if(($key = array_search('updated', $this->fields)) !== false) {
+            unset($this->fields[$key]);
+            self::$updated_field_key = $key;
+        }
+    }
+
+    /**
+     * Show updated field so it will be changed during update.
+     * Must be hidden first.
+     */
+    public function show_updated_field() {
+        if(($key = array_search('updated', $this->fields)) === false && !is_null(self::$updated_field_key)) {
+            array_splice($this->fields, self::$updated_field_key, 0, array('updated'));
+        }
     }
 }
