@@ -20,6 +20,13 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.4.1 | 2017-07-10
+
+NEW V tabuľke hodnotení je teraz možné kliknúť na hodnotenie, čím sa otvorí hodnotiaci dialóg.
+NEW [lang:english] In grading table it is now allowed to click on grade which open grading dialog.
+
+END VERSION
+
 VERSION 1.4.0 | 2017-07-10
 
 NEW Pridané zoraďovanie zostáv úloh vrámci typu zostavy úloh pre každý kurz. Už sa nebudú zoraďovať podľa dátumu publikovania.

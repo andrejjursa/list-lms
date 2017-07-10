@@ -126,6 +126,10 @@
     #valutation_table thead tr th[data-position] { cursor: pointer; }
     #valutation_table thead tr th.sort-asc:after { content: '\0000a0\0025B2' }
     #valutation_table thead tr th.sort-desc:after { content: '\0000a0\0025BC' }
+
+    #valutation_table tbody tr td.type_task_set[data-solution-id][data-task-set-id] { cursor: pointer; }
+    #valutation_table tbody tr:nth-child(2n) td.type_task_set[data-solution-id][data-task-set-id]:hover { background-color: orange; }
+    #valutation_table tbody tr:nth-child(2n+1) td.type_task_set[data-solution-id][data-task-set-id]:hover { background-color: darkorange; }
     
     ul.show_hide_menu li.name > a { background-color: #50a050 !important; color: black !important; }
     ul.show_hide_menu li.task_sets > a { background-color: #f4ff84 !important; color: black !important; }

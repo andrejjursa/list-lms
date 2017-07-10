@@ -1,8 +1,16 @@
 jQuery(document).ready(function($) {
     
     make_filter_form('#filter_form_id');
+
+    var default_sorting = {
+        col_position: 2,
+        direction: 'asc',
+        sort_type: 'alpha'
+    };
+
+    var last_sorting = default_sorting;
     
-    var reload_valuation_table = function() {
+    var reload_valuation_table = function(callback) {
         var url = global_base_url + 'index.php/admin_solutions/get_valuation_table';
         var target = '#table_content_id';
         var data = $('#filter_form_id').serializeArray();
@@ -12,30 +20,48 @@ jQuery(document).ready(function($) {
                 at: 'left bottom',
                 of: this
             });
-            //update_content_width();
-            //sort_table('#table_content_id table.valuation_table', '#filter_form_id');
-            /*var oTable = $('#valutation_table').dataTable({
-                'paging': false,
-                'scrollX': '100%',
-                'scrollY': '400px',
-                'scrollCollapse': true,
-                'order': [[ 1, 'asc' ]],
-                'language': lang.dataTables,
-                dom: '<"top"ifClp<"clear">>rt',
-                colVis: {
-                    exclude: [ 0, 1 ]
-                }
-            });
-            
-            new $.fn.dataTable.FixedColumns( oTable, {
-                leftColumns: 2,
-                rightColumns: 1
-            });*/
+            link_cells_to_solution_editor();
+            if (typeof callback === 'function') {
+                callback();
+            }
         };
         api_ajax_load(url, target, 'post', data, onSuccess);
     };
     
     reload_valuation_table();
+
+    var link_cells_to_solution_editor = function() {
+        $('#table_content_id td.type_task_set[data-solution-id][data-task-set-id]').each(function () {
+            $(this).click(function() {
+                var solution_id = $(this).attr('data-solution-id');
+                var task_set_id = $(this).attr('data-task-set-id');
+                var url = global_base_url + 'index.php/admin_solutions/valuation/' + task_set_id + '/' + solution_id;
+                open_valuation_dialog(url);
+            });
+        });
+    };
+
+    var open_valuation_dialog = function(url) {
+        $.fancybox(url, {
+            type: 'iframe',
+            width: '100%',
+            height: '100%',
+            autoSize: false,
+            autoHeight: false,
+            autoWidth: false,
+            helpers: {
+                overlay: {
+                    css: {
+                        background: 'rgba(255,255,255,0)'
+                    }
+                }
+            },
+            beforeClose: function() {
+                reload_valuation_table(restore_table_sorting);
+                return true;
+            }
+        });
+    };
     
     $('#filter_form_id').submit(function(event) {
         event.preventDefault();
@@ -96,10 +122,23 @@ jQuery(document).ready(function($) {
     $(document).on('mouseup', '#table_content_id table.valuation_table tbody tr td', function() {
         $(this).parent().removeClass('clicked');
     });
+
+    var restore_table_sorting = function () {
+        sort_table_by_col(last_sorting.col_position, last_sorting.direction, last_sorting.sort_type);
+        last_order_by = last_sorting.col_position;
+        last_order_by_direction = last_sorting.direction;
+        $('#valutation_table thead tr th').removeClass('sort-asc');
+        $('#valutation_table thead tr th').removeClass('sort-desc');
+        $('thead tr th[data-position=' + last_order_by + ']').addClass('sort-' + last_order_by_direction);
+    };
     
     var sort_table_by_col = function(col_position, direction, sort_type) {
         if (typeof sort_type === 'undefined') { sort_type = 'numeric'; }
-        
+
+        last_sorting.col_position = col_position;
+        last_sorting.direction = direction;
+        last_sorting.sort_type = sort_type;
+
         var sorting = [];
         
         var temporary_location = $('<div></div>').css('display', 'none');
