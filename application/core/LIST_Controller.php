@@ -2,6 +2,22 @@
 
 /**
  * Overriden controller class with few more useful methods.
+ *
+ * @property CI_URI $uri
+ * @property LIST_Parser $parser
+ * @property LIST_Session $session
+ * @property LIST_Lang $lang
+ * @property LIST_Loader $load
+ * @property LIST_Form_validation $form_validation
+ * @property LIST_Email $email
+ * @property CI_Config $config
+ * @property Usermanager $usermanager
+ * @property CI_Input $input
+ * @property Translations $translations
+ * @property CI_Router $router
+ * @property DataMapper $db
+ * @property LIST_Output $output
+ *
  * @package LIST_Core
  * @author Andrej Jursa
  */ 

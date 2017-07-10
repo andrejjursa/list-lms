@@ -1207,6 +1207,7 @@ class Solutions extends LIST_Controller {
             $content_type_task_set->where_related_course($course);
             $content_type_task_set->order_by_related_with_constant('task_set_type', 'name', 'asc');
             $content_type_task_set->order_by('task_set_type_id', 'asc');
+            $content_type_task_set->order_by('sorting', 'asc');
             $content_type_task_set->order_by('publish_start_time', 'asc');
             if ($group->exists()) {
                 $content_type_task_set->group_start();
