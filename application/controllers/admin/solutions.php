@@ -1321,6 +1321,7 @@ class Solutions extends LIST_Controller {
                 
                 if ($content_type_task_set->result_count() > 0 || $content_type_project->result_count() > 0) {
                     $solutions = new Solution();
+                    $solutions->select('id');
                     $solutions->select('task_set_id, points, tests_points, not_considered, revalidate');
                     $solutions->where_related_student($student);
                     $solutions->group_start();
@@ -1337,6 +1338,8 @@ class Solutions extends LIST_Controller {
                             'points' => is_null($solution->points) && is_null($solution->tests_points) ? NULL : ($solution->points + $solution->tests_points),
                             'not_considered' => $solution->not_considered,
                             'revalidate' => $solution->revalidate,
+                            'solution_id' => $solution->id,
+                            'task_set_id' => $solution->task_set_id,
                         );
                     }
                 }
@@ -1364,6 +1367,8 @@ class Solutions extends LIST_Controller {
                                         'type' => 'task_set',
                                         'points' => '*',
                                         'flag' => 'notConsidered',
+                                        'task_set_id' => $solutions_data[$task_set->id]['task_set_id'],
+                                        'solution_id' => $solutions_data[$task_set->id]['solution_id'],
                                     );
                                 }
                             } else {
@@ -1373,6 +1378,8 @@ class Solutions extends LIST_Controller {
                                             'type' => 'task_set',
                                             'points' => '!',
                                             'flag' => 'revalidate',
+                                            'task_set_id' => $solutions_data[$task_set->id]['task_set_id'],
+                                            'solution_id' => $solutions_data[$task_set->id]['solution_id'],
                                         );
                                     }
                                 } elseif ($solutions_data[$task_set->id]['revalidate']) {
@@ -1381,6 +1388,8 @@ class Solutions extends LIST_Controller {
                                             'type' => 'task_set',
                                             'points' => $solutions_data[$task_set->id]['points'],
                                             'flag' => 'revalidate',
+                                            'task_set_id' => $solutions_data[$task_set->id]['task_set_id'],
+                                            'solution_id' => $solutions_data[$task_set->id]['solution_id'],
                                         );
                                     }
                                     $points = floatval($solutions_data[$task_set->id]['points']);
@@ -1390,6 +1399,8 @@ class Solutions extends LIST_Controller {
                                             'type' => 'task_set',
                                             'points' => $solutions_data[$task_set->id]['points'],
                                             'flag' => 'ok',
+                                            'task_set_id' => $solutions_data[$task_set->id]['task_set_id'],
+                                            'solution_id' => $solutions_data[$task_set->id]['solution_id'],
                                         );
                                     }
                                     $points = floatval($solutions_data[$task_set->id]['points']);
@@ -1432,6 +1443,8 @@ class Solutions extends LIST_Controller {
                                         'type' => 'task_set',
                                         'points' => '*',
                                         'flag' => 'notConsidered',
+                                        'task_set_id' => $solutions_data[$task_set->id]['task_set_id'],
+                                        'solution_id' => $solutions_data[$task_set->id]['solution_id'],
                                     );
                                 }
                             } else {
@@ -1441,6 +1454,8 @@ class Solutions extends LIST_Controller {
                                             'type' => 'task_set',
                                             'points' => '!',
                                             'flag' => 'revalidate',
+                                            'task_set_id' => $solutions_data[$task_set->id]['task_set_id'],
+                                            'solution_id' => $solutions_data[$task_set->id]['solution_id'],
                                         );
                                     }
                                 } elseif ($solutions_data[$task_set->id]['revalidate']) {
@@ -1449,6 +1464,8 @@ class Solutions extends LIST_Controller {
                                             'type' => 'task_set',
                                             'points' => $solutions_data[$task_set->id]['points'],
                                             'flag' => 'revalidate',
+                                            'task_set_id' => $solutions_data[$task_set->id]['task_set_id'],
+                                            'solution_id' => $solutions_data[$task_set->id]['solution_id'],
                                         );
                                     }
                                     $points = floatval($solutions_data[$task_set->id]['points']);
@@ -1458,6 +1475,8 @@ class Solutions extends LIST_Controller {
                                             'type' => 'task_set',
                                             'points' => $solutions_data[$task_set->id]['points'],
                                             'flag' => 'ok',
+                                            'task_set_id' => $solutions_data[$task_set->id]['task_set_id'],
+                                            'solution_id' => $solutions_data[$task_set->id]['solution_id'],
                                         );
                                     }
                                     $points = floatval($solutions_data[$task_set->id]['points']);
@@ -1482,6 +1501,9 @@ class Solutions extends LIST_Controller {
                 $table_data['content'][] = $student_line;
             }
         }
+
+        //echo '<pre>' . htmlspecialchars(print_r($table_data, true)) . '</pre>';
+        //die();
         
         return $table_data;
     }

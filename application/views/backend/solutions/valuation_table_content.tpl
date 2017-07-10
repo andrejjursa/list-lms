@@ -78,13 +78,13 @@
                 {if count($row.task_sets_points) gt 0 or count($row.projects_points) gt 0}
                 {if count($row.task_sets_points) gt 0}
                     {foreach $row.task_sets_points as $item}
-                        <td class="type_{$item.type} flag_{$item.flag} ctype_task_set" title="{translate line="admin_solutions_valuation_tables_table_body_flag_{$item.flag}"}" data-order="{$item.points|valuation_table_col_points_to_data_order}" data-position="{$col_position}">{$item.points}</td>{$col_position = $col_position + 1}
+                        <td class="type_{$item.type} flag_{$item.flag} ctype_task_set" title="{translate line="admin_solutions_valuation_tables_table_body_flag_{$item.flag}"}" data-order="{$item.points|valuation_table_col_points_to_data_order}" data-position="{$col_position}"{if $item.solution_id && $item.task_set_id} data-solution-id="{$item.solution_id}" data-task-set-id="{$item.task_set_id}"{/if}>{$item.points}</td>{$col_position = $col_position + 1}
                     {/foreach}
                 {/if}
                 <td class="type_summary ctype_task_set" data-position="{$col_position}" data-order="{$row.task_sets_points_total}">{$row.task_sets_points_total}</td>{$col_position = $col_position + 1}
                 {if count($row.projects_points) gt 0}
                     {foreach $row.projects_points as $item}
-                        <td class="type_{$item.type} flag_{$item.flag} ctype_project" title="{translate line="admin_solutions_valuation_tables_table_body_flag_{$item.flag}"}" data-order="{$item.points|valuation_table_col_points_to_data_order}" data-position="{$col_position}">{$item.points}</td>{$col_position = $col_position + 1}
+                        <td class="type_{$item.type} flag_{$item.flag} ctype_project" title="{translate line="admin_solutions_valuation_tables_table_body_flag_{$item.flag}"}" data-order="{$item.points|valuation_table_col_points_to_data_order}" data-position="{$col_position}"{if $item.solution_id && $item.task_set_id} data-solution-id="{$item.solution_id}" data-task-set-id="{$item.task_set_id}"{/if}>{$item.points}</td>{$col_position = $col_position + 1}
                     {/foreach}
                 {/if}
                 <td class="type_summary ctype_project" data-position="{$col_position}" data-order="{$row.projects_points_total}">{$row.projects_points_total}</td>{$col_position = $col_position + 1}
