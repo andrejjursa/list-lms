@@ -605,6 +605,7 @@ class Tasks extends LIST_Controller {
             $task_set3->where('content_type', 'task_set');
             
             $sorting = $task_set2->union_order_by_overlay('task_set_type_name', 'task_set_types', 'name', 'task_set_type_id', 'asc');
+            $sorting .= ', `sorting` ASC';
             $sorting .= ', `pb_publish_start_time` ASC, `pb_upload_end_time` ASC';
             $sorting .= ', ' . $task_set2->union_order_by_constant('name', 'asc');
             
