@@ -51,9 +51,11 @@ class Migration_create_sessions_security extends CI_Migration {
             ), 
             'updated' => array(
                 'type' => 'timestamp',
+                'default' => '1970-01-01 01:00:01',
             ),  
             'created' => array(
                 'type' => 'timestamp',
+                'default' => '1970-01-01 01:00:01',
             ),
             'account_type' => array(
                 'type' => 'varchar',
@@ -73,6 +75,7 @@ class Migration_create_sessions_security extends CI_Migration {
             ),
             'login_failed_time' => array(
                 'type' => 'timestamp',
+                'default' => '1970-01-01 01:00:01',
             )
         ));
         

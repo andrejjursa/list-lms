@@ -13,9 +13,11 @@ class Migration_create_students extends CI_Migration {
                 ), 
                 'updated' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),  
                 'created' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),
                 'fullname' => array(
                     'type' => 'VARCHAR',
