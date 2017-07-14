@@ -4,8 +4,8 @@ class Migration_function_fnstriptags extends CI_Migration {
 
     public function up() {
         $this->db->query('DROP FUNCTION IF EXISTS fnStripTags');
-        $this->db->query('CREATE FUNCTION fnStripTags( Dirty varchar(65535) )  
- RETURNS varchar(65535) CHARSET utf8  
+        $this->db->query('CREATE FUNCTION fnStripTags( Dirty text )  
+ RETURNS text CHARSET utf8  
  DETERMINISTIC   
  BEGIN  
    DECLARE iStart, iEnd, iLength int;  

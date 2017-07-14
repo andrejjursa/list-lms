@@ -6,7 +6,7 @@ class Migration_update_test_queues_3 extends CI_Migration {
         $this->dbforge->add_column('tests_queue', array(
             'single_test_exec_start' => array(
                 'type' => 'timestamp',
-                'default' => '0000-00-00 00:00:00',
+                'default' => '1970-01-01 01:00:01',
             ),
             'restarts' => array(
                 'type' => 'int',

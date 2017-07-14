@@ -51,9 +51,11 @@ class Migration_create_groups_rooms extends CI_Migration {
                 ), 
                 'updated' => array(
                     'type' => 'timestamp',
+					'default' => '1970-01-01 01:00:01',
                 ),  
                 'created' => array(
                     'type' => 'timestamp',
+					'default' => '1970-01-01 01:00:01',
                 ),
                 'name' => array(
                     'type' => 'VARCHAR',
