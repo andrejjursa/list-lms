@@ -2,6 +2,22 @@
 
 /**
  * Overriden controller class with few more useful methods.
+ *
+ * @property CI_URI $uri
+ * @property LIST_Parser $parser
+ * @property LIST_Session $session
+ * @property LIST_Lang $lang
+ * @property LIST_Loader $load
+ * @property LIST_Form_validation $form_validation
+ * @property LIST_Email $email
+ * @property CI_Config $config
+ * @property Usermanager $usermanager
+ * @property CI_Input $input
+ * @property Translations $translations
+ * @property CI_Router $router
+ * @property DataMapper $db
+ * @property LIST_Output $output
+ *
  * @package LIST_Core
  * @author Andrej Jursa
  */ 
@@ -210,6 +226,11 @@ class LIST_Controller extends CI_Controller {
         $this->parser->add_css_file('jquery.dataTables.css');
     }
 
+    protected function _add_highcharts() {
+        $this->parser->add_js_file('highcharts/highcharts.js');
+        $this->parser->add_js_file('highcharts/modules/exporting.js');
+    }
+
     /**
      * This method adds plupload to template and load plupload library.
      */
@@ -237,7 +258,7 @@ class LIST_Controller extends CI_Controller {
      * This method add google prettify syntax highlighter to template.
      */
     protected function _add_prettify() {
-        $this->parser->add_js_file('prettify/prettify.js');
+        $this->parser->add_js_file('google-code-prettify/prettify.js');
         $this->parser->add_css_file('prettify.css');
     }
     

@@ -30,6 +30,7 @@ $cache = array (
     24 => 'deadline_notification_emails_handler',
     25 => 'project_selection_deadline',
     26 => 'test_priority',
+    27 => 'sorting',
   ),
   'validation' => 
   array (
@@ -219,6 +220,13 @@ $cache = array (
     'test_priority' => 
     array (
       'field' => 'test_priority',
+      'rules' => 
+      array (
+      ),
+    ),
+    'sorting' => 
+    array (
+      'field' => 'sorting',
       'rules' => 
       array (
       ),

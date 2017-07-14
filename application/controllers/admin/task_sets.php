@@ -9,7 +9,9 @@ class Task_sets extends LIST_Controller {
 	
     const STORED_FILTER_SESSION_NAME = 'admin_task_sets_filter_data';
     const REGEXP_PATTERN_DATETYME = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
-    
+
+    const STORED_SORTING_FILTER_SESSION_NAME = 'admin_task_sets_sorting_filter_data';
+
     public function __construct() {
         parent::__construct();
         $this->_init_language_for_teacher();
@@ -28,7 +30,7 @@ class Task_sets extends LIST_Controller {
         $this->parser->add_js_file('admin_task_sets/form.js');
         $this->parser->add_css_file('admin_task_sets.css');
         $this->inject_courses();
-        $this->inject_stored_filter();
+        $this->inject_stored_task_sets_filter();
         $this->inject_task_set_types();
         $this->inject_test_types();
         $this->inject_course_groups();
@@ -36,7 +38,150 @@ class Task_sets extends LIST_Controller {
         $this->inject_course_task_set_types();
         $this->parser->parse('backend/task_sets/index.tpl');
     }
-    
+
+    public function sorting() {
+        $this->_select_teacher_menu_pagetag('task_sets_sorting');
+        $this->parser->add_css_file('admin_task_sets.css');
+        $this->parser->add_js_file('admin_task_sets/sorting/list.js');
+        $this->inject_courses();
+        $this->inject_stored_sorting_filter();
+        $this->parser->parse('backend/task_sets/sorting.tpl');
+    }
+
+    public function get_all_task_sets_sorting() {
+        $filter = $this->input->post('filter');
+        $this->store_sorting_filter($filter);
+        $this->inject_stored_sorting_filter();
+
+        $course = new Course();
+        $course->get_by_id(isset($filter['course']) ? (int)$filter['course'] : 0);
+
+        if ($course->exists()) {
+            $all_task_set_type_ids = array();
+            $all_task_set_ids = array();
+
+            $task_set_types = new Task_set_type();
+            $task_set_types->where_related($course);
+            $task_set_types->get_iterated();
+
+            $all_task_sets = array();
+
+            foreach ($task_set_types as $task_set_type) {
+                $all_task_sets[$task_set_type->id] = array(
+                    'name' => $task_set_type->name,
+                    'items' => array(),
+                );
+                $all_task_set_type_ids[] = $task_set_type->id;
+            }
+
+            $task_sets = new Task_set();
+            $task_sets->where_related($course);
+            $task_sets->where('content_type', 'task_set');
+            $task_sets->order_by('sorting', 'asc');
+            $task_sets->get_iterated();
+
+            foreach ($task_sets as $task_set) {
+                if (isset($all_task_sets[$task_set->task_set_type_id])) {
+                    $all_task_sets[$task_set->task_set_type_id]['items'][] = array(
+                        'id' => $task_set->id,
+                        'name' => $task_set->name,
+                    );
+                    $all_task_set_ids[] = $task_set->id;
+                }
+            }
+
+            $this->lang->init_overlays('task_set_types', $all_task_set_type_ids, array('name'));
+            $this->lang->init_overlays('task_sets', $all_task_set_ids, array('name'));
+
+            $this->parser->assign('all_task_sets', $all_task_sets);
+        }
+
+        $this->parser->assign('course', $course);
+
+        $this->parser->parse('backend/task_sets/all_task_sets_sorting.tpl');
+    }
+
+    public function update_sorting() {
+        $output = new stdClass();
+        $output->status = false;
+        $output->message = '';
+        $output->content = '';
+
+        $task_set_type_id = $this->input->post('task_set_type_id');
+        $course_id = $this->input->post('course_id');
+        $order = $this->input->post('order');
+
+
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+
+        $course = new Course((int)$course_id);
+        $task_set_type = new Task_set_type((int)$task_set_type_id);
+
+        if ($course->exists() && $task_set_type->exists()) {
+            $task_sets = new Task_set();
+            $task_sets->where_related_course($course);
+            $task_sets->where_related_task_set_type($task_set_type);
+            $task_sets->where('content_type', 'task_set');
+
+            $task_sets->hide_updated_field();
+            $task_sets->update('sorting', count($order) + 1);
+            $task_sets->show_updated_field();
+
+            $sort_order = 1;
+            foreach ($order as $task_set_id) {
+                $task_set = new Task_set();
+                $task_set->where_related_course($course);
+                $task_set->where_related_task_set_type($task_set_type);
+                $task_set->where('id', $task_set_id);
+                $task_set->hide_updated_field();
+                $task_set->update('sorting', $sort_order++);
+                $task_set->show_updated_field();
+            }
+
+            $task_sets = new Task_set();
+            $task_sets->select(array('id, name'));
+            $task_sets->where_related_course($course);
+            $task_sets->where_related_task_set_type($task_set_type);
+            $task_sets->where('content_type', 'task_set');
+            $task_sets->order_by('sorting', 'asc');
+            $task_sets->get_iterated();
+
+            $this->db->trans_commit();
+            $output->status = true;
+            $output->message = $this->lang->line('admin_task_sets_sorting_update_successful');
+            $task_set_type_name = $this->lang->text($this->lang->get_overlay_with_default('task_set_types', $task_set_type_id, 'name', $task_set_type->name));
+            $course_name = $this->lang->text($this->lang->get_overlay_with_default('courses', $course_id, 'name', $course->name));
+            $output->message = sprintf($output->message, $task_set_type_name, $course_name);
+
+            $items = array();
+
+            foreach ($task_sets as $task_set) {
+                $items[] = array(
+                    'id' => $task_set->id,
+                    'name' => $task_set->name,
+                );
+            }
+
+            $output->content = $this->parser->parse('backend/task_sets/partial/single_type_task_sets_sorting.tpl', array(
+                'task_set_type_id' => $task_set_type_id,
+                'course' => $course,
+                'task_set_type_data' => array(
+                    'items' => $items,
+                ),
+            ), true);
+
+            $this->_action_success();
+        } else{
+            $this->db->trans_rollback();
+            $output->status = false;
+            $output->message = $this->lang->line('admin_task_sets_sorting_error_course_or_task_set_type_not_found');
+        }
+
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+
     public function new_task_set_form() {
         $this->inject_courses();
         $this->inject_test_types();
@@ -138,8 +283,11 @@ class Task_sets extends LIST_Controller {
             array('name' => 'project_selection_deadline', 'caption' => 'lang:admin_task_sets_table_header_project_selection_deadline'),
         );
         $filter = $this->input->post('filter');
-        $this->store_filter($filter);
-        $this->inject_stored_filter();
+        if (!array_key_exists('hide_old', $filter)) {
+            $filter['hide_old'] = 0;
+        }
+        $this->store_task_sets_filter($filter);
+        $this->inject_stored_task_sets_filter();
         $task_sets = new Task_set();
         $task_sets->select('*');
         $task_sets->select_subquery('(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = ${parent}.`id` AND `tsp`.`enabled` = 1)', 'task_set_permission_count');
@@ -168,6 +316,26 @@ class Task_sets extends LIST_Controller {
                     $task_sets->group_end();
                 $task_sets->group_end();
             }
+        }
+        if (isset($filter['hide_old']) && boolval($filter['hide_old'])) {
+            $old = date('Y-m-d H:i:s', strtotime('now -2 weeks'));
+            $task_sets->group_start();
+                $task_sets->group_start();
+                    $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                    $task_sets->group_start();
+                        $task_sets->where('upload_end_time', null);
+                        $task_sets->or_where('upload_end_time >', $old);
+                    $task_sets->group_end();
+                $task_sets->group_end();
+                $task_sets->or_group_start();
+                    $task_sets->where('content_type !=', 'project');
+                    $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                    $task_sets->group_start();
+                        $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 AND `tsp`.`upload_end_time` IS NULL)');
+                        $task_sets->or_where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 AND `tsp`.`upload_end_time` > \'' . $old . '\')');
+                    $task_sets->group_end();
+                $task_sets->group_end();
+            $task_sets->group_end();
         }
         if (isset($filter['task_set_type']) && intval($filter['task_set_type']) > 0) {
             $task_sets->where_related_task_set_type('id', intval($filter['task_set_type']));
@@ -530,7 +698,11 @@ class Task_sets extends LIST_Controller {
         $this->_add_mathjax();
         $task_set = new Task_set();
         $task_set->get_by_id((int)$task_set_id);
-        
+
+        $this->_add_mathjax();
+        $this->_add_prettify();
+        $this->parser->add_js_file('admin_task_sets/preview.js');
+
         $this->parser->parse('backend/task_sets/preview.tpl', array('task_set' => $task_set));
     }
 
@@ -974,7 +1146,7 @@ class Task_sets extends LIST_Controller {
         $this->parser->assign('task_set_types', $data);
     }
     
-    private function store_filter($filter) {
+    private function store_task_sets_filter($filter) {
         if (is_array($filter)) {
             $this->load->library('filter');
             $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
@@ -984,12 +1156,28 @@ class Task_sets extends LIST_Controller {
         }
     }
     
-    private function inject_stored_filter() {
+    private function inject_stored_task_sets_filter() {
         $this->load->library('filter');
         $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
         $this->parser->assign('filter', $filter);
     }
-    
+
+    private function store_sorting_filter($filter) {
+        if (is_array($filter)) {
+            $this->load->library('filter');
+            $old_filter = $this->filter->restore_filter(self::STORED_SORTING_FILTER_SESSION_NAME);
+            $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
+            $this->filter->store_filter(self::STORED_SORTING_FILTER_SESSION_NAME, $new_filter);
+            $this->filter->set_filter_course_name_field(self::STORED_SORTING_FILTER_SESSION_NAME, 'course');
+        }
+    }
+
+    private function inject_stored_sorting_filter() {
+        $this->load->library('filter');
+        $filter = $this->filter->restore_filter(self::STORED_SORTING_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
+        $this->parser->assign('filter', $filter);
+    }
+
     private function inject_languages() {
         $languages = $this->lang->get_list_of_languages();
         $this->parser->assign('languages', $languages);

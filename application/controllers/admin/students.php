@@ -486,12 +486,13 @@ class Students extends LIST_Controller {
             $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
             $this->filter->store_filter(self::STORED_FILTER_SESSION_NAME, $new_filter);
+            $this->filter->set_filter_course_name_field(self::STORED_FILTER_SESSION_NAME, 'course');
         }
     }
     
     private function inject_stored_filter() {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
+        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
         $this->parser->assign('filter', $filter);
     }
 }

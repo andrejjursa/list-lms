@@ -43,6 +43,7 @@
     table.solutions_table thead tr th.valuation { text-align: center; }
     table.solutions_table thead tr th.left_corner { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
     table.solutions_table thead tr th.right_corner { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+    table.solutions_table tbody tr td span.suspiciousSolution { font-size: 1.5em; font-weight: bold; color: red; font-family: monospace; }
 
     table.batch_valuation_table { width: 100%; border-collapse: collapse; }
     table.batch_valuation_table th { text-align: left; }
@@ -125,6 +126,10 @@
     #valutation_table thead tr th[data-position] { cursor: pointer; }
     #valutation_table thead tr th.sort-asc:after { content: '\0000a0\0025B2' }
     #valutation_table thead tr th.sort-desc:after { content: '\0000a0\0025BC' }
+
+    #valutation_table tbody tr td.type_task_set[data-solution-id][data-task-set-id] { cursor: pointer; }
+    #valutation_table tbody tr:nth-child(2n) td.type_task_set[data-solution-id][data-task-set-id]:hover { background-color: orange; }
+    #valutation_table tbody tr:nth-child(2n+1) td.type_task_set[data-solution-id][data-task-set-id]:hover { background-color: darkorange; }
     
     ul.show_hide_menu li.name > a { background-color: #50a050 !important; color: black !important; }
     ul.show_hide_menu li.task_sets > a { background-color: #f4ff84 !important; color: black !important; }
@@ -157,6 +162,9 @@
     #valuation_files_id pre.codepreview,
     #valuation_files_id pre.codepreviewNohighlight {  }
     #valuation_files_id div.version_metadata_panel { max-height: 200px; overflow-y: auto; }
+
+    form div.field label.suspiciousSolution { color: red; }
+    form div.field p.input.suspiciousSolution em { color: red; }
 }
 @media only screen and (min-width: 1024px) {
     #valuation_files_id div.filter_wrap { width: 300px; border-bottom: 0 none; float: left; }

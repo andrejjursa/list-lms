@@ -8,7 +8,7 @@ jQuery(document).ready(function($) {
                 "table contextmenu directionality emoticons textcolor paste textcolor"
             ],
 
-            toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect highlights",
+            toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect highlights mathjax",
             toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | inserttime preview | forecolor backcolor",
             toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | fullscreen | ltr rtl | visualchars visualblocks nonbreaking pagebreak",
 
@@ -22,6 +22,10 @@ jQuery(document).ready(function($) {
             autoresize_max_height: 400,
             autoresize_min_height: 150
         };
+
+        if (typeof highlighters !== 'undefined') {
+            config.content_css = 'public/css/tinymce/content.css' + list_version;
+        }
         
         var local_editor = null;
 
@@ -37,7 +41,6 @@ jQuery(document).ready(function($) {
                 })();
                 menuitems.push(item);
             }
-            console.log(menuitems);
             config.setup = function(editor) {
                 local_editor = editor;
                 editor.addButton('highlights', {
@@ -45,6 +48,24 @@ jQuery(document).ready(function($) {
                     text: 'Code highlighting',
                     icon: false,
                     menu: menuitems
+                });
+                editor.addButton('mathjax', {
+                    type: 'menubutton',
+                    text: 'MathJax',
+                    icon: false,
+                    menu: [
+                        {
+                            text: 'Inline mode equation',
+                            onclick: function() {
+                                tinymce_mathjax_wrap(local_editor, '\\(', '\\)');
+                            }
+                        },
+                        {
+                            text: 'Display mode equation',
+                            onclick: function() {
+                                tinymce_mathjax_wrap(local_editor, '\\[', '\\]');
+                            }
+                        }]
                 });
             };
         }

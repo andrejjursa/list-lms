@@ -1,0 +1,136 @@
+pre.prettyprint {
+    border: 1px solid gray;
+    text-shadow: 1px 1px 1px gray;
+}
+
+pre.prettyprint:before {
+    border-bottom: 1px solid gray;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    background-color: #a9b7d1;
+    line-height: 1.2em;
+    font-size: 1.1em;
+}
+
+pre.prettyprint.lang-hs:before {
+    content: 'Haskell';
+}
+
+pre.prettyprint.lang-c:before {
+    content: 'C';
+}
+
+pre.prettyprint.lang-cc:before {
+    content: 'C/C++';
+}
+
+pre.prettyprint.lang-cpp:before {
+    content: 'C++';
+}
+
+pre.prettyprint.lang-cs:before {
+    content: 'C#';
+}
+
+pre.prettyprint.lang-css:before {
+    content: 'CSS';
+}
+
+pre.prettyprint.lang-html:before {
+    content: 'HTML';
+}
+
+pre.prettyprint.lang-pas:before {
+    content: 'Pascal';
+}
+
+pre.prettyprint.lang-python:before {
+    content: 'Python';
+}
+
+pre.prettyprint.lang-php:before {
+    content: 'PHP';
+}
+
+pre.prettyprint.lang-pl:before {
+    content: 'Prolog';
+}
+
+pre.prettyprint.lang-java:before {
+    content: 'Java';
+}
+
+pre.prettyprint.lang-js:before {
+    content: 'JavaScript';
+}
+
+code.prettyprint {
+    text-shadow: 1px 1px 1px gray;
+}
+
+code.prettyprint:hover {
+    background-color: silver;
+}
+
+code.prettyprint:after {
+    font-weight: bold;
+    background-color: #a9b7d1;
+    display: none;
+}
+
+code.prettyprint:hover:after {
+    display: inline-block;
+}
+
+code.prettyprint.lang-hs:after {
+    content: ': Haskell';
+}
+
+code.prettyprint.lang-c:after {
+    content: ': C';
+}
+
+code.prettyprint.lang-cc:after {
+    content: ': C/C++';
+}
+
+code.prettyprint.lang-cpp:after {
+    content: ': C++';
+}
+
+code.prettyprint.lang-cs:after {
+    content: ': C#';
+}
+
+code.prettyprint.lang-css:after {
+    content: ': CSS';
+}
+
+code.prettyprint.lang-html:after {
+    content: ': HTML';
+}
+
+code.prettyprint.lang-pas:after {
+    content: ': Pascal';
+}
+
+code.prettyprint.lang-python:after {
+    content: ': Python';
+}
+
+code.prettyprint.lang-php:after {
+    content: ': PHP';
+}
+
+code.prettyprint.lang-pl:after {
+    content: ': Prolog';
+}
+
+code.prettyprint.lang-java:after {
+    content: ': Java';
+}
+
+code.prettyprint.lang-js:after {
+    content: ': JavaScript';
+}

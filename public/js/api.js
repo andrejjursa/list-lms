@@ -746,7 +746,7 @@ var test_window_maximized = function() {
 
 var tinymce_switch_highlight = function(editor, language) {
     var element = editor.selection.getEnd();
-    if (editor.dom.is(element, 'pre')) {
+    if (editor.dom.is(element, 'pre') || editor.dom.is(element, 'code')) {
         var addClass = true;
         if (editor.dom.hasClass(element, 'prettyprint')) {
             if (editor.dom.hasClass(element, language)) {
@@ -766,6 +766,13 @@ var tinymce_switch_highlight = function(editor, language) {
             editor.dom.addClass(element, 'prettyprint');
             editor.dom.addClass(element, language);
         }
+    }
+};
+
+var tinymce_mathjax_wrap = function(editor, pre, post) {
+    var selection = editor.selection.getContent();
+    if (selection && selection.length > 0) {
+        editor.execCommand('mceInsertContent', false, pre + ' ' + selection + ' ' + post);
     }
 };
 
