@@ -5,8 +5,9 @@ class DB_Fix {
   public function do_fix() {
     $CI =& get_instance();
 
-    //echo '<pre>' . htmlspecialchars(print_r($CI, true)) . '</pre>';
-    //die();
+    if (is_null($CI->db)) {
+      return;
+    }
 
     $query = $CI->db->query('SHOW GLOBAL VARIABLES LIKE "sql_mode"');
 
