@@ -2,16 +2,16 @@
 
 /**
  * Config file editor.
- * 
+ *
  * @author Andrej Jursa
  * @version 1.0
  * @package LIST_Libraries
  */
 class Configurator {
-    
+
     /**
      * Returns configuration array for given config file.
-     * 
+     *
      * @param string $config name of config file without extension.
      * @return array<mixed> values of config file.
      */
@@ -19,11 +19,11 @@ class Configurator {
         if (file_exists(APPPATH . 'config/' . $config . '.php') || file_exists(APPPATH . 'config/' . ENVIRONMENT . '/' . $config . '.php')) {
             $configObject = new CI_Config();
             $configObject->load($config, TRUE);
-            return $configObject->config[$config];    
+            return $configObject->config[$config];
         }
         return NULL;
     }
-    
+
     /**
      * Returns content of config file by config variable.
      * @param string $__config name of config file without extension.
@@ -48,7 +48,7 @@ class Configurator {
 
     /**
      * Saves new data array to given config file and inject them to active configuration.
-     * 
+     *
      * @param string $config name of config file without extension.
      * @param array<mixed> $data new values for config items.
      * @param boolean $inject if set to TRUE, it will inject data to active configuration.
@@ -59,7 +59,7 @@ class Configurator {
         $original_config_options = $this->get_config_array($config);
         if (!is_null($original_config_options)) {
             $config_data = $this->merge_array($original_config_options, $data);
-            
+
             $file = APPPATH . 'config/' . ENVIRONMENT . '/' . $config . '.php';
             if (!file_exists($file)) {
                 $file = APPPATH . 'config/' . $config . '.php';
@@ -67,7 +67,7 @@ class Configurator {
             $tokens = $this->get_config_file_tokens($file);
             if (is_null($tokens)) { return FALSE; }
             $arangement = $this->get_config_file_arangement_from_tokens($tokens);
-            
+
             try {
                 $content = $this->make_config_file_content($config_data, $arangement);
                 $f = fopen($file, 'w');
@@ -80,8 +80,8 @@ class Configurator {
             }
         }
         return FALSE;
-    }   
-    
+    }
+
     /**
      * Determines and return config file arangement.
      * @param string $config name of config file without extension.
@@ -130,7 +130,7 @@ class Configurator {
 
     /**
      * Inject config data to active codeigniter configuration.
-     * 
+     *
      * @param string $config name of config file without extension.
      * @param array<mixed> $data new values for config items.
      * @param boolean $independent if set to true, it will inject data to $config subarray.
@@ -156,10 +156,10 @@ class Configurator {
             }
         }
     }
-    
+
     /**
      * Saves new data array to given config file with custom arangement and custom config variable name.
-     * 
+     *
      * @param string $config name of config file without extension.
      * @param array<mixed> $data new values for config items.
      * @param array<mixed> $arangement custom arangement of file content.
@@ -184,10 +184,10 @@ class Configurator {
         }
         return FALSE;
     }
-    
+
     /**
      * Recursively merge two arrays.
-     * 
+     *
      * @param array<mixed> $array1 first array.
      * @param array<mixed> $array2 second array.
      * @return array<mixed> merged array.
@@ -216,10 +216,10 @@ class Configurator {
         }
         return $output;
     }
-    
+
     /**
      * For given data and arangement creates content of config file.
-     * 
+     *
      * @param array<mixed> $data values of config.
      * @param array<mixed> $arangement arangement of config file content.
      * @param string $config_variable name of configuration array (variable name with dollar sign).
@@ -231,14 +231,15 @@ class Configurator {
             if ($item['type'] == 'comment') {
                 $content .= "\n" . $item['value'] . "\n";
             } elseif ($item['type'] == 'config') {
-                $content .= $this->config_item_by_path($item['value'], $config_variable) . ' = ' . $this->var_export($this->config_item_value_by_path($data, $item['value'])) . ';' . "\n";
+                $value_to_write = $this->config_item_value_by_path($data, $item['value']);
+                $content .= $this->config_item_by_path($item['value'], $config_variable) . ' = ' . $this->var_export($value_to_write) . ';' . "\n";
             } elseif ($item['type'] == 'custom') {
                 $content .= $item['value'] . "\n";
             }
         }
         return trim($content);
     }
-    
+
     /**
      * Does variable content export with respect to TRUE, FALSE and NULL in uppercase.
      * @param mixed $var variable to be exported.
@@ -252,10 +253,10 @@ class Configurator {
         }
         return $exported;
     }
-    
+
     /**
      * Returns php parser tokens for given config file.
-     * 
+     *
      * @param string $file path to config file.
      * @return array<mixed>|NULL array of tokens or NULL if file not found.
      */
@@ -266,18 +267,18 @@ class Configurator {
             fpassthru($f);
             $filecontent = ob_get_clean();
             fclose($f);
-            
+
             $tokens = token_get_all($filecontent);
-            
+
             return $tokens;
         } else {
             return NULL;
         }
     }
-    
+
     /**
      * Parses tokens to produce arangement array.
-     * 
+     *
      * @param array<mixed> $tokens php parser tokens.
      * @param string $config_variable name of configuration array (variable name with dollar sign).
      * @return array<mixed> arangement of config file content.
@@ -303,10 +304,10 @@ class Configurator {
         }
         return $arangement;
     }
-    
+
     /**
      * Returns the path of found config variable at given token position in tokens array.
-     * 
+     *
      * @param array<mixed> $tokens php parser tokens.
      * @param integer $at position where config variable is found.
      * @return array<string> path for array segments.
@@ -333,13 +334,13 @@ class Configurator {
             }
             $pos++;
         }
-        
+
         return $path;
     }
-    
+
     /**
      * Creates $config variable for config file content.
-     * 
+     *
      * @param array<string> $path path of array segments.
      * @param string $config_variable name of configuration array (variable name with dollar sign).
      * @return string config variable like array.
@@ -353,10 +354,10 @@ class Configurator {
         }
         return $output;
     }
-    
+
     /**
      * Returns value of config item by path.
-     * 
+     *
      * @param array<mixed> $data configuration data.
      * @param array<string> $path path of array segments.
      * @return mixed value of config item defined by path.
