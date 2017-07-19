@@ -12,9 +12,11 @@ class Migration_update_test_queues extends CI_Migration {
             ),
             'result_html' => array(
                 'type' => 'text',
+				'null' => true,
             ),
             'result_message' => array(
                 'type' => 'text',
+				'null' => true,
             ),
         ));
     }

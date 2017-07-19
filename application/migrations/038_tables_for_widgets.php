@@ -13,9 +13,11 @@ class Migration_tables_for_widgets extends CI_Migration {
                 ), 
                 'updated' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),  
                 'created' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),
                 'teacher_id' => array(
                     'type' => 'INT',

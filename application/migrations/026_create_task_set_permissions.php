@@ -13,9 +13,11 @@ class Migration_create_task_set_permissions extends CI_Migration {
                 ), 
                 'updated' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),  
                 'created' => array(
                     'type' => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
                 ),
                 'publish_start_time' => array(
                     'type' => 'timestamp',
