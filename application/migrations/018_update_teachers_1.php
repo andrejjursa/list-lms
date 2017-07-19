@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Migration_update_teachers_1 extends CI_Migration {
-    
+
     public function up() {
         $this->dbforge->add_column('teachers', array(
             'prefered_course_id' => array(
@@ -12,9 +12,9 @@ class Migration_update_teachers_1 extends CI_Migration {
             ),
         ));
     }
-    
+
     public function down() {
         $this->dbforge->drop_column('teachers', 'prefered_course_id');
     }
-    
+
 }

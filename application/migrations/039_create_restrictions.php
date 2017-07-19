@@ -14,13 +14,14 @@ class Migration_create_restrictions extends CI_Migration {
                 'updated' => array(
                     'type' => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
-                ),  
+                ),
                 'created' => array(
                     'type' => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
                 ),
                 'ip_addresses' => array(
                     'type' => 'text',
+                    'null' => true,
                 ),
                 'start_time' => array(
                     'type' => 'timestamp',
@@ -32,16 +33,16 @@ class Migration_create_restrictions extends CI_Migration {
                 ),
             )
         );
-        
+
         $this->dbforge->add_key('id', TRUE);
-        
+
         $this->dbforge->create_table('restrictions');
-        
+
         change_mysql_table_to_InnoDB('restrictions');
     }
-    
+
     public function down() {
         $this->dbforge->drop_table('restrictions');
     }
-    
+
 }

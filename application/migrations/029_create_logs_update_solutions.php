@@ -21,14 +21,17 @@ class Migration_create_logs_update_solutions extends CI_Migration {
                 ),
                 'message' => array(
                     'type' => 'text',
+                    'null' => true,
                 ),
                 'ip_address' => array(
                     'type' => 'varchar',
                     'constraint' => '32',
+                    'default' => '',
                 ),
                 'language' => array(
                     'type' => 'varchar',
                     'constraint' => 64,
+                    'default' => '',
                 ),
                 'log_type' => array(
                     'type' => 'int',
@@ -59,6 +62,7 @@ class Migration_create_logs_update_solutions extends CI_Migration {
                 ),
                 'additional_data' => array(
                     'type' => 'text',
+                    'null' => true,
                 ),
             )
         );

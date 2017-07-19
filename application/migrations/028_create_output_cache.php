@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Migration_create_output_cache extends CI_Migration {
-    
+
     public function up() {
         $this->db->query('CREATE TABLE IF NOT EXISTS `output_cache` (
 `id` CHAR(40) NOT NULL COMMENT \'sha1 hash\',
@@ -17,9 +17,9 @@ INDEX(`compile_id`),
 INDEX(`modified`)
 ) ENGINE = InnoDB, COLLATE = utf8_general_ci;');
     }
-    
+
     public function down() {
         $this->dbforge->drop_table('output_cache');
     }
-    
+
 }
