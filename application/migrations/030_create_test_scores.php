@@ -20,6 +20,7 @@ class Migration_create_test_scores extends CI_Migration {
                 'token' => array(
                     'type' => 'varchar',
                     'constraint' => 32,
+                    'default' => '',
                 ),
                 'updated' => array(
                     'type' => 'timestamp',
@@ -33,6 +34,7 @@ class Migration_create_test_scores extends CI_Migration {
                 'test_type' => array(
                     'type' => 'varchar',
                     'constraint' => 255,
+                    'default' => '',
                 ),
             )
         );

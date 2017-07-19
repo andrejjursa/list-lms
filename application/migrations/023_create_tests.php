@@ -1,7 +1,7 @@
 <?php
 
 class Migration_create_tests extends CI_Migration {
-    
+
     public function up() {
         $this->dbforge->add_field(
             array(
@@ -10,11 +10,11 @@ class Migration_create_tests extends CI_Migration {
                     'constraint' => '11',
                     'unsigned' => TRUE,
                     'auto_increment' => TRUE,
-                ), 
+                ),
                 'updated' => array(
                     'type' => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
-                ),  
+                ),
                 'created' => array(
                     'type' => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
@@ -22,14 +22,17 @@ class Migration_create_tests extends CI_Migration {
                 'name' => array(
                     'type' => 'VARCHAR',
                     'constraint' => 255,
+                    'default' => '',
                 ),
                 'type' => array(
                     'type' => 'VARCHAR',
                     'constraint' => 255,
+                    'default' => '',
                 ),
                 'subtype' => array(
                     'type' => 'VARCHAR',
                     'constraint' => 255,
+                    'default' => '',
                 ),
                 'task_id' => array(
                     'type' => 'INT',
@@ -39,7 +42,7 @@ class Migration_create_tests extends CI_Migration {
                 ),
                 'configuration' => array(
                     'type' => 'TEXT',
-                    'null' => FALSE,
+                    'null' => true,
                 ),
                 'enabled' => array(
                     'type' => 'INT',
@@ -48,17 +51,17 @@ class Migration_create_tests extends CI_Migration {
                 ),
             )
         );
-        
+
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->add_key('task_id');
-        
+
         $this->dbforge->create_table('tests');
-        
+
         change_mysql_table_to_InnoDB('tests');
     }
-    
+
     public function down() {
         $this->dbforge->drop_table('tests');
     }
-    
+
 }
