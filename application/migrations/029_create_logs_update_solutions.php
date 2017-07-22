@@ -77,6 +77,7 @@ class Migration_create_logs_update_solutions extends CI_Migration {
             'ip_address' => array(
                 'type' => 'varchar',
                 'constraint' => '32',
+                'default' => '',
             ),
         ));
     }
