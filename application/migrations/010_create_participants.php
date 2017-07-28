@@ -10,11 +10,11 @@ class Migration_create_participants extends CI_Migration {
                     'constraint' => '11',
                     'unsigned' => TRUE,
                     'auto_increment' => TRUE,
-                ), 
+                ),
                 'updated' => array(
                     'type' => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
-                ),  
+                ),
                 'created' => array(
                     'type' => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
@@ -41,22 +41,23 @@ class Migration_create_participants extends CI_Migration {
                     'type' => 'INT',
                     'constraint' => 1,
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
             )
         );
-        
+
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->add_key('student_id');
         $this->dbforge->add_key('course_id');
         $this->dbforge->add_key('group_id');
-        
+
         $this->dbforge->create_table('participants');
-        
+
         change_mysql_table_to_InnoDB('participants');
     }
-    
+
     public function down() {
         $this->dbforge->drop_table('participants');
     }
-    
+
 }

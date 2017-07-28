@@ -15,15 +15,18 @@ class Migration_update_several_tables extends CI_Migration {
                 'type' => 'int',
                 'unsigned' => TRUE,
                 'constraint' => 1,
+                'default' => 0,
             ),
         ));
 
         $this->dbforge->add_column('task_task_set_rel', array(
             'test_min_points' => array(
                 'type' => 'double',
+                'default' => 0,
             ),
             'test_max_points' => array(
                 'type' => 'double',
+                'default' => 0,
             ),
         ));
 
@@ -32,6 +35,7 @@ class Migration_update_several_tables extends CI_Migration {
                 'type' => 'int',
                 'unsigned' => TRUE,
                 'constraint' => 6,
+                'default' => 0,
             ),
         ));
     }

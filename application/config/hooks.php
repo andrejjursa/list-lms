@@ -21,6 +21,13 @@ $course_cache_id = function(&$CI) {
     return 'course_' . $CI->output->get_internal_value('course_id');
 };
 
+$hook['post_controller_constructor'][] = array(
+  'class' => 'DB_Fix',
+  'function' => 'do_fix',
+  'filename' => 'db_fix.php',
+  'filepath' => 'hooks',
+);
+
 $hook['post_controller'] = array(
     'class' => 'Clear_Cache',
     'function' => 'execute',
@@ -31,10 +38,10 @@ $hook['post_controller'] = array(
             'students' => array(
                 'save_basic_information' => array(
                     'frontend/*' => $student_cache_id,
-                ), 
+                ),
                 'save_email' => array(
                     'frontend/students/my_account.tpl' => $student_cache_id,
-                ), 
+                ),
                 'delete_avatar' => array(
                     'frontend/students/my_account.tpl' => $student_cache_id,
                 ),
