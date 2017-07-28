@@ -52,6 +52,7 @@ class Migration_create_tests_queues extends CI_Migration {
                     'type' => 'int',
                     'constraint' => '11',
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
                 'task_id' => array(
                     'type' => 'int',
@@ -144,6 +145,7 @@ class Migration_create_tests_queues extends CI_Migration {
                     'type' => 'int',
                     'constraint' => '8',
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
                 'result_text' => array(
                     'type' => 'text',

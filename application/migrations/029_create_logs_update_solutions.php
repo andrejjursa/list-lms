@@ -37,6 +37,7 @@ class Migration_create_logs_update_solutions extends CI_Migration {
                     'type' => 'int',
                     'constraint' => 5,
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
                 'student_id' => array(
                     'type' => 'int',

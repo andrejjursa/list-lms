@@ -5,7 +5,7 @@ class DB_Fix {
   public function do_fix() {
     $CI =& get_instance();
 
-    if (is_null($CI->db)) {
+    if (!isset($CI->db) || is_null($CI->db)) {
       return;
     }
 

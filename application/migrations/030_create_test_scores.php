@@ -30,6 +30,7 @@ class Migration_create_test_scores extends CI_Migration {
                     'type' => 'int',
                     'unsigned' => TRUE,
                     'constraint' => 4,
+                    'default' => 0,
                 ),
                 'test_type' => array(
                     'type' => 'varchar',

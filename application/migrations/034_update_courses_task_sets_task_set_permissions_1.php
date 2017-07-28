@@ -8,6 +8,7 @@ class Migration_update_courses_task_sets_task_set_permissions_1 extends CI_Migra
                 'type' => 'int',
                 'unsigned' => TRUE,
                 'constraint' => 1,
+                'default' => 0,
             ),
         ));
 
@@ -20,11 +21,13 @@ class Migration_update_courses_task_sets_task_set_permissions_1 extends CI_Migra
                 'type' => 'int',
                 'unsigned' => TRUE,
                 'constraint' => 1,
+                'default' => 0,
             ),
             'deadline_notification_emails_handler' => array(
                 'type' => 'int',
                 'unsigned' => TRUE,
                 'constraint' => 2,
+                'default' => 0,
             ),
         ));
 
@@ -37,11 +40,13 @@ class Migration_update_courses_task_sets_task_set_permissions_1 extends CI_Migra
                 'type' => 'int',
                 'unsigned' => TRUE,
                 'constraint' => 1,
+                'default' => 0,
             ),
             'deadline_notification_emails_handler' => array(
                 'type' => 'int',
                 'unsigned' => TRUE,
                 'constraint' => 2,
+                'default' => 0,
             ),
         ));
     }

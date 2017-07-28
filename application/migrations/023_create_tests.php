@@ -47,7 +47,7 @@ class Migration_create_tests extends CI_Migration {
                 'enabled' => array(
                     'type' => 'INT',
                     'constraint' => 1,
-                    'defalt' => 0,
+                    'default' => 0,
                 ),
             )
         );

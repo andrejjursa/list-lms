@@ -13,6 +13,7 @@ class Migration_create_lang_overlays extends CI_Migration {
                 'table_id' => array(
                     'type' => 'INT',
                     'constraint' => '11',
+                    'default' => 0,
                 ),
                 'idiom' => array(
                     'type' => 'VARCHAR',

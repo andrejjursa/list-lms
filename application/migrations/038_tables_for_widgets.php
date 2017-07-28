@@ -38,11 +38,13 @@ class Migration_tables_for_widgets extends CI_Migration {
                     'type' => 'INT',
                     'constraint' => 11,
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
                 'column' => array(
                     'type' => 'INT',
                     'constraint' => 11,
                     'unsigned' => TRUE,
+                    'default' => 1,
                 ),
             )
         );

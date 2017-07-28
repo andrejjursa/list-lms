@@ -28,6 +28,7 @@ class Migration_create_periods_courses_translations extends CI_Migration {
                     'type' => 'INT',
                     'constraint' => '11',
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
             )
         );
@@ -73,6 +74,7 @@ class Migration_create_periods_courses_translations extends CI_Migration {
                     'type' => 'INT',
                     'unsigned' => TRUE,
                     'constraint' => 4,
+                    'default' => 0,
                 ),
                 'groups_change_deadline' => array(
                     'type' => 'timestamp',

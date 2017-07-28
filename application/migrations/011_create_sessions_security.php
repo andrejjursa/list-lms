@@ -20,7 +20,7 @@ class Migration_create_sessions_security extends CI_Migration {
             'user_agent' => array(
                 'type' => 'varchar',
                 'constraint' => '120',
-                'null' => FALSE,
+                'null' => TRUE,
             ),
             'last_activity' => array(
                 'type' => 'int',

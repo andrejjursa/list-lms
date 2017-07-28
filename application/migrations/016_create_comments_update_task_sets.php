@@ -51,6 +51,7 @@ class Migration_create_comments_update_task_sets extends CI_Migration {
                     'type' => 'int',
                     'constraint' => '1',
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
             )
         );

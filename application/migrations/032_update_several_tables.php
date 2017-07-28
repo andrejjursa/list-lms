@@ -15,6 +15,7 @@ class Migration_update_several_tables extends CI_Migration {
                 'type' => 'int',
                 'unsigned' => TRUE,
                 'constraint' => 1,
+                'default' => 0,
             ),
         ));
 
