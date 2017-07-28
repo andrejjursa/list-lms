@@ -74,6 +74,7 @@ class Migration_create_tasks_task_sets extends CI_Migration {
                     'type' => 'INT',
                     'constraint' => 1,
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
                 'publish_start_time' => array(
                     'type' => 'timestamp',

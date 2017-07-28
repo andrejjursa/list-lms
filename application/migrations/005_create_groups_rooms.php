@@ -73,21 +73,25 @@ class Migration_create_groups_rooms extends CI_Migration {
                     'type' => 'INT',
                     'constraint' => 6,
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
                 'time_end' => array(
                     'type' => 'INT',
                     'constraint' => 6,
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
                 'time_day' => array(
                     'type' => 'INT',
                     'constraint' => 2,
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
                 'capacity' => array(
                     'type' => 'INT',
                     'constraint' => 4,
                     'unsigned' => TRUE,
+                    'default' => 0,
                 ),
             )
         );
