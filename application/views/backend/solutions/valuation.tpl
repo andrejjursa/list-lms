@@ -89,6 +89,9 @@
                             </div>
                         </form>
                     </div>
+                    <div id="student_comment">
+                      
+                    </div>
                     <div id="file_content_id"></div>
                     <div class="clear"></div>
                 </div>

@@ -86,7 +86,7 @@
 
     #table_content_id { width: 100%; }
     #table_content_id h3 { margin-top: 10px; }
-    
+
     /*#table_content_id { position: relative; height: 600px; }*/
     /*#valutation_table_wrapper { margin-top: 10px; position: absolute; left: 0px; right: 0px; }*/
     #valutation_table tbody tr td { padding: 3px; text-align: center; }
@@ -130,7 +130,7 @@
     #valutation_table tbody tr td.type_task_set[data-solution-id][data-task-set-id] { cursor: pointer; }
     #valutation_table tbody tr:nth-child(2n) td.type_task_set[data-solution-id][data-task-set-id]:hover { background-color: orange; }
     #valutation_table tbody tr:nth-child(2n+1) td.type_task_set[data-solution-id][data-task-set-id]:hover { background-color: darkorange; }
-    
+
     ul.show_hide_menu li.name > a { background-color: #50a050 !important; color: black !important; }
     ul.show_hide_menu li.task_sets > a { background-color: #f4ff84 !important; color: black !important; }
     ul.show_hide_menu li.task_sets li.section > a { background-color: #ffff33 !important; color: black !important; }
@@ -157,7 +157,7 @@
     div.legend > div.not_valuated:hover { background-color: #96b9ff; }
     div.legend > div.not_considered { background-color: #fad6ff; }
     div.legend > div.not_considered:hover { background-color: #fa96ff; }
-    
+
     #valuation_files_id div.codepreview_container { width: 100%; height: 450px; overflow: scroll; }
     #valuation_files_id pre.codepreview,
     #valuation_files_id pre.codepreviewNohighlight {  }
@@ -177,6 +177,8 @@
     #valuation_files_id #file_content_id pre.prettyprint { border: 0 none; padding: 0; }
     #valuation_files_id div.clear { clear: both; }
     #valuation_files_id div.hint { margin-top: 8px; }
+    #student_comment { margin-left: 310px; width: auto; }
+    #student_comment div.solution_version_comment { border: 1px solid black; margin-bottom: 5px; border-radius: 3px; padding: 3px; max-height: 5em; overflow-y: auto; }
 }
 @media only screen and (max-width: 1024px) {
     #valuation_files_id { font-size: 0.7em; }
@@ -188,4 +190,5 @@
     #valuation_files_id div.filter_wrap form div.field p.input,
     #valuation_files_id div.filter_wrap form div.field div.input { margin-left: 43.1%; }
     #valuation_files_id div.hint { clear: both; margin-top: 5px; }
+    #student_comment div.solution_version_comment { border: 1px solid black; margin-bottom: 5px; border-radius: 3px; padding: 3px; max-height: 5em; overflow-y: auto; }
 }

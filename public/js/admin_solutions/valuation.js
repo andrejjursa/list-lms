@@ -1,13 +1,13 @@
 jQuery(document).ready(function($) {
-    
+
     api_make_tabs('tabs');
-    
+
     $('#valuation_form_id').formErrorWarning();
-    
+
     var last_zip_file = '';
     var last_index = '';
     var first_load = true;
-    
+
     var prettiPrintContent = function() {
         var codepreview = $('pre.codepreview.prettyprint');
         var codepreview_copy_html = codepreview.html();
@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
         codepreview_copy.html(codepreview_copy_html);
         prettyPrint();
     };
-    
+
     var switchCodePreview = function() {
         var codepreview = $('pre.codepreview');
         var codepreviewNohighlight = $('pre.codepreviewNohighlight');
@@ -30,13 +30,13 @@ jQuery(document).ready(function($) {
             codepreviewNohighlight.css('display', '');
         }
     };
-    
+
     $('#filter_form_id').activeForm();
-    
+
     $('#filter_form_id div.download_file_buttons').setActiveFormDisplayCondition(function() {
         return this.findElement('select[name="zip[file]"]').val() !== '';
     });
-    
+
     $('#filter_form_id div.select_file').setActiveFormDisplayCondition(function() {
         if (this.isDisplayed('div.download_file_buttons')) {
             var zip_file = this.findElement('select[name="zip[file]"]').val();
@@ -62,29 +62,32 @@ jQuery(document).ready(function($) {
                     make_custom_switch(target_2 + ' div.version_metadata_panel', 'Metadata');
                 });
                 last_zip_file = zip_file;
+                var url_3 = global_base_url + 'index.php/admin_solutions/get_solution_version_comment/' + task_set_id + '/' + solution_id + '/' + zip_file;
+                var target_3 = '#student_comment';
+                api_ajax_load(url_3, target_3, 'post', {});
             }
             return true;
         }
         return false;
     });
-    
+
     $('#filter_form_id #version_metadata').setActiveFormDisplayCondition(function() {
         return this.isDisplayed('div.download_file_buttons');
     });
-    
+
     $('#filter_form_id div.read_file_buttons').setActiveFormDisplayCondition(function() {
         last_index = this.findElement('select[name="zip[index]"]').val();
         return last_index !== '' && this.findElement('select[name="zip[file]"]').val() !== '';
     });
-    
+
     $('#filter_form_id').activeForm().applyConditions();
-    
+
     $(document).on('click', '#filter_form_id input[name="download_file_button"]', function(event) {
         event.preventDefault();
         var url = global_base_url + 'index.php/tasks/download_solution/' + task_set_id + '/' + last_zip_file;
         window.open(url, '_blank');
-    }); 
-    
+    });
+
     var load_file_content = function() {
         var url = global_base_url + 'index.php/admin_solutions/show_file_content/' + task_set_id + '/' + solution_id + '/' + last_zip_file + '/' + last_index;
         var target = '#file_content_id';
@@ -97,27 +100,27 @@ jQuery(document).ready(function($) {
             });
         });
     };
-    
+
     $(document).on('change', '#filter_form_id #zip_index_id', function(event) {
         if ($(this).val() !== '') {
             event.preventDefault();
             load_file_content();
         }
     });
-    
+
     $(document).on('click', '#filter_form_id input[name="read_file_button"]', function(event) {
         event.preventDefault();
         load_file_content();
     });
-    
+
     $(document).on('click', '#filter_form_id input[name="switch_code_highlight"]', function(event) {
         event.preventDefault();
         switchCodePreview();
     });
-    
+
     $('#tests_form_id').submit(function(event) {
         event.preventDefault();
-        
+
         var tests_execution_area = $('#tests_execution_area_id');
         if (tests_execution_area.length === 1) {
             tests_execution_area.html('');
@@ -150,7 +153,7 @@ jQuery(document).ready(function($) {
             }
         }
     });
-    
+
     var run_test = function(test_id, version_id, output_to_element_id) {
         var url = global_base_url + 'index.php/admin_tests/run_test_for_task/' + test_id + '/' + task_set_id + '/' + student_id + '/' + version_id;
         api_ajax_update(url, 'post', {}, function(data) {
@@ -168,7 +171,7 @@ jQuery(document).ready(function($) {
             }
         });
     };
-    
+
     var resize_test_result_content = function(output_to_element_id) {
         $(window).on('resize', function() {
             var div = $('#' + output_to_element_id);
@@ -178,7 +181,7 @@ jQuery(document).ready(function($) {
             div.show();
         });
     };
-    
+
     $('input[type=checkbox].switch_checkboxes').change(function() {
         var class_to_check = $(this).attr('name');
         class_to_check = class_to_check.substr(18);
@@ -190,7 +193,7 @@ jQuery(document).ready(function($) {
             $('input[type=checkbox].' + class_to_check).prop('checked', false);
         }
     });
-    
+
     $('input[type=checkbox].test_id').change(function() {
         var classes = $(this).attr('class').split(' ');
         var current_class = '';
@@ -211,7 +214,7 @@ jQuery(document).ready(function($) {
             $('input[type=checkbox][name="switch_checkboxes[' + current_class + ']"].switch_checkboxes').prop('checked', false);
         }
     });
-    
+
     $('a.button.go_to_next_solution').click(function(event) {
         event.preventDefault();
         api_ajax_update(urls.get_next_solution, 'post', {}, function(output) {
@@ -225,7 +228,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
-    
+
     $(document).on('change', '#version_metadata input.download_lock_switch', function() {
         var url = $(this).attr('data-change-url');
         var input_element = $(this);
@@ -245,5 +248,5 @@ jQuery(document).ready(function($) {
             show_notification(messages.download_lock_switch_failed, 'error');
         });
     });
-    
+
 });
