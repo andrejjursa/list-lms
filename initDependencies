@@ -89,7 +89,18 @@ ln -sd "$CD/$highcharts/js" "$CD/$phighcharts/js"
 ln -sd "$CD/$highcharts/lib" "$CD/$phighcharts/lib"
 ln -sd "$CD/$highcharts/modules" "$CD/$phighcharts/modules"
 ln -sd "$CD/$highcharts/themes" "$CD/$phighcharts/themes"
-echo "... dobe."
+echo "... done."
+
+fontAwesome="node_modules/font-awesome"
+pFontAwesome="public/css/font-awesome"
+
+echo "Copying references to font awesome ..."
+rm -rf "$CD/$pFontAwesome" 2> /dev/null > /dev/null
+mkdir "$CD/$pFontAwesome" 2> /dev/null > /dev/null
+mkdir "$CD/$pFontAwesome/css" 2> /dev/null > /dev/null
+ln -s "$CD/$fontAwesome/css/font-awesome.min.css" "$CD/$pFontAwesome/css/font-awesome.min.css"
+ln -sd "$CD/$fontAwesome/fonts" "$CD/$pFontAwesome/fonts"
+echo "... done."
 
 prettify="bower_components/google-code-prettify/src"
 pprettify="public/js/google-code-prettify"

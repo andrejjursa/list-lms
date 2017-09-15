@@ -1,9 +1,9 @@
 jQuery(document).ready(function($) {
-    
+
     prettyPrint();
-    
+
     api_make_tabs('tabs');
-    
+
     if (enable_countdown) {
         var current_date = new Date();
         if (countdown_to > current_date) {
@@ -20,5 +20,25 @@ jQuery(document).ready(function($) {
             $('#upload_solution_id').hide();
         }
     }
-    
+
+    $(document).on('click', 'a.button.comment_edit', function(e) {
+      e.preventDefault();
+
+      var url = $(this).attr('href');
+      $.fancybox(url, {
+          type: 'iframe',
+          width: '100%',
+          height: '100%',
+          autoSize: false,
+          autoHeight: false,
+          autoWidth: false,
+          helpers: {
+              overlay: {
+                  css: {
+                      background: 'rgba(255,255,255,0)'
+                  }
+              }
+          }
+      });
+    });
 });

@@ -5,6 +5,7 @@
         <meta name="robots" content="noindex, follow" />
         <title>{capture assign="list_title" name="list_title_cpt"}{block name='title'}{/block}{/capture}L.I.S.T.{if $list_title} - {$list_title}{/if}</title>
         <link type="text/css" rel="stylesheet" media="screen" href="{'/public/css/help_index_general.css'|base_url|add_file_version}" />
+        <link href="{'/public/css/font-awesome/css/font-awesome.min.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="{'favicon.ico'|base_url}" />
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";

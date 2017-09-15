@@ -9,6 +9,7 @@
         <link href="{'/public/css/list-theme/jquery-ui-1.10.2.custom.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" />
         <link href="{'/public/css/jqueryui-timepicker-addon.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" />
         <link href="{'/public/css/notification.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" />
+        <link href="{'/public/css/font-awesome/css/font-awesome.min.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="{'favicon.ico'|base_url}" />
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";

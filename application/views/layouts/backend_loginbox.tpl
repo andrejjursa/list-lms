@@ -6,6 +6,7 @@
         <title>{block name='title'}{/block}</title>
         <link href="{'/public/css/admin_general.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" media="screen" />
         <link href="{'/public/css/admin_icons.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" />
+        <link href="{'/public/css/font-awesome/css/font-awesome.min.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="{'favicon.ico'|base_url}" />
         <script type="text/javascript">
             var global_base_url = "{'/'|base_url}";

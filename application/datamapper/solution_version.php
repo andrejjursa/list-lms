@@ -10,6 +10,7 @@ $cache = array (
     4 => 'version',
     5 => 'download_lock',
     6 => 'ip_address',
+    7 => 'comment',
   ),
   'validation' => 
   array (
@@ -59,6 +60,13 @@ $cache = array (
     'ip_address' => 
     array (
       'field' => 'ip_address',
+      'rules' => 
+      array (
+      ),
+    ),
+    'comment' => 
+    array (
+      'field' => 'comment',
       'rules' => 
       array (
       ),
