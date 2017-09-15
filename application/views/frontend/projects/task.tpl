@@ -44,6 +44,11 @@
                                         {/if}
                                         {/nocache}
                                     </div>
+                                    <div class="field">
+                                        <label for="comment_id">{translate line='projects_task_form_label_comment'}:</label>
+                                        <p class="input"><textarea name="comment" id="comment_id"></textarea></p>
+                                        <p class="input"><em>{translate line='projects_task_form_label_comment_hint'}</em></p>
+                                    </div>
                                     {if !is_null($project->upload_end_time)}
                                     <div class="field">
                                         <label>{translate line='projects_task_form_label_remaining'}:</label>
@@ -91,6 +96,7 @@
                                     <th class="file">{translate line='projects_task_solution_table_header_file'}</th>
                                     <th class="size">{translate line='projects_task_solution_table_header_size'}</th>
                                     <th class="modified">{translate line='projects_task_solution_table_header_modified'}</th>
+                                    <th class="controlls"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,10 +110,18 @@
                                     {/if}
                                     <td class="size">{$file.size}</td>
                                     <td class="modified">{$file.last_modified|date_format:{translate line='common_datetime_format'}}</td>
+                                    <td class="controlls">
+                                      <a class="button comment_edit" href="{internal_url url="tasks/solution_version_comment/{$versions_metadata[$file@key]->id|intval}"}" title="{translate line="projects_task_solution_table_link_comment"}"><i class="fa fa-comment-o" aria-hidden="true"></i></a>
+                                      {if isset($versions_metadata[$file@key]) && $versions_metadata[$file@key]->download_lock}
+                                      <span class="button disabled"><i class="fa fa-download" aria-hidden="true"></i></span>
+                                      {else}
+                                      <a class="button" href="{internal_url url="tasks/download_solution/{$project->id|intval}/{$file.file|encode_for_url}"}" target="_blank" title="{$file.file_name}_{$file@key}.zip"><i class="fa fa-download" aria-hidden="true"></i></a>
+                                      {/if}
+                                    </td>
                                 </tr>
                             {foreachelse}
                                 <tr>
-                                    <td colspan="4">{include file='partials/frontend_general/error_box.tpl' message='lang:projects_task_no_solutions_yet' inline}</td>
+                                    <td colspan="5">{include file='partials/frontend_general/error_box.tpl' message='lang:projects_task_no_solutions_yet' inline}</td>
                                 </tr>
                             {/foreach}
                             </tbody>

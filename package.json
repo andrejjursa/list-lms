@@ -16,7 +16,8 @@
     "url": "https://github.com/andrejjursa/list-lms/issues"
   },
   "dependencies": {
-    "bower": "^1.8.0",
-    "highcharts": "^5.0.10"
+    "bower": "^1.8.2",
+    "highcharts": "^5.0.10",
+	"font-awesome": "^4.7.0"
   }
 }

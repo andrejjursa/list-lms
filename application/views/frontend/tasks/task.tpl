@@ -52,8 +52,8 @@
                                     <p class="input"><em>{translate|sprintf:$max_filesize line='tasks_task_form_label_file_hint' nocache}</em></p>
                                     {if trim($task_set->allowed_file_types) ne ''}
                                     {$exploded_allow_file_types = ','|explode:$task_set->allowed_file_types}
-                                    {$exploded_allow_file_types = 'trim'|array_map:$exploded_allow_file_types}   
-                                    {capture name='allowed_file_types' assign='allowed_file_types'}{', '|implode:$exploded_allow_file_types}{/capture}    
+                                    {$exploded_allow_file_types = 'trim'|array_map:$exploded_allow_file_types}
+                                    {capture name='allowed_file_types' assign='allowed_file_types'}{', '|implode:$exploded_allow_file_types}{/capture}
                                     <p class="input"><em>{translate|sprintf:$allowed_file_types line='tasks_task_form_label_file_hint2'}</em></p>
                                     {/if}
                                     {nocache}
@@ -61,6 +61,11 @@
                                     <p class="error"><span class="message">{translate_text text=$file_error_message}</span></p>
                                     {/if}
                                     {/nocache}
+                                </div>
+                                <div class="field">
+                                    <label for="comment_id">{translate line='tasks_task_form_label_comment'}:</label>
+                                    <p class="input"><textarea name="comment" id="comment_id"></textarea></p>
+                                    <p class="input"><em>{translate line='tasks_task_form_label_comment_hint'}</em></p>
                                 </div>
                                 {if !is_null($task_set->upload_end_time)}
                                 <div class="field">
@@ -160,6 +165,7 @@
                                 <th class="file">{translate line='tasks_task_solution_table_header_file'}</th>
                                 <th class="size">{translate line='tasks_task_solution_table_header_size'}</th>
                                 <th class="modified">{translate line='tasks_task_solution_table_header_modified'}</th>
+                                <th class="controlls"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -174,10 +180,18 @@
                                 {/if}
                                 <td class="size">{$file.size}</td>
                                 <td class="modified">{$file.last_modified|date_format:{translate line='tasks_date_format'}}</td>
+                                <td class="controlls">
+                                  <a class="button comment_edit" href="{internal_url url="tasks/solution_version_comment/{$versions_metadata[$file@key]->id|intval}"}" title="{translate line="tasks_task_solution_table_link_comment"}"><i class="fa fa-comment-o" aria-hidden="true"></i></a>
+                                  {if isset($versions_metadata[$file@key]) && $versions_metadata[$file@key]->download_lock}
+                                  <span class="button disabled"><i class="fa fa-download" aria-hidden="true"></i></span>
+                                  {else}
+                                  <a class="button" href="{internal_url url="tasks/download_solution/{$task_set->id|intval}/{$file.file|encode_for_url}"}" target="_blank" title="{$file.file_name}_{$file@key}.zip"><i class="fa fa-download" aria-hidden="true"></i></a>
+                                  {/if}
+                                </td>
                             </tr>
                         {foreachelse}
                             <tr>
-                                <td colspan="4">{include file='partials/frontend_general/error_box.tpl' message='lang:tasks_task_no_solutions_yet' inline}</td>
+                                <td colspan="5">{include file='partials/frontend_general/error_box.tpl' message='lang:tasks_task_no_solutions_yet' inline}</td>
                             </tr>
                         {/foreach}
                         </tbody>

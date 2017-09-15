@@ -67,7 +67,7 @@ div.task_files { padding: 4px; border-bottom: 1px solid gray; }
 div.task_files div.task_file { padding-left: 5px; }
 div.task_files div.task_file a { text-decoration: none; line-height: 1.5em; }
 span.bonus_task { color: red; }
-                                 
+
 h2.task_name { margin-bottom: 10px; }
 
 table.solutions_table { width: 100%; border-collapse: collapse; }
@@ -78,9 +78,11 @@ table.solutions_table thead th.select { width: 15px; }
 table.solutions_table thead th.version { width: 45px; }
 table.solutions_table thead th.size { width: 100px; }
 table.solutions_table thead th.modified { width: 200px; }
+table.solutions_table thead th.controlls { width: 0px; }
 table.solutions_table tbody td { padding: 4px; border-bottom: 1px dashed silver; }
 table.solutions_table tbody td span.download_lock { color: lightcoral; text-decoration: line-through; text-decoration-color: lightcoral; -moz-text-decoration-color: lightcoral; }
 table.solutions_table tbody td span.download_lock::selection { color: white; background-color: black; text-decoration-color: white; -moz-text-decoration-color: white; }
+table.solutions_table tbody td.controlls { width: 0px; white-space: nowrap; }
 
 ul.comments_list { list-style-type: none; margin-left: 5px; }
 ul.comments_list.level_1 { margin-left: 0; }

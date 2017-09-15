@@ -6,9 +6,9 @@
  * @author Andrej Jursa
  */
 class Projects extends LIST_Controller {
-    
+
     protected $filter_next_task_set_publication_min_cache_lifetime;
-    
+
     public function __construct() {
         parent::__construct();
         $this->_init_language_for_student();
@@ -17,21 +17,21 @@ class Projects extends LIST_Controller {
             $this->usermanager->student_login_protected_redirect();
         }
     }
-    
+
     public function index() {
         $cache_id = $this->usermanager->get_student_cache_id();
-        
+
         $this->_initialize_student_menu();
         $this->_select_student_menu_pagetag('projects');
         $this->parser->add_css_file('frontend_projects.css');
         $this->parser->add_js_file('projects/list.js');
-        
+
         if ($this->_is_cache_enabled()) {
             $this->smarty->caching = Smarty::CACHING_LIFETIME_SAVED;
         }
         if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/projects/index.tpl'), $cache_id)) {
             $projects_all = $this->get_task_sets($course, $student);
-            
+
             $projects = $this->filter_valid_task_sets($projects_all);
             if ($course->exists()) {
                 if ($this->_is_cache_enabled() && $this->filter_next_task_set_publication_min_cache_lifetime > 0 && $this->filter_next_task_set_publication_min_cache_lifetime <= $this->smarty->cache_lifetime) {
@@ -46,7 +46,7 @@ class Projects extends LIST_Controller {
         }
         $this->parser->parse('frontend/projects/index.tpl', array(), FALSE, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : FALSE, $cache_id);
     }
-    
+
     public function overview($task_set_id_url = NULL, $language = NULL) {
         $task_set_id = url_get_id($task_set_id_url);
         $this->parser->add_css_file('frontend_projects.css');
@@ -77,14 +77,14 @@ class Projects extends LIST_Controller {
         }
         $this->parser->parse('frontend/projects/overview.tpl', array(), FALSE, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : FALSE, $cache_id);
     }
-    
+
     public function selection($task_set_id_url = NULL) {
         $task_set_id = url_get_id($task_set_id_url);
-        
+
         $this->_initialize_student_menu();
         $this->_select_student_menu_pagetag('projects');
         $this->parser->add_css_file('frontend_projects.css');
-        
+
         $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id);
         if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/projects/selection.tpl'), $cache_id)) {
             $project_all = $this->get_task_set($task_set_id, $course, $student);
@@ -102,12 +102,12 @@ class Projects extends LIST_Controller {
         }
         $this->parser->parse('frontend/projects/selection.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
-    
+
     public function task($task_set_id_url = NULL, $task_id_url = NULL) {
         $this->_add_mathjax();
         $task_set_id = url_get_id($task_set_id_url);
         $task_id = url_get_id($task_id_url);
-        
+
         $this->_initialize_student_menu();
         $this->_select_student_menu_pagetag('projects');
         $this->parser->add_css_file('frontend_projects.css');
@@ -115,7 +115,7 @@ class Projects extends LIST_Controller {
         $this->_add_prettify();
         $this->_add_jquery_countdown();
         $this->parser->assign('max_filesize', compute_size_with_unit(intval($this->config->item('maximum_solition_filesize') * 1024)));
-        
+
         $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id . '|task_' . $task_id);
         if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/projects/task.tpl'), $cache_id)) {
             $project_all = $this->get_task_set($task_set_id, $course, $student);
@@ -159,20 +159,20 @@ class Projects extends LIST_Controller {
     public function select_project($task_set_id_url = NULL, $task_id_url = NULL) {
         $task_set_id = url_get_id($task_set_id_url);
         $task_id = url_get_id($task_id_url);
-        
+
         $this->_transaction_isolation();
         $this->db->trans_begin();
-        
+
         $student = new Student();
         $student->get_by_id($this->usermanager->get_student_id());
-        
+
         $course = new Course();
         $course->where_related('active_for_student', 'id', $student->id);
         $course->where_related('participant', 'student_id', $student->id);
         $course->where_related('participant', 'allowed', 1);
         $course->include_related('period', 'name');
         $course->get();
-        
+
         if ($course->exists()) {
             $task_set = new Task_set();
             $task_set->where_related('course', $course);
@@ -252,26 +252,26 @@ class Projects extends LIST_Controller {
             redirect(create_internal_url('projects'));
         }
     }
-    
+
     public function upload_solution($task_set_id_url, $task_id_url) {
         $task_set_id = url_get_id($task_set_id_url);
         $task_id = url_get_id($task_id_url);
-        
+
         $this->_transaction_isolation();
         $this->db->trans_begin();
-        
+
         $date = date('Y-m-d H:i:s');
-        
+
         $student = new Student();
         $student->get_by_id($this->usermanager->get_student_id());
-        
+
         $course = new Course();
         $course->where_related('active_for_student', 'id', $student->id);
         $course->where_related('participant', 'student_id', $student->id);
         $course->where_related('participant', 'allowed', 1);
         $course->include_related('period', 'name');
         $course->get();
-        
+
         $task_set = new Task_set();
         $task_set->where_related($course);
         $task_set->where('published', 1);
@@ -280,15 +280,15 @@ class Projects extends LIST_Controller {
             $task_set->or_where('publish_start_time', NULL);
         $task_set->group_end();
         $task_set->get_by_id($task_set_id);
-        
+
         $task = $task_set->task->include_join_fields()->get_by_id($task_id);
-        
+
         $project_selection = new Project_selection();
         $project_selection->where_related($student);
         $project_selection->where_related($task_set);
         $project_selection->where_related($task);
         $project_selection->get();
-        
+
         if ($student->exists() && $course->exists() && $task_set->exists() && $task->exists() && $project_selection->exists()) {
             if ($date <= $task_set->upload_end_time) {
                 $config['upload_path'] = 'private/uploads/solutions/task_set_' . intval($task_set_id) . '/';
@@ -298,7 +298,7 @@ class Projects extends LIST_Controller {
                 $config['file_name'] = $student->id . '_' . $this->normalize_student_name($student) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $current_version . '.zip';
                 @mkdir($config['upload_path'], DIR_READ_MODE);
                 $this->load->library('upload', $config);
-                
+
                 if ($this->upload->do_upload('file')) {
                     $solution = new Solution();
                     $solution->where('task_set_id', $task_set->id);
@@ -314,13 +314,19 @@ class Projects extends LIST_Controller {
                         $solution->ip_address = $_SERVER["REMOTE_ADDR"];
                         $solution->revalidate = $revalidate;
                         $solution->save(array(
-                            'student' => $student, 
+                            'student' => $student,
                             'task_set' => $task_set,
                         ));
                     }
                     $solution_version = new Solution_version();
                     $solution_version->ip_address = $_SERVER["REMOTE_ADDR"];
                     $solution_version->version = $current_version;
+
+                    $comment = $this->input->post('comment');
+                    if (trim($comment) != '') {
+                      $solution_version->comment = trim($comment);
+                    }
+
                     $solution_version->save($solution);
                     if ($this->db->trans_status()) {
                         $log = new Log();
@@ -352,13 +358,13 @@ class Projects extends LIST_Controller {
             redirect(create_internal_url('projects/task/' . $task_set_id_url . '/' . $task_id_url));
         }
     }
-    
+
     public function reset_task_cache($task_set_id, $task_id) {
         $this->_action_success();
         $this->output->set_internal_value('task_set_id', $task_set_id);
         $this->output->set_internal_value('task_id', $task_id);
     }
-    
+
     private function normalize_student_name($student) {
         $normalized = normalize($student->fullname);
         $output = '';
@@ -374,16 +380,16 @@ class Projects extends LIST_Controller {
     private function get_task_sets(&$course, &$student) {
         $student = new Student();
         $student->get_by_id($this->usermanager->get_student_id());
-        
+
         $course = new Course();
         $course->where_related('active_for_student', 'id', $student->id);
         $course->where_related('participant', 'student_id', $student->id);
         $course->where_related('participant', 'allowed', 1);
         $course->include_related('period', 'name');
         $course->get();
-        
+
         $task_set = new Task_set();
-        
+
         if ($course->exists()) {
             $task_set->where('published', 1);
             $task_set->where_related_course($course);
@@ -400,23 +406,23 @@ class Projects extends LIST_Controller {
             $task_set->order_by_with_overlay('name', 'asc');
             $task_set->get();
         }
-        
+
         return $task_set;
     }
-    
+
     private function get_task_set($task_set_id, &$course, &$student) {
         $student = new Student();
         $student->get_by_id($this->usermanager->get_student_id());
-        
+
         $course = new Course();
         $course->where_related('active_for_student', 'id', $student->id);
         $course->where_related('participant', 'student_id', $student->id);
         $course->where_related('participant', 'allowed', 1);
         $course->include_related('period', 'name');
         $course->get();
-        
+
         $task_set = new Task_set();
-        
+
         if ($course->exists()) {
             $task_set->where('published', 1);
             $task_set->where_related_course($course);
@@ -433,10 +439,10 @@ class Projects extends LIST_Controller {
             $task_set->order_by_with_overlay('name', 'asc');
             $task_set->get_by_id((int)$task_set_id);
         }
-        
+
         return $task_set;
     }
-    
+
     private function get_task_set_overview($task_set_id, &$course) {
         $task_set = new Task_set();
         $task_set->where('published', 1);
@@ -446,22 +452,22 @@ class Projects extends LIST_Controller {
         $task_set->order_by('upload_end_time', 'asc');
         $task_set->order_by_with_overlay('name', 'asc');
         $task_set->get_by_id((int)$task_set_id);
-        
+
         $course = new Course();
         $course->where_related('task_set', 'id', (int)$task_set->id);
         $course->include_related('period');
         $course->get();
-        
+
         return $task_set;
     }
-    
+
     private function filter_valid_task_sets(Task_set $task_sets) {
         $output = array();
-        
+
         $days = array(1=> 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
-        
+
         $minimum_next_time = date('U') + $this->smarty->cache_lifetime * 2;
-                
+
         foreach($task_sets->all as $task_set) {
             $add = TRUE;
             if (is_null($task_set->solution_id)) {
@@ -469,17 +475,17 @@ class Projects extends LIST_Controller {
                     if (strtotime($task_set->publish_start_time) > time()) {
                         $add = FALSE;
                         if (strtotime($task_set->publish_start_time) < $minimum_next_time) { $minimum_next_time = strtotime($task_set->publish_start_time); }
-                    } 
+                    }
                 }
             }
             if ($add) {
                 $output[] = $task_set;
             }
         }
-        
+
         $this->filter_next_task_set_publication_min_cache_lifetime = abs($minimum_next_time - date('U'));
-        
+
         return $output;
     }
-    
+
 }
