@@ -4,10 +4,14 @@
     {foreach $test_queue as $test_item}
     {capture name='tests_line' assign='tests_line'}
     <tr class="test_status_{$test_item->status|intval}{if date('Y-m-d H:i:s', time() - 300) lte $test_item->finish|date_format:'Y-m-d H:i:s'} recently_finished{/if}">
+      {$finish_time = {translate line='admin_tests_student_test_queue_not_finished'}}
+      {if $test_item->finish >= $test_item->start}
+        {$finish_time = $test_item->finish|date_format:{translate line='common_datetime_format'}}
+      {/if}
         <td>{$test_types[$test_item->test_type]}:{$test_item->tests_count}</td>
         <td>{$test_item->version|intval}</td>
         <td>{$test_item->start|date_format:{translate line='common_datetime_format'}}</td>
-        <td>{$test_item->finish|date_format:{translate line='common_datetime_format'}|default:{translate line='admin_tests_student_test_queue_not_finished'}}</td>
+        <td>{$finish_time}</td>
         <td>{$test_item->worker|default:{translate line='admin_tests_student_test_queue_worker_not_assigned'}}</td>
         <td>{$test_item->priority|intval}</td>
         <td>{translate|default:{translate line='admin_tests_student_test_queue_unknown_status'} line="admin_tests_student_test_queue_status_{$test_item->status}"}</td>
@@ -29,7 +33,7 @@
         {$table_error = "{$table_error}{$tests_line}"}
     {/if}
     {/foreach}
-    
+
     {if $table_done}
     <h4>{translate line='admin_tests_student_test_queue_status_header_done'}</h4>
     <table class="tests_queue_table">
@@ -50,7 +54,7 @@
         </tbody>
     </table>
     {/if}
-        
+
     {if $table_executing}
     <h4>{translate line='admin_tests_student_test_queue_status_header_executing'}</h4>
     <table class="tests_queue_table">
@@ -71,7 +75,7 @@
         </tbody>
     </table>
     {/if}
-    
+
     {if $table_waiting}
     <h4>{translate line='admin_tests_student_test_queue_status_header_waiting'}</h4>
     <table class="tests_queue_table">
@@ -92,7 +96,7 @@
         </tbody>
     </table>
     {/if}
-    
+
     {if $table_error}
     <h4>{translate line='admin_tests_student_test_queue_status_header_error'}</h4>
     <table class="tests_queue_table">
@@ -113,7 +117,7 @@
         </tbody>
     </table>
     {/if}
-    
+
     {if $test_queue->result_count() eq 0}
         <p>{translate line='admin_tests_student_test_queue_message_no_tests_yet'}</p>
     {/if}
