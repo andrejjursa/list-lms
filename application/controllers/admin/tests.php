@@ -6,7 +6,7 @@
  * @author Andrej Jursa
  */
 class Tests extends LIST_Controller {
-    
+
     public function __construct() {
         parent::__construct();
         $this->_init_language_for_teacher();
@@ -26,15 +26,15 @@ class Tests extends LIST_Controller {
             $this->usermanager->teacher_login_protected_redirect();
         }
     }
-    
+
     public function enqueue_test() {
         $post_test = $this->input->post('test');
         $post_select_test_type = $this->input->post('select_test_type');
-        
+
         $output = new stdClass();
         $output->status = FALSE;
         $output->message = '';
-        
+
         if ($post_select_test_type !== '') {
             if (isset($post_test['version']) && (int)$post_test['version'] > 0) {
                 if (isset($post_test['id']) && is_array($post_test['id']) && count($post_test['id']) > 0) {
@@ -111,90 +111,80 @@ class Tests extends LIST_Controller {
         } else {
             $output->message = $this->lang->line('admin_tests_enqueue_test_error_not_test_type_selected');
         }
-        
+
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
-    
+
     public function get_student_test_queue($task_set_id, $student_id) {
         $task_set = new Task_set();
         $task_set->get_by_id((int)$task_set_id);
         $student = new Student();
         $student->get_by_id((int)$student_id);
-        
+
         $test_queue = new Test_queue();
         if ($task_set->exists() && $student->exists()) {
             $max_allowed_to_enqueue = (int)$this->config->item('test_maximum_enqueued_pe_student');
-            if ($max_allowed_to_enqueue <= 0) { $max_allowed_to_enqueue = 1; } 
-            
+            if ($max_allowed_to_enqueue <= 0) { $max_allowed_to_enqueue = 1; }
+
             $test_status_0 = new Test();
             $test_status_0->select_func('COUNT', array('@id'), 'tests_count');
             $test_status_0->where_related('test_queue', 'id', '${parent}.id');
-            
+
             $test_queue_status_0 = new Test_queue();
             $test_queue_status_0->select('*');
             $test_queue_status_0->select_subquery($test_status_0, 'tests_count');
             $test_queue_status_0->where_related($task_set);
             $test_queue_status_0->where_related($student);
             $test_queue_status_0->where('status', 0);
-            $test_queue_status_0->order_by('status', 'desc');
-            $test_queue_status_0->order_by('finish', 'desc');
-            $test_queue_status_0->order_by('start', 'asc');
-            
+
             $test_status_1 = new Test();
             $test_status_1->select_func('COUNT', array('@id'), 'tests_count');
             $test_status_1->where_related('test_queue', 'id', '${parent}.id');
-            
+
             $test_queue_status_1 = new Test_queue();
             $test_queue_status_1->select('*');
             $test_queue_status_1->select_subquery($test_status_1, 'tests_count');
             $test_queue_status_1->where_related($task_set);
             $test_queue_status_1->where_related($student);
             $test_queue_status_1->where('status', 1);
-            $test_queue_status_1->order_by('status', 'desc');
-            $test_queue_status_1->order_by('finish', 'desc');
-            $test_queue_status_1->order_by('start', 'asc');
-            
+
             $test_status_2 = new Test();
             $test_status_2->select_func('COUNT', array('@id'), 'tests_count');
             $test_status_2->where_related('test_queue', 'id', '${parent}.id');
-            
+
             $test_queue_status_2 = new Test_queue();
             $test_queue_status_2->select('*');
             $test_queue_status_2->select_subquery($test_status_2, 'tests_count');
             $test_queue_status_2->where_related($task_set);
             $test_queue_status_2->where_related($student);
             $test_queue_status_2->where('status', 2);
-            $test_queue_status_2->order_by('status', 'desc');
-            $test_queue_status_2->order_by('finish', 'desc');
-            $test_queue_status_2->order_by('start', 'asc');
             $test_queue_status_2->limit($max_allowed_to_enqueue * 2);
-            
+
             $test_status_3 = new Test();
             $test_status_3->select_func('COUNT', array('@id'), 'tests_count');
             $test_status_3->where_related('test_queue', 'id', '${parent}.id');
-            
+
             $test_queue_status_3 = new Test_queue();
             $test_queue_status_3->select('*');
             $test_queue_status_3->select_subquery($test_status_3, 'tests_count');
             $test_queue_status_3->where_related($task_set);
             $test_queue_status_3->where_related($student);
             $test_queue_status_3->where('status', 3);
-            $test_queue_status_3->order_by('status', 'desc');
-            $test_queue_status_3->order_by('finish', 'desc');
-            $test_queue_status_3->order_by('start', 'asc');
             $test_queue_status_3->limit($max_allowed_to_enqueue * 2);
-            
-            $test_queue_status_0->union_iterated(array($test_queue_status_1, $test_queue_status_2, $test_queue_status_3));
+
+            $order_by_clauses = '`status` DESC, `priority` ASC, `finish` DESC, `start` DESC';
+
+            $test_queue_status_0->union_iterated(array($test_queue_status_1, $test_queue_status_2, $test_queue_status_3), FALSE, $order_by_clauses);
             $test_queue = $test_queue_status_0;
         }
-        
+
         //$test_queue->check_last_query();
-        
+
         $this->load->helper('tests');
-        
+
         $test_types = get_all_supported_test_types();
-        
+
         $this->parser->parse('backend/tests/get_student_test_queue.tpl', array(
             'test_queue' => $test_queue,
             'task_set' => $task_set,
@@ -202,13 +192,13 @@ class Tests extends LIST_Controller {
             'test_types' => $test_types,
         ));
     }
-    
+
     public function get_student_test_queue_all($task_set_id, $student_id) {
         $task_set = new Task_set();
         $task_set->get_by_id((int)$task_set_id);
         $student = new Student();
         $student->get_by_id((int)$student_id);
-        
+
         $test_queue = new Test_queue();
         if ($task_set->exists() && $student->exists()) {
             $test = new Test();
@@ -220,17 +210,18 @@ class Tests extends LIST_Controller {
             $test_queue->where_related($task_set);
             $test_queue->where_related($student);
             $test_queue->order_by('status', 'desc');
+            $test_queue->order_by('priority', 'asc');
             $test_queue->order_by('finish', 'desc');
-            $test_queue->order_by('start', 'asc');
+            $test_queue->order_by('start', 'desc');
             $test_queue->get_iterated();
         }
-        
+
         //$test_queue->check_last_query();
-        
+
         $this->load->helper('tests');
-        
+
         $test_types = get_all_supported_test_types();
-        
+
         $this->parser->parse('backend/tests/get_student_test_queue_all.tpl', array(
             'test_queue' => $test_queue,
             'task_set' => $task_set,
@@ -238,7 +229,7 @@ class Tests extends LIST_Controller {
             'test_types' => $test_types,
         ));
     }
-    
+
     public function new_test_form($task_id) {
         $this->load->helper('tests');
         $tests = get_all_supported_test_types_and_subtypes();
@@ -252,7 +243,7 @@ class Tests extends LIST_Controller {
             'task' => $task,
         ));
     }
-    
+
     public function prepare_new_test($task_id) {
         $task = new Task();
         $task->get_by_id($task_id);
@@ -260,11 +251,11 @@ class Tests extends LIST_Controller {
             $this->new_test_form($task_id);
         } else {
             $this->load->library('form_validation');
-            
+
             $this->form_validation->set_rules('test[name]', 'lang:admin_tests_test_form_field_name', 'required');
             $this->form_validation->set_rules('test[type]', 'lang:admin_tests_test_form_field_type', 'required');
             $this->form_validation->set_rules('test[subtype]', 'lang:admin_tests_test_form_field_subtype', 'required');
-            
+
             if ($this->form_validation->run()) {
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
@@ -292,7 +283,7 @@ class Tests extends LIST_Controller {
             }
         }
     }
-    
+
     public function configure_test($test_id) {
         $test = new Test();
         $test->include_related('task');
@@ -328,7 +319,7 @@ class Tests extends LIST_Controller {
             'languages' => $this->lang->get_list_of_languages(),
         ));
     }
-    
+
     public function save_test_configuration($test_id) {
         $this->_transaction_isolation();
         $this->db->trans_begin();
@@ -336,12 +327,12 @@ class Tests extends LIST_Controller {
         $test->get_by_id(intval($test_id));
         if ($test->exists()) {
             $this->load->library('form_validation');
-            
+
             $this->form_validation->set_rules('test[name]', 'lang:admin_tests_test_form_field_name', 'required');
             $this->form_validation->set_rules('test[timeout]', 'lang:admin_tests_test_form_field_timeout', 'required|greater_than_equal[100]');
-            
+
             $valid = TRUE;
-            
+
             $test_object = $this->load->test($test->type);
             try {
                 $test_object->initialize($test);
@@ -351,7 +342,7 @@ class Tests extends LIST_Controller {
                 $this->messages->add_message($e->getMessage(), Messages::MESSAGE_TYPE_ERROR);
                 redirect(create_internal_url('admin_tests/configure_test/' . $test_id));
                 die();
-            }            
+            }
             if ($this->form_validation->run() && $valid) {
                 $test_data = $this->input->post('test');
                 $test->name = $test_data['name'];
@@ -416,7 +407,7 @@ class Tests extends LIST_Controller {
             'tests' => $tests,
         ));
     }
-    
+
     public function delete_test($test_id) {
         $output = new stdClass();
         $output->result = FALSE;
@@ -441,14 +432,14 @@ class Tests extends LIST_Controller {
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
-    
+
     public function prepare_execution($test_id) {
         $test = new Test();
         $test->include_related('task');
         $test->get_by_id(intval($test_id));
         $this->parser->parse('backend/tests/prepare_execution.tpl', array('test' => $test));
     }
-    
+
     public function run_testing_execution($test_id) {
         $test = new Test();
         $test->include_related('task');
@@ -477,7 +468,7 @@ class Tests extends LIST_Controller {
         $this->parser->add_js_file('admin_tests/run_testing_execution.js');
         $this->parser->parse('backend/tests/run_testing_execution.tpl', array('test' => $test, 'file_name' => $file_name));
     }
-    
+
     public function after_testing_execution($source_file) {
         $source_file_decoded = decode_from_url($source_file);
         $path = 'private/test_to_execute/testing_execution/' . $source_file_decoded;
@@ -525,11 +516,11 @@ class Tests extends LIST_Controller {
         } catch (Exception $e) {
             $output->text = $e->getMessage();
             $output->code = $e->getCode();
-        } 
+        }
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
-    
+
     public function download_test_file($test_id, $file_name_encrypted) {
         $path = 'private/uploads/unit_tests/test_' . (int)$test_id . '/' . decode_from_url($file_name_encrypted);
         if (file_exists($path)) {
@@ -556,41 +547,41 @@ class Tests extends LIST_Controller {
             $this->output->set_status_header(404, 'Not found');
         }
     }
-    
+
     public function request_token() {
         $this->load->model('test_score');
-        
+
         $this->output->set_content_type('application/json');
-        
+
         $this->test_score->delete_old_scores();
-        
+
         $token = $this->test_score->request_token();
-        
+
         $this->output->set_output(json_encode($token));
     }
-    
+
     public function evaluate_test_result($task_set_id, $student_id, $version, $test_type, $token) {
         $task_set = new Task_set();
         $task_set->include_related('course', 'test_scoring_deadline');
         $task_set->get_by_id((int)$task_set_id);
-        
+
         $student = new Student();
         $student->get_by_id((int)$student_id);
-        
+
         $output = new stdClass();
         $output->result = FALSE;
         $output->message = '';
         $output->points_new = 0;
         $output->points_before = 0;
-        
+
         $this->load->model('test_score');
-        
+
         if ($task_set->exists() && $student->exists()) {
             if ($task_set->course_test_scoring_deadline >= date('Y-m-d H:i:s') && $task_set->enable_tests_scoring > 0) {
                 $results = $this->test_score->get_data_for_student($student->id, $token, $test_type);
                 $this->_transaction_isolation();
                 $this->db->trans_start();
-                
+
                 $tests = new Test();
                 $tests->where_related('task/task_set', 'id', $task_set->id);
                 $tests->where('type', $test_type);
@@ -600,15 +591,15 @@ class Tests extends LIST_Controller {
                 $tests->get_iterated();
                 //$output->debug = $tests->check_last_query(array('', ''), TRUE);
                 $test_count = $tests->result_count();
-                
+
                 $min_results = $task_set->test_min_needed > $test_count ? $test_count : $task_set->test_min_needed;
-                
+
                 $course = new Course();
                 $course->where_related_task_set('id', $task_set->id);
                 $course->get();
-                
+
                 $min_points_limit = -$course->default_points_to_remove;
-                                
+
                 if ($test_count > 0) {
                     $total_score = 0;
                     $score_array = array();
@@ -641,7 +632,7 @@ class Tests extends LIST_Controller {
                             $query->free_result();
                         }
                     }
-                    
+
                     $max_results = $task_set->test_max_allowed < count($score_array) ? $task_set->test_max_allowed : count($score_array);
 
                     arsort($score_array, SORT_NUMERIC);
@@ -658,16 +649,16 @@ class Tests extends LIST_Controller {
                     $total_score = $total_score < $min_points_limit ? $min_points_limit : $total_score;
 
                     arsort($bonus_tasks_array, SORT_NUMERIC);
-                    
+
                     $total_score += array_sum($bonus_tasks_array);
-                        
+
                     if (count($score_array) >= $min_results) {
                         $tasks = new Task();
                         $tasks->where_related_task_set('id', $task_set_id);
                         $tasks->order_by('`task_task_set_rel`.`sorting`', 'asc');
                         $tasks->get_iterated();
                         //$output->debug = $tasks->check_last_query(array('', ''), TRUE);
-                        
+
                         $output->evaluation = $this->parser->parse('backend/tests/evaluation_table.tpl', array(
                             'tasks' => $tasks,
                             'real_points' => $score_array,
@@ -676,7 +667,7 @@ class Tests extends LIST_Controller {
                             'bonus_percentage' => $bonus_tasks_percentage,
                             'max_results' => $max_results,
                         ), TRUE);
-                        
+
                         $solution = new Solution();
                         $solution->where('task_set_id', $task_set->id);
                         $solution->where('student_id', $student->id);
@@ -736,9 +727,9 @@ class Tests extends LIST_Controller {
         } else {
             $output->message = $this->lang->line('admin_tests_test_result_input_error');
         }
-        
+
         $this->test_score->delete_token($token);
-        
+
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
