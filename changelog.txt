@@ -24,6 +24,8 @@ VERSION 1.5.1 | 2017-09-15
 
 CHANGE Poradie testov v plánovači je teraz zobrazované študentom korektne.
 CHANGE [lang:english] Order of tests in test queue is displayed to student correctly.
+FIX Opravené zobrazenie o neukončenom teste v zozname.
+FIX [lang:english] Fixed display of non-finished test in listing.
 
 END VERSION
 
