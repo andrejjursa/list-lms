@@ -536,6 +536,9 @@ class Cli extends CI_Controller {
     
     public function send_deadline_notifications($lang_idiom = NULL) {
         $this->load->database();
+
+        $db_fix = new DB_Fix();
+        $db_fix->do_fix();
         
         $this->load->model('translations');
         if (!is_null($lang_idiom)) {
