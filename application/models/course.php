@@ -30,6 +30,7 @@ class Course extends DataMapper {
             'join_self_as' => 'prefered_course',
             'joint_other_as' => 'prefered_for_teacher',
         ),
+        'course_content',
     );
     
     /**

@@ -33,6 +33,7 @@ $lang['adminmenu_title_application_changelog'] = 'Changelog';
 $lang['adminmenu_title_manual_index'] = 'User manual';
 $lang['adminmenu_title_activity_logs'] = 'Activity logs';
 $lang['adminmenu_title_task_sets_sorting'] = 'Sorting';
+$lang['adminmenu_title_course_content'] = 'Course content';
 
 $lang['adminmenu_open_task_set_message'] = 'Open task set: %s (%s tasks)';
 $lang['adminmenu_open_task_set_nothing_opened'] = 'Nothing opened';

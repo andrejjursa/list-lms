@@ -160,6 +160,13 @@ $cache = array (
       array (
       ),
     ),
+    'course_content' => 
+    array (
+      'field' => 'course_content',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -239,6 +246,17 @@ $cache = array (
       'other_field' => 'course',
       'join_self_as' => 'course',
       'join_other_as' => 'participant',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'course_content' => 
+    array (
+      'class' => 'course_content',
+      'other_field' => 'course',
+      'join_self_as' => 'course',
+      'join_other_as' => 'course_content',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

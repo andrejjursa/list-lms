@@ -67,6 +67,13 @@ $config['adminmenu'] = array(
                 //'sub' => NULL,
             ),
             array(
+                'title' => 'lang:adminmenu_title_course_content',
+                'pagetag' => 'course_content',
+                'link' => 'admin_course_content',
+                'class' => '',
+                'sub' => NULL,
+            ),
+            array(
                 'title' => 'lang:adminmenu_title_categories',
                 'pagetag' => 'categories',
                 'link' => 'admin_categories',
