@@ -29,6 +29,19 @@ class Course_content extends LIST_Controller {
         $this->parser->parse('backend/course_content/new_content_form.tpl');
     }
 
+    public function get_all_content() {
+        $course_content = new Course_content_model();
+
+        $course_content->select('*');
+        $course_content->include_related('course', 'name');
+        $course_content->include_related('course/period', 'name');
+        $course_content->get_iterated();
+
+        $this->lang->init_overlays('course_content', $course_content->all_to_array(), ['title', 'content']);
+
+        $this->parser->parse('backend/course_content/table_content.tpl', ['course_content' => $course_content]);
+    }
+
     public function create() {
         $this->load->library('form_validation');
 
@@ -41,7 +54,7 @@ class Course_content extends LIST_Controller {
         $this->db->trans_begin();
         if ($this->form_validation->run()) {
             $course_content = new Course_content_model();
-            $course_content->from_array($course_content_data, array('title', 'content', 'course_id'));
+            $course_content->from_array($course_content_data, ['title', 'content', 'course_id']);
             $course_content->published = FALSE;
             if ($course_content->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
