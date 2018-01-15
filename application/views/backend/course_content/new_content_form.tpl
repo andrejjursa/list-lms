@@ -10,12 +10,10 @@
     {form_error field='course_content[title]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
 </div>
 <div class="field">
-    <label for="course_content_content_id" class="required">{translate line='admin_course_content_form_label_content'}:</label>
+    <label for="course_content_content_id">{translate line='admin_course_content_form_label_content'}:</label>
     <p class="input"><textarea name="course_content[content]" id="course_content_content_id">{$smarty.post.course_content.content|htmlspecialchars}</textarea></p>
     {form_error field='course_content[content]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
 </div>
-<div class="field">
-    <label for="course_content_published_id">{translate line='admin_course_content_form_label_published'}:</label>
-    <p class="input"><input type="checkbox" name="course_content[published]" value="1" id="course_content_published_id"{if $smarty.post.course_content.published eq 1} checked="checked"{/if} /></p>
-    {form_error field='course_content[published]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+<div class="buttons">
+    <input type="submit" name="submit_button" value="{translate line='admin_course_content_form_button_submit'}" class="button" />
 </div>

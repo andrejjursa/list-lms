@@ -32,7 +32,26 @@ class Course extends DataMapper {
         ),
         'course_content',
     );
-    
+
+
+    public static function get_all_courses_for_form_select() {
+        $courses = new Course();
+        $courses->order_by_related('period', 'sorting', 'asc');
+        $courses->order_by_with_constant('name', 'asc');
+        $courses->include_related('period', 'name');
+        $courses->get_iterated();
+
+        $output = [NULL => ''];
+
+        $ci =& get_instance();
+
+        foreach ($courses as $course) {
+            $output[$ci->lang->text($course->period_name)][$course->id] =  $ci->lang->text($course->name);
+        }
+
+        return $output;
+    }
+
     /**
      * Tests if this course have allowed subscription.
      * @return boolean TRUE when subscription is allowed for this (existing) course, FALSE otherwise.
