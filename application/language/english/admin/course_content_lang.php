@@ -16,3 +16,14 @@ $lang['admin_course_content_form_button_submit'] = 'Save';
 
 $lang['admin_course_content_flash_message_save_successful'] = 'New content successfully saved.';
 $lang['admin_course_content_flash_message_save_fail'] = 'Saving of new content was unsucessful.';
+
+$lang['admin_course_content_table_header_title'] = 'Title';
+$lang['admin_course_content_table_header_course'] = 'Course';
+$lang['admin_course_content_table_header_published'] = 'Published?';
+$lang['admin_course_content_table_header_controlls'] = 'Controlls';
+
+$lang['admin_course_content_table_content_published_yes'] = 'Yes';
+$lang['admin_course_content_table_content_published_no'] = 'No';
+
+$lang['admin_course_content_table_button_edit'] = 'Edit content';
+$lang['admin_course_content_table_button_delete'] = 'Delete content';

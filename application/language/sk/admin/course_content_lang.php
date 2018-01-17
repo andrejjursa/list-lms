@@ -16,3 +16,14 @@ $lang['admin_course_content_form_button_submit'] = 'Uložiť';
 
 $lang['admin_course_content_flash_message_save_successful'] = 'Nový obsah úspešne uložený.';
 $lang['admin_course_content_flash_message_save_fail'] = 'Nový obsah sa nepodarilo uložiť.';
+
+$lang['admin_course_content_table_header_title'] = 'Nadpis';
+$lang['admin_course_content_table_header_course'] = 'Kurz';
+$lang['admin_course_content_table_header_published'] = 'Publikované?';
+$lang['admin_course_content_table_header_controlls'] = 'Ovládanie';
+
+$lang['admin_course_content_table_content_published_yes'] = 'Áno';
+$lang['admin_course_content_table_content_published_no'] = 'Nie';
+
+$lang['admin_course_content_table_button_edit'] = 'Upraviť obsah';
+$lang['admin_course_content_table_button_delete'] = 'Vymazať obsah';

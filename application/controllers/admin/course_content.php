@@ -20,6 +20,7 @@ class Course_content extends LIST_Controller {
     public function index() {
         $this->_select_teacher_menu_pagetag('course_content');
         $this->parser->add_js_file('admin_course_content/list.js');
+        $this->parser->add_css_file('admin_course_content.css');
         $this->inject_courses();
         $this->parser->parse('backend/course_content/index.tpl');
     }
@@ -35,7 +36,7 @@ class Course_content extends LIST_Controller {
         $course_content->select('*');
         $course_content->include_related('course', 'name');
         $course_content->include_related('course/period', 'name');
-        $course_content->get_iterated();
+        $course_content->get_paged_iterated($filter['page'] ?? 1, $filter['rows_per_page'] ?? 25);
 
         $this->lang->init_overlays('course_content', $course_content->all_to_array(), ['title', 'content']);
 
