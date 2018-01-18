@@ -16,6 +16,7 @@ $lang['admin_course_content_form_button_submit'] = 'Uložiť';
 
 $lang['admin_course_content_flash_message_save_successful'] = 'Nový obsah úspešne uložený.';
 $lang['admin_course_content_flash_message_save_fail'] = 'Nový obsah sa nepodarilo uložiť.';
+$lang['admin_course_content_flash_message_content_not_found'] = 'Obsah sa nedá nájsť.';
 
 $lang['admin_course_content_table_header_title'] = 'Nadpis';
 $lang['admin_course_content_table_header_course'] = 'Kurz';
@@ -27,3 +28,5 @@ $lang['admin_course_content_table_content_published_no'] = 'Nie';
 
 $lang['admin_course_content_table_button_edit'] = 'Upraviť obsah';
 $lang['admin_course_content_table_button_delete'] = 'Vymazať obsah';
+
+$lang['admin_course_content_error_course_content_not_found'] = 'Požadovaný obsah kurzu sa nenašiel.';

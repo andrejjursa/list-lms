@@ -71,6 +71,22 @@ class Course_content extends LIST_Controller {
         }
         $this->db->trans_rollback();
     }
+    
+    public function edit($id) {
+        $this->_select_teacher_menu_pagetag('course_content');
+        
+        $course_content = new Course_content_model();
+        $course_content->get_by_id((int)$id);
+        
+        $this->inject_courses();
+        $this->parser->parse('backend/course_content/edit.tpl', [
+            'content' => $course_content
+        ]);
+    }
+    
+    public function delete($id) {
+    
+    }
 
     private function inject_courses()
     {
