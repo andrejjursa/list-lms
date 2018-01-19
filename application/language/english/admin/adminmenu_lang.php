@@ -36,7 +36,6 @@ $lang['adminmenu_title_task_sets_sorting'] = 'Sorting';
 $lang['adminmenu_title_course_content'] = 'Course content';
 $lang['adminmenu_title_course_content_sorting'] = 'Sorting';
 $lang['adminmenu_title_course_content_groups'] = 'Content groups';
-$lang['adminmenu_title_course_content_groups_sorting'] = 'Sorting';
 
 $lang['adminmenu_open_task_set_message'] = 'Open task set: %s (%s tasks)';
 $lang['adminmenu_open_task_set_nothing_opened'] = 'Nothing opened';

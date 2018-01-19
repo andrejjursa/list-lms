@@ -99,15 +99,7 @@ $config['adminmenu'] = array(
                         'pagetag' => 'course_content_groups',
                         'link' => 'admin_course_content_groups',
                         'class' => '',
-                        'sub' => array(
-                            array(
-                                'title' => 'lang:adminmenu_title_course_content_groups_sorting',
-                                'pagetag' => 'course_content_groups_sorting',
-                                'link' => 'admin_course_content_groups/sorting',
-                                'class' => '',
-                                'sub' => NULL,
-                            ),
-                        ),
+                        'sub' => NULL,
                     ),
                 ),
             ),
