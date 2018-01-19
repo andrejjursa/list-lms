@@ -48,7 +48,15 @@ $config['adminmenu'] = array(
                 'pagetag' => 'tasks',
                 'link' => 'admin_tasks',
                 'class' => '',
-                'sub' => NULL,
+                'sub' => array(
+                    array(
+                        'title' => 'lang:adminmenu_title_categories',
+                        'pagetag' => 'categories',
+                        'link' => 'admin_categories',
+                        'class' => '',
+                        'sub' => NULL,
+                    ),
+                ),
             ),
             array(
                 'title' => 'lang:adminmenu_title_task_sets',
@@ -63,6 +71,13 @@ $config['adminmenu'] = array(
                         'class' => '',
                         'sub' => NULL,
                     ),
+                    array(
+                        'title' => 'lang:adminmenu_title_task_set_types',
+                        'pagetag' => 'task_set_types',
+                        'link' => 'admin_task_set_types',
+                        'class' => '',
+                        'sub' => NULL,
+                    ),
                 ),
                 //'sub' => NULL,
             ),
@@ -71,21 +86,30 @@ $config['adminmenu'] = array(
                 'pagetag' => 'course_content',
                 'link' => 'admin_course_content',
                 'class' => '',
-                'sub' => NULL,
-            ),
-            array(
-                'title' => 'lang:adminmenu_title_categories',
-                'pagetag' => 'categories',
-                'link' => 'admin_categories',
-                'class' => '',
-                'sub' => NULL,
-            ),
-            array(
-                'title' => 'lang:adminmenu_title_task_set_types',
-                'pagetag' => 'task_set_types',
-                'link' => 'admin_task_set_types',
-                'class' => '',
-                'sub' => NULL,
+                'sub' => array(
+                    array(
+                        'title' => 'lang:adminmenu_title_course_content_sorting',
+                        'pagetag' => 'course_content_sorting',
+                        'link' => 'admin_course_content/sorting',
+                        'class' => '',
+                        'sub' => NULL,
+                    ),
+                    array(
+                        'title' => 'lang:adminmenu_title_course_content_groups',
+                        'pagetag' => 'course_content_groups',
+                        'link' => 'admin_course_content_groups',
+                        'class' => '',
+                        'sub' => array(
+                            array(
+                                'title' => 'lang:adminmenu_title_course_content_groups_sorting',
+                                'pagetag' => 'course_content_groups_sorting',
+                                'link' => 'admin_course_content_groups/sorting',
+                                'class' => '',
+                                'sub' => NULL,
+                            ),
+                        ),
+                    ),
+                ),
             ),
             array(
                 'title' => 'lang:adminmenu_title_restrictions',
