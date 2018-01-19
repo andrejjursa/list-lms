@@ -7,7 +7,10 @@ $lang['admin_course_content_fieldset_legend_all_content'] = 'List of content';
 $lang['admin_course_content_form_label_course_id'] = 'Course';
 $lang['admin_course_content_form_label_title'] = 'Content title';
 $lang['admin_course_content_form_label_content'] = 'Text content';
-$lang['admin_course_content_form_label_published'] = 'Publish?';
+$lang['admin_course_content_form_label_published'] = 'Is published?';
+$lang['admin_course_content_form_label_published_from'] = 'Published from';
+$lang['admin_course_content_form_label_published_to'] = 'Published to';
+$lang['admin_course_content_form_label_public'] = 'Is public?';
 
 $lang['admin_course_content_form_field_course_id'] = 'course';
 $lang['admin_course_content_form_field_title'] = 'content title';

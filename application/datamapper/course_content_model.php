@@ -10,7 +10,9 @@ $cache = array (
     4 => 'content',
     5 => 'course_id',
     6 => 'published',
-    7 => 'permissions',
+    7 => 'published_from',
+    8 => 'published_to',
+    9 => 'public',
   ),
   'validation' => 
   array (
@@ -64,9 +66,23 @@ $cache = array (
       array (
       ),
     ),
-    'permissions' => 
+    'published_from' => 
     array (
-      'field' => 'permissions',
+      'field' => 'published_from',
+      'rules' => 
+      array (
+      ),
+    ),
+    'published_to' => 
+    array (
+      'field' => 'published_to',
+      'rules' => 
+      array (
+      ),
+    ),
+    'public' => 
+    array (
+      'field' => 'public',
       'rules' => 
       array (
       ),

@@ -4,47 +4,47 @@ class Migration_add_course_content extends CI_Migration {
 
     public function up() {
         $this->dbforge->add_field(
-            array(
-                'id' => array(
+            [
+                'id' => [
                     'type' => 'INT',
                     'constraint' => '11',
                     'unsigned' => TRUE,
                     'auto_increment' => TRUE,
-                ),
-                'updated' => array(
+                ],
+                'updated' => [
                     'type' => 'TIMESTAMP',
                     'default' => '1970-01-01 01:00:01',
-                ),
-                'created' => array(
+                ],
+                'created' => [
                     'type' => 'TIMESTAMP',
                     'default' => '1970-01-01 01:00:01',
-                ),
-                'title' => array(
+                ],
+                'title' => [
                     'type' => 'VARCHAR',
                     'constraint' => 255,
                     'default' => '',
-                ),
-                'content' => array(
+                ],
+                'content' => [
                     'type' => 'TEXT',
                     'null' => FALSE,
-                ),
-                'course_id' => array(
+                ],
+                'course_id' => [
                     'type' => 'INT',
                     'constraint' => 11,
                     'unsigned' => TRUE,
                     'null' => TRUE,
-                ),
-                'published' => array(
+                ],
+                'published' => [
                     'type' => 'TINYINT',
                     'constraint' => 1,
                     'null' => FALSE,
                     'default' => 0
-                ),
-                'permissions' => array(
+                ],
+                'permissions' => [
                     'type' => 'TEXT',
                     'null' => TRUE,
-                ),
-            )
+                ],
+            ]
         );
 
         $this->dbforge->add_key('id', TRUE);

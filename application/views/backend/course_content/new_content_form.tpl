@@ -14,6 +14,21 @@
     <p class="input"><textarea name="course_content[content]" id="course_content_content_id">{$smarty.post.course_content.content|htmlspecialchars}</textarea></p>
     {form_error field='course_content[content]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
 </div>
+<div class="field">
+    <label for="course_content_published_from_id">{translate line='admin_course_content_form_label_published_from'}:</label>
+    <p class="input"><input type="text" name="course_content[published_from]" id="course_content_published_from_id" value="{$smarty.post.course_content.published_from|htmlspecialchars}" /></p>
+    {form_error field='course_content[published_from]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+</div>
+<div class="field">
+    <label for="course_content_published_to_id">{translate line='admin_course_content_form_label_published_to'}:</label>
+    <p class="input"><input type="text" name="course_content[published_to]" id="course_content_published_to_id" value="{$smarty.post.course_content.published_to|htmlspecialchars}" /></p>
+    {form_error field='course_content[published_to]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+</div>
+<div class="field">
+    <label for="course_content_public_id">{translate line='admin_course_content_form_label_public'}:</label>
+    <p class="input"><input type="checkbox" name="course_content[public]" value="1" id="course_content_public_id"{if $smarty.post.course_content.public eq 1} checked="checked"{/if} /></p>
+    {form_error field='course_content[public]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+</div>
 <div class="buttons">
     <input type="submit" name="submit_button" value="{translate line='admin_course_content_form_button_submit'}" class="button" />
 </div>

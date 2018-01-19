@@ -8,6 +8,9 @@ $lang['admin_course_content_form_label_course_id'] = 'Kurz';
 $lang['admin_course_content_form_label_title'] = 'Názov obsahu';
 $lang['admin_course_content_form_label_content'] = 'Textový obsah';
 $lang['admin_course_content_form_label_published'] = 'Publikovať?';
+$lang['admin_course_content_form_label_published_from'] = 'Publikovať od';
+$lang['admin_course_content_form_label_published_to'] = 'Publikovať do';
+$lang['admin_course_content_form_label_public'] = 'Verejné?';
 
 $lang['admin_course_content_form_field_course_id'] = 'kurz';
 $lang['admin_course_content_form_field_title'] = 'názov obsahu';
