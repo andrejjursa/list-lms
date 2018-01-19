@@ -19,6 +19,15 @@ class Course_content_groups extends LIST_Controller {
     
     public function index() {
         $this->_select_teacher_menu_pagetag('course_content_groups');
+        
+        $this->inject_courses();
+        
+        $this->parser->parse('backend/course_content_groups/index.tpl');
+    }
+    
+    private function inject_courses()
+    {
+        $this->parser->assign('courses', Course::get_all_courses_for_form_select());
     }
     
 }
