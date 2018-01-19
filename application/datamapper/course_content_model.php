@@ -13,6 +13,7 @@ $cache = array (
     7 => 'published_from',
     8 => 'published_to',
     9 => 'public',
+    10 => 'sorting',
   ),
   'validation' => 
   array (
@@ -83,6 +84,13 @@ $cache = array (
     'public' => 
     array (
       'field' => 'public',
+      'rules' => 
+      array (
+      ),
+    ),
+    'sorting' => 
+    array (
+      'field' => 'sorting',
       'rules' => 
       array (
       ),
