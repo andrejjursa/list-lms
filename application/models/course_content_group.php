@@ -33,4 +33,8 @@ class Course_content_group extends DataMapper {
         return $output;
     }
     
+    public static function get_next_sorting_number($course_id) {
+        return Course_content_model::get_next_sorting_number($course_id);
+    }
+    
 }

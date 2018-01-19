@@ -14,6 +14,7 @@ $cache = array (
     8 => 'published_to',
     9 => 'public',
     10 => 'sorting',
+    11 => 'course_content_group_id',
   ),
   'validation' => 
   array (
@@ -91,6 +92,13 @@ $cache = array (
     'sorting' => 
     array (
       'field' => 'sorting',
+      'rules' => 
+      array (
+      ),
+    ),
+    'course_content_group_id' => 
+    array (
+      'field' => 'course_content_group_id',
       'rules' => 
       array (
       ),
