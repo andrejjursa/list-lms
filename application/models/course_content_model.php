@@ -9,6 +9,6 @@ class Course_content_model extends DataMapper {
 
     public $table = 'course_content';
 
-    public $has_one = array('course');
+    public $has_one = ['course', 'course_content_group'];
 
 }

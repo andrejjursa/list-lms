@@ -11,6 +11,7 @@ $lang['admin_course_content_form_label_published'] = 'Is published?';
 $lang['admin_course_content_form_label_published_from'] = 'Published from';
 $lang['admin_course_content_form_label_published_to'] = 'Published to';
 $lang['admin_course_content_form_label_public'] = 'Is public?';
+$lang['admin_course_content_form_label_course_content_group_id'] = 'Group content to';
 
 $lang['admin_course_content_form_field_course_id'] = 'course';
 $lang['admin_course_content_form_field_title'] = 'content title';

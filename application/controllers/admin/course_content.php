@@ -87,10 +87,28 @@ class Course_content extends LIST_Controller {
     public function delete($id) {
     
     }
+    
+    public function get_course_content_groups($course_id, $selected_id = NULL, $course_content_id = NULL) {
+        $this->inject_course_content_groups($course_id);
+        
+        $course_content = new Course_content_model();
+        if (is_int($course_content_id)) {
+            $course_content->get_by_id((int)$course_content_id);
+        }
+        
+        $this->parser->assign('course_content', $course_content);
+        $this->parser->assign('selected_id', $selected_id);
+        
+        $this->parser->parse('backend/course_content/course_content_groups_options.tpl');
+    }
 
     private function inject_courses()
     {
         $this->parser->assign('courses', Course::get_all_courses_for_form_select());
+    }
+    
+    private function inject_course_content_groups($course_id = NULL) {
+        $this->parser->assign('course_content_groups', Course_content_group::get_all_groups($course_id));
     }
 
 }

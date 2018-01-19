@@ -5,6 +5,11 @@
     {form_error field='course_content[course_id]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
 </div>
 <div class="field">
+    <label for="course_content_course_content_group_id_id">{translate line='admin_course_content_form_label_course_content_group_id'}:</label>
+    <p class="input"><select name="course_content[course_content_group_id]" size="1" id="course_content_course_content_group_id_id"></select></p>
+    {form_error field='course_content[course_content_group_id]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+</div>
+<div class="field">
     <label for="course_content_title_id" class="required">{translate line='admin_course_content_form_label_title'}:</label>
     <p class="input"><input type="text" name="course_content[title]" id="course_content_title_id" value="{$smarty.post.course_content.title|htmlspecialchars}" /></p>
     {form_error field='course_content[title]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
