@@ -8,6 +8,7 @@ $cache = array (
     2 => 'created',
     3 => 'title',
     4 => 'course_id',
+    5 => 'sorting',
   ),
   'validation' => 
   array (
@@ -43,6 +44,13 @@ $cache = array (
     'course_id' => 
     array (
       'field' => 'course_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'sorting' => 
+    array (
+      'field' => 'sorting',
       'rules' => 
       array (
       ),
