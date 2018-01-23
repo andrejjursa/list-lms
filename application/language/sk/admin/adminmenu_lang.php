@@ -36,3 +36,8 @@ $lang['adminmenu_title_task_sets_sorting'] = 'Zotriedenie';
 
 $lang['adminmenu_open_task_set_message'] = 'Otvorená zostava úloh: %s (%s úloh)';
 $lang['adminmenu_open_task_set_nothing_opened'] = 'Nič nie je otvorené';
+
+$lang['adminmenu_tabs_menu'] = 'Navigácia';
+$lang['adminmenu_tabs_account'] = 'Učiteľ';
+
+$lang['adminmenu_user'] = 'Používateľ';
