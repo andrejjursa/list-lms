@@ -99,7 +99,7 @@ function link_file {
 }
 
 if [ "$(id -u)" != "0" ]; then
-    error_message " Run this script as root!i "
+    error_message " Run this script as root! "
     exit 1
 fi
 
