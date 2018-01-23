@@ -4,6 +4,7 @@
             'home': '{internal_url url='admin'}',
             'tasks': '{internal_url url='admin_tasks'}',
             'task_sets': '{internal_url url='admin_task_sets'}',
+            'course_content': '{internal_url url='admin_course_content'}',
             'solutions': '{internal_url url='admin_solutions'}',
             'valuation_tables': '{internal_url url='admin_solutions/valuation_tables'}',
             'my_account': '{internal_url url='admin_teachers/my_account'}',
@@ -45,6 +46,7 @@
                     '<a href="' + navigation_links.iconbar.home + '"><span class="fa fa-home"></span></a>',
                     '<a href="' + navigation_links.iconbar.tasks + '"><span class="fa fa-tasks"></span></a>',
                     '<a href="' + navigation_links.iconbar.task_sets + '"><span class="fa fa-list"></span></a>',
+                    '<a href="' + navigation_links.iconbar.course_content + '"><span class="fa fa-archive"></span></a>',
                     '<a href="' + navigation_links.iconbar.solutions + '"><span class="fa fa-check-square-o"></span></a>',
                     '<a href="' + navigation_links.iconbar.valuation_tables + '"><span class="fa fa-table"></span></a>'
                 ],

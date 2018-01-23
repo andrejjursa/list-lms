@@ -96,12 +96,14 @@ $config['adminmenu'] = array(
                 'title' => 'lang:adminmenu_title_course_content',
                 'pagetag' => 'course_content',
                 'link' => 'admin_course_content',
+                'icon' => '<i class="fa fa-archive" aria-hidden="true"></i>',
                 'class' => '',
                 'sub' => array(
                     array(
                         'title' => 'lang:adminmenu_title_course_content_sorting',
                         'pagetag' => 'course_content_sorting',
                         'link' => 'admin_course_content/sorting',
+                        'icon' => '<i class="fa fa-sort" aria-hidden="true"></i>',
                         'class' => '',
                         'sub' => NULL,
                     ),
@@ -109,6 +111,7 @@ $config['adminmenu'] = array(
                         'title' => 'lang:adminmenu_title_course_content_groups',
                         'pagetag' => 'course_content_groups',
                         'link' => 'admin_course_content_groups',
+                        'icon' => '<i class="fa fa-folder-open" aria-hidden="true"></i>',
                         'class' => '',
                         'sub' => NULL,
                     ),
