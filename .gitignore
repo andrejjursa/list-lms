@@ -5,6 +5,7 @@ application/cache/smarty/*
 public/js/mathjax
 public/js/highcharts
 public/js/google-code-prettify
+public/js/jquery.mmenu
 public/css/prettify.css
 public/css/font-awesome
 private/moss/*

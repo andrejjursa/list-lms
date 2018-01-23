@@ -203,3 +203,11 @@ remove_file "$CD/$pprettifycss/prettify.css"
 link_dir "$CD/$prettify" "$CD/$pprettify"
 link_file "$CD/$prettify/prettify.css" "$CD/$pprettifycss/prettify.css"
 echo "... done."
+
+mmenu="node_modules/jquery.mmenu/dist"
+pmmenu="public/js/jquery.mmenu"
+
+echo "Copying references to jquery.mmenu ..."
+empty_dir "$CD/$pmmenu"
+link_dir "$CD/$mmenu" "$CD/$pmmenu"
+echo "... done."

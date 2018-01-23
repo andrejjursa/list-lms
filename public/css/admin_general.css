@@ -4,9 +4,38 @@
 * { margin: 0; padding: 0; }
 body { font-family: Verdana, Arial, sans-serif; font-size: 14px; background-color: white; color: black; }
 table { border-collapse: collapse; }
-nav { background-color:#322f32; padding: 0 10px; margin-top: 10px; box-shadow: 0px 0px 5px 5px #322f32; }
-#pagewrap_id { min-width: 800px; }
-#headerwrap_id { position: fixed; top: 0px; width: 100%; background-color: white; z-index: 100; min-width: 800px; }
+nav { background-color:#322f32; }
+nav li.mm-listitem i.fa { margin-right: 2ex; }
+#page { position: relative; background-color: white; }
+#list-content { min-width: 800px; padding-top: 40px; padding-bottom: 40px; background-color: white; }
+
+#list-top-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; min-width: 800px; height: 40px; background-color: #322f32; color: white; padding: 0; }
+#list-top-header a#menu-open-close-button { color: gray; font-size: 20px; display: inline-block; padding: 2px 5px; transition: color 0.4s ease-in-out, border-color 0.4s ease-in-out; border: 2px solid gray; border-radius: 2px; position: relative; top: -4px; margin: 0 10px; }
+#list-top-header a#menu-open-close-button:hover { color: white; border-color: white; }
+#list-top-header span#list-title { font-size: 30px; line-height: 40px; }
+
+#list-footer { position: fixed; width: 100%; bottom: 0; left: 0; background-color: #322f32; color: white; z-index: 100; height: 40px; line-height: 40px; text-align: center; }
+#list-footer a { color: #00cc00; text-decoration: none; }
+#list-footer a:hover { color: #B6FBA6; }
+
+@keyframes ajax-loading {
+    0% {
+        background-color: #322f32;
+        color: white;
+    }
+    50% {
+        background-color: darkgreen;
+        color: lightblue;
+    }
+    100% {
+        background-color: #322f32;
+        color: white;
+    }
+}
+
+#list-top-header.ajax, #list-footer.ajax {
+    animation: ajax-loading 1s infinite linear;
+}
 /*div.header_margin { margin-top: 140px !important; }*/
 
 .button { transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; padding: 4px 10px; border: 1px solid green; border-radius: 30px; background-color: #B6FBA6; color: black; box-shadow: -3px -3px 3px gray inset; text-decoration: none; font-size: 0.9em; white-space: nowrap; }

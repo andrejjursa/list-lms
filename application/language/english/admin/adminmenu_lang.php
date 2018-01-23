@@ -39,3 +39,8 @@ $lang['adminmenu_title_course_content_groups'] = 'Content groups';
 
 $lang['adminmenu_open_task_set_message'] = 'Open task set: %s (%s tasks)';
 $lang['adminmenu_open_task_set_nothing_opened'] = 'Nothing opened';
+
+$lang['adminmenu_tabs_menu'] = 'Navigation';
+$lang['adminmenu_tabs_account'] = 'Teacher';
+
+$lang['adminmenu_user'] = 'User';
