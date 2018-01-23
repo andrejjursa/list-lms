@@ -18,6 +18,6 @@
   "dependencies": {
     "bower": "^1.8.2",
     "highcharts": "^5.0.10",
-	"font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0"
   }
 }

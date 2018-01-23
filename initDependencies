@@ -5,21 +5,112 @@
 #
 #-----------------------------
 
+function error_message {
+	echo -e "\e[93;101m$1\e[0m"
+}
+
+function success_message {
+	echo -e "\e[30;102m$1\e[0m"
+}
+
+function test_composer
+{
+	composer > /dev/null 2> /dev/null
+	if [ $? != "0" ]; then
+		error_message " Composer not found. It must be accessible globally. "
+		return 1
+	fi
+	return 0
+}
+
+function test_npm
+{
+	npm help > /dev/null 2> /dev/null
+	if [ $? != "0" ]; then
+		error_message " Node package manager (npm) not found. It must be accesible globally. "
+		return 1
+	fi
+	return 0
+}
+
+function empty_dir {
+	if [ -d $1 ]; then
+		rm -rf $1 > /dev/null 2> /dev/null
+		if [ $? == "0" ]; then
+			success_message " Directory $1 removed. "
+		else
+			error_message " Directory $1 can't be removed. "
+		fi
+	else
+		error_message " Path $1 is not a directory! "
+	fi
+}
+
+function remove_file {
+	if [ -f $1 ]; then
+		rm -f $1 > /dev/null 2> /dev/null
+		if [ $? == "0" ]; then
+			success_message " File $1 removed. "
+		else
+			error_message " File $1 can't be removed. "
+		fi
+	else
+		error_message " Path $! is not a file! "
+	fi
+}
+
+function make_dir {
+	if [ -d $1 ]; then
+		error_message " Directory $1 already exists. "
+	else
+		mkdir $1 > /dev/null 2> /dev/null
+		if [ $? == "0" ]; then
+			success_message " Directory $1 created successfully. "
+		else
+			error_message " Directory $1 can't be created. "
+		fi
+	fi
+}
+
+function link_dir {
+	if [ -d $1 ]; then
+		ln -sd $1 $2 > /dev/null 2> /dev/null
+		if [ $? == "0" ]; then
+			success_message " Directory $1 linked to $2. "
+		else
+			error_message " Directory $1 can't be linked to $2. "
+		fi
+	else
+		error_message " Source directory $1 can't be found. "
+	fi
+}
+
+function link_file {
+	if [ -f $1 ]; then
+		ln -s $1 $2 > /dev/null 2> /dev/null
+		if [ $? == "0" ]; then
+			success_message " File $1 linked to $2. "
+		else 
+			error_message " File $1 can't be linked to $2. "
+		fi
+	else
+		error_message " Source file $1 can't be found. "
+	fi
+}
+
 if [ "$(id -u)" != "0" ]; then
-    echo "Run this script as root!"
+    error_message " Run this script as root!i "
     exit 1
 fi
 
-dpkg --get-selections | grep composer | grep -v deinstall > /dev/null 2> /dev/null
-if [ $? == "1" ]; then
-    echo "Package composer can't be found!"
-    exit 1
+test_composer
+if [ $? != "0" ]; then
+	exit 1
 fi
 
-dpkg --get-selections | grep npm | grep -v deinstall > /dev/null 2> /dev/null
-if [ $? == "1" ]; then
-    echo "Package npm can't be found!"
-    exit 1
+test_npm
+if [ $? != "0" ]; then
+	exit 1
 fi
 
 COMPOSER_PARAMS=""
@@ -62,44 +153,44 @@ mathjax="vendor/mathjax/mathjax"
 pmathjax="public/js/mathjax"
 
 echo "Copying references to mathjax ..."
-rm -rf "$CD/$pmathjax" 2> /dev/null > /dev/null
-mkdir "$CD/$pmathjax" > /dev/null 2> /dev/null
-ln -s "$CD/$mathjax/MathJax.js" "$CD/$pmathjax/MathJax.js"
-ln -sd "$CD/$mathjax/config" "$CD/$pmathjax/config"
-ln -sd "$CD/$mathjax/fonts" "$CD/$pmathjax/fonts"
-ln -sd "$CD/$mathjax/extensions" "$CD/$pmathjax/extensions"
-ln -sd "$CD/$mathjax/jax" "$CD/$pmathjax/jax"
-ln -sd "$CD/$mathjax/localization" "$CD/$pmathjax/localization"
+empty_dir "$CD/$pmathjax"
+make_dir "$CD/$pmathjax"
+link_file "$CD/$mathjax/MathJax.js" "$CD/$pmathjax/MathJax.js"
+link_dir "$CD/$mathjax/config" "$CD/$pmathjax/config"
+link_dir "$CD/$mathjax/fonts" "$CD/$pmathjax/fonts"
+link_dir "$CD/$mathjax/extensions" "$CD/$pmathjax/extensions"
+link_dir "$CD/$mathjax/jax" "$CD/$pmathjax/jax"
+link_dir "$CD/$mathjax/localization" "$CD/$pmathjax/localization"
 echo "... done."
 
 highcharts="node_modules/highcharts"
 phighcharts="public/js/highcharts"
 
 echo "Copying references to highcharts ..."
-rm -rf "$CD/$phighcharts" 2> /dev/null > /dev/null
-mkdir "$CD/$phighcharts" > /dev/null 2> /dev/null
-ln -s "$CD/$highcharts/highcharts.js" "$CD/$phighcharts/highcharts.js"
-ln -s "$CD/$highcharts/highcharts-3d.js" "$CD/$phighcharts/highcharts-3d.js"
-ln -s "$CD/$highcharts/highcharts-more.js" "$CD/$phighcharts/highcharts-more.js"
-ln -s "$CD/$highcharts/highmaps.js" "$CD/$phighcharts/highmaps.js"
-ln -s "$CD/$highcharts/highstock.js" "$CD/$phighcharts/highstock.js"
-ln -sd "$CD/$highcharts/adapters" "$CD/$phighcharts/adapters"
-ln -sd "$CD/$highcharts/css" "$CD/$phighcharts/css"
-ln -sd "$CD/$highcharts/js" "$CD/$phighcharts/js"
-ln -sd "$CD/$highcharts/lib" "$CD/$phighcharts/lib"
-ln -sd "$CD/$highcharts/modules" "$CD/$phighcharts/modules"
-ln -sd "$CD/$highcharts/themes" "$CD/$phighcharts/themes"
+empty_dir "$CD/$phighcharts"
+make_dir "$CD/$phighcharts"
+link_file "$CD/$highcharts/highcharts.js" "$CD/$phighcharts/highcharts.js"
+link_file "$CD/$highcharts/highcharts-3d.js" "$CD/$phighcharts/highcharts-3d.js"
+link_file "$CD/$highcharts/highcharts-more.js" "$CD/$phighcharts/highcharts-more.js"
+link_file "$CD/$highcharts/highmaps.js" "$CD/$phighcharts/highmaps.js"
+link_file "$CD/$highcharts/highstock.js" "$CD/$phighcharts/highstock.js"
+link_dir "$CD/$highcharts/adapters" "$CD/$phighcharts/adapters"
+link_dir "$CD/$highcharts/css" "$CD/$phighcharts/css"
+link_dir "$CD/$highcharts/js" "$CD/$phighcharts/js"
+link_dir "$CD/$highcharts/lib" "$CD/$phighcharts/lib"
+link_dir "$CD/$highcharts/modules" "$CD/$phighcharts/modules"
+link_dir "$CD/$highcharts/themes" "$CD/$phighcharts/themes"
 echo "... done."
 
 fontAwesome="node_modules/font-awesome"
 pFontAwesome="public/css/font-awesome"
 
 echo "Copying references to font awesome ..."
-rm -rf "$CD/$pFontAwesome" 2> /dev/null > /dev/null
-mkdir "$CD/$pFontAwesome" 2> /dev/null > /dev/null
-mkdir "$CD/$pFontAwesome/css" 2> /dev/null > /dev/null
-ln -s "$CD/$fontAwesome/css/font-awesome.min.css" "$CD/$pFontAwesome/css/font-awesome.min.css"
-ln -sd "$CD/$fontAwesome/fonts" "$CD/$pFontAwesome/fonts"
+empty_dir "$CD/$pFontAwesome"
+make_dir "$CD/$pFontAwesome"
+make_dir "$CD/$pFontAwesome/css"
+link_file "$CD/$fontAwesome/css/font-awesome.min.css" "$CD/$pFontAwesome/css/font-awesome.min.css"
+link_dir "$CD/$fontAwesome/fonts" "$CD/$pFontAwesome/fonts"
 echo "... done."
 
 prettify="bower_components/google-code-prettify/src"
@@ -107,8 +198,8 @@ pprettify="public/js/google-code-prettify"
 pprettifycss="public/css"
 
 echo "Copying references to google-code-prettify ..."
-rm -f "$CD/$pprettify" 2> /dev/null > /dev/null
-rm -f "$CD/$pprettifycss/prettify.css" 2> /dev/null > /dev/null
-ln -sd "$CD/$prettify" "$CD/$pprettify"
-ln -s "$CD/$prettify/prettify.css" "$CD/$pprettifycss/prettify.css"
+empty_dir "$CD/$pprettify"
+remove_file "$CD/$pprettifycss/prettify.css"
+link_dir "$CD/$prettify" "$CD/$pprettify"
+link_file "$CD/$prettify/prettify.css" "$CD/$pprettifycss/prettify.css"
 echo "... done."
