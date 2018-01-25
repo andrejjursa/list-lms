@@ -20,6 +20,8 @@ class Course_content_groups extends LIST_Controller {
     public function index() {
         $this->_select_teacher_menu_pagetag('course_content_groups');
         
+        $this->parser->add_js_file('admin_course_content_groups/list.js');
+        
         $this->inject_courses();
         
         $this->parser->parse('backend/course_content_groups/index.tpl');
@@ -57,6 +59,21 @@ class Course_content_groups extends LIST_Controller {
             $this->new_group_form();
         }
         $this->db->trans_rollback();
+    }
+    
+    public function get_all_content_groups() {
+        $content_groups = new Course_content_group();
+        $content_groups->include_related('course', 'name');
+        $content_groups->include_related('course/period', 'name');
+        $content_groups->include_related_count('course_content_model', 'course_content_count');
+        
+        $content_groups->get_paged_iterated($filter['page'] ?? 1, $filter['rows_per_page'] ?? 25);
+    
+        $this->lang->init_overlays('course_content_groups', $content_groups->all_to_array(), ['title']);
+        
+        $this->parser->parse('backend/course_content_groups/table_content.tpl', [
+            'content_groups' => $content_groups,
+        ]);
     }
     
     private function inject_courses()
