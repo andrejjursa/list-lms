@@ -135,11 +135,13 @@ jQuery(document).ready(function($) {
 jQuery(document).ajaxStart(function () {
     jQuery('#list-top-header').addClass('ajax');
     jQuery('#list-footer').addClass('ajax');
+    jQuery('#list-navigation').addClass('ajax');
 }).ajaxStop(function() {
     try {
         jQuery('[title]').tooltip();
         jQuery('#list-top-header').removeClass('ajax');
         jQuery('#list-footer').removeClass('ajax');
+        jQuery('#list-navigation').removeClass('ajax');
     } catch (e) {
         console.log(e);
     }
@@ -697,24 +699,28 @@ var display_notification = function(message, type) {
     notification_box.html('<div class="message">' + message + '</div>');
     notification_box.addClass('type_' + type);
     notification_box.css('display', 'none');
-    notification_box.fadeIn(500, function() {
-        notification_box.fadeTo(10000, 0.8, function() {
-            notification_box.animate({
-                height: 0,
-                opacity: 0
-            }, 500, 'swing', function() {
-                notification_box.remove();
-            });
-        });
-    });
-    var close_button = jQuery('<span class="close_button">x</span>').prependTo(notification_box);
+
+    var close_button = jQuery('<span class="close_button"><i class="fa fa-close"></i></span>').prependTo(notification_box);
     close_button.click(function() {
+        close_button.hide();
         notification_box.stop();
         notification_box.animate({
             height: 0,
             opacity: 0
         }, 500, 'swing', function() {
             notification_box.remove();
+        });
+    });
+
+    notification_box.fadeIn(500, function() {
+        notification_box.fadeTo(10000, 0.8, function() {
+            close_button.hide();
+            notification_box.animate({
+                height: 0,
+                opacity: 0
+            }, 500, 'swing', function() {
+                notification_box.remove();
+            });
         });
     });
 };
