@@ -26,7 +26,7 @@ jQuery(document).ready(function($) {
     };
 
     var force_open_task_set = function(url) {
-        api_ajax_load(url, '#header_open_task_set_id', 'get', {}, function() {
+        api_ajax_load(url, '#header_open_task_set_id, #list-quick-info span.list-current-task-set-open', 'get', {}, function() {
             reload_all_task_sets();
             show_notification(messages.after_open, 'success');
         });
