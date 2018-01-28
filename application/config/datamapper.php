@@ -30,7 +30,7 @@ $config['db_params'] = '';
 $config['production_cache'] = APPPATH.'datamapper';
 
 $config['extensions_path'] = 'extensions';
-$config['extensions'] = array('array', 'translations', 'ordering', 'joins', 'unions', 'helpers');
+$config['extensions'] = array('array', 'translations', 'ordering', 'joins', 'unions', 'helpers', 'fixes');
 
 /* End of file datamapper.php */
 /* Location: ./sparks/Datamapper-ORM/config/datamapper.php */

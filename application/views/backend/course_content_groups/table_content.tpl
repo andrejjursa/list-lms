@@ -2,9 +2,9 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>{translate line='admin_course_content_group_table_header_title'}</th>
-        <th>{translate line='admin_course_content_group_table_header_course'}</th>
-        <th>{translate line='admin_course_content_group_table_header_content_count'}</th>
+        <th class="sort:title">{translate line='admin_course_content_group_table_header_title'}</th>
+        <th class="sort:course">{translate line='admin_course_content_group_table_header_course'}</th>
+        <th class="sort:content_count">{translate line='admin_course_content_group_table_header_content_count'}</th>
         <th colspan="2" class="controlls">{translate line='admin_course_content_group_table_header_controlls'}</th>
     </tr>
     </thead>

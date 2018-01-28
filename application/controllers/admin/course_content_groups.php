@@ -7,6 +7,8 @@
  */
 class Course_content_groups extends LIST_Controller {
     
+    const STORED_FILTER_SESSION_NAME = 'admin_course_content_groups_filter_data';
+    
     public function __construct() {
         parent::__construct();
         $this->_init_language_for_teacher();
@@ -21,8 +23,10 @@ class Course_content_groups extends LIST_Controller {
         $this->_select_teacher_menu_pagetag('course_content_groups');
         
         $this->parser->add_js_file('admin_course_content_groups/list.js');
+        $this->parser->add_css_file('admin_course_content_groups.css');
         
         $this->inject_courses();
+        $this->inject_stored_filter();
         
         $this->parser->parse('backend/course_content_groups/index.tpl');
     }
@@ -62,10 +66,32 @@ class Course_content_groups extends LIST_Controller {
     }
     
     public function get_all_content_groups() {
+        $filter = $this->input->post('filter');
+        $this->store_filter($filter);
+        $this->inject_stored_filter();
+        
         $content_groups = new Course_content_group();
         $content_groups->include_related('course', 'name');
         $content_groups->include_related('course/period', 'name');
         $content_groups->include_related_count('course_content_model', 'course_content_count');
+    
+        if (isset($filter['course_id']) && intval($filter['course_id']) > 0) {
+            $content_groups->where_related_course('id', intval($filter['course_id']));
+        }
+    
+        $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
+        if ($filter['order_by_field'] == 'title') {
+            $content_groups->order_by('title', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'course') {
+            $content_groups->order_by_related('course/period', 'sorting', $order_by_direction);
+            $content_groups->order_by_related_with_constant('course', 'name', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'content_count') {
+            $course_content_count = new Course_content_model();
+            $course_content_count->select_func('COUNT', ['@id'], 'content_count');
+            $course_content_count->where('course_content_group_id', '${parent}.id', FALSE);
+            $course_content_count->group_by('course_content_group_id');
+            $content_groups->order_by_subquery_fixed($course_content_count, strtoupper($order_by_direction));
+        }
         
         $content_groups->get_paged_iterated($filter['page'] ?? 1, $filter['rows_per_page'] ?? 25);
     
@@ -79,6 +105,22 @@ class Course_content_groups extends LIST_Controller {
     private function inject_courses()
     {
         $this->parser->assign('courses', Course::get_all_courses_for_form_select());
+    }
+    
+    private function store_filter($filter) {
+        if (is_array($filter)) {
+            $this->load->library('filter');
+            $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
+            $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
+            $this->filter->store_filter(self::STORED_FILTER_SESSION_NAME, $new_filter);
+            $this->filter->set_filter_course_name_field(self::STORED_FILTER_SESSION_NAME, 'course_id');
+        }
+    }
+    
+    private function inject_stored_filter() {
+        $this->load->library('filter');
+        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course_id');
+        $this->parser->assign('filter', $filter);
     }
     
 }

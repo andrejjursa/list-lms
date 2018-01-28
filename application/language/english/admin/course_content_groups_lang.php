@@ -14,3 +14,11 @@ $lang['admin_course_content_groups_form_field_course_id'] = 'course';
 
 $lang['admin_course_content_groups_flash_message_save_successful'] = 'Content group successfully created.';
 $lang['admin_course_content_groups_flash_message_save_fail'] = 'Failed to create content group.';
+
+$lang['admin_course_content_group_table_header_title'] = 'Group title';
+$lang['admin_course_content_group_table_header_course'] = 'Course';
+$lang['admin_course_content_group_table_header_content_count'] = 'Times used';
+$lang['admin_course_content_group_table_header_controlls'] = 'Controlls';
+
+$lang['admin_course_content_groups_filter_by_course'] = 'Filter by course';
+$lang['admin_course_content_groups_filter_submit_button'] = 'Apply';
