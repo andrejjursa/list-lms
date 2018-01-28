@@ -50,6 +50,7 @@ class Course_content_groups extends LIST_Controller {
         if ($this->form_validation->run()) {
             $course_content_group = new Course_content_group();
             $course_content_group->from_array($course_content_group_data, ['title', 'course_id']);
+            $course_content_group->sorting = Course_content_model::get_next_sorting_number((int)$course_content_group_data['course_id']);
             if ($course_content_group->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_course_content_groups_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
