@@ -32,4 +32,7 @@
     </fieldset>
 {/block}
 {block custom_head}<script type="text/javascript">
+    var messages = {
+        delete_content_group: '{translate line='admin_course_content_groups_js_message_confirm_delete'}'
+    };
 </script>{/block}

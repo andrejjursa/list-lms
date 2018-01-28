@@ -22,3 +22,10 @@ $lang['admin_course_content_group_table_header_controlls'] = 'Controlls';
 
 $lang['admin_course_content_groups_filter_by_course'] = 'Filter by course';
 $lang['admin_course_content_groups_filter_submit_button'] = 'Apply';
+
+$lang['admin_course_content_groups_delete_error_cant_delete'] = 'Can\'t delete content group, there is content related with it.';
+$lang['admin_course_content_groups_delete_error_not_found'] = 'Requested content group was not found.';
+$lang['admin_course_content_groups_delete_error_delete_failed'] = 'Failed to delete content group.';
+$lang['admin_course_content_groups_delete_success'] = 'Content group deleted successfully.';
+
+$lang['admin_course_content_groups_js_message_confirm_delete'] = 'Are you sure to delete this content group?';

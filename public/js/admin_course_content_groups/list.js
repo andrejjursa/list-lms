@@ -47,4 +47,22 @@ jQuery(document).ready(function($) {
         reload_content();
     });
 
+    $(document).on('click', '#table_content a.delete', function(event) {
+        event.preventDefault();
+        if (!confirm(messages.delete_content_group)) { return; }
+
+        var url = $(this).attr('href');
+
+        api_ajax_update(url, 'post', {}, function(output) {
+            if (typeof output.status !== 'undefined' && typeof output.message !== 'undefined') {
+                if (output.status) {
+                    reload_content();
+                    show_notification(output.message, 'success');
+                } else {
+                    show_notification(output.message, 'error');
+                }
+            }
+        });
+    });
+
 });

@@ -102,6 +102,49 @@ class Course_content_groups extends LIST_Controller {
         ]);
     }
     
+    public function edit($id) {
+    
+    }
+    
+    public function delete($id) {
+        $output = new stdClass();
+        $output->message = '';
+        $output->status = false;
+    
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        
+        $content_group = new Course_content_group();
+        $content_group->get_by_id(intval($id));
+        
+        if ($content_group->exists()) {
+            $course_content = new Course_content_model();
+            $course_content->where_related($content_group);
+            $course_content->limit(1);
+            $course_content->get();
+            
+            if (!$course_content->exists()) {
+                if ($content_group->delete()) {
+                    $this->db->trans_commit();
+                    $output->status = true;
+                    $output->message = $this->lang->line('admin_course_content_groups_delete_success');
+                } else {
+                    $this->db->trans_rollback();
+                    $output->message = $this->lang->line('admin_course_content_groups_delete_error_delete_failed');
+                }
+            } else {
+                $this->db->trans_rollback();
+                $output->message = $this->lang->line('admin_course_content_groups_delete_error_cant_delete');
+            }
+        } else {
+            $this->db->trans_rollback();
+            $output->message = $this->lang->line('admin_course_content_groups_delete_error_not_found');
+        }
+        
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+    
     private function inject_courses()
     {
         $this->parser->assign('courses', Course::get_all_courses_for_form_select());
