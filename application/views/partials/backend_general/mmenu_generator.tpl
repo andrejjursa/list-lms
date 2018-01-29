@@ -60,6 +60,10 @@
             jQuery('nav#list-navigation').data('mmenu').close();
         });
 
+        jQuery(document).mouseleave(function() {
+            jQuery('nav#list-navigation').data('mmenu').close();
+        });
+
         console.log(jQuery('nav#list-navigation').data('mmenu'));
     });
 </script>
