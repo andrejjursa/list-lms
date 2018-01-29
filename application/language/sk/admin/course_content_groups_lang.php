@@ -29,3 +29,8 @@ $lang['admin_course_content_groups_delete_error_delete_failed'] = 'Zmazanie skup
 $lang['admin_course_content_groups_delete_success'] = 'Skupina obsahu bola úspešne zmazaná.';
 
 $lang['admin_course_content_groups_js_message_confirm_delete'] = 'Naozaj chcete zmazať túto skupinu obsahu?';
+
+$lang['admin_course_content_groups_error_not_found_for_edit'] = 'Požadovaná skupina obsahu sa nenašla.';
+$lang['admin_course_content_groups_error_not_updated'] = 'Úprava skupiny obsahu zlyhala.';
+
+$lang['admin_course_content_group_success_updated'] = 'Úprava skupiny obsahu bola úspešná.';

@@ -12,7 +12,7 @@
     {foreach $content_groups as $content_group}
         <tr>
             <td>{$content_group->id}</td>
-            <td>{overlay table='course_content_group' table_id=$content_group->id column='title' default=$content_group->title}</td>
+            <td>{overlay table='course_content_groups' table_id=$content_group->id column='title' default=$content_group->title}</td>
             <td><span title="{translate_text text=$content_group->course_name}">{translate_text|abbreviation text=$content_group->course_name}</span> / <span title="{translate_text text=$content_group->course_period_name}">{translate_text|abbreviation text=$content_group->course_period_name}</span></td>
             <td>{$content_group->course_content_count}</td>
             <td class="controlls"><a href="{internal_url url="admin_course_content_groups/edit/{$content_group->id}"}" class="button" title="{translate line='admin_course_content_groups_table_button_edit'}"><span class="list-icon list-icon-edit"></span></a></td>

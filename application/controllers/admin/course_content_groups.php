@@ -104,7 +104,59 @@ class Course_content_groups extends LIST_Controller {
     }
     
     public function edit($id) {
+        $content_group = new Course_content_group();
+        $content_group->get_by_id((int)$id);
+        
+        $this->inject_courses();
+        $this->inject_languages();
+        
+        $this->parser->parse('backend/course_content_groups/edit.tpl', ['content_group' => $content_group]);
+    }
     
+    public function update() {
+        $id = $this->input->post('content_group_id');
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        
+        $course_content_group = new Course_content_group();
+        $course_content_group->get_by_id((int)$id);
+        
+        if ($course_content_group->exists()) {
+            $this->load->library('form_validation');
+    
+            $this->form_validation->set_rules('content_group[title]', 'lang:admin_course_content_groups_form_field_title', 'required');
+            $this->form_validation->set_rules('content_group[course_id]', 'lang:admin_course_content_groups_form_field_course_id', 'required|exists_in_table[courses.id]');
+            
+            if ($this->form_validation->run()) {
+                $course_content_group_data = $this->input->post('content_group');
+                
+                if ((int)$course_content_group->course_id != (int)$course_content_group_data['course_id']) {
+                    $course_content_group->sorting = Course_content_model::get_next_sorting_number((int)$course_content_group_data['course_id']);
+                }
+                
+                $course_content_group->from_array($course_content_group_data, ['title', 'course_id']);
+                
+                $overlay = $this->input->post('overlay');
+                
+                if ($course_content_group->save() && $this->lang->save_overlay_array($overlay) && $this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message('lang:admin_course_content_group_success_updated', Messages::MESSAGE_TYPE_SUCCESS);
+                    redirect(create_internal_url('admin_course_content_groups'));
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_course_content_groups_error_not_updated', Messages::MESSAGE_TYPE_ERROR);
+                    redirect(create_internal_url('admin_course_content_groups'));
+                }
+            } else {
+                $this->db->trans_rollback();
+                $this->edit($id);
+            }
+        } else {
+            $this->db->trans_rollback();
+            $this->messages->add_message('lang:admin_course_content_groups_error_not_found_for_edit', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('admin_course_content_groups'));
+        }
     }
     
     public function delete($id) {
@@ -149,6 +201,11 @@ class Course_content_groups extends LIST_Controller {
     private function inject_courses()
     {
         $this->parser->assign('courses', Course::get_all_courses_for_form_select());
+    }
+    
+    private function inject_languages() {
+        $languages = $this->lang->get_list_of_languages();
+        $this->parser->assign('languages', $languages);
     }
     
     private function store_filter($filter) {

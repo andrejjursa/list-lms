@@ -29,3 +29,8 @@ $lang['admin_course_content_groups_delete_error_delete_failed'] = 'Failed to del
 $lang['admin_course_content_groups_delete_success'] = 'Content group deleted successfully.';
 
 $lang['admin_course_content_groups_js_message_confirm_delete'] = 'Are you sure to delete this content group?';
+
+$lang['admin_course_content_groups_error_not_found_for_edit'] = 'Content group specified were not found.';
+$lang['admin_course_content_groups_error_not_updated'] = 'Content group update failed.';
+
+$lang['admin_course_content_group_success_updated'] = 'Content group updated successfully.';
