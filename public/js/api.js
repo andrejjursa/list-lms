@@ -135,13 +135,11 @@ jQuery(document).ready(function($) {
 jQuery(document).ajaxStart(function () {
     jQuery('#list-top-header').addClass('ajax');
     jQuery('#list-footer').addClass('ajax');
-    jQuery('#list-navigation').addClass('ajax');
 }).ajaxStop(function() {
     try {
         jQuery('[title]').tooltip();
         jQuery('#list-top-header').removeClass('ajax');
         jQuery('#list-footer').removeClass('ajax');
-        jQuery('#list-navigation').removeClass('ajax');
     } catch (e) {
         console.log(e);
     }
