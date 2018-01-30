@@ -37,4 +37,20 @@ class Course_content_group extends DataMapper {
         return Course_content_model::get_next_sorting_number($course_id);
     }
     
+    public function isNew() {
+        if (($this->stored->id ?? NULL) === NULL) {
+            return FALSE;
+        }
+        
+        if (($this->stored->created ?? NULL) === NULL) {
+            return false;
+        }
+        
+        if (date('Y-m-d H:i:s', strtotime('-5 minutes')) <= date('Y-m-d H:i:s', strtotime($this->stored->created))) {
+            return true;
+        }
+        
+        return false;
+    }
+    
 }

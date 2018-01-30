@@ -14,4 +14,5 @@ table.course_content_group_table thead tr th:last-child { border-top-right-radiu
 table.course_content_group_table tbody tr td span.published_yes { color: green; font-weight: bold; }
 table.course_content_group_table tbody tr td span.published_no { color: black; font-weight: bold; }
 table.course_content_group_table tfoot td { text-align: right; background-color: rgba(192,192,192,128); padding: 2px; border-radius: 4px; }
+table.course_content_group_table tbody tr.new_content_group td { color: blue; }
 div.filter_wrap { margin-bottom: 10px; border-bottom: 1px solid silver; padding-bottom: 5px; }

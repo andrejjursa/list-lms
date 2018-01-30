@@ -10,7 +10,7 @@
     </thead>
     <tbody>
     {foreach $content_groups as $content_group}
-        <tr>
+        <tr{if $content_group->isNew()} class="new_content_group"{/if}>
             <td>{$content_group->id}</td>
             <td>{overlay table='course_content_groups' table_id=$content_group->id column='title' default=$content_group->title}</td>
             <td><span title="{translate_text text=$content_group->course_name}">{translate_text|abbreviation text=$content_group->course_name}</span> / <span title="{translate_text text=$content_group->course_period_name}">{translate_text|abbreviation text=$content_group->course_period_name}</span></td>
