@@ -17,6 +17,9 @@
             {include file='backend/task_sets/new_comment_form.tpl' inline}
         </form>
     </fieldset>
+    <fieldset>
+        <a href="{internal_url url='admin_task_sets'}" class="button special">{translate line='common_button_back'}</a>
+    </fieldset>
 {/block}
 {block custom_head}<script type="text/javascript">
     var task_set_id = {$task_set->id|intval};
