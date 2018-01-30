@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    jQuery('#page').css('transition', '0s');
     jQuery(document).ready(function($) {
         $('nav#list-navigation').show().mmenu({
             extensions: [ 'theme-dark', "pagedim-black", "multiline", "shadow-page", "shadow-panels" ],
@@ -54,10 +55,17 @@
         });
 
         jQuery(document).on('mouseover', 'a.mm-menu__blocker', function() {
+            jQuery('#page').removeClass('no-initial-slideout');
             jQuery('nav#list-navigation').data('mmenu').open();
         });
 
         jQuery(document).on('mouseover', 'div.mm-page__blocker', function() {
+            jQuery('#page').removeClass('no-initial-slideout');
+            jQuery('nav#list-navigation').data('mmenu').close();
+        });
+
+        jQuery(document).mouseleave(function() {
+            jQuery('#page').removeClass('no-initial-slideout');
             jQuery('nav#list-navigation').data('mmenu').close();
         });
 

@@ -11,6 +11,7 @@ nav li.mm-listitem.list-selected-menu-item {
 }
 
 #page { background-color: white; position: relative; }
+#page.no-initial-slideout { transition: 0s !important; }
 #list-content { background-color: white; position: absolute; top: 40px; bottom: 40px; left: 0; right: 0; overflow: auto; }
 
 #list-top-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1; height: 40px; background-color: #322f32; color: white; padding: 0; overflow: hidden; }
@@ -51,21 +52,20 @@ nav li.mm-listitem.list-selected-menu-item {
 
 @keyframes ajax-loading {
     0% {
-        background-color: #1d1079;
-        color: white;
+        background-position: 0% 50%;
     }
     50% {
-        background-color: darkred;
-        color: lightblue;
+        background-position: 100% 50%;
     }
     100% {
-        background-color: #1d1079;
-        color: white;
+        background-position: 0% 50%;
     }
 }
 
 #list-top-header.ajax, #list-footer.ajax, #list-navigation.ajax {
-    animation: ajax-loading 1s infinite linear;
+    background: linear-gradient(to right, #322f32, darkgreen, #322f32);
+    background-size: 600% 600%;
+    animation: ajax-loading 2s infinite linear;
 }
 
 #header_open_task_set_id a {

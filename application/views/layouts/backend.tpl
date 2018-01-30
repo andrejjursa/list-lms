@@ -42,7 +42,7 @@
     </head>
     {include file='partials/backend_general/adminmenu.tpl' inline}
     <body>
-        <div id="page">
+        <div id="page" class="no-initial-slideout">
             <div id="list-top-header">
                 <span id="list-title">L.I.S.T.</span> <span id="list-subtitle">(Long-term Internet Storage of Tasks)</span> <span id="list-quick-info"><span class="list-current-user">{$list_teacher_account.fullname|escape:'html'}</span> <span class="list-current-task-set-open">{include file='partials/backend_general/open_task_set.tpl' inline}</span></span>
             </div>
