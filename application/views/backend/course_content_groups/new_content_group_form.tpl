@@ -8,6 +8,7 @@
     <label for="course_content_group_title_id" class="required">{translate line='admin_course_content_groups_form_label_title'}:</label>
     <p class="input"><input type="text" name="course_content_group[title]" id="course_content_group_title_id" value="{$smarty.post.course_content_group.title|htmlspecialchars}" /></p>
     {form_error field='course_content_group[title]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+    {include file='partials/backend_general/overlay_editor.tpl' table='course_content_groups' table_id='new' column='title' editor_type='input' inline}
 </div>
 <div class="buttons">
     <input type="submit" name="submit_button" value="{translate line='admin_course_content_groups_form_button_submit'}" class="button" />

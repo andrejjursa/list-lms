@@ -205,15 +205,29 @@ class LIST_Lang extends CI_Lang {
      * Fourth dimension is column name.
      * Value of array is language overlay text.
      * @param array<mixed> $array language overlays array.
+     * @param DataMapper|integer|null $new_is if set to not null it will set table id (third dimension) to provided value.
+     * @param string $new_keyword keyword to look at the place of table id to change.
      */
-    public function save_overlay_array($array) {
+    public function save_overlay_array($array, $new_is = NULL, $new_keyword = 'new') {
         $all_ok = TRUE;
+        $set_table_id = NULL;
+        if ($new_is !== NULL && is_int($new_is) && (int)$new_is > 0) {
+            $set_table_id = (int)$new_is;
+        } elseif ($new_is !== NULL && $new_is instanceof DataMapper && $new_is->exists() && ($new_is->id ?? 0) > 0) {
+            $set_table_id = (int)$new_is->id;
+        }
         if (is_array($array) && count($array) > 0) {
             foreach ($array as $idiom => $tables) {
                 if (is_array($tables) && count($tables) > 0) {
                     foreach ($tables as $table => $table_content) {
                         if (is_array($table_content) && count($table_content) > 0) {
                             foreach ($table_content as $table_id => $columns) {
+                                if ($table_id === $new_keyword) {
+                                    $table_id = $set_table_id;
+                                }
+                                if (!is_int($table_id)) {
+                                    continue;
+                                }
                                 if (is_array($columns) && count($columns) > 0) {
                                     foreach ($columns as $column => $text) {
                                         if (is_string($text)) {

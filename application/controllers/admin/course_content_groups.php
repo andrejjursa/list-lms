@@ -23,16 +23,19 @@ class Course_content_groups extends LIST_Controller {
         $this->_select_teacher_menu_pagetag('course_content_groups');
         
         $this->parser->add_js_file('admin_course_content_groups/list.js');
+        $this->parser->add_js_file('admin_course_content_groups/form.js');
         $this->parser->add_css_file('admin_course_content_groups.css');
         
         $this->inject_courses();
         $this->inject_stored_filter();
+        $this->inject_languages();
         
         $this->parser->parse('backend/course_content_groups/index.tpl');
     }
     
     public function new_group_form() {
         $this->inject_courses();
+        $this->inject_languages();
         
         $this->parser->parse('backend/course_content_groups/new_content_group_form.tpl');
     }
@@ -51,7 +54,10 @@ class Course_content_groups extends LIST_Controller {
             $course_content_group = new Course_content_group();
             $course_content_group->from_array($course_content_group_data, ['title', 'course_id']);
             $course_content_group->sorting = Course_content_model::get_next_sorting_number((int)$course_content_group_data['course_id']);
-            if ($course_content_group->save() && $this->db->trans_status()) {
+    
+            $overlay = $this->input->post('overlay');
+            
+            if ($course_content_group->save() && $this->lang->save_overlay_array($overlay, $course_content_group) && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_course_content_groups_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 $this->_action_success();
@@ -106,6 +112,8 @@ class Course_content_groups extends LIST_Controller {
     public function edit($id) {
         $content_group = new Course_content_group();
         $content_group->get_by_id((int)$id);
+        
+        $this->parser->add_js_file('admin_course_content_groups/form.js');
         
         $this->inject_courses();
         $this->inject_languages();

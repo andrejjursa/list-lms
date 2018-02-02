@@ -12,6 +12,7 @@ jQuery(document).ready(function($) {
                 reload_content();
             }
             $('#new_content_group_form_id').formErrorWarning();
+            $.getScript(global_base_url + 'public/js/admin_course_content_groups/form.js');
         };
         api_ajax_load(url, '#new_content_group_form_id', 'post', data, success);
     };
