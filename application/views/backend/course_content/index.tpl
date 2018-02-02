@@ -17,4 +17,8 @@
     </fieldset>
 {/block}
 {block custom_head}<script type="text/javascript">
+    var data = {
+        'all_course_content_groups': {$all_course_content_groups|json_encode}
+    };
+    var highlighters = {$highlighters|json_encode};
 </script>{/block}

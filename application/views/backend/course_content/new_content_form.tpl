@@ -4,20 +4,22 @@
     <p class="input"><select name="course_content[course_id]" size="1" id="course_content_course_id_id">{list_html_options options=$courses selected=$smarty.post.course_content.course_id|default:$list_teacher_account.prefered_course_id|intval}</select></p>
     {form_error field='course_content[course_id]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
 </div>
-<div class="field">
+<div class="field course_content_group_field" style="display: none;">
     <label for="course_content_course_content_group_id_id">{translate line='admin_course_content_form_label_course_content_group_id'}:</label>
-    <p class="input"><select name="course_content[course_content_group_id]" size="1" id="course_content_course_content_group_id_id"></select></p>
+    <p class="input"><select name="course_content[course_content_group_id]" size="1" id="course_content_course_content_group_id_id">{list_html_options options=$course_content_groups selected=$smarty.post.course_content.course_content_group_id|intval}</select></p>
     {form_error field='course_content[course_content_group_id]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
 </div>
 <div class="field">
     <label for="course_content_title_id" class="required">{translate line='admin_course_content_form_label_title'}:</label>
     <p class="input"><input type="text" name="course_content[title]" id="course_content_title_id" value="{$smarty.post.course_content.title|htmlspecialchars}" /></p>
     {form_error field='course_content[title]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+    {include file='partials/backend_general/overlay_editor.tpl' table='course_content' table_id='new' column='title' editor_type='input' inline}
 </div>
 <div class="field">
     <label for="course_content_content_id">{translate line='admin_course_content_form_label_content'}:</label>
-    <p class="input"><textarea name="course_content[content]" id="course_content_content_id">{$smarty.post.course_content.content|htmlspecialchars}</textarea></p>
+    <p class="input"><textarea name="course_content[content]" id="course_content_content_id" class="tinymce">{$smarty.post.course_content.content|htmlspecialchars}</textarea></p>
     {form_error field='course_content[content]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+    {include file='partials/backend_general/overlay_editor.tpl' table='course_content' table_id='new' column='content' editor_type='textarea' class='tinymce' inline}
 </div>
 <div class="field">
     <label for="course_content_published_from_id">{translate line='admin_course_content_form_label_published_from'}:</label>
@@ -36,4 +38,5 @@
 </div>
 <div class="buttons">
     <input type="submit" name="submit_button" value="{translate line='admin_course_content_form_button_submit'}" class="button" />
+    <input type="hidden" name="post_selected_course_content_group_id" value="{$smarty.post.course_content.course_content_group_id|intval}" />
 </div>

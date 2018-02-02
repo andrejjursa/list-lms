@@ -13,21 +13,28 @@ class Course_content_group extends DataMapper {
     
     public $has_many = ['course_content_model'];
     
-    public static function get_all_groups($course_id = NULL) {
+    public static function get_all_groups($course_id = NULL, $valueText = FALSE) {
         $groups = new Course_content_group();
         $groups->select('*');
         $groups->order_by_with_overlay('title', 'asc');
-        if (!is_int($course_id)) {
+        if (!is_int($course_id) && !$valueText) {
             $groups->where_related('course', 'id', (int)$course_id);
         }
         $groups->get_iterated();
         
-        $output = [NULL => ''];
+        $output = $valueText ? [] : [NULL => ''];
         
         $ci =& get_instance();
         
         foreach ($groups as $group) {
-            $output[$group->id] = $ci->lang->get_overlay_with_default('course_content_groups', $group->id, 'title', $group->title);
+            if ($valueText) {
+                $output[$group->course_id][] = [
+                    'value' => $group->id,
+                    'text' => $ci->lang->get_overlay_with_default('course_content_groups', $group->id, 'title', $group->title),
+                ];
+            } else {
+                $output[$group->id] = $ci->lang->get_overlay_with_default('course_content_groups', $group->id, 'title', $group->title);
+            }
         }
         
         return $output;

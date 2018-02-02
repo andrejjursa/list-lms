@@ -6,11 +6,19 @@ jQuery(document).ready(function($) {
         event.preventDefault();
         var url = $('#new_content_form_id').attr('action');
         var data = $('#new_content_form_id').serializeArray();
+
+        for (var i = tinymce.editors.length - 1 ; i > -1 ; i--) {
+            var ed_id = tinymce.editors[i].id;
+            tinyMCE.execCommand("mceRemoveEditor", true, ed_id);
+        }
+
         var success = function() {
             if ($('#new_content_form_id .flash_message.message_success').length > 0) {
                 reload_content();
             }
             $('#new_content_form_id').formErrorWarning();
+            $.getScript(global_base_url + 'public/js/admin_course_content/form.js');
+            $.getScript(global_base_url + 'public/js/admin_tasks/form.js');
         };
         api_ajax_load(url, '#new_content_form_id', 'post', data, success);
     };

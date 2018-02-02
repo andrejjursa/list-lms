@@ -167,6 +167,13 @@ $cache = array (
       array (
       ),
     ),
+    'course_content_group' => 
+    array (
+      'field' => 'course_content_group',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -257,6 +264,17 @@ $cache = array (
       'other_field' => 'course',
       'join_self_as' => 'course',
       'join_other_as' => 'course_content',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'course_content_group' => 
+    array (
+      'class' => 'course_content_group',
+      'other_field' => 'course',
+      'join_self_as' => 'course',
+      'join_other_as' => 'course_content_group',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

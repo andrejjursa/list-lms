@@ -12,9 +12,11 @@ $lang['admin_course_content_form_label_published_from'] = 'Publikovať od';
 $lang['admin_course_content_form_label_published_to'] = 'Publikovať do';
 $lang['admin_course_content_form_label_public'] = 'Verejné?';
 $lang['admin_course_content_form_label_course_content_group_id'] = 'Zoskupiť obsah do';
+$lang['admin_course_content_form_error_course_content_group_not_related_to_course'] = 'Hodnota pola <strong>%s</strong> nepatrí k zvolenému kurzu.';
 
 $lang['admin_course_content_form_field_course_id'] = 'kurz';
 $lang['admin_course_content_form_field_title'] = 'názov obsahu';
+$lang['admin_course_content_form_field_course_content_group_id'] = 'zoskupiť obsah do';
 
 $lang['admin_course_content_form_button_submit'] = 'Uložiť';
 

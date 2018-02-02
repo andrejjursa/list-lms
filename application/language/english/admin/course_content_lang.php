@@ -12,9 +12,11 @@ $lang['admin_course_content_form_label_published_from'] = 'Published from';
 $lang['admin_course_content_form_label_published_to'] = 'Published to';
 $lang['admin_course_content_form_label_public'] = 'Is public?';
 $lang['admin_course_content_form_label_course_content_group_id'] = 'Group content to';
+$lang['admin_course_content_form_error_course_content_group_not_related_to_course'] = 'The field <strong>%s</strong> value is not related to selected course.';
 
 $lang['admin_course_content_form_field_course_id'] = 'course';
 $lang['admin_course_content_form_field_title'] = 'content title';
+$lang['admin_course_content_form_field_course_content_group_id'] = 'group content to';
 
 $lang['admin_course_content_form_button_submit'] = 'Save';
 
