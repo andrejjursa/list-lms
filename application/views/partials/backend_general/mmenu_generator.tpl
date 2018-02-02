@@ -67,8 +67,6 @@
             jQuery('#page').removeClass('no-initial-slideout');
             jQuery('nav#list-navigation').data('mmenu').close();
         });
-
-        console.log(jQuery('nav#list-navigation').data('mmenu'));
     });
 </script>
 {function name='admin_menu_is_selected' menu=[] current=''}
