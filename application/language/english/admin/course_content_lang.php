@@ -27,10 +27,12 @@ $lang['admin_course_content_flash_message_content_not_found'] = 'Content can\'t 
 $lang['admin_course_content_table_header_title'] = 'Title';
 $lang['admin_course_content_table_header_course'] = 'Course';
 $lang['admin_course_content_table_header_published'] = 'Published?';
+$lang['admin_course_content_table_header_content_group'] = 'Content group';
 $lang['admin_course_content_table_header_controlls'] = 'Controlls';
 
 $lang['admin_course_content_table_content_published_yes'] = 'Yes';
 $lang['admin_course_content_table_content_published_no'] = 'No';
+$lang['admin_course_content_table_content_none_content_group'] = '&lt; none &gt;';
 
 $lang['admin_course_content_table_button_edit'] = 'Edit content';
 $lang['admin_course_content_table_button_delete'] = 'Delete content';

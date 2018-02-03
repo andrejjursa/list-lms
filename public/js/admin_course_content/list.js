@@ -32,6 +32,15 @@ jQuery(document).ready(function($) {
         submit_form(event);
     });
 
+    var toggle_content = function(event) {
+        event.preventDefault();
+        var myID = $(this).attr('data-content-id');
+        $('table tbody tr.content_overview[data-content-id="' + myID + '"]').toggleClass('show');
+        $(this).find('i').toggleClass('fa-chevron-down').toggleClass('fa-chevron-up');
+    };
+
+    $(document).on('click', 'a.toggle_content', toggle_content);
+
     reload_content();
 
 });

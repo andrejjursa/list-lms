@@ -27,10 +27,12 @@ $lang['admin_course_content_flash_message_content_not_found'] = 'Obsah sa nedá 
 $lang['admin_course_content_table_header_title'] = 'Nadpis';
 $lang['admin_course_content_table_header_course'] = 'Kurz';
 $lang['admin_course_content_table_header_published'] = 'Publikované?';
+$lang['admin_course_content_table_header_content_group'] = 'Skupina obsahu';
 $lang['admin_course_content_table_header_controlls'] = 'Ovládanie';
 
 $lang['admin_course_content_table_content_published_yes'] = 'Áno';
 $lang['admin_course_content_table_content_published_no'] = 'Nie';
+$lang['admin_course_content_table_content_none_content_group'] = '&lt; žiadna &gt;';
 
 $lang['admin_course_content_table_button_edit'] = 'Upraviť obsah';
 $lang['admin_course_content_table_button_delete'] = 'Vymazať obsah';

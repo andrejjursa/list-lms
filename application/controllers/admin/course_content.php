@@ -47,6 +47,7 @@ class Course_content extends LIST_Controller {
         $course_content->select('*');
         $course_content->include_related('course', 'name');
         $course_content->include_related('course/period', 'name');
+        $course_content->include_related('course_content_group', 'title');
         $course_content->get_paged_iterated($filter['page'] ?? 1, $filter['rows_per_page'] ?? 25);
 
         $this->lang->init_overlays('course_content', $course_content->all_to_array(), ['title', 'content']);
@@ -70,7 +71,11 @@ class Course_content extends LIST_Controller {
             $course_content = new Course_content_model();
             $course_content->from_array($course_content_data, ['title', 'content', 'course_id']);
             $course_content->published = FALSE;
-            if ($course_content->save() && $this->db->trans_status()) {
+            $course_content->course_content_group_id = (int)$course_content_data['course_content_group_id'] > 0 ? (int)$course_content_data['course_content_group_id'] : NULL;
+            
+            $overlay = $this->input->post('overlay');
+            
+            if ($course_content->save() && $this->lang->save_overlay_array($overlay, $course_content) && $this->db->trans_status()) {
                 $this->db->trans_commit();
                 $this->messages->add_message('lang:admin_course_content_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
                 $this->_action_success();
