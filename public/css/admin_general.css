@@ -86,6 +86,7 @@ a.button { padding-top: 3px; display: inline-block; }
 .button.help { background-color: #cc99ff; border-color: #cc33ff; }
 .button.help:hover { background-color: #cc66ff; }
 .button.help:active { border-color: black; }
+.button.disabled, .button[disabled] { background-color: silver; border-color: gray; }
 input[type=text], input[type=password], textarea, select { border: 1px solid black; background-color: white; color: black; font-family: Verdana, Arial, sans-serif; border-radius: 3px; box-shadow: -3px -3px 3px silver inset; padding: 3px; }
 input[type=text]:hover, input[type=password]:hover, textarea:hover, select:hover,
 input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus { box-shadow: 3px 3px 3px silver inset; }
@@ -171,18 +172,20 @@ form div.field p.caption > label { font-weight: bold; cursor: pointer; }
 form div.field div.overlay-editor-header { width: 80%; margin-left: 20%; padding: 6px 0 0 0; }
 form div.field div.overlay-editor-header div.ui-widget-header { width: 99%; }
 
-div.columns { margin: 0; padding: 0; width: 100%; }
-div.columns div.clear { clear: both; }
-div.columns div.col_50p { width: 49.89%; float: left; margin-right: 0.09% }
+@media (min-width: 1200px) {
+    div.columns { margin: 0; padding: 0; width: 100%; }
+    div.columns div.clear { clear: both; }
+    div.columns div.col_50p { width: 49.89%; float: left; margin-right: 0.09% }
 
-div.columns div.col_50p div.field p.error { width: 58.9%; margin-left: 40.1%; }
-div.columns div.col_50p div.field p.caption { width: 58.9%; margin-left: 40.1%; }
-div.columns div.col_50p div.field > label { width: 40.1%; }
-div.columns div.col_50p div.field p.input,
-div.columns div.col_50p div.field div.input { width: 58.9%; margin-left: 40.1%; }
-div.columns div.col_50p div.field div.input input[type=text], div.columns div.col_50p div.field div.input input[type=password], div.columns div.col_50p div.field div.input textarea,
-div.columns div.col_50p div.field p.input input[type=text], div.columns div.col_50p div.field p.input input[type=password], div.columns div.col_50p div.field p.input textarea { max-width: 96.5%; }
-div.columns div.col_50p div.field div.input select, div.columns div.col_50p div.field p.input select { width: 96.5%; }
+    div.columns div.col_50p div.field p.error { width: 58.9%; margin-left: 40.1%; }
+    div.columns div.col_50p div.field p.caption { width: 58.9%; margin-left: 40.1%; }
+    div.columns div.col_50p div.field > label { width: 40.1%; }
+    div.columns div.col_50p div.field p.input,
+    div.columns div.col_50p div.field div.input { width: 58.9%; margin-left: 40.1%; }
+    div.columns div.col_50p div.field div.input input[type=text], div.columns div.col_50p div.field div.input input[type=password], div.columns div.col_50p div.field div.input textarea,
+    div.columns div.col_50p div.field p.input input[type=text], div.columns div.col_50p div.field p.input input[type=password], div.columns div.col_50p div.field p.input textarea { max-width: 96.5%; }
+    div.columns div.col_50p div.field div.input select, div.columns div.col_50p div.field p.input select { width: 96.5%; }
+}
 
 div.flash_message { color: blue; margin: 5px; padding: 5px; border: 1px solid blue; background-color: #d0d8ff; border-radius: 5px; box-shadow: 0px 0px 2px 2px blue inset; }
 div.flash_message.message_success { border-color: green; box-shadow: 0px 0px 2px 2px green inset; background-color: #ADFF9A; color: green; }

@@ -1,4 +1,5 @@
-table.course_content_table { width: 100%; }
+table.course_content_table { width: 100%; border-collapse: collapse; }
+table.course_content_table tr { border-collapse: collapse; }
 table.course_content_table th { text-align: left; }
 table.course_content_table th.controlls { width: 1px; text-align: center; }
 table.course_content_table td.controlls { width: 1px;}
@@ -8,16 +9,35 @@ table.course_content_table tbody td:nth-child(2) { padding-left: 5px; }
 table.course_content_table tbody tr.grid:nth-child(4n),
 table.course_content_table tbody tr.grid:nth-child(4n+3) { background-color: rgba(255,255,255,128); }
 table.course_content_table tbody tr.grid.not_published { background-color: rgba(192, 0, 0, 255); }
+table.course_content_table tbody tr.grid.public { background-color: rgba(255, 255, 192, 255); }
+table.course_content_table tbody tr.grid.public.not_published { background-color: rgba(255, 192, 255, 255); }
 table.course_content_table tbody tr.grid:nth-child(4n).not_published,
 table.course_content_table tbody tr.grid:nth-child(4n+3).not_published { background-color: rgba(212, 0, 0, 255); }
+table.course_content_table tbody tr.grid:nth-child(4n).public,
+table.course_content_table tbody tr.grid:nth-child(4n+3).public { background-color: rgba(255, 255, 212, 255); }
+table.course_content_table tbody tr.grid:nth-child(4n).public.not_published,
+table.course_content_table tbody tr.grid:nth-child(4n+3).public.not_published { background-color: rgba(255, 212, 255, 255); }
 table.course_content_table tbody tr.grid td span.published_yes { color: green; font-weight: bold; }
 table.course_content_table tbody tr.grid td span.published_no { color: black; font-weight: bold; }
+table.course_content_table tbody tr.grid.show { border-top: 2px solid black; border-left: 2px solid black; border-right: 2px solid black; }
+table.course_content_table tbody tr.grid.show td.controlls:first-child { border-right: 1px dashed gray; }
 table.course_content_table tbody tr.content_overview:nth-child(4n),
 table.course_content_table tbody tr.content_overview:nth-child(4n+3) { background-color: rgba(255,255,255,128); }
 table.course_content_table tbody tr.content_overview td { padding: 5px; }
 table.course_content_table tbody tr.content_overview { display: none; }
-table.course_content_table tbody tr.content_overview.show { display: table-row; }
+table.course_content_table tbody tr.content_overview.show { display: table-row; border-bottom: 2px solid black; border-left: 2px solid black; border-right: 2px solid black; }
+table.course_content_table tbody tr.content_overview.show td:last-child { border-right: 1px dashed gray; }
 table.course_content_table thead tr th { padding: 2px; background-color: rgba(192,192,192,128); }
 table.course_content_table thead tr th:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
 table.course_content_table thead tr th:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
 table.course_content_table tfoot td { text-align: right; background-color: rgba(192,192,192,128); padding: 2px; border-radius: 4px; }
+
+table.course_content_files_table { width: 100%; }
+table.course_content_files_table th { text-align: left; }
+table.course_content_files_table th.controlls { width: 1px; text-align: center; }
+table.course_content_files_table td.controlls { width: 1px;}
+table.course_content_files_table tbody td { padding: 2px; }
+table.course_content_files_table tbody tr:nth-child(even) { background-color: rgba(255,255,255,128); }
+table.course_content_files_table thead tr th { padding: 2px; background-color: rgba(192,192,192,128); }
+table.course_content_files_table thead tr th:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+table.course_content_files_table thead tr th:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }

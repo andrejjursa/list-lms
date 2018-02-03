@@ -8,7 +8,7 @@
 class Task_sets extends LIST_Controller {
 	
     const STORED_FILTER_SESSION_NAME = 'admin_task_sets_filter_data';
-    const REGEXP_PATTERN_DATETYME = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
+    const REGEXP_PATTERN_DATETIME = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
 
     const STORED_SORTING_FILTER_SESSION_NAME = 'admin_task_sets_sorting_filter_data';
 
@@ -429,9 +429,9 @@ class Task_sets extends LIST_Controller {
             $task_set->from_array($task_set_data, array('content_type', 'name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment', 'test_priority'));
             $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
             $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
-            $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
-            $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
-            $task_set->project_selection_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['project_selection_deadline']) ? $task_set_data['project_selection_deadline'] : NULL;
+            $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
+            $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
+            $task_set->project_selection_deadline = preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['project_selection_deadline']) ? $task_set_data['project_selection_deadline'] : NULL;
             $task_set->comments_enabled = isset($task_set_data['comments_enabled']) ? (bool)intval($task_set_data['comments_enabled']) : FALSE;
             $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
             $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;
@@ -587,9 +587,9 @@ class Task_sets extends LIST_Controller {
             $task_set->instructions = remove_base_url($task_set_data['instructions']);
             $task_set->group_id = intval($task_set_data['group_id']) > 0 ? intval($task_set_data['group_id']) : NULL;
             $task_set->room_id = intval($task_set_data['room_id']) > 0 ? intval($task_set_data['room_id']) : NULL;
-            $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
-            $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
-            $task_set->project_selection_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $task_set_data['project_selection_deadline']) ? $task_set_data['project_selection_deadline'] : NULL;
+            $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : NULL;
+            $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : NULL;
+            $task_set->project_selection_deadline = preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['project_selection_deadline']) ? $task_set_data['project_selection_deadline'] : NULL;
             $task_set->comments_enabled = isset($task_set_data['comments_enabled']) ? (bool)intval($task_set_data['comments_enabled']) : FALSE;
             $task_set->comments_moderated = isset($task_set_data['comments_moderated']) ? (bool)intval($task_set_data['comments_moderated']) : FALSE;
             $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? floatval($task_set_data['points_override']) : NULL;

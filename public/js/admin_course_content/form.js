@@ -1,7 +1,11 @@
 jQuery(document).ready(function($) {
     make_overlay_editors();
 
+    make_custom_switch('div.uploader_switch', show_uploader_text);
+
     var last_course_id = '';
+
+    var upload_folder_name = $('input[type=hidden][name="course_content[folder_name]"]').val();
 
     $('#new_content_form_id').activeForm();
 
@@ -32,4 +36,64 @@ jQuery(document).ready(function($) {
         dateFormat: 'yy-mm-dd',
         timeFormat: 'HH:mm:ss'
     });
+
+    var delete_file = function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        var language = $(this).attr('data-language');
+        var file = $(this).attr('data-file');
+        var message = delete_file_question;
+        var confirmed = confirm(message.replace("{0}", file));
+        if (!confirmed) { return; }
+        api_ajax_update(url, 'post', [], function(response) {
+            if (typeof response.status !== 'undefined' && typeof response.message !== 'undefined') {
+                if (response.status) {
+                    show_notification(response.message, 'success');
+                } else {
+                    show_notification(response.message, 'error');
+                }
+            }
+            reload_file_list(upload_folder_name, language);
+        }, function() {
+            reload_file_list(upload_folder_name, language);
+        });
+    };
+
+    var reload_file_list = function (upload_folder, language) {
+        var url = global_base_url + 'index.php/admin_course_content/file_list/' + upload_folder + '/' + language;
+        api_ajax_load(url, 'table.course_content_files_table tbody.file_list_' + language, 'post', [], function () {
+            $('table.course_content_files_table tbody.file_list_' + language + ' a.delete_file').click(delete_file);
+        });
+    };
+
+    var make_plupload = function(language) {
+        $('#plupload_content_files_' + language + '_id').plupload({
+            runtimes: 'html5,flash,silverlight',
+            url: global_base_url + 'index.php/admin_course_content/plupload_file/' + upload_folder_name + '/' + language,
+            max_file_size: '1000mb',
+            max_file_count: 20,
+            chunk_size: '1mb',
+            multiple_queues: true,
+            flash_swf_url: global_base_url + 'public/swf/plupload.flash.swf',
+            silverlight_xap_url : global_base_url + 'public/xap/plupload.silverlight.xap',
+            init: {
+                UploadComplete: function () {
+                    reload_file_list(upload_folder_name, language);
+                },
+                FileUploaded: function () {
+                    reload_file_list(upload_folder_name, language);
+                },
+                Error: function () {
+                    reload_file_list(upload_folder_name, language);
+                }
+            }
+        });
+        reload_file_list(upload_folder_name, language);
+    };
+
+    for (var language in languages) {
+        make_plupload(language);
+    }
+
+    make_plupload('default');
 });

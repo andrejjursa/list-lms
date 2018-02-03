@@ -2,8 +2,19 @@ jQuery(document).ready(function($) {
     
     make_switchable_form('#new_content_form_id');
 
+    var disabled = $('#new_content_form_id').attr('data-disabled');
+
+    if (disabled === 'disabled') {
+        $('#new_content_form_id input, #new_content_form_id textarea').attr('disabled', 'disabled');
+        $('#new_content_form_id input[type=submit]').removeAttr('disabled').addClass('disabled');
+    }
+
     var submit_form = function(event) {
         event.preventDefault();
+        if (disabled === 'disabled') {
+            show_notification(message_write_disabled, 'error');
+            return false;
+        }
         var url = $('#new_content_form_id').attr('action');
         var data = $('#new_content_form_id').serializeArray();
 
@@ -28,19 +39,17 @@ jQuery(document).ready(function($) {
         api_ajax_load(url, '#table_content');
     };
 
-    $('#new_content_form_id').submit(function(event) {
-        submit_form(event);
-    });
+    $('#new_content_form_id').submit(submit_form);
 
     var toggle_content = function(event) {
         event.preventDefault();
         var myID = $(this).attr('data-content-id');
         $('table tbody tr.content_overview[data-content-id="' + myID + '"]').toggleClass('show');
+        $(this).parents('tr').toggleClass('show');
         $(this).find('i').toggleClass('fa-chevron-down').toggleClass('fa-chevron-up');
     };
 
     $(document).on('click', 'a.toggle_content', toggle_content);
 
     reload_content();
-
 });

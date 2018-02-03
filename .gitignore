@@ -24,6 +24,8 @@ private/uploads/unit_tests/*
 !private/uploads/unit_tests/.gitkeep
 public/images_users/*
 !public/images_users/no_avatar.jpg
+private/content/*
+!private/content/.gitkeep
 application/logs/*
 !application/logs/index.html
 docker_source/test_volume/*
