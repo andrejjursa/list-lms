@@ -25,8 +25,8 @@
             </tr>
             <tr class="content_overview" data-content-id="{$content->id}">
                 <td></td>
-                <td colspan="4">{overlay table='course_content' table_id=$content->id column='content' default=$content->content}</td>
-                <td colspan="3"></td>
+                <td colspan="5">{overlay table='course_content' table_id=$content->id column='content' default=$content->content}</td>
+                <td colspan="3" class="controlls"></td>
             </tr>
         {/foreach}
     </tbody>

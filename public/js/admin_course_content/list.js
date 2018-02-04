@@ -48,6 +48,11 @@ jQuery(document).ready(function($) {
     var toggle_content = function(event) {
         event.preventDefault();
         var myID = $(this).attr('data-content-id');
+        var parsed = $(this).attr('data-parsed');
+        if (typeof parsed === 'undefined') {
+            MathJax.Hub.Queue(['Typeset', MathJax.Hub, jQuery('table tbody tr.content_overview[data-content-id="' + myID + '"]')[0]]);
+            $(this).attr('data-parsed', 'parsed');
+        }
         $('table tbody tr.content_overview[data-content-id="' + myID + '"]').toggleClass('show');
         $(this).parents('tr').toggleClass('show');
         $(this).find('i').toggleClass('fa-chevron-down').toggleClass('fa-chevron-up');
