@@ -22,6 +22,9 @@ $lang['admin_course_content_form_field_course_content_group_id'] = 'zoskupiť ob
 
 $lang['admin_course_content_form_button_submit'] = 'Uložiť';
 
+$lang['admin_course_content_filter_by_course'] = 'Filtrovať podľa kurzu';
+$lang['admin_course_content_filter_submit_button'] = 'Použiť';
+
 $lang['admin_course_content_flash_message_save_successful'] = 'Nový obsah úspešne uložený.';
 $lang['admin_course_content_flash_message_save_fail'] = 'Nový obsah sa nepodarilo uložiť.';
 $lang['admin_course_content_flash_message_save_fail_folder_rename'] = 'Ukladanie nového obsahu sa nepodarilo, pretože sa nedá premenovať obsahový adresár.';

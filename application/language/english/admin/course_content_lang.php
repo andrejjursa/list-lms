@@ -22,6 +22,9 @@ $lang['admin_course_content_form_field_course_content_group_id'] = 'group conten
 
 $lang['admin_course_content_form_button_submit'] = 'Save';
 
+$lang['admin_course_content_filter_by_course'] = 'Filter by course';
+$lang['admin_course_content_filter_submit_button'] = 'Apply';
+
 $lang['admin_course_content_flash_message_save_successful'] = 'New content successfully saved.';
 $lang['admin_course_content_flash_message_save_fail'] = 'Saving of new content was unsucessful.';
 $lang['admin_course_content_flash_message_save_fail_folder_rename'] = 'Saving of new content failed because content folder can\'t be renamed.';

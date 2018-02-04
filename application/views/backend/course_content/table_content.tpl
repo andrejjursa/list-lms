@@ -2,11 +2,11 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>{translate line='admin_course_content_table_header_title'}</th>
-            <th>{translate line='admin_course_content_table_header_course'}</th>
-            <th>{translate line='admin_course_content_table_header_published'}</th>
-            <th>{translate line='admin_course_content_table_header_public'}</th>
-            <th>{translate line='admin_course_content_table_header_content_group'}</th>
+            <th class="sort:title">{translate line='admin_course_content_table_header_title'}</th>
+            <th class="sort:course">{translate line='admin_course_content_table_header_course'}</th>
+            <th class="sort:published">{translate line='admin_course_content_table_header_published'}</th>
+            <th class="sort:public">{translate line='admin_course_content_table_header_public'}</th>
+            <th class="sort:course_content_group">{translate line='admin_course_content_table_header_content_group'}</th>
             <th colspan="3" class="controlls">{translate line='admin_course_content_table_header_controlls'}</th>
         </tr>
     </thead>
