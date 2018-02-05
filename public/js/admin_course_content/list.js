@@ -51,6 +51,21 @@ jQuery(document).ready(function($) {
         var parsed = $(this).attr('data-parsed');
         if (typeof parsed === 'undefined') {
             MathJax.Hub.Queue(['Typeset', MathJax.Hub, jQuery('table tbody tr.content_overview[data-content-id="' + myID + '"]')[0]]);
+
+            $('table tbody tr.content_overview[data-content-id="' + myID + '"] pre.prettyprint, table tbody tr.content_overview[data-content-id="' + myID + '"] code.prettyprint').each(function() {
+                var lang = '';
+                $(this).attr('class').split(/\s+/).filter(function(item) {
+                    if (item.substring(0,5) == 'lang-') {
+                        lang = item.substring(5);
+                    }
+                    return false;
+                });
+                var code = $(this).html();
+                var html = prettyPrintOne(code, lang);
+                $(this).html(html);
+                $(this).addClass('prettyprinted');
+            });
+
             $(this).attr('data-parsed', 'parsed');
         }
         $('table tbody tr.content_overview[data-content-id="' + myID + '"]').toggleClass('show');
