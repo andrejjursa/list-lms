@@ -7,6 +7,8 @@ jQuery(document).ready(function($) {
 
     var upload_folder_name = $('input[type=hidden][name="course_content[folder_name]"]').val();
 
+    var requesting_directory = false;
+
     $('#new_content_form_id').activeForm();
 
     $('#new_content_form_id div.field.course_content_group_field').setActiveFormDisplayCondition(function () {
@@ -60,10 +62,29 @@ jQuery(document).ready(function($) {
     };
 
     var reload_file_list = function (upload_folder, language) {
-        var url = global_base_url + 'index.php/admin_course_content/file_list/' + upload_folder + '/' + language;
+        var url = global_base_url + 'index.php/admin_course_content/file_list/' + language + '/' + upload_folder;
         api_ajax_load(url, 'table.course_content_files_table tbody.file_list_' + language, 'post', [], function () {
             $('table.course_content_files_table tbody.file_list_' + language + ' a.delete_file').click(delete_file);
         });
+    };
+
+    var request_upload_directory = function() {
+        if (upload_folder_name === '' && !requesting_directory) {
+            requesting_directory = true;
+
+            var url = global_base_url + 'index.php/admin_course_content/request_temporary_directory';
+            api_ajax_update(url, 'post', [], function(result) {
+                if (typeof result.directory !== 'undefined' && result.directory !== '') {
+                    upload_folder_name = result.directory;
+                    $('input[type=hidden][name="course_content[folder_name]"]').val(upload_folder_name);
+                    requesting_directory = false;
+                }
+            }, function () {
+                requesting_directory = false;
+            }, 'json', true, 5000);
+        }
+
+        return upload_folder_name;
     };
 
     var make_plupload = function(language) {
@@ -78,13 +99,20 @@ jQuery(document).ready(function($) {
             silverlight_xap_url : global_base_url + 'public/xap/plupload.silverlight.xap',
             init: {
                 UploadComplete: function () {
-                    reload_file_list(upload_folder_name, language);
+                    reload_file_list(request_upload_directory(), language);
                 },
                 FileUploaded: function () {
-                    reload_file_list(upload_folder_name, language);
+                    reload_file_list(request_upload_directory(), language);
                 },
                 Error: function () {
-                    reload_file_list(upload_folder_name, language);
+                    reload_file_list(request_upload_directory(), language);
+                },
+                BeforeUpload: function() {
+                    var folder = request_upload_directory();
+                    if (folder === '') {
+                        return false;
+                    }
+                    this.settings.url = global_base_url + 'index.php/admin_course_content/plupload_file/' + folder + '/' + language;
                 }
             }
         });

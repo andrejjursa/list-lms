@@ -39,7 +39,6 @@ class Course_content extends LIST_Controller {
         $this->inject_prettify_config();
         $this->inject_stored_filter();
         $this->parser->parse('backend/course_content/index.tpl', [
-            'temp_upload_dir' => $this->get_upload_folder_name(NULL),
             'is_writable' => $this->check_writable(),
         ]);
     }
@@ -50,7 +49,6 @@ class Course_content extends LIST_Controller {
         $this->inject_course_content_groups($this->current_course_id());
         $this->inject_prettify_config();
         $this->parser->parse('backend/course_content/new_content_form.tpl', [
-            'temp_upload_dir' => $this->get_upload_folder_name(NULL),
             'is_writable' => $this->check_writable(),
         ]);
     }
@@ -171,11 +169,10 @@ class Course_content extends LIST_Controller {
         $this->plupload->do_upload($path);
     }
     
-    public function file_list($upload_folder, $language) {
-        
+    public function file_list($language = '', $upload_folder = '') {
         $path = realpath(self::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $upload_folder . DIRECTORY_SEPARATOR . $this->get_subfolder_by_language($language) . DIRECTORY_SEPARATOR;
         $files = [];
-        if (file_exists($path)) {
+        if (file_exists($path) && $upload_folder !== '') {
             $dir_content = scandir($path);
             foreach ($dir_content as $item) {
                 if (is_file($path . $item)) {
@@ -208,6 +205,13 @@ class Course_content extends LIST_Controller {
         } else {
             $output->message = sprintf($this->lang->line('admin_course_content_message_file_delete_not_found'), $file);
         }
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+    
+    public function request_temporary_directory() {
+        $output = new stdClass();
+        $output->directory = $this->get_upload_folder_name();
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
@@ -290,18 +294,9 @@ class Course_content extends LIST_Controller {
         $this->parser->assign('highlighters', $output);
     }
     
-    private function get_upload_folder_name($course_content = NULL) {
+    private function get_upload_folder_name() {
         if (!$this->check_writable()) {
             return 'non_writable';
-        }
-        if (is_object($course_content) && $course_content instanceof Course_content_model && $course_content->exists()) {
-            return $course_content->id;
-        }
-        $post = $this->input->post('course_content');
-        if (isset($post['folder_name'])
-            && file_exists(realpath(self::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $post['folder_name'])
-            && is_dir(realpath(self::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $post['folder_name'])) {
-            return $post['folder_name'];
         }
         $new_created = false;
         $random_temporary_folder_name = '';

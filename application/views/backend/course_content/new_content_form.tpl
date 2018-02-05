@@ -82,5 +82,5 @@
 <div class="buttons">
     <input type="submit" name="submit_button" value="{translate line='admin_course_content_form_button_submit'}" class="button" />
     <input type="hidden" name="post_selected_course_content_group_id" value="{$smarty.post.course_content.course_content_group_id|intval}" />
-    <input type="hidden" name="course_content[folder_name]" value="{$smarty.post.course_content.folder_name|default:$temp_upload_dir}" />
+    <input type="hidden" name="course_content[folder_name]" value="{$smarty.post.course_content.folder_name}" />
 </div>
