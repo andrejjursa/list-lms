@@ -115,7 +115,7 @@ class Course_content_groups extends LIST_Controller {
         
         $this->parser->add_js_file('admin_course_content_groups/form.js');
         
-        $this->inject_courses();
+        $this->inject_courses_for_edit($content_group);
         $this->inject_languages();
         
         $this->parser->parse('backend/course_content_groups/edit.tpl', ['content_group' => $content_group]);
@@ -209,6 +209,28 @@ class Course_content_groups extends LIST_Controller {
     private function inject_courses()
     {
         $this->parser->assign('courses', Course::get_all_courses_for_form_select());
+    }
+    
+    private function inject_courses_for_edit(Course_content_group $content_group) {
+        if ($content_group->exists()) {
+            $course_content = new Course_content_model();
+            $course_content->where_related($content_group);
+            $course_content->limit(1);
+            $course_content->get();
+        
+            if ($course_content->exists()) {
+                $course = new Course();
+                $course->include_related('period', 'name');
+                $course->get_by_id($content_group->course_id);
+                $output = [ NULL => '' ];
+                $output[$this->lang->text($course->period_name)][$course->id] =  $this->lang->text($course->name);
+                $this->parser->assign('courses', $output);
+            } else {
+                $this->inject_courses();
+            }
+        } else {
+            $this->inject_courses();
+        }
     }
     
     private function inject_languages() {
