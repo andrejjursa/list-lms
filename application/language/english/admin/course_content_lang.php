@@ -49,12 +49,12 @@ $lang['admin_course_content_table_button_delete_file'] = 'Delete file';
 
 $lang['admin_course_content_error_course_content_not_found'] = 'Requested course content not found.';
 $lang['admin_course_content_error_write_disabled'] = 'Course content private folder is not writable!';
-$lang['admin_course_content_error_cant_save_form'] = 'Form can\'t be saved because course content private folder is not writable!';
+$lang['admin_course_content_error_cant_save_form'] = 'Form can\\\'t be saved because course content private folder is not writable!';
 
 $lang['admin_course_content_message_file_delete_success'] = 'File %s deleted.';
 $lang['admin_course_content_message_file_delete_failed'] = 'File %s can\'t be deleted due to unknown error.';
 $lang['admin_course_content_message_file_delete_not_found'] = 'File %s not found.';
 
-$lang['admin_course_content_delete_file_question'] = 'This action will delete file {0} from server. This can\'t be undone. Are you sure to do this?';
+$lang['admin_course_content_delete_file_question'] = 'This action will delete file {0} from server. This can\\\'t be undone. Are you sure to do this?';
 
 $lang['admin_course_content_text_show_uploader'] = 'Show uploader';
