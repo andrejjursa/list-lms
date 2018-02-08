@@ -86,6 +86,8 @@ class Course_content extends LIST_Controller {
         $course_content->get_paged_iterated($filter['page'] ?? 1, $filter['rows_per_page'] ?? 25);
 
         $this->lang->init_overlays('course_content', $course_content->all_to_array(), ['title', 'content']);
+        
+        $this->inject_languages();
 
         $this->parser->parse('backend/course_content/table_content.tpl', ['course_content' => $course_content]);
     }
@@ -103,6 +105,7 @@ class Course_content extends LIST_Controller {
         $this->_transaction_isolation();
         $this->db->trans_begin();
         if ($this->form_validation->run()) {
+            $files_visibility = str_replace('\\"', '"', $course_content_data['files_visibility'] ?? '{}');
             $course_content = new Course_content_model();
             $course_content->from_array($course_content_data, ['title', 'content', 'course_id']);
             $course_content->published = $course_content_data['published'] ? 1 : 0;
@@ -110,6 +113,7 @@ class Course_content extends LIST_Controller {
             $course_content->course_content_group_id = (int)$course_content_data['course_content_group_id'] > 0 ? (int)$course_content_data['course_content_group_id'] : NULL;
             $course_content->published_from = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_from']) ? $course_content_data['published_from'] : NULL;
             $course_content->published_to = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_to']) ? $course_content_data['published_to'] : NULL;
+            $course_content->files_visibility = !Course_content_model::isJson($files_visibility) ? '{}' : $files_visibility;
             
             $overlay = $this->input->post('overlay');
             
@@ -134,6 +138,8 @@ class Course_content extends LIST_Controller {
         }
         $this->db->trans_rollback();
     }
+    
+    
     
     public function _content_group_related_to_course($id) {
         if (is_null($id) || empty($id) || (int)$id <= 0) {

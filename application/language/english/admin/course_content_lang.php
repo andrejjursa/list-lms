@@ -42,10 +42,12 @@ $lang['admin_course_content_table_content_published_yes'] = 'Yes';
 $lang['admin_course_content_table_content_published_no'] = 'No';
 $lang['admin_course_content_table_content_none_content_group'] = '&lt; none &gt;';
 $lang['admin_course_content_table_content_no_files_here'] = 'There are no files in this category.';
+$lang['admin_course_content_table_content_all_languages'] = 'All languages';
 
 $lang['admin_course_content_table_button_edit'] = 'Edit content';
 $lang['admin_course_content_table_button_delete'] = 'Delete content';
 $lang['admin_course_content_table_button_delete_file'] = 'Delete file';
+$lang['admin_course_content_table_button_switch_file_visibility'] = 'Switch file visibility';
 
 $lang['admin_course_content_error_course_content_not_found'] = 'Requested course content not found.';
 $lang['admin_course_content_error_write_disabled'] = 'Course content private folder is not writable!';

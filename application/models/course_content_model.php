@@ -58,5 +58,66 @@ class Course_content_model extends DataMapper {
         }
         
     }
+    
+    public function get_files_visibility_config() {
+        if (($this->stored->id ?? NULL) === NULL) {
+            return new stdClass();
+        }
+        
+        if (($this->stored->files_visibility ?? NULL) === NULL || !self::isJson($this->stored->files_visibility)) {
+            return new stdClass();
+        }
+        
+        return json_decode($this->stored->files_visibility);
+    }
+    
+    public function is_file_visible($language, $file) {
+        $config = $this->get_files_visibility_config();
+        
+        if (!property_exists($config, $language)) {
+            return true;
+        }
+        
+        if (!property_exists($config->$language, $file)) {
+            return true;
+        }
+        
+        return !($config->$language)->$file;
+    }
+    
+    public function get_files($language = '') {
+        $ci = &get_instance();
+        
+        if (($this->stored->id ?? NULL) === NULL) {
+            return [];
+        }
+        
+        $languages = $ci->lang->get_list_of_languages();
+        
+        if (!array_key_exists($language, $languages)) { $language = ''; }
+        
+        $path = realpath(Course_content::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $this->stored->id . ($language !== '' ? DIRECTORY_SEPARATOR . $language : '') . DIRECTORY_SEPARATOR;
+        
+        if (!file_exists($path)) {
+            return [];
+        }
+        
+        $files = scandir($path);
+        
+        $output = [];
+        
+        foreach ($files as $file) {
+            if (is_file($path . $file)) {
+                $output[] = $file;
+            }
+        }
+        
+        return $output;
+    }
+    
+    public static function isJson($string) {
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
+    }
 
 }

@@ -61,10 +61,54 @@ jQuery(document).ready(function($) {
         });
     };
 
+    var load_hidden_status = function(tr) {
+        var config = JSON.parse($('#files_visibility').val().split('\\"').join('"'));
+        var file = $(tr).attr('data-file');
+        var language = $(tr).attr('data-language');
+
+        console.log(file + ' ' + language);
+
+        if (typeof config[language] !== 'undefined' && typeof config[language][file] !== 'undefined' && config[language][file] === true) {
+            $(tr).addClass('hidden');
+            $(tr).find('a.switch_visibility').addClass('hidden');
+            $(tr).find('a.switch_visibility i').removeClass('fa-minus-circle').addClass('fa-plus-circle');
+        }
+    };
+
+    var set_hidden_status = function(language, file, status) {
+        var config = JSON.parse($('#files_visibility').val().split('\\"').join('"'));
+
+        console.log(language);
+        console.log(file);
+
+        if (typeof config[language] === 'undefined') {
+            config[language] = {};
+        }
+        config[language][file] = status;
+
+        $('#files_visibility').val(JSON.stringify(config).split('"').join('\\"'));
+    };
+
     var reload_file_list = function (upload_folder, language) {
         var url = global_base_url + 'index.php/admin_course_content/file_list/' + language + '/' + upload_folder;
         api_ajax_load(url, 'table.course_content_files_table tbody.file_list_' + language, 'post', [], function () {
             $('table.course_content_files_table tbody.file_list_' + language + ' a.delete_file').click(delete_file);
+            $('table.course_content_files_table tbody.file_list_' + language + ' a.switch_visibility').click(function (event) {
+                event.preventDefault();
+
+                var file = $(this).attr('data-file');
+                var language = $(this).attr('data-language');
+
+                $(this).toggleClass('hidden');
+                $(this).parents('tr').toggleClass('hidden');
+                $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
+
+                set_hidden_status(language, file, $(this).hasClass('hidden'));
+            });
+
+            $('table.course_content_files_table tbody.file_list_' + language + ' tr').each(function () {
+                load_hidden_status($(this));
+            });
         });
     };
 

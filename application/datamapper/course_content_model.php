@@ -15,6 +15,7 @@ $cache = array (
     9 => 'public',
     10 => 'sorting',
     11 => 'course_content_group_id',
+    12 => 'files_visibility',
   ),
   'validation' => 
   array (
@@ -99,6 +100,13 @@ $cache = array (
     'course_content_group_id' => 
     array (
       'field' => 'course_content_group_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'files_visibility' => 
+    array (
+      'field' => 'files_visibility',
       'rules' => 
       array (
       ),
