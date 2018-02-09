@@ -20,6 +20,22 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.6.0 | 2018-02-09
+
+CHANGE Používateľské rozhranie administrácie upravené tak aby bola pracovná plocha aplikácie väčšia.
+CHANGE [lang:english] Administration user interface changed to provide bigger workplace.
+
+CHANGE Pridaná lepšia responzivita na šírku pracovného prostredia v admnistrácii.
+CHANGE [lang:english] Added better responsivity to width of workspace in administration.
+
+FIX Rozhranie porovnávača MOSS korektne zobrazuje poradie období vo výbere kurzu.
+FIX [lang:english] MOSS comparator interface displays periods in course selector in correct order.
+
+FIX Rozhranie komentárov zostáv úloh dostalo chýbajúce tlačidlo "naspäť".
+FIX [lang:english] Interface for task set comments got the missing "go back" button.
+
+END VERSIONgi
+
 VERSION 1.5.2 | 2017-10-29
 
 FIX Pokus o opravu problému, ktorý spôsobil neodosielanie notifikácií o ukončení odosielania riešení k zostavám úloh.
@@ -31,6 +47,7 @@ VERSION 1.5.1 | 2017-09-15
 
 CHANGE Poradie testov v plánovači je teraz zobrazované študentom korektne.
 CHANGE [lang:english] Order of tests in test queue is displayed to student correctly.
+
 FIX Opravené zobrazenie o neukončenom teste v zozname.
 FIX [lang:english] Fixed display of non-finished test in listing.
 
