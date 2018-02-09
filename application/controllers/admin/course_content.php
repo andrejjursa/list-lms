@@ -108,8 +108,8 @@ class Course_content extends LIST_Controller {
             $files_visibility = str_replace('\\"', '"', $course_content_data['files_visibility'] ?? '{}');
             $course_content = new Course_content_model();
             $course_content->from_array($course_content_data, ['title', 'content', 'course_id']);
-            $course_content->published = $course_content_data['published'] ? 1 : 0;
-            $course_content->public = $course_content_data['public'] ? 1 : 0;
+            $course_content->published = ($course_content_data['published'] ?? false) ? 1 : 0;
+            $course_content->public = ($course_content_data['public'] ?? false) ? 1 : 0;
             $course_content->course_content_group_id = (int)$course_content_data['course_content_group_id'] > 0 ? (int)$course_content_data['course_content_group_id'] : NULL;
             $course_content->published_from = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_from']) ? $course_content_data['published_from'] : NULL;
             $course_content->published_to = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_to']) ? $course_content_data['published_to'] : NULL;
@@ -117,7 +117,7 @@ class Course_content extends LIST_Controller {
             
             $overlay = $this->input->post('overlay');
             
-            if ($course_content->save() && $this->lang->save_overlay_array($overlay, $course_content) && $this->db->trans_status()) {
+            if ($course_content->save() && $this->replace_temp_folder_name_in_texts($course_content_data['folder_name'], $course_content, $overlay) && $this->lang->save_overlay_array($overlay, $course_content) && $this->db->trans_status()) {
                 if ($this->change_temp_folder_name($course_content_data['folder_name'], $course_content->id)) {
                     $this->db->trans_commit();
                     $this->messages->add_message('lang:admin_course_content_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
@@ -402,6 +402,31 @@ class Course_content extends LIST_Controller {
         $this->load->library('filter');
         $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course_id');
         $this->parser->assign('filter', $filter);
+    }
+    
+    private function replace_temp_folder_name_in_texts($temp_name, &$course_content, &$overlay) {
+        $course_content->content = str_replace($temp_name, $course_content->id, $course_content->content);
+        $course_content->title = str_replace($temp_name, $course_content->id, $course_content->title);
+        
+        if (count($overlay)) {
+            foreach ($overlay as $language => $tables) {
+                if (count($tables)) {
+                    foreach ($tables as $table => $ids) {
+                        if (count($ids)) {
+                            foreach ($ids as $id => $columns) {
+                                if (count($columns)) {
+                                    foreach ($columns as $column => $value) {
+                                        $overlay[$language][$table][$id][$column] = str_replace($temp_name, $course_content->id, $value);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $course_content->save();
     }
 
 }

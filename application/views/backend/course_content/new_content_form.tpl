@@ -53,7 +53,7 @@
                     <thead>
                     <tr>
                         <th>{translate line='admin_course_content_table_header_file'}</th>
-                        <th class="controlls" colspan="2">{translate line='admin_course_content_table_header_controlls'}</th>
+                        <th class="controlls" colspan="3">{translate line='admin_course_content_table_header_controlls'}</th>
                     </tr>
                     </thead>
                     <tbody class="file_list_default"></tbody>
@@ -69,7 +69,7 @@
                         <thead>
                         <tr>
                             <th>{translate line='admin_course_content_table_header_file'}</th>
-                            <th class="controlls" colspan="2">{translate line='admin_course_content_table_header_controlls'}</th>
+                            <th class="controlls" colspan="3">{translate line='admin_course_content_table_header_controlls'}</th>
                         </tr>
                         </thead>
                         <tbody class="file_list_{$language}"></tbody>

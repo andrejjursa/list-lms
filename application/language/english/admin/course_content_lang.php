@@ -60,6 +60,7 @@ $lang['admin_course_content_message_file_delete_not_found'] = 'File %s not found
 $lang['admin_course_content_delete_file_question'] = 'This action will delete file {0} from server. This can\\\'t be undone. Are you sure to do this?';
 
 $lang['admin_course_content_text_show_uploader'] = 'Show uploader';
+$lang['admin_course_content_text_coppied_to_clipboard'] = 'Copy to clipboard successful.';
 
 $lang['admin_course_content_publication_status_switched'] = 'Publication status of content <strong>%s</strong> was switched.';
 $lang['admin_course_content_public_status_switched'] = 'Public/private status of content <strong>%s</strong> was changed.';

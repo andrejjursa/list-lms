@@ -60,7 +60,7 @@
                             <div class="default">
                                 <span class="language_name">{translate line='admin_course_content_table_content_all_languages'}:</span>
                                 {foreach $files as $file}
-                                    <span class="file{if not $content->is_file_visible('default', $file)} hidden{/if}">{$file}</span>
+                                    <span class="file{if not $content->is_file_visible('default', $file)} hidden{/if}"><a href="{internal_url url="content/download_file/{$content->id}/default/{$file|encode_for_url}"}" target="_blank">{$file}</a></span>
                                 {/foreach}
                             </div>
                         {/if}
@@ -69,7 +69,7 @@
                                 <div class="{$language}">
                                     <span class="language_name">{$language_name}:</span>
                                     {foreach $files as $file}
-                                        <span class="file{if not $content->is_file_visible($language, $file)} hidden{/if}">{$file}</span>
+                                        <span class="file{if not $content->is_file_visible($language, $file)} hidden{/if}"><a href="{internal_url url="content/download_file/{$content->id}/{$language}/{$file|encode_for_url}"}" target="_blank">{$file}</a></span>
                                     {/foreach}
                                 </div>
                             {/if}

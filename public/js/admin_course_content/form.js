@@ -78,15 +78,24 @@ jQuery(document).ready(function($) {
     var set_hidden_status = function(language, file, status) {
         var config = JSON.parse($('#files_visibility').val().split('\\"').join('"'));
 
-        console.log(language);
-        console.log(file);
-
         if (typeof config[language] === 'undefined') {
             config[language] = {};
         }
         config[language][file] = status;
 
         $('#files_visibility').val(JSON.stringify(config).split('"').join('\\"'));
+    };
+
+    var copy_link_function = function(event) {
+        event.preventDefault();
+
+        var link = $(this).attr('data-link');
+
+        if (copyTextToClipboard(link)) {
+            show_notification(coppied_to_clipboard, 'info');
+        } else {
+            prompt('Link:', link);
+        }
     };
 
     var reload_file_list = function (upload_folder, language) {
@@ -108,6 +117,7 @@ jQuery(document).ready(function($) {
 
             $('table.course_content_files_table tbody.file_list_' + language + ' tr').each(function () {
                 load_hidden_status($(this));
+                $(this).find('a.button.copy_link').click(copy_link_function);
             });
         });
     };

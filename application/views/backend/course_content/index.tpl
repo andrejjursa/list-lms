@@ -43,4 +43,5 @@
     var languages = {$languages|json_encode};
     var delete_file_question = '{translate line='admin_course_content_delete_file_question'}';
     var show_uploader_text = '{translate line='admin_course_content_text_show_uploader'}';
+    var coppied_to_clipboard = '{translate line='admin_course_content_text_coppied_to_clipboard'}';
 </script>{/block}

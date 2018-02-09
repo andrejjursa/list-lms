@@ -59,6 +59,31 @@ class Course_content_model extends DataMapper {
         
     }
     
+    public function get_is_published() {
+        if (($this->stored->id ?? NULL) === NULL) {
+            return false;
+        }
+    
+        if (!($this->stored->published ?? FALSE)) {
+            return false;
+        }
+        
+        $current_time = date('Y-m-d H:i:s');
+        
+        $from = $this->stored->published_from;
+        $to = $this->stored->published_to;
+        
+        if ($from !== null && $current_time < $from) {
+            return false;
+        }
+        
+        if ($to !== null && $current_time > $to) {
+            return false;
+        }
+        
+        return true;
+    }
+    
     public function get_files_visibility_config() {
         if (($this->stored->id ?? NULL) === NULL) {
             return new stdClass();
