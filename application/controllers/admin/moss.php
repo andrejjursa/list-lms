@@ -303,7 +303,7 @@ class moss extends LIST_Controller {
     private function inject_courses() {
         $courses = new Course();
         $courses->include_related('period', 'name');
-        $courses->order_by_related_with_constant('period', 'sorting', 'asc');
+        $courses->order_by_related('period', 'sorting', 'asc');
         $courses->order_by_with_constant('name');
         $courses->get_iterated();
         
