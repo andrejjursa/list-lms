@@ -139,8 +139,6 @@ class Course_content extends LIST_Controller {
         $this->db->trans_rollback();
     }
     
-    
-    
     public function _content_group_related_to_course($id) {
         if (is_null($id) || empty($id) || (int)$id <= 0) {
             return TRUE;
@@ -250,6 +248,58 @@ class Course_content extends LIST_Controller {
         $this->parser->assign('selected_id', $selected_id);
         
         $this->parser->parse('backend/course_content/course_content_groups_options.tpl');
+    }
+    
+    public function change_publication_status($course_content_id = null) {
+        $output = new stdClass();
+        $output->message = '';
+        $output->status = FALSE;
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $course_content = new Course_content_model();
+        $course_content->get_by_id((int)$course_content_id);
+        
+        if ($course_content->exists()) {
+            $course_content->published = 1 - (int)$course_content->published;
+            $course_content->save();
+            $this->db->trans_commit();
+            $output->message = sprintf($this->lang->line('admin_course_content_publication_status_switched'), $this->lang->get_overlay_with_default('course_content', $course_content->id, 'title', $course_content->title));
+            $output->status = TRUE;
+            $this->_action_success();
+        } else {
+            $this->db->trans_rollback();
+            $output->message = $this->lang->line('admin_course_content_error_course_content_not_found');
+        }
+        
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+    
+    public function change_public_status($course_content_id = null) {
+        $output = new stdClass();
+        $output->message = '';
+        $output->status = FALSE;
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        $course_content = new Course_content_model();
+        $course_content->get_by_id((int)$course_content_id);
+        
+        if ($course_content->exists()) {
+            $course_content->public = 1 - (int)$course_content->public;
+            $course_content->save();
+            $this->db->trans_commit();
+            $output->message = sprintf($this->lang->line('admin_course_content_public_status_switched'), $this->lang->get_overlay_with_default('course_content', $course_content->id, 'title', $course_content->title));
+            $output->status = TRUE;
+            $this->_action_success();
+        } else {
+            $this->db->trans_rollback();
+            $output->message = $this->lang->line('admin_course_content_error_course_content_not_found');
+        }
+    
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
     }
 
     private function inject_courses()

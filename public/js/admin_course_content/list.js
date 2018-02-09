@@ -35,11 +35,27 @@ jQuery(document).ready(function($) {
         api_ajax_load(url, '#new_content_form_id', 'post', data, success);
     };
 
+    var switch_status = function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        api_ajax_update(url, 'post', [], function(result) {
+            if (typeof result.status !== 'undefined' && typeof result.message !== 'undefined') {
+                if (result.status) {
+                    reload_content();
+                    show_notification(result.message, 'success');
+                } else {
+                    show_notification(result.message, 'error');
+                }
+            }
+        });
+    };
+
     var reload_content = function() {
         var url = global_base_url + '/admin_course_content/get_all_content';
         var data = $('#filter_form_id').serializeArray();
         api_ajax_load(url, '#table_content', 'post', data, function () {
             sort_table('table.course_content_table', '#filter_form_id');
+            $('a.status_switch').click(switch_status);
         });
     };
 

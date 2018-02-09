@@ -60,3 +60,6 @@ $lang['admin_course_content_message_file_delete_not_found'] = 'Súbor %s sa nena
 $lang['admin_course_content_delete_file_question'] = 'Táto akcia zmaže súbor {0} zo servra. Toto nie je možné vziať späť. Určite chcete súbor zmazať?';
 
 $lang['admin_course_content_text_show_uploader'] = 'Zobraziť uploader';
+
+$lang['admin_course_content_publication_status_switched'] = 'Stav publikovania obsahu <strong>%s</strong> bol prepnutý.';
+$lang['admin_course_content_public_status_switched'] = 'Stav súkromný/verejný obsahu <strong>%s</strong> bol prepnutý.';
