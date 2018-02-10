@@ -35,6 +35,8 @@ $lang['admin_course_content_table_header_course'] = 'Kurz';
 $lang['admin_course_content_table_header_published'] = 'Publikovať?';
 $lang['admin_course_content_table_header_public'] = 'Verejné?';
 $lang['admin_course_content_table_header_content_group'] = 'Skupina obsahu';
+$lang['admin_course_content_table_header_published_from'] = 'Publikovať od';
+$lang['admin_course_content_table_header_published_to'] = 'Publikovať do';
 $lang['admin_course_content_table_header_file'] = 'Súbor';
 $lang['admin_course_content_table_header_controlls'] = 'Ovládanie';
 
@@ -43,6 +45,8 @@ $lang['admin_course_content_table_content_published_no'] = 'Nie';
 $lang['admin_course_content_table_content_none_content_group'] = '&lt; žiadna &gt;';
 $lang['admin_course_content_table_content_no_files_here'] = 'V tejto kategórii nie sú žiadne súbory.';
 $lang['admin_course_content_table_content_all_languages'] = 'Všetky jazyky';
+$lang['admin_course_content_table_content_no_published_from'] = '< bez spodného limitu >';
+$lang['admin_course_content_table_content_no_published_to'] = '< bez horného limitu >';
 
 $lang['admin_course_content_table_button_edit'] = 'Upraviť obsah';
 $lang['admin_course_content_table_button_delete'] = 'Vymazať obsah';

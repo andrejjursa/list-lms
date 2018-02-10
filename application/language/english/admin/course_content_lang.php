@@ -35,6 +35,8 @@ $lang['admin_course_content_table_header_course'] = 'Course';
 $lang['admin_course_content_table_header_published'] = 'Is published?';
 $lang['admin_course_content_table_header_public'] = 'Is public?';
 $lang['admin_course_content_table_header_content_group'] = 'Content group';
+$lang['admin_course_content_table_header_published_from'] = 'Published from';
+$lang['admin_course_content_table_header_published_to'] = 'Published to';
 $lang['admin_course_content_table_header_file'] = 'File';
 $lang['admin_course_content_table_header_controlls'] = 'Controlls';
 
@@ -43,6 +45,8 @@ $lang['admin_course_content_table_content_published_no'] = 'No';
 $lang['admin_course_content_table_content_none_content_group'] = '&lt; none &gt;';
 $lang['admin_course_content_table_content_no_files_here'] = 'There are no files in this category.';
 $lang['admin_course_content_table_content_all_languages'] = 'All languages';
+$lang['admin_course_content_table_content_no_published_from'] = '< no lower limit >';
+$lang['admin_course_content_table_content_no_published_to'] = '< no upper limit >';
 
 $lang['admin_course_content_table_button_edit'] = 'Edit content';
 $lang['admin_course_content_table_button_delete'] = 'Delete content';
