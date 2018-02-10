@@ -34,6 +34,10 @@ FIX [lang:english] MOSS comparator interface displays periods in course selector
 FIX Rozhranie komentárov zostáv úloh dostalo chýbajúce tlačidlo "naspäť".
 FIX [lang:english] Interface for task set comments got the missing "go back" button.
 
+CHANGE TinyMCE editor v administrácii upgradnutý na verziu 4.7.6.
+CHANGE [lang:english] TinyMCE editor for administration is upgraded to version 4.7.6.
+
+
 END VERSIONgi
 
 VERSION 1.5.2 | 2017-10-29
