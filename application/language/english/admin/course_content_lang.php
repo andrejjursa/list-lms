@@ -68,3 +68,9 @@ $lang['admin_course_content_text_coppied_to_clipboard'] = 'Copy to clipboard suc
 
 $lang['admin_course_content_publication_status_switched'] = 'Publication status of content <strong>%s</strong> was switched.';
 $lang['admin_course_content_public_status_switched'] = 'Public/private status of content <strong>%s</strong> was changed.';
+
+$lang['admin_course_content_legend_table_caption'] = 'Table colors legend.';
+$lang['admin_course_content_header_public_yes'] = 'Public';
+$lang['admin_course_content_header_public_no'] = 'Non-public';
+$lang['admin_course_content_header_published_yes'] = 'Published';
+$lang['admin_course_content_header_published_no'] = 'Non-published';

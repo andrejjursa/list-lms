@@ -32,6 +32,24 @@
             </form>
         </div>
         <div id="table_content"></div>
+        <table class="course_content_legend_table">
+            <caption>{translate line='admin_course_content_legend_table_caption'}</caption>
+            <tr>
+                <td></td>
+                <td class="header">{translate line='admin_course_content_header_public_yes'}</td>
+                <td class="header">{translate line='admin_course_content_header_public_no'}</td>
+            </tr>
+            <tr>
+                <td class="header">{translate line='admin_course_content_header_published_yes'}</td>
+                <td class="course_content_legend_table_published_public"></td>
+                <td class="course_content_legend_table_published_nonpublic"></td>
+            </tr>
+            <tr>
+                <td class="header">{translate line='admin_course_content_header_published_no'}</td>
+                <td class="course_content_legend_table_nonpublished_public"></td>
+                <td class="course_content_legend_table_nonpublished_nonpublic"></td>
+            </tr>
+        </table>
     </fieldset>
 {/block}
 {block custom_head}<script type="text/javascript">

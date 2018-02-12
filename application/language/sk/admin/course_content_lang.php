@@ -68,3 +68,9 @@ $lang['admin_course_content_text_coppied_to_clipboard'] = 'Úspešne skopírovan
 
 $lang['admin_course_content_publication_status_switched'] = 'Stav publikovania obsahu <strong>%s</strong> bol prepnutý.';
 $lang['admin_course_content_public_status_switched'] = 'Stav súkromný/verejný obsahu <strong>%s</strong> bol prepnutý.';
+
+$lang['admin_course_content_legend_table_caption'] = 'Legenda farieb tabuľky.';
+$lang['admin_course_content_header_public_yes'] = 'Verejné';
+$lang['admin_course_content_header_public_no'] = 'Neverejné';
+$lang['admin_course_content_header_published_yes'] = 'Publikované';
+$lang['admin_course_content_header_published_no'] = 'Nepublikované';
