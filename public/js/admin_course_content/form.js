@@ -9,9 +9,9 @@ jQuery(document).ready(function($) {
 
     var requesting_directory = false;
 
-    $('#new_content_form_id').activeForm();
+    $('#new_content_form_id, #edit_form').activeForm();
 
-    $('#new_content_form_id div.field.course_content_group_field').setActiveFormDisplayCondition(function () {
+    $('#new_content_form_id div.field.course_content_group_field, #edit_form div.field.course_content_group_field').setActiveFormDisplayCondition(function () {
         var course_id = $('#course_content_course_id_id').val();
         if (course_id !== last_course_id) {
             var selected_id = $('form input[name=post_selected_course_content_group_id]').val() !== undefined ? $('form input[name=post_selected_course_content_group_id]').val() : '';
@@ -25,7 +25,7 @@ jQuery(document).ready(function($) {
         return true;
     });
 
-    $('#new_content_form_id').activeForm().applyConditions();
+    $('#new_content_form_id, #edit_form').activeForm().applyConditions();
 
     $('#course_content_published_from_id').datetimepicker({
         showSecond: true,

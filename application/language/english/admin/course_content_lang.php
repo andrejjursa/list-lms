@@ -15,6 +15,7 @@ $lang['admin_course_content_form_label_course_content_group_id'] = 'Group conten
 $lang['admin_course_content_form_label_files_default'] = 'Files (general)';
 $lang['admin_course_content_form_label_files_language'] = 'Files (%s)';
 $lang['admin_course_content_form_error_course_content_group_not_related_to_course'] = 'The field <strong>%s</strong> value is not related to selected course.';
+$lang['admin_course_content_form_hint_edit_files'] = 'Warning: The deletion of files is saved immediately, it do not rely on Save button at the bottom of this form.';
 
 $lang['admin_course_content_form_field_course_id'] = 'course';
 $lang['admin_course_content_form_field_title'] = 'content title';
@@ -53,6 +54,9 @@ $lang['admin_course_content_table_button_delete'] = 'Delete content';
 $lang['admin_course_content_table_button_delete_file'] = 'Delete file';
 $lang['admin_course_content_table_button_switch_file_visibility'] = 'Switch file visibility';
 
+$lang['admin_course_content_success_updated'] = 'Content successfully updated.';
+
+$lang['admin_course_content_error_not_updated'] = 'Content failed to be updated.';
 $lang['admin_course_content_error_course_content_not_found'] = 'Requested course content not found.';
 $lang['admin_course_content_error_write_disabled'] = 'Course content private folder is not writable!';
 $lang['admin_course_content_error_cant_save_form'] = 'Form can\\\'t be saved because course content private folder is not writable!';

@@ -149,6 +149,7 @@ class Course_content_groups extends LIST_Controller {
                 
                 if ($course_content_group->save() && $this->lang->save_overlay_array($overlay) && $this->db->trans_status()) {
                     $this->db->trans_commit();
+                    $this->_action_success();
                     $this->messages->add_message('lang:admin_course_content_group_success_updated', Messages::MESSAGE_TYPE_SUCCESS);
                     redirect(create_internal_url('admin_course_content_groups'));
                 } else {
@@ -187,6 +188,7 @@ class Course_content_groups extends LIST_Controller {
             if (!$course_content->exists()) {
                 if ($content_group->delete()) {
                     $this->db->trans_commit();
+                    $this->_action_success();
                     $output->status = true;
                     $output->message = $this->lang->line('admin_course_content_groups_delete_success');
                 } else {

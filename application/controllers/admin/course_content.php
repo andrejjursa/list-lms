@@ -222,14 +222,85 @@ class Course_content extends LIST_Controller {
     
     public function edit($id) {
         $this->_select_teacher_menu_pagetag('course_content');
+    
+        $this->parser->add_js_file('jquery.activeform.js');
+        $this->parser->add_js_file('admin_course_content/form.js');
+        $this->parser->add_js_file('admin_tasks/form.js');
+        $this->parser->add_css_file('admin_course_content.css');
+    
+        $this->_add_tinymce4();
+        $this->_add_prettify();
+        $this->_add_mathjax();
+        $this->_add_plupload();
+        $this->inject_courses();
+        $this->inject_languages();
+        $this->inject_course_content_groups($this->current_course_id());
+        $this->inject_course_content_groups_array();
+        $this->inject_prettify_config();
         
         $course_content = new Course_content_model();
         $course_content->get_by_id((int)$id);
         
-        $this->inject_courses();
         $this->parser->parse('backend/course_content/edit.tpl', [
             'content' => $course_content
         ]);
+    }
+    
+    public function update() {
+        $course_content_id = $this->input->post('course_content_id');
+    
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        
+        $course_content = new Course_content_model();
+        $course_content->get_by_id((int)$course_content_id);
+        
+        if ($course_content->exists()) {
+            $this->load->library('form_validation');
+    
+            $course_content_data = $this->input->post('course_content');
+    
+            $this->form_validation->set_rules('course_content[title]', 'lang:admin_course_content_form_field_title', 'required');
+            $this->form_validation->set_rules('course_content[course_id]', 'lang:admin_course_content_form_field_course_id', 'required|exists_in_table[courses.id]');
+            $this->form_validation->set_rules('course_content[course_content_group_id]', 'lang:admin_course_content_form_field_course_content_group_id','exists_in_table[?course_content_groups.id]|callback__content_group_related_to_course');
+            $this->form_validation->set_message('_content_group_related_to_course', $this->lang->line('admin_course_content_form_error_course_content_group_not_related_to_course'));
+            
+            if ($this->form_validation->run()) {
+                if ($course_content->course_id != (int)$course_content_data['course_id'] || $course_content->course_content_group_id != (int)$course_content_data['course_content_group_id']) {
+                    $course_content->sorting = Course_content_model::get_next_sorting_number((int)$course_content_data['course_id'], $course_content_data['course_content_group_id'] ? (int)$course_content_data['course_content_group_id'] : NULL);
+                }
+                
+                $files_visibility = str_replace('\\"', '"', $course_content_data['files_visibility'] ?? '{}');
+                $course_content->from_array($course_content_data, ['title', 'content', 'course_id']);
+                $course_content->published = ($course_content_data['published'] ?? false) ? 1 : 0;
+                $course_content->public = ($course_content_data['public'] ?? false) ? 1 : 0;
+                $course_content->course_content_group_id = (int)$course_content_data['course_content_group_id'] > 0 ? (int)$course_content_data['course_content_group_id'] : NULL;
+                $course_content->published_from = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_from']) ? $course_content_data['published_from'] : NULL;
+                $course_content->published_to = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_to']) ? $course_content_data['published_to'] : NULL;
+                $course_content->files_visibility = !Course_content_model::isJson($files_visibility) ? '{}' : $files_visibility;
+                
+                $overlay = $this->input->post('overlay');
+    
+                if ($course_content->save() && $this->lang->save_overlay_array($overlay) && $this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->_action_success();
+                    $this->messages->add_message('lang:admin_course_content_success_updated', Messages::MESSAGE_TYPE_SUCCESS);
+                    redirect(create_internal_url('admin_course_content'));
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message('lang:admin_course_content_error_not_updated', Messages::MESSAGE_TYPE_ERROR);
+                    redirect(create_internal_url('admin_course_content'));
+                }
+                
+            } else {
+                $this->db->trans_rollback();
+                $this->edit($course_content_id);
+            }
+        } else {
+            $this->db->trans_rollback();
+            $this->messages->add_message('lang:admin_course_content_error_course_content_not_found', Messages::MESSAGE_TYPE_ERROR);
+            redirect(create_internal_url('admin_course_content'));
+        }
     }
     
     public function delete($id) {
