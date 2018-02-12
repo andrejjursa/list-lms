@@ -304,7 +304,34 @@ class Course_content extends LIST_Controller {
     }
     
     public function delete($id) {
+        $output = new stdClass();
+        $output->status = false;
+        $output->message = '';
     
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        
+        $course_content = new Course_content_model();
+        $course_content->get_by_id((int)$id);
+        
+        if ($course_content->exists()) {
+            $this->lang->delete_overlays('course_content', $course_content->id);
+            if ($course_content->delete()) {
+                $this->db->trans_commit();
+                $this->_action_success();
+                $output->message = $this->lang->line('admin_course_content_success_course_content_deleted');
+                $output->status = true;
+            } else {
+                $this->db->trans_rollback();
+                $output->message = $this->lang->line('admin_course_content_error_course_content_cant_be_deleted');
+            }
+        } else {
+            $this->db->trans_rollback();
+            $output->message = $this->lang->line('admin_course_content_error_course_content_not_found');
+        }
+        
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
     }
     
     public function get_course_content_groups($course_id, $selected_id = NULL, $course_content_id = NULL) {

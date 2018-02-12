@@ -3,6 +3,7 @@
 {block main_content}
     <h2>{translate line='admin_course_content_page_title'}</h2>
     {include file='partials/backend_general/flash_messages.tpl' inline}
+    <fieldset>
     {if $content->exists() or $smarty.post.course_content}
         <form action="{internal_url url="admin_course_content/update"}" method="post" id="edit_form">
             {include file='partials/backend_general/flash_messages.tpl' inline}
@@ -90,6 +91,7 @@
             </div>
             <div class="buttons">
                 <input type="submit" name="submit_button" value="{translate line='admin_course_content_form_button_submit'}" class="button" />
+                <a href="{internal_url url='admin_course_content'}" class="button special">{translate line='common_button_back'}</a>
                 <input type="hidden" name="post_selected_course_content_group_id" value="{$smarty.post.course_content.course_content_group_id|default:$content->course_content_group_id|intval}" />
                 <input type="hidden" name="course_content[folder_name]" value="{$content->id}" />
                 <input type="hidden" name="course_content[files_visibility]" id="files_visibility" value="{$smarty.post.course_content.files_visibility|default:$content->files_visibility|default:'{}'|escape:'html'}" />
@@ -99,6 +101,7 @@
     {else}
         {include file='partials/backend_general/error_box.tpl' message='lang:admin_course_content_error_course_content_not_found' inline}
     {/if}
+    </fieldset>
 {/block}
 {block custom_head}
     <script type="text/javascript">

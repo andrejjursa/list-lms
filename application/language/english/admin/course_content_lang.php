@@ -55,7 +55,9 @@ $lang['admin_course_content_table_button_delete_file'] = 'Delete file';
 $lang['admin_course_content_table_button_switch_file_visibility'] = 'Switch file visibility';
 
 $lang['admin_course_content_success_updated'] = 'Content successfully updated.';
+$lang['admin_course_content_success_course_content_deleted'] = 'Content successfully deleted.';
 
+$lang['admin_course_content_error_course_content_cant_be_deleted'] = 'Content can\'t be deleted.';
 $lang['admin_course_content_error_not_updated'] = 'Content failed to be updated.';
 $lang['admin_course_content_error_course_content_not_found'] = 'Requested course content not found.';
 $lang['admin_course_content_error_write_disabled'] = 'Course content private folder is not writable!';
@@ -66,6 +68,7 @@ $lang['admin_course_content_message_file_delete_failed'] = 'File %s can\'t be de
 $lang['admin_course_content_message_file_delete_not_found'] = 'File %s not found.';
 
 $lang['admin_course_content_delete_file_question'] = 'This action will delete file {0} from server. This can\\\'t be undone. Are you sure to do this?';
+$lang['admin_course_content_delete_content_question'] = 'This action will delete content {0} from database and all it files (if exists). This can\\\'t be undone. Are you sure to do this?';
 
 $lang['admin_course_content_text_show_uploader'] = 'Show uploader';
 $lang['admin_course_content_text_coppied_to_clipboard'] = 'Copy to clipboard successful.';

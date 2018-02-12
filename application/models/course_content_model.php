@@ -144,5 +144,23 @@ class Course_content_model extends DataMapper {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
     }
+    
+    /**
+     * Deletes relations (if parameters are set) or this object from database.
+     * @param DataMapper|string $object related object to delete from relation.
+     * @param string $related_field relation internal name.
+     * @return bool success or fail.
+     */
+    public function delete($object = '', $related_field = '') {
+        $this_id = $this->id;
+        $result = parent::delete($object, $related_field);
+        if ($result && empty($object) && !is_array($object) && !empty($this_id)) {
+            $path = 'private/content/' . intval($this_id) . '/';
+            if (file_exists($path)) {
+                unlink_recursive($path, TRUE);
+            }
+        }
+        return $result;
+    }
 
 }

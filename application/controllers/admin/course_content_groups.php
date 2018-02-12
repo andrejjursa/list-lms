@@ -186,6 +186,7 @@ class Course_content_groups extends LIST_Controller {
             $course_content->get();
             
             if (!$course_content->exists()) {
+                $this->lang->delete_overlays('course_content_groups', $content_group->id);
                 if ($content_group->delete()) {
                     $this->db->trans_commit();
                     $this->_action_success();

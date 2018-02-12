@@ -53,7 +53,7 @@
                 <td>{if $content->published_to}{$content->published_to|date_format:{translate line='common_datetime_format'}}{else}{translate line='admin_course_content_table_content_no_published_to'}{/if}</td>
                 <td class="controlls"><a href="javascript:void(0);" class="button toggle_content" data-content-id="{$content->id}"><i class="fa fa-chevron-down" aria-hidden="true"></i></a></td>
                 <td class="controlls"><a href="{internal_url url="admin_course_content/edit/{$content->id}"}" class="button" title="{translate line='admin_course_content_table_button_edit'}"><span class="list-icon list-icon-edit"></span></a></td>
-                <td class="controlls"><a href="{internal_url url="admin_course_content/delete/{$content->id}"}" class="button delete" title="{translate line='admin_course_content_table_button_delete'}"><span class="list-icon list-icon-delete"></span></a></td>
+                <td class="controlls"><a href="{internal_url url="admin_course_content/delete/{$content->id}"}" class="button delete" title="{translate line='admin_course_content_table_button_delete'}" data-title="{overlay|escape:'html' table='course_content' table_id=$content->id column='title' default=$content->title}"><span class="list-icon list-icon-delete"></span></a></td>
             </tr>
             <tr class="content_overview" data-content-id="{$content->id}">
                 <td></td>

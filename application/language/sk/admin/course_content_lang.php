@@ -15,7 +15,6 @@ $lang['admin_course_content_form_label_course_content_group_id'] = 'Zoskupiť ob
 $lang['admin_course_content_form_label_files_default'] = 'Súbory (všeobecné)';
 $lang['admin_course_content_form_label_files_language'] = 'Súbory (%s)';
 $lang['admin_course_content_form_error_course_content_group_not_related_to_course'] = 'Hodnota pola <strong>%s</strong> nepatrí k zvolenému kurzu.';
-$lang['admin_course_content_form_hint_edit_files'] = 'Warning: The deletion of files is saved immediately, it do not rely on Save button at the bottom of this form.';
 $lang['admin_course_content_form_hint_edit_files'] = 'Pozor: Zmazanie súborov je uložené okamžite, nezávisí od tlačidla Uložiť na spodu tohoto formulára.';
 
 $lang['admin_course_content_form_field_course_id'] = 'kurz';
@@ -56,7 +55,9 @@ $lang['admin_course_content_table_button_delete_file'] = 'Vymazať súbor';
 $lang['admin_course_content_table_button_switch_file_visibility'] = 'Prepnúť viditeľnosť súboru';
 
 $lang['admin_course_content_success_updated'] = 'Obsah bol úspešne aktualizovaný.';
+$lang['admin_course_content_success_course_content_deleted'] = 'Obsah bol úspešne vymazaný.';
 
+$lang['admin_course_content_error_course_content_cant_be_deleted'] = 'Obsah sa nedá zmazať.';
 $lang['admin_course_content_error_not_updated'] = 'Obsah sa nepodarilo aktualizovať.';
 $lang['admin_course_content_error_course_content_not_found'] = 'Požadovaný obsah kurzu sa nenašiel.';
 $lang['admin_course_content_error_write_disabled'] = 'Súkromný adresár obsahu kurzov nie je zapisovateľný!';
@@ -67,6 +68,7 @@ $lang['admin_course_content_message_file_delete_failed'] = 'Súbor %s sa nedá z
 $lang['admin_course_content_message_file_delete_not_found'] = 'Súbor %s sa nenašiel.';
 
 $lang['admin_course_content_delete_file_question'] = 'Táto akcia zmaže súbor {0} zo servra. Toto nie je možné vziať späť. Určite chcete súbor zmazať?';
+$lang['admin_course_content_delete_content_question'] = 'Táto akcia vymaže obsah {0} z databázy spolu s jeho súbormi (ak existujú). Toto nie je možné vzia späť. Určite chcete obsah zmazať?';
 
 $lang['admin_course_content_text_show_uploader'] = 'Zobraziť uploader';
 $lang['admin_course_content_text_coppied_to_clipboard'] = 'Úspešne skopírované do schránky.';

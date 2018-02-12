@@ -50,12 +50,32 @@ jQuery(document).ready(function($) {
         });
     };
 
+    var delete_content = function(event) {
+        event.preventDefault();
+        var title = $(this).attr('data-title');
+        var question = delete_content_question;
+        if (confirm(question.replace('{0}', title))) {
+            var url = $(this).attr('href');
+            api_ajax_update(url, 'post', [], function (result) {
+                if (typeof result.status !== 'undefined' && typeof result.message !== 'undefined') {
+                    if (result.status) {
+                        show_notification(result.message, 'success');
+                        reload_content();
+                    } else {
+                        show_notification(result.message, 'error');
+                    }
+                }
+            });
+        }
+    };
+
     var reload_content = function() {
         var url = global_base_url + '/admin_course_content/get_all_content';
         var data = $('#filter_form_id').serializeArray();
         api_ajax_load(url, '#table_content', 'post', data, function () {
             sort_table('table.course_content_table', '#filter_form_id');
             $('a.status_switch').click(switch_status);
+            $('a.delete').click(delete_content);
         });
     };
 
