@@ -22,6 +22,9 @@
 
 VERSION 1.6.0 | 2018-02-09
 
+NEW Pridané rozhranie pre správu obsahu kurzov (informácie, súbory na stiahnutie a pod.).
+NEW [lang:english] Added interface for course content management (information, files for download, etc.).
+
 CHANGE Používateľské rozhranie administrácie upravené tak aby bola pracovná plocha aplikácie väčšia.
 CHANGE [lang:english] Administration user interface changed to provide bigger workplace.
 
