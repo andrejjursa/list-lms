@@ -53,6 +53,6 @@
             <div id="rightwrap"><div class="internal_padding">{block name='main_content'}{/block}</div></div>
             <div class="clear"></div>
         </div>
-        <div id="footer"><span>{translate|sprintf:'Andrej Jursa':2013:{translate line='common_copyright_faculty'}:$this->config->item('list_version') line='commont_copyright_text'}</span></div>
+        <div id="footer"><span>{translate|sprintf:'Andrej Jursa':2013:{translate line='common_copyright_faculty'}:$this->config->item('list_version') line='common_copyright_text'}</span></div>
     </body>
 </html>
