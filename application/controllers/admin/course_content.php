@@ -81,6 +81,10 @@ class Course_content extends LIST_Controller {
             $course_content->order_by('public', $order_by_direction);
         } elseif ($filter['order_by_field'] == 'course_content_group') {
             $course_content->order_by_related_with_overlay('course_content_group', 'title', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'published_from') {
+            $course_content->order_by('published_from', $order_by_direction);
+        } elseif ($filter['order_by_field'] == 'published_to') {
+            $course_content->order_by('published_to', $order_by_direction);
         }
         
         $course_content->get_paged_iterated($filter['page'] ?? 1, $filter['rows_per_page'] ?? 25);
