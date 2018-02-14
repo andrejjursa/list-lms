@@ -16,6 +16,10 @@ $cache = array (
     10 => 'test_scoring_deadline',
     11 => 'hide_in_lists',
     12 => 'auto_accept_students',
+    13 => 'syllabus',
+    14 => 'grading',
+    15 => 'instructions',
+    16 => 'other_texts',
   ),
   'validation' => 
   array (
@@ -107,6 +111,34 @@ $cache = array (
     'auto_accept_students' => 
     array (
       'field' => 'auto_accept_students',
+      'rules' => 
+      array (
+      ),
+    ),
+    'syllabus' => 
+    array (
+      'field' => 'syllabus',
+      'rules' => 
+      array (
+      ),
+    ),
+    'grading' => 
+    array (
+      'field' => 'grading',
+      'rules' => 
+      array (
+      ),
+    ),
+    'instructions' => 
+    array (
+      'field' => 'instructions',
+      'rules' => 
+      array (
+      ),
+    ),
+    'other_texts' => 
+    array (
+      'field' => 'other_texts',
       'rules' => 
       array (
       ),

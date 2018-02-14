@@ -14,6 +14,12 @@ $config['pagemenu'] = array(
         'sub' => NULL,
     ),
     array(
+        'title' => 'lang:pagemenu_title_course_description',
+        'pagetag' => 'course_description',
+        'link' => 'courses/course_description',
+        'sub' => NULL,
+    ),
+    array(
         'title' => 'lang:pagemenu_title_tasks',
         'pagetag' => 'tasks',
         'link' => 'tasks',

@@ -24,41 +24,83 @@
                     {form_error field='course[description]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                     {include file='partials/backend_general/overlay_editor.tpl' table='courses' table_id=$smarty.post.course_id|default:$course->id column='description' editor_type='textarea' class='tinymce' inline}
                 </div>
+                <div class="columns">
+                    <div class="col_50p">
+                        <div class="field">
+                            <label for="course_syllabus_id">{translate line='admin_courses_form_label_course_syllabus'}:</label>
+                            <p class="input"><textarea name="course[syllabus]" id="course_syllabus_id" class="tinymce">{$smarty.post.course.syllabus|default:$course->syllabus|add_base_url|htmlspecialchars}</textarea></p>
+                            {form_error field='course[syllabus]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                            {include file='partials/backend_general/overlay_editor.tpl' table='courses' table_id=$smarty.post.course_id|default:$course->id column='syllabus' editor_type='textarea' class='tinymce' inline}
+                        </div>
+                        <div class="field">
+                            <label for="course_grading_id">{translate line='admin_courses_form_label_course_grading'}:</label>
+                            <p class="input"><textarea name="course[grading]" id="course_grading_id" class="tinymce">{$smarty.post.course.grading|default:$course->grading|add_base_url|htmlspecialchars}</textarea></p>
+                            {form_error field='course[grading]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                            {include file='partials/backend_general/overlay_editor.tpl' table='courses' table_id=$smarty.post.course_id|default:$course->id column='grading' editor_type='textarea' class='tinymce' inline}
+                        </div>
+                    </div>
+                    <div class="col_50p">
+                        <div class="field">
+                            <label for="course_instructions_id">{translate line='admin_courses_form_label_course_instructions'}:</label>
+                            <p class="input"><textarea name="course[instructions]" id="course_instructions_id" class="tinymce">{$smarty.post.course.instructions|default:$course->instructions|add_base_url|htmlspecialchars}</textarea></p>
+                            {form_error field='course[instructions]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                            {include file='partials/backend_general/overlay_editor.tpl' table='courses' table_id=$smarty.post.course_id|default:$course->id column='instructions' editor_type='textarea' class='tinymce' inline}
+                        </div>
+                        <div class="field">
+                            <label for="course_other_texts_id">{translate line='admin_courses_form_label_course_other_texts'}:</label>
+                            <p class="input"><textarea name="course[other_texts]" id="course_other_texts_id" class="tinymce">{$smarty.post.course.other_texts|default:$course->other_texts|add_base_url|htmlspecialchars}</textarea></p>
+                            {form_error field='course[other_texts]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                            {include file='partials/backend_general/overlay_editor.tpl' table='courses' table_id=$smarty.post.course_id|default:$course->id column='other_texts' editor_type='textarea' class='tinymce' inline}
+                        </div>
+                    </div>
+                </div>
                 <div class="field">
                     <label for="course_capacity_id" class="required">{translate line='admin_courses_form_label_course_capacity'}:</label>
                     <p class="input"><input type="text" name="course[capacity]" id="course_capacity_id" value="{$smarty.post.course.capacity|default:$course->capacity|escape:'html'}" /></p>
                     {form_error field='course[capacity]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>
-                <div class="field">
-                    <label for="course_groups_change_deadline_id">{translate line='admin_courses_form_label_course_groups_change_deadline'}:</label>
-                    <p class="input"><input type="text" name="course[groups_change_deadline]" value="{$smarty.post.course.groups_change_deadline|default:$course->groups_change_deadline|escape:'html'}" id="course_groups_change_deadline_id" /></p>
-                    <p class="input"><em>{translate line='admin_courses_form_label_course_groups_change_deadline_hint'}</em></p>
+                <div class="columns">
+                    <div class="col_50p">
+                        <div class="field">
+                            <label for="course_groups_change_deadline_id">{translate line='admin_courses_form_label_course_groups_change_deadline'}:</label>
+                            <p class="input"><input type="text" name="course[groups_change_deadline]" value="{$smarty.post.course.groups_change_deadline|default:$course->groups_change_deadline|escape:'html'}" id="course_groups_change_deadline_id" /></p>
+                            <p class="input"><em>{translate line='admin_courses_form_label_course_groups_change_deadline_hint'}</em></p>
+                        </div>
+                        <div class="field">
+                            <label for="course_default_points_to_remove_id" class="required">{translate line='admin_courses_form_label_course_default_points_to_remove'}:</label>
+                            <p class="input"><input type="text" name="course[default_points_to_remove]" value="{$smarty.post.course.default_points_to_remove|default:$course->default_points_to_remove}" id="course_default_points_to_remove_id" /></p>
+                            <p class="input"><em>{translate line='admin_courses_form_label_course_default_points_to_remove_hint'}</em></p>
+                            {form_error field='course[default_points_to_remove]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+                        </div>
+                    </div>
+                    <div class="col_50p">
+                        <div class="field">
+                            <label for="course_allow_subscription_to_id">{translate line='admin_courses_form_label_allow_subscription_to'}:</label>
+                            <p class="input"><input type="text" name="course[allow_subscription_to]" value="{$smarty.post.course.allow_subscription_to|default:$course->allow_subscription_to|escape:'html'}" id="course_allow_subscription_to_id" /></p>
+                            <p class="input"><em>{translate line='admin_courses_form_label_allow_subscription_to_hint'}</em></p>
+                        </div>
+                        <div class="field">
+                            <label for="course_test_scoring_deadline_id">{translate line='admin_courses_form_label_test_scoring_deadline'}:</label>
+                            <p class="input"><input type="text" name="course[test_scoring_deadline]" value="{$smarty.post.course.test_scoring_deadline|default:$course->test_scoring_deadline|escape:'html'}" id="course_test_scoring_deadline_id" /></p>
+                            <p class="input"><em>{translate line='admin_courses_form_label_test_scoring_deadline_hint'}</em></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="field">
-                    <label for="course_default_points_to_remove_id" class="required">{translate line='admin_courses_form_label_course_default_points_to_remove'}:</label>
-                    <p class="input"><input type="text" name="course[default_points_to_remove]" value="{$smarty.post.course.default_points_to_remove|default:$course->default_points_to_remove}" id="course_default_points_to_remove_id" /></p>
-                    <p class="input"><em>{translate line='admin_courses_form_label_course_default_points_to_remove_hint'}</em></p>
-                    {form_error field='course[default_points_to_remove]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
-                </div>
-                <div class="field">
-                    <label for="course_allow_subscription_to_id">{translate line='admin_courses_form_label_allow_subscription_to'}:</label>
-                    <p class="input"><input type="text" name="course[allow_subscription_to]" value="{$smarty.post.course.allow_subscription_to|default:$course->allow_subscription_to|escape:'html'}" id="course_allow_subscription_to_id" /></p>
-                    <p class="input"><em>{translate line='admin_courses_form_label_allow_subscription_to_hint'}</em></p>
-                </div>
-                <div class="field">
-                    <label for="course_test_scoring_deadline_id">{translate line='admin_courses_form_label_test_scoring_deadline'}:</label>
-                    <p class="input"><input type="text" name="course[test_scoring_deadline]" value="{$smarty.post.course.test_scoring_deadline|default:$course->test_scoring_deadline|escape:'html'}" id="course_test_scoring_deadline_id" /></p>
-                    <p class="input"><em>{translate line='admin_courses_form_label_test_scoring_deadline_hint'}</em></p>
-                </div>
-                <div class="field">
-                    <label for="course_hide_in_lists_id">{translate line='admin_courses_form_label_hide_in_lists'}:</label>
-                    <p class="input"><input type="checkbox" name="course[hide_in_lists]" id="course_hide_in_lists_id" value="1"{if $smarty.post.course.hide_in_lists|default:$course->hide_in_lists eq 1} checked="checked"{/if}</p>
-                    <p class="input"><em>{translate line='admin_courses_form_label_hide_in_lists_hint'}</em></p>
-                </div>
-                <div class="field">
-                    <label for="course_auto_accept_students_id">{translate line='admin_courses_form_label_auto_accept_students'}:</label>
-                    <p class="input"><input type="checkbox" name="course[auto_accept_students]" id="course_auto_accept_students_id" value="1"{if $smarty.post.course.auto_accelpt_students|default:$course->auto_accept_students eq 1} checked="checked"{/if} /></p>
-                    <p class="input"><em>{translate line='admin_courses_form_label_auto_accept_students_hint'}</em></p>
+                <div class="columns">
+                    <div class="col_50p">
+                        <div class="field">
+                            <label for="course_hide_in_lists_id">{translate line='admin_courses_form_label_hide_in_lists'}:</label>
+                            <p class="input"><input type="checkbox" name="course[hide_in_lists]" id="course_hide_in_lists_id" value="1"{if $smarty.post.course.hide_in_lists|default:$course->hide_in_lists eq 1} checked="checked"{/if}</p>
+                            <p class="input"><em>{translate line='admin_courses_form_label_hide_in_lists_hint'}</em></p>
+                        </div>
+                    </div>
+                    <div class="col_50p">
+                        <div class="field">
+                            <label for="course_auto_accept_students_id">{translate line='admin_courses_form_label_auto_accept_students'}:</label>
+                            <p class="input"><input type="checkbox" name="course[auto_accept_students]" id="course_auto_accept_students_id" value="1"{if $smarty.post.course.auto_accelpt_students|default:$course->auto_accept_students eq 1} checked="checked"{/if} /></p>
+                            <p class="input"><em>{translate line='admin_courses_form_label_auto_accept_students_hint'}</em></p>
+                        </div>
+                    </div>
                 </div>
                 <div class="buttons">
                     <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" /> <a href="{internal_url url='admin_courses'}" class="button special">{translate line='common_button_back'}</a>

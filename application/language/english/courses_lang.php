@@ -24,3 +24,13 @@ $lang['courses_detail_group_teaching'] = 'Teaching in rooms';
 $lang['courses_detail_group_empty'] = 'Group is empty.';
 $lang['courses_detail_group_without_rooms'] = 'This group does not have any room.';
 $lang['courses_detail_group_name_not_assigned'] = 'Not assigned to group';
+
+$lang['courses_page_description_title'] = 'Course description';
+
+$lang['courses_description_legend_description'] = 'Overall description';
+$lang['courses_description_legend_instructions'] = 'Instructions';
+$lang['courses_description_legend_syllabus'] = 'Syllabus';
+$lang['courses_description_legend_grading'] = 'Grading conditions';
+$lang['courses_description_legend_other_texts'] = 'Other information';
+
+$lang['courses_no_active_course'] = 'No active course selected.';

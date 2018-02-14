@@ -15,6 +15,10 @@ class Content extends LIST_Controller {
         $this->_load_student_langfile();
     }
     
+    public function index() {
+    
+    }
+    
     public function download_file($path, $language, $file) {
         if (is_numeric($path)) {
             $course_content = new Course_content_model();

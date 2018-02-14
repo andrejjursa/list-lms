@@ -24,3 +24,13 @@ $lang['courses_detail_group_teaching'] = 'Výuka v miestnostiach';
 $lang['courses_detail_group_empty'] = 'Skupina je prázdna.';
 $lang['courses_detail_group_without_rooms'] = 'Táto skupina nemá žiadnu miestnosť.';
 $lang['courses_detail_group_name_not_assigned'] = 'Nezaradení do skupiny';
+
+$lang['courses_page_description_title'] = 'Popis kurzu';
+
+$lang['courses_description_legend_description'] = 'Celkový popis';
+$lang['courses_description_legend_instructions'] = 'Inštrukcie';
+$lang['courses_description_legend_syllabus'] = 'Sylabus';
+$lang['courses_description_legend_grading'] = 'Podmienky udelenia známky';
+$lang['courses_description_legend_other_texts'] = 'Ostatné informácie';
+
+$lang['courses_no_active_course'] = 'Nie je zvolený žiadny aktívny kurz.';

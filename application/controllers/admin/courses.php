@@ -190,6 +190,10 @@
 						'default_points_to_remove',
 					));
 					$course->description            = remove_base_url($course_data['description']);
+					$course->syllabus               = remove_base_url($course_data['syllabus']);
+                    $course->grading                = remove_base_url($course_data['grading']);
+                    $course->instructions           = remove_base_url($course_data['instructions']);
+                    $course->other_texts            = remove_base_url($course_data['other_texts']);
 					$course->allow_subscription_to  = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : NULL;
 					$course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
 					$course->test_scoring_deadline  = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['test_scoring_deadline']) ? $course_data['test_scoring_deadline'] : NULL;

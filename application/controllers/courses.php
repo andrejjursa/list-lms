@@ -175,6 +175,27 @@ class Courses extends LIST_Controller {
         $this->parser->parse('frontend/courses/course_details.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
     }
     
+    public function course_description() {
+        $this->parser->add_css_file('frontend_courses.css');
+    
+        $this->_initialize_student_menu();
+        $this->_select_student_menu_pagetag('course_description');
+        
+        $student = new Student();
+        $student->get_by_id($this->usermanager->get_student_id());
+        
+        $course_id = $student->active_course_id ?? 'none';
+        $cache_id = 'course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/courses/course_description.tpl'), $cache_id)) {
+            $course = new Course();
+            $course->include_related('period');
+            $course->get_by_id((int)$course_id);
+            smarty_inject_days();
+            $this->parser->assign(array('course' => $course));
+        }
+        $this->parser->parse('frontend/courses/course_description.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
+    }
+    
     public function quick_course_change($course_id, $current_url) {
         $this->activate_course($course_id);
         $output = $this->output->get_output();
