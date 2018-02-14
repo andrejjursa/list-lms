@@ -25,6 +25,9 @@ VERSION 1.6.0 | 2018-02-09
 NEW Pridané rozhranie pre správu obsahu kurzov (informácie, súbory na stiahnutie a pod.).
 NEW [lang:english] Added interface for course content management (information, files for download, etc.).
 
+NEW Pridané položky o sylabe, známkovaní, inštrukciách a volitelnej ďalšej informácii ku kurzu.
+NEW [lang:english] Added field for syllabus, grading, instructions and optional other text to course.
+
 CHANGE Používateľské rozhranie administrácie upravené tak aby bola pracovná plocha aplikácie väčšia.
 CHANGE [lang:english] Administration user interface changed to provide bigger workplace.
 
