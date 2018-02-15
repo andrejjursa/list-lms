@@ -11,7 +11,7 @@ class Courses extends LIST_Controller {
     
     public function __construct() {
         parent::__construct();
-        if ($this->router->method != 'show_details') {
+        if ($this->router->method != 'show_details' && $this->router->method != 'show_description') {
             $this->usermanager->student_login_protected_redirect();
         }
         $this->_init_language_for_student();
