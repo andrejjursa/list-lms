@@ -24,6 +24,7 @@ class Groups extends LIST_Controller {
             $student->get_by_id($this->usermanager->get_student_id());
 
             $course = new Course();
+            $course->include_related('period', 'name');
             $course->where_related_active_for_student($student);
             $course->where_related('participant/student', $student);
             $course->where_related_participant('allowed', 1);

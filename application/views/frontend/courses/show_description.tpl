@@ -1,4 +1,4 @@
-{extends file='layouts/frontend.tpl'}
+{extends file='layouts/frontend_popup.tpl'}
 {block title}{translate line='courses_page_description_title'}{/block}
 {block main_content}
     <h1>{translate line='courses_page_description_title'}</h1>
@@ -43,7 +43,7 @@
             </fieldset>
         {/if}
     {else}
-        {include file='partials/frontend_general/error_box.tpl' message='lang:courses_no_active_course' inline}
+        {include file='partials/frontend_general/error_box.tpl' message='lang:courses_course_not_found' inline}
     {/if}
 {/block}
 {block custom_head}

@@ -2,17 +2,11 @@
 {block title}{translate line='courses_detail_page_title'}{/block}
 {block main_content}
     <h1>{translate line='courses_detail_page_title'}</h1>
+    {if $course->exists()}
+    <h2>{translate_text text=$course->name} / {translate_text text=$course->period_name}</h2>
+    {/if}
     {include file='partials/frontend_general/flash_messages.tpl' inline}
-    <fieldset>
-        <legend>{translate_text text=$course->name} / {translate_text text=$course->period_name}</legend>
-        <div class="text text_content">
-        {if {overlay table='courses' table_id=$course->id column='description' default=$course->description}}
-            {overlay|add_base_url table='courses' table_id=$course->id column='description' default=$course->description}
-        {else}
-            <p>{translate line='courses_detail_description_missing'}</p>
-        {/if}
-        </div>
-    </fieldset>
+    {if $course->exists()}
     <fieldset>
         <legend>{translate line='courses_detail_fieldset_legend_groups'}</legend>
         {$groups_contents = []}
@@ -69,4 +63,7 @@
             {if $group_content@last or $group_content@iteration is div by 3}<div class="clear"></div>{/if}
         {/foreach}
     </fieldset>
+    {else}
+        {include file='partials/frontend_general/error_box.tpl' message='lang:courses_course_not_found' inline}
+    {/if}
 {/block}

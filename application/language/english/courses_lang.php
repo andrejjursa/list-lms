@@ -17,7 +17,7 @@ $lang['courses_message_cant_switch_to_unsigned_course'] = 'Can\'t switch to sele
 $lang['courses_message_subscription_disallowed'] = 'Subscription is disallowed for this course.';
 $lang['courses_message_course_is_full'] = 'Selected course is full.';
 
-$lang['courses_detail_page_title'] = 'Course details';
+$lang['courses_detail_page_title'] = 'Course groups';
 $lang['courses_detail_description_missing'] = 'This course has no description.';
 $lang['courses_detail_fieldset_legend_groups'] = 'Groups';
 $lang['courses_detail_group_teaching'] = 'Teaching in rooms';
@@ -34,3 +34,4 @@ $lang['courses_description_legend_grading'] = 'Grading conditions';
 $lang['courses_description_legend_other_texts'] = 'Other information';
 
 $lang['courses_no_active_course'] = 'No active course selected.';
+$lang['courses_course_not_found'] = 'Error: course specified in URL does not exist.';
