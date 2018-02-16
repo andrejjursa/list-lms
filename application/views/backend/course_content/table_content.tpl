@@ -58,7 +58,7 @@
             <tr class="content_overview" data-content-id="{$content->id}">
                 <td></td>
                 <td colspan="7">
-                    <div class="content_preview">{overlay table='course_content' table_id=$content->id column='content' default=$content->content}</div>
+                    <div class="content_preview content_styles">{overlay table='course_content' table_id=$content->id column='content' default=$content->content}</div>
                     <div class="files">{$files = $content->get_files()}
                         {if $files}
                             <div class="default">
