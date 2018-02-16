@@ -16,7 +16,7 @@ class Course_content_group extends DataMapper {
     public static function get_all_groups($course_id = NULL, $valueText = FALSE) {
         $groups = new Course_content_group();
         $groups->select('*');
-        $groups->order_by_with_overlay('title', 'asc');
+        $groups->order_by('sorting', 'asc');
         if (!is_int($course_id) && !$valueText) {
             $groups->where_related('course', 'id', (int)$course_id);
         }

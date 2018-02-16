@@ -201,7 +201,7 @@ class Courses extends LIST_Controller {
         $student->get_by_id($this->usermanager->get_student_id());
         
         $course_id = $student->active_course_id ?? 'none';
-        $cache_id = 'course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
+        $cache_id = 'student_' . $student->id . '|course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
         if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/courses/course_description.tpl'), $cache_id)) {
             $course = new Course();
             $course->include_related('period');

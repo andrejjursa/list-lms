@@ -1,0 +1,14 @@
+div.course_content section.content_wrap:first-child { margin-top: 0.5em; }
+div.course_content section.content_wrap:last-child { margin-bottom: 0.5em; }
+div.course_content section.content_wrap { margin: 1em; border-top: 1px solid gray; border-bottom: 1px solid gray; border-radius: 5px; }
+div.course_content section.content_wrap header.content_header { padding: 0.5em; }
+div.course_content section.content_wrap header.content_header h1 { font-size: 2.5em; }
+div.course_content section.content_wrap section.content_body { border-top: 1px solid gray; padding: 0.5em; }
+div.course_content section.content_wrap section.content_files { padding: 0.5em; border-top: 1px solid gray; }
+div.course_content section.content_wrap section.content_files span.file { border: 1px solid green; border-radius: 15px; padding: 0.25em; margin: 0.25em; background-color: silver; display: inline-block; }
+div.course_content section.content_wrap section.content_files span.file a { color: green; text-decoration: none; }
+div.course_content section.content_wrap section.content_files span.file a:hover { color: darkgreen; }
+div.course_content fieldset.group_wrap legend { font-size: 2em; padding: 0 0.5em; }
+div.course_content fieldset.group_wrap section.content_wrap:first-child { margin-top: 0.5em; }
+div.course_content fieldset.group_wrap section.content_wrap:last-child { margin-bottom: 0.5em; }
+div.course_content fieldset.group_wrap section.content_wrap { margin: 1em 0.4em; }

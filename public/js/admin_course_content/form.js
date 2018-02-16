@@ -66,8 +66,6 @@ jQuery(document).ready(function($) {
         var file = $(tr).attr('data-file');
         var language = $(tr).attr('data-language');
 
-        console.log(file + ' ' + language);
-
         if (typeof config[language] !== 'undefined' && typeof config[language][file] !== 'undefined' && config[language][file] === true) {
             $(tr).addClass('hidden');
             $(tr).find('a.switch_visibility').addClass('hidden');

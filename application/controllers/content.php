@@ -22,11 +22,17 @@ class Content extends LIST_Controller {
         $this->_initialize_student_menu();
         $this->_select_student_menu_pagetag('course_content');
     
+        $this->_add_prettify();
+        $this->_add_mathjax();
+        
+        $this->parser->add_js_file('content/content.js');
+        $this->parser->add_css_file('frontend_content.css');
+    
         $student = new Student();
         $student->get_by_id($this->usermanager->get_student_id());
     
         $course_id = $student->active_course_id ?? 'none';
-        $cache_id = 'course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
+        $cache_id = 'student_' . $student->id . '|course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
         if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/content/index.tpl'), $cache_id)) {
             $this->_transaction_isolation();
             $this->db->trans_start();
@@ -67,6 +73,16 @@ class Content extends LIST_Controller {
             if (!$this->usermanager->is_teacher_session_valid()) {
                 if (!$course_content->public) {
                     $this->usermanager->student_login_protected_redirect();
+                    
+                    $student = new Student();
+                    $student->where_related('participant/course', 'id', $course_content->course_id);
+                    $student->where_related('participant', 'allowed', true);
+                    $student->get_by_id($this->usermanager->get_student_id());
+                    
+                    if (!$student->exists()) {
+                        $this->file_not_found();
+                        return;
+                    }
                 }
                 
                 if (!$course_content->get_is_published()) {

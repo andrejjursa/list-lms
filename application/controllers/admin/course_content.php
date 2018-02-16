@@ -138,9 +138,9 @@ class Course_content extends LIST_Controller {
             }
             redirect(create_internal_url('admin_course_content/new_content_form'));
         } else {
+            $this->db->trans_rollback();
             $this->new_content_form();
         }
-        $this->db->trans_rollback();
     }
     
     public function _content_group_related_to_course($id) {
@@ -482,8 +482,14 @@ class Course_content extends LIST_Controller {
     }
     
     private function change_temp_folder_name($folder, $id) {
+        if (empty($folder)) {
+            return true;
+        }
         $path = realpath(self::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $folder;
         $new_path = realpath(self::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $id;
+        if (!file_exists($path) || !is_dir($path)) {
+            return true;
+        }
         if (file_exists($path) && is_dir($path) && !file_exists($new_path)) {
             return @rename($path, $new_path);
         }
@@ -507,6 +513,10 @@ class Course_content extends LIST_Controller {
     }
     
     private function replace_temp_folder_name_in_texts($temp_name, &$course_content, &$overlay) {
+        if (empty($temp_name)) {
+            return true;
+        }
+        
         $course_content->content = str_replace($temp_name, $course_content->id, $course_content->content);
         $course_content->title = str_replace($temp_name, $course_content->id, $course_content->title);
         
