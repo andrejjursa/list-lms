@@ -91,3 +91,6 @@ $lang['admin_course_content_sorting_nothing_to_sort'] = 'There is nothing to sor
 $lang['admin_course_content_sorting_order_inconsistent'] = 'Can\'t perform sorting due to inconsistent input: can\'t mix groups and content inside group sorting.';
 $lang['admin_course_content_sorting_failed_to_update_sorting'] = 'Failed to apply sorting, try again.';
 $lang['admin_course_content_sorting_successful'] = 'Sorting successful.';
+
+$lang['admin_course_content_switch_to_sorting'] = 'To sorting';
+$lang['admin_course_content_switch_to_listing'] = 'To listing';

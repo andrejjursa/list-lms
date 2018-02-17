@@ -91,3 +91,6 @@ $lang['admin_course_content_sorting_nothing_to_sort'] = 'Nie je čo zoradiť.';
 $lang['admin_course_content_sorting_order_inconsistent'] = 'Nie je možné vykonať zotriedenie kvôli nekonzistentnému vstupu: nie je možné miešať obsah a skupiny vrámci vnútroskupinového triedenia.';
 $lang['admin_course_content_sorting_failed_to_update_sorting'] = 'Zlyhanie pri aplikovaní zoradenia, skúste to znovu.';
 $lang['admin_course_content_sorting_successful'] = 'Zoradenie úspešné.';
+
+$lang['admin_course_content_switch_to_sorting'] = 'Na zotriedenie';
+$lang['admin_course_content_switch_to_listing'] = 'Na zoznam';

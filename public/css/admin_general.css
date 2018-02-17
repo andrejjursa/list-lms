@@ -140,6 +140,16 @@ div.backend_body > fieldset, fieldset.basefieldset { margin: 5px; border: 1px so
 div.backend_body > fieldset > legend, fieldset.basefieldset > legend { border: 1px solid gray; margin-left: 5px; width: 50%; padding: 4px; border-radius: 5px; background-color: #E8E8E8; font-weight: bold; }
 div.backend_body > h4, div.backend_body > h3, div.backend_body > h2 { margin: 5px; text-shadow: 0 0 4px gray; color: black; }
 
+div.backend_body > span.switches { display: block; text-align: right; margin: 0 1em; }
+div.backend_body > span.switches a { display: inline-block; text-decoration: none; color: green; transition: color 0.2s ease-in-out; margin: 0 0.25em; }
+div.backend_body > span.switches a:before { content: '[ '; color: limegreen; font-family: monospace; transition: color 0.2s ease-in-out; }
+div.backend_body > span.switches a:after { content: ' ]'; color: limegreen; font-family: monospace; transition: color 0.2s ease-in-out; }
+div.backend_body > span.switches a i.fa { color: lightcoral; transition: color 0.2s ease-in-out; }
+div.backend_body > span.switches a:hover { color: darkgreen; }
+div.backend_body > span.switches a:hover:before { content: '( '; color: lightcoral; }
+div.backend_body > span.switches a:hover:after { content: ' )'; color: lightcoral; }
+div.backend_body > span.switches a:hover i.fa { color: limegreen; }
+
 div.backend_footer { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; }
 div.backend_footer a { color: green; text-decoration: none; }
 div.backend_footer a:hover { color: darkgreen; text-decoration: underline; }

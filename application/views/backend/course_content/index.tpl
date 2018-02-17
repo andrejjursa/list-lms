@@ -2,6 +2,7 @@
 {block title}{translate line='admin_course_content_page_title'}{/block}
 {block main_content}
     <h2>{translate line='admin_course_content_page_title'}</h2>
+    <span class="switches"><a href="{internal_url url='admin_course_content/sorting'}" class="switch"><i class="fa fa-arrow-right" aria-hidden="true"></i> {translate line='admin_course_content_switch_to_sorting'}</a></span>
     {include file='partials/backend_general/flash_messages.tpl'}
     {if not $is_writable}
         {include file='partials/backend_general/error_box.tpl' message='lang:admin_course_content_error_write_disabled'}
