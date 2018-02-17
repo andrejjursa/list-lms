@@ -33,6 +33,17 @@
                         <section class="content_wrap">
                             <header class="content_header">
                                 <h1>{overlay table='course_content' table_id=$record->id column='title' default=$record->title}</h1>
+                                {$reference_time = '1971-01-01 00:00:00'|strtotime}
+                                {$created_at = $record->created|strtotime}
+                                {$updated_at = $record->updated|strtotime}
+                                <h2>
+                                    {if $updated_at > $reference_time}
+                                        <span>{$updated_at|date_format:{translate line='common_datetime_format'}}</span>
+                                    {/if}
+                                    {if $created_at > $reference_time}
+                                        <span>{$created_at|date_format:{translate line='common_datetime_format'}}</span>
+                                    {/if}
+                                </h2>
                             </header>
                             {if $content_body}
                             <section class="content_body content_styles">

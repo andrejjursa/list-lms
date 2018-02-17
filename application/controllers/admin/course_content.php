@@ -555,7 +555,9 @@ class Course_content extends LIST_Controller {
             
             foreach ($sorted as $to_sort) {
                 $this->db->where('id', $to_sort['id']);
-                if (!$this->db->update($all_content->table, [ 'sorting' => $to_sort['sorting'] ])) {
+                $this->db->set('updated', 'updated', false);
+                $this->db->set('sorting', $to_sort['sorting']);
+                if (!$this->db->update($all_content->table)) {
                     $output->message = $this->lang->line('admin_course_content_sorting_failed_to_update_sorting');
                     return $output;
                 }
@@ -630,13 +632,15 @@ class Course_content extends LIST_Controller {
     
         foreach ($sorted as $to_sort) {
             $this->db->where('id', $to_sort['id']);
+            $this->db->set('updated', 'updated', false);
+            $this->db->set('sorting', $to_sort['sorting']);
             if ($to_sort['type'] == 'content') {
-                if (!$this->db->update($all_content->table, [ 'sorting' => $to_sort['sorting'] ])) {
+                if (!$this->db->update($all_content->table)) {
                     $output->message = $this->lang->line('admin_course_content_sorting_failed_to_update_sorting');
                     return $output;
                 }
             } else {
-                if (!$this->db->update($all_groups->table, [ 'sorting' => $to_sort['sorting'] ])) {
+                if (!$this->db->update($all_groups->table)) {
                     $output->message = $this->lang->line('admin_course_content_sorting_failed_to_update_sorting');
                     return $output;
                 }

@@ -3,6 +3,11 @@ div.course_content section.content_wrap:last-child { margin-bottom: 0.5em; }
 div.course_content section.content_wrap { margin: 1em; border-top: 1px solid gray; border-bottom: 1px solid gray; border-radius: 5px; }
 div.course_content section.content_wrap header.content_header { padding: 0.5em; }
 div.course_content section.content_wrap header.content_header h1 { font-size: 2.5em; }
+div.course_content section.content_wrap header.content_header h2 { font-size: 0.8em; font-weight: normal; text-align: right; }
+div.course_content section.content_wrap header.content_header h2 span { margin: 0 0.5ex; }
+div.course_content section.content_wrap header.content_header h2 span:first-child { margin-left: 0; }
+div.course_content section.content_wrap header.content_header h2 span:last-child { margin-right: 0; }
+div.course_content section.content_wrap header.content_header h2 span:nth-child(2) { border-left: 1px solid black; padding-left: 1ex; }
 div.course_content section.content_wrap section.content_body { border-top: 1px solid gray; padding: 0.5em; }
 div.course_content section.content_wrap section.content_files { padding: 0.5em; border-top: 1px solid gray; }
 div.course_content section.content_wrap section.content_files span.file { border: 1px solid green; border-radius: 15px; padding: 0.25em; margin: 0.25em; background-color: silver; display: inline-block; }
