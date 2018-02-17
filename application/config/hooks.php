@@ -163,6 +163,9 @@ $hook['post_controller'] = array(
                 'change_public_status' => array(
                     'frontend/content/*' => $no_student_id,
                 ),
+                'update_sorting' => array(
+                    'frontend/content/*' => $no_student_id,
+                ),
             ),
             'course_content_groups' => array(
                 'create' => array(

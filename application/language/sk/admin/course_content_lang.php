@@ -81,3 +81,13 @@ $lang['admin_course_content_header_public_yes'] = 'Verejné';
 $lang['admin_course_content_header_public_no'] = 'Neverejné';
 $lang['admin_course_content_header_published_yes'] = 'Publikované';
 $lang['admin_course_content_header_published_no'] = 'Nepublikované';
+
+$lang['admin_course_content_sorting_page_header'] = 'Obsah kurzu - zotriedenie';
+$lang['admin_course_content_fieldset_sort_all_content'] = 'Zotriedenie celého obsahu';
+
+$lang['admin_course_content_sorting_course_not_found'] = 'Kurz, v ktorom chcete zotriediť obsah, sa nenašiel.';
+$lang['admin_course_content_sorting_group_not_found'] = 'Nie je možné nájsť skupinu obsahu kurzu, v ktorej sa má zoradiť obsah.';
+$lang['admin_course_content_sorting_nothing_to_sort'] = 'Nie je čo zoradiť.';
+$lang['admin_course_content_sorting_order_inconsistent'] = 'Nie je možné vykonať zotriedenie kvôli nekonzistentnému vstupu: nie je možné miešať obsah a skupiny vrámci vnútroskupinového triedenia.';
+$lang['admin_course_content_sorting_failed_to_update_sorting'] = 'Zlyhanie pri aplikovaní zoradenia, skúste to znovu.';
+$lang['admin_course_content_sorting_successful'] = 'Zoradenie úspešné.';

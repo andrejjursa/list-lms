@@ -66,3 +66,12 @@ table.course_content_legend_table tr td.course_content_legend_table_published_pu
 table.course_content_legend_table tr td.course_content_legend_table_published_nonpublic { background-color: rgba(255,255,255,128); }
 table.course_content_legend_table tr td.course_content_legend_table_nonpublished_public { background-color: rgba(255, 212, 255, 255); }
 table.course_content_legend_table tr td.course_content_legend_table_nonpublished_nonpublic { background-color: rgba(212, 0, 0, 255); }
+
+div.top_level_sorting {}
+div.top_level_sorting div.sorted_content { border: 1px solid darkgreen; background-color: limegreen; padding: 0.1em; margin: 0.1em; }
+div.top_level_sorting div.sorted_group { border: 1px solid darkblue; background-color: lightblue; padding: 0.1em; margin: 0.1em; }
+div.top_level_sorting div.sorted_group div.inner_content { margin: 0.5em; padding: 0.5em; border: 1px dashed darkblue; }
+div.top_level_sorting.disabled div.sorted_content { border-color: gray; background-color: lightgrey; cursor: not-allowed; }
+div.top_level_sorting.disabled div.sorted_group { border-color: gray; background-color: lightgrey; cursor: not-allowed; }
+
+div.content_or_group_placeholder { height: 1em; border: 1px solid darkred; background-color: lightcoral; margin: 0.1em; padding: 0.1em; }

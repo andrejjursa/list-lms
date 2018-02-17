@@ -81,3 +81,13 @@ $lang['admin_course_content_header_public_yes'] = 'Public';
 $lang['admin_course_content_header_public_no'] = 'Non-public';
 $lang['admin_course_content_header_published_yes'] = 'Published';
 $lang['admin_course_content_header_published_no'] = 'Non-published';
+
+$lang['admin_course_content_sorting_page_header'] = 'Course content - sorting';
+$lang['admin_course_content_fieldset_sort_all_content'] = 'Sort all content';
+
+$lang['admin_course_content_sorting_course_not_found'] = 'Course, in which you want to sort content, was not found.';
+$lang['admin_course_content_sorting_group_not_found'] = 'Can\'t find course content group in which content has to be sort.';
+$lang['admin_course_content_sorting_nothing_to_sort'] = 'There is nothing to sort.';
+$lang['admin_course_content_sorting_order_inconsistent'] = 'Can\'t perform sorting due to inconsistent input: can\'t mix groups and content inside group sorting.';
+$lang['admin_course_content_sorting_failed_to_update_sorting'] = 'Failed to apply sorting, try again.';
+$lang['admin_course_content_sorting_successful'] = 'Sorting successful.';
