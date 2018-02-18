@@ -38,10 +38,10 @@
                                 {$updated_at = $record->updated|strtotime}
                                 <h2>
                                     {if $updated_at > $reference_time}
-                                        <span>{$updated_at|date_format:{translate line='common_datetime_format'}}</span>
+                                        <span>{$updated_at|date_format:{translate line='common_datetime_format'}}{if $record->updator_id} ({$record->updator_fullname}){/if}</span>
                                     {/if}
                                     {if $created_at > $reference_time}
-                                        <span>{$created_at|date_format:{translate line='common_datetime_format'}}</span>
+                                        <span>{$created_at|date_format:{translate line='common_datetime_format'}}{if $record->creator_id} ({$record->creator_fullname}){/if}</span>
                                     {/if}
                                 </h2>
                             </header>

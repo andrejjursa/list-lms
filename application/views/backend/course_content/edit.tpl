@@ -10,6 +10,20 @@
             <div class="columns">
                 <div class="col_50p">
                     <div class="field">
+                        <label>{translate line='admin_course_content_form_label_created_by'}:</label>
+                        <div class="input">{if $content->creator_id}{$content->creator_fullname}{else}-{/if} ({$content->created|date_format:{translate line='common_datetime_format'}})</div>
+                    </div>
+                </div>
+                <div class="col_50p">
+                    <div class="field">
+                        <label>{translate line='admin_course_content_form_label_updated_by'}:</label>
+                        <div class="input">{if $content->updator_id}{$content->updator_fullname}{else}-{/if} ({$content->updated|date_format:{translate line='common_datetime_format'}})</div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="col_50p">
+                    <div class="field">
                         <label for="course_content_course_id_id" class="required">{translate line='admin_course_content_form_label_course_id'}:</label>
                         <p class="input"><select name="course_content[course_id]" size="1" id="course_content_course_id_id">{list_html_options options=$courses selected=$smarty.post.course_content.course_id|default:$content->course_id|default:$list_teacher_account.prefered_course_id|intval}</select></p>
                         {form_error field='course_content[course_id]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}

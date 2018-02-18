@@ -9,7 +9,22 @@ class Course_content_model extends DataMapper {
 
     public $table = 'course_content';
 
-    public $has_one = ['course', 'course_content_group'];
+    public $has_one = [
+        'course',
+        'course_content_group',
+        'creator' => [
+            'class' => 'Teacher',
+            'other_field' => 'created_content',
+            'join_self_as' => 'created_content',
+            'join_other_as' => 'creator',
+        ],
+        'updator' => [
+            'class' => 'Teacher',
+            'other_field' => 'updated_content',
+            'join_self_as' => 'updated_content',
+            'join_other_as' => 'updator',
+        ],
+    ];
     
     public static function get_next_sorting_number($course_id, $content_group_id = NULL) {
         if (!is_int($course_id)) {

@@ -16,6 +16,8 @@ $cache = array (
     10 => 'sorting',
     11 => 'course_content_group_id',
     12 => 'files_visibility',
+    13 => 'creator_id',
+    14 => 'updator_id',
   ),
   'validation' => 
   array (
@@ -111,6 +113,20 @@ $cache = array (
       array (
       ),
     ),
+    'creator_id' => 
+    array (
+      'field' => 'creator_id',
+      'rules' => 
+      array (
+      ),
+    ),
+    'updator_id' => 
+    array (
+      'field' => 'updator_id',
+      'rules' => 
+      array (
+      ),
+    ),
     'course' => 
     array (
       'field' => 'course',
@@ -125,9 +141,45 @@ $cache = array (
       array (
       ),
     ),
+    'creator' => 
+    array (
+      'field' => 'creator',
+      'rules' => 
+      array (
+      ),
+    ),
+    'updator' => 
+    array (
+      'field' => 'updator',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
+    'creator' => 
+    array (
+      'class' => 'Teacher',
+      'other_field' => 'created_content',
+      'join_self_as' => 'created_content',
+      'join_other_as' => 'creator',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'updator' => 
+    array (
+      'class' => 'Teacher',
+      'other_field' => 'updated_content',
+      'join_self_as' => 'updated_content',
+      'join_other_as' => 'updator',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
     'course' => 
     array (
       'class' => 'course',

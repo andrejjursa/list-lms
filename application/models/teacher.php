@@ -30,6 +30,18 @@ class Teacher extends DataMapper {
         'log',
         'admin_widget',
         'test_queue',
+        'created_content' => array(
+            'class' => 'Course_content_model',
+            'other_field' => 'creator',
+            'join_self_as' => 'creator',
+            'join_other_as' => 'created_content',
+        ),
+        'updated_content' => array(
+            'class' => 'Course_content_model',
+            'other_field' => 'updator',
+            'join_self_as' => 'updator',
+            'join_other_as' => 'updated_content',
+        ),
     );
     public $has_one = array(
         'prefered_course' => array(

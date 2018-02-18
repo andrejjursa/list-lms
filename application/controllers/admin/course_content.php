@@ -119,6 +119,7 @@ class Course_content extends LIST_Controller {
             $course_content->published_from = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_from']) ? $course_content_data['published_from'] : NULL;
             $course_content->published_to = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_to']) ? $course_content_data['published_to'] : NULL;
             $course_content->files_visibility = !Course_content_model::isJson($files_visibility) ? '{}' : $files_visibility;
+            $course_content->creator_id = (int)$this->usermanager->get_teacher_id();
             
             $overlay = $this->input->post('overlay');
             
@@ -244,6 +245,8 @@ class Course_content extends LIST_Controller {
         $this->inject_prettify_config();
         
         $course_content = new Course_content_model();
+        $course_content->include_related('creator');
+        $course_content->include_related('updator');
         $course_content->get_by_id((int)$id);
         
         $this->parser->parse('backend/course_content/edit.tpl', [
@@ -283,6 +286,7 @@ class Course_content extends LIST_Controller {
                 $course_content->published_from = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_from']) ? $course_content_data['published_from'] : NULL;
                 $course_content->published_to = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_to']) ? $course_content_data['published_to'] : NULL;
                 $course_content->files_visibility = !Course_content_model::isJson($files_visibility) ? '{}' : $files_visibility;
+                $course_content->updator_id = (int)$this->usermanager->get_teacher_id();
                 
                 $overlay = $this->input->post('overlay');
     
@@ -365,6 +369,7 @@ class Course_content extends LIST_Controller {
         
         if ($course_content->exists()) {
             $course_content->published = 1 - (int)$course_content->published;
+            $course_content->updator_id = (int)$this->usermanager->get_teacher_id();
             $course_content->save();
             $this->db->trans_commit();
             $output->message = sprintf($this->lang->line('admin_course_content_publication_status_switched'), $this->lang->get_overlay_with_default('course_content', $course_content->id, 'title', $course_content->title));
@@ -391,6 +396,7 @@ class Course_content extends LIST_Controller {
         
         if ($course_content->exists()) {
             $course_content->public = 1 - (int)$course_content->public;
+            $course_content->updator_id = (int)$this->usermanager->get_teacher_id();
             $course_content->save();
             $this->db->trans_commit();
             $output->message = sprintf($this->lang->line('admin_course_content_public_status_switched'), $this->lang->get_overlay_with_default('course_content', $course_content->id, 'title', $course_content->title));

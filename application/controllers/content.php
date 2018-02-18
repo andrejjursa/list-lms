@@ -150,6 +150,9 @@ class Content extends LIST_Controller {
         if ($course->exists()) {
             $date = date('Y-m-d H:i:s');
             
+            $content->include_related('creator');
+            $content->include_related('updator');
+            
             $content->where_related('course', $course);
             
             if ($public_only) {
