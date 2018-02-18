@@ -70,8 +70,8 @@ class Task_set_permissions extends LIST_Controller {
                 $task_set_permission->enabled = isset($task_set_permission_data['enabled']) ? 1 : 0;
                 $task_set_permission->group_id = $task_set_permission_data['group_id'];
                 $task_set_permission->room_id = intval($task_set_permission_data['room_id']) > 0 ? intval($task_set_permission_data['room_id']) : NULL;
-                $task_set_permission->publish_start_time = preg_match(Task_sets::REGEXP_PATTERN_DATETYME, $task_set_permission_data['publish_start_time']) ? $task_set_permission_data['publish_start_time'] : NULL;
-                $task_set_permission->upload_end_time = preg_match(Task_sets::REGEXP_PATTERN_DATETYME, $task_set_permission_data['upload_end_time']) ? $task_set_permission_data['upload_end_time'] : NULL;
+                $task_set_permission->publish_start_time = preg_match(Task_sets::REGEXP_PATTERN_DATETIME, $task_set_permission_data['publish_start_time']) ? $task_set_permission_data['publish_start_time'] : NULL;
+                $task_set_permission->upload_end_time = preg_match(Task_sets::REGEXP_PATTERN_DATETIME, $task_set_permission_data['upload_end_time']) ? $task_set_permission_data['upload_end_time'] : NULL;
                 $task_set_permission->deadline_notification_emails = $task_set_permission_data['deadline_notification_emails'];
                 $task_set_permission->deadline_notification_emails_handler = $task_set_permission_data['deadline_notification_emails_handler'];
                 $task_set_permission->deadline_notified = is_null($task_set_permission->upload_end_time) ? 1 : 0;
@@ -140,8 +140,8 @@ class Task_set_permissions extends LIST_Controller {
                     $task_set_permission->enabled = isset($task_set_permission_data['enabled']) ? 1 : 0;
                     $task_set_permission->group_id = $task_set_permission_data['group_id'];
                     $task_set_permission->room_id = intval($task_set_permission_data['room_id']) > 0 ? intval($task_set_permission_data['room_id']) : NULL;
-                    $task_set_permission->publish_start_time = preg_match(Task_sets::REGEXP_PATTERN_DATETYME, $task_set_permission_data['publish_start_time']) ? $task_set_permission_data['publish_start_time'] : NULL;
-                    $task_set_permission->upload_end_time = preg_match(Task_sets::REGEXP_PATTERN_DATETYME, $task_set_permission_data['upload_end_time']) ? $task_set_permission_data['upload_end_time'] : NULL;
+                    $task_set_permission->publish_start_time = preg_match(Task_sets::REGEXP_PATTERN_DATETIME, $task_set_permission_data['publish_start_time']) ? $task_set_permission_data['publish_start_time'] : NULL;
+                    $task_set_permission->upload_end_time = preg_match(Task_sets::REGEXP_PATTERN_DATETIME, $task_set_permission_data['upload_end_time']) ? $task_set_permission_data['upload_end_time'] : NULL;
                     $task_set_permission->deadline_notification_emails = $task_set_permission_data['deadline_notification_emails'];
                     $task_set_permission->deadline_notification_emails_handler = $task_set_permission_data['deadline_notification_emails_handler'];
                     if ($task_set_permission->upload_end_time !== $task_set_permission_upload_end_time) {

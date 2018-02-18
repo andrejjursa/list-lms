@@ -5,6 +5,7 @@
         <meta name="robots" content="noindex, follow" />
         <title>{capture assign="list_title" name="list_title_cpt"}{block name='title'}{/block}{/capture}L.I.S.T.{if $list_title} - {$list_title}{/if}</title>
         <link type="text/css" rel="stylesheet" media="screen" href="{'/public/css/frontend_general.css'|base_url|add_file_version}" />
+        <link href="{'/public/css/general_text_content_styles.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" />
         <link href="{'/public/css/list-theme/jquery-ui-1.10.2.custom.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" />
         <link href="{'/public/css/jqueryui-timepicker-addon.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" />
         <link href="{'/public/css/notification.css'|base_url|add_file_version}" rel="stylesheet" type="text/css" />
@@ -53,6 +54,6 @@
             <div id="rightwrap"><div class="internal_padding">{block name='main_content'}{/block}</div></div>
             <div class="clear"></div>
         </div>
-        <div id="footer"><span>{translate|sprintf:'Andrej Jursa':2013:{translate line='common_copyright_faculty'}:$this->config->item('list_version') line='commont_copyright_text'}</span></div>
+        <div id="footer"><span>{translate|sprintf:'Andrej Jursa':2013:{translate line='common_copyright_faculty'}:$this->config->item('list_version') line='common_copyright_text'}</span></div>
     </body>
 </html>

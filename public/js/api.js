@@ -132,29 +132,14 @@ jQuery(document).ready(function($) {
     };
 })(jQuery);
 
-var block_ui_message = (lang !== undefined && lang.messages !== undefined && lang.messages.ajax_standby !== undefined) ? lang.messages.ajax_standby : 'Please wait ...';
 jQuery(document).ajaxStart(function () {
-  jQuery.blockUI({
-    message: '<img src="' + global_base_url + 'public/images_ui/loading.gif" alt="' + block_ui_message + '" width="48"/>',
-    showOverlay: false,
-    css: {
-      top: '25px',
-      left: '',
-      right: '20px',
-      borderRadius: '100px',
-      border: '3px solid black',
-      padding: '5px 5px 2px 5px',
-      backgroundColor: 'white',
-      color: 'black',
-      width: '48px',
-      'box-shadow': '3px 3px 3px black',
-      opacity: 0.65
-    }
-  });
+    jQuery('#list-top-header').addClass('ajax');
+    jQuery('#list-footer').addClass('ajax');
 }).ajaxStop(function() {
     try {
         jQuery('[title]').tooltip();
-        jQuery.unblockUI();
+        jQuery('#list-top-header').removeClass('ajax');
+        jQuery('#list-footer').removeClass('ajax');
     } catch (e) {
         console.log(e);
     }
@@ -487,7 +472,7 @@ var api_make_tabs = function(structure_id_attr_value, options) {
     });
 };
 
-var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
+var api_ajax_load = function(url, target, method, data, onSuccess, onError, synchronous, timeout) {
     method = method === undefined ? 'post' : method;
     data = data === undefined ? {} : data;
     onError = onError === undefined ? function(jqXHR) {
@@ -500,8 +485,10 @@ var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
         }
     } : onError;
     onSuccess = onSuccess === undefined ? function() {}: onSuccess;
+    synchronous = synchronous === undefined ? false : (typeof synchronous === 'boolean' ? synchronous : false);
+    timeout = timeout === undefined ? 0 : (typeof timeout === 'number' ? timeout : 0);
     
-    jQuery.ajax(url, {
+    return jQuery.ajax(url, {
         cache: false,
         dataType: 'html',
         data: data,
@@ -514,24 +501,30 @@ var api_ajax_load = function(url, target, method, data, onSuccess, onError) {
             }
             onSuccess(html);
         },
-        error: onError
+        error: onError,
+        async: !synchronous,
+        timeout: timeout
     });
 };
 
-var api_ajax_update = function(url, method, data, onSuccess, onError, dataType) {
+var api_ajax_update = function(url, method, data, onSuccess, onError, dataType, synchronous, timeout) {
     method = method === undefined ? 'post' : method;
     data = data === undefined ? {} : data;
     onError = onError === undefined ? function() {} : onError;
     onSuccess = onSuccess === undefined ? function() {}: onSuccess;
     dataType = dataType === undefined ? 'json' : dataType;
+    synchronous = synchronous === undefined ? false : (typeof synchronous === 'boolean' ? synchronous : false);
+    timeout = timeout === undefined ? 0 : (typeof timeout === 'number' ? timeout : 0);
     
-    jQuery.ajax(url, {
+    return jQuery.ajax(url, {
         cache: false,
         dataType: dataType,
         data: data,
         method: method,
         success: onSuccess,
-        error: onError
+        error: onError,
+        async: !synchronous,
+        timeout: timeout
     });
 };
 
@@ -712,24 +705,28 @@ var display_notification = function(message, type) {
     notification_box.html('<div class="message">' + message + '</div>');
     notification_box.addClass('type_' + type);
     notification_box.css('display', 'none');
-    notification_box.fadeIn(500, function() {
-        notification_box.fadeTo(10000, 0.8, function() {
-            notification_box.animate({
-                height: 0,
-                opacity: 0
-            }, 500, 'swing', function() {
-                notification_box.remove();
-            });
-        });
-    });
-    var close_button = jQuery('<span class="close_button">x</span>').prependTo(notification_box);
+
+    var close_button = jQuery('<span class="close_button"><i class="fa fa-close"></i></span>').prependTo(notification_box);
     close_button.click(function() {
+        close_button.hide();
         notification_box.stop();
         notification_box.animate({
             height: 0,
             opacity: 0
         }, 500, 'swing', function() {
             notification_box.remove();
+        });
+    });
+
+    notification_box.fadeIn(500, function() {
+        notification_box.fadeTo(10000, 0.8, function() {
+            close_button.hide();
+            notification_box.animate({
+                height: 0,
+                opacity: 0
+            }, 500, 'swing', function() {
+                notification_box.remove();
+            });
         });
     });
 };
@@ -783,3 +780,64 @@ var tinymce_mathjax_wrap = function(editor, pre, post) {
     }
     return false;
 };
+
+function copyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+
+    //
+    // *** This styling is an extra step which is likely not required. ***
+    //
+    // Why is it here? To ensure:
+    // 1. the element is able to have focus and selection.
+    // 2. if element was to flash render it has minimal visual impact.
+    // 3. less flakyness with selection and copying which **might** occur if
+    //    the textarea element is not visible.
+    //
+    // The likelihood is the element won't even render, not even a flash,
+    // so some of these are just precautions. However in IE the element
+    // is visible whilst the popup box asking the user for permission for
+    // the web page to copy to the clipboard.
+    //
+
+    // Place in top-left corner of screen regardless of scroll position.
+    textArea.style.position = 'fixed';
+    textArea.style.top = 0;
+    textArea.style.left = 0;
+
+    // Ensure it has a small width and height. Setting to 1px / 1em
+    // doesn't work as this gives a negative w/h on some browsers.
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+
+    // We don't need padding, reducing the size if it does flash render.
+    textArea.style.padding = 0;
+
+    // Clean up any borders.
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+
+    // Avoid flash of white box if rendered for any reason.
+    textArea.style.background = 'transparent';
+
+
+    textArea.value = text;
+
+    document.body.appendChild(textArea);
+
+    textArea.select();
+
+    var status = false;
+
+    try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        status = true;
+    } catch (err) {
+        console.error(err);
+    }
+
+    document.body.removeChild(textArea);
+
+    return status;
+}

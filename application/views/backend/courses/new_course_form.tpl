@@ -47,6 +47,10 @@
     <p class="input"><input type="checkbox" name="course[auto_accept_students]" id="course_auto_accept_students_id" value="1"{if $smarty.post.course.auto_accelpt_students eq 1} checked="checked"{/if} /></p>
     <p class="input"><em>{translate line='admin_courses_form_label_auto_accept_students_hint'}</em></p>
 </div>
+<div class="field">
+    <label for="course_disable_public_groups_page_id">{translate line='admin_courses_form_label_disable_public_groups_page'}:</label>
+    <p class="input"><input type="checkbox" name="course[disable_public_groups_page]" id="course_disable_public_groups_page_id" value="1"{if $smarty.post.course.disable_public_groups_page eq 1} checked="checked"{/if} /></p>
+</div>
 <div class="buttons">
     <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" />
 </div>

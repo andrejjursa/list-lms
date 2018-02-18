@@ -29,18 +29,8 @@ class LIST_Form_validation extends CI_Form_validation {
      */
     public function matches($str, $field) {
         if (strpos($field, '[') !== FALSE) {
-            $path = explode('[', str_replace(']', '', $field));
-            $fld = isset($_POST[$path[0]]) ? $_POST[$path[0]] : FALSE;
-            if ($fld === FALSE) { return FALSE; }
-            if (count($path) > 1) {
-                for ($i=1;$i<count($path);$i++) {
-                    $segment = $path[$i];
-                    if (!isset($fld[$segment])) {
-                        return FALSE;
-                    }
-                    $fld = $fld[$segment];
-                }
-            }
+            $fld = $this->get_post_array_value($field);
+            if ($fld === NULL) { return FALSE; }
             if ($str == $fld) { return TRUE; }
             return FALSE;
         } else {
@@ -75,10 +65,16 @@ class LIST_Form_validation extends CI_Form_validation {
     /**
      * Tests if string value exists in database table.
      * @param string $str input string to evaluate.
-     * @param string $table comma separated definition of table (first part), column (second part), least occurrence (third part) and most often occurrence (fourth part).
+     * @param string $table comma separated definition of table (first part), column (second part), least occurrence (third part) and most often occurrence (fourth part). Start table with question mark for test if value is set to int (if not, test is true).
      * @return boolean TRUE, if condition is satisfied, FALSE othewise.
      */
     public function exists_in_table($str, $table) {
+        if (mb_substr($table,0, 1) === '?') {
+            if (!is_int($str) || (int)$str <= 0) {
+                return TRUE;
+            }
+            $table = mb_substr($table, 1);
+        }
         $table_def = explode('.', $table);
         $CI =& get_instance();
         if (count($table_def) == 2) {
@@ -213,5 +209,26 @@ class LIST_Form_validation extends CI_Form_validation {
         } else {
             return array($field);
         }
+    }
+    
+    /**
+     * Returns value from post array.
+     * @param $array_config configuration of array keys.
+     * @return NULL if not found, mixed otherwise.
+     */
+    private function get_post_array_value($array_config) {
+        $path = explode('[', str_replace(']', '', $array_config));
+        $fld = isset($_POST[$path[0]]) ? $_POST[$path[0]] : NULL;
+        if ($fld === NULL) { return NULL; }
+        if (count($path) > 1) {
+            for ($i=1;$i<count($path);$i++) {
+                $segment = $path[$i];
+                if (!isset($fld[$segment])) {
+                    return NULL;
+                }
+                $fld = $fld[$segment];
+            }
+        }
+        return $fld;
     }
 }

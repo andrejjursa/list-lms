@@ -147,6 +147,37 @@ $hook['post_controller'] = array(
                     'frontend/*' => $no_student_id,
                 ),
             ),
+            'course_content' => array(
+                'create' => array(
+                    'frontend/content/*' => $no_student_id,
+                ),
+                'update' => array(
+                    'frontend/content/*' => $no_student_id,
+                ),
+                'delete' => array(
+                    'frontend/content/*' => $no_student_id,
+                ),
+                'change_publication_status' => array(
+                    'frontend/content/*' => $no_student_id,
+                ),
+                'change_public_status' => array(
+                    'frontend/content/*' => $no_student_id,
+                ),
+                'update_sorting' => array(
+                    'frontend/content/*' => $no_student_id,
+                ),
+            ),
+            'course_content_groups' => array(
+                'create' => array(
+                    'frontend/content/*' => $no_student_id,
+                ),
+                'update' => array(
+                    'frontend/content/*' => $no_student_id,
+                ),
+                'delete' => array(
+                    'frontend/content/*' => $no_student_id,
+                ),
+            ),
             'groups' => array(
                 'create' => array(
                     'frontend/groups/*' => $no_student_id,

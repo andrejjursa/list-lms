@@ -16,6 +16,12 @@ $cache = array (
     10 => 'test_scoring_deadline',
     11 => 'hide_in_lists',
     12 => 'auto_accept_students',
+    13 => 'syllabus',
+    14 => 'grading',
+    15 => 'instructions',
+    16 => 'other_texts',
+    17 => 'disable_public_groups_page',
+    18 => 'additional_menu_links',
   ),
   'validation' => 
   array (
@@ -111,6 +117,48 @@ $cache = array (
       array (
       ),
     ),
+    'syllabus' => 
+    array (
+      'field' => 'syllabus',
+      'rules' => 
+      array (
+      ),
+    ),
+    'grading' => 
+    array (
+      'field' => 'grading',
+      'rules' => 
+      array (
+      ),
+    ),
+    'instructions' => 
+    array (
+      'field' => 'instructions',
+      'rules' => 
+      array (
+      ),
+    ),
+    'other_texts' => 
+    array (
+      'field' => 'other_texts',
+      'rules' => 
+      array (
+      ),
+    ),
+    'disable_public_groups_page' => 
+    array (
+      'field' => 'disable_public_groups_page',
+      'rules' => 
+      array (
+      ),
+    ),
+    'additional_menu_links' => 
+    array (
+      'field' => 'additional_menu_links',
+      'rules' => 
+      array (
+      ),
+    ),
     'period' => 
     array (
       'field' => 'period',
@@ -156,6 +204,20 @@ $cache = array (
     'prefered_for_teacher' => 
     array (
       'field' => 'prefered_for_teacher',
+      'rules' => 
+      array (
+      ),
+    ),
+    'course_content' => 
+    array (
+      'field' => 'course_content',
+      'rules' => 
+      array (
+      ),
+    ),
+    'course_content_group' => 
+    array (
+      'field' => 'course_content_group',
       'rules' => 
       array (
       ),
@@ -239,6 +301,28 @@ $cache = array (
       'other_field' => 'course',
       'join_self_as' => 'course',
       'join_other_as' => 'participant',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'course_content' => 
+    array (
+      'class' => 'course_content',
+      'other_field' => 'course',
+      'join_self_as' => 'course',
+      'join_other_as' => 'course_content',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'course_content_group' => 
+    array (
+      'class' => 'course_content_group',
+      'other_field' => 'course',
+      'join_self_as' => 'course',
+      'join_other_as' => 'course_content_group',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

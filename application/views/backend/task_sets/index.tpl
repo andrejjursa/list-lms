@@ -2,6 +2,7 @@
 {block title}{translate line='admin_task_sets_page_header'}{/block}
 {block main_content}
 	<h2>{translate line='admin_task_sets_page_header'}</h2>
+    <span class="switches"><a href="{internal_url url='admin_task_sets/sorting'}" class="switch"><i class="fa fa-arrow-right" aria-hidden="true"></i> {translate line='admin_task_sets_switch_to_sorting'}</a></span>
 	{include file='partials/backend_general/flash_messages.tpl' inline}
 	<fieldset>
             <legend>{translate line='admin_task_sets_fieldset_legend_new_task_set'}</legend>

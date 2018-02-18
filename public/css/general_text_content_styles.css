@@ -1,0 +1,20 @@
+.content_styles p { margin: 0.25em 0; }
+.content_styles h1 { font-size: 2em; margin: 0.25em 0; }
+.content_styles h2 { font-size: 1.8em; margin: 0.25em 0; }
+.content_styles h3 { font-size: 1.6em; margin: 0.25em 0; }
+.content_styles h4 { font-size: 1.4em; margin: 0.25em 0; }
+.content_styles h5 { font-size: 1.2em; margin: 0.25em 0; }
+.content_styles h6 { font-size: 1.1em; margin: 0.25em 0; }
+.content_styles a { text-decoration: underline; color: green; }
+.content_styles a:hover { color: darkgreen; }
+.content_styles blockquote { border: 3px double gray; margin: 0.25em; padding: 0.25em; border-radius: 5px; min-height: 1.5em; }
+.content_styles blockquote:before { content: '\201C'; float: left; margin-left: 0.1em; font-size: 2em; font-family: monospace; line-height: 1em; }
+.content_styles blockquote:after { content: '\201D'; float: right; margin-right: 0.1em; font-size: 2em; font-family: monospace; line-height: 1em; margin-top: -0.7em; }
+.content_styles hr { border: 1px solid gray; margin: 0.5em 0; }
+.content_styles table { border-collapse: collapse; width: 100%; border: 1px solid gray; margin: 0.5em 0; }
+.content_styles table tr { border-collapse: collapse; border: 1px solid gray; }
+.content_styles table tr td { border-collapse: collapse; border: 1px solid gray; padding: 0.25em; }
+.content_styles ul { margin: 0.5em 0 0.5em 1.5em; }
+.content_styles li { padding: 0.1em 0.25em; }
+.content_styles ol { margin: 0.5em 0 0.5em 1.5em; }
+.content_styles img { max-width: 99% !important; max-height: fit-content !important; }

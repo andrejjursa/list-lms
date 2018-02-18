@@ -142,6 +142,20 @@ $cache = array (
       array (
       ),
     ),
+    'created_content' => 
+    array (
+      'field' => 'created_content',
+      'rules' => 
+      array (
+      ),
+    ),
+    'updated_content' => 
+    array (
+      'field' => 'updated_content',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -200,6 +214,28 @@ $cache = array (
       'other_field' => 'teacher',
       'join_self_as' => 'teacher',
       'join_other_as' => 'room',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'created_content' => 
+    array (
+      'class' => 'Course_content_model',
+      'other_field' => 'creator',
+      'join_self_as' => 'creator',
+      'join_other_as' => 'created_content',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'updated_content' => 
+    array (
+      'class' => 'Course_content_model',
+      'other_field' => 'updator',
+      'join_self_as' => 'updator',
+      'join_other_as' => 'updated_content',
+      'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,
       'cascade_delete' => true,

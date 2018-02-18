@@ -4,9 +4,73 @@
 * { margin: 0; padding: 0; }
 body { font-family: Verdana, Arial, sans-serif; font-size: 14px; background-color: white; color: black; }
 table { border-collapse: collapse; }
-nav { background-color:#322f32; padding: 0 10px; margin-top: 10px; box-shadow: 0px 0px 5px 5px #322f32; }
-#pagewrap_id { min-width: 800px; }
-#headerwrap_id { position: fixed; top: 0px; width: 100%; background-color: white; z-index: 100; min-width: 800px; }
+nav { background-color:#322f32; }
+nav li.mm-listitem i.fa { margin-right: 2ex; }
+nav li.mm-listitem.list-selected-menu-item {
+    background-color: darkgreen;
+}
+
+#page { background-color: white; position: relative; }
+#page.no-initial-slideout { transition: 0s !important; }
+#list-content { background-color: white; position: absolute; top: 40px; bottom: 40px; left: 0; right: 0; overflow: auto; }
+
+#list-top-header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1; height: 40px; background-color: #322f32; color: white; padding: 0; overflow: hidden; }
+#list-top-header a#menu-open-close-button { color: gray; font-size: 20px; display: inline-block; padding: 2px 5px; transition: color 0.4s ease-in-out, border-color 0.4s ease-in-out; border: 2px solid gray; border-radius: 2px; position: relative; top: -4px; margin: 0 10px; }
+#list-top-header a#menu-open-close-button:hover { color: white; border-color: white; }
+#list-top-header span#list-title { font-size: 30px; line-height: 40px; }
+
+#list-footer { position: fixed; width: 100%; bottom: 0; left: 0; background-color: #322f32; color: white; z-index: 1; height: 40px; line-height: 40px; text-align: center; overflow: hidden; }
+#list-footer a { color: #00cc00; text-decoration: none; }
+#list-footer a:hover { color: #B6FBA6; }
+
+#list-quick-info { font-size: 80%; margin: 0; padding: 0; line-height: 18px; float: right; }
+
+#list-quick-info > span { display: block; right: 5px; position: fixed; }
+
+#list-quick-info > span.list-current-user { font-weight: bold; max-width: 200px; overflow: auto; top: 2px; }
+
+#list-quick-info > span.list-current-task-set-open { top: 18px; overflow: hidden; max-width: 400px; }
+
+#list-quick-info > span.list-current-task-set-open a { color: #00cc00; text-decoration: none; }
+#list-quick-info > span.list-current-task-set-open a:hover { color: #B6FBA6; }
+
+@media (max-width: 1200px) {
+    #list-footer span.additional { display: none; }
+}
+
+@media (max-width: 800px) {
+    #list-subtitle { display: none; }
+}
+
+@media (max-width: 550px) {
+    #list-quick-info > span.list-current-task-set-open { display: none; }
+}
+
+@media (max-width: 350px) {
+    #list-quick-info > span.list-current-user { display: none; }
+}
+
+@keyframes ajax-loading {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#list-top-header.ajax, #list-footer.ajax, #list-navigation.ajax {
+    background: linear-gradient(to right, #322f32, darkgreen, #322f32);
+    background-size: 600% 600%;
+    animation: ajax-loading 2s infinite linear;
+}
+
+#header_open_task_set_id a {
+    color: #00cc00; font-weight: bold;
+}
 /*div.header_margin { margin-top: 140px !important; }*/
 
 .button { transition: all 0.1s ease-in-out; -moz-transition: all 0.1s ease-in-out; -webkit-transition: all 0.1s ease-in-out; -o-transition: all 0.1s ease-in-out; padding: 4px 10px; border: 1px solid green; border-radius: 30px; background-color: #B6FBA6; color: black; box-shadow: -3px -3px 3px gray inset; text-decoration: none; font-size: 0.9em; white-space: nowrap; }
@@ -22,6 +86,7 @@ a.button { padding-top: 3px; display: inline-block; }
 .button.help { background-color: #cc99ff; border-color: #cc33ff; }
 .button.help:hover { background-color: #cc66ff; }
 .button.help:active { border-color: black; }
+.button.disabled, .button[disabled] { background-color: silver; border-color: gray; }
 input[type=text], input[type=password], textarea, select { border: 1px solid black; background-color: white; color: black; font-family: Verdana, Arial, sans-serif; border-radius: 3px; box-shadow: -3px -3px 3px silver inset; padding: 3px; }
 input[type=text]:hover, input[type=password]:hover, textarea:hover, select:hover,
 input[type=text]:focus, input[type=password]:focus, textarea:focus, select:focus { box-shadow: 3px 3px 3px silver inset; }
@@ -75,6 +140,16 @@ div.backend_body > fieldset, fieldset.basefieldset { margin: 5px; border: 1px so
 div.backend_body > fieldset > legend, fieldset.basefieldset > legend { border: 1px solid gray; margin-left: 5px; width: 50%; padding: 4px; border-radius: 5px; background-color: #E8E8E8; font-weight: bold; }
 div.backend_body > h4, div.backend_body > h3, div.backend_body > h2 { margin: 5px; text-shadow: 0 0 4px gray; color: black; }
 
+div.backend_body > span.switches { display: block; text-align: right; margin: 0 1em; }
+div.backend_body > span.switches a { display: inline-block; text-decoration: none; color: green; transition: color 0.2s ease-in-out; margin: 0 0.25em; }
+div.backend_body > span.switches a:before { content: '[ '; color: limegreen; font-family: monospace; transition: color 0.2s ease-in-out; }
+div.backend_body > span.switches a:after { content: ' ]'; color: limegreen; font-family: monospace; transition: color 0.2s ease-in-out; }
+div.backend_body > span.switches a i.fa { color: lightcoral; transition: color 0.2s ease-in-out; }
+div.backend_body > span.switches a:hover { color: darkgreen; }
+div.backend_body > span.switches a:hover:before { content: '( '; color: lightcoral; }
+div.backend_body > span.switches a:hover:after { content: ' )'; color: lightcoral; }
+div.backend_body > span.switches a:hover i.fa { color: limegreen; }
+
 div.backend_footer { border: 1px solid black; border-radius: 5px; padding: 5px; margin: 15px 15px 10px 10px; box-shadow: 5px 5px 5px black; }
 div.backend_footer a { color: green; text-decoration: none; }
 div.backend_footer a:hover { color: darkgreen; text-decoration: underline; }
@@ -107,18 +182,20 @@ form div.field p.caption > label { font-weight: bold; cursor: pointer; }
 form div.field div.overlay-editor-header { width: 80%; margin-left: 20%; padding: 6px 0 0 0; }
 form div.field div.overlay-editor-header div.ui-widget-header { width: 99%; }
 
-div.columns { margin: 0; padding: 0; width: 100%; }
-div.columns div.clear { clear: both; }
-div.columns div.col_50p { width: 49.89%; float: left; margin-right: 0.09% }
+@media (min-width: 1200px) {
+    div.columns { margin: 0; padding: 0; width: 100%; }
+    div.columns div.clear { clear: both; }
+    div.columns div.col_50p { width: 49.89%; float: left; margin-right: 0.09% }
 
-div.columns div.col_50p div.field p.error { width: 58.9%; margin-left: 40.1%; }
-div.columns div.col_50p div.field p.caption { width: 58.9%; margin-left: 40.1%; }
-div.columns div.col_50p div.field > label { width: 40.1%; }
-div.columns div.col_50p div.field p.input,
-div.columns div.col_50p div.field div.input { width: 58.9%; margin-left: 40.1%; }
-div.columns div.col_50p div.field div.input input[type=text], div.columns div.col_50p div.field div.input input[type=password], div.columns div.col_50p div.field div.input textarea,
-div.columns div.col_50p div.field p.input input[type=text], div.columns div.col_50p div.field p.input input[type=password], div.columns div.col_50p div.field p.input textarea { max-width: 96.5%; }
-div.columns div.col_50p div.field div.input select, div.columns div.col_50p div.field p.input select { width: 96.5%; }
+    div.columns div.col_50p div.field p.error { width: 58.9%; margin-left: 40.1%; }
+    div.columns div.col_50p div.field p.caption { width: 58.9%; margin-left: 40.1%; }
+    div.columns div.col_50p div.field > label { width: 40.1%; }
+    div.columns div.col_50p div.field p.input,
+    div.columns div.col_50p div.field div.input { width: 58.9%; margin-left: 40.1%; }
+    div.columns div.col_50p div.field div.input input[type=text], div.columns div.col_50p div.field div.input input[type=password], div.columns div.col_50p div.field div.input textarea,
+    div.columns div.col_50p div.field p.input input[type=text], div.columns div.col_50p div.field p.input input[type=password], div.columns div.col_50p div.field p.input textarea { max-width: 96.5%; }
+    div.columns div.col_50p div.field div.input select, div.columns div.col_50p div.field p.input select { width: 96.5%; }
+}
 
 div.flash_message { color: blue; margin: 5px; padding: 5px; border: 1px solid blue; background-color: #d0d8ff; border-radius: 5px; box-shadow: 0px 0px 2px 2px blue inset; }
 div.flash_message.message_success { border-color: green; box-shadow: 0px 0px 2px 2px green inset; background-color: #ADFF9A; color: green; }

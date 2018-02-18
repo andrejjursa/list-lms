@@ -6,6 +6,7 @@ application/cache/smarty/*
 public/js/mathjax
 public/js/highcharts
 public/js/google-code-prettify
+public/js/jquery.mmenu
 public/css/prettify.css
 public/css/font-awesome
 private/moss/*
@@ -24,6 +25,8 @@ private/uploads/unit_tests/*
 !private/uploads/unit_tests/.gitkeep
 public/images_users/*
 !public/images_users/no_avatar.jpg
+private/content/*
+!private/content/.gitkeep
 application/logs/*
 !application/logs/index.html
 docker_source/test_volume/*
@@ -31,6 +34,9 @@ test_locks/*
 !test_locks/.gitkeep
 test_scripts/workers_info.txt
 .idea/*
+private/content/*
+!private/content/.gitkeep
+public/js/tinymce4
 
 /vendor/
 /node_modules/

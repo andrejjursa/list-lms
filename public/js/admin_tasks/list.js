@@ -103,7 +103,7 @@ jQuery(document).ready(function($) {
             beforeClose: function() {
                 reload_all_tasks();
                 var url = global_base_url + 'index.php/admin_tasks/get_metainfo_open_task_set';
-                api_ajax_load(url, '#header_open_task_set_id');
+                api_ajax_load(url, '#header_open_task_set_id, #list-quick-info span.list-current-task-set-open');
                 return true;
             }
         });
