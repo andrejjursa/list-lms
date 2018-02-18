@@ -1,4 +1,4 @@
-{extends file='layouts/frontend.tpl'}
+{extends file='layouts/frontend_popup.tpl'}
 {block title}{translate line='content_page_title'}{/block}
 {block main_content}
     <h1>{translate line='content_page_title'}</h1>

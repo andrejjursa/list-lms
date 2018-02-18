@@ -11,7 +11,7 @@ class Content extends LIST_Controller {
     
     public function __construct() {
         parent::__construct();
-        if ($this->router->method != 'download_file') {
+        if ($this->router->method != 'download_file' && $this->router->method != 'show_content') {
             $this->usermanager->student_login_protected_redirect();
         }
         $this->_init_language_for_student();
@@ -58,6 +58,35 @@ class Content extends LIST_Controller {
             $this->db->trans_complete();
         }
         $this->parser->parse('frontend/content/index.tpl', array(), FALSE, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : FALSE, $cache_id);
+    }
+    
+    public function show_content($course_id, $lang = null) {
+        $this->parser->add_css_file('frontend_content.css');
+        if (!is_null($lang)) {
+            $this->_init_specific_language($lang);
+        }
+        $student_id = $this->usermanager->is_student_session_valid() ? $this->usermanager->get_student_id() : 0;
+        $cache_id = 'course_' . $course_id . '|student_' . $student_id . '|lang_' . $this->lang->get_current_idiom();
+        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/content/show_content.tpl'), $cache_id)) {
+            $course = new Course();
+            $course->include_related('period');
+            $course->get_by_id($course_id);
+            smarty_inject_days();
+            $this->parser->assign(array('course' => $course));
+    
+            $content = $this->get_content($course, $student_id == 0 ? true : false);
+            $content_groups = $this->get_content_groups($course);
+            $top_level_order = $this->get_top_level_sorting_order($course, $student_id == 0 ? true : false);
+            $cache_lifetime = $this->get_cache_lifetime($course, $student_id == 0 ? true : false);
+    
+            $this->smarty->setCacheLifetime($cache_lifetime + 1);
+            $this->parser->setCacheLifetimeForTemplateObject('frontend/content/index.tpl', $cache_lifetime + 1);
+    
+            $this->parser->assign(array('content' => $content));
+            $this->parser->assign(array('content_groups' => $content_groups));
+            $this->parser->assign(array('top_level_order' => $top_level_order));
+        }
+        $this->parser->parse('frontend/content/show_content.tpl', array(), FALSE, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : FALSE, $cache_id);
     }
     
     public function download_file($path, $language, $file) {
