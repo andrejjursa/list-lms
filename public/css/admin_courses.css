@@ -24,3 +24,32 @@ table.task_set_types_table thead tr th:first-child { border-top-left-radius: 4px
 table.task_set_types_table thead tr th:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
 
 ul.mail_students_list { list-style-type: none; margin: 0.6em 0; }
+
+#new_additional_menu_link_name_id.error,
+#new_additional_menu_link_href_id.error,
+#additional_links li input[type=text].error { border-color: red; background-color: lightcoral; box-shadow: -3px -3px 3px indianred inset; }
+#new_additional_menu_link_name_id.error:hover,
+#new_additional_menu_link_href_id.error:hover,
+#new_additional_menu_link_name_id.error:focus,
+#new_additional_menu_link_href_id.error:focus,
+#additional_links li input[type=text].error:hover,
+#additional_links li input[type=text].error:focus { box-shadow: 3px 3px 3px indianred inset; }
+#new_additional_menu_link_name_id.error::placeholder,
+#new_additional_menu_link_href_id.error::placeholder,
+#additional_links li input[type=text].error::placeholder { color: darkred; }
+#new_additional_menu_link_href_id.exists,
+#additional_links li input[type=text].exists { border-color: darkorange; background-color: lightgoldenrodyellow; box-shadow: -3px -3px 3px coral inset; }
+#new_additional_menu_link_href_id.exists:hover,
+#new_additional_menu_link_href_id.exists:focus,
+#additional_links li input[type=text].exists:hover,
+#additional_links li input[type=text].exists:focus { box-shadow: 3px 3px 3px coral inset; }
+#new_additional_menu_link_href_id.exists::placeholder,
+#additional_links li input[type=text].exists::placeholder { color: orange; }
+
+#additional_links { list-style-type: none; border: 1px solid black; border-radius: 5px; min-height: 10px; }
+#additional_links li { padding: 0.25em; }
+#additional_links li input[type=text] { margin-left: 0.5ex; }
+#additional_links li span.link_text { padding: 0.25em; font-weight: bold; border-radius: 5px; margin-right: 1ex; border: 1px solid gray; }
+#additional_links li span.link_text span.link_href { color: gray; margin-left: 1ex; }
+#additional_links li.exists span.link_text { background-color: lightgoldenrodyellow; border: 1px solid darkorange; }
+#additional_links li.exists span.link_text span.link_href { color: indianred; }

@@ -106,6 +106,18 @@
                     <label for="course_disable_public_groups_page_id">{translate line='admin_courses_form_label_disable_public_groups_page'}:</label>
                     <p class="input"><input type="checkbox" name="course[disable_public_groups_page]" id="course_disable_public_groups_page_id" value="1"{if $smarty.post.course.disable_public_groups_page|default:$course->disable_public_groups_page eq 1} checked="checked"{/if} /></p>
                 </div>
+                <div class="field">
+                    <label for="new_additional_menu_link_href_id">{translate line='admin_courses_form_label_additional_menu_links'}:</label>
+                    <div class="input">
+                        <ul id="additional_links"></ul>
+                    </div>
+                    <div class="input">
+                        <input type="text" value="" name="additional_link_href" placeholder="{translate line='admin_courses_form_label_additional_menu_links_placeholder_href'}" id="new_additional_menu_link_href_id" style="width: 200px;" />
+                        <input type="text" value="" name="additional_link_text" placeholder="{translate line='admin_courses_form_label_additional_menu_links_placeholder_text'}" id="new_additional_menu_link_name_id" style="width: 200px;" />
+                        <a href="javascript:void(0);" class="button special" id="add_additional_link">{translate line='admin_courses_form_button_add_additional_link'}</a>
+                        <input type="hidden" name="course[additional_menu_links]" value="{$smarty.post.course.additional_menu_links|default:$course->additional_menu_links|default:'[]'|escape:'html'}" />
+                    </div>
+                </div>
                 <div class="buttons">
                     <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" /> <a href="{internal_url url='admin_courses'}" class="button special">{translate line='common_button_back'}</a>
                 </div>
@@ -116,3 +128,15 @@
         {include file='partials/backend_general/error_box.tpl' message='lang:admin_courses_error_course_not_found' inline}
     {/if}
 {/block}
+{block custom_head}<script type="text/javascript">
+    var buttons = {
+        delete_link: '{translate|addslashes line="admin_courses_form_button_delete_link"}',
+        edit_link: '{translate|addslashes line="admin_courses_form_button_edit_link"}',
+        update_link: '{translate|addslashes line="admin_courses_form_button_update_link"}',
+        cancel_update_link: '{translate|addslashes line="admin_courses_form_button_cancel_update_link"}'
+    };
+    var inputs = {
+        text_placeholder: '{translate|addslashes line="admin_courses_form_label_additional_menu_links_placeholder_text"}',
+        href_placeholder: '{translate|addslashes line="admin_courses_form_label_additional_menu_links_placeholder_href"}'
+    };
+</script>{/block}

@@ -156,6 +156,8 @@
 			$this->parser->add_js_file('admin_courses/list.js');
 			$this->parser->add_js_file('admin_courses/form.js');
 			$this->parser->add_js_file('admin_courses/edit.js');
+			
+			$this->parser->add_css_file('admin_courses.css');
 
 			$url       = $this->uri->ruri_to_assoc(3);
 			$course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
