@@ -101,3 +101,4 @@ $lang['admin_courses_mail_to_course_form_field_subject'] = 'subject';
 $lang['admin_courses_mail_to_course_form_field_body'] = 'message';
 $lang['admin_courses_mail_to_course_form_field_from'] = 'from';
 $lang['admin_courses_mail_to_course_form_field_students'] = 'students';
+$lang['admin_courses_form_hint_additional_menu_links'] = 'Here you can add links to course public page. Note that URLs and IDs can be equal only if the links belongs to different languages. The ID is mandatory if you want to have URL loaded inside the course public page. Leave it blank for opening that link outside course public page. URL must be valid and ID, if present, must contain only chars from a to z and digits.';

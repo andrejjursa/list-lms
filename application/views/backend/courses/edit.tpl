@@ -124,6 +124,7 @@
                         <a href="javascript:void(0);" class="button special" id="add_additional_link">{translate line='admin_courses_form_button_add_additional_link'}</a>
                         <input type="hidden" name="course[additional_menu_links]" value="{$smarty.post.course.additional_menu_links|default:$course->additional_menu_links|default:'[]'|escape:'html'}" />
                     </div>
+                    <div class="input"><em>{translate line='admin_courses_form_hint_additional_menu_links'}</em></div>
                 </div>
                 <div class="buttons">
                     <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" /> <a href="{internal_url url='admin_courses'}" class="button special">{translate line='common_button_back'}</a>
@@ -144,7 +145,8 @@
     };
     var inputs = {
         text_placeholder: '{translate|addslashes line="admin_courses_form_label_additional_menu_links_placeholder_text"}',
-        href_placeholder: '{translate|addslashes line="admin_courses_form_label_additional_menu_links_placeholder_href"}'
+        href_placeholder: '{translate|addslashes line="admin_courses_form_label_additional_menu_links_placeholder_href"}',
+        id_placeholder: '{translate|addslashes line="admin_courses_form_label_additional_menu_links_placeholder_id"}'
     };
 
     var languages = {$languages|json_encode};

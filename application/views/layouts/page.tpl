@@ -75,12 +75,21 @@
                     </ul>
                     {if Course_content_model::isJson($course->additional_menu_links)}
                         {$links = $course->additional_menu_links|json_decode}
-                        {if $links}
+                        {capture name='all_links' assign=all_links}{strip}
+                            {foreach $links as $id => $link}
+                                {if not isset($link->lang) or $link->lang eq $lang or $link->lang eq ''}
+                                    {if not isset($link->id) or $link->id eq ''}
+                                        <li><a target="_blank" href="{$link->href|escape:'html'}">{$link->text|htmlspecialchars}</a></li>
+                                    {else}
+                                        <li><a data-link-id="pake_{$link->id}" href="{$link->href|escape:'html'}">{$link->text|htmlspecialchars}</a></li>
+                                    {/if}
+                                {/if}
+                            {/foreach}
+                        {/strip}{/capture}
+                        {if $all_links}
                             <hr />
                             <ul>
-                                {foreach $links as $id => $link}
-                                    <li><a data-link-id="link_{$id}" href="{$link->href|escape:'html'}">{$link->text|htmlspecialchars}</a></li>
-                                {/foreach}
+                                {$all_links}
                             </ul>
                         {/if}
                     {/if}

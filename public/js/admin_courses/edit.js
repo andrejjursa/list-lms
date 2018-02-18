@@ -313,7 +313,7 @@ jQuery(document).ready(function($) {
         editID.hide();
         editID.attr('type', 'text');
         editID.val(typeof jsondata[index].id === 'undefined' ? '' : jsondata[index].id);
-        editID.attr('placeholder', '');
+        editID.attr('placeholder', inputs.id_placeholder);
         editID.css('width', '200px');
         editID.appendTo(link);
 

@@ -101,3 +101,4 @@ $lang['admin_courses_mail_to_course_form_field_subject'] = 'predmet';
 $lang['admin_courses_mail_to_course_form_field_body'] = 'správa';
 $lang['admin_courses_mail_to_course_form_field_from'] = 'od';
 $lang['admin_courses_mail_to_course_form_field_students'] = 'študenti';
+$lang['admin_courses_form_hint_additional_menu_links'] = 'Tu môžete pridať linky na verejnú stránku kurzu. Zapamätajte si, že URL a ID môžu byť rovnaké iba ak linky patria do rôznych jazykov. ID je dôležité, ak chcete aby bola URL načítané vnútri verejnej stránky kurzu. Nechajte ID prázdne ak chcete aby sa linka otvorila mimo verejnú stránku kurzu. URL musí byť korektné a ID, ak je zadané, musí obsahovať iba znaky a až z a číslice.';
