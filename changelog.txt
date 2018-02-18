@@ -28,6 +28,9 @@ NEW [lang:english] Added interface for course content management (information, f
 NEW Pridané položky o sylabe, známkovaní, inštrukciách a volitelnej ďalšej informácii ku kurzu.
 NEW [lang:english] Added field for syllabus, grading, instructions and optional other text to course.
 
+NEW Pridané verejné stránky kurzu (popis, obsah, skupiny a vlastné linky), zobrazovanie skupín sa dá vypnúť.
+NEW [lang:english] Added course public pages (description, content, groups and custom links), the groups page can be hidden.
+
 CHANGE Používateľské rozhranie administrácie upravené tak aby bola pracovná plocha aplikácie väčšia.
 CHANGE [lang:english] Administration user interface changed to provide bigger workplace.
 
