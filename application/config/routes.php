@@ -44,6 +44,9 @@ $route['404_override'] = '';
 $route['admin'] = 'admin/dashboard';
 $route['admin_(:any)'] = 'admin/$1';
 
+$route['page/(:num)'] = 'content/page/$1/$2';
+$route['page/(:num)/(:any)'] = 'content/page/$1/$2';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

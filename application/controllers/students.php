@@ -95,6 +95,12 @@ class Students extends LIST_Controller {
         redirect(create_internal_url($redirects['student']));
     }
     
+    public function logout_to_page($course_id, $lang = null) {
+        $this->usermanager->do_student_logout();
+        $this->messages->add_message('lang:students_logout_logout_message', Messages::MESSAGE_TYPE_SUCCESS);
+        redirect(create_internal_url("page/{$course_id}" . (is_null($lang) ? '' : '/' . $lang)));
+    }
+    
     /**
      * Displays password recovery form.
      */

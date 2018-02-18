@@ -11,7 +11,8 @@ class Content extends LIST_Controller {
     
     public function __construct() {
         parent::__construct();
-        if ($this->router->method != 'download_file' && $this->router->method != 'show_content') {
+        
+        if ($this->router->method != 'download_file' && $this->router->method != 'show_content' && $this->router->method != 'page') {
             $this->usermanager->student_login_protected_redirect();
         }
         $this->_init_language_for_student();
@@ -42,11 +43,23 @@ class Content extends LIST_Controller {
             $course->get_by_id((int)$course_id);
             smarty_inject_days();
             $this->parser->assign(array('course' => $course));
+    
+            $student = new Student();
+            $student->include_related('participant');
+            $student->where_related('participant/course', 'id', $course->id);
+            $student->where_related('participant', 'allowed', true);
+            $student->get_by_id($this->usermanager->get_student_id());
+    
+            $public_only = true;
+    
+            if ($student->exists()) {
+                $public_only = false;
+            }
             
-            $content = $this->get_content($course);
+            $content = $this->get_content($course, $public_only);
             $content_groups = $this->get_content_groups($course);
-            $top_level_order = $this->get_top_level_sorting_order($course);
-            $cache_lifetime = $this->get_cache_lifetime($course);
+            $top_level_order = $this->get_top_level_sorting_order($course, $public_only);
+            $cache_lifetime = $this->get_cache_lifetime($course, $public_only);
     
             $this->smarty->setCacheLifetime($cache_lifetime + 1);
             $this->parser->setCacheLifetimeForTemplateObject('frontend/content/index.tpl', $cache_lifetime + 1);
@@ -73,11 +86,23 @@ class Content extends LIST_Controller {
             $course->get_by_id($course_id);
             smarty_inject_days();
             $this->parser->assign(array('course' => $course));
+            
+            $student = new Student();
+            $student->include_related('participant');
+            $student->where_related('participant/course', 'id', $course->id);
+            $student->where_related('participant', 'allowed', true);
+            $student->get_by_id($student_id);
+            
+            $public_only = true;
+            
+            if ($student->exists()) {
+                $public_only = false;
+            }
     
-            $content = $this->get_content($course, $student_id == 0 ? true : false);
+            $content = $this->get_content($course, $public_only);
             $content_groups = $this->get_content_groups($course);
-            $top_level_order = $this->get_top_level_sorting_order($course, $student_id == 0 ? true : false);
-            $cache_lifetime = $this->get_cache_lifetime($course, $student_id == 0 ? true : false);
+            $top_level_order = $this->get_top_level_sorting_order($course, $public_only);
+            $cache_lifetime = $this->get_cache_lifetime($course, $public_only);
     
             $this->smarty->setCacheLifetime($cache_lifetime + 1);
             $this->parser->setCacheLifetimeForTemplateObject('frontend/content/index.tpl', $cache_lifetime + 1);
@@ -87,6 +112,29 @@ class Content extends LIST_Controller {
             $this->parser->assign(array('top_level_order' => $top_level_order));
         }
         $this->parser->parse('frontend/content/show_content.tpl', array(), FALSE, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : FALSE, $cache_id);
+    }
+    
+    public function page($course_id, $lang = null) {
+        $course = new Course();
+        $course->include_related('period', 'name');
+        $course->get_by_id((int)$course_id);
+    
+        if (!is_null($lang)) {
+            $this->_init_specific_language($lang);
+        }
+        
+        $student = new Student();
+        if ($this->usermanager->is_student_session_valid()) {
+            $student->get_by_id((int)$this->usermanager->get_student_id());
+        }
+        
+        $this->parser->assign('course', $course);
+        $this->parser->assign('lang', $this->lang->get_current_idiom());
+        $this->parser->assign('student', $student);
+        
+        $this->inject_languages();
+        
+        $this->parser->parse('frontend/content/page.tpl');
     }
     
     public function download_file($path, $language, $file) {
@@ -312,5 +360,10 @@ class Content extends LIST_Controller {
         }
         
         return $lifetime;
+    }
+    
+    private function inject_languages() {
+        $languages = $this->lang->get_list_of_languages();
+        $this->parser->assign('languages', $languages);
     }
 }
