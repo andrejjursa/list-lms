@@ -64,6 +64,7 @@ $lang['admin_courses_form_label_disable_public_groups_page'] = 'Zakázať verejn
 $lang['admin_courses_form_label_additional_menu_links'] = 'Ďalšie odkazy v menu verejnej stránky';
 $lang['admin_courses_form_label_additional_menu_links_placeholder_href'] = 'Sem href odkazu';
 $lang['admin_courses_form_label_additional_menu_links_placeholder_text'] = 'Sem text odkazu';
+$lang['admin_courses_form_label_additional_menu_links_placeholder_id'] = 'Jednoslovné id';
 $lang['admin_courses_form_select_option_upload_solution_yes'] = 'Áno';
 $lang['admin_courses_form_select_option_upload_solution_no'] = 'Nie';
 $lang['admin_courses_form_field_task_set_type_name'] = 'typ zostavy úloh';

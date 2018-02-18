@@ -112,8 +112,15 @@
                         <ul id="additional_links"></ul>
                     </div>
                     <div class="input">
-                        <input type="text" value="" name="additional_link_href" placeholder="{translate line='admin_courses_form_label_additional_menu_links_placeholder_href'}" id="new_additional_menu_link_href_id" style="width: 200px;" />
-                        <input type="text" value="" name="additional_link_text" placeholder="{translate line='admin_courses_form_label_additional_menu_links_placeholder_text'}" id="new_additional_menu_link_name_id" style="width: 200px;" />
+                        <input type="text" value="" name="additional_link_href" placeholder="{translate line='admin_courses_form_label_additional_menu_links_placeholder_href'}" id="new_additional_menu_link_href_id" style="width: 200px;" class="additional_links" />
+                        <input type="text" value="" name="additional_link_text" placeholder="{translate line='admin_courses_form_label_additional_menu_links_placeholder_text'}" id="new_additional_menu_link_name_id" style="width: 200px;" class="additional_links" />
+                        <input type="text" value="" name="additional_link_id" placeholder="{translate line='admin_courses_form_label_additional_menu_links_placeholder_id'}" id="new_additional_menu_link_id_id" style="width: 200px;" class="additional_links">
+                        <select name="additional_link_lang" size="1" id="new_additional_menu_link_lang_id" style="width: 200px;">
+                            <option></option>
+                            {foreach $languages as $lang => $langName}
+                                <option value="{$lang}">{$langName}</option>
+                            {/foreach}
+                        </select>
                         <a href="javascript:void(0);" class="button special" id="add_additional_link">{translate line='admin_courses_form_button_add_additional_link'}</a>
                         <input type="hidden" name="course[additional_menu_links]" value="{$smarty.post.course.additional_menu_links|default:$course->additional_menu_links|default:'[]'|escape:'html'}" />
                     </div>
@@ -139,4 +146,6 @@
         text_placeholder: '{translate|addslashes line="admin_courses_form_label_additional_menu_links_placeholder_text"}',
         href_placeholder: '{translate|addslashes line="admin_courses_form_label_additional_menu_links_placeholder_href"}'
     };
+
+    var languages = {$languages|json_encode};
 </script>{/block}

@@ -64,6 +64,7 @@ $lang['admin_courses_form_label_disable_public_groups_page'] = 'Disable public p
 $lang['admin_courses_form_label_additional_menu_links'] = 'Additional menu links for public pages';
 $lang['admin_courses_form_label_additional_menu_links_placeholder_href'] = 'Link href here';
 $lang['admin_courses_form_label_additional_menu_links_placeholder_text'] = 'Link text here';
+$lang['admin_courses_form_label_additional_menu_links_placeholder_id'] = 'One-word id';
 $lang['admin_courses_form_select_option_upload_solution_yes'] = 'Yes';
 $lang['admin_courses_form_select_option_upload_solution_no'] = 'No';
 $lang['admin_courses_form_task_set_type_button_submit'] = 'Add';
