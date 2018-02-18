@@ -127,7 +127,7 @@ echo "Installation of dependencies with composer ..."
 
 echo "Running: composer install $COMPOSER_PARAMS"
 
-composer install $COMPOSER_PARAMS
+sudo -u www-data composer install $COMPOSER_PARAMS
 
 echo "... done."
 

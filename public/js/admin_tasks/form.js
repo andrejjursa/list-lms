@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
             ],
             theme: 'modern',
 
-            toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect highlights mathjax",
+            toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | highlights mathjax | styleselect formatselect | fontselect fontsizeselect",
             toolbar2: "cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | inserttime preview | forecolor backcolor",
             toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | fullscreen | ltr rtl | visualchars visualblocks nonbreaking pagebreak",
 

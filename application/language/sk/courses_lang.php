@@ -17,10 +17,22 @@ $lang['courses_message_cant_switch_to_unsigned_course'] = 'Nie je možné prepn�
 $lang['courses_message_subscription_disallowed'] = 'Prihlasovanie sa na tento kurz je zakázané.';
 $lang['courses_message_course_is_full'] = 'Vybraný kurz je plný.';
 
-$lang['courses_detail_page_title'] = 'Detaily kurzu';
+$lang['courses_detail_page_title'] = 'Skupiny kurzu';
 $lang['courses_detail_description_missing'] = 'Tento kurz nemá popis.';
 $lang['courses_detail_fieldset_legend_groups'] = 'Skupiny';
 $lang['courses_detail_group_teaching'] = 'Výuka v miestnostiach';
 $lang['courses_detail_group_empty'] = 'Skupina je prázdna.';
 $lang['courses_detail_group_without_rooms'] = 'Táto skupina nemá žiadnu miestnosť.';
 $lang['courses_detail_group_name_not_assigned'] = 'Nezaradení do skupiny';
+
+$lang['courses_page_description_title'] = 'Popis kurzu';
+
+$lang['courses_description_legend_description'] = 'Celkový popis';
+$lang['courses_description_legend_instructions'] = 'Inštrukcie';
+$lang['courses_description_legend_syllabus'] = 'Sylabus';
+$lang['courses_description_legend_grading'] = 'Podmienky udelenia známky';
+$lang['courses_description_legend_other_texts'] = 'Ostatné informácie';
+
+$lang['courses_no_active_course'] = 'Nie je zvolený žiadny aktívny kurz.';
+$lang['courses_course_not_found'] = 'Chyba: kurz zadaný v URL neexistuje.';
+$lang['courses_course_groups_page_disabled'] = 'Prezentácia skupín tohoto kurzu je zakázaná.';

@@ -100,6 +100,7 @@
 				$course->test_scoring_deadline  = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['test_scoring_deadline']) ? $course_data['test_scoring_deadline'] : NULL;
 				$course->hide_in_lists          = isset($course_data['hide_in_lists']) ? 1 : 0;
 				$course->auto_accept_students   = isset($course_data['auto_accept_students']) ? 1 : 0;
+				$course->disable_public_groups_page = isset($course_data['disable_public_groups_page']) ? 1 : 0;
 
 				$this->_transaction_isolation();
 				$this->db->trans_begin();
@@ -155,6 +156,8 @@
 			$this->parser->add_js_file('admin_courses/list.js');
 			$this->parser->add_js_file('admin_courses/form.js');
 			$this->parser->add_js_file('admin_courses/edit.js');
+			
+			$this->parser->add_css_file('admin_courses.css');
 
 			$url       = $this->uri->ruri_to_assoc(3);
 			$course_id = isset($url['course_id']) ? intval($url['course_id']) : 0;
@@ -189,12 +192,19 @@
 						'capacity',
 						'default_points_to_remove',
 					));
+                    $additional_menu_links = str_replace('\\"', '"', $course_data['additional_menu_links'] ?? '[]');
 					$course->description            = remove_base_url($course_data['description']);
+					$course->syllabus               = remove_base_url($course_data['syllabus']);
+                    $course->grading                = remove_base_url($course_data['grading']);
+                    $course->instructions           = remove_base_url($course_data['instructions']);
+                    $course->other_texts            = remove_base_url($course_data['other_texts']);
 					$course->allow_subscription_to  = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : NULL;
 					$course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : NULL;
 					$course->test_scoring_deadline  = preg_match(self::REGEXP_PATTERN_DATETYME, $course_data['test_scoring_deadline']) ? $course_data['test_scoring_deadline'] : NULL;
 					$course->hide_in_lists          = isset($course_data['hide_in_lists']) ? 1 : 0;
 					$course->auto_accept_students   = isset($course_data['auto_accept_students']) ? 1 : 0;
+                    $course->disable_public_groups_page = isset($course_data['disable_public_groups_page']) ? 1 : 0;
+                    $course->additional_menu_links  = !Course_content_model::isJson($additional_menu_links) ? '[]' : $additional_menu_links;
 
 					$overlay = $this->input->post('overlay');
 

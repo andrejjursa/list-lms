@@ -2,6 +2,9 @@
 {block title}{translate line='groups_page_title'}{/block}
 {block main_content}
     <h1>{translate line='groups_page_title'}</h1>
+    {if $course->exists()}
+        <h2>{translate_text text=$course->name} / {translate_text text=$course->period_name}</h2>
+    {/if}
     {include file='partials/frontend_general/flash_messages.tpl' inline}
     {if $course->exists()}
     <fieldset>

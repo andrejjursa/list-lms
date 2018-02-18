@@ -505,7 +505,11 @@ class LIST_Parser extends CI_Parser {
     public function string_parse($template, $data = array(), $return = FALSE, $is_include = FALSE)
     {
         $this->CI->smarty->assign($data);
-        return $this->CI->smarty->fetch('string:'.$template);
+        $caching = $this->CI->smarty->caching;
+        $this->CI->smarty->caching = false;
+        $output = $this->CI->smarty->fetch('string:'.$template);
+        $this->CI->smarty->caching = $caching;
+        return $output;
     }
     
     /**

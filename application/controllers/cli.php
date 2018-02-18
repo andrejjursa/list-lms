@@ -675,7 +675,7 @@ class Cli extends CI_Controller {
         $current_time = time();
 
         $this->load->library('cli_progress_bar');
-        $this->cli_progress_bar->init(5);
+        $this->cli_progress_bar->init(7);
         
         // ----------- COMPARATOR WORKING DIRECTORIES --------------------------
         
@@ -833,7 +833,7 @@ class Cli extends CI_Controller {
         $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.');
         $this->cli_progress_bar->increment();
         
-        // ----------- TEST TO EXECUTE DIRECTORIES -----------------------------
+        // ----------- UNFINISHED TASK FILES UPLOADS ---------------------------
         
         $total_number = 0;
         //echo ' Clearing unfinished uploads of task files:' . "\n";
@@ -845,6 +845,43 @@ class Cli extends CI_Controller {
         }
         //echo ' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.' . "\n";
         $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.');
+        $this->cli_progress_bar->increment();
+        
+        // ----------- UNFINISHED CONTENT FILES UPLOADS ------------------------
+    
+        $total_number = 0;
+        $this->cli_progress_bar->print_text(' Clearing unfinished uploads of content files:');
+        $deleted = $this->find_and_delete_old_upload_part('private/content/', '', 172800, $current_time, $total_number);
+        if ($total_number == 0) {
+            //echo '  No files ...' . "\n";
+            $this->cli_progress_bar->print_text('  No files ...');
+        }
+        //echo ' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.' . "\n";
+        $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.');
+        $this->cli_progress_bar->increment();
+    
+        // ----------- DELETE ABANDONED CONTENT FOLDERS ------------------------
+        
+        $total_number = 0;
+        $deleted = 0;
+        $this->cli_progress_bar->print_text(' Clearing abandoned content folders:');
+        
+        $structure = scandir('private/content/');
+        
+        foreach ($structure as $item) {
+            if (substr($item, 0, 5) == 'temp_') {
+                $total_number++;
+                if ($current_time - filemtime('private/content/' . $item) >= 172800) {
+                    $deleted++;
+                    @unlink_recursive('private/content/' . $item, true);
+                }
+            }
+        }
+        
+        if ($total_number == 0) {
+            $this->cli_progress_bar->print_text('  No folders ...');
+        }
+        $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_number . ' folders deleted.');
         $this->cli_progress_bar->increment();
         $this->cli_progress_bar->finish();
         

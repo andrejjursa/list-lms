@@ -31,6 +31,7 @@
                     '<a href="{internal_url url='admin_tasks'}" title="{translate line='adminmenu_title_tasks'}"><span class="fa fa-tasks"></span></a>',
                     '<a href="{internal_url url='admin_task_sets'}" title="{translate line='adminmenu_title_task_sets'}"><span class="fa fa-list"></span></a>',
                     '<a href="{internal_url url='admin_moss'}" title="{translate line='adminmenu_title_moss_comparator'}"><span class="fa fa-balance-scale"></span></a>',
+                    '<a href="{internal_url url='admin_course_content'}" title="{translate line='adminmenu_title_course_content'}"><span class="fa fa-archive"></span></a>',
                     '<a href="{internal_url url='admin_solutions'}" title="{translate line='adminmenu_title_solutions'}"><span class="fa fa-check-square-o"></span></a>',
                     '<a href="{internal_url url='admin_solutions/valuation_tables'}" title="{translate line='adminmenu_title_valuation_tables'}"><span class="fa fa-table"></span></a>'
                 ],

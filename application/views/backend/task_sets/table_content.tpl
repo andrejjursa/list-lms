@@ -48,7 +48,7 @@
             {if $filter.fields.task_set_type}<td>{translate_text text=$task_set->task_set_type_name}</td>{/if}
             {if $filter.fields.tasks}<td>{$task_set->task_count}</td>{/if}
             {if $filter.fields.published}<td>
-                {if $task_set->published eq 1}<span class="published_yes">{translate line='admin_task_sets_table_field_published_yes'}{else}<span class="published_no">{translate line='admin_task_sets_table_field_published_no'}{/if}</span>
+                {if $task_set->published eq 1}<span class="published_yes"><i class="fa fa-check" aria-hidden="true"></i> {translate line='admin_task_sets_table_field_published_yes'}{else}<span class="published_no"><i class="fa fa-times" aria-hidden="true"></i> {translate line='admin_task_sets_table_field_published_no'}{/if}</span>
                 <a href="{internal_url url="admin_task_sets/change_publication_status/{$task_set->id|intval}"}" class="change_publication_status">[{if $task_set->published eq 1}-{else}+{/if}]</a>
                 </td>{/if}
             {if $filter.fields.publish_start_time}<td>
