@@ -192,6 +192,7 @@
 						'capacity',
 						'default_points_to_remove',
 					));
+                    $additional_menu_links = str_replace('\\"', '"', $course_data['additional_menu_links'] ?? '[]');
 					$course->description            = remove_base_url($course_data['description']);
 					$course->syllabus               = remove_base_url($course_data['syllabus']);
                     $course->grading                = remove_base_url($course_data['grading']);
@@ -203,6 +204,7 @@
 					$course->hide_in_lists          = isset($course_data['hide_in_lists']) ? 1 : 0;
 					$course->auto_accept_students   = isset($course_data['auto_accept_students']) ? 1 : 0;
                     $course->disable_public_groups_page = isset($course_data['disable_public_groups_page']) ? 1 : 0;
+                    $course->additional_menu_links  = !Course_content_model::isJson($additional_menu_links) ? '[]' : $additional_menu_links;
 
 					$overlay = $this->input->post('overlay');
 
