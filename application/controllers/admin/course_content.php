@@ -511,6 +511,17 @@ class Course_content extends LIST_Controller {
         $this->output->set_output(json_encode($output));
     }
     
+    public function content_preview($content_id) {
+        $content = new Course_content_model();
+        $content->get_by_id((int)$content_id);
+        
+        $this->inject_languages();
+        
+        $this->parser->parse('backend/course_content/content_preview.tpl', [
+            'content' => $content
+        ]);
+    }
+    
     private function sort_in_group($output, $course, $group_id, $order) {
         $course_content_group = new Course_content_group();
         $course_content_group->where_related($course);
@@ -767,13 +778,13 @@ class Course_content extends LIST_Controller {
             $old_filter = $this->filter->restore_filter(self::SORTING_STORED_FILTER_SESSION_NAME);
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
             $this->filter->store_filter(self::SORTING_STORED_FILTER_SESSION_NAME, $new_filter);
-            $this->filter->set_filter_course_name_field(self::SORTING_STORED_FILTER_SESSION_NAME, 'course_id');
+            $this->filter->set_filter_course_name_field(self::SORTING_STORED_FILTER_SESSION_NAME, 'course');
         }
     }
     
     private function inject_stored_sorting_filter() {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::SORTING_STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course_id');
+        $filter = $this->filter->restore_filter(self::SORTING_STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
         $this->parser->assign('filter', $filter);
     }
     

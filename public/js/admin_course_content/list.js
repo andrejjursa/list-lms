@@ -85,24 +85,35 @@ jQuery(document).ready(function($) {
         event.preventDefault();
         var myID = $(this).attr('data-content-id');
         var parsed = $(this).attr('data-parsed');
-        if (typeof parsed === 'undefined') {
-            MathJax.Hub.Queue(['Typeset', MathJax.Hub, jQuery('table tbody tr.content_overview[data-content-id="' + myID + '"]')[0]]);
+        var lock = $(this).attr('data-lock');
+        if (typeof parsed === 'undefined' && typeof lock === 'undefined') {
+            $(this).attr('data-lock', 'lock');
+            var url = global_base_url + 'index.php/admin_course_content/content_preview/' + myID;
+            var target = 'table tbody tr.content_overview[data-content-id="' + myID + '"] td.content_preview_container';
+            var self = $(this);
 
-            $('table tbody tr.content_overview[data-content-id="' + myID + '"] pre.prettyprint, table tbody tr.content_overview[data-content-id="' + myID + '"] code.prettyprint').each(function() {
-                var lang = '';
-                $(this).attr('class').split(/\s+/).filter(function(item) {
-                    if (item.substring(0,5) == 'lang-') {
-                        lang = item.substring(5);
-                    }
-                    return false;
+            api_ajax_load(url, target, 'get', [], function () {
+                MathJax.Hub.Queue(['Typeset', MathJax.Hub, jQuery('table tbody tr.content_overview[data-content-id="' + myID + '"]')[0]]);
+
+                $('table tbody tr.content_overview[data-content-id="' + myID + '"] pre.prettyprint, table tbody tr.content_overview[data-content-id="' + myID + '"] code.prettyprint').each(function() {
+                    var lang = '';
+                    $(this).attr('class').split(/\s+/).filter(function(item) {
+                        if (item.substring(0,5) == 'lang-') {
+                            lang = item.substring(5);
+                        }
+                        return false;
+                    });
+                    var code = $(this).html();
+                    var html = prettyPrintOne(code, lang);
+                    $(this).html(html);
+                    $(this).addClass('prettyprinted');
                 });
-                var code = $(this).html();
-                var html = prettyPrintOne(code, lang);
-                $(this).html(html);
-                $(this).addClass('prettyprinted');
-            });
 
-            $(this).attr('data-parsed', 'parsed');
+                self.attr('data-parsed', 'parsed');
+                self.removeAttr('data-lock');
+            }, function () {
+                self.removeAttr('data-lock');
+            });
         }
         $('table tbody tr.content_overview[data-content-id="' + myID + '"]').toggleClass('show');
         $(this).parents('tr').toggleClass('show');
