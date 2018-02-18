@@ -35,3 +35,4 @@ $lang['courses_description_legend_other_texts'] = 'Other information';
 
 $lang['courses_no_active_course'] = 'No active course selected.';
 $lang['courses_course_not_found'] = 'Error: course specified in URL does not exist.';
+$lang['courses_course_groups_page_disabled'] = 'Groups presentation is disabled for this course.';

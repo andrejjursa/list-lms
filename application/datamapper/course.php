@@ -20,6 +20,8 @@ $cache = array (
     14 => 'grading',
     15 => 'instructions',
     16 => 'other_texts',
+    17 => 'disable_public_groups_page',
+    18 => 'additional_menu_links',
   ),
   'validation' => 
   array (
@@ -139,6 +141,20 @@ $cache = array (
     'other_texts' => 
     array (
       'field' => 'other_texts',
+      'rules' => 
+      array (
+      ),
+    ),
+    'disable_public_groups_page' => 
+    array (
+      'field' => 'disable_public_groups_page',
+      'rules' => 
+      array (
+      ),
+    ),
+    'additional_menu_links' => 
+    array (
+      'field' => 'additional_menu_links',
       'rules' => 
       array (
       ),

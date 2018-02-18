@@ -102,6 +102,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="field">
+                    <label for="course_disable_public_groups_page_id">{translate line='admin_courses_form_label_disable_public_groups_page'}:</label>
+                    <p class="input"><input type="checkbox" name="course[disable_public_groups_page]" id="course_disable_public_groups_page_id" value="1"{if $smarty.post.course.disable_public_groups_page|default:$course->disable_public_groups_page eq 1} checked="checked"{/if} /></p>
+                </div>
                 <div class="buttons">
                     <input type="submit" name="submit_button" class="button" value="{translate line='admin_courses_form_button_submit'}" /> <a href="{internal_url url='admin_courses'}" class="button special">{translate line='common_button_back'}</a>
                 </div>

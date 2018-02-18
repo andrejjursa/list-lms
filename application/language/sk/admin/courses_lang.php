@@ -55,6 +55,7 @@ $lang['admin_courses_fieldset_legend_add_task_set_type'] = 'Pridať typ zostavy 
 $lang['admin_courses_fieldset_legend_all_task_set_types'] = 'Všetky typy zostáv úloh';
 $lang['admin_courses_form_label_task_set_type_name'] = 'Typ zostavy úloh';
 $lang['admin_courses_form_label_upload_solution'] = 'Povoliť upload riešení';
+$lang['admin_courses_form_label_disable_public_groups_page'] = 'Zakázať verejnú stránku so skupinami';
 $lang['admin_courses_form_select_option_upload_solution_yes'] = 'Áno';
 $lang['admin_courses_form_select_option_upload_solution_no'] = 'Nie';
 $lang['admin_courses_form_field_task_set_type_name'] = 'typ zostavy úloh';

@@ -35,3 +35,4 @@ $lang['courses_description_legend_other_texts'] = 'Ostatné informácie';
 
 $lang['courses_no_active_course'] = 'Nie je zvolený žiadny aktívny kurz.';
 $lang['courses_course_not_found'] = 'Chyba: kurz zadaný v URL neexistuje.';
+$lang['courses_course_groups_page_disabled'] = 'Prezentácia skupín tohoto kurzu je zakázaná.';

@@ -55,6 +55,7 @@ $lang['admin_courses_fieldset_legend_add_task_set_type'] = 'Add type of task set
 $lang['admin_courses_fieldset_legend_all_task_set_types'] = 'All types of task set';
 $lang['admin_courses_form_label_task_set_type_name'] = 'Type of task set';
 $lang['admin_courses_form_label_upload_solution'] = 'Enable solutions uploading';
+$lang['admin_courses_form_label_disable_public_groups_page'] = 'Disable public page with groups';
 $lang['admin_courses_form_select_option_upload_solution_yes'] = 'Yes';
 $lang['admin_courses_form_select_option_upload_solution_no'] = 'No';
 $lang['admin_courses_form_task_set_type_button_submit'] = 'Add';
