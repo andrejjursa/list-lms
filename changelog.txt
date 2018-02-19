@@ -20,7 +20,14 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
-VERSION 1.6.0 | 2018-02-09
+VERSION 1.6.1 | 2018-02-19
+
+FIX Niekoľko drobných opráv pre verejnú stránku kurzu.
+FIX [lang:english] Several small fixes for course public page.
+
+END VERSION
+
+VERSION 1.6.0 | 2018-02-18
 
 NEW Pridané rozhranie pre správu obsahu kurzov (informácie, súbory na stiahnutie a pod.).
 NEW [lang:english] Added interface for course content management (information, files for download, etc.).
@@ -47,7 +54,7 @@ CHANGE TinyMCE editor v administrácii upgradnutý na verziu 4.7.6.
 CHANGE [lang:english] TinyMCE editor for administration is upgraded to version 4.7.6.
 
 
-END VERSIONgi
+END VERSION
 
 VERSION 1.5.2 | 2017-10-29
 
