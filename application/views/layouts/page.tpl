@@ -81,7 +81,7 @@
                                     {if not isset($link->id) or $link->id eq ''}
                                         <li><a target="_blank" href="{$link->href|escape:'html'}">{$link->text|htmlspecialchars}</a></li>
                                     {else}
-                                        <li><a data-link-id="pake_{$link->id}" href="{$link->href|escape:'html'}">{$link->text|htmlspecialchars}</a></li>
+                                        <li><a data-link-id="page_{$link->id}" href="{$link->href|escape:'html'}">{$link->text|htmlspecialchars}</a></li>
                                     {/if}
                                 {/if}
                             {/foreach}
