@@ -1,5 +1,7 @@
 <script type="text/javascript">
-    jQuery('#page').css('transition', '0s');
+
+    var menuOpenTimer = null;
+
     jQuery(document).ready(function($) {
         $('nav#list-navigation').show().mmenu({
             extensions: [ 'theme-dark', "pagedim-black", "multiline", "shadow-page", "shadow-panels" ],
@@ -55,19 +57,40 @@
             }
         });
 
-        jQuery(document).on('mouseover', 'a.mm-menu__blocker', function() {
+        var closeMenu = function() {
+            if (menuOpenTimer !== null) {
+                clearTimeout(menuOpenTimer);
+                menuOpenTimer = null;
+            }
+            jQuery('#page').removeClass('no-initial-slideout');
+            jQuery('nav#list-navigation').data('mmenu').close();
+        };
+
+        var openMenu = function () {
+            if (menuOpenTimer !== null) {
+                clearTimeout(menuOpenTimer);
+                menuOpenTimer = null;
+            }
             jQuery('#page').removeClass('no-initial-slideout');
             jQuery('nav#list-navigation').data('mmenu').open();
+        };
+
+        jQuery(document).on('mouseover', 'a.mm-menu__blocker', function() {
+            if (menuOpenTimer === null) {
+                menuOpenTimer = setTimeout(openMenu, 250);
+            }
+        });
+
+        jQuery(document).on('mouseout', 'a.mm-menu__blocker', function () {
+            closeMenu();
         });
 
         jQuery(document).on('mouseover', 'div.mm-page__blocker', function() {
-            jQuery('#page').removeClass('no-initial-slideout');
-            jQuery('nav#list-navigation').data('mmenu').close();
+            closeMenu();
         });
 
         jQuery(document).mouseleave(function() {
-            jQuery('#page').removeClass('no-initial-slideout');
-            jQuery('nav#list-navigation').data('mmenu').close();
+            closeMenu();
         });
     });
 </script>
