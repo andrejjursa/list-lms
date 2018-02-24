@@ -15,13 +15,6 @@
             },
             navbars: [
                 {
-                    type: 'tabs',
-                    content: [
-                        '<a href="#panel-menu">{translate line='adminmenu_tabs_menu'}</a>',
-                        '<a href="#panel-account">{translate line='adminmenu_tabs_account'}</a>'
-                    ]
-                },
-                {
                     content: [ 'prev', 'breadcrumbs' ]
                 }
             ],
@@ -123,11 +116,9 @@
 {function name='add_admin_menu' menu=[] current=''}
     <nav id="list-navigation" style="display: none;">
         <div id="panel-menu">
+            <p>{translate line='adminmenu_user'}: <strong>{$list_teacher_account.fullname|escape:'html'}</strong></p>
             <span id="header_open_task_set_id">{include file='partials/backend_general/open_task_set.tpl' inline}</span>
             {generate_admin_menu menu=$menu current=$current}
-        </div>
-        <div id="panel-account">
-            <p>{translate line='adminmenu_user'}: <strong>{$list_teacher_account.fullname|escape:'html'}</strong></p>
             <ul>
                 <li><a href="{internal_url url='admin_teachers/my_account'}"><i class="fa fa-id-card-o" aria-hidden="true"></i>{translate line='adminmenu_title_teacher_account'}</a></li>
                 <li><span><i class="fa fa-language" aria-hidden="true"></i>{foreach $list_quicklang_menu as $language}{if $language@key eq $list_teacher_account.language}{$language}{/if}{/foreach}</span>
