@@ -28,6 +28,9 @@ CHANGE [lang:english] Administration navigation is opening with 250ms delay.
 CHANGE Navigácia v administrácii už nie je rozdelená na záložky.
 CHANGE [lang:english] Administration navigation is no longer divided into tabs.
 
+FIX Opravený problém, ktorý spôsoboval zlé zobrazovanie výsledkov testov.
+FIX [lang:english] Fixed problem causing wrong display of tests results.
+
 END VERSION
 
 VERSION 1.6.2 | 2018-02-20
