@@ -1,5 +1,7 @@
 <script type="text/javascript">
-    jQuery('#page').css('transition', '0s');
+
+    var menuOpenTimer = null;
+
     jQuery(document).ready(function($) {
         $('nav#list-navigation').show().mmenu({
             extensions: [ 'theme-dark', "pagedim-black", "multiline", "shadow-page", "shadow-panels" ],
@@ -12,13 +14,6 @@
                 current: false
             },
             navbars: [
-                {
-                    type: 'tabs',
-                    content: [
-                        '<a href="#panel-menu">{translate line='adminmenu_tabs_menu'}</a>',
-                        '<a href="#panel-account">{translate line='adminmenu_tabs_account'}</a>'
-                    ]
-                },
                 {
                     content: [ 'prev', 'breadcrumbs' ]
                 }
@@ -55,19 +50,40 @@
             }
         });
 
-        jQuery(document).on('mouseover', 'a.mm-menu__blocker', function() {
+        var closeMenu = function() {
+            if (menuOpenTimer !== null) {
+                clearTimeout(menuOpenTimer);
+                menuOpenTimer = null;
+            }
+            jQuery('#page').removeClass('no-initial-slideout');
+            jQuery('nav#list-navigation').data('mmenu').close();
+        };
+
+        var openMenu = function () {
+            if (menuOpenTimer !== null) {
+                clearTimeout(menuOpenTimer);
+                menuOpenTimer = null;
+            }
             jQuery('#page').removeClass('no-initial-slideout');
             jQuery('nav#list-navigation').data('mmenu').open();
+        };
+
+        jQuery(document).on('mouseover', 'a.mm-menu__blocker', function() {
+            if (menuOpenTimer === null) {
+                menuOpenTimer = setTimeout(openMenu, 250);
+            }
+        });
+
+        jQuery(document).on('mouseout', 'a.mm-menu__blocker', function () {
+            closeMenu();
         });
 
         jQuery(document).on('mouseover', 'div.mm-page__blocker', function() {
-            jQuery('#page').removeClass('no-initial-slideout');
-            jQuery('nav#list-navigation').data('mmenu').close();
+            closeMenu();
         });
 
         jQuery(document).mouseleave(function() {
-            jQuery('#page').removeClass('no-initial-slideout');
-            jQuery('nav#list-navigation').data('mmenu').close();
+            closeMenu();
         });
     });
 </script>
@@ -100,11 +116,9 @@
 {function name='add_admin_menu' menu=[] current=''}
     <nav id="list-navigation" style="display: none;">
         <div id="panel-menu">
+            <p>{translate line='adminmenu_user'}: <strong>{$list_teacher_account.fullname|escape:'html'}</strong></p>
             <span id="header_open_task_set_id">{include file='partials/backend_general/open_task_set.tpl' inline}</span>
             {generate_admin_menu menu=$menu current=$current}
-        </div>
-        <div id="panel-account">
-            <p>{translate line='adminmenu_user'}: <strong>{$list_teacher_account.fullname|escape:'html'}</strong></p>
             <ul>
                 <li><a href="{internal_url url='admin_teachers/my_account'}"><i class="fa fa-id-card-o" aria-hidden="true"></i>{translate line='adminmenu_title_teacher_account'}</a></li>
                 <li><span><i class="fa fa-language" aria-hidden="true"></i>{foreach $list_quicklang_menu as $language}{if $language@key eq $list_teacher_account.language}{$language}{/if}{/foreach}</span>

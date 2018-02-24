@@ -160,6 +160,9 @@ class Tests extends LIST_Controller {
             $test_queue_status_2->where_related($student);
             $test_queue_status_2->where('status', 2);
             $test_queue_status_2->limit($max_allowed_to_enqueue * 2);
+            $test_queue_status_2->order_by('priority', 'ASC');
+            $test_queue_status_2->order_by('finish', 'DESC');
+            $test_queue_status_2->order_by('start', 'DESC');
 
             $test_status_3 = new Test();
             $test_status_3->select_func('COUNT', array('@id'), 'tests_count');
@@ -172,6 +175,9 @@ class Tests extends LIST_Controller {
             $test_queue_status_3->where_related($student);
             $test_queue_status_3->where('status', 3);
             $test_queue_status_3->limit($max_allowed_to_enqueue * 2);
+            $test_queue_status_3->order_by('priority', 'ASC');
+            $test_queue_status_3->order_by('finish', 'DESC');
+            $test_queue_status_3->order_by('start', 'DESC');
 
             $order_by_clauses = '`status` DESC, `priority` ASC, `finish` DESC, `start` DESC';
 
