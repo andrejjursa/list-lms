@@ -34,3 +34,6 @@ $lang['admin_course_content_groups_error_not_found_for_edit'] = 'Content group s
 $lang['admin_course_content_groups_error_not_updated'] = 'Content group update failed.';
 
 $lang['admin_course_content_group_success_updated'] = 'Content group updated successfully.';
+
+$lang['admin_course_content_groups_switch_to_listing'] = 'To content listing';
+$lang['admin_course_content_groups_switch_to_sorting'] = 'To content/group sorting';
