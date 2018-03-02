@@ -34,3 +34,6 @@ $lang['admin_course_content_groups_error_not_found_for_edit'] = 'Požadovaná sk
 $lang['admin_course_content_groups_error_not_updated'] = 'Úprava skupiny obsahu zlyhala.';
 
 $lang['admin_course_content_group_success_updated'] = 'Úprava skupiny obsahu bola úspešná.';
+
+$lang['admin_course_content_groups_switch_to_listing'] = 'Na zoznam obsahu';
+$lang['admin_course_content_groups_switch_to_sorting'] = 'Na triedenie obsahu/skupín';

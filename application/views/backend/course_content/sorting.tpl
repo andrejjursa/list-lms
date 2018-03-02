@@ -2,7 +2,10 @@
 {block title}{translate line='admin_course_content_sorting_page_header'}{/block}
 {block main_content}
     <h2>{translate line='admin_course_content_sorting_page_header'}</h2>
-    <span class="switches"><a href="{internal_url url='admin_course_content'}" class="switch"><i class="fa fa-arrow-right" aria-hidden="true"></i> {translate line='admin_course_content_switch_to_listing'}</a></span>
+    <span class="switches">
+        <a href="{internal_url url='admin_course_content'}" class="switch"><i class="fa fa-arrow-right" aria-hidden="true"></i> {translate line='admin_course_content_switch_to_listing'}</a>
+        <a href="{internal_url url='admin_course_content_groups'}" class="switch"><i class="fa fa-arrow-right" aria-hidden="true"></i> {translate line='admin_course_content_switch_to_groups'}</a>
+    </span>
     {include file='partials/backend_general/flash_messages.tpl' inline}
     <fieldset>
         <legend>{translate line='admin_course_content_fieldset_sort_all_content'}</legend>

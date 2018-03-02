@@ -96,3 +96,4 @@ $lang['admin_course_content_sorting_successful'] = 'Zoradenie úspešné.';
 
 $lang['admin_course_content_switch_to_sorting'] = 'Na zotriedenie';
 $lang['admin_course_content_switch_to_listing'] = 'Na zoznam';
+$lang['admin_course_content_switch_to_groups'] = 'Na skupiny';
