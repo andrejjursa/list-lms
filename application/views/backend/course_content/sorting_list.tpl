@@ -13,7 +13,7 @@
                         {foreach $grouped_content as $sub_content}
                             {if $sub_content->course_content_group_id eq $content_or_group->id}
                             <div class="sorted_content" data-id="{$sub_content->id}" data-type="content">
-                                {overlay table='course_content' table_id=$sub_content->id column='title' default=$sub_content->title} ({$sub_content->id})
+                                {overlay table='course_content' table_id=$sub_content->id column='title' default=$sub_content->title}
                             </div>
                             {/if}
                         {/foreach}

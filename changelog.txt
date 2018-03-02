@@ -20,7 +20,14 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
-VERSION 1.6.4 | 2018-02-05
+VERSION 1.6.5 | 2018-03-02
+
+CHANGE Odstránené zbytočne zobrazované ID záznamov o obsahu v triedení obsahu.
+CHANGE [lang:english] Deleted unnecessary ID displaying in course content sorting on content records.
+
+END VERSION
+
+VERSION 1.6.4 | 2018-02-25
 
 REMOVE Odstránená úprava otvárania navigácie administrácie z verzie 1.6.3 a vrátená do stavu verzie 1.6.2.
 REMOVE [lang:english] Removed change of administration navigation open method from version 1.6.3 and reverted back to state from version 1.6.2.
