@@ -96,3 +96,4 @@ $lang['admin_course_content_sorting_successful'] = 'Sorting successful.';
 
 $lang['admin_course_content_switch_to_sorting'] = 'To sorting';
 $lang['admin_course_content_switch_to_listing'] = 'To listing';
+$lang['admin_course_content_switch_to_groups'] = 'To groups';
