@@ -14,21 +14,30 @@ SCORING_FILE=$WORKING_PATH'__list_score.txt'
 cd $WORKING_PATH
 rm -f $RUN_FILE *.o
 mv $TEST_SOURCE_FILE $TEST_SOURCE_FILE'.pending'
+TRY_UCS2LE=0
 echo "----- compiling... ----- <pre>" >> $OUTPUT_FILE
-if [[ "`echo *.cpp`" != "*.cpp" ]] ; then
-  g++ $COPTIONS -c *.cpp >> $OUTPUT_FILE 2>> $OUTPUT_FILE
+rm -f $OUTPUT_FILE'.x'
+g++ $COPTIONS -c $(ls *.cpp *.CPP) >> $OUTPUT_FILE 2> $OUTPUT_FILE'.x'
+RV1=$?
+grep "error: stray" $OUTPUT_FILE'.x' > /dev/null
+if [[ $? -eq 0 ]] ; then
+  TRY_UCS2LE=1
+fi
+
+rm -f $OUTPUT_FILE'.x'
+if [[ $TRY_UCS2LE -ne 0 ]] ; then
+  # echo "compiling failed, trying with UCS-2LE encoding..." >> $OUTPUT_FILE
+  mv list_simple_cpp_test.cpp list_simple_cpp_test.cpp.pending
+  for x in *.cpp *.CPP ; do mv $x conv.$x ; iconv -f UCS-2LE -t utf-8 conv.$x -o $x ; rm conv.$x ; done 
+  g++ $COPTIONS -c $(ls *.cpp *.CPP) >> $OUTPUT_FILE 2> $OUTPUT_FILE'.x'
   RV1=$?
-else
-  RV1=0
-fi 
-if [[ "`echo *.CPP`" != "*.CPP" ]] ; then
-  g++ $COPTIONS -c *.CPP >> $OUTPUT_FILE 2>> $OUTPUT_FILE
-  RV2=$?
-  echo "comp2: $RV2" >> $OUTPUT_FILE
-else
-  RV2=0
-fi 
-if [[ $RV1 -ne 0 || $RV2 -ne 0 ]] ; then
+  mv list_simple_cpp_test.cpp.pending list_simple_cpp_test.cpp
+  g++ $COPTIONS -c list_simple_cpp_test.cpp 
+  head --lines=1 $OUTPUT_FILE'.x' >> $OUTPUT_FILE
+  rm -f $OUTPUT_FILE'.x'
+fi
+
+if [[ $RV1 -ne 0 ]] ; then
   echo "</pre><br>----- compilation did not work out well, please fix your errors, upload a new version and try again -----<br>" >> $OUTPUT_FILE
 else
   strip --strip-symbol main *.o
