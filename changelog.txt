@@ -20,6 +20,13 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.6.6 | 2018-04-20
+
+CHANGE Navigácia v administrácii sa odteraz otvára kliknutím na ikonu v ľavo hore. Automatické otváranie bolo zrušené.
+CHANGE [lang:english] In administration, the navigation is now opening by icon in top left corner. Automatic opening was canceled.
+
+END VERSION
+
 VERSION 1.6.5 | 2018-03-02
 
 NEW Pridané odkazy na rýchle prepínanie medzi zoznamom obsahu, zoznamom skupín obsahu a zotriedením obsahu/skupín.
