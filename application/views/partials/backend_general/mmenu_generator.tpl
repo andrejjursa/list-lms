@@ -1,7 +1,4 @@
 <script type="text/javascript">
-
-    var menuOpenTimer = null;
-
     jQuery(document).ready(function($) {
         $('nav#list-navigation').show().mmenu({
             extensions: [ 'theme-dark', "pagedim-black", "multiline", "shadow-page", "shadow-panels" ],
@@ -22,6 +19,7 @@
                 add: true,
                 size: 40,
                 top: [
+                    '<a href="javascript:void(0);" id="navigation_open_close"><span class="fa fa-bars"></span></a>',
                     '<a href="{internal_url url='admin'}" title="{translate line='adminmenu_title_dashboard'}"><span class="fa fa-home"></span></a>',
                     '<a href="{internal_url url='admin_tasks'}" title="{translate line='adminmenu_title_tasks'}"><span class="fa fa-tasks"></span></a>',
                     '<a href="{internal_url url='admin_task_sets'}" title="{translate line='adminmenu_title_task_sets'}"><span class="fa fa-list"></span></a>',
@@ -50,19 +48,14 @@
             }
         });
 
-        jQuery(document).on('mouseover', 'a.mm-menu__blocker', function() {
-            jQuery('#page').removeClass('no-initial-slideout');
-            jQuery('nav#list-navigation').data('mmenu').open();
-        });
+        jQuery('a.mm-menu__blocker').hide();
 
-        jQuery(document).on('mouseover', 'div.mm-page__blocker', function() {
-            jQuery('#page').removeClass('no-initial-slideout');
-            jQuery('nav#list-navigation').data('mmenu').close();
-        });
-
-        jQuery(document).mouseleave(function() {
-            jQuery('#page').removeClass('no-initial-slideout');
-            jQuery('nav#list-navigation').data('mmenu').close();
+        jQuery('#navigation_open_close').click(function() {
+            if (jQuery('nav#list-navigation').hasClass('mm-menu_opened')) {
+                jQuery('nav#list-navigation').data('mmenu').close();
+            } else {
+                jQuery('nav#list-navigation').data('mmenu').open();
+            }
         });
     });
 </script>
