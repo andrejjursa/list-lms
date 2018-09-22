@@ -252,7 +252,7 @@ class LIST_Lang extends CI_Lang {
      * @param array<string> $fields array of fields (column names) in table for which overlays may be presented in overlay array.
      */
     public function init_overlays($table, $rows, $fields) {
-        if (count($rows) > 0) {
+        if (($rows != null) && (count($rows) > 0)) {
             $ids = array();
             foreach ($rows as $row) {
                 $row_id = is_object($row) ? $row->id : (is_array($row) ? $row['id'] : $row);
