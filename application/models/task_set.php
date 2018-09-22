@@ -472,7 +472,7 @@ class Task_set extends DataMapper {
             $task_set_permissions->where('enabled', 1);
             $task_set_permissions->get_iterated();
 
-            $this->related_permissions = array();
+            $this->related_permissions[$this->id] = array();
 
             foreach ($task_set_permissions as $task_set_permission) {
                 $this->related_permissions[$this->id][$task_set_permission->id] = (object) $task_set_permission->to_array();
