@@ -1,3 +1,4 @@
+test_scripts/run_with_timeout
 application/config/development
 application/config/testing
 application/config/production

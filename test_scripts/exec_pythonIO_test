@@ -3,7 +3,7 @@ TESTFILE=$1
 TIMEOUT=$2
 CURRENT_PATH=$3
 PYTHON_ARGS=""
-nice "$CURRENT_PATH/run_with_timeout" $TIMEOUT /usr/bin/python3.4 $PYTHON_ARGS $TESTFILE.py
+nice "$CURRENT_PATH/run_with_timeout" $TIMEOUT /usr/bin/python3 $PYTHON_ARGS $TESTFILE.py
 EC=$?
 chmod -R a+w * > /dev/null 2> /dev/null
 exit $EC

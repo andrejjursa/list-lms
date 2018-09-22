@@ -9,7 +9,7 @@ TIMEOUT=$2
 BIN_PATH=$3
 PYTHON_ARGS=""
 #
-nice $BIN_PATH/run_with_timeout $TIMEOUT /usr/bin/python3.4 $PYTHON_ARGS Test$TESTFILE.py
+nice $BIN_PATH/run_with_timeout $TIMEOUT /usr/bin/python3 $PYTHON_ARGS Test$TESTFILE.py
 EC=$?
 chmod -R a+w * > /dev/null 2> /dev/null
 exit $EC
