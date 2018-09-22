@@ -54,6 +54,8 @@ class LIST_Parser extends CI_Parser {
         // Update theme paths
         $this->_update_theme_paths();
         
+        $this->CI->smarty->addPluginsDir(APPPATH . './smarty_plugins');
+        
         $this->CI->smarty->registerPlugin('modifier', 'php_strip_tags', 'strip_tags');
         
         $this->CI->smarty->caching_type = 'mysql';
@@ -157,7 +159,7 @@ class LIST_Parser extends CI_Parser {
      * @return string
      */
     public function parse($template, $data = array(), $return = FALSE, $caching = FALSE, $cache_id =  '', $theme = '')
-    {        
+    {
         // If we don't want caching, disable it
         if ($caching === FALSE)
         {
@@ -224,7 +226,7 @@ class LIST_Parser extends CI_Parser {
      * @param $file
      */
     public function add_css_file($file, $attributes = array()) {
-        include_once APPPATH . 'third_party/Smarty/plugins/modifier.add_file_version.php';
+        include_once APPPATH . 'smarty_plugins/modifier.add_file_version.php';
         $defaults = array(
             'media' => 'screen',
             'rel'   => 'stylesheet',
@@ -251,7 +253,7 @@ class LIST_Parser extends CI_Parser {
      * @param $file
      */
     public function add_js_file($file, $attributes = array()) {
-        include_once APPPATH . 'third_party/Smarty/plugins/modifier.add_file_version.php';
+        include_once APPPATH . 'smarty_plugins/modifier.add_file_version.php';
         $defaults = array(
             'type'  => 'text/javascript'
         );

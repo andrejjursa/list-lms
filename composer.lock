@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8e5ceef5fae0aa723bc5e9ff1e979b5b",
+    "content-hash": "ad30c119154e3725212e3500884cf8e5",
     "packages": [
         {
             "name": "mathjax/mathjax",
-            "version": "2.7.1",
+            "version": "2.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathjax/MathJax.git",
-                "reference": "d71cc40666d213dceeb9353822a3b530656d9a4b"
+                "reference": "419b0a6eee7eefc0f85e47f7d4f8227ec28b8e57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathjax/MathJax/zipball/d71cc40666d213dceeb9353822a3b530656d9a4b",
-                "reference": "d71cc40666d213dceeb9353822a3b530656d9a4b",
+                "url": "https://api.github.com/repos/mathjax/MathJax/zipball/419b0a6eee7eefc0f85e47f7d4f8227ec28b8e57",
+                "reference": "419b0a6eee7eefc0f85e47f7d4f8227ec28b8e57",
                 "shasum": ""
             },
             "type": "library",
@@ -40,12 +40,67 @@
                 "latex",
                 "math"
             ],
-            "time": "2017-04-25 08:29:36"
+            "time": "2018-07-19T15:25:43+00:00"
+        },
+        {
+            "name": "smarty/smarty",
+            "version": "v3.1.29",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smarty-php/smarty.git",
+                "reference": "35480f10e7ce9b0fdaf23d3799d7b79463919b1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/35480f10e7ce9b0fdaf23d3799d7b79463919b1e",
+                "reference": "35480f10e7ce9b0fdaf23d3799d7b79463919b1e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "libs/Smarty.class.php",
+                    "libs/SmartyBC.class.php",
+                    "libs/sysplugins/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Monte Ohrt",
+                    "email": "monte@ohrt.com"
+                },
+                {
+                    "name": "Uwe Tews",
+                    "email": "uwe.tews@googlemail.com"
+                },
+                {
+                    "name": "Rodney Rehm",
+                    "email": "rodney.rehm@medialize.de"
+                }
+            ],
+            "description": "Smarty - the compiling PHP template engine",
+            "homepage": "http://www.smarty.net",
+            "keywords": [
+                "templating"
+            ],
+            "time": "2015-12-21T01:57:06+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,

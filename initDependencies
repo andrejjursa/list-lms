@@ -55,7 +55,7 @@ function remove_file {
 			error_message " File $1 can't be removed. "
 		fi
 	else
-		error_message " Path $! is not a file! "
+		error_message " Path $1 is not a file! "
 	fi
 }
 
@@ -135,7 +135,7 @@ echo "Installation of dependencies with npm ..."
 
 echo "Running: npm install $NPM_PARAMS"
 
-npm install $NPM_PARAMS
+sudo -u www-data npm install $NPM_PARAMS
 
 echo "... done."
 
@@ -143,7 +143,7 @@ echo "Installation of dependencies with bower ..."
 
 echo "Running: node_modules/bower/bin/bower install $BOWER_PARAMS"
 
-node_modules/bower/bin/bower install $BOWER_PARAMS
+sudo -u www-data node_modules/bower/bin/bower install $BOWER_PARAMS
 
 echo "... done."
 
@@ -162,6 +162,28 @@ link_dir "$CD/$mathjax/extensions" "$CD/$pmathjax/extensions"
 link_dir "$CD/$mathjax/jax" "$CD/$pmathjax/jax"
 link_dir "$CD/$mathjax/localization" "$CD/$pmathjax/localization"
 chmod -R 755 "$CD/$pmathjax"
+echo "... done."
+
+smarty="vendor/smarty/smarty/libs"
+psmarty="application/third_party/Smarty"
+
+echo "Copying references to smarty template engine ..."
+
+empty_dir "$CD/$psmarty/sysplugins"
+empty_dir "$CD/$psmarty/plugins"
+remove_file "$CD/$psmarty/Autoloader.php"
+remove_file "$CD/$psmarty/bootstrap.php"
+remove_file "$CD/$psmarty/debug.tpl"
+remove_file "$CD/$psmarty/SmartyBC.class.php"
+remove_file "$CD/$psmarty/Smarty.class.php"
+link_dir "$CD/$smarty/sysplugins" "$CD/$psmarty/sysplugins"
+link_dir "$CD/$smarty/plugins" "$CD/$psmarty/plugins"
+link_file "$CD/$smarty/Autoloader.php" "$CD/$psmarty/Autoloader.php"
+link_file "$CD/$smarty/bootstrap.php" "$CD/$psmarty/bootstrap.php"
+link_file "$CD/$smarty/debug.tpl" "$CD/$psmarty/debug.tpl"
+link_file "$CD/$smarty/SmartyBC.class.php" "$CD/$psmarty/SmartyBC.class.php"
+link_file "$CD/$smarty/Smarty.class.php" "$CD/$psmarty/Smarty.class.php"
+
 echo "... done."
 
 highcharts="node_modules/highcharts"

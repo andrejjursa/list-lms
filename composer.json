@@ -8,8 +8,9 @@
             "email": "dragoo@thelambda.sk"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
-        "mathjax/mathjax": "^2.7"
+        "mathjax/mathjax": "^2.7",
+        "smarty/smarty": "3.1.29"
     }
 }
