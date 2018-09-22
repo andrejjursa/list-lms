@@ -434,7 +434,7 @@ class Task_set extends DataMapper {
         $permissions = $this->get_related_permissions();
 
         $upload_end_time = null;
-        if (count($permissions) > 0) {
+        if (($permissions != null) && (count($permissions) > 0)) {
             if ($permission_id !== null && isset($permissions[$permission_id])) {
                 $upload_end_time = $permissions[$permission_id]->upload_end_time;
             } else {
@@ -472,7 +472,7 @@ class Task_set extends DataMapper {
             $task_set_permissions->where('enabled', 1);
             $task_set_permissions->get_iterated();
 
-            $this->related_permissions = array();
+            $this->related_permissions[$this->id] = array();
 
             foreach ($task_set_permissions as $task_set_permission) {
                 $this->related_permissions[$this->id][$task_set_permission->id] = (object) $task_set_permission->to_array();

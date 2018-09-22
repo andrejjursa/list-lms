@@ -23,7 +23,7 @@
                         {list_html_options
                             options=[''=>'','system'=>'lang:admin_groups_group_email_from_system','me'=>'lang:admin_groups_group_email_from_me']
                             selected=$smarty.post.group_mail.from}
-                    </select> <label><input type="checkbox" name="group_mail[sender_copy]" value="1" {if !$smarty.post or $smarty.post.group_mail.sender_copy eq 1}checked="checked"{/if} /> {translate line="admin_groups_group_email_form_label_sender_copy"}</label>
+                    </select><br><br><label><input type="checkbox" name="group_mail[sender_copy]" value="1" {if !$smarty.post or $smarty.post.group_mail.sender_copy eq 1}checked="checked"{/if} /> {translate line="admin_groups_group_email_form_label_sender_copy"}</label>
                 </div>
                 {form_error field='group_mail[from]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
             </div>
