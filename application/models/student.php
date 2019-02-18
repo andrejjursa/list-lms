@@ -54,9 +54,11 @@ class Student extends DataMapper {
      */
     public function generate_random_password_token() {
         $this->load->library('form_validation');
-        
+
+        $CI =& get_instance();
+
         do {
-            $this->password_token = sha1(time() . '-' . $this->config->item('encryption_key') . '-' . $_SERVER['SCRIPT_FILENAME'] . '-' . rand(1000000, 9999999));
+            $this->password_token = sha1(time() . '-' . $CI->config->item('encryption_key') . '-' . $_SERVER['SCRIPT_FILENAME'] . '-' . rand(1000000, 9999999));
         } while(!$this->form_validation->is_unique($this->password_token, 'students.password_token'));
         
         if (!is_null($this->id) && is_numeric($this->id) && intval($this->id) > 0) {

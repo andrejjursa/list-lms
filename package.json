@@ -19,7 +19,7 @@
     "bower": "^1.8.2",
     "font-awesome": "^4.7.0",
     "highcharts": "^5.0.10",
-    "jquery.mmenu": "^7.0.0",
+    "jquery.mmenu": "7.0.0",
     "tinymce": "^4.7.6"
   }
 }
