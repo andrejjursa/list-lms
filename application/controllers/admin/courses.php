@@ -89,7 +89,7 @@
 			$this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
 			$this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
 			$this->form_validation->set_rules('course[capacity]', 'lang:admin_courses_form_field_capacity', 'required|integer|greater_than[0]');
-			$this->form_validation->set_rules('course[default_points_to_remove]', 'lang:admin_courses_form_field_default_points_to_remove', 'required|numeric|greater_than[0]');
+			$this->form_validation->set_rules('course[default_points_to_remove]', 'lang:admin_courses_form_field_default_points_to_remove', 'required|numeric|greater_than_or_equal[0]');
 
 			if ($this->form_validation->run()) {
 				$course      = new Course();
@@ -178,7 +178,7 @@
 			$this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
 			$this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
 			$this->form_validation->set_rules('course[capacity]', 'lang:admin_courses_form_field_capacity', 'required|integer|greater_than[0]');
-			$this->form_validation->set_rules('course[default_points_to_remove]', 'lang:admin_courses_form_field_default_points_to_remove', 'required|numeric|greater_than[0]');
+			$this->form_validation->set_rules('course[default_points_to_remove]', 'lang:admin_courses_form_field_default_points_to_remove', 'required|numeric|greater_than_or_equal[0]');
 
 			if ($this->form_validation->run()) {
 				$course_id = intval($this->input->post('course_id'));

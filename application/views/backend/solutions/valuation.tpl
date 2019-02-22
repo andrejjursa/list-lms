@@ -26,7 +26,7 @@
                         {form_error field='solution[tests_points]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
                     </div>
                     <div class="field">
-                        <label for="solution_points_id" class="required">{translate line='admin_solutions_valuation_form_label_points'}:</label>
+                        <label for="solution_points_id">{translate line='admin_solutions_valuation_form_label_points'}:</label>
                         <p class="input"><input type="text" name="solution[points]" value="{$smarty.post.solution.points|default:$solution->points|escape:'html'}" id="solution_points_id" /></p>{capture name='total_points' assign='total_points'}{if !is_null($solution->task_set->points_override)}{$solution->task_set->points_override}{else}{$solution->task_set_total_points}{/if}{/capture}
                         <p class="input"><em>{translate|sprintf:{$total_points|floatval} line='admin_solutions_valuation_form_label_points_hint'}</em></p>
                         {form_error field='solution[points]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
