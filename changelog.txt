@@ -20,6 +20,19 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.6.8 | 2019-02-22
+
+FIX Niekolko drobných opráv.
+FIX [lang:english] Several small fixes.
+
+CHANGE Kurz môže byť vytvorený / upravený s 0 bodmi na odobratie pri nestihutí termínov odovzdania úloh.
+CHANGE [lang:english] The course can be created / edited with 0 points to withdraw when the deadline for submitting tasks is not met.
+
+CHANGE Hodnotiaci formulár môže byť odoslaný bez vyplnenia bodov.
+CHANGE [lang:english] The evaluation form can be sent without filling in the points.
+
+END VERSION
+
 VERSION 1.6.7 | 2018-09-22
 
 FIX Niekolko drobných opráv.

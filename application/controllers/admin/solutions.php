@@ -442,7 +442,7 @@ class Solutions extends LIST_Controller {
     public function update_valuation($task_set_id, $solution_id) {
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('solution[points]', 'lang:admin_solutions_valuation_form_field_points', 'required|floatpoint');
+        $this->form_validation->set_rules('solution[points]', 'lang:admin_solutions_valuation_form_field_points', 'trim|callback__tests_points_value_check');
         $this->form_validation->set_rules('solution[tests_points]', 'lang:admin_solutions_valuation_form_field_tests_points', 'trim|callback__tests_points_value_check');
         $this->form_validation->set_message('_tests_points_value_check', $this->lang->line('admin_solutions_valuation_form_field_tests_points_value_check_error'));
 
@@ -454,10 +454,11 @@ class Solutions extends LIST_Controller {
             $solution->get_by_id($solution_id);
             if ($solution->exists()) {
                 $solution_data = $this->input->post('solution');
-                if ($solution->comment != $solution_data['comment'] || $solution->points != floatval($solution_data['points']) || $solution->not_considered != intval($solution_data['not_considered'])) {
+                if ($solution->comment != $solution_data['comment'] || floatval($solution->points) != floatval($solution_data['points']) || $solution->not_considered != intval($solution_data['not_considered'])) {
                     $solution->teacher_id = $this->usermanager->get_teacher_id();
                 }
-                $solution->from_array($solution_data, array('points', 'comment', 'not_considered', 'disable_evaluation_by_tests'));
+                $solution->from_array($solution_data, array('comment', 'not_considered', 'disable_evaluation_by_tests'));
+                $solution->points = isset($solution_data['points']) && $solution_data['points'] !== '' ? $solution_data['points'] : NULL;
                 $solution->tests_points = isset($solution_data['tests_points']) && $solution_data['tests_points'] !== '' ? $solution_data['tests_points'] : NULL;
                 $solution->revalidate = 0;
                 if ($solution->save() && $this->db->trans_status()) {
