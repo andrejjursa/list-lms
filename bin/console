@@ -1,5 +1,6 @@
 #!/bin/bash
 
 MyPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PHPPATH=$( which php )
 
-/usr/bin/php $MyPATH/../index.php cli "$@"
+$PHPPATH $MyPATH/../index.php cli "$@"
