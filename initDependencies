@@ -127,7 +127,8 @@ echo "Installation of dependencies with composer ..."
 
 echo "Running: composer install $COMPOSER_PARAMS"
 
-sudo -u www-data composer install $COMPOSER_PARAMS
+composer install $COMPOSER_PARAMS
+chown -R 1000:1000 vendor/
 
 echo "... done."
 
@@ -136,6 +137,7 @@ echo "Installation of dependencies with npm ..."
 echo "Running: npm install $NPM_PARAMS"
 
 npm install $NPM_PARAMS
+chown -R 1000:1000 node_modules/
 
 echo "... done."
 
@@ -144,6 +146,7 @@ echo "Installation of dependencies with bower ..."
 echo "Running: node_modules/bower/bin/bower install $BOWER_PARAMS"
 
 node_modules/bower/bin/bower install $BOWER_PARAMS
+chown -R 1000:1000 bower_components/
 
 echo "... done."
 
