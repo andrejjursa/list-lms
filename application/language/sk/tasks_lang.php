@@ -125,3 +125,4 @@ $lang['tasks_test_result_score_name_general_test'] = 'Hodnotenie testu';
 $lang['tasks_solution_version_not_found'] = 'Nenašiel sa požadovaný záznam o metadátach verzii riešenia.';
 $lang['tasks_solution_version_version'] = 'verzia';
 $lang['tasks_solution_version_comment_updated'] = 'Komentrár bol aktualizovaný.';
+$lang['tasks_show_all_task_sets'] = 'Zobraziť všetky úlohy.';

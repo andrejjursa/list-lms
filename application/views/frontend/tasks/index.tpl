@@ -10,6 +10,11 @@
             {$task_set_in_types[$task_set->task_set_type_id][] = $task_set}
         {/foreach}
         <fieldset>
+            <div class="task_sets_show_all{if $showAllTaskSets} show_all{/if}">
+                <form method="post" action="{internal_url url='tasks'}">
+                    <label><input type="checkbox" name="show_all_task_sets" value="1" onchange="javascript:submit();"{if $showAllTaskSets} checked="checked"{/if}> {translate line='tasks_show_all_task_sets'}</label>
+                </form>
+            </div>
             <table class="task_sets_table">
                 <thead>
                     <tr>
@@ -36,6 +41,7 @@
                     {else}
                         {$after_deadline = 0}
                     {/if}
+                    {if !$showAllTaskSets && $after_deadline}{continue}{/if}
                     {$files_count = $task_set->get_student_files_count($list_student_account_model->id)}
                     <tr class="{cycle values="tr_background_odd,tr_background_even" name=$task_set_type->name} {get_task_set_timed_class($task_set->pb_upload_end_time, $task_set->join_upload_solution, $files_count)}">
                         <td class="td_name">{capture name='task_set_name' assign='task_set_name'}{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}{/capture}
@@ -62,8 +68,8 @@
                             {if !is_null($task_set->solution_id) AND (!is_null($task_set->solution_teacher_fullname) OR !is_null($task_set->solution_comment))}
                                 {if trim($task_set->solution_comment)}
                                     {if $task_set->solution_comment|mb_strlen > 40}
-                                        <a href="javascript:void(0);" title="{translate line='tasks_table_click_to_display_comment'}" class="click_enlarge_comment" for="task_set_comment_{$task_set->id}">{$task_set->solution_comment|strip_tags|truncate:40}</a>
-                                        <div class="whole_comment" id="task_set_comment_{$task_set->id}" title="{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name} | {if is_null($task_set->solution_points) AND is_null($task_set->solution_tests_points)}-{else}{$task_set->solution_points|default:0|floatval + $task_set->solution_tests_points|default:0|floatval}{/if} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if} | {$task_set->solution_teacher_fullname}"><div class="comment_body">{$task_set->solution_comment|nl2br}</div></div>
+                                        <a href="javascript:void(0);" title="{translate line='tasks_table_click_to_display_comment'}" class="click_enlarge_comment" for="task_set_comment_{$task_set->id}">{$task_set->solution_comment|escape:'html'|truncate:40}</a>
+                                        <div class="whole_comment" id="task_set_comment_{$task_set->id}" title="{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name} | {if is_null($task_set->solution_points) AND is_null($task_set->solution_tests_points)}-{else}{$task_set->solution_points|default:0|floatval + $task_set->solution_tests_points|default:0|floatval}{/if} / {if !is_null($task_set->points_override)}{$task_set->points_override|default:0|floatval}{else}{$task_set->total_points|default:0|floatval}{/if} | {$task_set->solution_teacher_fullname}"><div class="comment_body">{$task_set->solution_comment|escape:'html'|nl2br}</div></div>
                                     {else}
                                         {$task_set->solution_comment|nl2br}
                                     {/if}
