@@ -10,6 +10,11 @@
             {$task_set_in_types[$task_set->task_set_type_id][] = $task_set}
         {/foreach}
         <fieldset>
+            <div class="task_sets_show_all{if $showAllTaskSets} show_all{/if}">
+                <form method="post" action="{internal_url url='tasks'}">
+                    <label><input type="checkbox" name="show_all_task_sets" value="1" onchange="javascript:submit();"{if $showAllTaskSets} checked="checked"{/if}> {translate line='tasks_show_all_task_sets'}</label>
+                </form>
+            </div>
             <table class="task_sets_table">
                 <thead>
                     <tr>
@@ -36,6 +41,7 @@
                     {else}
                         {$after_deadline = 0}
                     {/if}
+                    {if !$showAllTaskSets && $after_deadline}{continue}{/if}
                     {$files_count = $task_set->get_student_files_count($list_student_account_model->id)}
                     <tr class="{cycle values="tr_background_odd,tr_background_even" name=$task_set_type->name} {get_task_set_timed_class($task_set->pb_upload_end_time, $task_set->join_upload_solution, $files_count)}">
                         <td class="td_name">{capture name='task_set_name' assign='task_set_name'}{overlay table='task_sets' table_id=$task_set->id column='name' default=$task_set->name}{/capture}
