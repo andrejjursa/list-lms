@@ -8,7 +8,9 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <sys/times.h>
-
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <errno.h>
 
 static int rv;
 unsigned int ticks_per_second;
@@ -77,6 +79,14 @@ int main(int argc, char **args)
 
   if (!(pid = fork())) 
   {
+    struct rlimit memlimit;
+    memlimit.rlim_cur = 4294967296L;
+    memlimit.rlim_max = 4294967296L;
+    if (setrlimit(RLIMIT_AS, &memlimit) < 0)
+    {
+        printf("could not set memory limit, errno=%d\n", errno);
+	return 0;
+    }
     execvp(args[1], args+1);
   }
   else 
