@@ -149,3 +149,8 @@ table.tests_result_table tbody td div.test_evaluation_table { margin-left: 60%; 
 table.tests_result_table tbody td div.test_evaluation_table table { width: 100%; border-collapse: collapse; }
 table.tests_result_table tbody td div.test_evaluation_table table tfoot { color: #008000; }
 table.tests_result_table tbody td div.clear_evaluation_table { clear: both; }
+
+div.task_sets_show_all { padding: 0.5em; background-color: #0d9a95; border-radius: 3px; margin-bottom: 0.5em; }
+div.task_sets_show_all.show_all { background-color: #2f7c00; }
+div.task_sets_show_all label { font-weight: bold; display: block; cursor: pointer; transition: color 200ms ease-in-out; }
+div.task_sets_show_all label:hover { color: white; }

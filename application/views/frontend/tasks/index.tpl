@@ -10,7 +10,7 @@
             {$task_set_in_types[$task_set->task_set_type_id][] = $task_set}
         {/foreach}
         <fieldset>
-            <div class="task_sets_show_all">
+            <div class="task_sets_show_all{if $showAllTaskSets} show_all{/if}">
                 <form method="post" action="{internal_url url='tasks'}">
                     <label><input type="checkbox" name="show_all_task_sets" value="1" onchange="javascript:submit();"{if $showAllTaskSets} checked="checked"{/if}> {translate line='tasks_show_all_task_sets'}</label>
                 </form>
