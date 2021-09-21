@@ -22,6 +22,7 @@ services:
                         LIST_DATABASE_PASSWORD: root
                         LIST_DATABASE_NAME: list-dev
                         LIST_CONFIG_BASE_URL: http://server.listdev/
+                        LIST_ENVIRONMENT: development
 
         list-database:
                 image: mariadb:10
