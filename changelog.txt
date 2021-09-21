@@ -25,6 +25,9 @@ VERSION 1.6.9 | 2021-09-21
 FIX Opravené zobrazovanie komentárov od učitela k študentskému riešeniu úloh.
 FIX [lang:english] Fixed display of teachers comment to the student solution.
 
+CHANGE Odteraz sa študentom zobrazujú iba úlohy pred limitom odovzdania riešení. Staršie úlohy možno zobraziť prepínačom.
+CHANGE [lang:english] From now only the task before deadline are shown to students by default. Older tasks may be displayed by checking the checkbox.
+
 END VERSION
 
 VERSION 1.6.8 | 2019-02-22
