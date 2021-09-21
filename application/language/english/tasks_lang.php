@@ -125,3 +125,4 @@ $lang['tasks_test_result_score_name_general_test'] = 'Test score';
 $lang['tasks_solution_version_not_found'] = 'Requested solution version metadata record not found.';
 $lang['tasks_solution_version_version'] = 'version';
 $lang['tasks_solution_version_comment_updated'] = 'Comment updated.';
+$lang['tasks_show_all_task_sets'] = 'Show all tasks.';

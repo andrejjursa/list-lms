@@ -22,7 +22,13 @@ class Tasks extends LIST_Controller {
         $this->_select_student_menu_pagetag('tasks');
         $this->parser->add_css_file('frontend_tasks.css');
         $this->parser->add_js_file('tasks/list.js');
-        $cache_id = $this->usermanager->get_student_cache_id();
+        $data = $this->input->post();
+        $showAllTaskSets = false;
+        if (is_array($data) && array_key_exists('show_all_task_sets', $data) && (int)$data['show_all_task_sets'] === 1) {
+            $showAllTaskSets = true;
+        }
+        $this->parser->assign('showAllTaskSets', $showAllTaskSets);
+        $cache_id = $this->usermanager->get_student_cache_id() . '_' . ($showAllTaskSets ? 'all' : 'future');
         if ($this->_is_cache_enabled()) {
             $this->smarty->caching = Smarty::CACHING_LIFETIME_SAVED;
         }
