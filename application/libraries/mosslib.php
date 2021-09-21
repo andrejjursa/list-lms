@@ -198,7 +198,7 @@ class mosslib {
 	public function send(){
 		$socket = fsockopen($this->server,$this->port, $errno, $errstr);
 		if(!$socket){
-			throw new Exception("Socket-Error: ".$errstr." (".$errno.")", 8);
+			throw new Exception("Socket-Error: ".$this->server.":".$this->port." - ".$errstr." (".$errno.")", 8);
 		}
 		else{
 			fwrite($socket, "moss ".$this->userid."\n");
