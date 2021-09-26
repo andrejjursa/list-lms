@@ -10,6 +10,9 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "mathjax/mathjax": "^2.7"
+        "mathjax/mathjax": "^2.7",
+      "ext-json": "*",
+        "ext-zip": "*",
+        "ext-mbstring": "*"
     }
 }

@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "8e5ceef5fae0aa723bc5e9ff1e979b5b",
+    "content-hash": "b64c4e4287c40e1715f2b30f98fcaafa",
     "packages": [
         {
             "name": "mathjax/mathjax",
@@ -40,7 +40,11 @@
                 "latex",
                 "math"
             ],
-            "time": "2017-04-25 08:29:36"
+            "support": {
+                "issues": "https://github.com/mathjax/MathJax/issues",
+                "source": "https://github.com/mathjax/MathJax/tree/master"
+            },
+            "time": "2017-04-25T08:29:36+00:00"
         }
     ],
     "packages-dev": [],
@@ -49,6 +53,11 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": []
+    "platform": {
+        "ext-json": "*",
+        "ext-zip": "*",
+        "ext-mbstring": "*"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }
