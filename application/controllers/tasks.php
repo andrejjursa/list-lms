@@ -28,7 +28,7 @@ class Tasks extends LIST_Controller {
             $showAllTaskSets = true;
         }
         $this->parser->assign('showAllTaskSets', $showAllTaskSets);
-        $cache_id = $this->usermanager->get_student_cache_id() . '_' . ($showAllTaskSets ? 'all' : 'future');
+        $cache_id = $this->usermanager->get_student_cache_id() . '|' . ($showAllTaskSets ? 'show_all' : 'show_future');
         if ($this->_is_cache_enabled()) {
             $this->smarty->caching = Smarty::CACHING_LIFETIME_SAVED;
         }
