@@ -17,26 +17,28 @@
  * @property CI_Router $router
  * @property DataMapper $db
  * @property LIST_Output $output
+ * @property Messages $message
  *
  * @package LIST_Core
  * @author Andrej Jursa
  */ 
 class LIST_Controller extends CI_Controller {
+
+    public const TRANSACTION_ISOLATION_REPEATABLE_READ = 'REPEATABLE READ';
+    public const TRANSACTION_ISOLATION_READ_COMMITTED = 'READ COMMITTED';
+    public const TRANSACTION_ISOLATION_READ_UNCOMMITTED = 'READ UNCOMMITTED';
+    public const TRANSACTION_ISOLATION_SERIALIZABLE = 'SERIALIZABLE';
     
-    const TRANSACTION_ISOLATION_REPEATABLE_READ = 'REPEATABLE READ';
-    const TRANSACTION_ISOLATION_READ_COMMITTED = 'READ COMMITTED';
-    const TRANSACTION_ISOLATION_READ_UNCOMMITTED = 'READ UNCOMMITTED';
-    const TRANSACTION_ISOLATION_SERIALIZABLE = 'SERIALIZABLE';
-    
-    const TRANSACTION_AREA_GLOBAL = 'GLOBAL';
-    const TRANSACTION_AREA_SESSION = 'SESSION';
+    public const TRANSACTION_AREA_GLOBAL = 'GLOBAL';
+    public const TRANSACTION_AREA_SESSION = 'SESSION';
     
     /**
      * Main constructor, initialise controller.
      * Database will be connected, libraries for usermanager and messages will be loaded and translations model will be loaded.
      * All user data will be send to smarty template.
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->load->config('list');
         $this->load->config('lockdown');
@@ -63,7 +65,8 @@ class LIST_Controller extends CI_Controller {
      * Language idiom must exist in system/application languages.
      * @param string $lang_idiom language idiom.
      */
-    protected function _init_specific_language($lang_idiom) {
+    protected function _init_specific_language(string $lang_idiom): void
+    {
         $languages = $this->lang->get_list_of_languages();
         if (array_key_exists($lang_idiom, $languages) && $this->lang->get_current_idiom() != $lang_idiom) {
             $this->lang->reinitialize_for_idiom($lang_idiom);
@@ -75,40 +78,40 @@ class LIST_Controller extends CI_Controller {
 
         /**
      * Perform initialisation of student language settings.
-     * @param Student|integer $student, for which language have to be set, accept Student model or integer with student id, default is NULL (use currently loged in student).
+     * @param Student|integer|null $student for which language have to be set, accept Student model or integer with student id, default is NULL (use currently loged in student).
      */
-    protected function _init_language_for_student($student = NULL) {
+    protected function _init_language_for_student($student = NULL): void
+    {
         if (is_null($student)) {
             $this->lang->reinitialize_for_idiom($this->usermanager->get_student_language());
             $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
             $this->lang->add_custom_translations($translations);
             $this->_init_lang_js_messages();
+        } else if (!($student instanceof Student) && !(is_numeric($student) && (int)$student > 0)) {
+            $this->_init_language_for_student();
         } else {
-            if (!(is_object($student) && $student instanceof Student) && !(is_numeric($student) && intval($student) > 0)) {
-                $this->_init_language_for_student();
+            if (!is_object($student)) {
+                $student = new Student($student);
+            }
+            if ($student->exists()) {
+                if ($this->lang->get_current_idiom() !== $student->language) {
+                    $this->lang->reinitialize_for_idiom($student->language);
+                    $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
+                    $this->lang->add_custom_translations($translations);
+                    $this->_init_lang_js_messages();
+                }
             } else {
-                if (!is_object($student)) {
-                    $student = new Student($student);
-                }
-                if ($student->exists()) {
-                    if ($this->lang->get_current_idiom() != $student->language) {
-                        $this->lang->reinitialize_for_idiom($student->language);
-                        $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
-                        $this->lang->add_custom_translations($translations);
-                        $this->_init_lang_js_messages();
-                    }
-                } else {
-                    $this->_init_language_for_student();
-                }
+                $this->_init_language_for_student();
             }
         }
     }
     
     /**
      * Load student type language file.
-     * @param string $filename name of file to be loaded or NULL to load file with name of derived controller.
+     * @param string|null $filename name of file to be loaded or NULL to load file with name of derived controller.
      */
-    protected function _load_student_langfile($filename = NULL) {
+    protected function _load_student_langfile(string $filename = NULL): void
+    {
         if (is_null($filename)) {
             $this->lang->load(strtolower(get_class($this)));
         } else {
@@ -118,42 +121,42 @@ class LIST_Controller extends CI_Controller {
     
     /**
      * Perform initialisation of teacher language settings.
-     * @param Teacher|integer $teacher, for which language have to be set, accept Teacher model or integer with teacher id, default is NULL (use currently loged in teacher).
+     * @param Teacher|integer|null $teacher, for which language have to be set, accept Teacher model or integer with teacher id, default is NULL (use currently loged in teacher).
      */
-    protected function _init_language_for_teacher($teacher = NULL) {
+    protected function _init_language_for_teacher($teacher = NULL): void
+    {
         if (is_null($teacher)) {
             $this->lang->reinitialize_for_idiom($this->usermanager->get_teacher_language());
             $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
             $this->lang->add_custom_translations($translations);
             $this->_init_lang_js_messages();
             $this->_init_teacher_quick_langmenu();
+        } else if (!($teacher instanceof Teacher) && !(is_numeric($teacher) && (int)$teacher > 0)) {
+            $this->_init_language_for_teacher();
         } else {
-            if (!(is_object($teacher) && $teacher instanceof Teacher) && !(is_numeric($teacher) && intval($teacher) > 0)) {
-                $this->_init_language_for_teacher();
+            if (!is_object($teacher)) {
+                $teacher = new Teacher($teacher);
+            }
+            if ($teacher->exists()) {
+                if ($this->lang->get_current_idiom() !== $teacher->language) {
+                    $this->lang->reinitialize_for_idiom($teacher->language);
+                    $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
+                    $this->lang->add_custom_translations($translations);
+                    $this->_init_lang_js_messages();
+                    $this->_init_teacher_quick_langmenu();
+                }
             } else {
-                if (!is_object($teacher)) {
-                    $teacher = new Teacher($teacher);
-                }
-                if ($teacher->exists()) {
-                    if ($this->lang->get_current_idiom() != $teacher->language) {
-                        $this->lang->reinitialize_for_idiom($teacher->language);
-                        $translations = $this->translations->get_translations_for_idiom($this->lang->get_current_idiom());
-                        $this->lang->add_custom_translations($translations);
-                        $this->_init_lang_js_messages();
-                        $this->_init_teacher_quick_langmenu();
-                    }
-                } else {
-                    $this->_init_language_for_teacher();
-                }
+                $this->_init_language_for_teacher();
             }
         }
     }
     
     /**
      * Load teacher type language file.
-     * @param string $filename name of file to be loaded or NULL to load file with name of derived controller.
+     * @param string|null $filename name of file to be loaded or NULL to load file with name of derived controller.
      */
-    protected function _load_teacher_langfile($filename = NULL) {
+    protected function _load_teacher_langfile(string $filename = NULL): void
+    {
         if (is_null($filename)) {
             $this->lang->load('admin/' . strtolower(get_class($this)));
         } else {
@@ -165,7 +168,8 @@ class LIST_Controller extends CI_Controller {
      * Loads and inject teacher menu configuration to template.
      * Smarty template variable $list_adminmenu will be created.
      */
-    protected function _initialize_teacher_menu() {
+    protected function _initialize_teacher_menu(): void
+    {
         $this->config->load('adminmenu');
         $this->parser->assign('list_adminmenu', $this->config->item('adminmenu'));
         $this->_load_teacher_langfile('adminmenu');
@@ -175,7 +179,8 @@ class LIST_Controller extends CI_Controller {
      * Loads and inject open task set to template.
      * Smarty template variable $list_open_task_set will be created.
      */
-    protected function _initialize_open_task_set() {
+    protected function _initialize_open_task_set(): void
+    {
         $task_set = new Task_set();
         $task_set->get_as_open();
         $this->parser->assign('list_open_task_set', $task_set);
@@ -186,7 +191,8 @@ class LIST_Controller extends CI_Controller {
      * Smarty template variable $list_adminmenu_current will be created.
      * @param string $tag page tag to be set as active item in menu.
      */
-    protected function _select_teacher_menu_pagetag($tag = '') {
+    protected function _select_teacher_menu_pagetag(string $tag = ''): void
+    {
         $this->parser->assign('list_adminmenu_current', $tag);
     }
     
@@ -195,14 +201,18 @@ class LIST_Controller extends CI_Controller {
      * @param string $level transaction isolation level, one of TRANSACTION_ISOLATION_* of MY_Controller class.
      * @param string $area area of where isolation is aplied, one of TRANSACTION_AREA_* of MY_Controller class.
      */
-    protected function _transaction_isolation($level = self::TRANSACTION_ISOLATION_SERIALIZABLE, $area = self::TRANSACTION_AREA_SESSION) {
+    protected function _transaction_isolation(
+        string $level = self::TRANSACTION_ISOLATION_SERIALIZABLE,
+        string $area = self::TRANSACTION_AREA_SESSION
+    ): void {
         $this->db->query('SET ' . $area . ' TRANSACTION ISOLATION LEVEL ' . $level . ';');
     }
     
     /**
      * Add language messages.js file to page headers.
      */
-    private function _init_lang_js_messages() {
+    private function _init_lang_js_messages(): void
+    {
         $path = 'public/js/language/' . $this->lang->get_current_idiom() . '/messages.js';
         $this->parser->assign('list_lang_js_messages', $path);
     }
@@ -210,23 +220,27 @@ class LIST_Controller extends CI_Controller {
     /**
      * This method adds tinymce editor to template.
      */
-    protected function _add_tinymce() {
+    protected function _add_tinymce(): void
+    {
         $this->parser->add_js_file('tinymce/jquery.tinymce.js');
         $this->parser->add_js_file('tinymce_fix.js');
         $this->parser->add_css_file('tinymce/common.css');
     }
     
-    protected function _add_tinymce4() {
+    protected function _add_tinymce4(): void
+    {
         $this->parser->add_js_file('tinymce4/jquery.tinymce.min.js');
         $this->parser->add_js_file('tinymce4/tinymce.min.js');
     }
 
-    protected function _add_dataTables() {
+    protected function _add_dataTables(): void
+    {
         $this->parser->add_js_file('jquery.dataTables.min.js');
         $this->parser->add_css_file('jquery.dataTables.css');
     }
 
-    protected function _add_highcharts() {
+    protected function _add_highcharts(): void
+    {
         $this->parser->add_js_file('highcharts/highcharts.js');
         $this->parser->add_js_file('highcharts/modules/exporting.js');
     }
@@ -234,14 +248,15 @@ class LIST_Controller extends CI_Controller {
     /**
      * This method adds plupload to template and load plupload library.
      */
-    protected function _add_plupload() {
+    protected function _add_plupload(): void
+    {
         $this->load->library('plupload');
         $this->parser->add_js_file('plupload.js');
         $this->parser->add_js_file('plupload.html5.js');
         $this->parser->add_js_file('plupload.flash.js');
         $this->parser->add_js_file('plupload.silverlight.js');
         $this->parser->add_js_file('jquery.ui.plupload.js');
-        if (strlen($this->lang->line('plupload_i18n_langfile')) > 0) {
+        if ($this->lang->line('plupload_i18n_langfile') !== '') {
             $this->parser->add_js_file('i18n/' . $this->lang->line('plupload_i18n_langfile'));
         }
         $this->parser->add_css_file('jquery.ui.plupload.css');
@@ -250,14 +265,16 @@ class LIST_Controller extends CI_Controller {
     /**
      * This method add jquery scrollTo plugin to template.
      */
-    protected function _add_scrollTo() {
+    protected function _add_scrollTo(): void
+    {
         $this->parser->add_js_file('jquery.scrollTo-1.4.3.1-min.js');
     }
     
     /**
      * This method add google prettify syntax highlighter to template.
      */
-    protected function _add_prettify() {
+    protected function _add_prettify(): void
+    {
         $this->parser->add_js_file('google-code-prettify/prettify.js');
         $this->parser->add_css_file('prettify.css');
     }
@@ -265,7 +282,8 @@ class LIST_Controller extends CI_Controller {
     /**
      * This method add Jcrop to template.
      */
-    protected function _add_jCrop() {
+    protected function _add_jCrop(): void
+    {
         $this->parser->add_js_file('jquery.Jcrop.js');
         $this->parser->add_css_file('jquery.Jcrop.css');
     }
@@ -273,7 +291,8 @@ class LIST_Controller extends CI_Controller {
     /**
      * This method add jQuery countdown plugin to template.
      */
-    protected function _add_jquery_countdown() {
+    protected function _add_jquery_countdown(): void
+    {
         $this->parser->add_js_file('jquery.plugin.min.js');
         $this->parser->add_js_file('jquery.countdown.js');
         $localisation_file = $this->lang->line('common_jquery_countdown_localisation_file');
@@ -282,19 +301,22 @@ class LIST_Controller extends CI_Controller {
         }
     }
 
-    protected function _add_mathjax() {
+    protected function _add_mathjax(): void
+    {
         $this->parser->add_js_file('mathjax/MathJax.js?config=TeX-AMS_CHTML-full');
     }
 
     /**
      * Injects all possible languages to smarty parser.
      */
-    private function _init_teacher_quick_langmenu() {
+    private function _init_teacher_quick_langmenu(): void
+    {
         $languages = $this->lang->get_list_of_languages();
         $this->parser->assign('list_quicklang_menu', $languages);
     }
     
-    protected function _init_teacher_quick_prefered_course_menu() {
+    protected function _init_teacher_quick_prefered_course_menu(): void
+    {
         $menu = array();
         
         $courses = new Course();
@@ -328,7 +350,8 @@ class LIST_Controller extends CI_Controller {
      * Also loads all courses, in which current student is participating.
      * Smarty template variable $list_pagemenu will be created.
      */
-    protected function _initialize_student_menu() {
+    protected function _initialize_student_menu(): void
+    {
         $this->config->load('pagemenu');
         $this->parser->assign('list_pagemenu', $this->config->item('pagemenu'));
         $this->_load_student_langfile('pagemenu');
@@ -349,29 +372,40 @@ class LIST_Controller extends CI_Controller {
      * Smarty template variable list_pagemenu_current will be created.
      * @param string $tag page tag to be set as active item in menu.
      */
-    protected function _select_student_menu_pagetag($tag = '') {
+    protected function _select_student_menu_pagetag(string $tag = ''): void
+    {
         $this->parser->assign('list_pagemenu_current', $tag);
     }
-    
+
     /**
      * Sends message to all students or teachers. Do not use get_iterated() to execute select query!
      * @param Student|Teacher $recipients list of students or teachers.
      * @param string $subject email subject (accepts lang: prefix).
      * @param string $template template body or file:path/to/template.tpl.
-     * @param string $template_variables array of template variables.
-     * @param string $from email addres of sender or NULL to use system address.
+     * @param array $template_variables array of template variables.
+     * @param string|null $from email addres of sender or NULL to use system address.
      * @param string $from_name name of sender.
      * @param boolean $sender_copy enable sending of copy to sender email address.
      * @param string $sender_email sender email address.
      * @return boolean TRUE, if all emails are sent, or FALSE if all or some emails failed to be send.
+     * @throws Exception
      */
-    protected function _send_multiple_emails($recipients, $subject, $template, $template_variables = array(), $from = NULL, $from_name = '', $sender_copy = FALSE, $sender_email = '') {
+    protected function _send_multiple_emails(
+        $recipients,
+        string $subject,
+        string $template,
+        array $template_variables = array(),
+        string $from = NULL,
+        string $from_name = '',
+        bool $sender_copy,
+        string $sender_email = ''
+    ): bool {
         if ($recipients instanceof Teacher || $recipients instanceof Student) {
             $email_by_languages = array();
             if ($recipients->exists()) { foreach ($recipients->all as $recipient) {
                 $email_by_languages[$recipient->language][] = $recipient;
             }}
-            if (count($email_by_languages) == 0) { return FALSE; }
+            if (count($email_by_languages) === 0) { return FALSE; }
             $this->load->library('email');
             if (is_null($from)) {
                 $this->email->from_system();
@@ -384,7 +418,7 @@ class LIST_Controller extends CI_Controller {
             $lang_clone = clone $this->lang;
             set_time_limit(0);
             foreach($email_by_languages as $language => $subrecipients) {
-                if (count($subrecipients) == 0) { continue; }
+                if (count($subrecipients) === 0) { continue; }
                 $this->_init_specific_language($language);
                 $this->email->build_message_body($template, $template_variables);
                 $email_subject = 'LIST' . ($subject ? ' - ' . $this->lang->text($subject) : '');
@@ -423,11 +457,13 @@ class LIST_Controller extends CI_Controller {
         }
     }
     
-    protected function _is_cache_enabled() {
+    protected function _is_cache_enabled()
+    {
         return $this->config->item('enable_hooks');
     }
     
-    protected function _action_success() {
+    protected function _action_success(): void
+    {
         $this->output->set_internal_value(LIST_Output::IV_ACTION_RESULT, TRUE);
     }
 }

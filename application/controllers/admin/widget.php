@@ -18,7 +18,10 @@ class Widget extends LIST_Controller {
         $this->_init_teacher_quick_prefered_course_menu();
         $this->usermanager->teacher_login_protected_redirect();
     }
-    
+
+    /**
+     * @throws Exception
+     */
     public function showWidget($widget_id) {
         $widget = new Admin_widget();
         $widget->where_related('teacher', 'id', $this->usermanager->get_teacher_id());

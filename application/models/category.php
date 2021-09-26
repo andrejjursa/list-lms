@@ -4,6 +4,12 @@
  * Category model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
+ *
+ * @property int $id
+ * @property string $updated date time format YYYY-MM-DD HH:MM:SS
+ * @property string $created date time format YYYY-MM-DD HH:MM:SS
+ * @property string $name
+ * @property int|null $parent_id entity id of model Category
  */
 class Category extends DataMapper {
     

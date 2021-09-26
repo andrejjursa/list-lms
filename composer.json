@@ -13,6 +13,7 @@
         "mathjax/mathjax": "^2.7",
       "ext-json": "*",
         "ext-zip": "*",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+      "ext-fileinfo": "*"
     }
 }

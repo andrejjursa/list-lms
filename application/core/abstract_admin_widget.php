@@ -4,6 +4,9 @@
  * Abstract admin widget class.
  * @package LIST_Tests
  * @author Andrej Jursa
+ *
+ * @property LIST_Lang $lang
+ * @property LIST_Parser $parser
  */ 
 abstract class abstract_admin_widget {
     
@@ -19,11 +22,13 @@ abstract class abstract_admin_widget {
     
     public function getWidgetId() { return $this->id; }
     
-    public function defaultConfiguration() {
+    public function defaultConfiguration(): array
+    {
         return array();
     }
     
-    protected function defaultParserVars() {
+    protected function defaultParserVars(): void
+    {
         $this->parser->assign('widget_id', $this->id);
     }
 
@@ -43,10 +48,10 @@ abstract class abstract_admin_widget {
     * Allows models to access CI's loaded classes using the same
     * syntax as controllers.
     *
-    * @param	string
+    * @param string $key
     * @access private
     */
-   function __get($key)
+   function __get(string $key)
    {
         $CI =& get_instance();
         return $CI->$key;

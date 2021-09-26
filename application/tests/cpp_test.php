@@ -75,9 +75,9 @@
 			$valid = TRUE;
 			if ($this->was_file_sent('zip_file')) {
 				$data = $this->upload_file('unit_test', 'zip_file', 'zip', array(
-					'overwrite' => TRUE,
-					'file_name' => 'unit_test.zip',
-				), TRUE, 'java', 'unit_test.zip');
+                    'overwrite' => TRUE,
+                    'file_name' => 'unit_test.zip',
+                ), TRUE, 'java', 'unit_test.zip');
 				if ($data === FALSE) {
 					$valid = FALSE;
 				} else {

@@ -4,6 +4,8 @@
  * Abstract test class.
  * @package LIST_Tests
  * @author Andrej Jursa
+ *
+ * @property LIST_Lang $lang
  */ 
 abstract class abstract_test {
     
@@ -18,10 +20,11 @@ abstract class abstract_test {
     private $test_scoring = NULL;
     private $last_exit_code = 0;
 
-    const TEST_OUTPUT_FILE = '__list_output.txt';
-    const TEST_SCORING_FILE = '__list_score.txt';
-    
-    public function __construct() {
+    public const TEST_OUTPUT_FILE = '__list_output.txt';
+    public const TEST_SCORING_FILE = '__list_score.txt';
+
+    public function __construct()
+    {
         $this->CI =& get_instance();
         $this->determine_test_type();
         $this->CI->lang->load('tests/' . $this->test_type);
@@ -38,7 +41,8 @@ abstract class abstract_test {
      * Return type of this test.
      * @return string test type.
      */
-    public function get_test_type() {
+    public function get_test_type(): string
+    {
         return $this->test_type;
     }
     
@@ -46,7 +50,8 @@ abstract class abstract_test {
      * Returns last test score.
      * @return int test score;
      */
-    public function get_last_test_score() {
+    public function get_last_test_score():int
+    {
         $score_total = 0;
         if (is_array($this->test_scoring) && count($this->test_scoring)) {
             foreach ($this->test_scoring as $test_scoring_object) {
@@ -64,7 +69,8 @@ abstract class abstract_test {
      * If $this->test_subtypes[subtype]['name'] is set, it will be used as subtype name.
      * @return array<string> array of all possible subtypes with names.
      */
-    public function get_test_subtypes() {
+    public function get_test_subtypes(): array
+    {
         $output = array();
         if (is_array($this->test_subtypes) && count($this->test_subtypes)) {
             foreach ($this->test_subtypes as $subtype => $config) {
@@ -78,9 +84,10 @@ abstract class abstract_test {
      * Return subtype of initialized test object.
      * Subtype is obtained from Test model after initialization.
      * Object can be initialized with initialize() method.
-     * @return string current subtype or NULL if not initialized.
+     * @return string|null current subtype or NULL if not initialized.
      */
-    public function get_current_test_subtype() {
+    public function get_current_test_subtype(): ?string
+    {
         if (is_array($this->current_test)) {
             return $this->current_test['subtype'];
         }
@@ -91,9 +98,10 @@ abstract class abstract_test {
      * Return id of initialized test object.
      * Id is obtained from Test model after initialization.
      * Object can be initialized with initialize() method.
-     * @return integer current test id or NULL if not initialized.
+     * @return integer|null current test id or NULL if not initialized.
      */
-    public function get_current_test_id() {
+    public function get_current_test_id(): ?int
+    {
         if (is_array($this->current_test)) {
             return (int)$this->current_test['id'];
         }
@@ -105,9 +113,10 @@ abstract class abstract_test {
      * Return configuration array of initialized test object.
      * Configuration array is unserialized from Test model after initialization.
      * Object can be initialized with initialize() method.
-     * @return array<mixed> current configuration array or NULL if not initialized.
+     * @return array|null current configuration array or NULL if not initialized.
      */
-    public function get_current_test_configuration() {
+    public function get_current_test_configuration(): ?array
+    {
         if (is_array($this->current_test)) {
             return $this->current_test['config'];
         }
@@ -121,8 +130,8 @@ abstract class abstract_test {
      * @param string $constant name of constant from array.
      * @return mixed value of constant or NULL if not initialized.
      */
-    public function get_current_test_configuration_value($constant) {
-        if (is_array($this->current_test) && is_string($constant) && isset($this->current_test['config'][$constant])) {
+    public function get_current_test_configuration_value(string $constant) {
+        if (is_array($this->current_test) && isset($this->current_test['config'][$constant])) {
             return $this->current_test['config'][$constant];
         }
         return NULL;
@@ -130,9 +139,10 @@ abstract class abstract_test {
     
     /**
      * Return path to zip file with source code to test, which is set by run() method.
-     * @return string path and file name of zip file with source code.
+     * @return string|null path and file name of zip file with source code.
      */
-    public function get_input_zip_file() {
+    public function get_input_zip_file(): ?string
+    {
         return $this->zip_file_path;
     }
 
@@ -140,7 +150,7 @@ abstract class abstract_test {
      * Safely returns current sandbox type.
      * @return string sandbox type.
      */
-    public function get_sandbox_type()
+    public function get_sandbox_type(): string
     {
         $sandbox_type = strtolower($this->CI->config->item('test_sandbox'));
         $allowed_types = array('implicit', 'docker');
@@ -152,7 +162,8 @@ abstract class abstract_test {
      * @return string path to directory.
      * @throws TestException can be thrown if test object is not initialized.
      */
-    public function get_current_test_source_directory() {
+    public function get_current_test_source_directory(): string
+    {
         if (is_null($this->get_current_test_subtype())) {
             throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1900001);
         }
@@ -164,10 +175,11 @@ abstract class abstract_test {
      * @param DataMapper|integer $test_model Test model or id of test record.
      * @throws TestException can be thrown if $test_model is not Test object, test record not exists or test type or subtype is not supported.
      */
-    public function initialize($test_model) {
+    public function initialize($test_model): void
+    {
         if (is_object($test_model) && !($test_model instanceof Test)) {
             throw new TestException($this->CI->lang->line('tests_general_error_cant_initialize_with_non_test_model'), 1000001);
-        } elseif (is_integer($test_model)) {
+        } elseif (is_int($test_model)) {
             $test_model_id = $test_model;
             $test_model = new Test();
             $test_model->get_by_id($test_model_id);
@@ -183,7 +195,7 @@ abstract class abstract_test {
                 'subtype' => $test_model->subtype,
                 'config' => unserialize($test_model->configuration),
                 'id' => $test_model->id,
-                'enable_scoring' => (int)$test_model->enable_scoring > 0 ? TRUE : FALSE,
+                'enable_scoring' => (int)$test_model->enable_scoring > 0,
                 'task_id' => $test_model->task_id,
                 'timeout' => $test_model->timeout,
             );
@@ -202,7 +214,12 @@ abstract class abstract_test {
      * @return string result of test in text/html or plain/text form.
      * @throws TestException can be thrown if test object is not initialized, source file is not found or run method is not found.
      */
-    public function run($input_zip_file, $save_score = FALSE, $score_token = '', $score_student = NULL) {
+    public function run(
+        string $input_zip_file,
+        bool $save_score = false,
+        string $score_token = '',
+        $score_student = null
+    ): string {
         $this->test_scoring = NULL;
         $this->last_exit_code = 0;
         if (is_null($this->get_current_test_subtype())) {
@@ -225,7 +242,8 @@ abstract class abstract_test {
      * @return string path to view template.
      * @throws TestException can be thrown if test object is not initialized or view file is not configured.
      */
-    public function get_configure_view() {
+    public function get_configure_view(): string
+    {
         if (is_null($this->get_current_test_subtype())) {
             throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1300001);
         }
@@ -241,11 +259,12 @@ abstract class abstract_test {
      * @return string|NULL path to js file or NULL if not set.
      * @throws TestException can be thrown if test object is not initialized.
      */
-    public function get_configure_js() {
+    public function get_configure_js(): ?string
+    {
         if (is_null($this->get_current_test_subtype())) {
             throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1310001);
         }
-        return isset($this->test_subtypes[$this->get_current_test_subtype()]['configure_js']) ? $this->test_subtypes[$this->get_current_test_subtype()]['configure_js'] : NULL;
+        return $this->test_subtypes[$this->get_current_test_subtype()]['configure_js'] ?? NULL;
     }
     
     /**
@@ -254,7 +273,8 @@ abstract class abstract_test {
      * @return boolean if this method returns FALSE, save action will be stoped and configuration form will be displayed again.
      * @throws TestException can be thrown if test object is not initialized or validator method is not found.
      */
-    public function validate_test_configuration() {
+    public function validate_test_configuration(): bool
+    {
         if (is_null($this->get_current_test_subtype())) {
             throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1400001);
         }
@@ -271,11 +291,12 @@ abstract class abstract_test {
     /**
      * This method will be call during configuration save process to handle file uploads.
      * Will use method defined in $this->test_subtypes[current_subtype]['configure_uploader'].
-     * @param array<mixed> $new_config part of configuration array to be saved (output argument).
+     * @param array $new_config part of configuration array to be saved (output argument).
      * @return boolean TRUE, if all uploads are successful, FALSE othewise (on FALSE, prevent configuration to be saved).
      * @throws TestException can be thrown if test object is not initialized or uploader method is not found.
      */
-    public function handle_uploads(&$new_config) {
+    public function handle_uploads(array &$new_config): bool
+    {
         if (is_null($this->get_current_test_subtype())) {
             throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1500001);
         }
@@ -293,11 +314,12 @@ abstract class abstract_test {
     /**
      * This method will be call during configuration save process to make final changes to configuration array.
      * Will use method defined in $this->test_subtypes[current_subtype]['configure_before_save'].
-     * @param array<mixed> $new_config configuration from configuration form.
-     * @return array<mixed> updated configuration.
+     * @param array $new_config configuration from configuration form.
+     * @return array updated configuration.
      * @throws TestException can be thrown if test object is not initialized or particular method not found.
      */
-    public function prepare_test_configuration($new_config) {
+    public function prepare_test_configuration(array $new_config): array
+    {
         if (is_null($this->get_current_test_subtype())) {
             throw new TestException($this->CI->lang->line('tests_general_error_test_not_initialized'), 1700001);
         }
@@ -315,7 +337,8 @@ abstract class abstract_test {
      * Call this function to get last test scoring array.
      * @return string|null serialized array of scoring objects or null on error.
      */
-    public function get_last_test_scoring() {
+    public function get_last_test_scoring(): ?string
+    {
         if (!is_null($this->test_scoring)) {
             return serialize($this->test_scoring);
         }
@@ -326,7 +349,8 @@ abstract class abstract_test {
      * This function will return last exit code for last test run.
      * @return int last exit code
      */
-    public function get_last_exit_code() {
+    public function get_last_exit_code(): int
+    {
         return $this->last_exit_code;
     }
 
@@ -334,17 +358,22 @@ abstract class abstract_test {
      * Call this function from test to set last exit code.
      * @param int $exit_code exit code to remember.
      */
-    protected function set_last_exit_code($exit_code) {
+    protected function set_last_exit_code(int $exit_code): void
+    {
         $this->last_exit_code = $exit_code;
     }
 
     /**
      * Call this function to construct evaluation table data for I/O test scoring.
-     * @param $percents current value achieved.
-     * @param $maximum maximum value.
-     * @param $name name of test.
+     * @param double $percents current value achieved.
+     * @param double $maximum maximum value.
+     * @param string $name name of test.
      */
-    protected function construct_io_test_result($percents, $maximum, $name='lang:tasks_test_result_score_name_io_test') {
+    protected function construct_io_test_result(
+        float $percents,
+        float $maximum,
+        string $name='lang:tasks_test_result_score_name_io_test'
+    ): void {
         $score = new stdClass();
         $score->name = $name;
         $score->current = (double)$percents;
@@ -358,21 +387,21 @@ abstract class abstract_test {
 
     /**
      * Decode scoring and return it as decoded JSON array.
-     * @param $score encrypted scoring string.
+     * @param string $score encrypted scoring string.
      * @return mixed decoded scoring array.
      * @throws Exception on error like MD5 checksum does not match the score or there is wrong format of scoring output text.
      */
-    protected function decode_scoring($score) {
+    protected function decode_scoring(string $score) {
         $lines = explode("\n", $score);
         if (count($lines)) { foreach ($lines as $key => $value) {
             $lines[$key] = base64_decode(trim($value));
         }}
         $this->test_scoring = NULL;
-        if (count($lines) == 2) {
-            if (mb_strlen($lines[0]) == 32) {
+        if (count($lines) === 2) {
+            if (mb_strlen($lines[0]) === 32) {
                 $md5 = $this->decode_scoring_single_line($lines[0]);
                 $json = $this->decode_scoring_single_line($lines[1], 32);
-                if (md5($json) == $md5) {
+                if (md5($json) === $md5) {
                     $this->test_scoring = json_decode($json);
                     return $this->test_scoring;
                 }
@@ -384,14 +413,15 @@ abstract class abstract_test {
 
     /**
      * Decode single line of encrypted scoring.
-     * @param $text scoring text to decode.
+     * @param string $text scoring text to decode.
      * @param int $offset offset in encryption phrase.
      * @return string doceded scoring text.
      */
-    private function decode_scoring_single_line($text, $offset = 0) {
+    private function decode_scoring_single_line(string $text, int $offset = 0): string
+    {
         $output = '';
 
-        for ($i = 0; $i < mb_strlen($text); $i++) {
+        for ($i = 0, $iMax = mb_strlen($text); $i < $iMax; $i++) {
             $output .= chr(ord(mb_substr($text, $i, 1)) ^ ord(mb_substr($this->encryption_phrase, $i + $offset % mb_strlen($this->encryption_phrase))));
         }
 
@@ -399,10 +429,11 @@ abstract class abstract_test {
     }
 
     /**
-     * @param $path path to directory with test files extracted.
+     * @param string $path path to directory with test files extracted.
      * @return null|string encryption phrase as string or NULL on error.
      */
-    protected function create_encryption_phrase($path) {
+    protected function create_encryption_phrase(string $path): ?string
+    {
         if (file_exists($path) && is_dir($path)) {
             $filepath = rtrim($path, '/\\') . DIRECTORY_SEPARATOR . '__list_encrypt_phrase.txt';
             $lexicon = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.?!\\/\'"^&*(){}[];,%$#@~';
@@ -435,7 +466,8 @@ abstract class abstract_test {
      * Return path of directory with test execution scripts.
      * @return string path to directory.
      */
-    protected function get_test_scripts_directory() {
+    protected function get_test_scripts_directory(): string
+    {
         $path = rtrim(getcwd(), '\\/') . '/';
         
         $path .= 'test_scripts/';
@@ -452,7 +484,8 @@ abstract class abstract_test {
      * @param string $output_file name of output file (with path inside working directory).
      * @return string content of output file.
      */
-    protected function read_output_file($output_file) {
+    protected function read_output_file(string $output_file): string
+    {
         $output = '';
         if (file_exists($this->current_test_directory . $output_file)) {
             $f = fopen($this->current_test_directory . $output_file, 'r');
@@ -469,13 +502,14 @@ abstract class abstract_test {
      * @param string $directory_path directory to create.
      * @throws TestException can be thrown if parent directory is not writable.
      */
-    protected function create_directory($directory_path) {
+    protected function create_directory(string $directory_path): void
+    {
         $trimmed_directory_path = str_replace('\\', DIRECTORY_SEPARATOR, trim($directory_path, '\\/'));
         $path_segments = explode(DIRECTORY_SEPARATOR, $trimmed_directory_path);
         $path_to_create = '';
         $old_path_to_create = $path_to_create;
         foreach ($path_segments as $path_segment) {
-            $path_to_create .= ($path_to_create != '' ? DIRECTORY_SEPARATOR : '') . $path_segment;
+            $path_to_create .= ($path_to_create !== '' ? DIRECTORY_SEPARATOR : '') . $path_segment;
             if (!file_exists($path_to_create)) {
                 if (!mkdir($path_to_create, DIR_READ_MODE, TRUE)) {
                     throw new TestException(sprintf($this->CI->lang->line('tests_general_error_cant_create_path'), $path_to_create), 1200001);
@@ -490,14 +524,23 @@ abstract class abstract_test {
      * @param string $folder name of directory inside test working directory where the file will be uploaded.
      * @param string $field_name name of configuration constant and form input (in the form of configuration_test_files_&lt;$field_name&gt;.
      * @param string $allowed allowed file types, pipe separated list of extensions, like: txt|zip.
-     * @param array<mixed> $additional_config optional additional configuration (see CodeIgniter manual for upload library).
+     * @param array $additional_config optional additional configuration (see CodeIgniter manual for upload library).
      * @param boolean $single_file_handle set to TRUE means that additional file types will be handled as single file and ZIPed.
      * @param string $single_file_allowed file types for single file, pipe separated list of extensions, like: txt|zip.
      * @param string $single_file_target_zip_filename target zip file name.
-     * @param string $single_file_additional_config additional upload configuration.
-     * @return boolean|array<mixed> return FALSE if upload failed, or uploaded file data on success (see CodeIgniter manual for upload library, specificaly $this->upload->data() method).
+     * @param array $single_file_additional_config additional upload configuration.
+     * @return boolean|array return FALSE if upload failed, or uploaded file data on success (see CodeIgniter manual for upload library, specificaly $this->upload->data() method).
      */
-    protected function upload_file($folder, $field_name, $allowed = 'zip', $additional_config = array(), $single_file_handle = FALSE, $single_file_allowed = '', $single_file_target_zip_filename = '', $single_file_additional_config = array()) {
+    protected function upload_file(
+        string $folder,
+        string $field_name,
+        string $allowed = 'zip',
+        array  $additional_config = array(),
+        bool   $single_file_handle = false,
+        string $single_file_allowed = '',
+        string $single_file_target_zip_filename = '',
+        array  $single_file_additional_config = array()
+    ) {
         if ($single_file_handle) {
             $this->CI->load->library('upload');
             $mimes_zip = $this->CI->upload->mimes_types('zip');
@@ -506,7 +549,7 @@ abstract class abstract_test {
             $file_location = $_FILES['configuration_test_files_' . $field_name]['tmp_name'];
             $file_mime_type = finfo_file($finfo, $file_location);
             finfo_close($finfo);
-            if (!in_array($file_mime_type, $mimes_zip)) {
+            if (!in_array($file_mime_type, $mimes_zip, true)) {
                 if (array_key_exists('upload_path', $single_file_additional_config)) { unset($single_file_additional_config['upload_path']); }
                 if (array_key_exists('allowed_types', $single_file_additional_config)) { unset($single_file_additional_config['allowed_types']); }
                 if (array_key_exists('encrypt_name', $single_file_additional_config)) { unset($single_file_additional_config['encrypt_name']); }
@@ -524,14 +567,14 @@ abstract class abstract_test {
                     if ($this->zip_plain_file_to_archive($single_file_target_zip_filename, $config['upload_path'], $data['file_name'], $data['orig_name'])) {
                         $data['file_name'] = $single_file_target_zip_filename;
                         return $data;
-                    } else {
-                        $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->lang->line('tests_general_error_single_file_zip_error'));
-                        return FALSE;
                     }
-                } else {
-                    $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->CI->upload->display_errors('', '') . ' (' . $file_mime_type . ')');
+
+                    $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->lang->line('tests_general_error_single_file_zip_error'));
                     return FALSE;
                 }
+
+                $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->CI->upload->display_errors('', '') . ' (' . $file_mime_type . ')');
+                return FALSE;
             }
         }
         
@@ -547,10 +590,10 @@ abstract class abstract_test {
         $this->create_directory($config['upload_path']);
         if ($this->CI->upload->do_upload('configuration_test_files_' . $field_name)) {
             return $this->CI->upload->data();
-        } else {
-            $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->CI->upload->display_errors('', ''));
-            return FALSE;
         }
+
+        $this->CI->parser->assign('configuration_test_files_' . $field_name . '_error', $this->CI->upload->display_errors('', ''));
+        return FALSE;
     }
     
     /**
@@ -558,18 +601,18 @@ abstract class abstract_test {
      * @param string $field_name name of configuration constant and form input (in the form of configuration_test_files_&lt;$field_name&gt;.
      * @return boolean TRUE, if file was upload (or simply error level reported by browser is no 4), FALSE otherwise.
      */
-    protected function was_file_sent($field_name) {
-        if (isset($_FILES['configuration_test_files_' . $field_name]['error'])) {
-            if ($_FILES['configuration_test_files_' . $field_name]['error'] != 4) { return TRUE; }
-        }
-        return FALSE;
+    protected function was_file_sent(string $field_name): bool
+    {
+        return isset($_FILES['configuration_test_files_' . $field_name]['error']) && (int)$_FILES['configuration_test_files_' . $field_name]['error'] !== 4;
     }
-    
+
     /**
      * Creates working directory for current test. It is either return and set to $this->current_test_directory (for internal use).
      * @return string working directory for current test.
+     * @throws TestException
      */
-    protected function make_test_directory() {
+    protected function make_test_directory(): string
+    {
         $random_folder = '';
         $tests_folder = 'private/test_to_execute/';
         do {
@@ -583,7 +626,8 @@ abstract class abstract_test {
     /**
      * Recursive delete current test work directory with everything inside.
      */
-    protected function delete_test_directory() {
+    protected function delete_test_directory(): void
+    {
         if (file_exists($this->current_test_directory)) {
             unlink_recursive($this->current_test_directory, TRUE);
         }
@@ -595,7 +639,8 @@ abstract class abstract_test {
      * @param string $subdirectory subdirectory where to extract files, default is empty.
      * @throws TestException can be thrown if zip file is not found or input file is not valid zip file (can't be open by ZipArchive).
      */
-    protected function extract_zip_to($zip_file, $subdirectory='') {
+    protected function extract_zip_to(string $zip_file, string $subdirectory=''): void
+    {
         if (file_exists($zip_file)) {
             $this->create_directory(ltrim($this->current_test_directory . $subdirectory, '\\/'));
             $zip = new ZipArchive();
@@ -609,8 +654,12 @@ abstract class abstract_test {
             throw new TestException(sprintf($this->CI->lang->line('tests_general_error_file_not_found'), $zip_file), 1800001);
         }
     }
-    
-    protected function copy_file_to($file, $subdirectory='') {
+
+    /**
+     * @throws TestException
+     */
+    protected function copy_file_to(string $file, string $subdirectory=''): void
+    {
         if (file_exists($file)) {
             $this->create_directory(ltrim($this->current_test_directory . $subdirectory, '\\/'));
             if (!@copy($file, ltrim($this->current_test_directory . $subdirectory, '\\/') . '/' . basename($file))) {
@@ -628,7 +677,8 @@ abstract class abstract_test {
      * @param string $token string token.
      * @return void returns nothing.
      */
-    protected function save_test_result($score, $student_id, $token) {
+    protected function save_test_result(int $score, $student_id, string $token): void
+    {
         if (!$this->current_test['enable_scoring']) { 
             $this->last_test_score = 0;
             return;           
@@ -649,7 +699,8 @@ abstract class abstract_test {
      * Run by constructor, determines type of test from class name.
      * Test class must be named as &lt;type_of_test&gt;_test.
      */
-    private function determine_test_type() {
+    private function determine_test_type(): void
+    {
         if ($this->test_type === NULL) {
             $class_name = get_class($this);
             $this->test_type = strtolower(substr($class_name, 0, -5));
@@ -664,7 +715,12 @@ abstract class abstract_test {
      * @param string $original_file_name original name of file.
      * @return boolean TRUE, if file is added to zip archive.
      */
-    private function zip_plain_file_to_archive($zip_name, $path, $file_to_zip, $original_file_name) {
+    private function zip_plain_file_to_archive(
+        string $zip_name,
+        string $path,
+        string $file_to_zip,
+        string $original_file_name
+    ): bool {
         $clear_path = rtrim($path, '/\\') . '/';
         if (file_exists($clear_path . $file_to_zip)) {
             $rand_zip_name = '';
@@ -691,7 +747,8 @@ abstract class abstract_test {
      * Returns test timeout.
      * @return int timeout.
      */
-    protected function get_test_timeout() {
+    protected function get_test_timeout(): int
+    {
         $timeout = (int)$this->current_test['timeout'];
         return $timeout >= 100 ? $timeout : 100;
     }
@@ -702,8 +759,9 @@ abstract class abstract_test {
      * @param integer $lines maximum number of lines.
      * @return string truncated text.
      */
-    protected function truncate_lines($text, $lines = 0) {
-        if (is_null($lines) || !is_numeric($lines) || $lines <= 0) { return $text; }
+    protected function truncate_lines(string $text, int $lines = 0): string
+    {
+        if (!is_numeric($lines) || $lines <= 0) { return $text; }
         $text_array = explode("\n", $text);
         if (count($text_array) <= $lines) { return $text; }
         
@@ -716,7 +774,7 @@ abstract class abstract_test {
                 $lns++;
             }
             $output .= $line . "\n";
-            if ($lns == $lines) {
+            if ($lns === $lines) {
                 if (strpos($line, '</pre') === FALSE) {
                     $output .= '</pre>';
                 }
@@ -732,17 +790,18 @@ abstract class abstract_test {
      * @param string $output test output.
      * @return string converted output.
      */
-    protected function encode_output($output) {
-        $find = array(
+    protected function encode_output(string $output): string
+    {
+        $find = [
             '/\&lt\;br[\s]*[\/]?\&gt\;/i',
             '/\&lt\;pre[\s]*\&gt\;/i',
             '/\&lt\;\/pre[\s]*\&gt\;/i',
-        );
-        $replace = array(
+        ];
+        $replace = [
             '<br />',
             '<pre>',
             '</pre>',
-        );
+        ];
         return preg_replace($find, $replace, htmlspecialchars($output));
     }
 }

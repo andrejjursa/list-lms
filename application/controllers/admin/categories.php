@@ -55,15 +55,15 @@ class Categories extends LIST_Controller {
             $this->db->trans_begin();
             
             $cansave = TRUE;
-            if ($category_data['parent_id'] == 'root') {
+            if ($category_data['parent_id'] === 'root') {
                 $category->parent_id = NULL;
             } else {
                 $parent = new Category();
-                $parent->get_by_id(intval($category_data['parent_id']));
+                $parent->get_by_id((int)$category_data['parent_id']);
                 if (!$parent->exists()) {
                     $cansave = FALSE;
                 } else {
-                    $category->parent_id = intval($category_data['parent_id']);
+                    $category->parent_id = (int)$category_data['parent_id'];
                 }
             }
             
@@ -86,7 +86,7 @@ class Categories extends LIST_Controller {
         $this->parser->add_js_file('translation_selector.js');
         $this->parser->add_js_file('admin_categories/form.js');
         $uri = $this->uri->ruri_to_assoc(3);
-        $category_id = isset($uri['category_id']) ? intval($uri['category_id']) : 0;
+        $category_id = isset($uri['category_id']) ? (int)$uri['category_id'] : 0;
         $category = new Category();
         $category->get_by_id($category_id);
         $categories = new Category();
@@ -113,15 +113,15 @@ class Categories extends LIST_Controller {
                 $this->db->trans_begin();
                 
                 $cansave = TRUE;
-                if ($category_data['parent_id'] == 'root') {
+                if ($category_data['parent_id'] === 'root') {
                     $category->parent_id = NULL;
                 } else {
                     $parent = new Category();
-                    $parent->get_by_id(intval($category_data['parent_id']));
+                    $parent->get_by_id((int)$category_data['parent_id']);
                     if (!$parent->exists()) {
                         $cansave = FALSE;
                     } else {
-                        $category->parent_id = intval($category_data['parent_id']);
+                        $category->parent_id = (int)$category_data['parent_id'];
                     }
                 }
                 
@@ -144,7 +144,7 @@ class Categories extends LIST_Controller {
     public function delete() {
         $this->output->set_content_type('application/json');
         $url = $this->uri->ruri_to_assoc(3);
-        $category_id = isset($url['category_id']) ? intval($url['category_id']) : 0;
+        $category_id = isset($url['category_id']) ? (int)$url['category_id'] : 0;
         if ($category_id !== 0) {
             $this->_transaction_isolation();
             $this->db->trans_begin();
