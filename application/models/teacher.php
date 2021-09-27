@@ -1,11 +1,13 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Teacher model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
  */
-class Teacher extends DataMapper {
+class Teacher extends DataMapper implements DataMapperExtensionsInterface {
     
     public $has_many = array(
         'solution',

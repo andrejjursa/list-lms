@@ -36,7 +36,7 @@ class LIST_Lang extends CI_Lang {
 
     /**
      * Load language file.
-     * @param string $langfile language file without suffix _lang.php.
+     * @param mixed $langfile language file without suffix _lang.php.
      * @param string $idiom language idiom, if empty, default idiom will be used.
      * @param boolean $return flag for returning lang file content from this method as array.
      * @param boolean $add_suffix add suffix _lang to $langfile.
@@ -44,11 +44,11 @@ class LIST_Lang extends CI_Lang {
      * @return mixed
      */
     public function load(
-        string $langfile = '',
-        string $idiom = '',
-        bool $return = FALSE,
-        bool $add_suffix = TRUE,
-        string $alt_path = ''
+        $langfile = '',
+        $idiom = '',
+        $return = FALSE,
+        $add_suffix = TRUE,
+        $alt_path = ''
     ) {
         if ($idiom === '') {
             $idiom = $this->lang_idiom;
@@ -110,11 +110,11 @@ class LIST_Lang extends CI_Lang {
     
     /**
      * Parse text as language line, if is prepended with lang: prefix.
-     * @param string $text text to parse.
+     * @param string|null $text text to parse.
      * @param string $default default text to return if output of parsed $text is empty.
      * @return string parsed text.
      */
-    public function text(string $text, string $default = ''): string
+    public function text(?string $text, string $default = ''): string
     {
         $output = '';
         if (stripos($text, 'lang:') === 0) {
@@ -142,19 +142,19 @@ class LIST_Lang extends CI_Lang {
     /**
      * Returns overlay text for given table name, table id, column and idiom (if provided).
      * @param string $table name of table.
-     * @param integer $table_id table id.
+     * @param integer|string $table_id table id.
      * @param string $column column name in given table.
      * @param string|null $idiom language idiom or NULL to use default.
      * @return string language overlay text.
      */
-    public function get_overlay(string $table, int $table_id, string $column, string $idiom = NULL): string {
+    public function get_overlay(string $table, $table_id, string $column, string $idiom = NULL): string {
         return $this->replace_null_overlay_text($this->get_overlay_if_exists($table, $table_id, $column, is_null($idiom) ? $this->lang_idiom : $idiom));
     }
     
     /**
      * Returns overlay text for given table name, table id, column and idiom (if provided).
      * @param string $table name of table.
-     * @param integer $table_id table id.
+     * @param integer|string $table_id table id.
      * @param string $column column name in given table.
      * @param string $default default text in case overlay is not found.
      * @param string|null $idiom language idiom or NULL to use default.
@@ -174,13 +174,13 @@ class LIST_Lang extends CI_Lang {
     /**
      * Saves language overlay to database.
      * @param string $table name of table.
-     * @param integer $table_id table id.
+     * @param integer|string $table_id table id.
      * @param string $column column name in given table.
      * @param string $idiom language idiom.
      * @param string $text language overlay text.
      * @return boolean returns TRUE if overlay is saved, FALSE otherwise.
      */
-    public function save_overlay(string $table, int $table_id, string $column, string $idiom, string $text): bool
+    public function save_overlay(string $table, $table_id, string $column, string $idiom, string $text): bool
     {
         $CI =& get_instance();
         
@@ -379,12 +379,12 @@ class LIST_Lang extends CI_Lang {
      * Returns overlay text for given parameters if this overlay exists.
      * If overlay is not loaded, it will be.
      * @param string $table name of table.
-     * @param integer $table_id table id.
+     * @param integer|string $table_id table id.
      * @param string $column column name in given table.
      * @param string $idiom language idiom.
      * @param mixed can return overlay text if overlay exists or NULL value of not exists.
      */
-    protected function get_overlay_if_exists(string $table, int $table_id, string $column, string $idiom)
+    protected function get_overlay_if_exists(string $table, $table_id, string $column, string $idiom)
     {
         if ($this->overlay_exists($table, $table_id, $column, $idiom)) {
             return $this->lang_overlays[$idiom][$table][$table_id][$column];
@@ -400,12 +400,12 @@ class LIST_Lang extends CI_Lang {
     /**
      * Checks if overlay for given parameters is loaded.
      * @param string $table name of table.
-     * @param integer $table_id table id.
+     * @param integer|string $table_id table id.
      * @param string $column column name in given table.
      * @param string $idiom language idiom.
      * @return boolean returns TRUE if exists, FALSE otherwise.
      */ 
-    protected function overlay_exists(string $table, int $table_id, string $column, string $idiom): bool
+    protected function overlay_exists(string $table, $table_id, string $column, string $idiom): bool
     {
         if (isset($this->lang_overlays[$idiom][$table][$table_id])) {
             $columns = $this->lang_overlays[$idiom][$table][$table_id];
@@ -417,11 +417,11 @@ class LIST_Lang extends CI_Lang {
     /**
      * Set overlay for given parameters to NULL value.
      * @param string $table name of table.
-     * @param integer $table_id table id.
+     * @param integer|string $table_id table id.
      * @param string $column column name in given table.
      * @param string $idiom language idiom.
      */
-    protected function no_more_load_overlay(string $table, int $table_id, string $column, string $idiom): void
+    protected function no_more_load_overlay(string $table, $table_id, string $column, string $idiom): void
     {
         $this->lang_overlays[$idiom][$table][(int)$table_id][$column] = NULL;
     }

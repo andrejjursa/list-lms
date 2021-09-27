@@ -1,11 +1,13 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Room model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
  */
-class Room extends DataMapper {
+class Room extends DataMapper implements DataMapperExtensionsInterface {
     
     public $has_one = array(
         'group'

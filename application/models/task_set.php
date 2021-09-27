@@ -1,5 +1,7 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Task_set model.
  * @package LIST_DM_Models
@@ -39,7 +41,7 @@
  * @method DataMapper where_related_group(mixed $related, string $field = NULL, string $value = NULL)
  * @method DataMapper where_related_room(mixed $related, string $field = NULL, string $value = NULL)
  */
-class Task_set extends DataMapper {
+class Task_set extends DataMapper implements DataMapperExtensionsInterface {
     
     public const OPEN_TASK_SET_SESSION_NAME = 'OPEN_TASK_SET_SESSION';
     public const STUDENT_FILE_NAME_REGEXP = '/^(?P<student_id>\d+)\_(?P<file_name>[a-zA-Z]+)\_(?P<random_hash>[a-zA-Z0-9]+)\_(?P<solution_version>\d+)\.zip$/i';

@@ -1,11 +1,13 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Course model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
  */
-class Course extends DataMapper {
+class Course extends DataMapper implements DataMapperExtensionsInterface {
     
     //const ACTIVE_COURSE_SESSION_NAME = 'ACTIVE_COURSE_SESSION';
     

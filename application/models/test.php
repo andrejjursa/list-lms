@@ -1,6 +1,8 @@
 <?php
 
-class Test extends DataMapper {
+use Application\Interfaces\DataMapperExtensionsInterface;
+
+class Test extends DataMapper implements DataMapperExtensionsInterface {
     
     public $has_one = array(
         'task',

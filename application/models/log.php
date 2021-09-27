@@ -1,11 +1,13 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Log model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
  */
-class Log extends DataMapper {
+class Log extends DataMapper implements DataMapperExtensionsInterface {
     
     const LOG_TYPE_STUDENT_SOLUTION_UPLOAD = 1;
     const LOG_TYPE_TEACHER_SOLUTION_UPLOAD = 2;

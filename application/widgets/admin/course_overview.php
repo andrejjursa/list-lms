@@ -7,7 +7,8 @@
  */
 class Course_overview extends abstract_admin_widget {
     
-    public function render() {
+    public function render(): void
+    {
         if (isset($this->config['course_id'])) {
             $course = new Course();
             $course->include_related('period');
@@ -78,11 +79,13 @@ class Course_overview extends abstract_admin_widget {
         $this->parser->parse('widgets/admin/course_overview/main.tpl');
     }
 
-    public function getContentTypeName() {
+    public function getContentTypeName(): string
+    {
         return $this->lang->line('widget_admin_course_overview_widget_type_name');
     }
 
-    public function preConfigureForm() {
+    public function preConfigureForm(): void
+    {
         $courses = new Course();
         $courses->include_related('period');
         $courses->order_by_related('period', 'sorting', 'asc');
@@ -98,14 +101,15 @@ class Course_overview extends abstract_admin_widget {
         $this->parser->assign('courses', $courses_list);
     }
 
-    public function mergeConfiguration($old_configuration, $new_configuration) {
+    public function mergeConfiguration($old_configuration, $new_configuration): array
+    {
         if (!is_array($old_configuration)) {
             return $new_configuration;
         }
         return array_merge($old_configuration, $new_configuration);
     }
 
-    public function validateConfiguration($configuration) {
+    public function validateConfiguration($configuration): bool {
         $this->load->library('form_validation');
         
         $this->form_validation->set_rules('configure[course_id]', 'lang:widget_admin_course_overview_configure_form_field_course', 'required');
@@ -114,7 +118,7 @@ class Course_overview extends abstract_admin_widget {
         return $this->form_validation->run();
     }
     
-    public function defaultConfiguration() {
+    public function defaultConfiguration(): array {
         return array(
             'course_id' => NULL,
             'number_of_task_sets' => 5,

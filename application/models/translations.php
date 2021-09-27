@@ -12,8 +12,8 @@ class Translations extends CI_Model {
     /**
      * Returns array of all translations constants and texts from database prepended with defined prefix.
      * @param string $idiom language idiom for which the translations will be loaded.
-     * @param string $prefis constant prefix for separation from another constants, default is 'user_custom_'.
-     * @return array<mixed> array of constants.
+     * @param string $prefix constant prefix for separation from another constants, default is 'user_custom_'.
+     * @return array array of constants.
      */
     public function get_translations_for_idiom($idiom, $prefix = 'user_custom_') {
         if (is_string($idiom)) {
@@ -32,7 +32,7 @@ class Translations extends CI_Model {
     /**
      * Return all constants from database as two dimensional associative array.
      * First dimension is constant name, second dimension is language idiom and the value is text.
-     * @return array<mixed> translations array.
+     * @return array translations array.
      */ 
     public function get_all_for_editing() {
         $query = $this->db->select('*')->from('translations')->order_by('constant')->get();
@@ -46,7 +46,7 @@ class Translations extends CI_Model {
     /**
      * Returns all translations table rows for given idiom.
      * @param string $idiom language idiom.
-     * @return array<mixed> translations table rows.
+     * @return array translations table rows.
      */
     public function get_all_for_idiom($idiom) {
         $query = $this->db->select('*')->from('translations')->where('idiom', $idiom)->order_by('constant')->get();
@@ -61,7 +61,7 @@ class Translations extends CI_Model {
      * Returns two dimensional array of language constants texts.
      * First dimension is constant name, second dimension is language idiom and the value is text.
      * @param string $constant name of constant for which the array have to be obtained from database.
-     * @return array<mixed> array for given constant name.
+     * @return array array for given constant name.
      */ 
     public function get_constant_for_editing($constant) {
         if (is_string($constant) && trim($constant) && preg_match(self::CONSTANT_VALIDATION_REGEXP, $constant)) {

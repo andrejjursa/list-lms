@@ -7,22 +7,20 @@
  */
 class Last_changes extends abstract_admin_widget {
     
-    public function getContentTypeName() {
+    public function getContentTypeName(): string
+    {
         return $this->lang->line('widget_admin_last_changes_widget_type_name');
     }
 
-    public function mergeConfiguration($old_configuration, $new_configuration) {
-        if (!is_array($old_configuration)) {
-            return $new_configuration;
-        }
-        return array_merge($old_configuration, $new_configuration);
+    public function mergeConfiguration($old_configuration, $new_configuration): array
+    {
+        return $old_configuration ?? [];
     }
 
-    public function preConfigureForm() {
-        
-    }
+    public function preConfigureForm():void {}
 
-    public function render() {
+    public function render(): void
+    {
         $CI = & get_instance();
         $this->load->config('list');
         $version = $CI->config->item('list_version');
@@ -39,7 +37,8 @@ class Last_changes extends abstract_admin_widget {
         $this->parser->parse('widgets/admin/last_changes/main.tpl', array('content' => $this->changelog->get($version), 'version' => $version));
     }
 
-    public function validateConfiguration($configuration) {
+    public function validateConfiguration($configuration): bool
+    {
         return TRUE;
     }    
 }

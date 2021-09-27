@@ -1,11 +1,13 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Solution model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
  */
-class Solution extends DataMapper {
+class Solution extends DataMapper implements DataMapperExtensionsInterface {
     
     public $has_one = array(
         'task_set',

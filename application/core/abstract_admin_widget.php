@@ -7,6 +7,10 @@
  *
  * @property LIST_Lang $lang
  * @property LIST_Parser $parser
+ * @property DataMapper $db
+ * @property LIST_Loader $load
+ * @property LIST_Form_validation $form_validation
+ * @property Changelog $changelog
  */ 
 abstract class abstract_admin_widget {
     

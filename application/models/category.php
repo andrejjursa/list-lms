@@ -1,5 +1,7 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Category model.
  * @package LIST_DM_Models
@@ -11,7 +13,7 @@
  * @property string $name
  * @property int|null $parent_id entity id of model Category
  */
-class Category extends DataMapper {
+class Category extends DataMapper implements DataMapperExtensionsInterface {
     
     private static $cached_categories_array = NULL;
     

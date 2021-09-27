@@ -1,11 +1,13 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Period model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
  */
-class Period extends DataMapper {
+class Period extends DataMapper implements DataMapperExtensionsInterface {
     
     public $has_many = array(
         'course'

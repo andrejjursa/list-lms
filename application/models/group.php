@@ -1,11 +1,13 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Group model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
  */
-class Group extends DataMapper {
+class Group extends DataMapper implements DataMapperExtensionsInterface {
     
     public $has_one = array(
         'course'

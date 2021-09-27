@@ -1,11 +1,13 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Comment model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
  */
-class Comment extends DataMapper {
+class Comment extends DataMapper implements DataMapperExtensionsInterface {
     
     public $default_order_by = array('created');
 

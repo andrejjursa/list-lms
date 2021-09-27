@@ -15,5 +15,10 @@
         "ext-zip": "*",
         "ext-mbstring": "*",
       "ext-fileinfo": "*"
+    },
+    "autoload": {
+      "psr-4": {
+        "Application\\Interfaces\\": "application/interface/"
+      }
     }
 }

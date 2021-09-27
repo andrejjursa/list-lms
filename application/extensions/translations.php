@@ -14,7 +14,7 @@ class DMZ_Translations {
      * @param DataMapper $object model object which will be using this function.
      * @param string $column column name in table.
      * @param string $direction sorting direction (asc | desc).
-     * @param string $lang_idiom language idiom, default is NULL = current language idion set in language object.
+     * @param string|null $lang_idiom language idiom, default is NULL = current language idion set in language object.
      * @param string $constant_prefix prefix of user constant, default is 'user_custom_'.
      * @return DataMapper returns object for method chaining.
      */
@@ -37,7 +37,7 @@ SELECT ' . $object->db->protect_identifiers($object->table) . '.' . $object->db-
      * @param DataMapper $object model object which will be using this function.
      * @param string $column column name in table.
      * @param string $direction sorting direction (asc | desc).
-     * @param string $lang_idiom language idiom, default is NULL = current language idion set in language object.
+     * @param string|null $lang_idiom language idiom, default is NULL = current language idion set in language object.
      * @return DataMapper returns object for method chaining.
      */
     public function order_by_with_overlay($object, $column, $direction = 'asc', $lang_idiom = NULL) {
@@ -61,7 +61,7 @@ LIMIT 1) ' . (strtolower($direction) == 'asc' ? 'ASC' : 'DESC');
      * @param string $related slash separated list of deeply related models.
      * @param string $column column name in table.
      * @param string $direction sorting direction (asc | desc).
-     * @param string $lang_idiom language idiom, default is NULL = current language idion set in language object.
+     * @param string|null $lang_idiom language idiom, default is NULL = current language idion set in language object.
      * @param string $constant_prefix prefix of user constant, default is 'user_custom_'.
      * @return DataMapper returns object for method chaining.
      */
@@ -90,7 +90,7 @@ LIMIT 1) ' . (strtolower($direction) == 'asc' ? 'ASC' : 'DESC');
      * @param string $related slash separated list of deeply related models.
      * @param string $column column name in table.
      * @param string $direction sorting direction (asc | desc).
-     * @param string $lang_idiom language idiom, default is NULL = current language idion set in language object.
+     * @param string|null $lang_idiom language idiom, default is NULL = current language idion set in language object.
      * @return DataMapper returns object for method chaining.
      */
     public function order_by_related_with_overlay($object, $related, $column, $direction = 'asc', $lang_idiom = NULL) {
@@ -121,9 +121,9 @@ LIMIT 1) ' . (strtolower($direction) == 'asc' ? 'ASC' : 'DESC');
      * @param DataMapper $object model object which will be using this function.
      * @param string $column column name in table.
      * @param string $value search text.
-     * @param string $wrap wraping constant, can be 'both', 'before', 'after'.
+     * @param string $wrap wrapping constant, can be 'both', 'before', 'after'.
      * @param bool $strip_html if set to TRUE it will strip html tags from column.
-     * @param string $lang_idiom language idiom, default is NULL = current language idion set in language object.
+     * @param string|null $lang_idiom language idiom, default is NULL = current language idion set in language object.
      * @param string $constant_prefix prefix of user constant, default is 'user_custom_'.
      * @return DataMapper returns object for method chaining.
      */

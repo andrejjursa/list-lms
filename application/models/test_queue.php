@@ -1,6 +1,8 @@
 <?php
 
-class Test_queue extends DataMapper {
+use Application\Interfaces\DataMapperExtensionsInterface;
+
+class Test_queue extends DataMapper implements DataMapperExtensionsInterface {
     
     public $table = 'tests_queue';
     

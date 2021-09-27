@@ -1,5 +1,7 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Admin_widget model.
  * @package LIST_DM_Models
@@ -16,7 +18,7 @@
  *
  * @method DataMapper where_related_teacher(mixed $related, string $field = NULL, string $value = NULL)
  */
-class Admin_widget extends DataMapper {
+class Admin_widget extends DataMapper implements DataMapperExtensionsInterface {
      
     public $has_one = array('teacher');
     

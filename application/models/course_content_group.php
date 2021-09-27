@@ -1,11 +1,13 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Course content groups model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
  */
-class Course_content_group extends DataMapper {
+class Course_content_group extends DataMapper implements DataMapperExtensionsInterface {
     
     public $table = 'course_content_groups';
     

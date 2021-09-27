@@ -1,11 +1,13 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Task model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
  */
-class Task extends DataMapper {
+class Task extends DataMapper implements DataMapperExtensionsInterface {
     
     public $has_many = array(
         'category' => array(

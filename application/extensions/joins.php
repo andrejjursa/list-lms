@@ -13,11 +13,11 @@ class DMZ_Joins {
      * Adds custom condition to last build join clause. You can use question mark as wildcard character for value pased by $replace array.
      * @param DataMapper $object model object which will be using this function.
      * @param string $condition SQL condition added to last join clause.
-     * @param array<mixed> $replace array of values replaced for corresponding question marks (by position in condition string).
+     * @param array $replace array of values replaced for corresponding question marks (by position in condition string).
      * @return DataMapper returns object for method chaining.
      */
-    public function add_join_condition($object, $condition, $replace = array()) {
-        if (count($object->db->ar_join) > 0 && trim($condition) != '') {
+    public function add_join_condition($object, $condition, $replace = []) {
+        if (count($object->db->ar_join) > 0 && trim($condition) !== '') {
             $build_condition = $condition;
             if (is_array($replace) && count($replace) > 0) {
                 foreach ($replace as $data) {

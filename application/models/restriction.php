@@ -1,11 +1,13 @@
 <?php
 
+use Application\Interfaces\DataMapperExtensionsInterface;
+
 /**
  * Restriction model.
  * @package LIST_DM_Models
  * @author Andrej Jursa
  */
-class Restriction extends DataMapper {
+class Restriction extends DataMapper implements DataMapperExtensionsInterface {
     
     public static function check_restriction_for_ip_address($ip_address = NULL) {
         $ci =& get_instance();
