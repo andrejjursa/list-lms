@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
@@ -46,7 +46,7 @@
 */
 
 $active_group = 'default';
-$active_record = TRUE;
+$active_record = true;
 
 $db['default']['hostname'] = getenv('LIST_DATABASE_HOSTNAME');
 $db['default']['username'] = getenv('LIST_DATABASE_USER');
@@ -54,15 +54,15 @@ $db['default']['password'] = getenv('LIST_DATABASE_PASSWORD');
 $db['default']['database'] = getenv('LIST_DATABASE_NAME');
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
-$db['default']['pconnect'] = TRUE;
-$db['default']['db_debug'] = TRUE;
-$db['default']['cache_on'] = FALSE;
+$db['default']['pconnect'] = true;
+$db['default']['db_debug'] = true;
+$db['default']['cache_on'] = false;
 $db['default']['cachedir'] = '';
 $db['default']['char_set'] = 'utf8';
 $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
-$db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE;
+$db['default']['autoinit'] = true;
+$db['default']['stricton'] = false;
 
 $db['lamsfet']['hostname'] = '';
 $db['lamsfet']['username'] = '';
@@ -70,15 +70,15 @@ $db['lamsfet']['password'] = '';
 $db['lamsfet']['database'] = '';
 $db['lamsfet']['dbdriver'] = 'postgre';
 $db['lamsfet']['dbprefix'] = '';
-$db['lamsfet']['pconnect'] = TRUE;
-$db['lamsfet']['db_debug'] = TRUE;
-$db['lamsfet']['cache_on'] = FALSE;
+$db['lamsfet']['pconnect'] = true;
+$db['lamsfet']['db_debug'] = true;
+$db['lamsfet']['cache_on'] = false;
 $db['lamsfet']['cachedir'] = '';
 $db['lamsfet']['char_set'] = 'utf8';
 $db['lamsfet']['dbcollat'] = 'utf8_general_ci';
 $db['lamsfet']['swap_pre'] = '';
-$db['lamsfet']['autoinit'] = TRUE;
-$db['lamsfet']['stricton'] = FALSE;
+$db['lamsfet']['autoinit'] = true;
+$db['lamsfet']['stricton'] = false;
 $db['lamsfet']['port'] = 5432;
 
 /* End of file database.php */
