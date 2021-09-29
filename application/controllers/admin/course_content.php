@@ -1,18 +1,23 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /**
  * Course content controller for backend.
+ *
  * @package LIST_BE_Controllers
- * @author Andrej Jursa
+ * @author  Andrej Jursa
  */
-class Course_content extends LIST_Controller {
-
-    const COURSE_CONTENT_MASTER_FILE_STORAGE = APPPATH . '..' . DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR;
-    const REGEXP_PATTERN_DATETIME = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
-    const STORED_FILTER_SESSION_NAME = 'admin_course_content_filter_data';
-    const SORTING_STORED_FILTER_SESSION_NAME = 'admin_course_content_sorting_filter_data';
+class Course_content extends LIST_Controller
+{
     
-    public function __construct() {
+    public const COURSE_CONTENT_MASTER_FILE_STORAGE = APPPATH . '..' . DIRECTORY_SEPARATOR . 'private' . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR;
+    public const REGEXP_PATTERN_DATETIME = '/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/';
+    public const STORED_FILTER_SESSION_NAME = 'admin_course_content_filter_data';
+    public const SORTING_STORED_FILTER_SESSION_NAME = 'admin_course_content_sorting_filter_data';
+    
+    public function __construct()
+    {
         parent::__construct();
         $this->_init_language_for_teacher();
         $this->_load_teacher_langfile();
@@ -21,8 +26,9 @@ class Course_content extends LIST_Controller {
         $this->_init_teacher_quick_prefered_course_menu();
         $this->usermanager->teacher_login_protected_redirect();
     }
-
-    public function index() {
+    
+    public function index(): void
+    {
         $this->_select_teacher_menu_pagetag('course_content');
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_course_content/list.js');
@@ -43,8 +49,9 @@ class Course_content extends LIST_Controller {
             'is_writable' => $this->check_writable(),
         ]);
     }
-
-    public function new_content_form() {
+    
+    public function new_content_form(): void
+    {
         $this->inject_courses();
         $this->inject_languages();
         $this->inject_course_content_groups($this->current_course_id());
@@ -53,8 +60,9 @@ class Course_content extends LIST_Controller {
             'is_writable' => $this->check_writable(),
         ]);
     }
-
-    public function get_all_content() {
+    
+    public function get_all_content(): void
+    {
         $filter = $this->input->post('filter');
         $this->store_listing_filter($filter);
         $this->inject_stored_listing_filter();
@@ -64,49 +72,50 @@ class Course_content extends LIST_Controller {
         if ((int)($filter['course_id'] ?? 0) > 0) {
             $course_content->where_related('course', 'id', (int)$filter['course_id']);
         }
-
+        
         $course_content->select('*');
         $course_content->include_related('course', 'name');
         $course_content->include_related('course/period', 'name');
         $course_content->include_related('course_content_group', 'title');
-    
-        $order_by_direction = $filter['order_by_direction'] == 'desc' ? 'desc' : 'asc';
-        if ($filter['order_by_field'] == 'title') {
+        
+        $order_by_direction = $filter['order_by_direction'] === 'desc' ? 'desc' : 'asc';
+        if ($filter['order_by_field'] === 'title') {
             $course_content->order_by('title', $order_by_direction);
-        } elseif ($filter['order_by_field'] == 'course') {
+        } else if ($filter['order_by_field'] === 'course') {
             $course_content->order_by_related('course/period', 'sorting', $order_by_direction);
             $course_content->order_by_related_with_constant('course', 'name', $order_by_direction);
-        } elseif ($filter['order_by_field'] == 'published') {
+        } else if ($filter['order_by_field'] === 'published') {
             $course_content->order_by('published', $order_by_direction);
-        } elseif ($filter['order_by_field'] == 'public') {
+        } else if ($filter['order_by_field'] === 'public') {
             $course_content->order_by('public', $order_by_direction);
-        } elseif ($filter['order_by_field'] == 'course_content_group') {
+        } else if ($filter['order_by_field'] === 'course_content_group') {
             $course_content->order_by_related_with_overlay('course_content_group', 'title', $order_by_direction);
-        } elseif ($filter['order_by_field'] == 'published_from') {
+        } else if ($filter['order_by_field'] === 'published_from') {
             $course_content->order_by('published_from', $order_by_direction);
-        } elseif ($filter['order_by_field'] == 'published_to') {
+        } else if ($filter['order_by_field'] === 'published_to') {
             $course_content->order_by('published_to', $order_by_direction);
         }
         
         $course_content->get_paged_iterated($filter['page'] ?? 1, $filter['rows_per_page'] ?? 25);
-
+        
         $this->lang->init_overlays('course_content', $course_content->all_to_array(), ['title', 'content']);
         
         $this->inject_languages();
-
+        
         $this->parser->parse('backend/course_content/table_content.tpl', ['course_content' => $course_content]);
     }
-
-    public function create() {
+    
+    public function create(): void
+    {
         $this->load->library('form_validation');
-
+        
         $course_content_data = $this->input->post('course_content');
-
+        
         $this->form_validation->set_rules('course_content[title]', 'lang:admin_course_content_form_field_title', 'required');
         $this->form_validation->set_rules('course_content[course_id]', 'lang:admin_course_content_form_field_course_id', 'required|exists_in_table[courses.id]');
-        $this->form_validation->set_rules('course_content[course_content_group_id]', 'lang:admin_course_content_form_field_course_content_group_id','exists_in_table[?course_content_groups.id]|callback__content_group_related_to_course');
+        $this->form_validation->set_rules('course_content[course_content_group_id]', 'lang:admin_course_content_form_field_course_content_group_id', 'exists_in_table[?course_content_groups.id]|callback__content_group_related_to_course');
         $this->form_validation->set_message('_content_group_related_to_course', $this->lang->line('admin_course_content_form_error_course_content_group_not_related_to_course'));
-
+        
         $this->_transaction_isolation();
         $this->db->trans_begin();
         if ($this->form_validation->run()) {
@@ -115,9 +124,9 @@ class Course_content extends LIST_Controller {
             $course_content->from_array($course_content_data, ['title', 'content', 'course_id']);
             $course_content->published = ($course_content_data['published'] ?? false) ? 1 : 0;
             $course_content->public = ($course_content_data['public'] ?? false) ? 1 : 0;
-            $course_content->course_content_group_id = (int)$course_content_data['course_content_group_id'] > 0 ? (int)$course_content_data['course_content_group_id'] : NULL;
-            $course_content->published_from = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_from']) ? $course_content_data['published_from'] : NULL;
-            $course_content->published_to = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_to']) ? $course_content_data['published_to'] : NULL;
+            $course_content->course_content_group_id = (int)$course_content_data['course_content_group_id'] > 0 ? (int)$course_content_data['course_content_group_id'] : null;
+            $course_content->published_from = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_from']) ? $course_content_data['published_from'] : null;
+            $course_content->published_to = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_to']) ? $course_content_data['published_to'] : null;
             $course_content->files_visibility = !Course_content_model::isJson($files_visibility) ? '{}' : $files_visibility;
             $course_content->creator_id = (int)$this->usermanager->get_teacher_id();
             
@@ -145,17 +154,18 @@ class Course_content extends LIST_Controller {
         }
     }
     
-    public function _content_group_related_to_course($id) {
-        if (is_null($id) || empty($id) || (int)$id <= 0) {
-            return TRUE;
+    public function _content_group_related_to_course($id): bool
+    {
+        if (empty($id) || (int)$id <= 0) {
+            return true;
         }
         
         $post = $this->input->post('course_content');
         
-        $course_id = $post['course_id'] ?? NULL;
+        $course_id = $post['course_id'] ?? null;
         
-        if (is_null($course_id) || empty($course_id) || (int)$course_id <= 0) {
-            return FALSE;
+        if (empty($course_id) || (int)$course_id <= 0) {
+            return false;
         }
         
         $content_group = new Course_content_group();
@@ -163,26 +173,28 @@ class Course_content extends LIST_Controller {
         $content_group->get_by_id((int)$id);
         
         if ($content_group->exists()) {
-            return TRUE;
+            return true;
         }
         
-        return FALSE;
+        return false;
     }
     
-    public function plupload_file($upload_folder, $language) {
+    public function plupload_file($upload_folder, $language): void
+    {
         $this->load->library('plupload');
         $path = realpath(self::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $upload_folder . DIRECTORY_SEPARATOR . $this->get_subfolder_by_language($language) . DIRECTORY_SEPARATOR;
         if (!file_exists($path)) {
-            @mkdir($path, DIR_READ_MODE,true);
+            @mkdir($path, DIR_READ_MODE, true);
             @chmod($path, DIR_READ_MODE);
         }
         $this->plupload->do_upload($path);
     }
     
-    public function file_list($language = '', $upload_folder = '') {
+    public function file_list($language = '', $upload_folder = ''): void
+    {
         $path = realpath(self::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $upload_folder . DIRECTORY_SEPARATOR . $this->get_subfolder_by_language($language) . DIRECTORY_SEPARATOR;
         $files = [];
-        if (file_exists($path) && $upload_folder !== '') {
+        if ($upload_folder !== '' && file_exists($path)) {
             $dir_content = scandir($path);
             foreach ($dir_content as $item) {
                 if (is_file($path . $item)) {
@@ -194,13 +206,14 @@ class Course_content extends LIST_Controller {
             }
         }
         $this->parser->parse('backend/course_content/file_list.tpl', [
-            'files' => $files,
+            'files'         => $files,
             'upload_folder' => $upload_folder,
-            'language' => $language,
+            'language'      => $language,
         ]);
     }
     
-    public function delete_file($file, $upload_folder, $language) {
+    public function delete_file($file, $upload_folder, $language): void
+    {
         $output = new stdClass();
         $output->status = false;
         $output->message = '';
@@ -219,21 +232,23 @@ class Course_content extends LIST_Controller {
         $this->output->set_output(json_encode($output));
     }
     
-    public function request_temporary_directory() {
+    public function request_temporary_directory(): void
+    {
         $output = new stdClass();
         $output->directory = $this->get_upload_folder_name();
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
     
-    public function edit($id) {
+    public function edit($id): void
+    {
         $this->_select_teacher_menu_pagetag('course_content');
-    
+        
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_course_content/form.js');
         $this->parser->add_js_file('admin_tasks/form.js');
         $this->parser->add_css_file('admin_course_content.css');
-    
+        
         $this->_add_tinymce4();
         $this->_add_prettify();
         $this->_add_mathjax();
@@ -250,13 +265,14 @@ class Course_content extends LIST_Controller {
         $course_content->get_by_id((int)$id);
         
         $this->parser->parse('backend/course_content/edit.tpl', [
-            'content' => $course_content
+            'content' => $course_content,
         ]);
     }
     
-    public function update() {
+    public function update(): void
+    {
         $course_content_id = $this->input->post('course_content_id');
-    
+        
         $this->_transaction_isolation();
         $this->db->trans_begin();
         
@@ -265,31 +281,31 @@ class Course_content extends LIST_Controller {
         
         if ($course_content->exists()) {
             $this->load->library('form_validation');
-    
+            
             $course_content_data = $this->input->post('course_content');
-    
+            
             $this->form_validation->set_rules('course_content[title]', 'lang:admin_course_content_form_field_title', 'required');
             $this->form_validation->set_rules('course_content[course_id]', 'lang:admin_course_content_form_field_course_id', 'required|exists_in_table[courses.id]');
-            $this->form_validation->set_rules('course_content[course_content_group_id]', 'lang:admin_course_content_form_field_course_content_group_id','exists_in_table[?course_content_groups.id]|callback__content_group_related_to_course');
+            $this->form_validation->set_rules('course_content[course_content_group_id]', 'lang:admin_course_content_form_field_course_content_group_id', 'exists_in_table[?course_content_groups.id]|callback__content_group_related_to_course');
             $this->form_validation->set_message('_content_group_related_to_course', $this->lang->line('admin_course_content_form_error_course_content_group_not_related_to_course'));
             
             if ($this->form_validation->run()) {
-                if ($course_content->course_id != (int)$course_content_data['course_id'] || $course_content->course_content_group_id != (int)$course_content_data['course_content_group_id']) {
-                    $course_content->sorting = Course_content_model::get_next_sorting_number((int)$course_content_data['course_id'], $course_content_data['course_content_group_id'] ? (int)$course_content_data['course_content_group_id'] : NULL);
+                if ($course_content->course_id !== (int)$course_content_data['course_id'] || $course_content->course_content_group_id !== (int)$course_content_data['course_content_group_id']) {
+                    $course_content->sorting = Course_content_model::get_next_sorting_number((int)$course_content_data['course_id'], $course_content_data['course_content_group_id'] ? (int)$course_content_data['course_content_group_id'] : null);
                 }
                 
                 $files_visibility = str_replace('\\"', '"', $course_content_data['files_visibility'] ?? '{}');
                 $course_content->from_array($course_content_data, ['title', 'content', 'course_id']);
                 $course_content->published = ($course_content_data['published'] ?? false) ? 1 : 0;
                 $course_content->public = ($course_content_data['public'] ?? false) ? 1 : 0;
-                $course_content->course_content_group_id = (int)$course_content_data['course_content_group_id'] > 0 ? (int)$course_content_data['course_content_group_id'] : NULL;
-                $course_content->published_from = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_from']) ? $course_content_data['published_from'] : NULL;
-                $course_content->published_to = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_to']) ? $course_content_data['published_to'] : NULL;
+                $course_content->course_content_group_id = (int)$course_content_data['course_content_group_id'] > 0 ? (int)$course_content_data['course_content_group_id'] : null;
+                $course_content->published_from = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_from']) ? $course_content_data['published_from'] : null;
+                $course_content->published_to = preg_match(self::REGEXP_PATTERN_DATETIME, $course_content_data['published_to']) ? $course_content_data['published_to'] : null;
                 $course_content->files_visibility = !Course_content_model::isJson($files_visibility) ? '{}' : $files_visibility;
                 $course_content->updator_id = (int)$this->usermanager->get_teacher_id();
                 
                 $overlay = $this->input->post('overlay');
-    
+                
                 if ($course_content->save() && $this->lang->save_overlay_array($overlay) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->_action_success();
@@ -312,11 +328,12 @@ class Course_content extends LIST_Controller {
         }
     }
     
-    public function delete($id) {
+    public function delete($id): void
+    {
         $output = new stdClass();
         $output->status = false;
         $output->message = '';
-    
+        
         $this->_transaction_isolation();
         $this->db->trans_begin();
         
@@ -343,7 +360,8 @@ class Course_content extends LIST_Controller {
         $this->output->set_output(json_encode($output));
     }
     
-    public function get_course_content_groups($course_id, $selected_id = NULL, $course_content_id = NULL) {
+    public function get_course_content_groups($course_id, $selected_id = null, $course_content_id = null): void
+    {
         $this->inject_course_content_groups($course_id);
         
         $course_content = new Course_content_model();
@@ -357,10 +375,11 @@ class Course_content extends LIST_Controller {
         $this->parser->parse('backend/course_content/course_content_groups_options.tpl');
     }
     
-    public function change_publication_status($course_content_id = null) {
+    public function change_publication_status($course_content_id = null): void
+    {
         $output = new stdClass();
         $output->message = '';
-        $output->status = FALSE;
+        $output->status = false;
         
         $this->_transaction_isolation();
         $this->db->trans_begin();
@@ -372,8 +391,15 @@ class Course_content extends LIST_Controller {
             $course_content->updator_id = (int)$this->usermanager->get_teacher_id();
             $course_content->save();
             $this->db->trans_commit();
-            $output->message = sprintf($this->lang->line('admin_course_content_publication_status_switched'), $this->lang->get_overlay_with_default('course_content', $course_content->id, 'title', $course_content->title));
-            $output->status = TRUE;
+            $output->message = sprintf(
+                $this->lang->line('admin_course_content_publication_status_switched'),
+                $this->lang->get_overlay_with_default('course_content',
+                    $course_content->id,
+                    'title',
+                    $course_content->title
+                )
+            );
+            $output->status = true;
             $this->_action_success();
         } else {
             $this->db->trans_rollback();
@@ -384,10 +410,11 @@ class Course_content extends LIST_Controller {
         $this->output->set_output(json_encode($output));
     }
     
-    public function change_public_status($course_content_id = null) {
+    public function change_public_status($course_content_id = null): void
+    {
         $output = new stdClass();
         $output->message = '';
-        $output->status = FALSE;
+        $output->status = false;
         
         $this->_transaction_isolation();
         $this->db->trans_begin();
@@ -399,19 +426,27 @@ class Course_content extends LIST_Controller {
             $course_content->updator_id = (int)$this->usermanager->get_teacher_id();
             $course_content->save();
             $this->db->trans_commit();
-            $output->message = sprintf($this->lang->line('admin_course_content_public_status_switched'), $this->lang->get_overlay_with_default('course_content', $course_content->id, 'title', $course_content->title));
-            $output->status = TRUE;
+            $output->message = sprintf(
+                $this->lang->line('admin_course_content_public_status_switched'),
+                $this->lang->get_overlay_with_default('course_content',
+                    $course_content->id,
+                    'title',
+                    $course_content->title
+                )
+            );
+            $output->status = true;
             $this->_action_success();
         } else {
             $this->db->trans_rollback();
             $output->message = $this->lang->line('admin_course_content_error_course_content_not_found');
         }
-    
+        
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
     
-    public function sorting() {
+    public function sorting(): void
+    {
         $this->_select_teacher_menu_pagetag('course_content_sorting');
         
         $this->inject_stored_sorting_filter();
@@ -423,7 +458,8 @@ class Course_content extends LIST_Controller {
         $this->parser->parse('backend/course_content/sorting.tpl');
     }
     
-    public function get_all_course_content_sorting() {
+    public function get_all_course_content_sorting(): void
+    {
         $filter = $this->input->post('filter');
         $this->store_sorting_filter($filter);
         $this->inject_stored_sorting_filter();
@@ -441,13 +477,13 @@ class Course_content extends LIST_Controller {
             $query1->select_func('', [0], 'content_count');
             $query1->where_related('course_content_group', 'id', null);
             $query1->where_related($course);
-    
+            
             $content_counter = new Course_content_model();
             $content_counter->select_func('COUNT', '@id', 'content_count');
             $content_counter->where_related($course);
             $content_counter->where_related('course_content_group', 'id', '${parent}.id');
             
-    
+            
             $query2 = new Course_content_group();
             $query2->select('id, title, sorting');
             $query2->select_func('', 'group', 'type');
@@ -465,7 +501,7 @@ class Course_content extends LIST_Controller {
             $grouped_content->order_by_related('course_content_group', 'sorting', 'asc');
             $grouped_content->order_by('sorting', 'asc');
             $grouped_content->get_iterated();
-    
+            
             $this->parser->assign('top_level', $query1);
             $this->parser->assign('grouped_content', $grouped_content);
         }
@@ -477,7 +513,8 @@ class Course_content extends LIST_Controller {
         $this->parser->parse('backend/course_content/sorting_list.tpl');
     }
     
-    public function update_sorting() {
+    public function update_sorting(): void
+    {
         $group_id = $this->input->post('group_id') ?? null;
         $course_id = $this->input->post('course_id') ?? null;
         $order = $this->input->post('order') ?? [];
@@ -517,22 +554,24 @@ class Course_content extends LIST_Controller {
         $this->output->set_output(json_encode($output));
     }
     
-    public function content_preview($content_id) {
+    public function content_preview($content_id): void
+    {
         $content = new Course_content_model();
         $content->get_by_id((int)$content_id);
         
         $this->inject_languages();
         
         $this->parser->parse('backend/course_content/content_preview.tpl', [
-            'content' => $content
+            'content' => $content,
         ]);
     }
     
-    private function sort_in_group($output, $course, $group_id, $order) {
+    private function sort_in_group($output, $course, $group_id, $order)
+    {
         $course_content_group = new Course_content_group();
         $course_content_group->where_related($course);
         $course_content_group->get_by_id((int)$group_id);
-    
+        
         $output->status = false;
         
         if ($course_content_group->exists()) {
@@ -544,28 +583,28 @@ class Course_content extends LIST_Controller {
             $all_content->get_iterated();
             
             $position = 0;
-    
+            
             $sorted = [];
             $sorted_order = [];
-            for ($i=0; $i<count($order);$i++) {
+            for ($i = 0, $iMax = count($order); $i < $iMax; $i++) {
                 $item = $order[$i];
                 
                 if ($item['type'] == 'group') {
                     $output->message = $this->lang->line('admin_course_content_sorting_order_inconsistent');
                     return $output;
                 }
-    
-                $sorted[] = [ 'id' => (int)$item['id'], 'sorting' => $position++ ];
+                
+                $sorted[] = ['id' => (int)$item['id'], 'sorting' => $position++];
                 $sorted_order[] = (int)$item['id'];
             }
             
             $new_position = count($order);
             
             foreach ($all_content as $content) {
-                if (!in_array($content->id, $sorted_order)) {
+                if (!in_array($content->id, $sorted_order, true)) {
                     $sorted[] = [
-                        'id' => $content->id,
-                        'sorting' => $new_position++
+                        'id'      => $content->id,
+                        'sorting' => $new_position++,
                     ];
                 }
             }
@@ -585,11 +624,12 @@ class Course_content extends LIST_Controller {
         } else {
             $output->message = $this->lang->line('admin_course_content_sorting_group_not_found');
         }
-    
+        
         return $output;
     }
     
-    private function sort_top_level($output, $course, $order) {
+    private function sort_top_level($output, $course, $order)
+    {
         $output->status = false;
         
         $all_content = new Course_content_model();
@@ -611,14 +651,16 @@ class Course_content extends LIST_Controller {
         $sorted_groups = [];
         $sorted_content = [];
         
-        for ($i=0; $i<count($order);$i++) {
+        for ($i = 0, $iMax = count($order); $i < $iMax; $i++) {
             $item = $order[$i];
             
             $type = 'group';
-            if ($item['type'] == 'content') { $type = 'content'; }
+            if ($item['type'] === 'content') {
+                $type = 'content';
+            }
             
-            $sorted[] = [ 'id' => (int)$item['id'], 'type' => $type, 'sorting' => $position++ ];
-            if ($type == 'content') {
+            $sorted[] = ['id' => (int)$item['id'], 'type' => $type, 'sorting' => $position++];
+            if ($type === 'content') {
                 $sorted_content[] = (int)$item['id'];
             } else {
                 $sorted_groups[] = (int)$item['id'];
@@ -626,32 +668,32 @@ class Course_content extends LIST_Controller {
         }
         
         $new_position = count($order);
-    
+        
         foreach ($all_content as $content) {
-            if (!in_array($content->id, $sorted_content)) {
+            if (!in_array($content->id, $sorted_content, true)) {
                 $sorted[] = [
-                    'id' => $content->id,
+                    'id'      => $content->id,
                     'sorting' => $new_position++,
-                    'type' => 'content'
+                    'type'    => 'content',
                 ];
             }
         }
-    
+        
         foreach ($all_groups as $group) {
-            if (!in_array($group->id, $sorted_groups)) {
+            if (!in_array($group->id, $sorted_groups, true)) {
                 $sorted[] = [
-                    'id' => $group->id,
+                    'id'      => $group->id,
                     'sorting' => $new_position++,
-                    'type' => 'group'
+                    'type'    => 'group',
                 ];
             }
         }
-    
+        
         foreach ($sorted as $to_sort) {
             $this->db->where('id', $to_sort['id']);
             $this->db->set('updated', 'updated', false);
             $this->db->set('sorting', $to_sort['sorting']);
-            if ($to_sort['type'] == 'content') {
+            if ($to_sort['type'] === 'content') {
                 if (!$this->db->update($all_content->table)) {
                     $output->message = $this->lang->line('admin_course_content_sorting_failed_to_update_sorting');
                     return $output;
@@ -663,79 +705,88 @@ class Course_content extends LIST_Controller {
                 }
             }
         }
-    
+        
         $output->message = $this->lang->line('admin_course_content_sorting_successful');
         $output->status = true;
         
         return $output;
     }
-
-    private function inject_courses()
+    
+    private function inject_courses(): void
     {
         $this->parser->assign('courses', Course::get_all_courses_for_form_select());
     }
     
-    private function inject_languages() {
+    private function inject_languages(): void
+    {
         $languages = $this->lang->get_list_of_languages();
         $this->parser->assign('languages', $languages);
     }
     
-    private function inject_course_content_groups($course_id = NULL) {
+    private function inject_course_content_groups($course_id = null): void
+    {
         $this->parser->assign('course_content_groups', Course_content_group::get_all_groups($course_id));
     }
     
-    private function current_teacher_prefered_course() {
+    private function current_teacher_prefered_course(): ?int
+    {
         $teacher = new Teacher();
         $teacher->get_by_id((int)$this->usermanager->get_teacher_id());
         
-        if (!$teacher->exists()) { return NULL; }
+        if (!$teacher->exists()) {
+            return null;
+        }
         
-        return $teacher->prefered_course_id ?? NULL;
+        return $teacher->prefered_course_id ?? null;
     }
     
-    private function current_course_id() {
+    private function current_course_id(): ?int
+    {
         $course_id = $this->current_teacher_prefered_course();
         $post = $this->input->post('course_content');
-        $post_course_id = $post['course_id'] ?? NULL;
+        $post_course_id = $post['course_id'] ?? null;
         
         return $post_course_id ?? $course_id;
     }
     
-    private function inject_course_content_groups_array() {
+    private function inject_course_content_groups_array(): void
+    {
         $this->parser->assign('all_course_content_groups', Course_content_group::get_all_groups(null, true));
     }
     
-    private function inject_prettify_config() {
+    private function inject_prettify_config(): void
+    {
         $this->config->load('prettify');
         $prettify = $this->config->item('prettify');
         $highlighters = $prettify['highlighters'];
-        $output = array();
+        $output = [];
         if (is_array($highlighters) && count($highlighters)) {
             foreach ($highlighters as $lang => $config) {
-                $output[] = array('lang' => $lang, 'name' => $this->lang->text($config['name']));
+                $output[] = ['lang' => $lang, 'name' => $this->lang->text($config['name'])];
             }
         }
         $this->parser->assign('highlighters', $output);
     }
     
-    private function get_upload_folder_name() {
+    private function get_upload_folder_name(): string
+    {
         if (!$this->check_writable()) {
             return 'non_writable';
         }
         $new_created = false;
-        $random_temporary_folder_name = '';
         do {
             $random_temporary_folder_name = 'temp_' . date('Y_m_d_H_i_s') . '_' . rand(1000000, 9999999);
             $path = realpath(self::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $random_temporary_folder_name;
             if (!file_exists($path)) {
-                mkdir($path,DIR_READ_MODE, true);
+                mkdir($path, DIR_READ_MODE, true);
                 $new_created = true;
             }
-        } while(!$new_created);
+        } while (!$new_created);
         return $random_temporary_folder_name;
     }
     
-    private function get_subfolder_by_language($language) {
+    private function get_subfolder_by_language($language): string
+    {
         $languages = $this->lang->get_list_of_languages();
         if (array_key_exists($language, $languages)) {
             return $language;
@@ -743,11 +794,13 @@ class Course_content extends LIST_Controller {
         return '';
     }
     
-    private function check_writable() {
+    private function check_writable(): bool
+    {
         return is_writable(realpath(self::COURSE_CONTENT_MASTER_FILE_STORAGE));
     }
     
-    private function change_temp_folder_name($folder, $id) {
+    private function change_temp_folder_name($folder, $id): bool
+    {
         if (empty($folder)) {
             return true;
         }
@@ -762,7 +815,8 @@ class Course_content extends LIST_Controller {
         return false;
     }
     
-    private function store_listing_filter($filter) {
+    private function store_listing_filter($filter): void
+    {
         if (is_array($filter)) {
             $this->load->library('filter');
             $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
@@ -772,13 +826,15 @@ class Course_content extends LIST_Controller {
         }
     }
     
-    private function inject_stored_listing_filter() {
+    private function inject_stored_listing_filter(): void
+    {
         $this->load->library('filter');
         $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course_id');
         $this->parser->assign('filter', $filter);
     }
     
-    private function store_sorting_filter($filter) {
+    private function store_sorting_filter($filter): void
+    {
         if (is_array($filter)) {
             $this->load->library('filter');
             $old_filter = $this->filter->restore_filter(self::SORTING_STORED_FILTER_SESSION_NAME);
@@ -788,13 +844,15 @@ class Course_content extends LIST_Controller {
         }
     }
     
-    private function inject_stored_sorting_filter() {
+    private function inject_stored_sorting_filter(): void
+    {
         $this->load->library('filter');
         $filter = $this->filter->restore_filter(self::SORTING_STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
         $this->parser->assign('filter', $filter);
     }
     
-    private function replace_temp_folder_name_in_texts($temp_name, &$course_content, &$overlay) {
+    private function replace_temp_folder_name_in_texts($temp_name, &$course_content, &$overlay): bool
+    {
         if (empty($temp_name)) {
             return true;
         }
@@ -822,5 +880,5 @@ class Course_content extends LIST_Controller {
         
         return $course_content->save();
     }
-
+    
 }

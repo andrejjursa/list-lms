@@ -4,91 +4,95 @@ use Application\Interfaces\DataMapperExtensionsInterface;
 
 /**
  * Task_set model.
- * @package LIST_DM_Models
- * @author Andrej Jursa
  *
- * @property int $id
- * @property string $updated date time format YYYY-MM-DD HH:MM:SS
- * @property string $created date time format YYYY-MM-DD HH:MM:SS
- * @property string $content_type one of: `task_set`, `project`
- * @property string $name
- * @property int|null $course_id entity id of model Course
- * @property int|null $task_set_type_id entity id of model Task_set_type
- * @property bool $published
- * @property string|null $publish_start_time date time format YYYY-MM-DD HH:MM:SS
- * @property string|null $upload_end_time date time format YYYY-MM-DD HH:MM:SS
- * @property int|null $group_id entity id of model Group
- * @property int|null $room_id entity id of model Room
+ * @property int         $id
+ * @property string      $updated                    date time format YYYY-MM-DD HH:MM:SS
+ * @property string      $created                    date time format YYYY-MM-DD HH:MM:SS
+ * @property string      $content_type               one of: `task_set`, `project`
+ * @property string      $name
+ * @property int|null    $course_id                  entity id of model {@see Course}
+ * @property int|null    $task_set_type_id           entity id of model {@see Task_set_type}
+ * @property bool        $published
+ * @property string|null $publish_start_time         date time format YYYY-MM-DD HH:MM:SS
+ * @property string|null $upload_end_time            date time format YYYY-MM-DD HH:MM:SS
+ * @property int|null    $group_id                   entity id of model {@see Group}
+ * @property int|null    $room_id                    entity id of model {@see Room}
  * @property string|null $instructions
  * @property double|null $points_override
- * @property bool $comments_enabled
- * @property bool $comments_moderated
- * @property string|null $allowed_file_types comma separated list
- * @property string|null $allowed_test_types comma separated list
+ * @property bool        $comments_enabled
+ * @property bool        $comments_moderated
+ * @property string|null $allowed_file_types         comma separated list
+ * @property string|null $allowed_test_types         comma separated list
  * @property string|null $internal_comment
- * @property bool $enable_tests_scoring
- * @property int $test_min_needed
- * @property int $test_max_allowed
+ * @property bool        $enable_tests_scoring
+ * @property int         $test_min_needed
+ * @property int         $test_max_allowed
  * @property string|null $deadline_notification_emails
- * @property bool $deadline_notified
- * @property int $deadline_notification_emails_handler
+ * @property bool        $deadline_notified
+ * @property int         $deadline_notification_emails_handler
  * @property string|null $project_selection_deadline date time format YYYY-MM-DD HH:MM:SS
- * @property int $test_priority
- * @property int $sorting
+ * @property int         $test_priority
+ * @property int         $sorting
  *
- * @method DataMapper where_related_course(mixed $related, string $field = NULL, string $value = NULL)
- * @method DataMapper where_related_task_set_type(mixed $related, string $field = NULL, string $value = NULL)
- * @method DataMapper where_related_group(mixed $related, string $field = NULL, string $value = NULL)
- * @method DataMapper where_related_room(mixed $related, string $field = NULL, string $value = NULL)
+ * @method DataMapper where_related_course(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_task_set_type(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_group(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_room(mixed $related, string $field = null, string $value = null)
+ *
+ * @package LIST_DM_Models
+ * @author  Andrej Jursa
+ *
  */
-class Task_set extends DataMapper implements DataMapperExtensionsInterface {
+class Task_set extends DataMapper implements DataMapperExtensionsInterface
+{
     
     public const OPEN_TASK_SET_SESSION_NAME = 'OPEN_TASK_SET_SESSION';
     public const STUDENT_FILE_NAME_REGEXP = '/^(?P<student_id>\d+)\_(?P<file_name>[a-zA-Z]+)\_(?P<random_hash>[a-zA-Z0-9]+)\_(?P<solution_version>\d+)\.zip$/i';
     
     private $filter_tasks_count_sql = '(SELECT COUNT(*) AS count FROM (`tasks`) LEFT OUTER JOIN `task_task_set_rel` task_task_set_rel ON `tasks`.`id` = `task_task_set_rel`.`task_id` LEFT OUTER JOIN `task_sets` `task_sets_subquery` ON `task_sets_subquery`.`id` = `task_task_set_rel`.`task_set_id` WHERE `task_sets_subquery`.`id` = `task_sets`.`id`)';
     private $max_solution_version = 0;
-
-    private $related_permissions = array();
-
-    private $related_task_set_type = array();
-
+    
+    private $related_permissions = [];
+    
+    private $related_task_set_type = [];
+    
     private static $updated_field_key;
     
-    public $has_many = array(
-        'task' => array(
+    public $has_many = [
+        'task'                       => [
             'join_table' => 'task_task_set_rel',
-        ),
+        ],
         'solution',
         'comment',
         'task_set_permission',
         'project_selection',
-        'comment_subscriber_student' => array(
-            'class' => 'student',
-            'other_field' => 'comment_subscription',
-            'join_self_as' => 'comment_subscription',
+        'comment_subscriber_student' => [
+            'class'         => 'student',
+            'other_field'   => 'comment_subscription',
+            'join_self_as'  => 'comment_subscription',
             'join_other_as' => 'comment_subscriber_student',
-            'join_table' => 'task_set_comment_subscription_rel',
-        ),
-        'comment_subscriber_teacher' => array(
-            'class' => 'teacher',
-            'other_field' => 'comment_subscription',
-            'join_self_as' => 'comment_subscription',
+            'join_table'    => 'task_set_comment_subscription_rel',
+        ],
+        'comment_subscriber_teacher' => [
+            'class'         => 'teacher',
+            'other_field'   => 'comment_subscription',
+            'join_self_as'  => 'comment_subscription',
             'join_other_as' => 'comment_subscriber_teacher',
-            'join_table' => 'task_set_comment_subscription_rel',
-        ),
+            'join_table'    => 'task_set_comment_subscription_rel',
+        ],
         'test_queue',
-    );
+    ];
     
-    public $has_one = array(
-    	'task_set_type',
-    	'course',
+    public $has_one = [
+        'task_set_type',
+        'course',
         'room',
         'group',
-    );
+    ];
     
     /**
      * Add condition to load only task sets which have one or more related tasks.
+     *
      * @return Task_set this object.
      */
     public function where_has_tasks(): Task_set
@@ -99,6 +103,7 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
     
     /**
      * Add condition to load only tasks which have no task in relation.
+     *
      * @return Task_set this object.
      */
     public function where_has_no_tasks(): Task_set
@@ -109,6 +114,7 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
     
     /**
      * Set the currently loaded task set as open task set.
+     *
      * @return boolean TRUE, if task set is set as opened, FALSE otherwise.
      */
     public function set_as_open(): bool
@@ -120,14 +126,15 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
             
             $CI->session->set_userdata(self::OPEN_TASK_SET_SESSION_NAME, $this->id);
             
-            return TRUE;
+            return true;
         }
-
-        return FALSE;
+        
+        return false;
     }
     
     /**
      * Load record of opened task set from database table.
+     *
      * @return Task_set this object for method chaining.
      */
     public function get_as_open(): Task_set
@@ -135,7 +142,7 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
         $CI =& get_instance();
         $CI->load->database();
         $CI->load->library('session');
-            
+        
         $id = $CI->session->userdata(self::OPEN_TASK_SET_SESSION_NAME);
         
         $this->get_by_id((int)$id);
@@ -145,6 +152,7 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
     
     /**
      * Returns opened task set ID.
+     *
      * @return integer ID of opened task set.
      */
     public function get_open_task_set_id(): int
@@ -152,49 +160,55 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
         $CI =& get_instance();
         $CI->load->database();
         $CI->load->library('session');
-            
+        
         return $CI->session->userdata(self::OPEN_TASK_SET_SESSION_NAME);
     }
     
     /**
      * Reads the directory for solutions of this task set and sorted array of all files belonging to student.
-     * @param integer $student_id ID of student.
-     * @param integer|NULL $version concrete version of file or NULL for all files (default NULL).
+     *
+     * @param integer      $student_id ID of student.
+     * @param integer|NULL $version    concrete version of file or NULL for all files (default NULL).
+     *
      * @return array<string> sorted array of files.
      */
-    public function get_student_files(int $student_id, ?int $version = NULL): array
+    public function get_student_files(int $student_id, ?int $version = null): array
     {
         if (!is_null($this->id)) {
             $path = 'private/uploads/solutions/task_set_' . $this->id . '/';
             if (file_exists($path)) {
                 $all_files = scandir($path);
-                $student_files = array();
-                if (count($all_files) > 0) { foreach ($all_files as $single_file) {
-                    if (is_file($path . $single_file) && preg_match(self::STUDENT_FILE_NAME_REGEXP, $single_file, $matches) && (int)$matches['student_id'] === $student_id) {
-                        if ($version === NULL || $version === (int)$matches['solution_version']) {
-                            $student_files[(int)$matches['solution_version']] = array(
-                                'file' => $single_file,
-                                'filepath' => $path . $single_file,
-                                'size' => get_file_size($path . $single_file),
-                                'student_id' => (int)$matches['student_id'],
-                                'file_name' => $matches['file_name'],
-                                'random_hash' => $matches['random_hash'],
-                                'last_modified' => filemtime($path . $single_file),
-                                'version' => (int)$matches['solution_version'],
-                            );
+                $student_files = [];
+                if (count($all_files) > 0) {
+                    foreach ($all_files as $single_file) {
+                        if (is_file($path . $single_file) && preg_match(self::STUDENT_FILE_NAME_REGEXP, $single_file, $matches) && (int)$matches['student_id'] === $student_id) {
+                            if ($version === null || $version === (int)$matches['solution_version']) {
+                                $student_files[(int)$matches['solution_version']] = [
+                                    'file'          => $single_file,
+                                    'filepath'      => $path . $single_file,
+                                    'size'          => get_file_size($path . $single_file),
+                                    'student_id'    => (int)$matches['student_id'],
+                                    'file_name'     => $matches['file_name'],
+                                    'random_hash'   => $matches['random_hash'],
+                                    'last_modified' => filemtime($path . $single_file),
+                                    'version'       => (int)$matches['solution_version'],
+                                ];
+                            }
                         }
                     }
-                }}
+                }
                 ksort($student_files, SORT_NUMERIC);
                 return $student_files;
             }
         }
-        return array();
+        return [];
     }
     
     /**
      * Returns count of student files in this task set.
+     *
      * @param integer $student_id ID of student.
+     *
      * @return integer number of files.
      */
     public function get_student_files_count(int $student_id): int
@@ -205,12 +219,14 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
             if (file_exists($path)) {
                 $all_files = scandir($path);
                 $count = 0;
-                if (count($all_files) > 0) { foreach ($all_files as $single_file) {
-                    if (is_file($path . $single_file) && preg_match(self::STUDENT_FILE_NAME_REGEXP, $single_file, $matches) && (int)$matches['student_id'] === $student_id) {
-                        $count++;
-                        $this->max_solution_version = max(array($this->max_solution_version, (int)$matches['solution_version']));
+                if (count($all_files) > 0) {
+                    foreach ($all_files as $single_file) {
+                        if (is_file($path . $single_file) && preg_match(self::STUDENT_FILE_NAME_REGEXP, $single_file, $matches) && (int)$matches['student_id'] === $student_id) {
+                            $count++;
+                            $this->max_solution_version = max([$this->max_solution_version, (int)$matches['solution_version']]);
+                        }
                     }
-                }}
+                }
                 return $count;
             }
         }
@@ -219,7 +235,9 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
     
     /**
      * Return next version number of student solution for this task set.
+     *
      * @param integer $student_id ID of student.
+     *
      * @return integer next version number.
      */
     public function get_student_file_next_version(int $student_id): int
@@ -230,34 +248,39 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
     
     /**
      * Return info about solution file with specific real file name.
+     *
      * @param string $real_filename solution file name.
+     *
      * @return boolean|array returns FALSE if file is not found or array of file informations if it is found.
      */
-    public function get_specific_file_info(string $real_filename) {
+    public function get_specific_file_info(string $real_filename)
+    {
         if (!is_null($this->id)) {
             $path = 'private/uploads/solutions/task_set_' . $this->id . '/';
             if (file_exists($path)) {
                 $all_files = scandir($path);
                 if (in_array($real_filename, $all_files, true) && preg_match(self::STUDENT_FILE_NAME_REGEXP, $real_filename, $matches)) {
-                    return array(
-                        'file' => $real_filename,
-                        'filepath' => $path . $real_filename,
-                        'size' => get_file_size($path . $real_filename),
-                        'student_id' => $matches['student_id'],
-                        'file_name' => $matches['file_name'],
-                        'random_hash' => $matches['random_hash'],
+                    return [
+                        'file'          => $real_filename,
+                        'filepath'      => $path . $real_filename,
+                        'size'          => get_file_size($path . $real_filename),
+                        'student_id'    => $matches['student_id'],
+                        'file_name'     => $matches['file_name'],
+                        'random_hash'   => $matches['random_hash'],
                         'last_modified' => filemtime($path . $real_filename),
-                        'version' => (int)$matches['solution_version'],
-                    );
+                        'version'       => (int)$matches['solution_version'],
+                    ];
                 }
             }
         }
-        return FALSE;
+        return false;
     }
     
     /**
      * Returns the internal files in ZIP archive of student solution.
+     *
      * @param string $real_filename solution file name.
+     *
      * @return array<string> array of ZIP archive content (array keys are ZIP archive file indexes).
      */
     public function get_student_file_content(string $real_filename): array
@@ -267,9 +290,9 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
             if (file_exists($path)) {
                 $all_files = scandir($path);
                 if (in_array($real_filename, $all_files, true) && preg_match(self::STUDENT_FILE_NAME_REGEXP, $real_filename, $matches)) {
-                    $output = array();
+                    $output = [];
                     $zip_file = new ZipArchive();
-                    if ($zip_file->open($path . $real_filename) === TRUE) {
+                    if ($zip_file->open($path . $real_filename) === true) {
                         for ($i = 0; $i < $zip_file->numFiles; $i++) {
                             $output[$i] = $zip_file->getNameIndex($i);
                         }
@@ -279,18 +302,21 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
                 }
             }
         }
-        return array();
+        return [];
     }
     
     /**
      * Extracts one file from given student ZIP file and index and returns its content.
-     * @param string $real_filename solution file name.
-     * @param integer $index index in ZIP file.
+     *
+     * @param string  $real_filename solution file name.
+     * @param integer $index         index in ZIP file.
+     *
      * @return boolean|array returns array with file content, name and extension or FALSE on error.
      */
-    public function extract_student_file_by_index(string $real_filename, int $index) {
+    public function extract_student_file_by_index(string $real_filename, int $index)
+    {
         $file_info = $this->get_specific_file_info($real_filename);
-        if ($file_info !== FALSE) {
+        if ($file_info !== false) {
             $path = 'private/uploads/solutions/task_set_' . $this->id . '/';
             $CI =& get_instance();
             $CI->load->library('session');
@@ -304,48 +330,54 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
             $content = '';
             $filename = '';
             $extension = '';
-            $file_read = TRUE;
-            if ($open === TRUE && $index >= 0 && $index < $zip_file->numFiles) {
+            $file_read = true;
+            if ($open === true && $index >= 0 && $index < $zip_file->numFiles) {
                 $extracted_file = $zip_file->getNameIndex($index);
                 $extension = '';
                 $ext_pos = strrpos($extracted_file, '.');
-                if ($ext_pos !== FALSE) { $extension = substr($extracted_file, $ext_pos + 1); }
+                if ($ext_pos !== false) {
+                    $extension = substr($extracted_file, $ext_pos + 1);
+                }
                 if (in_array(strtolower($extension), $supported_extensions)) {
                     $zip_file->extractTo($extract_path, $extracted_file);
                     $content = @file_get_contents($extract_path . $extracted_file);
                     $filename = basename($extract_path . $extracted_file);
                 } else {
-                    $file_read = FALSE;
+                    $file_read = false;
                 }
                 $zip_file->close();
             } else {
-                $file_read = FALSE;
+                $file_read = false;
             }
-            @unlink_recursive(rtrim($extract_path, '/'), TRUE);
-            return $file_read ? array('content' => $content, 'filename' => $filename, 'extension' => $extension) : FALSE;
+            @unlink_recursive(rtrim($extract_path, '/'), true);
+            return $file_read ? ['content' => $content, 'filename' => $filename, 'extension' => $extension] : false;
         }
-        return FALSE;
+        return false;
     }
     
     /**
-     * This method will extract student file content to provided folder. Optionally can extract only files with specified extensions.
-     * @param string $real_filename solution file name.
-     * @param string $folder destination folder.
-     * @param array<string>|NULL $extensions array of extensions to extract or NULL to extract all files.
+     * This method will extract student file content to provided folder. Optionally can extract only files with
+     * specified extensions.
+     *
+     * @param string             $real_filename solution file name.
+     * @param string             $folder        destination folder.
+     * @param array<string>|NULL $extensions    array of extensions to extract or NULL to extract all files.
+     *
      * @return boolean TRUE on success, FALSE on error.
      */
-    public function extract_student_zip_to_folder(string $real_filename, string $folder, ?array $extensions = NULL): bool {
+    public function extract_student_zip_to_folder(string $real_filename, string $folder, ?array $extensions = null): bool
+    {
         $file_info = $this->get_specific_file_info($real_filename);
-        if ($file_info !== FALSE) {
+        if ($file_info !== false) {
             $zip_file = new ZipArchive();
             $open = $zip_file->open($file_info['filepath']);
             if (!is_array($extensions)) {
                 $zip_file->extractTo($folder);
             } else {
-                for($index = 0; $index < $zip_file->numFiles; $index++) {
+                for ($index = 0; $index < $zip_file->numFiles; $index++) {
                     $filename = $zip_file->getNameIndex($index);
                     $ext_pos = strrpos($filename, '.');
-                    if ($ext_pos !== FALSE) {
+                    if ($ext_pos !== false) {
                         $ext = substr($filename, $ext_pos + 1);
                         if (in_array($ext, $extensions, true)) {
                             $zip_file->extractTo($folder, $filename);
@@ -354,37 +386,43 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
                 }
             }
             $zip_file->close();
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
     
     /**
      * Performs explode on given string by given delimiter and trims all array items in output array.
+     *
      * @param string $string string to split to array.
+     *
      * @return array<string> result array.
      */
     private function trim_explode(string $string): array
     {
         $array = explode(',', $string);
-        if (count($array) > 0) { foreach ($array as $key => $value) {
-            $array[$key] = trim($value);
-        }}
+        if (count($array) > 0) {
+            foreach ($array as $key => $value) {
+                $array[$key] = trim($value);
+            }
+        }
         return $array;
     }
     
     /**
      * Deletes relations (if parameters are set) or this object from database.
      * All solutions related to this task set will be deleted as well.
-     * @param DataMapper|string $object related object to delete from relation.
-     * @param string $related_field relation internal name.
+     *
+     * @param DataMapper|string $object        related object to delete from relation.
+     * @param string            $related_field relation internal name.
      */
-    public function delete($object = '', $related_field = '') {
+    public function delete($object = '', $related_field = '')
+    {
         $this_id = $this->id;
         if (empty($object) && !is_array($object) && !empty($this_id)) {
             $solutions = new Solution();
             $solutions->get_by_related('task_set', 'id', $this_id);
-            foreach($solutions as $solution) {
+            foreach ($solutions as $solution) {
                 set_time_limit(ini_get('max_execution_time'));
                 $solution->delete();
             }
@@ -412,7 +450,7 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
             $zip_archive->close();
             header('Content-Description: File Transfer');
             header('Content-Type: application/zip');
-            header('Content-Disposition: attachment; filename='.basename($filename));
+            header('Content-Disposition: attachment; filename=' . basename($filename));
             header('Content-Transfer-Encoding: binary');
             header('Expires: 0');
             header('Cache-Control: must-revalidate');
@@ -434,18 +472,19 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
     
     /**
      * Add files to open zip archive.
-     * @param ZipArchive $zip_archive open zip archive.
-     * @param Course $course course object with loaded course.
+     *
+     * @param ZipArchive  $zip_archive  open zip archive.
+     * @param Course      $course       course object with loaded course.
      * @param string|NULL $subdirectory subdirectory where to add files.
      */
-    public function add_files_to_zip_archive(ZipArchive $zip_archive, Course $course, ?string $subdirectory = NULL): void
+    public function add_files_to_zip_archive(ZipArchive $zip_archive, Course $course, ?string $subdirectory = null): void
     {
         if (!is_null($this->id)) {
             ini_set('max_execution_time', 300);
             $path_to_task_set_files = 'private/uploads/solutions/task_set_' . $this->id . '/';
             if (file_exists($path_to_task_set_files)) {
                 $groups = $course->groups->get_iterated();
-                $group_names = array(0 => 'unassigned');
+                $group_names = [0 => 'unassigned'];
                 foreach ($groups as $group) {
                     $group_names[$group->id] = normalizeForFilesystem($this->lang->text($group->name));
                 }
@@ -453,7 +492,7 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
                 $students->include_related('participant');
                 $students->where_related('participant/course', $course);
                 $students->get_iterated();
-                $student_groups = array();
+                $student_groups = [];
                 foreach ($students as $student) {
                     $student_groups[$student->id] = (int)$student->participant_group_id;
                 }
@@ -461,24 +500,24 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
                 foreach ($files as $file) {
                     if ($file !== '.' && $file !== '..' && preg_match(self::STUDENT_FILE_NAME_REGEXP, $file, $matches)) {
                         $student_id = (int)$matches['student_id'];
-                        $path = ($subdirectory !== NULL && trim($subdirectory) !== '' ? $subdirectory . '/' : '') . $group_names[$student_groups[$student_id]] . '/' . $file;
+                        $path = ($subdirectory !== null && trim($subdirectory) !== '' ? $subdirectory . '/' : '') . $group_names[$student_groups[$student_id]] . '/' . $file;
                         $zip_archive->addFile($path_to_task_set_files . $file, $path);
                     }
                 }
             }
         }
     }
-
+    
     public function get_task_set_time_class($permission_id = null): string
     {
         $task_set_type = $this->get_related_task_set_type();
-
+        
         if ($this->content_type === 'task_set' && (!isset($task_set_type->upload_solution) || !$task_set_type->upload_solution)) {
             return '';
         }
-
+        
         $permissions = $this->get_related_permissions();
-
+        
         $upload_end_time = null;
         if (($permissions !== null) && (count($permissions) > 0)) {
             if ($permission_id !== null && isset($permissions[$permission_id])) {
@@ -502,34 +541,36 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
         } else {
             $upload_end_time = $this->upload_end_time;
         }
-
+        
         $this->load->helper('task_sets');
-
+        
         return get_task_set_timed_class($upload_end_time, true, 0);
     }
-
-    private function get_related_permissions() {
+    
+    private function get_related_permissions()
+    {
         if (is_null($this->id)) {
-            return array();
+            return [];
         }
         if (!isset($this->related_permissions[$this->id])) {
             $task_set_permissions = new Task_set_permission();
             $task_set_permissions->where_related('task_set', 'id', $this->id);
             $task_set_permissions->where('enabled', 1);
             $task_set_permissions->get_iterated();
-
-            $this->related_permissions[$this->id] = array();
-
+            
+            $this->related_permissions[$this->id] = [];
+            
             foreach ($task_set_permissions as $task_set_permission) {
-                $this->related_permissions[$this->id][$task_set_permission->id] = (object) $task_set_permission->to_array();
+                $this->related_permissions[$this->id][$task_set_permission->id] = (object)$task_set_permission->to_array();
             }
         }
         return $this->related_permissions[$this->id];
     }
-
-    private function get_related_task_set_type() {
+    
+    private function get_related_task_set_type()
+    {
         if (is_null($this->id)) {
-            return (object) array();
+            return (object)[];
         }
         if (!isset($this->related_task_set_type[$this->id])) {
             $task_set_type = new Task_set_type();
@@ -541,20 +582,21 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
                 $task_set_type->limit(1);
                 $task_set_type->get();
             }
-
+            
             if ($task_set_type->exists()) {
-                $this->related_task_set_type[$this->id] = (object) $task_set_type->to_array();
-                $this->related_task_set_type[$this->id]->upload_solution = (bool) $task_set_type->upload_solution;
+                $this->related_task_set_type[$this->id] = (object)$task_set_type->to_array();
+                $this->related_task_set_type[$this->id]->upload_solution = (bool)$task_set_type->upload_solution;
             } else {
-                $this->related_task_set_type[$this->id] = (object) array();
+                $this->related_task_set_type[$this->id] = (object)[];
             }
         }
-
+        
         return $this->related_task_set_type[$this->id];
     }
-
+    
     /**
      * Returns unused file name for solution download.
+     *
      * @return string file name with path.
      */
     private function get_new_solution_zip_filename(): string
@@ -568,26 +610,26 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface {
         } while (file_exists($path . $filename));
         return $path . $filename;
     }
-
+    
     /**
      * Hide updated field so it will not be changed during update.
      */
     public function hide_updated_field(): void
     {
-        if(($key = array_search('updated', $this->fields, true)) !== false) {
+        if (($key = array_search('updated', $this->fields, true)) !== false) {
             unset($this->fields[$key]);
             self::$updated_field_key = $key;
         }
     }
-
+    
     /**
      * Show updated field so it will be changed during update.
      * Must be hidden first.
      */
     public function show_updated_field(): void
     {
-        if(($key = array_search('updated', $this->fields, true)) === false && !is_null(self::$updated_field_key)) {
-            array_splice($this->fields, self::$updated_field_key, 0, array('updated'));
+        if (($key = array_search('updated', $this->fields, true)) === false && !is_null(self::$updated_field_key)) {
+            array_splice($this->fields, self::$updated_field_key, 0, ['updated']);
         }
     }
 }

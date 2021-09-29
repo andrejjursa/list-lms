@@ -17,7 +17,7 @@
  * @property CI_Router $router
  * @property DataMapper $db
  * @property LIST_Output $output
- * @property Messages $message
+ * @property Messages $messages
  *
  * @package LIST_Core
  * @author Andrej Jursa

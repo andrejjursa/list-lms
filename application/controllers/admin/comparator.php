@@ -2,16 +2,19 @@
 
 /**
  * Comparator controller for backend.
+ *
  * @package LIST_BE_Controllers
- * @author Andrej Jursa
+ * @author  Andrej Jursa
  */
-class Comparator extends LIST_Controller {
+class Comparator extends LIST_Controller
+{
     
-    const STORED_FILTER_SESSION_NAME = 'admin_comparator_filter_data';
-    const SECONDS_TO_BE_CONSIDERED_OLD = 21600; // 6 hours
-    const COMPARATOR_WORKING_DIRECTORY = 'public/comparator/';
+    public const STORED_FILTER_SESSION_NAME = 'admin_comparator_filter_data';
+    public const SECONDS_TO_BE_CONSIDERED_OLD = 21600; // 6 hours
+    public const COMPARATOR_WORKING_DIRECTORY = 'public/comparator/';
     
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->_init_language_for_teacher();
         $this->_load_teacher_langfile();
@@ -21,7 +24,8 @@ class Comparator extends LIST_Controller {
         $this->usermanager->teacher_login_protected_redirect();
     }
     
-    public function index() {
+    public function index(): void
+    {
         $this->_select_teacher_menu_pagetag('comparator');
         
         $this->parser->add_css_file('admin_comparator.css');
@@ -38,7 +42,8 @@ class Comparator extends LIST_Controller {
         $this->parser->parse('backend/comparator/index.tpl');
     }
     
-    public function list_solutions() {
+    public function list_solutions(): void
+    {
         $task_sets_setup_data = $this->input->post('task_sets_setup');
         
         $this->store_filter($task_sets_setup_data);
@@ -50,10 +55,10 @@ class Comparator extends LIST_Controller {
         $task_set->where_related($course);
         $task_set->get_by_id(isset($task_sets_setup_data['task_set']) ? (int)$task_sets_setup_data['task_set'] : 0);
         
-        $this->parser->assign(array(
-            'course' => $course,
+        $this->parser->assign([
+            'course'   => $course,
             'task_set' => $task_set,
-        ));
+        ]);
         
         if ($course->exists() && $task_set->exists()) {
             $solutions = new Solution();
@@ -67,7 +72,8 @@ class Comparator extends LIST_Controller {
         $this->parser->parse('backend/comparator/list_solutions.tpl');
     }
     
-    public function run_comparation() {
+    public function run_comparation(): void
+    {
         $task_sets_setup_data = $this->input->post('task_sets_setup');
         $solutions_data = $this->input->post('solutions');
         $comparator_setup_data = $this->input->post('comparator_setup');
@@ -79,10 +85,10 @@ class Comparator extends LIST_Controller {
         $task_set->where_related($course);
         $task_set->get_by_id(isset($task_sets_setup_data['task_set']) ? (int)$task_sets_setup_data['task_set'] : 0);
         
-        $this->parser->assign(array(
-            'course' => $course,
+        $this->parser->assign([
+            'course'   => $course,
             'task_set' => $task_set,
-        ));
+        ]);
         
         if ($course->exists() && $task_set->exists()) {
             $this->load->library('form_validation');
@@ -109,43 +115,43 @@ class Comparator extends LIST_Controller {
                 $path_source = $path . '/source';
                 $path_output = $path . '/output';
                 
-                @mkdir($path_source, DIR_WRITE_MODE, TRUE);
-                @mkdir($path_output, DIR_WRITE_MODE, TRUE);
+                @mkdir($path_source, DIR_WRITE_MODE, true);
+                @mkdir($path_output, DIR_WRITE_MODE, true);
                 
-                $all_extracted = TRUE;
+                $all_extracted = true;
                 
                 foreach ($solutions_data as $id => $config) {
-                    if (isset($config['selected']) && $config['selected'] == 1) {
+                    if (isset($config['selected']) && (int)$config['selected'] === 1) {
                         set_time_limit(120);
-                        $version = isset($config['version']) ? $config['version'] : 0;
-                        $student = isset($config['student']) ? $config['student'] : 0;
+                        $version = $config['version'] ?? 0;
+                        $student = $config['student'] ?? 0;
                         $file = $task_set->get_student_files($student, $version);
-                        if (count($file) == 1) {
+                        if (count($file) === 1) {
                             $file = $file[$version];
-                            $subdir = '/' . normalize($file['file_name']) . '_sid-' . $file['student_id'] . '_ver-' . $file['version'];
-                            $extract_path = $path_source . $subdir;
-                            @mkdir($extract_path, DIR_WRITE_MODE, TRUE);
-                            $status = $task_set->extract_student_zip_to_folder($file['file'], $extract_path, array('java'));
+                            $subDir = '/' . normalize($file['file_name']) . '_sid-' . $file['student_id'] . '_ver-' . $file['version'];
+                            $extract_path = $path_source . $subDir;
+                            @mkdir($extract_path, DIR_WRITE_MODE, true);
+                            $status = $task_set->extract_student_zip_to_folder($file['file'], $extract_path, ['java']);
                             $all_extracted = $all_extracted && $status;
                         }
                     }
                 }
                 
                 if (!$all_extracted) {
-                    unlink_recursive($path, TRUE);
+                    unlink_recursive($path, true);
                 }
                 
                 $this->parser->assign('all_extracted', $all_extracted);
                 $this->parser->assign('path', $path);
                 
-                $this->parser->assign('comparator_config', array(
-                    't' => $comparator_setup_data['threshold'],
-                    'm' => $comparator_setup_data['min_tree_size'],
-                    'cut' => $comparator_setup_data['max_cutted_tree_size'],
-                    'bf' => $comparator_setup_data['branching_factor'],
-                    'mp' => $comparator_setup_data['min_similarity'],
+                $this->parser->assign('comparator_config', [
+                    't'       => $comparator_setup_data['threshold'],
+                    'm'       => $comparator_setup_data['min_tree_size'],
+                    'cut'     => $comparator_setup_data['max_cutted_tree_size'],
+                    'bf'      => $comparator_setup_data['branching_factor'],
+                    'mp'      => $comparator_setup_data['min_similarity'],
                     'timeout' => $comparator_setup_data['timeout'] * 60000,
-                ));
+                ]);
                 
                 $this->parser->parse('backend/comparator/run_comparation.tpl');
             } else {
@@ -156,7 +162,8 @@ class Comparator extends LIST_Controller {
         }
     }
     
-    public function execute() {
+    public function execute(): void
+    {
         set_time_limit(3600);
         $config = $this->input->post('config');
         $path = $this->input->post('path');
@@ -187,14 +194,17 @@ class Comparator extends LIST_Controller {
         echo '<p><a href="' . base_url($path . '/output/main.html') . '" class="button" target="_blank">' . $this->lang->line('admin_comparator_execute_button_open_report') . '</a></p>';
     }
     
-    public function _selected_solutions($solutions) {
-        if (!is_array($solutions) || count($solutions) == 0) { return FALSE; }
+    public function _selected_solutions($solutions): bool
+    {
+        if (!is_array($solutions) || count($solutions) === 0) {
+            return false;
+        }
         
-        $output = FALSE;
+        $output = false;
         
         foreach ($solutions as $id => $config) {
-            if (isset($config['selected']) && $config['selected'] == 1) {
-                $output = TRUE;
+            if (isset($config['selected']) && (int)$config['selected'] === 1) {
+                $output = true;
                 break;
             }
         }
@@ -202,7 +212,8 @@ class Comparator extends LIST_Controller {
         return $output;
     }
     
-    private function clear_old_reports() {
+    private function clear_old_reports(): void
+    {
         $path = self::COMPARATOR_WORKING_DIRECTORY;
         $path = ltrim($path, '\\/') . '/';
         
@@ -215,14 +226,15 @@ class Comparator extends LIST_Controller {
                 if (is_dir($path . $directory) && $directory != '.' && $directory != '..') {
                     $last_mod_time = filemtime($path . $directory);
                     if ($current_time - $last_mod_time >= self::SECONDS_TO_BE_CONSIDERED_OLD) {
-                        unlink_recursive($path . $directory, TRUE);
+                        unlink_recursive($path . $directory, true);
                     }
                 }
             }
         }
     }
     
-    private function get_random_hash_folder($course, $task_set) {
+    private function get_random_hash_folder($course, $task_set): string
+    {
         $path = self::COMPARATOR_WORKING_DIRECTORY;
         $path = ltrim($path, '\\/') . '/';
         
@@ -233,28 +245,30 @@ class Comparator extends LIST_Controller {
             $folder_name = $course . '_' . $task_set . '_' . $hash;
         } while (file_exists($path . $folder_name));
         
-        @mkdir($path . $folder_name, DIR_WRITE_MODE, TRUE);
+        @mkdir($path . $folder_name, DIR_WRITE_MODE, true);
         
         return $path . $folder_name;
     }
-
-    private function inject_courses() {
+    
+    private function inject_courses(): void
+    {
         $courses = new Course();
         $courses->include_related('period', 'name');
         $courses->order_by_related_with_constant('period', 'sorting', 'asc');
         $courses->order_by_with_constant('name');
         $courses->get_iterated();
         
-        $data = array();
+        $data = [];
         
         foreach ($courses as $course) {
             $data[$this->lang->text($course->period_name)][$course->id] = $this->lang->text($course->name);
-        } 
+        }
         
         $this->parser->assign('courses', $data);
     }
     
-    private function inject_all_task_sets() {
+    private function inject_all_task_sets(): void
+    {
         $task_sets = new Task_set();
         $task_set_permissions = $task_sets->task_set_permission;
         
@@ -268,11 +282,11 @@ class Comparator extends LIST_Controller {
         $task_sets->order_by_with_overlay('name');
         $task_sets->get_iterated();
         
-        $data = array();
+        $data = [];
         
         $this->lang->init_all_overlays('task_sets');
         
-        foreach($task_sets as $task_set) {
+        foreach ($task_sets as $task_set) {
             $text_groups = '';
             if ((int)$task_set->task_set_permissions_count > 0) {
                 $task_set_permissions = new Task_set_permission();
@@ -281,26 +295,27 @@ class Comparator extends LIST_Controller {
                 $task_set_permissions->where_related_task_set($task_set);
                 $task_set_permissions->order_by_related_with_constant('group', 'name', 'asc');
                 $task_set_permissions->get_iterated();
-                $groups = array();
+                $groups = [];
                 foreach ($task_set_permissions as $task_set_permission) {
                     $groups[] = $this->lang->text($task_set_permission->group_name);
                 }
                 if (count($groups) > 0) {
                     $text_groups = ' ... (' . implode(', ', $groups) . ')';
                 }
-            } elseif (!is_null($task_set->group_id) && (int)$task_set->group_id > 0) {
+            } else if (!is_null($task_set->group_id) && (int)$task_set->group_id > 0) {
                 $text_groups = ' ... (' . $this->lang->text($task_set->group_name) . ')';
             }
-            $data[$task_set->course_id][] = array(
+            $data[$task_set->course_id][] = [
                 'value' => $task_set->id,
-                'text' => $this->lang->get_overlay_with_default('task_sets', $task_set->id, 'name', $task_set->name) . $text_groups
-            );
+                'text'  => $this->lang->get_overlay_with_default('task_sets', $task_set->id, 'name', $task_set->name) . $text_groups,
+            ];
         }
         
         $this->parser->assign('task_sets', $data);
     }
     
-    private function store_filter($filter) {
+    private function store_filter($filter): void
+    {
         if (is_array($filter)) {
             $this->load->library('filter');
             $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
@@ -310,7 +325,8 @@ class Comparator extends LIST_Controller {
         }
     }
     
-    private function inject_stored_filter() {
+    private function inject_stored_filter(): void
+    {
         $this->load->library('filter');
         $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
         $this->parser->assign('filter', $filter);
