@@ -5,35 +5,55 @@ use Application\Interfaces\DataMapperExtensionsInterface;
 /**
  * Task_set model.
  *
- * @property int         $id
- * @property string      $updated                    date time format YYYY-MM-DD HH:MM:SS
- * @property string      $created                    date time format YYYY-MM-DD HH:MM:SS
- * @property string      $content_type               one of: `task_set`, `project`
- * @property string      $name
- * @property int|null    $course_id                  entity id of model {@see Course}
- * @property int|null    $task_set_type_id           entity id of model {@see Task_set_type}
- * @property bool        $published
- * @property string|null $publish_start_time         date time format YYYY-MM-DD HH:MM:SS
- * @property string|null $upload_end_time            date time format YYYY-MM-DD HH:MM:SS
- * @property int|null    $group_id                   entity id of model {@see Group}
- * @property int|null    $room_id                    entity id of model {@see Room}
- * @property string|null $instructions
- * @property double|null $points_override
- * @property bool        $comments_enabled
- * @property bool        $comments_moderated
- * @property string|null $allowed_file_types         comma separated list
- * @property string|null $allowed_test_types         comma separated list
- * @property string|null $internal_comment
- * @property bool        $enable_tests_scoring
- * @property int         $test_min_needed
- * @property int         $test_max_allowed
- * @property string|null $deadline_notification_emails
- * @property bool        $deadline_notified
- * @property int         $deadline_notification_emails_handler
- * @property string|null $project_selection_deadline date time format YYYY-MM-DD HH:MM:SS
- * @property int         $test_priority
- * @property int         $sorting
+ * @property int                 $id
+ * @property string              $updated                    date time format YYYY-MM-DD HH:MM:SS
+ * @property string              $created                    date time format YYYY-MM-DD HH:MM:SS
+ * @property string              $content_type               one of: `task_set`, `project`
+ * @property string              $name
+ * @property int|null            $course_id                  entity id of model {@see Course}
+ * @property int|null            $task_set_type_id           entity id of model {@see Task_set_type}
+ * @property bool                $published
+ * @property string|null         $publish_start_time         date time format YYYY-MM-DD HH:MM:SS
+ * @property string|null         $upload_end_time            date time format YYYY-MM-DD HH:MM:SS
+ * @property int|null            $group_id                   entity id of model {@see Group}
+ * @property int|null            $room_id                    entity id of model {@see Room}
+ * @property string|null         $instructions
+ * @property double|null         $points_override
+ * @property bool                $comments_enabled
+ * @property bool                $comments_moderated
+ * @property string|null         $allowed_file_types         comma separated list
+ * @property string|null         $allowed_test_types         comma separated list
+ * @property string|null         $internal_comment
+ * @property bool                $enable_tests_scoring
+ * @property int                 $test_min_needed
+ * @property int                 $test_max_allowed
+ * @property string|null         $deadline_notification_emails
+ * @property bool                $deadline_notified
+ * @property int                 $deadline_notification_emails_handler
+ * @property string|null         $project_selection_deadline date time format YYYY-MM-DD HH:MM:SS
+ * @property int                 $test_priority
+ * @property int                 $sorting
+ * @property Task                $task
+ * @property Solution            $solution
+ * @property Comment             $comment
+ * @property Task_set_permission $task_set_permission
+ * @property Project_selection   $project_selection
+ * @property Student             $comment_subscriber_student
+ * @property Teacher             $comment_subscriber_teacher
+ * @property Test_queue          $test_queue
+ * @property Course              $course
+ * @property Group               $group
+ * @property Room                $room
+ * @property Task_set_type       $task_set_type
  *
+ * @method DataMapper where_related_task(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_solution(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_comment(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_task_set_permission(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_project_selection(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_comment_subscriber_student(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_comment_subscriber_teacher(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_test_queue(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_course(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_task_set_type(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_group(mixed $related, string $field = null, string $value = null)

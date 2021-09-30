@@ -18,6 +18,7 @@
  * @property DataMapper $db
  * @property LIST_Output $output
  * @property Messages $messages
+ * @property Filter $filter
  *
  * @package LIST_Core
  * @author Andrej Jursa
