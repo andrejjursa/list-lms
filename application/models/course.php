@@ -5,32 +5,32 @@ use Application\Interfaces\DataMapperExtensionsInterface;
 /**
  * Course model.
  *
- * @property int         $id
- * @property string      $updated                date time format YYYY-MM-DD HH:MM:SS
- * @property string      $created                date time format YYYY-MM-DD HH:MM:SS
- * @property string      $name
- * @property int|null    $period_id              entity id of model {@see Period}
- * @property string      $description
- * @property int         $capacity
- * @property string|null $groups_change_deadline date time format YYYY-MM-DD HH:MM:SS
- * @property double      $default_points_to_remove
- * @property string|null $allow_subscription_to  date time format YYYY-MM-DD HH:MM:SS
- * @property string      $test_scoring_deadline  date time format YYYY-MM-DD HH:MM:SS
- * @property bool        $hide_in_lists
- * @property bool        $auto_accept_students
- * @property string|null $syllabus
- * @property string|null $grading
- * @property string|null $instructions
- * @property string|null $other_texts
- * @property bool        $disable_public_groups_page
- * @property string|null $additional_menu_links
- * @property Group $group
- * @property Task_set_type $task_set_type
- * @property Task_set $task_set
- * @property Participant $participant
- * @property Student $active_for_student
- * @property Teacher $prefered_for_teacher
- * @property Course_content $course_content
+ * @property int                  $id
+ * @property string               $updated                date time format YYYY-MM-DD HH:MM:SS
+ * @property string               $created                date time format YYYY-MM-DD HH:MM:SS
+ * @property string               $name
+ * @property int|null             $period_id              entity id of model {@see Period}
+ * @property string               $description
+ * @property int                  $capacity
+ * @property string|null          $groups_change_deadline date time format YYYY-MM-DD HH:MM:SS
+ * @property double               $default_points_to_remove
+ * @property string|null          $allow_subscription_to  date time format YYYY-MM-DD HH:MM:SS
+ * @property string               $test_scoring_deadline  date time format YYYY-MM-DD HH:MM:SS
+ * @property bool                 $hide_in_lists
+ * @property bool                 $auto_accept_students
+ * @property string|null          $syllabus
+ * @property string|null          $grading
+ * @property string|null          $instructions
+ * @property string|null          $other_texts
+ * @property bool                 $disable_public_groups_page
+ * @property string|null          $additional_menu_links
+ * @property Group                $group
+ * @property Task_set_type        $task_set_type
+ * @property Task_set             $task_set
+ * @property Participant          $participant
+ * @property Student              $active_for_student
+ * @property Teacher              $prefered_for_teacher
+ * @property Course_content       $course_content
  * @property Course_content_group $course_content_group
  *
  * @method DataMapper where_related_group(mixed $related, string $field = null, string $value = null)
