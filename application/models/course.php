@@ -97,7 +97,7 @@ class Course extends DataMapper implements DataMapperExtensionsInterface
     }
     
     /**
-     * Tests if this course have allowed subscription.
+     * Tests if this course has allowed subscription.
      *
      * @return boolean TRUE when subscription is allowed for this (existing) course, FALSE otherwise.
      */
@@ -132,7 +132,7 @@ class Course extends DataMapper implements DataMapperExtensionsInterface
                 $zip_archive->addFromString('readme.txt', $readme);
                 foreach ($task_sets as $task_set) {
                     $overlay_name = $this->lang->get_overlay('task_sets', $task_set->id, 'name');
-                    $task_set->add_files_to_zip_archive($zip_archive, $this, normalizeForFilesystem(trim($overlay_name) == '' ? $task_set->name : $overlay_name) . '_(' . $task_set->id . ')');
+                    $task_set->add_files_to_zip_archive($zip_archive, $this, normalizeForFilesystem(trim($overlay_name) === '' ? $task_set->name : $overlay_name) . '_(' . $task_set->id . ')');
                 }
                 $zip_archive->close();
                 header('Content-Description: File Transfer');

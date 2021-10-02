@@ -14,6 +14,17 @@ use Application\Interfaces\DataMapperExtensionsInterface;
  * @property int|null    $student_id  entity id of model {@see Student}
  * @property int|null    $teacher_id  entity id of model {@see Teacher}
  * @property bool        $approved
+ * @property Task_set    $task_set
+ * @property Comment     $reply_at
+ * @property Student     $student
+ * @property Teacher     $teacher
+ * @property Comment     $comment
+ *
+ * @method DataMapper where_related_task_set(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_reply_at(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_student(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_teacher(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_comment(mixed $related, string $field = null, string $value = null)
  *
  * @package LIST_DM_Models
  * @author  Andrej Jursa
@@ -55,13 +66,13 @@ class Comment extends DataMapper implements DataMapperExtensionsInterface
      *
      * @return array<Comment> structured array of comments (parent => key => Comment).
      */
-    public static function get_comments_for_task_set($task_set)
+    public static function get_comments_for_task_set($task_set): array
     {
         if (!($task_set instanceof DataMapper) && !is_numeric($task_set)) {
             return [];
         }
         if (!($task_set instanceof Task_set)) {
-            $task_set = new Task_set(is_numeric($task_set) ? intval($task_set) : $task_set->id);
+            $task_set = new Task_set(is_numeric($task_set) ? (int)$task_set : $task_set->id);
         }
         if ($task_set->exists()) {
             $comments = $task_set->comment;
@@ -74,7 +85,7 @@ class Comment extends DataMapper implements DataMapperExtensionsInterface
             
             if ($comments->exists()) {
                 foreach ($comments->all as $comment) {
-                    $output[intval($comment->reply_at_id)][] = $comment;
+                    $output[(int)$comment->reply_at_id][] = $comment;
                 }
             }
             

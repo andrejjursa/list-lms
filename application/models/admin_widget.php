@@ -13,6 +13,7 @@ use Application\Interfaces\DataMapperExtensionsInterface;
  * @property string|null $widget_config
  * @property int         $position
  * @property int         $column
+ * @property Teacher     $teacher
  *
  * @method DataMapper where_related_teacher(mixed $related, string $field = null, string $value = null)
  *
