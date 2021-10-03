@@ -17,6 +17,13 @@ use Application\Interfaces\DataMapperExtensionsInterface;
  * @property string|null $deadline_notification_emails
  * @property bool        $deadline_notified
  * @property int         $deadline_notification_emails_handler
+ * @property Task_set    $task_set
+ * @property Group       $group
+ * @property Room        $room
+ *
+ * @method DataMapper where_related_task_set(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_group(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_room(mixed $related, string $field = null, string $value = null)
  *
  * @package LIST_DM_Models
  * @author  Andrej Jursa
