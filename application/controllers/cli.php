@@ -3,36 +3,43 @@
 /**
  * Controller for CLI requests.
  *
- * @property LIST_Loader $load
- * @property LIST_Output $output
- * @property CI_Migration $migration
- * @property cli_progress_bar $cli_progress_bar
- * @property LIST_Lang $lang
+ * @property LIST_Loader          $load
+ * @property LIST_Output          $output
+ * @property CI_Migration         $migration
+ * @property cli_progress_bar     $cli_progress_bar
+ * @property LIST_Lang            $lang
  * @property LIST_Form_validation $form_validation
- * @property CI_DB $db
- * @property CI_Config $config
- * @property Configurator $configurator
- * @property Translations $translations
- * @property LIST_Email $email
+ * @property CI_DB                $db
+ * @property CI_Config            $config
+ * @property Configurator         $configurator
+ * @property Translations         $translations
+ * @property LIST_Email           $email
+ * @property CI_Router            $router
+ * @property CI_Input             $input
+ * @property LIST_Parser          $parser
  *
  * @package LIST_CLI_Controllers
- * @author Andrej Jursa
+ * @author  Andrej Jursa
  */
-class Cli extends CI_Controller {
+class Cli extends CI_Controller
+{
     
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
-        if (!$this->input->is_cli_request() && $this->router->method != 'send_deadline_notifications') {
+        if ($this->router->method !== 'send_deadline_notifications' && !$this->input->is_cli_request()) {
             show_error('This controller can be called only from CLI!');
             die();
         }
     }
     
-    public function __destruct() {
+    public function __destruct()
+    {
         echo "\n";
     }
-
-    public function index() {
+    
+    public function index(): void
+    {
         echo 'This is CLI controller for LIST' . "\n\n";
         
         echo 'Available commands:' . "\n";
@@ -47,10 +54,11 @@ class Cli extends CI_Controller {
         echo '  garbage_collector' . "\n";
         echo '  merge_configuration' . "\n";
         echo '  upgrade_java_tests' . "\n";
-	echo '  clear_cache';
+        echo '  clear_cache';
     }
-
-    public function upgrade_java_tests() {
+    
+    public function upgrade_java_tests(): void
+    {
         $this->load->database();
         $tests = new Test();
         $tests->include_related('task');
@@ -59,9 +67,9 @@ class Cli extends CI_Controller {
         $tests->order_by_related('task', 'name', 'asc');
         $tests->order_by('name', 'asc');
         $tests->get_iterated();
-
-        $unsuccessful_files = array();
-
+        
+        $unsuccessful_files = [];
+        
         if ($tests->exists()) {
             echo 'Found ' . $tests->result_count() . ' java unit tests to check, starting process now.' . PHP_EOL;
             $this->load->library('cli_progress_bar');
@@ -133,7 +141,7 @@ class Cli extends CI_Controller {
         } else {
             echo 'No java unit tests found.';
         }
-
+        
         if (count($unsuccessful_files)) {
             echo PHP_EOL . 'Some files can\'t be processed:' . PHP_EOL;
             foreach ($unsuccessful_files as $file) {
@@ -141,8 +149,9 @@ class Cli extends CI_Controller {
             }
         }
     }
-
-    private function upgrade_single_java_unit_test($temp_directory, $filename) {
+    
+    private function upgrade_single_java_unit_test($temp_directory, $filename): bool
+    {
         $file = $temp_directory . '/' . $filename;
         if (file_exists($file) && is_file($file)) {
             $lines = explode("\n", file_get_contents($file));
@@ -150,43 +159,43 @@ class Cli extends CI_Controller {
             $classLines = $this->find_text_in_lines('class', $lines);
             $beforeClassLines = $this->find_text_in_lines('@BeforeClass', $lines);
             $LISTTestsLines = $this->find_text_in_lines('LISTTests', $lines);
-
+            
             if (count(($LISTTestsLines['lines']))) {
                 $scoring_var_name = 'scoring';
                 $test_class_name = $this->get_test_class_name($classLines['texts'], $test_class_line);
-                foreach($LISTTestsLines['lines'] as $line_number) {
+                foreach ($LISTTestsLines['lines'] as $line_number) {
                     $line = $lines[$line_number];
-                    $line = preg_replace('/LISTTests[ ]*\.[ ]*addTaskEvaluation[ ]*\(/', $test_class_name.'.'.$scoring_var_name.'.updateScore("lang:common_list_test_scoring_name",', $line);
-                    $line = preg_replace('/LISTTests[ ]*\.[ ]*setTaskEvaluation[ ]*\(/', $test_class_name.'.'.$scoring_var_name.'.setScore("lang:common_list_test_scoring_name",', $line);
+                    $line = preg_replace('/LISTTests[ ]*\.[ ]*addTaskEvaluation[ ]*\(/', $test_class_name . '.' . $scoring_var_name . '.updateScore("lang:common_list_test_scoring_name",', $line);
+                    $line = preg_replace('/LISTTests[ ]*\.[ ]*setTaskEvaluation[ ]*\(/', $test_class_name . '.' . $scoring_var_name . '.setScore("lang:common_list_test_scoring_name",', $line);
                     $lines[$line_number] = $line;
                 }
-
-                $add_BeforeClass_import = TRUE;
+                
+                $add_BeforeClass_import = true;
                 if (count($importLines)) {
                     foreach ($importLines['lines'] as $line_number) {
                         $line = $lines[$line_number];
                         if (preg_match('/import[ ]+org\.junit\.\*/', $line) || preg_match('/import[ ]+org\.junit\.BeforeClass/', $line)) {
-                            $add_BeforeClass_import = FALSE;
+                            $add_BeforeClass_import = false;
                             break;
                         }
                     }
                 }
-
-                $before_class_body  = "\t\t" . $scoring_var_name . ' = new LISTTestScoring();' . "\n";
+                
+                $before_class_body = "\t\t" . $scoring_var_name . ' = new LISTTestScoring();' . "\n";
                 $before_class_body .= "\t\t" . $scoring_var_name . '.setScore("lang:common_list_test_scoring_name", 0, 100);' . "\n";
-
-                $add_custom_BeforeClass_procedure = TRUE;
-                if (count($beforeClassLines['lines']) == 1) {
-                    $add_custom_BeforeClass_procedure = FALSE;
+                
+                $add_custom_BeforeClass_procedure = true;
+                if (count($beforeClassLines['lines']) === 1) {
+                    $add_custom_BeforeClass_procedure = false;
                 }
-
+                
                 if ($test_class_line) {
-			$plus_line = 1;
-			if (substr(trim($lines[$test_class_line]), -1) == '{') {
-				$plus_line = 0;
-			}
+                    $plus_line = 1;
+                    if (substr(trim($lines[$test_class_line]), -1) === '{') {
+                        $plus_line = 0;
+                    }
                     $line = $lines[$test_class_line + $plus_line];
-
+                    
                     $line .= "\n\t" . 'private static LISTTestScoring ' . $scoring_var_name . ' = null;' . "\n";
                     if ($add_custom_BeforeClass_procedure) {
                         $line .= "\n\t" . '@BeforeClass' . "\n\t" . 'public static void initScoring() {' . "\n";
@@ -194,17 +203,17 @@ class Cli extends CI_Controller {
                         $line .= "\t" . '}' . "\n";
                     }
                     $lines[$test_class_line + $plus_line] = $line;
-
+                    
                 }
-
-		$imports = 'import LISTTestScoring.LISTTestScoring;' . "\n";
+                
+                $imports = 'import LISTTestScoring.LISTTestScoring;' . "\n";
                 if ($add_BeforeClass_import) {
                     $imports .= 'import org.junit.BeforeClass;' . "\n";
                 }
-
+                
                 $lines[0] = $imports . "\n" . $lines[0];
-
-
+                
+                
                 if (!$add_custom_BeforeClass_procedure) {
                     $ln = $beforeClassLines['lines'][0];
                     $line = $lines[$ln];
@@ -214,20 +223,20 @@ class Cli extends CI_Controller {
                             $line = $lines[$ln];
                         } else {
                             $this->cli_progress_bar->print_text('  Can\'t find body of existing @BeforeClass method.');
-                            return FALSE;
+                            return false;
                         }
                     }
                     $line_after = $lines[$ln + 1];
-                    if (trim($line_after) == '{') {
+                    if (trim($line_after) === '{') {
                         $line_after .= "\n" . $before_class_body;
-                    } elseif (substr(trim($line_after), 0, 1) == '{') {
+                    } else if (strpos(trim($line_after), '{') === 0) {
                         $line_after = '{' . "\n" . $before_class_body . mb_substr(trim($line_after), 1);
                     } else {
                         $line_after = $before_class_body . $line_after;
                     }
                     $lines[$ln + 1] = $line_after;
                 }
-
+                
                 $new_file = '';
                 foreach ($lines as $line) {
                     $new_file .= $line . "\n";
@@ -238,34 +247,36 @@ class Cli extends CI_Controller {
             }
         } else {
             $this->cli_progress_bar->print_text('  Can\'t find java file "' . $filename . '".');
-            return FALSE;
+            return false;
         }
-        return TRUE;
+        return true;
     }
-
-    private function find_text_in_lines($text, &$lines) {
-        $output = array('lines' => array(), 'texts' => array());
-        for($i = 0; $i < count($lines); $i++) {
-            if (strpos($lines[$i], $text) !== FALSE) {
+    
+    private function find_text_in_lines($text, &$lines): array
+    {
+        $output = ['lines' => [], 'texts' => []];
+        for ($i = 0, $iMax = count($lines); $i < $iMax; $i++) {
+            if (strpos($lines[$i], $text) !== false) {
                 $output['lines'][] = $i;
                 $output['texts'][$i] = $lines[$i];
             }
         }
         return $output;
     }
-
-    private function get_test_class_name(&$matches, &$line_number) {
-        $line_number = NULL;
+    
+    private function get_test_class_name(&$matches, &$line_number)
+    {
+        $line_number = null;
         if (count($matches)) {
             foreach ($matches as $key => $line) {
                 $pos_public = strpos($line, 'public');
                 $pos_class = strpos($line, 'class');
-                if ($pos_public !== FALSE && $pos_class !== FALSE && $pos_public < $pos_class) {
+                if ($pos_public !== false && $pos_class !== false && $pos_public < $pos_class) {
                     $line_remaining = trim(substr($line, $pos_class + 5));
                     $words = explode(' ', $line_remaining);
                     if (count($words)) {
                         foreach ($words as $word) {
-                            if (substr($word, 0, 4) == 'Test') {
+                            if (strpos($word, 'Test') === 0) {
                                 $line_number = (int)$key;
                                 return $word;
                             }
@@ -274,22 +285,24 @@ class Cli extends CI_Controller {
                 }
             }
         }
-        return NULL;
+        return null;
     }
-
-    public function clear_cache() {
+    
+    public function clear_cache(): void
+    {
         $this->load->database();
         echo 'Clearing cache ...' . "\n";
         $this->parser->clearAllCache();
         echo 'Clearing compiled versions of templates ...' . "\n";
         $this->parser->clearCompiledTemplate();
     }
-
+    
     /**
      * Merges configuration of environment and base config files.
      */
-    public function merge_configuration() {
-        $to_merge = array('config' => '$config', 'moss' => '$config');
+    public function merge_configuration(): void
+    {
+        $to_merge = ['config' => '$config', 'moss' => '$config'];
         $this->load->library('configurator');
         $this->load->library('cli_progress_bar');
         $this->cli_progress_bar->init(count($to_merge));
@@ -301,8 +314,9 @@ class Cli extends CI_Controller {
         }
         $this->cli_progress_bar->finish();
     }
-
-    public function test_bar() {
+    
+    public function test_bar(): void
+    {
         $this->load->library('cli_progress_bar');
         $this->cli_progress_bar->init(150);
         $this->cli_progress_bar->tick();
@@ -316,12 +330,14 @@ class Cli extends CI_Controller {
         }
         $this->cli_progress_bar->finish();
     }
-
+    
     /**
      * Performs an migration update from console.
+     *
      * @param integer|null $migration migration number or null to update to the latest migration.
      */
-    public function update_database($migration = null) {
+    public function update_database($migration = null): void
+    {
         $this->output->set_content_type('text/plain');
         $this->load->database();
         $this->load->library('migration');
@@ -336,13 +352,13 @@ class Cli extends CI_Controller {
                 $this->_recreate_production_cache();
                 echo 'Cache refreshed, ' . $cleared . ' old cache files deleted.';
             }
-        } elseif (is_numeric($migration) && intval($migration) > 0) {
+        } else if (is_numeric($migration) && (int)$migration > 0) {
             $answer = $this->_get_cli_user_input('Do you realy want to update database to version ' . $migration . '? (yes)');
             if ($answer !== 'yes') {
                 echo 'Database structure update canceled.';
                 return;
             }
-            $this->migration->version(intval($migration));
+            $this->migration->version((int)$migration);
             if ($this->migration->error_string()) {
                 echo 'Error occured:' . "\n\n";
                 echo $this->migration->error_string();
@@ -359,7 +375,8 @@ class Cli extends CI_Controller {
     /**
      * Creates new teacher from console.
      */
-    public function new_teacher() {
+    public function new_teacher(): void
+    {
         $this->load->database();
         $languages = $this->lang->get_list_of_languages();
         
@@ -369,25 +386,25 @@ class Cli extends CI_Controller {
         $password = $this->_get_cli_user_input('Teacher password');
         if (count($languages)) {
             echo 'Available languages:';
-            foreach($languages as $language_key => $language_value) {
+            foreach ($languages as $language_key => $language_value) {
                 echo "\n" . '  (' . $language_key . ') for ' . normalize($language_value) . '';
             }
         }
         $language = $this->_get_cli_user_input("\n" . 'Select teacher language');
         
         $this->load->library('form_validation');
-            
+        
         if (!$this->form_validation->required($name) || !$this->form_validation->required($email) || !$this->form_validation->required($password) || !$this->form_validation->required($language)) {
             echo 'ERROR: Some parameter(s) is(are) missing.' . "\n";
-        } elseif (!$this->form_validation->valid_email($email)) {
+        } else if (!$this->form_validation->valid_email($email)) {
             echo 'ERROR: E-mail is invalid.' . "\n";
-        } elseif (!$this->form_validation->is_unique($email, 'teachers.email')) {
+        } else if (!$this->form_validation->is_unique($email, 'teachers.email')) {
             echo 'ERROR: E-mail must be unique.' . "\n";
-        } elseif (!$this->form_validation->min_length($password, 6)) {
+        } else if (!$this->form_validation->min_length($password, 6)) {
             echo 'ERROR: Password must have at least 6 characters.' . "\n";
-        } elseif (!$this->form_validation->max_length($password, 20)) {
+        } else if (!$this->form_validation->max_length($password, 20)) {
             echo 'ERROR: Password must not be longer than 20 characters.' . "\n";
-        } elseif (!array_key_exists($language, $languages)) {
+        } else if (!array_key_exists($language, $languages)) {
             echo 'ERROR: Desired language not found.' . "\n";
         } else {
             $teacher = new Teacher();
@@ -395,12 +412,12 @@ class Cli extends CI_Controller {
             $teacher->email = $email;
             $teacher->password = sha1($password);
             $teacher->language = $language;
-
+            
             $this->db->trans_begin();
             $teacher->save();
-
+            
             $teacher->get_by_email($email);
-            if ($teacher->result_count() == 1) {
+            if ($teacher->result_count() === 1) {
                 $this->db->trans_commit();
                 echo "\n" . 'Teacher account created!';
             } else {
@@ -412,12 +429,14 @@ class Cli extends CI_Controller {
     
     /**
      * Import LaMSfET data into this LIST installation.
+     *
      * @return void
      */
-    public function lamsfet_import() {
+    public function lamsfet_import(): void
+    {
         $this->config->load('lockdown');
         $this->load->library('configurator');
-        $lamsfet_db = $this->load->database('lamsfet', TRUE, TRUE);
+        $lamsfet_db = $this->load->database('lamsfet', true, true);
         $this->load->database();
         $this->config->load('lamsfet');
         $lamsfet_url = $this->config->item('lamsfet_url');
@@ -425,7 +444,7 @@ class Cli extends CI_Controller {
         echo 'This script will import some database data and files from LaMSfET at ' . $lamsfet_url . ' (from application/config/lamsfet.php)' . "\n\n";
         echo 'WARNING: THIS SCRIPT WILL TRUNCATE CONTENT TABLES OF LIST AND DELETE ALL TASK FILES, TASK UNIT TEST FILES AND SOLUTION FILES FROM HARD DRIVE!' . "\n\n";
         $answer = $this->_get_cli_user_input('Do you want to execute this import script? (yes)');
-        if ($answer != 'yes') { 
+        if ($answer !== 'yes') {
             echo 'Import canceled.' . "\n";
             return;
         }
@@ -434,7 +453,7 @@ class Cli extends CI_Controller {
         echo 'Starting LaMSfET data migration to LIST ...' . "\n\n";
         
         echo 'Locking down LIST ...' . "\n\n";
-        $this->configurator->set_config_array('lockdown', array('system_lockdown' => TRUE));
+        $this->configurator->set_config_array('lockdown', ['system_lockdown' => true]);
         
         $lamsfet_db->reconnect();
         
@@ -477,60 +496,65 @@ class Cli extends CI_Controller {
         echo "\n\n ... DONE!\n\n";
         
         echo 'Unlocking LIST ...' . "\n";
-        $this->configurator->set_config_array('lockdown', array('system_lockdown' => FALSE));
+        $this->configurator->set_config_array('lockdown', ['system_lockdown' => false]);
     }
     
     /**
      * Release system lockdown.
+     *
      * @return void
      */
-    public function clear_lockdown() {
+    public function clear_lockdown(): void
+    {
         $this->config->load('lockdown');
         $this->load->library('configurator');
         echo 'Releasing system lockdown...' . "\n";
-        $this->configurator->set_config_array('lockdown', array('system_lockdown' => FALSE));
+        $this->configurator->set_config_array('lockdown', ['system_lockdown' => false]);
     }
     
     /**
      * Apply new lockdown.
      */
-    public function apply_lockdown() {
+    public function apply_lockdown(): void
+    {
         $this->config->load('lockdown');
         $this->load->library('configurator');
-        $this->configurator->set_config_array('lockdown', array('system_lockdown' => TRUE));
+        $this->configurator->set_config_array('lockdown', ['system_lockdown' => true]);
         echo 'System locked...' . "\n";
     }
     
     /**
      * Generate new encryption key.
      */
-    public function generate_encryption_key() {
+    public function generate_encryption_key(): void
+    {
         $encryption_key_data = '';
         switch (rand(1, 5)) {
             case 1:
                 $encryption_key_data = get_current_user() . rand(1, 1000000) . (time() + rand(-3600, 3600)) . ENVIRONMENT . get_include_path() . memory_get_peak_usage() . memory_get_usage();
-            break;
+                break;
             case 2:
                 $encryption_key_data = (time() + rand(-3600, 3600)) . get_current_user() . rand(1, 2000000) . memory_get_peak_usage() . get_include_path() . memory_get_usage() . ENVIRONMENT;
-            break;
+                break;
             case 3:
                 $encryption_key_data = (time() + rand(-3600, 3600)) . ENVIRONMENT . memory_get_peak_usage() . get_current_user() . get_include_path() . rand(1, 3000000) . memory_get_usage();
-            break;
+                break;
             case 4:
                 $encryption_key_data = memory_get_peak_usage() . (time() + rand(-3600, 3600)) . ENVIRONMENT . rand(1, 4000000) . get_include_path() . memory_get_usage() . get_current_user();
-            break;
+                break;
             case 5:
                 $encryption_key_data = rand(1, 5000000) . (time() + rand(-3600, 3600)) . get_include_path() . memory_get_peak_usage() . memory_get_usage() . get_current_user() . ENVIRONMENT;
-            break;
+                break;
         }
-        $config = array();
+        $config = [];
         $config['encryption_key'] = md5($encryption_key_data);
         $this->load->library('configurator');
         $this->configurator->set_config_array('config', $config);
         echo 'Encryption key set to: ' . $config['encryption_key'];
     }
     
-    public function fix_broken_link() {
+    public function fix_broken_link(): void
+    {
         $this->load->database();
         $this->load->helper('lamsfet');
         echo 'This script will repair all broken links in tasks.' . "\n\n";
@@ -547,9 +571,10 @@ class Cli extends CI_Controller {
         $this->clear_lockdown();
     }
     
-    public function send_deadline_notifications($lang_idiom = NULL) {
+    public function send_deadline_notifications($lang_idiom = null): void
+    {
         $this->load->database();
-
+        
         $db_fix = new DB_Fix();
         $db_fix->do_fix();
         
@@ -566,15 +591,15 @@ class Cli extends CI_Controller {
         
         $task_sets1 = new Task_set();
         $task_sets1->select('id, name, course_id, group_id AS common_group_id, upload_end_time AS common_upload_end_time, deadline_notified AS common_deadline_notified, deadline_notification_emails AS common_deadline_notification_emails, deadline_notification_emails_handler AS common_deadline_notification_emails_handler');
-        $task_sets1->select('null AS `task_set_permission_id`', FALSE);
+        $task_sets1->select('null AS `task_set_permission_id`', false);
         $task_sets1->where('deadline_notified', 0);
         $task_sets1->where('deadline_notification_emails_handler >', 0);
         $task_sets1->group_start();
-            $task_sets1->not_group_start();
-                $task_sets1->where('upload_end_time', NULL);
-            $task_sets1->group_end();
-            $task_sets1->where('upload_end_time <', $current_time);
-            $task_sets1->where('upload_end_time >=', $one_day_back_time);
+        $task_sets1->not_group_start();
+        $task_sets1->where('upload_end_time', null);
+        $task_sets1->group_end();
+        $task_sets1->where('upload_end_time <', $current_time);
+        $task_sets1->where('upload_end_time >=', $one_day_back_time);
         $task_sets1->group_end();
         $task_sets1->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
         $task_sets1->where('published', 1);
@@ -591,15 +616,15 @@ class Cli extends CI_Controller {
         $task_sets2->where_related('task_set_permission', 'deadline_notified', 0);
         $task_sets2->where_related('task_set_permission', 'deadline_notification_emails_handler >', 0);
         $task_sets2->group_start();
-            $task_sets2->not_group_start();
-                $task_sets2->where_related('task_set_permission', 'upload_end_time', NULL);
-            $task_sets2->group_end();
-            $task_sets2->where_related('task_set_permission', 'upload_end_time <', $current_time);
-            $task_sets2->where_related('task_set_permission', 'upload_end_time >=', $one_day_back_time);
+        $task_sets2->not_group_start();
+        $task_sets2->where_related('task_set_permission', 'upload_end_time', null);
+        $task_sets2->group_end();
+        $task_sets2->where_related('task_set_permission', 'upload_end_time <', $current_time);
+        $task_sets2->where_related('task_set_permission', 'upload_end_time >=', $one_day_back_time);
         $task_sets2->group_end();
         $task_sets2->where('published', 1);
         
-        $task_sets1->union_iterated($task_sets2, TRUE);
+        $task_sets1->union_iterated($task_sets2, true);
         
         $this->load->library('email');
         
@@ -607,17 +632,17 @@ class Cli extends CI_Controller {
         
         foreach ($task_sets1 as $task_set) {
             if ($task_set->common_deadline_notification_emails_handler > 0) {
-                $emails = trim($task_set->common_deadline_notification_emails) != '' ? explode(',', $task_set->common_deadline_notification_emails) : array();
-                array_walk($emails, function(&$email, $key) {
+                $emails = trim($task_set->common_deadline_notification_emails) !== '' ? explode(',', $task_set->common_deadline_notification_emails) : [];
+                array_walk($emails, static function (&$email, $key) {
                     $email = trim($email);
                 });
-                if ($task_set->common_deadline_notification_emails_handler == 1) {
+                if ($task_set->common_deadline_notification_emails_handler === 1) {
                     $groups = new Group();
                     $groups->where_related('course', 'id', $task_set->course_id);
                     $groups->include_related('room/teacher', '*');
                     $groups->group_start('NOT');
-                        $groups->where_related('room', 'id', null);
-                        $groups->or_where_related('room/teacher', 'id', null);
+                    $groups->where_related('room', 'id', null);
+                    $groups->or_where_related('room/teacher', 'id', null);
                     $groups->group_end();
                     $groups->group_by_related('room/teacher', 'email');
                     if (!is_null($task_set->common_group_id)) {
@@ -625,10 +650,12 @@ class Cli extends CI_Controller {
                     }
                     $groups->get_iterated();
                     
-                    foreach($groups as $teacher) {
-                        if (trim($teacher->room_teacher_email) != '') {
+                    foreach ($groups as $teacher) {
+                        if (trim($teacher->room_teacher_email) !== '') {
                             $email = trim($teacher->room_teacher_email);
-                            if (!in_array($email, $emails)) { $emails[] = $email; }
+                            if (!in_array($email, $emails, true)) {
+                                $emails[] = $email;
+                            }
                         }
                     }
                 }
@@ -642,7 +669,7 @@ class Cli extends CI_Controller {
                     $this->email->from_system();
                     $this->email->reply_to_system();
                     
-                    $this->email->build_message_body('file:emails/cli/deadline_notification.tpl', array('task_set' => $task_set, 'group' => $group));
+                    $this->email->build_message_body('file:emails/cli/deadline_notification.tpl', ['task_set' => $task_set, 'group' => $group]);
                     
                     if ($this->config->item('email_multirecipient_batch_mode')) {
                         $this->email->to($emails);
@@ -680,13 +707,14 @@ class Cli extends CI_Controller {
         echo "Process finished, {$sent_notifications} notifications were sent ...\n";
     }
     
-    public function garbage_collector() {
+    public function garbage_collector(): void
+    {
         echo 'Running garbage collector script ...' . "\n";
         
         $this->load->helper('application');
         
         $current_time = time();
-
+        
         $this->load->library('cli_progress_bar');
         $this->cli_progress_bar->init(7);
         
@@ -703,25 +731,25 @@ class Cli extends CI_Controller {
         $total_dirs = 0;
         
         if (is_array($dirs) && count($dirs) > 0) {
-            foreach($dirs as $dir) {
-                if (is_dir($path_to_comparator_files . $dir) && $dir != '.' && $dir != '..') {
+            foreach ($dirs as $dir) {
+                if (is_dir($path_to_comparator_files . $dir) && $dir !== '.' && $dir !== '..') {
                     $total_dirs++;
                     $to_print = '  ' . $dir;
                     $dir_mod_time = filemtime($path_to_comparator_files . $dir);
                     if ($current_time - $dir_mod_time >= $time_for_comparator_folders_to_remain_untouched) {
                         $deleted++;
-                        unlink_recursive($path_to_comparator_files . $dir, TRUE);
+                        unlink_recursive($path_to_comparator_files . $dir, true);
                         $to_print .= ':  OLD - deleting' . "\n";
                     } else {
                         $to_print .= ':  SAFE' . "\n";
                     }
-                    $this->cli_progress_bar->print_text($to_print, TRUE);
+                    $this->cli_progress_bar->print_text($to_print, true);
                 } else {
                     $this->cli_progress_bar->tick();
                 }
             }
-        } 
-        if ($total_dirs == 0) {
+        }
+        if ($total_dirs === 0) {
             //echo '  No directories ...' . "\n";
             $this->cli_progress_bar->print_text('  No directories ...');
         }
@@ -742,25 +770,25 @@ class Cli extends CI_Controller {
         $total_dirs = 0;
         
         if (is_array($dirs) && count($dirs) > 0) {
-            foreach($dirs as $dir) {
-                if (is_dir($path_to_moss_files . $dir) && $dir != '.' && $dir != '..') {
+            foreach ($dirs as $dir) {
+                if (is_dir($path_to_moss_files . $dir) && $dir !== '.' && $dir !== '..') {
                     $total_dirs++;
                     $to_print = '  ' . $dir;
                     $dir_mod_time = filemtime($path_to_moss_files . $dir);
                     if ($current_time - $dir_mod_time >= $time_for_moss_folders_to_remain_untouched) {
                         $deleted++;
-                        unlink_recursive($path_to_moss_files . $dir, TRUE);
+                        unlink_recursive($path_to_moss_files . $dir, true);
                         $to_print .= ':  OLD - deleting' . "\n";
                     } else {
                         $to_print .= ':  SAFE' . "\n";
                     }
-                    $this->cli_progress_bar->print_text($to_print, TRUE);
+                    $this->cli_progress_bar->print_text($to_print, true);
                 } else {
                     $this->cli_progress_bar->tick();
                 }
             }
-        } 
-        if ($total_dirs == 0) {
+        }
+        if ($total_dirs === 0) {
             //echo '  No directories ...' . "\n";
             $this->cli_progress_bar->print_text('  No directories ...');
         }
@@ -781,25 +809,25 @@ class Cli extends CI_Controller {
         $total_dirs = 0;
         
         if (is_array($dirs) && count($dirs) > 0) {
-            foreach($dirs as $dir) {
-                if (is_dir($path_to_extracted_solutions . $dir) && $dir != '.' && $dir != '..') {
+            foreach ($dirs as $dir) {
+                if (is_dir($path_to_extracted_solutions . $dir) && $dir !== '.' && $dir !== '..') {
                     $total_dirs++;
                     $to_print = '  ' . $dir;
                     $dir_mod_time = filemtime($path_to_extracted_solutions . $dir);
                     if ($current_time - $dir_mod_time >= $time_for_extracted_solutions_to_remain_untouched) {
                         $deleted++;
-                        unlink_recursive($path_to_extracted_solutions . $dir, TRUE);
+                        unlink_recursive($path_to_extracted_solutions . $dir, true);
                         $to_print .= ':  OLD - deleting' . "\n";
                     } else {
                         $to_print .= ':  SAFE' . "\n";
                     }
-                    $this->cli_progress_bar->print_text($to_print, TRUE);
+                    $this->cli_progress_bar->print_text($to_print, true);
                 } else {
                     $this->cli_progress_bar->tick();
                 }
             }
-        } 
-        if ($total_dirs == 0) {
+        }
+        if ($total_dirs === 0) {
             //echo '  No directories ...' . "\n";
             $this->cli_progress_bar->print_text('  No directories ...');
         }
@@ -820,25 +848,25 @@ class Cli extends CI_Controller {
         $total_dirs = 0;
         
         if (is_array($dirs) && count($dirs) > 0) {
-            foreach($dirs as $dir) {
-                if (is_dir($path_to_test_to_execute . $dir) && $dir != '.' && $dir != '..') {
+            foreach ($dirs as $dir) {
+                if (is_dir($path_to_test_to_execute . $dir) && $dir !== '.' && $dir !== '..') {
                     $total_dirs++;
                     $to_print = '  ' . $dir;
                     $dir_mod_time = filemtime($path_to_test_to_execute . $dir);
                     if ($current_time - $dir_mod_time >= $time_for_test_to_execute_to_remain_untouched) {
                         $deleted++;
-                        unlink_recursive($path_to_test_to_execute . $dir, TRUE);
+                        unlink_recursive($path_to_test_to_execute . $dir, true);
                         $to_print .= ':  OLD - deleting' . "\n";
                     } else {
                         $to_print .= ':  SAFE' . "\n";
                     }
-                    $this->cli_progress_bar->print_text($to_print, TRUE);
+                    $this->cli_progress_bar->print_text($to_print, true);
                 } else {
                     $this->cli_progress_bar->tick();
                 }
             }
-        } 
-        if ($total_dirs == 0) {
+        }
+        if ($total_dirs === 0) {
             //echo '  No directories ...' . "\n";
             $this->cli_progress_bar->print_text('  No directories ...');
         }
@@ -852,7 +880,7 @@ class Cli extends CI_Controller {
         //echo ' Clearing unfinished uploads of task files:' . "\n";
         $this->cli_progress_bar->print_text(' Clearing unfinished uploads of task files:');
         $deleted = $this->find_and_delete_old_upload_part('private/uploads/task_files/', '', 172800, $current_time, $total_number);
-        if ($total_number == 0) {
+        if ($total_number === 0) {
             //echo '  No files ...' . "\n";
             $this->cli_progress_bar->print_text('  No files ...');
         }
@@ -861,18 +889,18 @@ class Cli extends CI_Controller {
         $this->cli_progress_bar->increment();
         
         // ----------- UNFINISHED CONTENT FILES UPLOADS ------------------------
-    
+        
         $total_number = 0;
         $this->cli_progress_bar->print_text(' Clearing unfinished uploads of content files:');
         $deleted = $this->find_and_delete_old_upload_part('private/content/', '', 172800, $current_time, $total_number);
-        if ($total_number == 0) {
+        if ($total_number === 0) {
             //echo '  No files ...' . "\n";
             $this->cli_progress_bar->print_text('  No files ...');
         }
         //echo ' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.' . "\n";
         $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.');
         $this->cli_progress_bar->increment();
-    
+        
         // ----------- DELETE ABANDONED CONTENT FOLDERS ------------------------
         
         $total_number = 0;
@@ -882,7 +910,7 @@ class Cli extends CI_Controller {
         $structure = scandir('private/content/');
         
         foreach ($structure as $item) {
-            if (substr($item, 0, 5) == 'temp_') {
+            if (strpos($item, 'temp_') === 0) {
                 $total_number++;
                 if ($current_time - filemtime('private/content/' . $item) >= 172800) {
                     $deleted++;
@@ -891,7 +919,7 @@ class Cli extends CI_Controller {
             }
         }
         
-        if ($total_number == 0) {
+        if ($total_number === 0) {
             $this->cli_progress_bar->print_text('  No folders ...');
         }
         $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_number . ' folders deleted.');
@@ -901,22 +929,23 @@ class Cli extends CI_Controller {
         echo 'Done ...' . "\n";
     }
     
-    private function find_and_delete_old_upload_part($path_base, $path_add, $max_time, $current_time, &$count_of_parts) {
+    private function find_and_delete_old_upload_part($path_base, $path_add, $max_time, $current_time, &$count_of_parts): int
+    {
         $deleted = 0;
-
+        
         $this->load->library('cli_progress_bar');
-
+        
         
         $files = scandir($path_base . $path_add);
         if (is_array($files) && count($files) > 0) {
-            foreach($files as $file) {
-                if (is_dir($path_base . $path_add . $file) && $file != '.' && $file != '..') {
-                    $deleted = $deleted + $this->find_and_delete_old_upload_part($path_base, $path_add . $file . '/', $max_time, $current_time, $count_of_parts);
+            foreach ($files as $file) {
+                if (is_dir($path_base . $path_add . $file) && $file !== '.' && $file !== '..') {
+                    $deleted += $this->find_and_delete_old_upload_part($path_base, $path_add . $file . '/', $max_time, $current_time, $count_of_parts);
                 } else if (is_file($path_base . $path_add . $file)) {
                     $ext_pos = strrpos($file, '.');
-                    if ($ext_pos !== FALSE) {
+                    if ($ext_pos !== false) {
                         $ext = substr($file, $ext_pos + 1);
-                        if ($ext == 'upload_part') {
+                        if ($ext === 'upload_part') {
                             $count_of_parts++;
                             $to_print = '  ' . $path_add . $file;
                             $filemtime = filemtime($path_base . $path_add . $file);
@@ -927,7 +956,7 @@ class Cli extends CI_Controller {
                             } else {
                                 $to_print .= ':  SAFE' . "\n";
                             }
-                            $this->cli_progress_bar->print_text($to_print, TRUE);
+                            $this->cli_progress_bar->print_text($to_print, true);
                         }
                     }
                 }
@@ -937,21 +966,25 @@ class Cli extends CI_Controller {
         
         return $deleted;
     }
-
+    
     /**
      * Clear production cache for DataMapper if it is enabled.
+     *
      * @return integer number of deleted cache files.
      */
-    private function _clear_production_cache() {
+    private function _clear_production_cache(): int
+    {
         $count = 0;
-        $this->config->load('datamapper', TRUE);
+        $this->config->load('datamapper', true);
         $production_cache = $this->config->item('production_cache', 'datamapper');
         if (!empty($production_cache) && file_exists($production_cache) && is_dir($production_cache)) {
             $production_cache = rtrim($production_cache, '/\\') . DIRECTORY_SEPARATOR;
             $dir_content = scandir($production_cache);
-            foreach($dir_content as $item) {
-                if (is_file($production_cache . $item) && substr($item, -4) == '.php') {
-                    if (@unlink($production_cache . $item)) { $count++; }
+            foreach ($dir_content as $item) {
+                if (is_file($production_cache . $item) && substr($item, -4) === '.php') {
+                    if (@unlink($production_cache . $item)) {
+                        $count++;
+                    }
                 }
             }
         }
@@ -960,22 +993,25 @@ class Cli extends CI_Controller {
     
     /**
      * Displays standard input prompt with message and return answer.
+     *
      * @param string $msg message.
+     *
      * @return string answer.
      */
-    private function _get_cli_user_input($msg) {
+    private function _get_cli_user_input($msg)
+    {
         fwrite(STDOUT, "$msg: ");
-        $varin = trim(fgets(STDIN));
-        return $varin;
+        return trim(fgets(STDIN));
     }
     
     /**
      * Create new cache files for DataMapper if production cache is enabled.
      */
-    private function _recreate_production_cache() {
+    private function _recreate_production_cache(): void
+    {
         $result = $this->db->get('migrations', 1);
-        if ($result->num_rows() == 1) {
-            if ($result->row()->version != $this->_get_last_migration_version()) {
+        if ($result->num_rows() === 1) {
+            if ($result->row()->version !== $this->_get_last_migration_version()) {
                 echo '  Current migration version isn\'t the latest one.' . "\n" . '  Cache will be rebuild on first hit.' . "\n";
                 return;
             }
@@ -984,7 +1020,7 @@ class Cli extends CI_Controller {
             return;
         }
         
-        $this->config->load('datamapper', TRUE);
+        $this->config->load('datamapper', true);
         $production_cache = $this->config->item('production_cache', 'datamapper');
         if (!empty($production_cache) && file_exists($production_cache) && is_dir($production_cache)) {
             include APPPATH . '../system/core/Model.php';
@@ -994,10 +1030,10 @@ class Cli extends CI_Controller {
                 foreach ($files as $file) {
                     $ext = pathinfo($file, PATHINFO_EXTENSION);
                     $class_name = basename($file, '.' . $ext);
-                    $class_name = strtoupper(substr($class_name, 0, 1)) . strtolower(substr($class_name, 1));
-                    if (strtolower($ext) == 'php') {
+                    $class_name = strtoupper($class_name[0]) . strtolower(substr($class_name, 1));
+                    if (strtolower($ext) === 'php') {
                         include $path . $file;
-                        if (class_exists($class_name) && in_array('DataMapper', class_parents($class_name))) {
+                        if (class_exists($class_name) && in_array('DataMapper', class_parents($class_name), true)) {
                             echo '  DataMapper model ' . $class_name . ' cached again ...' . "\n";
                             $model = new $class_name();
                             $model->limit(1)->get_iterated();
@@ -1008,18 +1044,19 @@ class Cli extends CI_Controller {
         }
     }
     
-    private function _get_last_migration_version() {
+    private function _get_last_migration_version()
+    {
         $last = -1;
         $dir = scandir(APPPATH . 'migrations');
         foreach ($dir as $file) {
             if (is_file(APPPATH . 'migrations/' . $file)) {
                 $ext = pathinfo($file, PATHINFO_EXTENSION);
-                if (strtolower($ext) == 'php') {
+                if (strtolower($ext) === 'php') {
                     $filename = basename($file, '.' . $ext);
-                    $matches = array();
-                    if (preg_match('/^(?P<version>[0-9]+)\_/', $filename, $matches)) {
+                    $matches = [];
+                    if (preg_match('/^(?P<version>\d+)\_/', $filename, $matches)) {
                         $version = (int)$matches['version'];
-                        $last = max(array($last, $version));
+                        $last = max([$last, $version]);
                     }
                 }
             }
