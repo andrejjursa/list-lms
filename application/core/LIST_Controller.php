@@ -1,30 +1,31 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * Overriden controller class with few more useful methods.
  *
- * @property CI_URI $uri
- * @property LIST_Parser $parser
- * @property LIST_Session $session
- * @property LIST_Lang $lang
- * @property LIST_Loader $load
+ * @property CI_URI               $uri
+ * @property LIST_Parser          $parser
+ * @property LIST_Session         $session
+ * @property LIST_Lang            $lang
+ * @property LIST_Loader          $load
  * @property LIST_Form_validation $form_validation
- * @property LIST_Email $email
- * @property CI_Config $config
- * @property Usermanager $usermanager
- * @property CI_Input $input
- * @property Translations $translations
- * @property CI_Router $router
- * @property DataMapper $db
- * @property LIST_Output $output
- * @property Messages $messages
- * @property Filter $filter
+ * @property LIST_Email           $email
+ * @property CI_Config            $config
+ * @property Usermanager          $usermanager
+ * @property CI_Input             $input
+ * @property Translations         $translations
+ * @property CI_Router            $router
+ * @property CI_DB                $db
+ * @property LIST_Output          $output
+ * @property Messages             $messages
+ * @property Filter               $filter
  *
  * @package LIST_Core
- * @author Andrej Jursa
- */ 
-class LIST_Controller extends CI_Controller {
-
+ * @author  Andrej Jursa
+ */
+class LIST_Controller extends CI_Controller
+{
+    
     public const TRANSACTION_ISOLATION_REPEATABLE_READ = 'REPEATABLE READ';
     public const TRANSACTION_ISOLATION_READ_COMMITTED = 'READ COMMITTED';
     public const TRANSACTION_ISOLATION_READ_UNCOMMITTED = 'READ UNCOMMITTED';
@@ -35,17 +36,17 @@ class LIST_Controller extends CI_Controller {
     
     /**
      * Main constructor, initialise controller.
-     * Database will be connected, libraries for usermanager and messages will be loaded and translations model will be loaded.
-     * All user data will be send to smarty template.
+     * Database will be connected, libraries for usermanager and messages will be loaded and translations model will be
+     * loaded. All user data will be send to smarty template.
      */
     public function __construct()
     {
         parent::__construct();
         $this->load->config('list');
         $this->load->config('lockdown');
-        if ($this->config->item('system_lockdown') === TRUE) {
+        if ($this->config->item('system_lockdown') === true) {
             if (!$this->input->is_ajax_request()) {
-                redirect(create_internal_url('maintenance', TRUE));
+                redirect(create_internal_url('maintenance', true));
             }
             die();
         }
@@ -64,6 +65,7 @@ class LIST_Controller extends CI_Controller {
     /**
      * Perform initialisation of language for specific language idiom.
      * Language idiom must exist in system/application languages.
+     *
      * @param string $lang_idiom language idiom.
      */
     protected function _init_specific_language(string $lang_idiom): void
@@ -76,12 +78,14 @@ class LIST_Controller extends CI_Controller {
             $this->_init_lang_js_messages();
         }
     }
-
-        /**
+    
+    /**
      * Perform initialisation of student language settings.
-     * @param Student|integer|null $student for which language have to be set, accept Student model or integer with student id, default is NULL (use currently loged in student).
+     *
+     * @param Student|integer|null $student for which language have to be set, accept Student model or integer with
+     *                                      student id, default is NULL (use currently loged in student).
      */
-    protected function _init_language_for_student($student = NULL): void
+    protected function _init_language_for_student($student = null): void
     {
         if (is_null($student)) {
             $this->lang->reinitialize_for_idiom($this->usermanager->get_student_language());
@@ -109,9 +113,10 @@ class LIST_Controller extends CI_Controller {
     
     /**
      * Load student type language file.
+     *
      * @param string|null $filename name of file to be loaded or NULL to load file with name of derived controller.
      */
-    protected function _load_student_langfile(string $filename = NULL): void
+    protected function _load_student_langfile(string $filename = null): void
     {
         if (is_null($filename)) {
             $this->lang->load(strtolower(get_class($this)));
@@ -122,9 +127,11 @@ class LIST_Controller extends CI_Controller {
     
     /**
      * Perform initialisation of teacher language settings.
-     * @param Teacher|integer|null $teacher, for which language have to be set, accept Teacher model or integer with teacher id, default is NULL (use currently loged in teacher).
+     *
+     * @param Teacher|integer|null $teacher , for which language have to be set, accept Teacher model or integer with
+     *                                      teacher id, default is NULL (use currently loged in teacher).
      */
-    protected function _init_language_for_teacher($teacher = NULL): void
+    protected function _init_language_for_teacher($teacher = null): void
     {
         if (is_null($teacher)) {
             $this->lang->reinitialize_for_idiom($this->usermanager->get_teacher_language());
@@ -154,9 +161,10 @@ class LIST_Controller extends CI_Controller {
     
     /**
      * Load teacher type language file.
+     *
      * @param string|null $filename name of file to be loaded or NULL to load file with name of derived controller.
      */
-    protected function _load_teacher_langfile(string $filename = NULL): void
+    protected function _load_teacher_langfile(string $filename = null): void
     {
         if (is_null($filename)) {
             $this->lang->load('admin/' . strtolower(get_class($this)));
@@ -190,6 +198,7 @@ class LIST_Controller extends CI_Controller {
     /**
      * Set the active menu item in teacher menu.
      * Smarty template variable $list_adminmenu_current will be created.
+     *
      * @param string $tag page tag to be set as active item in menu.
      */
     protected function _select_teacher_menu_pagetag(string $tag = ''): void
@@ -199,13 +208,15 @@ class LIST_Controller extends CI_Controller {
     
     /**
      * Set the database transaction isolation level.
+     *
      * @param string $level transaction isolation level, one of TRANSACTION_ISOLATION_* of MY_Controller class.
-     * @param string $area area of where isolation is aplied, one of TRANSACTION_AREA_* of MY_Controller class.
+     * @param string $area  area of where isolation is aplied, one of TRANSACTION_AREA_* of MY_Controller class.
      */
     protected function _transaction_isolation(
         string $level = self::TRANSACTION_ISOLATION_SERIALIZABLE,
         string $area = self::TRANSACTION_AREA_SESSION
-    ): void {
+    ): void
+    {
         $this->db->query('SET ' . $area . ' TRANSACTION ISOLATION LEVEL ' . $level . ';');
     }
     
@@ -233,19 +244,19 @@ class LIST_Controller extends CI_Controller {
         $this->parser->add_js_file('tinymce4/jquery.tinymce.min.js');
         $this->parser->add_js_file('tinymce4/tinymce.min.js');
     }
-
+    
     protected function _add_dataTables(): void
     {
         $this->parser->add_js_file('jquery.dataTables.min.js');
         $this->parser->add_css_file('jquery.dataTables.css');
     }
-
+    
     protected function _add_highcharts(): void
     {
         $this->parser->add_js_file('highcharts/highcharts.js');
         $this->parser->add_js_file('highcharts/modules/exporting.js');
     }
-
+    
     /**
      * This method adds plupload to template and load plupload library.
      */
@@ -301,12 +312,12 @@ class LIST_Controller extends CI_Controller {
             $this->parser->add_js_file(trim($localisation_file));
         }
     }
-
+    
     protected function _add_mathjax(): void
     {
         $this->parser->add_js_file('mathjax/MathJax.js?config=TeX-AMS_CHTML-full');
     }
-
+    
     /**
      * Injects all possible languages to smarty parser.
      */
@@ -318,7 +329,7 @@ class LIST_Controller extends CI_Controller {
     
     protected function _init_teacher_quick_prefered_course_menu(): void
     {
-        $menu = array();
+        $menu = [];
         
         $courses = new Course();
         $courses->include_related('period', 'name');
@@ -326,14 +337,14 @@ class LIST_Controller extends CI_Controller {
         $courses->order_by_with_constant('name', 'asc');
         $courses->get_iterated();
         
-        foreach($courses as $course) {
+        foreach ($courses as $course) {
             $menu[$course->period_name][$course->id] = $course->name;
         }
         
         $teacher = new Teacher();
         $teacher->get_by_id($this->usermanager->get_teacher_id());
         $current_course_name = $this->lang->line('admin_teachers_no_prefered_course');
-        $current_course_id = NULL;
+        $current_course_id = null;
         if ($teacher->exists()) {
             $prefered_course = $teacher->prefered_course->get();
             if ($prefered_course->exists()) {
@@ -371,23 +382,26 @@ class LIST_Controller extends CI_Controller {
     /**
      * Set the active menu item in student menu.
      * Smarty template variable list_pagemenu_current will be created.
+     *
      * @param string $tag page tag to be set as active item in menu.
      */
     protected function _select_student_menu_pagetag(string $tag = ''): void
     {
         $this->parser->assign('list_pagemenu_current', $tag);
     }
-
+    
     /**
      * Sends message to all students or teachers. Do not use get_iterated() to execute select query!
-     * @param Student|Teacher $recipients list of students or teachers.
-     * @param string $subject email subject (accepts lang: prefix).
-     * @param string $template template body or file:path/to/template.tpl.
-     * @param array $template_variables array of template variables.
-     * @param string|null $from email addres of sender or NULL to use system address.
-     * @param string $from_name name of sender.
-     * @param boolean $sender_copy enable sending of copy to sender email address.
-     * @param string $sender_email sender email address.
+     *
+     * @param Student|Teacher $recipients         list of students or teachers.
+     * @param string          $subject            email subject (accepts lang: prefix).
+     * @param string          $template           template body or file:path/to/template.tpl.
+     * @param array           $template_variables array of template variables.
+     * @param string|null     $from               email addres of sender or NULL to use system address.
+     * @param string          $from_name          name of sender.
+     * @param boolean         $sender_copy        enable sending of copy to sender email address.
+     * @param string          $sender_email       sender email address.
+     *
      * @return boolean TRUE, if all emails are sent, or FALSE if all or some emails failed to be send.
      * @throws Exception
      */
@@ -395,18 +409,23 @@ class LIST_Controller extends CI_Controller {
         $recipients,
         string $subject,
         string $template,
-        array $template_variables = array(),
-        string $from = NULL,
+        array $template_variables = [],
+        string $from = null,
         string $from_name = '',
         bool $sender_copy,
         string $sender_email = ''
-    ): bool {
+    ): bool
+    {
         if ($recipients instanceof Teacher || $recipients instanceof Student) {
-            $email_by_languages = array();
-            if ($recipients->exists()) { foreach ($recipients->all as $recipient) {
-                $email_by_languages[$recipient->language][] = $recipient;
-            }}
-            if (count($email_by_languages) === 0) { return FALSE; }
+            $email_by_languages = [];
+            if ($recipients->exists()) {
+                foreach ($recipients->all as $recipient) {
+                    $email_by_languages[$recipient->language][] = $recipient;
+                }
+            }
+            if (count($email_by_languages) === 0) {
+                return false;
+            }
             $this->load->library('email');
             if (is_null($from)) {
                 $this->email->from_system();
@@ -415,20 +434,22 @@ class LIST_Controller extends CI_Controller {
                 $this->email->from($from, $from_name);
                 $this->email->reply_to($from, $from_name);
             }
-            $result = TRUE;
+            $result = true;
             $lang_clone = clone $this->lang;
             set_time_limit(0);
-            foreach($email_by_languages as $language => $subrecipients) {
-                if (count($subrecipients) === 0) { continue; }
+            foreach ($email_by_languages as $language => $subrecipients) {
+                if (count($subrecipients) === 0) {
+                    continue;
+                }
                 $this->_init_specific_language($language);
                 $this->email->build_message_body($template, $template_variables);
                 $email_subject = 'LIST' . ($subject ? ' - ' . $this->lang->text($subject) : '');
                 if ($this->config->item('email_multirecipient_batch_mode')) {
-                    $to_list = array();
+                    $to_list = [];
                     foreach ($subrecipients as $recipient) {
                         $to_list[] = $recipient->email;
                     }
-                    if ($sender_copy === TRUE) {
+                    if ($sender_copy === true) {
                         $to_list[] = $sender_email;
                     }
                     $this->email->to($to_list);
@@ -436,13 +457,13 @@ class LIST_Controller extends CI_Controller {
                     $partial_result = $this->email->send();
                     $result = $result && $partial_result;
                 } else {
-                    foreach($subrecipients as $recipient) {
+                    foreach ($subrecipients as $recipient) {
                         $this->email->to($recipient->email);
                         $this->email->subject($email_subject);
                         $partial_result = $this->email->send();
                         $result = $result && $partial_result;
                     }
-                    if ($sender_copy === TRUE) {
+                    if ($sender_copy === true) {
                         $this->email->to($sender_email);
                         $this->email->subject($email_subject);
                         $partial_result = $this->email->send();
@@ -453,9 +474,9 @@ class LIST_Controller extends CI_Controller {
             $this->lang = $lang_clone;
             set_time_limit((int)ini_get('max_execution_time'));
             return $result;
-        } else {
-            return FALSE;
         }
+    
+        return false;
     }
     
     protected function _is_cache_enabled()
@@ -465,6 +486,6 @@ class LIST_Controller extends CI_Controller {
     
     protected function _action_success(): void
     {
-        $this->output->set_internal_value(LIST_Output::IV_ACTION_RESULT, TRUE);
+        $this->output->set_internal_value(LIST_Output::IV_ACTION_RESULT, true);
     }
 }
