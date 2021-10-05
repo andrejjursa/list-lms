@@ -1,11 +1,12 @@
 <?php
 
 if (!function_exists('get_task_set_timed_class')) {
-    function get_task_set_timed_class($time, $uploads, $solutions) {
-        if (is_null($uploads) || !$uploads) {
+    function get_task_set_timed_class($time, $uploads, $solutions): string
+    {
+        if (!$uploads) {
             return '';
         }
-
+        
         if (!is_null($time) && trim($time) !== '') {
             if ((int)$solutions > 0) {
                 if (strtotime($time) < date('U')) {
@@ -34,11 +35,12 @@ if (!function_exists('get_task_set_timed_class')) {
 }
 
 if (!function_exists('get_task_sets_color_legend')) {
-    function get_task_sets_color_legend($admin = false) {
+    function get_task_sets_color_legend($admin = false)
+    {
         $CI =& get_instance();
-
+        
         $CI->parser->assign('admin', (bool)$admin);
-
-        return $CI->parser->parse('partials/helper/task_sets_color_legend.tpl', array(), true, false);
+        
+        return $CI->parser->parse('partials/helper/task_sets_color_legend.tpl', [], true, false);
     }
 }
