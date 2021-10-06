@@ -1,20 +1,26 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /**
  * Groups controller for frontend.
+ *
  * @package LIST_FE_Controllers
- * @author Andrej Jursa
+ * @author  Andrej Jursa
  */
-class Groups extends LIST_Controller {
+class Groups extends LIST_Controller
+{
     
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->usermanager->student_login_protected_redirect();
         $this->_init_language_for_student();
         $this->_load_student_langfile();
     }
     
-    public function index() {
+    public function index(): void
+    {
         $this->_initialize_student_menu();
         $this->_select_student_menu_pagetag('groups');
         $this->parser->add_css_file('frontend_groups.css');
@@ -22,27 +28,30 @@ class Groups extends LIST_Controller {
         if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/groups/index.tpl'), $cache_id)) {
             $student = new Student();
             $student->get_by_id($this->usermanager->get_student_id());
-
+            
             $course = new Course();
             $course->include_related('period', 'name');
             $course->where_related_active_for_student($student);
             $course->where_related('participant/student', $student);
             $course->where_related_participant('allowed', 1);
             $course->get();
-
-            $can_change_group = FALSE;
-
+            
+            $can_change_group = false;
+            
             if ($course->exists()) {
-                if (is_null($course->groups_change_deadline) || date('U', strtotime($course->groups_change_deadline)) >= time()) { $can_change_group = TRUE; }
+                if (is_null($course->groups_change_deadline) || date('U', strtotime($course->groups_change_deadline)) >= time()) {
+                    $can_change_group = true;
+                }
             }
-
+            
             smarty_inject_days();
-            $this->parser->assign(array('course' => $course, 'can_change_group' => $can_change_group));
+            $this->parser->assign(['course' => $course, 'can_change_group' => $can_change_group]);
         }
-        $this->parser->parse('frontend/groups/index.tpl', array(), FALSE, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse('frontend/groups/index.tpl', [], false, $this->_is_cache_enabled(), $cache_id);
     }
     
-    public function select_group() {
+    public function select_group(): void
+    {
         $group_id = $this->input->post('group_id');
         
         $this->_transaction_isolation();
@@ -55,10 +64,10 @@ class Groups extends LIST_Controller {
             $course = $group->course->get();
             
             if (is_null($course->groups_change_deadline) || date('U', strtotime($course->groups_change_deadline)) >= time()) {
-
+                
                 $student = new Student();
                 $student->get_by_id($this->usermanager->get_student_id());
-
+                
                 if ($student->is_related_to('active_course', $course->id)) {
                     $participant = new Participant();
                     $participant->where_related($student);
@@ -74,7 +83,7 @@ class Groups extends LIST_Controller {
                             $participants_count = $participant->count();
                             $room = new Room();
                             $room->where_related($group)->order_by('capacity', 'asc')->limit(1)->get();
-                            if ($participants_count > intval($room->capacity)) {
+                            if ($participants_count > (int)$room->capacity) {
                                 $this->db->trans_rollback();
                                 $this->messages->add_message('lang:groups_message_group_is_full', Messages::MESSAGE_TYPE_ERROR);
                             } else {

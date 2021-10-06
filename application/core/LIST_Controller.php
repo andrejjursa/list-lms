@@ -19,6 +19,9 @@
  * @property LIST_Output          $output
  * @property Messages             $messages
  * @property Filter               $filter
+ * @property Smarty               $smarty
+ * @property CI_Upload            $upload
+ * @property CI_Image_lib         $image_lib
  *
  * @package LIST_Core
  * @author  Andrej Jursa
@@ -475,7 +478,7 @@ class LIST_Controller extends CI_Controller
             set_time_limit((int)ini_get('max_execution_time'));
             return $result;
         }
-    
+        
         return false;
     }
     

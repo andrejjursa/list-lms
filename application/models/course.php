@@ -24,6 +24,7 @@ use Application\Interfaces\DataMapperExtensionsInterface;
  * @property string|null          $other_texts
  * @property bool                 $disable_public_groups_page
  * @property string|null          $additional_menu_links
+ * @property Period               $period
  * @property Group                $group
  * @property Task_set_type        $task_set_type
  * @property Task_set             $task_set
@@ -33,6 +34,7 @@ use Application\Interfaces\DataMapperExtensionsInterface;
  * @property Course_content       $course_content
  * @property Course_content_group $course_content_group
  *
+ * @method DataMapper where_related_period(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_group(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_task_set_type(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_task_set(mixed $related, string $field = null, string $value = null)
