@@ -586,10 +586,8 @@ class Course_content extends LIST_Controller
             
             $sorted = [];
             $sorted_order = [];
-            for ($i = 0, $iMax = count($order); $i < $iMax; $i++) {
-                $item = $order[$i];
-                
-                if ($item['type'] == 'group') {
+            foreach ($order as $item) {
+                if ($item['type'] === 'group') {
                     $output->message = $this->lang->line('admin_course_content_sorting_order_inconsistent');
                     return $output;
                 }
@@ -597,7 +595,7 @@ class Course_content extends LIST_Controller
                 $sorted[] = ['id' => (int)$item['id'], 'sorting' => $position++];
                 $sorted_order[] = (int)$item['id'];
             }
-            
+    
             $new_position = count($order);
             
             foreach ($all_content as $content) {
@@ -650,10 +648,8 @@ class Course_content extends LIST_Controller
         $sorted = [];
         $sorted_groups = [];
         $sorted_content = [];
-        
-        for ($i = 0, $iMax = count($order); $i < $iMax; $i++) {
-            $item = $order[$i];
-            
+    
+        foreach ($order as $item) {
             $type = 'group';
             if ($item['type'] === 'content') {
                 $type = 'content';
@@ -666,7 +662,7 @@ class Course_content extends LIST_Controller
                 $sorted_groups[] = (int)$item['id'];
             }
         }
-        
+    
         $new_position = count($order);
         
         foreach ($all_content as $content) {

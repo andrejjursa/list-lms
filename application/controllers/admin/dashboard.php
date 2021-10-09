@@ -1,15 +1,20 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 require_once APPPATH . 'core/abstract_admin_widget.php';
 
 /**
  * Dashboard controller for backend.
+ *
  * @package LIST_BE_Controllers
- * @author Andrej Jursa
+ * @author  Andrej Jursa
  */
-class Dashboard extends LIST_Controller {
+class Dashboard extends LIST_Controller
+{
     
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->_init_language_for_teacher();
         $this->_load_teacher_langfile();
@@ -19,7 +24,8 @@ class Dashboard extends LIST_Controller {
         $this->usermanager->teacher_login_protected_redirect();
     }
     
-    public function index() {
+    public function index(): void
+    {
         $this->_select_teacher_menu_pagetag('dashboard');
         
         $this->load->helper('widget');
@@ -31,11 +37,13 @@ class Dashboard extends LIST_Controller {
         $this->parser->add_js_file('admin_dashboard/widgets.js');
         $this->parser->add_css_file('admin_dashboard.css');
         
-        if (count($widget_types_list)) { foreach ($widget_types_list as $widget_type => $widget_type_name) {
-            if (file_exists('public/css/admin_widgets/' . strtolower($widget_type) . '.css')) {
-                $this->parser->add_css_file('admin_widgets/' . strtolower($widget_type) . '.css');
+        if (count($widget_types_list)) {
+            foreach ($widget_types_list as $widget_type => $widget_type_name) {
+                if (file_exists('public/css/admin_widgets/' . strtolower($widget_type) . '.css')) {
+                    $this->parser->add_css_file('admin_widgets/' . strtolower($widget_type) . '.css');
+                }
             }
-        }}
+        }
         
         $widgets = new Admin_widget();
         $widgets->where_related_teacher('id', $this->usermanager->get_teacher_id());
@@ -43,7 +51,7 @@ class Dashboard extends LIST_Controller {
         $widgets->order_by('position', 'asc');
         $widgets->get_iterated();
         
-        $widget_list = array();
+        $widget_list = [];
         
         foreach ($widgets as $widget) {
             $widget_list[$widget->column][] = $widget->id;
@@ -59,10 +67,11 @@ class Dashboard extends LIST_Controller {
         $this->parser->parse('backend/dashboard/index.tpl');
     }
     
-    public function add_widget() {
+    public function add_widget(): void
+    {
         $output = new stdClass();
         $output->message = '';
-        $output->status = FALSE;
+        $output->status = false;
         $output->new_id = 0;
         $this->_transaction_isolation();
         $this->db->trans_begin();
@@ -81,7 +90,7 @@ class Dashboard extends LIST_Controller {
                 $position += $last_widget->position;
             }
             try {
-                $wgt = $this->load->admin_widget($widget_type, 0, array());
+                $wgt = $this->load->admin_widget($widget_type, 0, []);
                 $widget = new Admin_widget();
                 $widget->teacher_id = $this->usermanager->get_teacher_id();
                 $widget->widget_type = $widget_type;
@@ -91,7 +100,7 @@ class Dashboard extends LIST_Controller {
                 $widget->save();
                 $this->db->trans_commit();
                 $output->message = $this->lang->line('admin_dashboard_message_widget_created');
-                $output->status = TRUE;
+                $output->status = true;
                 $output->new_id = (int)$widget->id;
             } catch (Exception $e) {
                 $this->db->trans_rollback();
@@ -105,7 +114,8 @@ class Dashboard extends LIST_Controller {
         $this->output->set_output(json_encode($output));
     }
     
-    public function set_columns() {
+    public function set_columns(): void
+    {
         $this->_transaction_isolation();
         $this->db->trans_begin();
         
@@ -121,33 +131,33 @@ class Dashboard extends LIST_Controller {
                 $widget->where('column >', $teacher->widget_columns);
                 $widget->limit(1);
                 $widget->get();
-
+                
                 if ($widget->exists()) {
                     $widget->where('column', $teacher->widget_columns);
                     $widget->where_related('teacher', $teacher);
                     $widget->limit(1);
                     $widget->order_by('position', 'desc');
                     $widget->get();
-
+                    
                     $position = 1;
                     if ($widget->exists()) {
                         $position += $widget->position;
                     }
-
+                    
                     $widget->select('id');
                     $widget->where('column >', $teacher->widget_columns);
                     $widget->where_related('teacher', $teacher);
                     $widget->order_by('column', 'asc');
                     $widget->order_by('position', 'asc');
                     $widget->get();
-
-                    $updates = TRUE;
-
+                    
+                    $updates = true;
+                    
                     foreach ($widget->all as $widget_to_update) {
                         $widget_to_update->column = $teacher->widget_columns;
                         $widget_to_update->position = $position;
                         if (!$widget_to_update->save()) {
-                            $updates = FALSE;
+                            $updates = false;
                         } else {
                             $position++;
                         }

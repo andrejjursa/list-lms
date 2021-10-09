@@ -22,6 +22,8 @@
  * @property Smarty               $smarty
  * @property CI_Upload            $upload
  * @property CI_Image_lib         $image_lib
+ * @property Plupload             $plupload
+ * @property mosslib              $mosslib
  *
  * @package LIST_Core
  * @author  Andrej Jursa
