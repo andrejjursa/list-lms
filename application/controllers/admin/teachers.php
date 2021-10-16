@@ -2,12 +2,15 @@
 
 /**
  * Teachers controller for backend.
+ *
  * @package LIST_BE_Controllers
- * @author Andrej Jursa
+ * @author  Andrej Jursa
  */
-class Teachers extends LIST_Controller {
+class Teachers extends LIST_Controller
+{
     
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->_init_language_for_teacher();
         $this->_load_teacher_langfile();
@@ -16,7 +19,8 @@ class Teachers extends LIST_Controller {
         }
     }
     
-    public function login() {
+    public function login(): void
+    {
         $uri_params = $this->uri->uri_to_assoc(3);
         if ($this->usermanager->is_teacher_session_valid()) {
             if (isset($uri_params['current_url'])) {
@@ -32,7 +36,7 @@ class Teachers extends LIST_Controller {
             $this->_load_teacher_langfile('settings');
             $version = $this->config->item('list_version');
             try {
-		$this->changelog->read(FCPATH . 'changelog.txt');
+                $this->changelog->read(FCPATH . 'changelog.txt');
                 $this->changelog->parse();
                 $this->parser->assign('list_version_info', $this->changelog->get($version));
                 $this->parser->assign('version', $version);
@@ -40,11 +44,12 @@ class Teachers extends LIST_Controller {
             } catch (Exception $e) {
             }
             $this->parser->add_js_file('admin_teachers/login.js?1');
-            $this->parser->parse('backend/teachers/login.tpl', array('uri_params' => $uri_params));
+            $this->parser->parse('backend/teachers/login.tpl', ['uri_params' => $uri_params]);
         }
     }
     
-    public function do_login() {
+    public function do_login(): void
+    {
         $uri_params = $this->uri->uri_to_assoc(3);
         if ($this->usermanager->is_teacher_session_valid()) {
             if (isset($uri_params['current_url'])) {
@@ -84,14 +89,16 @@ class Teachers extends LIST_Controller {
         }
     }
     
-    public function logout() {
+    public function logout(): void
+    {
         $this->usermanager->do_teacher_logout();
         $this->messages->add_message('lang:admin_teachers_logout_success', Messages::MESSAGE_TYPE_SUCCESS);
         $redirects = $this->config->item('login_redirects');
         redirect(create_internal_url($redirects['teacher']));
     }
     
-    public function my_account() {
+    public function my_account(): void
+    {
         $this->_select_teacher_menu_pagetag('teacher_account');
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
@@ -102,10 +109,11 @@ class Teachers extends LIST_Controller {
         $languages_available = $this->lang->get_list_of_languages();
         $this->inject_courses();
         
-        $this->parser->parse('backend/teachers/my_account.tpl', array('teacher' => $teacher, 'languages' => $languages_available));
+        $this->parser->parse('backend/teachers/my_account.tpl', ['teacher' => $teacher, 'languages' => $languages_available]);
     }
     
-    public function save_basic_information() {
+    public function save_basic_information(): void
+    {
         $this->usermanager->teacher_login_protected_redirect();
         $this->load->library('form_validation');
         
@@ -114,18 +122,18 @@ class Teachers extends LIST_Controller {
         $this->form_validation->set_rules('teacher_id', 'id', 'required');
         
         if ($this->form_validation->run()) {
-            $teacher_id = intval($this->input->post('teacher_id'));
-            if ($teacher_id == $this->usermanager->get_teacher_id()) {
+            $teacher_id = (int)$this->input->post('teacher_id');
+            if ($teacher_id === $this->usermanager->get_teacher_id()) {
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
                 $teacher = new Teacher();
                 $teacher->get_by_id($teacher_id);
                 if ($teacher->exists()) {
                     $teacher_data = $this->input->post('teacher');
-                    $teacher->from_array($teacher_data, array('fullname', 'language'));
+                    $teacher->from_array($teacher_data, ['fullname', 'language']);
                     $course = new Course();
                     $course->get_by_id(@$teacher_data['prefered_course_id']);
-                    if ($teacher->save(array('prefered_course' => $course)) && $this->db->trans_status()) {
+                    if ($teacher->save(['prefered_course' => $course]) && $this->db->trans_status()) {
                         $this->db->trans_commit();
                         $this->messages->add_message('lang:admin_teachers_my_account_success_save', Messages::MESSAGE_TYPE_SUCCESS);
                         $this->usermanager->refresh_teacher_userdata();
@@ -149,11 +157,12 @@ class Teachers extends LIST_Controller {
         }
     }
     
-    public function save_password() {
+    public function save_password(): void
+    {
         $this->usermanager->teacher_login_protected_redirect();
         $this->load->library('form_validation');
         
-        $teacher_id = intval($this->input->post('teacher_id'));
+        $teacher_id = (int)$this->input->post('teacher_id');
         $this->form_validation->set_rules('teacher[password_old]', 'lang:admin_teachers_my_account_field_old_password', 'required|callback__validate_old_password[' . $teacher_id . ']');
         $this->form_validation->set_rules('teacher[password]', 'lang:admin_teachers_my_account_field_password', 'required|min_length[6]|max_length[20]');
         $this->form_validation->set_rules('teacher[password_validation]', 'lang:admin_teachers_my_account_field_password_validation', 'required|matches[teacher[password]]');
@@ -161,7 +170,7 @@ class Teachers extends LIST_Controller {
         $this->form_validation->set_message('_validate_old_password', $this->lang->line('admin_teachers_my_account_field_old_password_error_message'));
         
         if ($this->form_validation->run()) {
-            if ($teacher_id == $this->usermanager->get_teacher_id()) {
+            if ($teacher_id === $this->usermanager->get_teacher_id()) {
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
                 $teacher = new Teacher();
@@ -189,25 +198,27 @@ class Teachers extends LIST_Controller {
         }
     }
     
-    public function _validate_old_password($str, $teacher_id) {
+    public function _validate_old_password($str, $teacher_id): bool
+    {
         $teacher = new Teacher();
         $teacher->where('password', sha1($str));
-        $teacher->where('id', intval($teacher_id));
+        $teacher->where('id', (int)$teacher_id);
         $teacher->get();
         return $teacher->exists();
     }
     
-    public function save_email() {
+    public function save_email(): void
+    {
         $this->usermanager->teacher_login_protected_redirect();
         $this->load->library('form_validation');
         
-        $teacher_id = intval($this->input->post('teacher_id'));
+        $teacher_id = (int)$this->input->post('teacher_id');
         $this->form_validation->set_rules('teacher[email]', 'lang:admin_teachers_my_account_field_email', 'required|valid_email|is_unique[teachers.email]');
         $this->form_validation->set_rules('teacher[email_validation]', 'lang:admin_teachers_my_account_field_email_validation', 'required|matches[teacher[email]]');
         $this->form_validation->set_rules('teacher_id', 'id', 'required');
         
         if ($this->form_validation->run()) {
-            if ($teacher_id == $this->usermanager->get_teacher_id()) {
+            if ($teacher_id === $this->usermanager->get_teacher_id()) {
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
                 $teacher = new Teacher();
@@ -236,7 +247,8 @@ class Teachers extends LIST_Controller {
         }
     }
     
-    public function list_index() {
+    public function list_index(): void
+    {
         $this->_initialize_teacher_menu();
         $this->_initialize_open_task_set();
         $this->usermanager->teacher_login_protected_redirect();
@@ -246,20 +258,23 @@ class Teachers extends LIST_Controller {
         $this->parser->parse('backend/teachers/list_index.tpl');
     }
     
-    public function list_teachers_table() {
+    public function list_teachers_table(): void
+    {
         $this->usermanager->teacher_login_protected_redirect();
         
         $teachers = new Teacher();
         $teachers->order_by_as_fullname('fullname', 'asc')->where('id !=', $this->usermanager->get_teacher_id())->get_iterated();
-        $this->parser->parse('backend/teachers/list_teachers_table.tpl', array('teachers' => $teachers));
+        $this->parser->parse('backend/teachers/list_teachers_table.tpl', ['teachers' => $teachers]);
     }
     
-    public function get_new_teacher_form() {
+    public function get_new_teacher_form(): void
+    {
         $this->usermanager->teacher_login_protected_redirect();
         $this->parser->parse('backend/teachers/new_teacher_form.tpl');
     }
     
-    public function create_teacher() {
+    public function create_teacher(): void
+    {
         $this->usermanager->teacher_login_protected_redirect();
         $this->load->library('form_validation');
         
@@ -272,7 +287,7 @@ class Teachers extends LIST_Controller {
         if ($this->form_validation->run()) {
             $teacher_data = $this->input->post('teacher');
             $teacher = new Teacher();
-            $teacher->from_array($teacher_data, array('fullname', 'email'));
+            $teacher->from_array($teacher_data, ['fullname', 'email']);
             $teacher->password = sha1($teacher_data['password']);
             $teacher->language = $this->config->item('language');
             if ($teacher->save() && $this->db->trans_status()) {
@@ -290,7 +305,8 @@ class Teachers extends LIST_Controller {
         }
     }
     
-    public function edit_teacher() {
+    public function edit_teacher(): void
+    {
         $this->_initialize_open_task_set();
         $this->_initialize_teacher_menu();
         $this->usermanager->teacher_login_protected_redirect();
@@ -300,15 +316,16 @@ class Teachers extends LIST_Controller {
         $teacher = new Teacher();
         $teacher->where('id !=', $this->usermanager->get_teacher_id())->get_by_id($teacher_id);
         $this->parser->add_js_file('admin_teachers/edit.js');
-        $this->parser->parse('backend/teachers/edit_teacher.tpl', array('teacher' => $teacher));
+        $this->parser->parse('backend/teachers/edit_teacher.tpl', ['teacher' => $teacher]);
     }
     
-    public function update_teacher() {
+    public function update_teacher(): void
+    {
         $this->usermanager->teacher_login_protected_redirect();
         
         $this->load->library('form_validation');
         
-        $teacher_id = intval($this->input->post('teacher_id'));
+        $teacher_id = (int)$this->input->post('teacher_id');
         
         $this->form_validation->set_rules('teacher[fullname]', 'lang:admin_teachers_list_form_field_fullname', 'required|max_length[255]');
         $this->form_validation->set_rules('teacher[email]', 'lang:admin_teachers_list_form_field_email', 'required|valid_email|callback__email_available[' . $teacher_id . ']');
@@ -322,7 +339,7 @@ class Teachers extends LIST_Controller {
             $teacher->where('id !=', $this->usermanager->get_teacher_id())->get_by_id($teacher_id);
             if ($teacher->exists()) {
                 $teacher_data = $this->input->post('teacher');
-                $teacher->from_array($teacher_data, array('fullname', 'email'));
+                $teacher->from_array($teacher_data, ['fullname', 'email']);
                 if (isset($teacher_data['password']) && !empty($teacher_data['password'])) {
                     $teacher->password = sha1($teacher_data['password']);
                 }
@@ -344,19 +361,21 @@ class Teachers extends LIST_Controller {
         }
     }
     
-    public function _email_available($str, $teacher_id) {
+    public function _email_available($str, $teacher_id): bool
+    {
         $teacher = new Teacher();
         $teacher->where('email', $str)->where('id !=', $teacher_id);
         $count = $teacher->count();
-        return $count == 0;
+        return $count === 0;
     }
     
-    public function delete_teacher() {
+    public function delete_teacher(): void
+    {
         $this->output->set_content_type('application/json');
         $this->usermanager->teacher_login_protected_redirect();
         $url = $this->uri->ruri_to_assoc(3);
-        $teacher_id = isset($url['teacher_id']) ? intval($url['teacher_id']) : 0;
-        if ($teacher_id != 0) {
+        $teacher_id = isset($url['teacher_id']) ? (int)$url['teacher_id'] : 0;
+        if ($teacher_id !== 0) {
             $this->_transaction_isolation();
             $this->db->trans_begin();
             $teacher = new Teacher();
@@ -364,18 +383,19 @@ class Teachers extends LIST_Controller {
             $teacher->delete();
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->output->set_output(json_encode(TRUE));    
+                $this->output->set_output(json_encode(true));
                 $this->_action_success();
             } else {
                 $this->db->trans_rollback();
-                $this->output->set_output(json_encode(FALSE));                
+                $this->output->set_output(json_encode(false));
             }
         } else {
-            $this->output->set_output(json_encode(FALSE));
+            $this->output->set_output(json_encode(false));
         }
     }
     
-    public function switch_language($language, $current_url) {
+    public function switch_language($language, $current_url): void
+    {
         $this->usermanager->teacher_login_protected_redirect();
         if ($this->usermanager->set_teacher_language($language)) {
             $this->messages->add_message('lang:admin_teachers_teacher_language_quick_changed', Messages::MESSAGE_TYPE_DEFAULT);
@@ -383,7 +403,8 @@ class Teachers extends LIST_Controller {
         redirect(decode_from_url($current_url));
     }
     
-    public function switch_prefered_course($course_id, $current_url) {
+    public function switch_prefered_course($course_id, $current_url): void
+    {
         $this->usermanager->teacher_login_protected_redirect();
         $this->_transaction_isolation();
         $this->db->trans_begin();
@@ -392,7 +413,7 @@ class Teachers extends LIST_Controller {
         if ($teacher->exists()) {
             $course = new Course();
             $course->get_by_id($course_id);
-            if ($teacher->save(array('prefered_course' => $course))) {
+            if ($teacher->save(['prefered_course' => $course])) {
                 $this->db->trans_commit();
                 $this->usermanager->refresh_teacher_userdata();
                 $this->messages->add_message('lang:admin_teachers_prefered_course_quickchange_success', Messages::MESSAGE_TYPE_DEFAULT);
@@ -408,18 +429,19 @@ class Teachers extends LIST_Controller {
         }
         redirect(decode_from_url($current_url));
     }
-
-
-    private function inject_courses() {
+    
+    
+    private function inject_courses(): void
+    {
         $courses = new Course();
         $courses->include_related('period', 'name');
         $courses->order_by_related('period', 'sorting', 'asc');
         $courses->order_by_with_constant('name', 'asc');
         $courses->get_iterated();
         
-        $data = array('' => '');
+        $data = ['' => ''];
         
-        foreach($courses as $course) {
+        foreach ($courses as $course) {
             $data[$course->period_name][$course->id] = $course->name;
         }
         

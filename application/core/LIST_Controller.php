@@ -24,6 +24,9 @@
  * @property CI_Image_lib         $image_lib
  * @property Plupload             $plupload
  * @property mosslib              $mosslib
+ * @property Configurator         $configurator
+ * @property Changelog            $changelog
+ * @property Test_score           $test_score
  *
  * @package LIST_Core
  * @author  Andrej Jursa
