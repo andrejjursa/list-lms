@@ -159,8 +159,17 @@ class Task_sets extends LIST_Controller
             $this->db->trans_commit();
             $output->status = true;
             $output->message = $this->lang->line('admin_task_sets_sorting_update_successful');
-            $task_set_type_name = $this->lang->text($this->lang->get_overlay_with_default('task_set_types', $task_set_type_id, 'name', $task_set_type->name));
-            $course_name = $this->lang->text($this->lang->get_overlay_with_default('courses', $course_id, 'name', $course->name));
+            $task_set_type_name = $this->lang->text(
+                $this->lang->get_overlay_with_default(
+                    'task_set_types',
+                    $task_set_type_id,
+                    'name',
+                    $task_set_type->name
+                )
+            );
+            $course_name = $this->lang->text(
+                $this->lang->get_overlay_with_default('courses', $course_id, 'name', $course->name)
+            );
             $output->message = sprintf($output->message, $task_set_type_name, $course_name);
             
             $items = [];
@@ -172,13 +181,17 @@ class Task_sets extends LIST_Controller
                 ];
             }
             
-            $output->content = $this->parser->parse('backend/task_sets/partial/single_type_task_sets_sorting.tpl', [
-                'task_set_type_id'   => $task_set_type_id,
-                'course'             => $course,
-                'task_set_type_data' => [
-                    'items' => $items,
+            $output->content = $this->parser->parse(
+                'backend/task_sets/partial/single_type_task_sets_sorting.tpl',
+                [
+                    'task_set_type_id'   => $task_set_type_id,
+                    'course'             => $course,
+                    'task_set_type_data' => [
+                        'items' => $items,
+                    ],
                 ],
-            ], true);
+                true
+            );
             
             $this->_action_success();
         } else {
@@ -218,7 +231,14 @@ class Task_sets extends LIST_Controller
         $task_set = new Task_set();
         $task_set->where_related_course('id', $course_id)->get_by_id($task_set_id);
         
-        $this->parser->parse('backend/task_sets/task_set_types_options.tpl', ['task_set_types' => $task_set_types, 'task_set' => $task_set, 'selected_id' => $selected_id]);
+        $this->parser->parse(
+            'backend/task_sets/task_set_types_options.tpl',
+            [
+                'task_set_types' => $task_set_types,
+                'task_set'       => $task_set,
+                'selected_id'    => $selected_id,
+            ]
+        );
     }
     
     public function get_task_set_groups($course_id, $selected_id = null, $task_set_id = null): void
@@ -240,7 +260,14 @@ class Task_sets extends LIST_Controller
         $task_set = new Task_set();
         $task_set->where_related_course('id', $course_id)->get_by_id($task_set_id);
         
-        $this->parser->parse('backend/task_sets/task_set_groups_options.tpl', ['groups' => $groups, 'task_set' => $task_set, 'selected_id' => $selected_id]);
+        $this->parser->parse(
+            'backend/task_sets/task_set_groups_options.tpl',
+            [
+                'groups'      => $groups,
+                'task_set'    => $task_set,
+                'selected_id' => $selected_id,
+            ]
+        );
     }
     
     public function get_course_groups($course_id, $selected_id = null): void
@@ -259,7 +286,13 @@ class Task_sets extends LIST_Controller
         
         $query->free_result();
         
-        $this->parser->parse('backend/task_sets/task_set_groups_filter_options.tpl', ['groups' => $groups, 'selected_id' => $selected_id]);
+        $this->parser->parse(
+            'backend/task_sets/task_set_groups_filter_options.tpl',
+            [
+                'groups'      => $groups,
+                'selected_id' => $selected_id,
+            ]
+        );
     }
     
     
@@ -277,7 +310,9 @@ class Task_sets extends LIST_Controller
         
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {
-                $rooms[$row->id] = $this->lang->text($row->name) . ' (' . $days[$row->time_day] . ': ' . smarty_modifier_is_time($row->time_begin) . ' - ' . smarty_modifier_is_time($row->time_end) . ')';
+                $rooms[$row->id] = $this->lang->text($row->name) . ' (' . $days[$row->time_day] . ': '
+                    . smarty_modifier_is_time($row->time_begin) . ' - '
+                    . smarty_modifier_is_time($row->time_end) . ')';
             }
         }
         
@@ -286,24 +321,67 @@ class Task_sets extends LIST_Controller
         $task_set = new Task_set();
         $task_set->where_related_course('id', $course_id)->get_by_id($task_set_id);
         
-        $this->parser->parse('backend/task_sets/task_set_group_rooms_options.tpl', ['rooms' => $rooms, 'task_set' => $task_set, 'selected_id' => $selected_id]);
+        $this->parser->parse(
+            'backend/task_sets/task_set_group_rooms_options.tpl',
+            [
+                'rooms'       => $rooms,
+                'task_set'    => $task_set,
+                'selected_id' => $selected_id,
+            ]
+        );
     }
     
     public function get_all_task_sets(): void
     {
         $fields_config = [
-            ['name' => 'created', 'caption' => 'lang:common_table_header_created'],
-            ['name' => 'updated', 'caption' => 'lang:common_table_header_updated'],
-            ['name' => 'name', 'caption' => 'lang:admin_task_sets_table_header_name'],
-            ['name' => 'content_type', 'caption' => 'lang:admin_task_sets_table_header_content_type'],
-            ['name' => 'course', 'caption' => 'lang:admin_task_sets_table_header_course'],
-            ['name' => 'group', 'caption' => 'lang:admin_task_sets_table_header_group'],
-            ['name' => 'task_set_type', 'caption' => 'lang:admin_task_sets_table_header_task_set_type'],
-            ['name' => 'tasks', 'caption' => 'lang:admin_task_sets_table_header_tasks'],
-            ['name' => 'published', 'caption' => 'lang:admin_task_sets_table_header_published'],
-            ['name' => 'publish_start_time', 'caption' => 'lang:admin_task_sets_table_header_publish_start_time'],
-            ['name' => 'upload_end_time', 'caption' => 'lang:admin_task_sets_table_header_upload_end_time'],
-            ['name' => 'project_selection_deadline', 'caption' => 'lang:admin_task_sets_table_header_project_selection_deadline'],
+            [
+                'name'    => 'created',
+                'caption' => 'lang:common_table_header_created',
+            ],
+            [
+                'name'    => 'updated',
+                'caption' => 'lang:common_table_header_updated',
+            ],
+            [
+                'name'    => 'name',
+                'caption' => 'lang:admin_task_sets_table_header_name',
+            ],
+            [
+                'name'    => 'content_type',
+                'caption' => 'lang:admin_task_sets_table_header_content_type',
+            ],
+            [
+                'name'    => 'course',
+                'caption' => 'lang:admin_task_sets_table_header_course',
+            ],
+            [
+                'name'    => 'group',
+                'caption' => 'lang:admin_task_sets_table_header_group',
+            ],
+            [
+                'name'    => 'task_set_type',
+                'caption' => 'lang:admin_task_sets_table_header_task_set_type',
+            ],
+            [
+                'name'    => 'tasks',
+                'caption' => 'lang:admin_task_sets_table_header_tasks',
+            ],
+            [
+                'name'    => 'published',
+                'caption' => 'lang:admin_task_sets_table_header_published',
+            ],
+            [
+                'name'    => 'publish_start_time',
+                'caption' => 'lang:admin_task_sets_table_header_publish_start_time',
+            ],
+            [
+                'name'    => 'upload_end_time',
+                'caption' => 'lang:admin_task_sets_table_header_upload_end_time',
+            ],
+            [
+                'name'    => 'project_selection_deadline',
+                'caption' => 'lang:admin_task_sets_table_header_project_selection_deadline',
+            ],
         ];
         $filter = $this->input->post('filter');
         if (!array_key_exists('hide_old', $filter)) {
@@ -313,7 +391,11 @@ class Task_sets extends LIST_Controller
         $this->inject_stored_task_sets_filter();
         $task_sets = new Task_set();
         $task_sets->select('*');
-        $task_sets->select_subquery('(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = ${parent}.`id` AND `tsp`.`enabled` = 1)', 'task_set_permission_count');
+        $task_sets->select_subquery(
+            '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+            . 'WHERE `tsp`.`task_set_id` = ${parent}.`id` AND `tsp`.`enabled` = 1)',
+            'task_set_permission_count'
+        );
         //$task_sets->include_related_count('task_set_permission');
         //$task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
         $task_sets->include_related('course', 'name', true);
@@ -326,12 +408,20 @@ class Task_sets extends LIST_Controller
             $task_sets->where_related_course('id', (int)$filter['course']);
             if (isset($filter['group']) && $filter['group'] === 'none') {
                 $task_sets->where_related_group('id', null);
-                $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                $task_sets->where_subquery(
+                    0,
+                    '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                    . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+                );
             } else if (isset($filter['group']) && (int)$filter['group'] > 0) {
                 $task_sets->group_start();
                 $task_sets->or_group_start();
                 $task_sets->where_related_group('id', (int)$filter['group']);
-                $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                $task_sets->where_subquery(
+                    0,
+                    '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                    . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+                );
                 $task_sets->group_end();
                 $task_sets->or_group_start();
                 $task_sets->where_related('task_set_permission/group', 'id', (int)$filter['group']);
@@ -344,7 +434,11 @@ class Task_sets extends LIST_Controller
             $old = date('Y-m-d H:i:s', strtotime('now -2 weeks'));
             $task_sets->group_start();
             $task_sets->group_start();
-            $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_sets->where_subquery(
+                0,
+                '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+            );
             $task_sets->group_start();
             $task_sets->where('upload_end_time', null);
             $task_sets->or_where('upload_end_time >', $old);
@@ -352,10 +446,24 @@ class Task_sets extends LIST_Controller
             $task_sets->group_end();
             $task_sets->or_group_start();
             $task_sets->where('content_type !=', 'project');
-            $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_sets->where_subquery(
+                '0 <',
+                '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+            );
             $task_sets->group_start();
-            $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 AND `tsp`.`upload_end_time` IS NULL)');
-            $task_sets->or_where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 AND `tsp`.`upload_end_time` > \'' . $old . '\')');
+            $task_sets->where_subquery(
+                '0 <',
+                '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 '
+                . 'AND `tsp`.`upload_end_time` IS NULL)'
+            );
+            $task_sets->or_where_subquery(
+                '0 <',
+                '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 '
+                . 'AND `tsp`.`upload_end_time` > \'' . $old . '\')'
+            );
             $task_sets->group_end();
             $task_sets->group_end();
             $task_sets->group_end();
@@ -399,11 +507,21 @@ class Task_sets extends LIST_Controller
         } else if ($filter['order_by_field'] === 'content_type') {
             $task_sets->order_by('content_type', $order_by_direction);
         }
-        $task_sets->get_paged_iterated(isset($filter['page']) ? (int)$filter['page'] : 1, isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25);
+        $task_sets->get_paged_iterated(
+            isset($filter['page']) ? (int)$filter['page'] : 1,
+            isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25
+        );
         $this->lang->init_overlays('task_sets', $task_sets->all_to_array(), ['name']);
         $opened_task_set = new Task_set();
         $opened_task_set->get_as_open();
-        $this->parser->parse('backend/task_sets/table_content.tpl', ['task_sets' => $task_sets, 'opened_task_set' => $opened_task_set, 'fields_config' => $fields_config]);
+        $this->parser->parse(
+            'backend/task_sets/table_content.tpl',
+            [
+                'task_sets'       => $task_sets,
+                'opened_task_set' => $opened_task_set,
+                'fields_config'   => $fields_config,
+            ]
+        );
     }
     
     public function create(): void
@@ -412,70 +530,197 @@ class Task_sets extends LIST_Controller
         
         $task_set_data = $this->input->post('task_set');
         
-        $this->form_validation->set_rules('task_set[content_type]', 'lang:admin_task_sets_form_field_content_type', 'required');
+        $this->form_validation->set_rules(
+            'task_set[content_type]',
+            'lang:admin_task_sets_form_field_content_type',
+            'required'
+        );
         
-        $this->form_validation->set_rules('task_set[name]', 'lang:admin_task_sets_form_field_name', 'required');
-        $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
+        $this->form_validation->set_rules(
+            'task_set[name]',
+            'lang:admin_task_sets_form_field_name',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'task_set[course_id]',
+            'lang:admin_task_sets_form_field_course_id',
+            'required|exists_in_table[courses.id]'
+        );
         if (isset($task_set_data['content_type']) && $task_set_data['content_type'] === 'task_set') {
-            $this->form_validation->set_rules('task_set[task_set_type_id]', 'lang:admin_task_sets_form_field_task_set_type_id', 'required|exists_in_table[task_set_types.id]');
-            $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'greater_than_equal[0]');
+            $this->form_validation->set_rules(
+                'task_set[task_set_type_id]',
+                'lang:admin_task_sets_form_field_task_set_type_id',
+                'required|exists_in_table[task_set_types.id]'
+            );
+            $this->form_validation->set_rules(
+                'task_set[points_override]',
+                'lang:admin_task_sets_form_field_points_override',
+                'greater_than_equal[0]'
+            );
             if (isset($task_set_data['enable_tests_scoring'])) {
-                $this->form_validation->set_rules('task_set[test_min_needed]', 'lang:admin_task_sets_form_field_test_min_needed', 'greater_than_equal[0]');
-                $this->form_validation->set_rules('task_set[test_max_allowed]', 'lang:admin_task_sets_form_field_test_max_allowed', 'greater_than_field_or_equal[task_set[test_min_needed]]');
+                $this->form_validation->set_rules(
+                    'task_set[test_min_needed]',
+                    'lang:admin_task_sets_form_field_test_min_needed',
+                    'greater_than_equal[0]'
+                );
+                $this->form_validation->set_rules(
+                    'task_set[test_max_allowed]',
+                    'lang:admin_task_sets_form_field_test_max_allowed',
+                    'greater_than_field_or_equal[task_set[test_min_needed]]'
+                );
             }
-            $this->form_validation->set_rules('task_set[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
-            if (isset($task_set_data['deadline_notification_emails_handler']) && (int)$task_set_data['deadline_notification_emails_handler'] === 2) {
-                $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
+            $this->form_validation->set_rules(
+                'task_set[deadline_notification_emails_handler]',
+                'lang:admin_task_sets_form_field_deadline_notification_emails_handler',
+                'required'
+            );
+            if (isset($task_set_data['deadline_notification_emails_handler'])
+                && (int)$task_set_data['deadline_notification_emails_handler'] === 2
+            ) {
+                $this->form_validation->set_rules(
+                    'task_set[deadline_notification_emails]',
+                    'lang:admin_task_sets_form_field_deadline_notification_emails',
+                    'required|valid_emails'
+                );
             } else {
-                $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
+                $this->form_validation->set_rules(
+                    'task_set[deadline_notification_emails]',
+                    'lang:admin_task_sets_form_field_deadline_notification_emails',
+                    'zero_or_more_valid_emails'
+                );
             }
-            $this->form_validation->set_rules('task_set[publish_start_time]', 'lang:admin_task_sets_form_field_publish_start_time', 'datetime');
-            $this->form_validation->set_rules('task_set[upload_end_time]', 'lang:admin_task_sets_form_field_upload_end_time', 'datetime');
+            $this->form_validation->set_rules(
+                'task_set[publish_start_time]',
+                'lang:admin_task_sets_form_field_publish_start_time',
+                'datetime'
+            );
+            $this->form_validation->set_rules(
+                'task_set[upload_end_time]',
+                'lang:admin_task_sets_form_field_upload_end_time',
+                'datetime'
+            );
         } else {
-            $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'required|numeric|greater_than_equal[0]');
-            $this->form_validation->set_rules('task_set[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
-            if (isset($task_set_data['deadline_notification_emails_handler']) && (int)$task_set_data['deadline_notification_emails_handler'] === 2) {
-                $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
+            $this->form_validation->set_rules(
+                'task_set[points_override]',
+                'lang:admin_task_sets_form_field_points_override',
+                'required|numeric|greater_than_equal[0]'
+            );
+            $this->form_validation->set_rules(
+                'task_set[deadline_notification_emails_handler]',
+                'lang:admin_task_sets_form_field_deadline_notification_emails_handler',
+                'required'
+            );
+            if (isset($task_set_data['deadline_notification_emails_handler'])
+                && (int)$task_set_data['deadline_notification_emails_handler'] === 2
+            ) {
+                $this->form_validation->set_rules(
+                    'task_set[deadline_notification_emails]',
+                    'lang:admin_task_sets_form_field_deadline_notification_emails',
+                    'required|valid_emails'
+                );
             } else {
-                $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
+                $this->form_validation->set_rules(
+                    'task_set[deadline_notification_emails]',
+                    'lang:admin_task_sets_form_field_deadline_notification_emails',
+                    'zero_or_more_valid_emails'
+                );
             }
-            $this->form_validation->set_rules('task_set[publish_start_time]', 'lang:admin_task_sets_form_field_publish_start_time', 'datetime');
-            $this->form_validation->set_rules('task_set[upload_end_time]', 'lang:admin_task_sets_form_field_upload_end_time', 'required|datetime');
-            $this->form_validation->set_rules('task_set[project_selection_deadline]', 'lang:admin_task_sets_form_field_project_selection_deadline', 'required|datetime');
+            $this->form_validation->set_rules(
+                'task_set[publish_start_time]',
+                'lang:admin_task_sets_form_field_publish_start_time',
+                'datetime'
+            );
+            $this->form_validation->set_rules(
+                'task_set[upload_end_time]',
+                'lang:admin_task_sets_form_field_upload_end_time',
+                'required|datetime'
+            );
+            $this->form_validation->set_rules(
+                'task_set[project_selection_deadline]',
+                'lang:admin_task_sets_form_field_project_selection_deadline',
+                'required|datetime'
+            );
         }
         
         $this->_transaction_isolation();
         $this->db->trans_begin();
         if ($this->form_validation->run()) {
             $task_set = new Task_set();
-            $task_set->from_array($task_set_data, ['content_type', 'name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment', 'test_priority']);
+            $task_set->from_array(
+                $task_set_data,
+                [
+                    'content_type',
+                    'name',
+                    'course_id',
+                    'task_set_type_id',
+                    'published',
+                    'allowed_file_types',
+                    'internal_comment',
+                    'test_priority',
+                ]
+            );
             $task_set->group_id = (int)$task_set_data['group_id'] > 0 ? (int)$task_set_data['group_id'] : null;
             $task_set->room_id = (int)$task_set_data['room_id'] > 0 ? (int)$task_set_data['room_id'] : null;
-            $task_set->publish_start_time = preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : null;
-            $task_set->upload_end_time = preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : null;
-            $task_set->project_selection_deadline = preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['project_selection_deadline']) ? $task_set_data['project_selection_deadline'] : null;
-            $task_set->comments_enabled = isset($task_set_data['comments_enabled']) && (bool)(int)$task_set_data['comments_enabled'];
-            $task_set->comments_moderated = isset($task_set_data['comments_moderated']) && (bool)(int)$task_set_data['comments_moderated'];
-            $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? (float)$task_set_data['points_override'] : null;
-            $task_set->allowed_test_types = isset($task_set_data['allowed_test_types']) && is_array($task_set_data['allowed_test_types']) ? implode(',', $task_set_data['allowed_test_types']) : '';
+            $task_set->publish_start_time =
+                preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['publish_start_time'])
+                    ? $task_set_data['publish_start_time']
+                    : null;
+            $task_set->upload_end_time =
+                preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['upload_end_time'])
+                    ? $task_set_data['upload_end_time']
+                    : null;
+            $task_set->project_selection_deadline =
+                preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['project_selection_deadline'])
+                    ? $task_set_data['project_selection_deadline']
+                    : null;
+            $task_set->comments_enabled =
+                isset($task_set_data['comments_enabled'])
+                && (bool)(int)$task_set_data['comments_enabled'];
+            $task_set->comments_moderated =
+                isset($task_set_data['comments_moderated'])
+                && (bool)(int)$task_set_data['comments_moderated'];
+            $task_set->points_override =
+                isset($task_set_data['points_override_enabled'])
+                && (bool)$task_set_data['points_override_enabled']
+                    ? (float)$task_set_data['points_override']
+                    : null;
+            $task_set->allowed_test_types =
+                isset($task_set_data['allowed_test_types'])
+                && is_array($task_set_data['allowed_test_types'])
+                    ? implode(',', $task_set_data['allowed_test_types'])
+                    : '';
             $task_set->enable_tests_scoring = isset($task_set_data['enable_tests_scoring']) ? 1 : 0;
             $task_set->deadline_notification_emails = $task_set_data['deadline_notification_emails'];
             $task_set->deadline_notification_emails_handler = $task_set_data['deadline_notification_emails_handler'];
             $task_set->deadline_notified = is_null($task_set->upload_end_time) ? 1 : 0;
             if ((int)$task_set->enable_tests_scoring === 1) {
-                $task_set->test_min_needed = isset($task_set_data['test_min_needed']) ? (int)$task_set_data['test_min_needed'] : 0;
-                $task_set->test_max_allowed = isset($task_set_data['test_max_allowed']) ? (int)$task_set_data['test_max_allowed'] : 0;
+                $task_set->test_min_needed = isset($task_set_data['test_min_needed'])
+                    ? (int)$task_set_data['test_min_needed']
+                    : 0;
+                $task_set->test_max_allowed = isset($task_set_data['test_max_allowed'])
+                    ? (int)$task_set_data['test_max_allowed']
+                    : 0;
             }
             if ($task_set->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message(
+                    'lang:admin_task_sets_flash_message_save_successful',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
                 $this->_action_success();
                 if ($this->input->post('open_task_set') === 'true') {
-                    redirect(create_internal_url('admin_task_sets/new_task_set_form/force_open_task_set_id/' . $task_set->id));
+                    redirect(
+                        create_internal_url(
+                            'admin_task_sets/new_task_set_form/force_open_task_set_id/' . $task_set->id
+                        )
+                    );
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_task_sets_flash_message_save_fail', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_task_sets_flash_message_save_fail',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_task_sets/new_task_set_form'));
         } else {
@@ -488,7 +733,9 @@ class Task_sets extends LIST_Controller
     {
         $this->_select_teacher_menu_pagetag('task_sets');
         $url = $this->uri->ruri_to_assoc(3);
-        $task_set_id = isset($url['task_set_id']) ? (int)$url['task_set_id'] : (int)$this->input->post('task_set_id');
+        $task_set_id = isset($url['task_set_id'])
+            ? (int)$url['task_set_id']
+            : (int)$this->input->post('task_set_id');
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         $ps_data = [];
@@ -539,7 +786,14 @@ class Task_sets extends LIST_Controller
         $this->inject_course_groups();
         $this->inject_course_group_rooms();
         $this->inject_course_task_set_types();
-        $this->parser->parse('backend/task_sets/edit.tpl', ['task_set' => $task_set, 'project_selections' => $ps_data, 'not_project_selections' => $nps_data]);
+        $this->parser->parse(
+            'backend/task_sets/edit.tpl',
+            [
+                'task_set'               => $task_set,
+                'project_selections'     => $ps_data,
+                'not_project_selections' => $nps_data,
+            ]
+        );
     }
     
     public function update(): void
@@ -555,71 +809,208 @@ class Task_sets extends LIST_Controller
         $task_set->get_by_id($task_set_id);
         
         if ($task_set->exists()) {
-            $this->form_validation->set_rules('task_set[name]', 'lang:admin_task_sets_form_field_name', 'required');
-            $this->form_validation->set_rules('task_set[course_id]', 'lang:admin_task_sets_form_field_course_id', 'required|exists_in_table[courses.id]');
+            $this->form_validation->set_rules(
+                'task_set[name]',
+                'lang:admin_task_sets_form_field_name',
+                'required'
+            );
+            $this->form_validation->set_rules(
+                'task_set[course_id]',
+                'lang:admin_task_sets_form_field_course_id',
+                'required|exists_in_table[courses.id]'
+            );
             if (isset($task_set_data['content_type']) && $task_set_data['content_type'] === 'task_set') {
-                $this->form_validation->set_rules('task_set[task_set_type_id]', 'lang:admin_task_sets_form_field_task_set_type_id', 'required|exists_in_table[task_set_types.id]');
-                $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'greater_than_equal[0]');
+                $this->form_validation->set_rules(
+                    'task_set[task_set_type_id]',
+                    'lang:admin_task_sets_form_field_task_set_type_id',
+                    'required|exists_in_table[task_set_types.id]'
+                );
+                $this->form_validation->set_rules(
+                    'task_set[points_override]',
+                    'lang:admin_task_sets_form_field_points_override',
+                    'greater_than_equal[0]'
+                );
                 if (isset($task_set_data['enable_tests_scoring'])) {
-                    $this->form_validation->set_rules('task_set[test_min_needed]', 'lang:admin_task_sets_form_field_test_min_needed', 'greater_than_equal[0]');
-                    $this->form_validation->set_rules('task_set[test_max_allowed]', 'lang:admin_task_sets_form_field_test_max_allowed', 'greater_than_field_or_equal[task_set[test_min_needed]]');
+                    $this->form_validation->set_rules(
+                        'task_set[test_min_needed]',
+                        'lang:admin_task_sets_form_field_test_min_needed',
+                        'greater_than_equal[0]'
+                    );
+                    $this->form_validation->set_rules(
+                        'task_set[test_max_allowed]',
+                        'lang:admin_task_sets_form_field_test_max_allowed',
+                        'greater_than_field_or_equal[task_set[test_min_needed]]'
+                    );
                 }
-                $this->form_validation->set_rules('task_set[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
-                if (isset($task_set_data['deadline_notification_emails_handler']) && (int)$task_set_data['deadline_notification_emails_handler'] === 2) {
-                    $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
+                $this->form_validation->set_rules(
+                    'task_set[deadline_notification_emails_handler]',
+                    'lang:admin_task_sets_form_field_deadline_notification_emails_handler',
+                    'required'
+                );
+                if (isset($task_set_data['deadline_notification_emails_handler'])
+                    && (int)$task_set_data['deadline_notification_emails_handler'] === 2
+                ) {
+                    $this->form_validation->set_rules(
+                        'task_set[deadline_notification_emails]',
+                        'lang:admin_task_sets_form_field_deadline_notification_emails',
+                        'required|valid_emails'
+                    );
                 } else {
-                    $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
+                    $this->form_validation->set_rules(
+                        'task_set[deadline_notification_emails]',
+                        'lang:admin_task_sets_form_field_deadline_notification_emails',
+                        'zero_or_more_valid_emails'
+                    );
                 }
-                $this->form_validation->set_rules('task_set[publish_start_time]', 'lang:admin_task_sets_form_field_publish_start_time', 'datetime');
-                $this->form_validation->set_rules('task_set[upload_end_time]', 'lang:admin_task_sets_form_field_upload_end_time', 'datetime');
+                $this->form_validation->set_rules(
+                    'task_set[publish_start_time]',
+                    'lang:admin_task_sets_form_field_publish_start_time',
+                    'datetime'
+                );
+                $this->form_validation->set_rules(
+                    'task_set[upload_end_time]',
+                    'lang:admin_task_sets_form_field_upload_end_time',
+                    'datetime'
+                );
             } else {
-                $this->form_validation->set_rules('task_set[points_override]', 'lang:admin_task_sets_form_field_points_override', 'required|numeric|greater_than_equal[0]');
-                $this->form_validation->set_rules('task_set[deadline_notification_emails_handler]', 'lang:admin_task_sets_form_field_deadline_notification_emails_handler', 'required');
-                if (isset($task_set_data['deadline_notification_emails_handler']) && (int)$task_set_data['deadline_notification_emails_handler'] === 2) {
-                    $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'required|valid_emails');
+                $this->form_validation->set_rules(
+                    'task_set[points_override]',
+                    'lang:admin_task_sets_form_field_points_override',
+                    'required|numeric|greater_than_equal[0]'
+                );
+                $this->form_validation->set_rules(
+                    'task_set[deadline_notification_emails_handler]',
+                    'lang:admin_task_sets_form_field_deadline_notification_emails_handler',
+                    'required'
+                );
+                if (isset($task_set_data['deadline_notification_emails_handler'])
+                    && (int)$task_set_data['deadline_notification_emails_handler'] === 2
+                ) {
+                    $this->form_validation->set_rules(
+                        'task_set[deadline_notification_emails]',
+                        'lang:admin_task_sets_form_field_deadline_notification_emails',
+                        'required|valid_emails'
+                    );
                 } else {
-                    $this->form_validation->set_rules('task_set[deadline_notification_emails]', 'lang:admin_task_sets_form_field_deadline_notification_emails', 'zero_or_more_valid_emails');
+                    $this->form_validation->set_rules(
+                        'task_set[deadline_notification_emails]',
+                        'lang:admin_task_sets_form_field_deadline_notification_emails',
+                        'zero_or_more_valid_emails'
+                    );
                 }
-                $this->form_validation->set_rules('task_set[publish_start_time]', 'lang:admin_task_sets_form_field_publish_start_time', 'datetime');
-                $this->form_validation->set_rules('task_set[upload_end_time]', 'lang:admin_task_sets_form_field_upload_end_time', 'required|datetime');
-                $this->form_validation->set_rules('task_set[project_selection_deadline]', 'lang:admin_task_sets_form_field_project_selection_deadline', 'required|datetime');
+                $this->form_validation->set_rules(
+                    'task_set[publish_start_time]',
+                    'lang:admin_task_sets_form_field_publish_start_time',
+                    'datetime'
+                );
+                $this->form_validation->set_rules(
+                    'task_set[upload_end_time]',
+                    'lang:admin_task_sets_form_field_upload_end_time',
+                    'required|datetime'
+                );
+                $this->form_validation->set_rules(
+                    'task_set[project_selection_deadline]',
+                    'lang:admin_task_sets_form_field_project_selection_deadline',
+                    'required|datetime'
+                );
             }
             
-            $tasks = $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get();
+            $tasks = $task_set
+                ->task
+                ->include_join_fields()
+                ->order_by('`task_task_set_rel`.`sorting`', 'asc')
+                ->get();
             $tasks_join_fields_data = $this->input->post('task_join_field');
             if ($tasks->exists()) {
                 foreach ($tasks->all as $task) {
-                    if (isset($tasks_join_fields_data[$task->id]) && !isset($tasks_join_fields_data[$task->id]['delete'])) {
+                    if (isset($tasks_join_fields_data[$task->id]) &&
+                        !isset($tasks_join_fields_data[$task->id]['delete'])
+                    ) {
                         if ($task_set->content_type === 'task_set') {
-                            $this->form_validation->set_rules('task_join_field[' . (int)$task->id . '][points_total]', 'lang:admin_task_sets_form_field_task_points_total', 'required|number|greater_than_equal[0]');
-                            $this->form_validation->set_rules('task_join_field[' . (int)$task->id . '][test_max_points]', 'lang:admin_task_sets_form_field_task_test_max_points', 'required|number|greater_than_equal[0]');
-                            $this->form_validation->set_rules('task_join_field[' . (int)$task->id . '][test_min_points]', 'lang:admin_task_sets_form_field_task_test_min_points', 'required|number|less_than_field_or_equal[task_join_field[' . (int)$task->id . '][test_max_points]]');
+                            $this->form_validation->set_rules(
+                                'task_join_field[' . (int)$task->id . '][points_total]',
+                                'lang:admin_task_sets_form_field_task_points_total',
+                                'required|number|greater_than_equal[0]'
+                            );
+                            $this->form_validation->set_rules(
+                                'task_join_field[' . (int)$task->id . '][test_max_points]',
+                                'lang:admin_task_sets_form_field_task_test_max_points',
+                                'required|number|greater_than_equal[0]'
+                            );
+                            $this->form_validation->set_rules(
+                                'task_join_field[' . (int)$task->id . '][test_min_points]',
+                                'lang:admin_task_sets_form_field_task_test_min_points',
+                                'required|number|less_than_field_or_equal[task_join_field['
+                                . (int)$task->id . '][test_max_points]]'
+                            );
                         } else {
-                            $this->form_validation->set_rules('task_join_field[' . (int)$task->id . '][max_projects_selections]', 'lang:admin_task_sets_form_field_task_max_projects_selections', 'required|integer|greater_than[0]');
+                            $this->form_validation->set_rules(
+                                'task_join_field[' . (int)$task->id . '][max_projects_selections]',
+                                'lang:admin_task_sets_form_field_task_max_projects_selections',
+                                'required|integer|greater_than[0]'
+                            );
                         }
                     }
                 }
             }
         } else {
             $this->db->trans_rollback();
-            $this->messages->add_message('lang:admin_task_sets_error_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:admin_task_sets_error_task_set_not_found',
+                Messages::MESSAGE_TYPE_ERROR
+            );
             redirect(create_internal_url('admin_task_sets'));
             die();
         }
         
         if ($this->form_validation->run()) {
             $task_set_upload_end_time = $task_set->upload_end_time;
-            $task_set->from_array($task_set_data, ['name', 'course_id', 'task_set_type_id', 'published', 'allowed_file_types', 'internal_comment', 'test_priority']);
+            $task_set->from_array(
+                $task_set_data,
+                [
+                    'name',
+                    'course_id',
+                    'task_set_type_id',
+                    'published',
+                    'allowed_file_types',
+                    'internal_comment',
+                    'test_priority',
+                ]
+            );
             $task_set->instructions = remove_base_url($task_set_data['instructions']);
             $task_set->group_id = (int)($task_set_data['group_id']) > 0 ? (int)($task_set_data['group_id']) : null;
             $task_set->room_id = (int)($task_set_data['room_id']) > 0 ? (int)($task_set_data['room_id']) : null;
-            $task_set->publish_start_time = isset($task_set_data['publish_start_time']) && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['publish_start_time']) ? $task_set_data['publish_start_time'] : null;
-            $task_set->upload_end_time = isset($task_set_data['upload_end_time']) && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['upload_end_time']) ? $task_set_data['upload_end_time'] : null;
-            $task_set->project_selection_deadline = isset($task_set_data['project_selection_deadline']) && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['project_selection_deadline']) ? $task_set_data['project_selection_deadline'] : null;
-            $task_set->comments_enabled = isset($task_set_data['comments_enabled']) && (bool)(int)$task_set_data['comments_enabled'];
-            $task_set->comments_moderated = isset($task_set_data['comments_moderated']) && (bool)(int)$task_set_data['comments_moderated'];
-            $task_set->points_override = isset($task_set_data['points_override_enabled']) && (bool)$task_set_data['points_override_enabled'] ? (float)$task_set_data['points_override'] : null;
-            $task_set->allowed_test_types = isset($task_set_data['allowed_test_types']) && is_array($task_set_data['allowed_test_types']) ? implode(',', $task_set_data['allowed_test_types']) : '';
+            $task_set->publish_start_time =
+                isset($task_set_data['publish_start_time'])
+                && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['publish_start_time'])
+                    ? $task_set_data['publish_start_time']
+                    : null;
+            $task_set->upload_end_time =
+                isset($task_set_data['upload_end_time'])
+                && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['upload_end_time'])
+                    ? $task_set_data['upload_end_time']
+                    : null;
+            $task_set->project_selection_deadline =
+                isset($task_set_data['project_selection_deadline'])
+                && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['project_selection_deadline'])
+                    ? $task_set_data['project_selection_deadline']
+                    : null;
+            $task_set->comments_enabled =
+                isset($task_set_data['comments_enabled'])
+                && (bool)(int)$task_set_data['comments_enabled'];
+            $task_set->comments_moderated =
+                isset($task_set_data['comments_moderated'])
+                && (bool)(int)$task_set_data['comments_moderated'];
+            $task_set->points_override =
+                isset($task_set_data['points_override_enabled'])
+                && (bool)$task_set_data['points_override_enabled']
+                    ? (float)$task_set_data['points_override']
+                    : null;
+            $task_set->allowed_test_types =
+                isset($task_set_data['allowed_test_types'])
+                && is_array($task_set_data['allowed_test_types'])
+                    ? implode(',', $task_set_data['allowed_test_types'])
+                    : '';
             $task_set->enable_tests_scoring = isset($task_set_data['enable_tests_scoring']) ? 1 : 0;
             $task_set->deadline_notification_emails = $task_set_data['deadline_notification_emails'];
             $task_set->deadline_notification_emails_handler = $task_set_data['deadline_notification_emails_handler'];
@@ -627,8 +1018,12 @@ class Task_sets extends LIST_Controller
                 $task_set->deadline_notified = 0;
             }
             if ((int)$task_set->enable_tests_scoring === 1) {
-                $task_set->test_min_needed = isset($task_set_data['test_min_needed']) ? (int)($task_set_data['test_min_needed']) : 0;
-                $task_set->test_max_allowed = isset($task_set_data['test_max_allowed']) ? (int)($task_set_data['test_max_allowed']) : 0;
+                $task_set->test_min_needed = isset($task_set_data['test_min_needed'])
+                    ? (int)($task_set_data['test_min_needed'])
+                    : 0;
+                $task_set->test_max_allowed = isset($task_set_data['test_max_allowed'])
+                    ? (int)($task_set_data['test_max_allowed'])
+                    : 0;
             }
             
             $overlay = $this->input->post('overlay');
@@ -639,12 +1034,36 @@ class Task_sets extends LIST_Controller
                     if (isset($tasks_join_fields_data[$task->id])) {
                         if (!isset($tasks_join_fields_data[$task->id]['delete'])) {
                             $task->set_join_field($task_set, 'sorting', $tasks_sorting[$task->id] + 1);
-                            $task->set_join_field($task_set, 'points_total', (float)@$tasks_join_fields_data[$task->id]['points_total']);
-                            $task->set_join_field($task_set, 'test_min_points', (float)@$tasks_join_fields_data[$task->id]['test_min_points']);
-                            $task->set_join_field($task_set, 'test_max_points', (float)@$tasks_join_fields_data[$task->id]['test_max_points']);
-                            $task->set_join_field($task_set, 'bonus_task', (int)(bool)@$tasks_join_fields_data[$task->id]['bonus_task']);
-                            $task->set_join_field($task_set, 'internal_comment', @$tasks_join_fields_data[$task->id]['internal_comment']);
-                            $task->set_join_field($task_set, 'max_projects_selections', @$tasks_join_fields_data[$task->id]['max_projects_selections']);
+                            $task->set_join_field(
+                                $task_set,
+                                'points_total',
+                                (float)@$tasks_join_fields_data[$task->id]['points_total']
+                            );
+                            $task->set_join_field(
+                                $task_set,
+                                'test_min_points',
+                                (float)@$tasks_join_fields_data[$task->id]['test_min_points']
+                            );
+                            $task->set_join_field(
+                                $task_set,
+                                'test_max_points',
+                                (float)@$tasks_join_fields_data[$task->id]['test_max_points']
+                            );
+                            $task->set_join_field(
+                                $task_set,
+                                'bonus_task',
+                                (int)(bool)@$tasks_join_fields_data[$task->id]['bonus_task']
+                            );
+                            $task->set_join_field(
+                                $task_set,
+                                'internal_comment',
+                                @$tasks_join_fields_data[$task->id]['internal_comment']
+                            );
+                            $task->set_join_field(
+                                $task_set,
+                                'max_projects_selections',
+                                @$tasks_join_fields_data[$task->id]['max_projects_selections']
+                            );
                         } else {
                             $task_set->delete($task);
                         }
@@ -652,13 +1071,23 @@ class Task_sets extends LIST_Controller
                 }
             }
             
-            if ($task_set->save() && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'instructions')) && $this->db->trans_status()) {
+            if ($task_set->save()
+                && $this->lang->save_overlay_array(
+                    remove_base_url_from_overlay_array($overlay, 'instructions')
+                ) && $this->db->trans_status()
+            ) {
                 $this->db->trans_commit();
-                $this->messages->add_message('lang:admin_task_sets_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message(
+                    'lang:admin_task_sets_flash_message_save_successful',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
                 $this->_action_success();
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_task_sets_flash_message_save_fail', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_task_sets_flash_message_save_fail',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_task_sets'));
         } else {
@@ -711,7 +1140,10 @@ class Task_sets extends LIST_Controller
             $task_set->published = 1 - (int)$task_set->published;
             $task_set->save();
             $this->db->trans_commit();
-            $output->message = sprintf($this->lang->line('admin_task_sets_publication_status_switched'), $this->lang->get_overlay_with_default('task_sets', $task_set->id, 'name', $task_set->name));
+            $output->message = sprintf(
+                $this->lang->line('admin_task_sets_publication_status_switched'),
+                $this->lang->get_overlay_with_default('task_sets', $task_set->id, 'name', $task_set->name)
+            );
             $output->status = true;
             $this->_action_success();
         } else {
@@ -779,7 +1211,11 @@ class Task_sets extends LIST_Controller
                         $task->set_join_field($new_task_set, 'test_min_points', $task->join_test_min_points);
                         $task->set_join_field($new_task_set, 'test_max_points', $task->join_test_max_points);
                         $task->set_join_field($new_task_set, 'bonus_task', $task->join_bonus_task);
-                        $task->set_join_field($new_task_set, 'max_projects_selections', $task->join_max_projects_selections);
+                        $task->set_join_field(
+                            $new_task_set,
+                            'max_projects_selections',
+                            $task->join_max_projects_selections
+                        );
                     }
                     $task_set_permissions = new Task_set_permission();
                     $task_set_permissions->where_related($task_set);
@@ -821,11 +1257,17 @@ class Task_sets extends LIST_Controller
                 $this->parser->add_css_file('admin_task_sets.css');
                 $this->parser->parse('backend/task_sets/comments.tpl', ['task_set' => $task_set]);
             } else {
-                $this->messages->add_message('lang:admin_task_sets_comments_error_comments_disabled', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_task_sets_comments_error_comments_disabled',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
                 redirect(create_internal_url('admin_task_sets'));
             }
         } else {
-            $this->messages->add_message('lang:admin_task_sets_error_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:admin_task_sets_error_task_set_not_found',
+                Messages::MESSAGE_TYPE_ERROR
+            );
             redirect(create_internal_url('admin_task_sets'));
         }
     }
@@ -838,7 +1280,13 @@ class Task_sets extends LIST_Controller
         if ($task_set->exists() && $task_set->comments_enabled) {
             $comments = Comment::get_comments_for_task_set($task_set);
         }
-        $this->parser->parse('backend/task_sets/all_comments.tpl', ['task_set' => $task_set, 'comments' => $comments]);
+        $this->parser->parse(
+            'backend/task_sets/all_comments.tpl',
+            [
+                'task_set' => $task_set,
+                'comments' => $comments,
+            ]
+        );
     }
     
     public function new_comment_form($task_set_id): void
@@ -855,9 +1303,18 @@ class Task_sets extends LIST_Controller
         $teacher = new Teacher();
         $teacher->get_by_id($this->usermanager->get_teacher_id());
         if ($teacher->exists() && $task_set->exists()) {
-            $this->parser->assign('subscribed', $teacher->is_related_to('comment_subscription', $task_set->id));
+            $this->parser->assign(
+                'subscribed',
+                $teacher->is_related_to('comment_subscription', $task_set->id)
+            );
         }
-        $this->parser->parse('backend/task_sets/my_comments_settings.tpl', ['task_set' => $task_set, 'teacher' => $teacher]);
+        $this->parser->parse(
+            'backend/task_sets/my_comments_settings.tpl',
+            [
+                'task_set' => $task_set,
+                'teacher'  => $teacher,
+            ]
+        );
     }
     
     public function comments_unsubscribe($task_set_id): void
@@ -869,7 +1326,9 @@ class Task_sets extends LIST_Controller
         $task_set->get_by_id((int)$task_set_id);
         $teacher = new Teacher();
         $teacher->get_by_id($this->usermanager->get_teacher_id());
-        if ($teacher->exists() && $task_set->exists() && $teacher->is_related_to('comment_subscription', $task_set->id)) {
+        if ($teacher->exists() && $task_set->exists()
+            && $teacher->is_related_to('comment_subscription', $task_set->id)
+        ) {
             $teacher->delete_comment_subscription($task_set);
             if ($this->db->trans_status()) {
                 $this->db->trans_commit();
@@ -954,7 +1413,9 @@ class Task_sets extends LIST_Controller
         $comment->include_related('student', '*', true, true);
         $comment->include_related('teacher', '*', true, true);
         $comment->get_by_id($comment_id);
-        if ($comment->exists() && $task_set->exists() && $comment->is_related_to($task_set) && !is_null($comment->student->id) && is_null($comment->teacher->id) && !(bool)$comment->approved) {
+        if ($comment->exists() && $task_set->exists() && $comment->is_related_to($task_set)
+            && !is_null($comment->student->id) && is_null($comment->teacher->id) && !(bool)$comment->approved
+        ) {
             $comment->approved = 1;
             if ($comment->save()) {
                 $this->db->trans_commit();
@@ -1005,7 +1466,11 @@ class Task_sets extends LIST_Controller
     public function post_comment($task_set_id): void
     {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('comment[text]', 'lang:admin_task_sets_comments_form_field_text', 'required_no_html');
+        $this->form_validation->set_rules(
+            'comment[text]',
+            'lang:admin_task_sets_comments_form_field_text',
+            'required_no_html'
+        );
         if ($this->form_validation->run()) {
             $this->add_comment($task_set_id);
             redirect(create_internal_url('admin_task_sets/new_comment_form/' . $task_set_id));
@@ -1023,16 +1488,28 @@ class Task_sets extends LIST_Controller
         $comment->include_related('student', '*', true, true);
         $comment->get_by_id($reply_at_id);
         $this->parser->add_css_file('admin_task_sets.css');
-        $this->parser->parse('backend/task_sets/reply_at_comment.tpl', ['task_set' => $task_set, 'comment' => $comment]);
+        $this->parser->parse(
+            'backend/task_sets/reply_at_comment.tpl',
+            [
+                'task_set' => $task_set,
+                'comment'  => $comment,
+            ]
+        );
     }
     
     public function post_comment_reply($task_set_id, $reply_at_id): void
     {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('comment[text]', 'lang:admin_task_sets_comments_form_field_text', 'required_no_html');
+        $this->form_validation->set_rules(
+            'comment[text]',
+            'lang:admin_task_sets_comments_form_field_text',
+            'required_no_html'
+        );
         if ($this->form_validation->run()) {
             $this->add_comment($task_set_id, $reply_at_id);
-            redirect(create_internal_url('admin_task_sets/reply_at_comment/' . $task_set_id . '/' . $reply_at_id));
+            redirect(
+                create_internal_url('admin_task_sets/reply_at_comment/' . $task_set_id . '/' . $reply_at_id)
+            );
         } else {
             $this->reply_at_comment($task_set_id, $reply_at_id);
         }
@@ -1070,7 +1547,9 @@ class Task_sets extends LIST_Controller
         $project_selection->where_related_task_set($task_set);
         $project_selection->get();
         
-        if ($task_set->exists() && $task->exists() && $task_set->is_related_to($task) && $student->exists() && $course->exists() && $participant->exists()) {
+        if ($task_set->exists() && $task->exists() && $task_set->is_related_to($task)
+            && $student->exists() && $course->exists() && $participant->exists()
+        ) {
             if ($task_set->get_student_files_count($student->id) === 0) {
                 $all_project_selections = new Project_selection();
                 $all_project_selections->where_related_task_set($task_set);
@@ -1104,7 +1583,9 @@ class Task_sets extends LIST_Controller
                     $output->message = $this->lang->line('admin_task_sets_project_selection_no_room');
                 }
             } else {
-                $output->message = $this->lang->line('admin_task_sets_project_selection_already_submited_solutions');
+                $output->message = $this->lang->line(
+                    'admin_task_sets_project_selection_already_submited_solutions'
+                );
             }
         } else {
             $output->message = $this->lang->line('admin_task_sets_project_selection_cant_find_data');
@@ -1144,12 +1625,18 @@ class Task_sets extends LIST_Controller
                                 $save_array['reply_at'] = $reply_at;
                             } else {
                                 $this->db->trans_rollback();
-                                $this->messages->add_message('lang:admin_task_sets_comments_error_reply_at_comment_from_different_task_set', Messages::MESSAGE_TYPE_ERROR);
+                                $this->messages->add_message(
+                                    'lang:admin_task_sets_comments_error_reply_at_comment_from_different_task_set',
+                                    Messages::MESSAGE_TYPE_ERROR
+                                );
                                 return;
                             }
                         } else {
                             $this->db->trans_rollback();
-                            $this->messages->add_message('lang:admin_task_sets_comments_error_reply_at_comment_not_exists', Messages::MESSAGE_TYPE_ERROR);
+                            $this->messages->add_message(
+                                'lang:admin_task_sets_comments_error_reply_at_comment_not_exists',
+                                Messages::MESSAGE_TYPE_ERROR
+                            );
                             return;
                         }
                     }
@@ -1162,7 +1649,10 @@ class Task_sets extends LIST_Controller
                     $comment->approved = 1;
                     if ($comment->save($save_array)) {
                         $this->db->trans_commit();
-                        $this->messages->add_message('lang:admin_task_sets_comments_save_successfully', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->messages->add_message(
+                            'lang:admin_task_sets_comments_save_successfully',
+                            Messages::MESSAGE_TYPE_SUCCESS
+                        );
                         
                         $all_students = $task_set->comment_subscriber_student;
                         $all_students->get();
@@ -1191,18 +1681,30 @@ class Task_sets extends LIST_Controller
                         );
                     } else {
                         $this->db->trans_rollback();
-                        $this->messages->add_message('lang:admin_task_sets_comments_error_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                        $this->messages->add_message(
+                            'lang:admin_task_sets_comments_error_save_failed',
+                            Messages::MESSAGE_TYPE_ERROR
+                        );
                     }
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_task_sets_comments_error_comments_disabled', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_task_sets_comments_error_comments_disabled',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_task_sets_error_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_task_sets_error_task_set_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
         } else {
-            $this->messages->add_message('lang:admin_task_sets_error_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:admin_task_sets_error_task_set_not_found',
+                Messages::MESSAGE_TYPE_ERROR
+            );
         }
     }
     
@@ -1253,7 +1755,11 @@ class Task_sets extends LIST_Controller
     private function inject_stored_task_sets_filter(): void
     {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
+        $filter = $this->filter->restore_filter(
+            self::STORED_FILTER_SESSION_NAME,
+            $this->usermanager->get_teacher_id(),
+            'course'
+        );
         $this->parser->assign('filter', $filter);
     }
     
@@ -1264,14 +1770,21 @@ class Task_sets extends LIST_Controller
             $old_filter = $this->filter->restore_filter(self::STORED_SORTING_FILTER_SESSION_NAME);
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
             $this->filter->store_filter(self::STORED_SORTING_FILTER_SESSION_NAME, $new_filter);
-            $this->filter->set_filter_course_name_field(self::STORED_SORTING_FILTER_SESSION_NAME, 'course');
+            $this->filter->set_filter_course_name_field(
+                self::STORED_SORTING_FILTER_SESSION_NAME,
+                'course'
+            );
         }
     }
     
     private function inject_stored_sorting_filter(): void
     {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_SORTING_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
+        $filter = $this->filter->restore_filter(
+            self::STORED_SORTING_FILTER_SESSION_NAME,
+            $this->usermanager->get_teacher_id(),
+            'course'
+        );
         $this->parser->assign('filter', $filter);
     }
     
@@ -1325,7 +1838,10 @@ class Task_sets extends LIST_Controller
             if ($room->group->exists()) {
                 $data[$room->group->id][] = [
                     'value' => $room->id,
-                    'text'  => $this->lang->text($room->name) . ' (' . $days[$room->time_day] . ': ' . is_time($room->time_begin) . ' - ' . is_time($room->time_end) . ')',
+                    'text'  => $this->lang->text($room->name)
+                        . ' (' . $days[$room->time_day] . ': '
+                        . is_time($room->time_begin) . ' - ' . is_time($room->time_end) . ')'
+                    ,
                 ];
             }
         }

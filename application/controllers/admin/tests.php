@@ -20,12 +20,14 @@ class Tests extends LIST_Controller
         $this->_initialize_open_task_set();
         $this->_init_teacher_quick_prefered_course_menu();
         if ($this->router->method === 'run_test_for_task' || ($this->router->method === 'request_token' &&
-                $this->router->method === 'evaluate_test_result')) {
+                $this->router->method === 'evaluate_test_result')
+        ) {
             if (!$this->usermanager->is_student_session_valid() && !$this->usermanager->is_teacher_session_valid()) {
                 die();
             }
         } else if ($this->router->method === 'enqueue_test' || $this->router->method === 'get_student_test_queue' ||
-            $this->router->method === 'get_student_test_queue_all') {
+            $this->router->method === 'get_student_test_queue_all'
+        ) {
             $this->usermanager->student_login_protected_redirect();
         } else {
             $this->usermanager->teacher_login_protected_redirect();
@@ -44,10 +46,14 @@ class Tests extends LIST_Controller
         if ($post_select_test_type !== '') {
             if (isset($post_test['version']) && (int)$post_test['version'] > 0) {
                 if (isset($post_test['id']) && is_array($post_test['id']) && count($post_test['id']) > 0) {
-                    if (isset($post_test['task_set_id'], $post_test['student_id']) && (int)$post_test['task_set_id'] > 0 && (int)$post_test['student_id'] > 0) {
+                    if (isset($post_test['task_set_id'], $post_test['student_id'])
+                        && (int)$post_test['task_set_id'] > 0 && (int)$post_test['student_id'] > 0
+                    ) {
                         $this->_transaction_isolation();
                         $this->db->trans_begin();
-                        $maximum_eqnueued_tests_allowed = (int)$this->config->item('test_maximum_enqueued_pe_student');
+                        $maximum_eqnueued_tests_allowed = (int)$this->config->item(
+                            'test_maximum_enqueued_pe_student'
+                        );
                         if ($maximum_eqnueued_tests_allowed <= 0) {
                             $maximum_eqnueued_tests_allowed = 1;
                         }
@@ -86,29 +92,44 @@ class Tests extends LIST_Controller
                                         if ($errors === 0) {
                                             $this->db->trans_commit();
                                             $output->status = true;
-                                            $output->message = $this->lang->line('admin_tests_enqueue_test_success');
+                                            $output->message = $this->lang->line(
+                                                'admin_tests_enqueue_test_success'
+                                            );
                                         } else {
                                             $this->db->trans_rollback();
-                                            $output->message = $this->lang->line('admin_tests_enqueue_test_error_cant_add_to_queue');
+                                            $output->message = $this->lang->line(
+                                                'admin_tests_enqueue_test_error_cant_add_to_queue'
+                                            );
                                         }
                                     } else {
                                         $this->db->trans_rollback();
-                                        $output->message = $this->lang->line('admin_tests_enqueue_test_error_cant_add_to_queue');
+                                        $output->message = $this->lang->line(
+                                            'admin_tests_enqueue_test_error_cant_add_to_queue'
+                                        );
                                     }
                                 } else {
                                     $this->db->trans_rollback();
-                                    $output->message = $this->lang->line('admin_tests_enqueue_test_error_task_set_or_student_not_found');
+                                    $output->message = $this->lang->line(
+                                        'admin_tests_enqueue_test_error_task_set_or_student_not_found'
+                                    );
                                 }
                             } else {
                                 $this->db->trans_rollback();
-                                $output->message = $this->lang->line('admin_tests_enqueue_test_error_no_tests_selected');
+                                $output->message = $this->lang->line(
+                                    'admin_tests_enqueue_test_error_no_tests_selected'
+                                );
                             }
                         } else {
                             $this->db->trans_rollback();
-                            $output->message = sprintf($this->lang->line('admin_tests_enqueue_test_error_maximum_enqueues_reached'), $maximum_eqnueued_tests_allowed);
+                            $output->message = sprintf(
+                                $this->lang->line('admin_tests_enqueue_test_error_maximum_enqueues_reached'),
+                                $maximum_eqnueued_tests_allowed
+                            );
                         }
                     } else {
-                        $output->message = $this->lang->line('admin_tests_enqueue_test_error_task_set_or_student_not_found');
+                        $output->message = $this->lang->line(
+                            'admin_tests_enqueue_test_error_task_set_or_student_not_found'
+                        );
                     }
                 } else {
                     $output->message = $this->lang->line('admin_tests_enqueue_test_error_no_tests_selected');
@@ -192,7 +213,11 @@ class Tests extends LIST_Controller
             
             $order_by_clauses = '`status` DESC, `priority` ASC, `finish` DESC, `start` DESC';
             
-            $test_queue_status_0->union_iterated([$test_queue_status_1, $test_queue_status_2, $test_queue_status_3], false, $order_by_clauses);
+            $test_queue_status_0->union_iterated(
+                [$test_queue_status_1, $test_queue_status_2, $test_queue_status_3],
+                false,
+                $order_by_clauses
+            );
             $test_queue = $test_queue_status_0;
         }
         
@@ -272,9 +297,18 @@ class Tests extends LIST_Controller
         } else {
             $this->load->library('form_validation');
             
-            $this->form_validation->set_rules('test[name]', 'lang:admin_tests_test_form_field_name', 'required');
-            $this->form_validation->set_rules('test[type]', 'lang:admin_tests_test_form_field_type', 'required');
-            $this->form_validation->set_rules('test[subtype]', 'lang:admin_tests_test_form_field_subtype', 'required');
+            $this->form_validation->set_rules(
+                'test[name]',
+                'lang:admin_tests_test_form_field_name', 'required'
+            );
+            $this->form_validation->set_rules(
+                'test[type]',
+                'lang:admin_tests_test_form_field_type', 'required'
+            );
+            $this->form_validation->set_rules(
+                'test[subtype]',
+                'lang:admin_tests_test_form_field_subtype', 'required'
+            );
             
             if ($this->form_validation->run()) {
                 $this->_transaction_isolation();
@@ -290,12 +324,18 @@ class Tests extends LIST_Controller
                 if ($test->save($task) && $this->db->trans_status()) {
                     $this->db->trans_commit();
                     @mkdir('private/uploads/unit_tests/test_' . $test->id, DIR_READ_MODE);
-                    $this->messages->add_message('lang:admin_tests_flash_message_new_test_saved', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_tests_flash_message_new_test_saved',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                     redirect(create_internal_url('admin_tests/configure_test/' . $test->id));
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_tests_flash_message_new_test_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_tests_flash_message_new_test_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                     redirect(create_internal_url('admin_tests/new_test_form/' . $task->id));
                 }
             } else {
@@ -352,8 +392,16 @@ class Tests extends LIST_Controller
         if ($test->exists()) {
             $this->load->library('form_validation');
             
-            $this->form_validation->set_rules('test[name]', 'lang:admin_tests_test_form_field_name', 'required');
-            $this->form_validation->set_rules('test[timeout]', 'lang:admin_tests_test_form_field_timeout', 'required|greater_than_equal[100]');
+            $this->form_validation->set_rules(
+                'test[name]',
+                'lang:admin_tests_test_form_field_name',
+                'required'
+            );
+            $this->form_validation->set_rules(
+                'test[timeout]',
+                'lang:admin_tests_test_form_field_timeout',
+                'required|greater_than_equal[100]'
+            );
             
             $valid = true;
             
@@ -376,7 +424,9 @@ class Tests extends LIST_Controller
                 $test->instructions = isset($test_data['instructions']) ? remove_base_url($test_data['instructions']) : '';
                 $can_save = true;
                 try {
-                    $config_data = is_array($this->input->post('configuration')) ? $this->input->post('configuration') : [];
+                    $config_data = is_array($this->input->post('configuration'))
+                        ? $this->input->post('configuration')
+                        : [];
                     $upload_data = [];
                     $can_save = $test_object->handle_uploads($upload_data);
                     $config_data = array_merge($config_data, $upload_data);
@@ -389,13 +439,23 @@ class Tests extends LIST_Controller
                 }
                 if ($can_save) {
                     $overlay = $this->input->post('overlay');
-                    if ($test->save() && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'instructions')) && $this->db->trans_status()) {
+                    if ($test->save()
+                        && $this->lang->save_overlay_array(
+                            remove_base_url_from_overlay_array($overlay, 'instructions')
+                        ) && $this->db->trans_status()
+                    ) {
                         $this->db->trans_commit();
-                        $this->messages->add_message('lang:admin_tests_flash_message_configuration_saved', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->messages->add_message(
+                            'lang:admin_tests_flash_message_configuration_saved',
+                            Messages::MESSAGE_TYPE_SUCCESS
+                        );
                         $this->_action_success();
                     } else {
                         $this->db->trans_rollback();
-                        $this->messages->add_message('lang:admin_tests_flash_message_configuration_save_failed', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->messages->add_message(
+                            'lang:admin_tests_flash_message_configuration_save_failed',
+                            Messages::MESSAGE_TYPE_SUCCESS
+                        );
                     }
                     redirect(create_internal_url('admin_tests/configure_test/' . $test_id));
                 } else {
@@ -494,7 +554,13 @@ class Tests extends LIST_Controller
             }
         }
         $this->parser->add_js_file('admin_tests/run_testing_execution.js');
-        $this->parser->parse('backend/tests/run_testing_execution.tpl', ['test' => $test, 'file_name' => $file_name]);
+        $this->parser->parse(
+            'backend/tests/run_testing_execution.tpl',
+            [
+                'test'      => $test,
+                'file_name' => $file_name,
+            ]
+        );
     }
     
     public function after_testing_execution($source_file): void
@@ -519,8 +585,15 @@ class Tests extends LIST_Controller
         if ($task_set->exists() && $student->exists()) {
             $files = $task_set->get_student_files($student->id, (int)$version);
             if (isset($files[(int)$version]['filepath'])) {
-                $run_evaluation = $task_set->enable_tests_scoring > 0 && $task_set->course_test_scoring_deadline >= date('Y-m-d H:i:s');
-                $this->run_single_test($test_id, encode_for_url($files[(int)$version]['filepath']), $run_evaluation, $token, $student->id);
+                $run_evaluation = $task_set->enable_tests_scoring > 0
+                    && $task_set->course_test_scoring_deadline >= date('Y-m-d H:i:s');
+                $this->run_single_test(
+                    $test_id,
+                    encode_for_url($files[(int)$version]['filepath']),
+                    $run_evaluation,
+                    $token,
+                    $student->id
+                );
             } else {
                 $this->output->set_content_type('application/json');
                 $this->output->set_output(json_encode($output));
@@ -542,7 +615,12 @@ class Tests extends LIST_Controller
             if ($test->exists()) {
                 $test_object = $this->load->test($test->type);
                 $test_object->initialize($test);
-                $output->text = $test_object->run(decode_from_url($source_file), (bool)(int)$evaluation && strlen($token) > 0, $student_id, $token);
+                $output->text = $test_object->run(
+                    decode_from_url($source_file),
+                    (bool)(int)$evaluation && $token !== '',
+                    $student_id,
+                    $token
+                );
             }
         } catch (Exception $e) {
             $output->text = $e->getMessage();
@@ -576,7 +654,7 @@ class Tests extends LIST_Controller
             fclose($f);
             exit;
         }
-    
+        
         $this->output->set_status_header(404, 'Not found');
     }
     
@@ -611,7 +689,9 @@ class Tests extends LIST_Controller
         $this->load->model('test_score');
         
         if ($task_set->exists() && $student->exists()) {
-            if ($task_set->course_test_scoring_deadline >= date('Y-m-d H:i:s') && $task_set->enable_tests_scoring > 0) {
+            if ($task_set->course_test_scoring_deadline >= date('Y-m-d H:i:s')
+                && $task_set->enable_tests_scoring > 0
+            ) {
                 $results = $this->test_score->get_data_for_student($student->id, $token, $test_type);
                 $this->_transaction_isolation();
                 $this->db->trans_start();
@@ -667,7 +747,9 @@ class Tests extends LIST_Controller
                         }
                     }
                     
-                    $max_results = $task_set->test_max_allowed < count($score_array) ? $task_set->test_max_allowed : count($score_array);
+                    $max_results = $task_set->test_max_allowed < count($score_array)
+                        ? $task_set->test_max_allowed
+                        : count($score_array);
                     
                     arsort($score_array, SORT_NUMERIC);
                     $i = 0;
@@ -741,15 +823,22 @@ class Tests extends LIST_Controller
                             $solution->save();
                             $output->result = true;
                             $this->_action_success();
+                        } else if (!$solution_not_considered) {
+                            $output->message = sprintf(
+                                $this->lang->line('admin_tests_test_result_nothing_to_update'),
+                                $output->points_new,
+                                $output->points_before
+                            );
                         } else {
-                            if (!$solution_not_considered) {
-                                $output->message = sprintf($this->lang->line('admin_tests_test_result_nothing_to_update'), $output->points_new, $output->points_before);
-                            } else {
-                                $output->message = $this->lang->line('admin_tests_test_result_solution_not_considered');
-                            }
+                            $output->message = $this->lang->line(
+                                'admin_tests_test_result_solution_not_considered'
+                            );
                         }
                     } else {
-                        $output->message = sprintf($this->lang->line('admin_tests_test_result_minimum_number_of_test_not_selected'), $min_results);
+                        $output->message = sprintf(
+                            $this->lang->line('admin_tests_test_result_minimum_number_of_test_not_selected'),
+                            $min_results
+                        );
                     }
                 } else {
                     $output->message = $this->lang->line('admin_tests_test_result_no_evaluationg_tests');

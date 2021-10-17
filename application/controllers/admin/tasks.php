@@ -12,8 +12,8 @@ class Tasks extends LIST_Controller
 {
     public const STORED_FILTER_SESSION_NAME = 'admin_tasks_filter_data';
     
-    public const FILELIST_PUBLIC = 1;
-    public const FILELIST_HIDDEN = 2;
+    public const FILE_LIST_PUBLIC = 1;
+    public const FILE_LIST_HIDDEN = 2;
     
     public function __construct()
     {
@@ -39,7 +39,13 @@ class Tasks extends LIST_Controller
         $this->inject_authors();
         $category = new Category();
         $structure = $category->get_all_structured();
-        $this->parser->parse('backend/tasks/index.tpl', ['structure' => $structure, 'test_types' => get_all_supported_test_types()]);
+        $this->parser->parse(
+            'backend/tasks/index.tpl',
+            [
+                'structure' => $structure,
+                'test_types' => get_all_supported_test_types()
+            ]
+        );
     }
     
     public function get_all_tasks(): void
@@ -64,7 +70,9 @@ class Tasks extends LIST_Controller
         if (isset($filter['categories']['clauses']) && count($filter['categories']['clauses']) > 0) {
             $tasks->add_categories_filter($filter['categories']['clauses']);
         }
-        if ((isset($filter['name']) && trim($filter['name']) !== '') || (isset($filter['text']) && trim($filter['text']) !== '')) {
+        if ((isset($filter['name']) && trim($filter['name']) !== '')
+            || (isset($filter['text']) && trim($filter['text']) !== '')
+        ) {
             $tasks->group_start();
             if (isset($filter['name']) && trim($filter['name']) !== '') {
                 $tasks->or_like_with_overlay('name', trim($filter['name']));
@@ -79,7 +87,10 @@ class Tasks extends LIST_Controller
             $tests->select_func('COUNT', '@id', 'tests_count');
             $tests->where_related('task', 'id', '${parent}.id');
             if ($filter['tests'] === 'have') {
-                if (isset($filter['test_types']) && is_array($filter['test_types']) && count($filter['test_types']) > 0) {
+                if (isset($filter['test_types'])
+                    && is_array($filter['test_types'])
+                    && count($filter['test_types']) > 0
+                ) {
                     $tests->where_in('type', $filter['test_types']);
                 }
                 $tasks->where_subquery('0 < ', $tests);
@@ -99,7 +110,16 @@ class Tasks extends LIST_Controller
         if (isset($filter['time'], $filter['time_days'])) {
             if (is_numeric($filter['time_days']) && $filter['time_days'] >= 1 && $filter['time'] !== 'disable') {
                 $days = $filter['time_days'] - 1;
-                $day_min = date('Y-m-d H:i:s', strtotime(date('Y-m-d') . ' 00:00:00' . ($days == 1 ? ' -1 day' : ($days > 1 ? ' -' . $days . ' days' : ''))));
+                $day_min = date(
+                    'Y-m-d H:i:s',
+                    strtotime(
+                        date('Y-m-d') . ' 00:00:00' . (
+                            $days === 1
+                                ? ' -1 day'
+                                : ($days > 1 ? ' -' . $days . ' days' : '')
+                        )
+                    )
+                );
                 if ($filter['time'] === 'created') {
                     $tasks->where('created >=', $day_min);
                 } else if ($filter['time'] === 'updated') {
@@ -122,9 +142,18 @@ class Tasks extends LIST_Controller
         } else if ($filter['order_by_field'] === 'author') {
             $tasks->order_by_related_as_fullname('author', 'fullname', $order_by_direction);
         }
-        $tasks->get_paged_iterated(isset($filter['page']) ? (int)$filter['page'] : 1, isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25);
+        $tasks->get_paged_iterated(
+            isset($filter['page']) ? (int)$filter['page'] : 1,
+            isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25
+        );
         $this->lang->init_overlays('tasks', $tasks->all_to_array(), ['name']);
-        $this->parser->parse('backend/tasks/all_tasks.tpl', ['tasks' => $tasks, 'fields_config' => $fields_config]);
+        $this->parser->parse(
+            'backend/tasks/all_tasks.tpl',
+            [
+                'tasks' => $tasks,
+                'fields_config' => $fields_config
+            ]
+        );
     }
     
     public function new_task(): void
@@ -146,7 +175,11 @@ class Tasks extends LIST_Controller
         
         $this->form_validation->set_rules('task[name]', 'lang:admin_tasks_form_field_name', 'required');
         $this->form_validation->set_rules('task[text]', 'lang:admin_tasks_form_field_text', 'required');
-        $this->form_validation->set_rules('task[categories][]', 'lang:admin_tasks_form_field_categories', 'required');
+        $this->form_validation->set_rules(
+            'task[categories][]',
+            'lang:admin_tasks_form_field_categories',
+            'required'
+        );
         
         if ($this->form_validation->run()) {
             $task_data = $this->input->post('task');
@@ -164,7 +197,10 @@ class Tasks extends LIST_Controller
             $task->author_id = $this->usermanager->get_teacher_id();
             if ($task->save($categories->all) && $this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->messages->add_message('lang:admin_tasks_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message(
+                    'lang:admin_tasks_flash_message_save_successful',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
                 $this->_action_success();
                 if ($this->input->post('submit_and_go_to_list') !== null) {
                     redirect(create_internal_url('admin_tasks'));
@@ -173,7 +209,10 @@ class Tasks extends LIST_Controller
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_tasks_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_tasks_flash_message_save_failed',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             
             redirect(create_internal_url('admin_tasks'));
@@ -216,7 +255,11 @@ class Tasks extends LIST_Controller
         
         $this->form_validation->set_rules('task[name]', 'lang:admin_tasks_form_field_name', 'required');
         $this->form_validation->set_rules('task[text]', 'lang:admin_tasks_form_field_text', 'required');
-        $this->form_validation->set_rules('task[categories][]', 'lang:admin_tasks_form_field_categories', 'required');
+        $this->form_validation->set_rules(
+            'task[categories][]',
+            'lang:admin_tasks_form_field_categories',
+            'required'
+        );
         $this->form_validation->set_rules('task_id', 'id', 'required');
         
         if ($this->form_validation->run()) {
@@ -244,17 +287,29 @@ class Tasks extends LIST_Controller
                 $task->category->get();
                 $task->delete($task->category->all);
                 
-                if ($task->save(['category' => $categories->all, 'author' => $author]) && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'text')) && $this->db->trans_status()) {
+                if ($task->save(['category' => $categories->all, 'author' => $author])
+                    && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'text'))
+                    && $this->db->trans_status()
+                ) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_tasks_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_tasks_flash_message_save_successful',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_tasks_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_tasks_flash_message_save_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
                 
             } else {
-                $this->messages->add_message('lang:admin_tasks_error_message_task_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_tasks_error_message_task_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_tasks'));
         } else {
@@ -399,7 +454,7 @@ class Tasks extends LIST_Controller
     
     public function get_hidden_task_files($task_id): void
     {
-        $this->inject_files($task_id, self::FILELIST_HIDDEN);
+        $this->inject_files($task_id, self::FILE_LIST_HIDDEN);
         $this->parser->parse('backend/tasks/edit_private_files_list.tpl', ['task_id' => (int)$task_id]);
     }
     
@@ -465,11 +520,27 @@ class Tasks extends LIST_Controller
         $this->form_validation->set_rules('task_set_id', 'task_set_id', 'required');
         if ($task_set->exists()) {
             if ($task_set->content_type === 'task_set') {
-                $this->form_validation->set_rules('points_total', 'lang:admin_tasks_add_to_task_set_form_field_points_total', 'required|number|greater_than_equal[0]');
-                $this->form_validation->set_rules('test_max_points', 'lang:admin_tasks_add_to_task_set_form_field_test_max_points', 'required|number|greater_than_equal[0]');
-                $this->form_validation->set_rules('test_min_points', 'lang:admin_tasks_add_to_task_set_form_field_test_min_points', 'required|number|less_than_field_or_equal[test_max_points]');
+                $this->form_validation->set_rules(
+                    'points_total',
+                    'lang:admin_tasks_add_to_task_set_form_field_points_total',
+                    'required|number|greater_than_equal[0]'
+                );
+                $this->form_validation->set_rules(
+                    'test_max_points',
+                    'lang:admin_tasks_add_to_task_set_form_field_test_max_points',
+                    'required|number|greater_than_equal[0]'
+                );
+                $this->form_validation->set_rules(
+                    'test_min_points',
+                    'lang:admin_tasks_add_to_task_set_form_field_test_min_points',
+                    'required|number|less_than_field_or_equal[test_max_points]'
+                );
             } else {
-                $this->form_validation->set_rules('max_projects_selections', 'lang:admin_tasks_add_to_task_set_form_field_max_projects_selections', 'required|integer|greater_than[0]');
+                $this->form_validation->set_rules(
+                    'max_projects_selections',
+                    'lang:admin_tasks_add_to_task_set_form_field_max_projects_selections',
+                    'required|integer|greater_than[0]'
+                );
             }
         }
         
@@ -485,15 +556,28 @@ class Tasks extends LIST_Controller
             $task->get_by_id($task_id);
             if (!$task->exists()) {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_tasks_error_message_task_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_tasks_error_message_task_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             } else if (!$task_set->exists()) {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_tasks_add_to_task_set_nothing_opened', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_tasks_add_to_task_set_nothing_opened',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             } else if ($task_set->is_related_to($task)) {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_tasks_add_to_task_set_already_related', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_tasks_add_to_task_set_already_related',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             } else {
-                $related_task = $task_set->task->include_join_fields()->order_by('join_sorting', 'desc')->limit(1)->get();
+                $related_task = $task_set
+                    ->task
+                    ->include_join_fields()
+                    ->order_by('join_sorting', 'desc')
+                    ->limit(1)->get();
                 $new_sorting = $related_task->exists() ? (int)$related_task->join_sorting + 1 : 1;
                 $task_set->save($task);
                 $task_set->set_join_field($task, 'points_total', $points_total);
@@ -505,11 +589,17 @@ class Tasks extends LIST_Controller
                 $task_set->set_join_field($task, 'internal_comment', $internal_comment);
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_tasks_add_to_task_set_save_success', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_tasks_add_to_task_set_save_success',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_tasks_add_to_task_set_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_tasks_add_to_task_set_save_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             }
             redirect(create_internal_url('admin_tasks/add_to_task_set/task_id/' . $task_id));
@@ -549,14 +639,14 @@ class Tasks extends LIST_Controller
         $this->parser->assign('languages', $languages);
     }
     
-    private function inject_files($task_id, $source = self::FILELIST_PUBLIC): void
+    private function inject_files($task_id, $source = self::FILE_LIST_PUBLIC): void
     {
         $task = new Task();
         $task->get_by_id($task_id);
         $files = [];
-        if ($source === self::FILELIST_PUBLIC) {
+        if ($source === self::FILE_LIST_PUBLIC) {
             $files = $task->get_task_files();
-        } else if ($source === self::FILELIST_HIDDEN) {
+        } else if ($source === self::FILE_LIST_HIDDEN) {
             $files = $task->get_task_hidden_files();
         }
         $this->parser->assign('files', $files);
