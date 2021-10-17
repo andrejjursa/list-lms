@@ -53,7 +53,11 @@ class Comparator extends LIST_Controller
         
         $task_set = new Task_set();
         $task_set->where_related($course);
-        $task_set->get_by_id(isset($task_sets_setup_data['task_set']) ? (int)$task_sets_setup_data['task_set'] : 0);
+        $task_set->get_by_id(
+            isset($task_sets_setup_data['task_set'])
+                ? (int)$task_sets_setup_data['task_set']
+                : 0
+        );
         
         $this->parser->assign([
             'course'   => $course,
@@ -83,7 +87,11 @@ class Comparator extends LIST_Controller
         
         $task_set = new Task_set();
         $task_set->where_related($course);
-        $task_set->get_by_id(isset($task_sets_setup_data['task_set']) ? (int)$task_sets_setup_data['task_set'] : 0);
+        $task_set->get_by_id(
+            isset($task_sets_setup_data['task_set'])
+                ? (int)$task_sets_setup_data['task_set']
+                : 0
+        );
         
         $this->parser->assign([
             'course'   => $course,
@@ -93,15 +101,48 @@ class Comparator extends LIST_Controller
         if ($course->exists() && $task_set->exists()) {
             $this->load->library('form_validation');
             
-            $this->form_validation->set_rules('solutions', 'lang:admin_comparator_list_solutions_form_field_solution_selection', 'callback__selected_solutions');
-            $this->form_validation->set_rules('comparator_setup[threshold]', 'lang:admin_comparator_list_solutions_form_field_threshold', 'required|numeric|greater_than_equal[0]|less_than_equal[1]');
-            $this->form_validation->set_rules('comparator_setup[min_tree_size]', 'lang:admin_comparator_list_solutions_form_field_min_tree_size', 'required|integer|greater_than_equal[1]');
-            $this->form_validation->set_rules('comparator_setup[max_cutted_tree_size]', 'lang:admin_comparator_list_solutions_form_field_max_cutted_tree_size', 'required|integer|greater_than_field_or_equal[comparator_setup[min_tree_size]]');
-            $this->form_validation->set_rules('comparator_setup[branching_factor]', 'lang:admin_comparator_list_solutions_form_field_branching_factor', 'required|integer|greater_than_equal[1]');
-            $this->form_validation->set_rules('comparator_setup[min_similarity]', 'lang:admin_comparator_list_solutions_form_field_minimum_similarity', 'required|numeric|greater_than_equal[0]|less_than_equal[1]');
-            $this->form_validation->set_rules('comparator_setup[timeout]', 'lang:admin_comparator_list_solutions_form_field_timeout', 'required|integer|greater_than_equal[1]');
+            $this->form_validation->set_rules(
+                'solutions',
+                'lang:admin_comparator_list_solutions_form_field_solution_selection',
+                'callback__selected_solutions'
+            );
+            $this->form_validation->set_rules(
+                'comparator_setup[threshold]',
+                'lang:admin_comparator_list_solutions_form_field_threshold',
+                'required|numeric|greater_than_equal[0]|less_than_equal[1]'
+            );
+            $this->form_validation->set_rules(
+                'comparator_setup[min_tree_size]',
+                'lang:admin_comparator_list_solutions_form_field_min_tree_size',
+                'required|integer|greater_than_equal[1]'
+            );
+            $this->form_validation->set_rules(
+                'comparator_setup[max_cutted_tree_size]',
+                'lang:admin_comparator_list_solutions_form_field_max_cutted_tree_size',
+                'required|integer|greater_than_field_or_equal[comparator_setup[min_tree_size]]'
+            );
+            $this->form_validation->set_rules(
+                'comparator_setup[branching_factor]',
+                'lang:admin_comparator_list_solutions_form_field_branching_factor',
+                'required|integer|greater_than_equal[1]'
+            );
+            $this->form_validation->set_rules(
+                'comparator_setup[min_similarity]',
+                'lang:admin_comparator_list_solutions_form_field_minimum_similarity',
+                'required|numeric|greater_than_equal[0]|less_than_equal[1]'
+            );
+            $this->form_validation->set_rules(
+                'comparator_setup[timeout]',
+                'lang:admin_comparator_list_solutions_form_field_timeout',
+                'required|integer|greater_than_equal[1]'
+            );
             
-            $this->form_validation->set_message('_selected_solutions', $this->lang->line('admin_comparator_list_solutions_validation_callback_selected_solutions'));
+            $this->form_validation->set_message(
+                '_selected_solutions',
+                $this->lang->line(
+                    'admin_comparator_list_solutions_validation_callback_selected_solutions'
+                )
+            );
             if ($this->form_validation->run()) {
                 $solutions = new Solution();
                 $solutions->include_related('student');
@@ -128,10 +169,15 @@ class Comparator extends LIST_Controller
                         $file = $task_set->get_student_files($student, $version);
                         if (count($file) === 1) {
                             $file = $file[$version];
-                            $subDir = '/' . normalize($file['file_name']) . '_sid-' . $file['student_id'] . '_ver-' . $file['version'];
+                            $subDir = '/' . normalize($file['file_name']) . '_sid-'
+                                . $file['student_id'] . '_ver-' . $file['version'];
                             $extract_path = $path_source . $subDir;
                             @mkdir($extract_path, DIR_WRITE_MODE, true);
-                            $status = $task_set->extract_student_zip_to_folder($file['file'], $extract_path, ['java']);
+                            $status = $task_set->extract_student_zip_to_folder(
+                                $file['file'],
+                                $extract_path,
+                                ['java']
+                            );
                             $all_extracted = $all_extracted && $status;
                         }
                     }
@@ -175,7 +221,8 @@ class Comparator extends LIST_Controller
             $exec_path .= ENVIRONMENT . '/';
         }
         
-        $execute_command = $exec_path . 'run ' . $path . ' ' . $config['t'] . ' ' . $config['m'] . ' ' . $config['cut'] . ' ' . $config['bf'] . ' ' . $config['mp'] . ' ' . $config['timeout'];
+        $execute_command = $exec_path . 'run ' . $path . ' ' . $config['t'] . ' ' . $config['m']
+            . ' ' . $config['cut'] . ' ' . $config['bf'] . ' ' . $config['mp'] . ' ' . $config['timeout'];
         
         @exec($execute_command, $exec_output, $return_var);
         
@@ -191,7 +238,8 @@ class Comparator extends LIST_Controller
         echo '<pre>';
         print_r($output);
         echo '</pre>';
-        echo '<p><a href="' . base_url($path . '/output/main.html') . '" class="button" target="_blank">' . $this->lang->line('admin_comparator_execute_button_open_report') . '</a></p>';
+        echo '<p><a href="' . base_url($path . '/output/main.html') . '" class="button" target="_blank">'
+            . $this->lang->line('admin_comparator_execute_button_open_report') . '</a></p>';
     }
     
     public function _selected_solutions($solutions): bool
@@ -307,7 +355,12 @@ class Comparator extends LIST_Controller
             }
             $data[$task_set->course_id][] = [
                 'value' => $task_set->id,
-                'text'  => $this->lang->get_overlay_with_default('task_sets', $task_set->id, 'name', $task_set->name) . $text_groups,
+                'text'  => $this->lang->get_overlay_with_default(
+                        'task_sets',
+                        $task_set->id,
+                        'name',
+                        $task_set->name
+                    ) . $text_groups,
             ];
         }
         
@@ -321,14 +374,21 @@ class Comparator extends LIST_Controller
             $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
             $this->filter->store_filter(self::STORED_FILTER_SESSION_NAME, $new_filter);
-            $this->filter->set_filter_course_name_field(self::STORED_FILTER_SESSION_NAME, 'course');
+            $this->filter->set_filter_course_name_field(
+                self::STORED_FILTER_SESSION_NAME,
+                'course'
+            );
         }
     }
     
     private function inject_stored_filter(): void
     {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
+        $filter = $this->filter->restore_filter(
+            self::STORED_FILTER_SESSION_NAME,
+            $this->usermanager->get_teacher_id(),
+            'course'
+        );
         $this->parser->assign('filter', $filter);
     }
     

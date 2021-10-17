@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 require_once APPPATH . 'core/abstract_admin_widget.php';
 
@@ -164,22 +162,37 @@ class Dashboard extends LIST_Controller
                     }
                     if ($updates) {
                         $this->db->trans_commit();
-                        $this->messages->add_message($this->lang->line('admin_dashboard_message_columns_saved'), Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->messages->add_message(
+                            $this->lang->line('admin_dashboard_message_columns_saved'),
+                            Messages::MESSAGE_TYPE_SUCCESS
+                        );
                     } else {
                         $this->db->trans_rollback();
-                        $this->messages->add_message($this->lang->line('admin_dashboard_message_columns_save_fail'), Messages::MESSAGE_TYPE_ERROR);
+                        $this->messages->add_message(
+                            $this->lang->line('admin_dashboard_message_columns_save_fail'),
+                            Messages::MESSAGE_TYPE_ERROR
+                        );
                     }
                 } else {
                     $this->db->trans_commit();
-                    $this->messages->add_message($this->lang->line('admin_dashboard_message_columns_saved'), Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        $this->lang->line('admin_dashboard_message_columns_saved'),
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message($this->lang->line('admin_dashboard_message_columns_save_fail'), Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    $this->lang->line('admin_dashboard_message_columns_save_fail'),
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
         } else {
             $this->db->trans_rollback();
-            $this->messages->add_message($this->lang->line('admin_dashboard_message_columns_save_fail_count'), Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                $this->lang->line('admin_dashboard_message_columns_save_fail_count'),
+                Messages::MESSAGE_TYPE_ERROR
+            );
         }
         
         redirect(create_internal_url('admin_dashboard'));

@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Courses controller for backend.
@@ -92,18 +90,43 @@ class Courses extends LIST_Controller
     public function create(): void
     {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
-        $this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
-        $this->form_validation->set_rules('course[capacity]', 'lang:admin_courses_form_field_capacity', 'required|integer|greater_than[0]');
-        $this->form_validation->set_rules('course[default_points_to_remove]', 'lang:admin_courses_form_field_default_points_to_remove', 'required|numeric|greater_than_or_equal[0]');
+        $this->form_validation->set_rules(
+            'course[name]',
+            'lang:admin_courses_form_field_name',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'course[period_id]',
+            'lang:admin_courses_form_field_period',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'course[capacity]',
+            'lang:admin_courses_form_field_capacity',
+            'required|integer|greater_than[0]'
+        );
+        $this->form_validation->set_rules(
+            'course[default_points_to_remove]',
+            'lang:admin_courses_form_field_default_points_to_remove',
+            'required|numeric|greater_than_or_equal[0]'
+        );
         
         if ($this->form_validation->run()) {
             $course = new Course();
             $course_data = $this->input->post('course');
             $course->from_array($course_data, ['name', 'period_id', 'capacity', 'default_points_to_remove']);
-            $course->allow_subscription_to = preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : null;
-            $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : null;
-            $course->test_scoring_deadline = preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['test_scoring_deadline']) ? $course_data['test_scoring_deadline'] : null;
+            $course->allow_subscription_to =
+                preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['allow_subscription_to'])
+                    ? $course_data['allow_subscription_to']
+                    : null;
+            $course->groups_change_deadline =
+                preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['groups_change_deadline'])
+                    ? $course_data['groups_change_deadline']
+                    : null;
+            $course->test_scoring_deadline =
+                preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['test_scoring_deadline'])
+                    ? $course_data['test_scoring_deadline']
+                    : null;
             $course->hide_in_lists = isset($course_data['hide_in_lists']) ? 1 : 0;
             $course->auto_accept_students = isset($course_data['auto_accept_students']) ? 1 : 0;
             $course->disable_public_groups_page = isset($course_data['disable_public_groups_page']) ? 1 : 0;
@@ -113,11 +136,17 @@ class Courses extends LIST_Controller
             
             if ($course->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->messages->add_message('lang:admin_courses_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message(
+                    'lang:admin_courses_flash_message_save_successful',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
                 $this->_action_success();
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_courses_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_courses_flash_message_save_failed',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_courses/new_course_form'));
         } else {
@@ -185,10 +214,26 @@ class Courses extends LIST_Controller
         $this->load->library('form_validation');
         
         $this->form_validation->set_rules('course_id', 'id', 'required');
-        $this->form_validation->set_rules('course[name]', 'lang:admin_courses_form_field_name', 'required');
-        $this->form_validation->set_rules('course[period_id]', 'lang:admin_courses_form_field_period', 'required');
-        $this->form_validation->set_rules('course[capacity]', 'lang:admin_courses_form_field_capacity', 'required|integer|greater_than[0]');
-        $this->form_validation->set_rules('course[default_points_to_remove]', 'lang:admin_courses_form_field_default_points_to_remove', 'required|numeric|greater_than_or_equal[0]');
+        $this->form_validation->set_rules(
+            'course[name]',
+            'lang:admin_courses_form_field_name',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'course[period_id]',
+            'lang:admin_courses_form_field_period',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'course[capacity]',
+            'lang:admin_courses_form_field_capacity',
+            'required|integer|greater_than[0]'
+        );
+        $this->form_validation->set_rules(
+            'course[default_points_to_remove]',
+            'lang:admin_courses_form_field_default_points_to_remove',
+            'required|numeric|greater_than_or_equal[0]'
+        );
         
         if ($this->form_validation->run()) {
             $course_id = (int)$this->input->post('course_id');
@@ -202,36 +247,65 @@ class Courses extends LIST_Controller
                     'capacity',
                     'default_points_to_remove',
                 ]);
-                $additional_menu_links = str_replace('\\"', '"', $course_data['additional_menu_links'] ?? '[]');
+                $additional_menu_links = str_replace(
+                    '\\"',
+                    '"',
+                    $course_data['additional_menu_links'] ?? '[]'
+                );
                 $course->description = remove_base_url($course_data['description']);
                 $course->syllabus = remove_base_url($course_data['syllabus']);
                 $course->grading = remove_base_url($course_data['grading']);
                 $course->instructions = remove_base_url($course_data['instructions']);
                 $course->other_texts = remove_base_url($course_data['other_texts']);
-                $course->allow_subscription_to = preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['allow_subscription_to']) ? $course_data['allow_subscription_to'] : null;
-                $course->groups_change_deadline = preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['groups_change_deadline']) ? $course_data['groups_change_deadline'] : null;
-                $course->test_scoring_deadline = preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['test_scoring_deadline']) ? $course_data['test_scoring_deadline'] : null;
+                $course->allow_subscription_to =
+                    preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['allow_subscription_to'])
+                        ? $course_data['allow_subscription_to']
+                        : null;
+                $course->groups_change_deadline =
+                    preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['groups_change_deadline'])
+                        ? $course_data['groups_change_deadline']
+                        : null;
+                $course->test_scoring_deadline =
+                    preg_match(self::REGEXP_PATTERN_DATETIME, $course_data['test_scoring_deadline'])
+                        ? $course_data['test_scoring_deadline']
+                        : null;
                 $course->hide_in_lists = isset($course_data['hide_in_lists']) ? 1 : 0;
                 $course->auto_accept_students = isset($course_data['auto_accept_students']) ? 1 : 0;
                 $course->disable_public_groups_page = isset($course_data['disable_public_groups_page']) ? 1 : 0;
-                $course->additional_menu_links = !Course_content_model::isJson($additional_menu_links) ? '[]' : $additional_menu_links;
+                $course->additional_menu_links =
+                    !Course_content_model::isJson($additional_menu_links)
+                        ? '[]'
+                        : $additional_menu_links;
                 
                 $overlay = $this->input->post('overlay');
                 
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
                 
-                if ($course->save() && $this->lang->save_overlay_array(remove_base_url_from_overlay_array($overlay, 'description')) && $this->db->trans_status()) {
+                if ($course->save()
+                    && $this->lang->save_overlay_array(
+                        remove_base_url_from_overlay_array($overlay, 'description')
+                    ) && $this->db->trans_status()
+                ) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_courses_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_courses_flash_message_save_successful',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                     $this->output->set_internal_value('course_id', $course->id);
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_courses_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_courses_flash_message_save_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
-                $this->messages->add_message('lang:admin_courses_error_course_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_courses_error_course_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_courses/index'));
         } else {
@@ -298,10 +372,26 @@ class Courses extends LIST_Controller
         $course->get_by_id($course_id);
         if ($course->exists()) {
             $this->load->library('form_validation');
-            $this->form_validation->set_rules('course_mail[subject]', 'lang:admin_courses_mail_to_course_form_field_subject', 'required');
-            $this->form_validation->set_rules('course_mail[body]', 'lang:admin_courses_mail_to_course_form_field_body', 'required_no_html');
-            $this->form_validation->set_rules('course_mail[from]', 'lang:admin_courses_mail_to_course_form_field_from', 'required');
-            $this->form_validation->set_rules('course_mail[student][]', 'lang:admin_courses_mail_to_course_form_field_students', 'required');
+            $this->form_validation->set_rules(
+                'course_mail[subject]',
+                'lang:admin_courses_mail_to_course_form_field_subject',
+                'required'
+            );
+            $this->form_validation->set_rules(
+                'course_mail[body]',
+                'lang:admin_courses_mail_to_course_form_field_body',
+                'required_no_html'
+            );
+            $this->form_validation->set_rules(
+                'course_mail[from]',
+                'lang:admin_courses_mail_to_course_form_field_from',
+                'required'
+            );
+            $this->form_validation->set_rules(
+                'course_mail[student][]',
+                'lang:admin_courses_mail_to_course_form_field_students',
+                'required'
+            );
             if ($this->form_validation->run()) {
                 $data = $this->input->post('course_mail');
                 $students = new Student();
@@ -320,20 +410,37 @@ class Courses extends LIST_Controller
                     }
                     $sender_copy = isset($data['sender_copy']) && $data['sender_copy'] === 1;
                     $sender_email = $teacher->email;
-                    if ($this->_send_multiple_emails($students, $data['subject'], '{$data.body|add_base_url}', ['data' => $data], $from, $from_name, $sender_copy, $sender_email)) {
-                        $this->messages->add_message('lang:admin_courses_mail_to_course_success_sent', Messages::MESSAGE_TYPE_SUCCESS);
+                    if ($this->_send_multiple_emails(
+                        $students,
+                        $data['subject'],
+                        '{$data.body|add_base_url}',
+                        ['data' => $data], $from, $from_name, $sender_copy, $sender_email
+                    )) {
+                        $this->messages->add_message(
+                            'lang:admin_courses_mail_to_course_success_sent',
+                            Messages::MESSAGE_TYPE_SUCCESS
+                        );
                     } else {
-                        $this->messages->add_message('lang:admin_courses_mail_to_course_error_send_failed', Messages::MESSAGE_TYPE_ERROR);
+                        $this->messages->add_message(
+                            'lang:admin_courses_mail_to_course_error_send_failed',
+                            Messages::MESSAGE_TYPE_ERROR
+                        );
                     }
                 } else {
-                    $this->messages->add_message('lang:admin_courses_mail_to_course_error_no_students_selected', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_courses_mail_to_course_error_no_students_selected',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
                 redirect(create_internal_url('admin_courses/mail_to_course/' . $course_id));
             } else {
                 $this->mail_to_course($course_id);
             }
         } else {
-            $this->messages->add_message('lang:admin_courses_mail_to_course_error_course_not_found', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:admin_courses_mail_to_course_error_course_not_found',
+                Messages::MESSAGE_TYPE_ERROR
+            );
             redirect(create_internal_url('admin_courses/mail_to_course/' . $course_id));
         }
     }
@@ -356,7 +463,11 @@ class Courses extends LIST_Controller
         $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
         $course = new Course();
         $course->get_by_id($course_id);
-        $course->task_set_type->order_by_with_constant('name', 'asc')->include_join_fields()->get_iterated();
+        $course
+            ->task_set_type
+            ->order_by_with_constant('name', 'asc')
+            ->include_join_fields()
+            ->get_iterated();
         $this->parser->parse('backend/courses/task_set_types_content.tpl', [
             'task_set_types' => $course->task_set_type,
             'course'         => $course,
@@ -378,8 +489,16 @@ class Courses extends LIST_Controller
         $url = $this->uri->ruri_to_assoc(3);
         $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
         
-        $this->form_validation->set_rules('task_set_type[id]', 'lang:admin_courses_form_field_task_set_type_name', 'required');
-        $this->form_validation->set_rules('task_set_type[join_upload_solution]', 'lang:admin_courses_form_field_upload_solution', 'required');
+        $this->form_validation->set_rules(
+            'task_set_type[id]',
+            'lang:admin_courses_form_field_task_set_type_name',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'task_set_type[join_upload_solution]',
+            'lang:admin_courses_form_field_upload_solution',
+            'required'
+        );
         
         if ($this->form_validation->run()) {
             $task_set_type_data = $this->input->post('task_set_type');
@@ -392,17 +511,30 @@ class Courses extends LIST_Controller
                 $this->db->trans_begin();
                 
                 $course->save($task_set_type);
-                $course->set_join_field($task_set_type, 'upload_solution', (int)$task_set_type_data['join_upload_solution']);
+                $course->set_join_field(
+                    $task_set_type,
+                    'upload_solution',
+                    (int)$task_set_type_data['join_upload_solution']
+                );
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_courses_flash_message_task_set_type_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_courses_flash_message_task_set_type_save_successful',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_courses_flash_message_task_set_type_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_courses_flash_message_task_set_type_save_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
-                $this->messages->add_message('lang:admin_courses_flash_message_task_set_type_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_courses_flash_message_task_set_type_save_failed',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_courses/get_task_set_type_form/course_id/' . $course_id));
         } else {
@@ -442,7 +574,7 @@ class Courses extends LIST_Controller
                     
                     return;
                 }
-    
+                
                 $this->db->trans_rollback();
             }
         }
@@ -487,7 +619,7 @@ class Courses extends LIST_Controller
                     
                     return;
                 }
-    
+                
                 $this->db->trans_rollback();
             }
         }
@@ -501,7 +633,10 @@ class Courses extends LIST_Controller
         if ($course->exists()) {
             $course->download_all_solutions();
         } else {
-            $this->messages->add_message('lang:admin_courses_message_cant_download_solutions', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:admin_courses_message_cant_download_solutions',
+                Messages::MESSAGE_TYPE_ERROR
+            );
             redirect(create_internal_url('admin_courses'));
         }
     }
@@ -536,7 +671,10 @@ class Courses extends LIST_Controller
         $course->task_set_type->get();
         $course_task_set_types = $course->task_set_type->all_to_single_array('id');
         $task_set_types = new Task_set_type();
-        $task_set_types->where_not_in('id', count($course_task_set_types) > 0 ? $course_task_set_types : [0]);
+        $task_set_types->where_not_in(
+            'id',
+            count($course_task_set_types) > 0 ? $course_task_set_types : [0]
+        );
         $query = $task_set_types->order_by('name', 'asc')->get_raw();
         $data = [
             null => '',

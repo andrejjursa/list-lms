@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Logs controller for backend.
@@ -13,10 +11,13 @@ class Logs extends LIST_Controller
     
     public const STORED_FILTER_SESSION_NAME = 'admin_logs_filter_data';
     
-    public const PATTERN_IP_ADDRESS_SINGLE = '/^(?P<firstIP>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/';
-    public const PATTERN_IP_ADDRESS_RANGE = '/^(?P<firstIP>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(\-|\:)(?P<secondIP>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/';
+    public const PATTERN_IP_ADDRESS_SINGLE
+        = '/^(?P<firstIP>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/';
+    public const PATTERN_IP_ADDRESS_RANGE
+        = '/^(?P<firstIP>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(\-|\:)(?P<secondIP>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/';
     public const PATTERN_INTERVAL_DATETIME = '/^\d{4}\-\d{2}\-\d{2} \d{2}\:\d{2}\:\d{2}$/';
-    public const PATTERN_IP_ADDRESS_WILDCARD = '/^(?P<firstIP>(\d{1,3}\.\d{1,3}\.\d{1,3}\.\*|\d{1,3}\.\d{1,3}\.\*\.\*|\d{1,3}\.\*\.\*\.\*|\*\.\*\.\*\.\*))$/';
+    public const PATTERN_IP_ADDRESS_WILDCARD
+        = '/^(?P<firstIP>(\d{1,3}\.\d{1,3}\.\d{1,3}\.\*|\d{1,3}\.\d{1,3}\.\*\.\*|\d{1,3}\.\*\.\*\.\*|\*\.\*\.\*\.\*))$/';
     
     public function __construct()
     {
@@ -96,10 +97,14 @@ class Logs extends LIST_Controller
             }
             $logs->group_end();
         }
-        if (isset($filter['interval_start']) && preg_match(self::PATTERN_INTERVAL_DATETIME, $filter['interval_start'])) {
+        if (isset($filter['interval_start'])
+            && preg_match(self::PATTERN_INTERVAL_DATETIME, $filter['interval_start'])
+        ) {
             $logs->where('created >=', $filter['interval_start']);
         }
-        if (isset($filter['interval_end']) && preg_match(self::PATTERN_INTERVAL_DATETIME, $filter['interval_end'])) {
+        if (isset($filter['interval_end'])
+            && preg_match(self::PATTERN_INTERVAL_DATETIME, $filter['interval_end'])
+        ) {
             $logs->where('created <=', $filter['interval_end']);
         }
         if (isset($filter['course']) && (int)$filter['course'] > 0) {
@@ -128,7 +133,10 @@ class Logs extends LIST_Controller
         } else if ($filter['order_by_field'] === 'teacher') {
             $logs->order_by_related_as_fullname('teacher', 'id', $order_by_direction);
         }
-        $logs->get_paged_iterated(isset($filter['page']) ? intval($filter['page']) : 1, isset($filter['rows_per_page']) ? intval($filter['rows_per_page']) : 25);
+        $logs->get_paged_iterated(
+            isset($filter['page']) ? (int)$filter['page'] : 1,
+            isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25
+        );
         $this->parser->parse('backend/logs/all_logs.tpl', ['logs' => $logs]);
     }
     
@@ -140,7 +148,9 @@ class Logs extends LIST_Controller
         $log->get_by_id($log_id);
         
         if ($log->exists()) {
-            if ($log->log_type === Log::LOG_TYPE_STUDENT_SOLUTION_UPLOAD || $log->log_type === Log::LOG_TYPE_TEACHER_SOLUTION_UPLOAD) {
+            if ($log->log_type === Log::LOG_TYPE_STUDENT_SOLUTION_UPLOAD
+                || $log->log_type === Log::LOG_TYPE_TEACHER_SOLUTION_UPLOAD
+            ) {
                 $solution = new Solution();
                 $solution->include_related('student');
                 $solution->include_related('task_set');

@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Groups controller for backend.
@@ -81,16 +79,33 @@ class Groups extends LIST_Controller
         } else if ($filter['order_by_field'] === 'name') {
             $groups->order_by_with_constant('name', $order_by_direction);
         }
-        $groups->get_paged_iterated(isset($filter['page']) ? (int)$filter['page'] : 1, isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25);
-        $this->parser->parse('backend/groups/table_content.tpl', ['groups' => $groups, 'fields_config' => $fields_config]);
+        $groups->get_paged_iterated(
+            isset($filter['page']) ? (int)$filter['page'] : 1,
+            isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25
+        );
+        $this->parser->parse(
+            'backend/groups/table_content.tpl',
+            [
+                'groups'        => $groups,
+                'fields_config' => $fields_config,
+            ]
+        );
     }
     
     public function create(): void
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('group[name]', 'lang:admin_groups_form_field_group_name', 'required');
-        $this->form_validation->set_rules('group[course_id]', 'lang:admin_groups_form_field_group_course', 'required');
+        $this->form_validation->set_rules(
+            'group[name]',
+            'lang:admin_groups_form_field_group_name',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'group[course_id]',
+            'lang:admin_groups_form_field_group_course',
+            'required'
+        );
         
         if ($this->form_validation->run()) {
             $group = new Group();
@@ -102,12 +117,18 @@ class Groups extends LIST_Controller
             
             if ($group->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->messages->add_message('lang:admin_groups_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message(
+                    'lang:admin_groups_flash_message_save_successful',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
                 $this->_action_success();
                 $this->output->set_internal_value('course_id', $group->course_id);
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_groups_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_groups_flash_message_save_failed',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_groups/new_group_form'));
         } else {
@@ -137,8 +158,16 @@ class Groups extends LIST_Controller
         $group_id = (int)$this->input->post('group_id');
         
         $this->form_validation->set_rules('group_id', 'id', 'required');
-        $this->form_validation->set_rules('group[name]', 'lang:admin_groups_form_field_group_name', 'required');
-        $this->form_validation->set_rules('group[course_id]', 'lang:admin_groups_form_field_group_course', 'required');
+        $this->form_validation->set_rules(
+            'group[name]',
+            'lang:admin_groups_form_field_group_name',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'group[course_id]',
+            'lang:admin_groups_form_field_group_course',
+            'required'
+        );
         
         if ($this->form_validation->run()) {
             $group = new Group();
@@ -152,15 +181,24 @@ class Groups extends LIST_Controller
                 
                 if ($group->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_groups_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_groups_flash_message_save_successful',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                     $this->output->set_internal_value('course_id', $group->course_id);
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_groups_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_groups_flash_message_save_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
-                $this->messages->add_message('lang:admin_groups_error_no_such_group_message', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_groups_error_no_such_group_message',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_groups/index'));
         } else {
@@ -221,10 +259,26 @@ class Groups extends LIST_Controller
         $group->get_by_id($group_id);
         if ($group->exists()) {
             $this->load->library('form_validation');
-            $this->form_validation->set_rules('group_mail[subject]', 'lang:admin_groups_group_email_form_field_subject', 'required');
-            $this->form_validation->set_rules('group_mail[body]', 'lang:admin_groups_group_email_form_field_body', 'required_no_html');
-            $this->form_validation->set_rules('group_mail[from]', 'lang:admin_groups_group_email_form_field_from', 'required');
-            $this->form_validation->set_rules('group_mail[student][]', 'lang:admin_groups_group_email_form_field_students', 'required');
+            $this->form_validation->set_rules(
+                'group_mail[subject]',
+                'lang:admin_groups_group_email_form_field_subject',
+                'required'
+            );
+            $this->form_validation->set_rules(
+                'group_mail[body]',
+                'lang:admin_groups_group_email_form_field_body',
+                'required_no_html'
+            );
+            $this->form_validation->set_rules(
+                'group_mail[from]',
+                'lang:admin_groups_group_email_form_field_from',
+                'required'
+            );
+            $this->form_validation->set_rules(
+                'group_mail[student][]',
+                'lang:admin_groups_group_email_form_field_students',
+                'required'
+            );
             if ($this->form_validation->run()) {
                 $data = $this->input->post('group_mail');
                 $students = new Student();
@@ -244,20 +298,37 @@ class Groups extends LIST_Controller
                     }
                     $sender_copy = isset($data['sender_copy']) && $data['sender_copy'] === 1;
                     $sender_email = $teacher->email;
-                    if ($this->_send_multiple_emails($students, $data['subject'], '{$data.body|add_base_url}', ['data' => $data], $from, $from_name, $sender_copy, $sender_email)) {
-                        $this->messages->add_message('lang:admin_groups_group_email_success_sent', Messages::MESSAGE_TYPE_SUCCESS);
+                    if ($this->_send_multiple_emails(
+                        $students,
+                        $data['subject'],
+                        '{$data.body|add_base_url}',
+                        ['data' => $data], $from, $from_name, $sender_copy, $sender_email
+                    )) {
+                        $this->messages->add_message(
+                            'lang:admin_groups_group_email_success_sent',
+                            Messages::MESSAGE_TYPE_SUCCESS
+                        );
                     } else {
-                        $this->messages->add_message('lang:admin_groups_group_email_error_send_failed', Messages::MESSAGE_TYPE_ERROR);
+                        $this->messages->add_message(
+                            'lang:admin_groups_group_email_error_send_failed',
+                            Messages::MESSAGE_TYPE_ERROR
+                        );
                     }
                 } else {
-                    $this->messages->add_message('lang:admin_groups_group_email_error_no_students_selected', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_groups_group_email_error_no_students_selected',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
                 redirect(create_internal_url('admin_groups/group_mail/' . $group_id));
             } else {
                 $this->group_mail($group_id);
             }
         } else {
-            $this->messages->add_message('lang:admin_groups_group_email_error_group_not_found', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:admin_groups_group_email_error_group_not_found',
+                Messages::MESSAGE_TYPE_ERROR
+            );
             redirect(create_internal_url('admin_groups/group_mail/' . $group_id));
         }
     }
@@ -288,14 +359,21 @@ class Groups extends LIST_Controller
             $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
             $this->filter->store_filter(self::STORED_FILTER_SESSION_NAME, $new_filter);
-            $this->filter->set_filter_course_name_field(self::STORED_FILTER_SESSION_NAME, 'course_id');
+            $this->filter->set_filter_course_name_field(
+                self::STORED_FILTER_SESSION_NAME,
+                'course_id'
+            );
         }
     }
     
     private function inject_stored_filter(): void
     {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course_id');
+        $filter = $this->filter->restore_filter(
+            self::STORED_FILTER_SESSION_NAME,
+            $this->usermanager->get_teacher_id(),
+            'course_id'
+        );
         $this->parser->assign('filter', $filter);
     }
     
