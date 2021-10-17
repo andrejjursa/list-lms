@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Categories controller for backend.
@@ -10,7 +8,9 @@
  */
 class Categories extends LIST_Controller
 {
-    
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -22,6 +22,11 @@ class Categories extends LIST_Controller
         $this->usermanager->teacher_login_protected_redirect();
     }
     
+    /**
+     * Main list and editor of categories.
+     *
+     * @return void
+     */
     public function index(): void
     {
         $this->_select_teacher_menu_pagetag('categories');
@@ -31,29 +36,67 @@ class Categories extends LIST_Controller
         $this->parser->add_css_file('admin_categories.css');
         $categories = new Category();
         $structure = $categories->get_all_structured();
-        $this->parser->parse('backend/categories/index.tpl', ['structure' => $structure]);
+        $this->parser->parse(
+            'backend/categories/index.tpl',
+            [
+                'structure' => $structure,
+            ]
+        );
     }
     
+    /**
+     * Tree structure of categories.
+     *
+     * @return void
+     */
     public function tree_structure(): void
     {
         $categories = new Category();
         $structure = $categories->get_all_structured();
-        $this->parser->parse('backend/categories/tree_structure.tpl', ['structure' => $structure]);
+        $this->parser->parse(
+            'backend/categories/tree_structure.tpl',
+            [
+                'structure' => $structure,
+            ]
+        );
     }
     
+    /**
+     * New category form.
+     *
+     * @return void
+     */
     public function new_category_form(): void
     {
         $categories = new Category();
         $structure = $categories->get_all_structured();
-        $this->parser->parse('backend/categories/new_category_form.tpl', ['structure' => $structure]);
+        $this->parser->parse(
+            'backend/categories/new_category_form.tpl',
+            [
+                'structure' => $structure,
+            ]
+        );
     }
     
+    /**
+     * Create new category.
+     *
+     * @return void
+     */
     public function create(): void
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('category[name]', 'lang:admin_categories_form_field_category_name', 'required');
-        $this->form_validation->set_rules('category[parent_id]', 'lang:admin_categories_form_field_parent_category', 'required');
+        $this->form_validation->set_rules(
+            'category[name]',
+            'lang:admin_categories_form_field_category_name',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'category[parent_id]',
+            'lang:admin_categories_form_field_parent_category',
+            'required'
+        );
         
         if ($this->form_validation->run()) {
             $category_data = $this->input->post('category');
@@ -78,10 +121,16 @@ class Categories extends LIST_Controller
             
             if ($canSave && $category->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->messages->add_message('lang:admin_categories_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message(
+                    'lang:admin_categories_flash_message_save_successful',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_categories_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_categories_flash_message_save_failed',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             
             redirect(create_internal_url('admin_categories/new_category_form'));
@@ -90,6 +139,11 @@ class Categories extends LIST_Controller
         }
     }
     
+    /**
+     * Edit category page.
+     *
+     * @return void
+     */
     public function edit(): void
     {
         $this->_select_teacher_menu_pagetag('categories');
@@ -101,15 +155,34 @@ class Categories extends LIST_Controller
         $category->get_by_id($category_id);
         $categories = new Category();
         $structure = $categories->get_all_structured();
-        $this->parser->parse('backend/categories/edit.tpl', ['category' => $category, 'structure' => $structure]);
+        $this->parser->parse(
+            'backend/categories/edit.tpl',
+            [
+                'category'  => $category,
+                'structure' => $structure,
+            ]
+        );
     }
     
+    /**
+     * Update edited category.
+     *
+     * @return void
+     */
     public function update(): void
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('category[name]', 'lang:admin_categories_form_field_category_name', 'required');
-        $this->form_validation->set_rules('category[parent_id]', 'lang:admin_categories_form_field_parent_category', 'required');
+        $this->form_validation->set_rules(
+            'category[name]',
+            'lang:admin_categories_form_field_category_name',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'category[parent_id]',
+            'lang:admin_categories_form_field_parent_category',
+            'required'
+        );
         $this->form_validation->set_rules('category_id', 'id', 'required');
         
         if ($this->form_validation->run()) {
@@ -138,13 +211,22 @@ class Categories extends LIST_Controller
                 
                 if ($canSave && $category->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_categories_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_categories_flash_message_save_successful',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_categories_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_categories_flash_message_save_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
-                $this->messages->add_message('lang:admin_categories_error_category_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_categories_error_category_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_categories/index'));
         } else {
@@ -152,6 +234,11 @@ class Categories extends LIST_Controller
         }
     }
     
+    /**
+     * Delete category.
+     *
+     * @return void
+     */
     public function delete(): void
     {
         $this->output->set_content_type('application/json');
