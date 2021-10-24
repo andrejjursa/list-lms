@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Settings controller for backend.
@@ -33,34 +31,116 @@ class Settings extends LIST_Controller
         $this->inject_number_of_compiled_templates();
         $this->parser->add_css_file('admin_settings.css');
         $this->parser->add_js_file('admin_settings/form.js');
-        $this->parser->parse('backend/settings/index.tpl', ['config' => $config, 'languages' => $languages, 'moss' => $moss]);
+        $this->parser->parse(
+            'backend/settings/index.tpl',
+            [
+                'config'    => $config,
+                'languages' => $languages,
+                'moss'      => $moss,
+            ]
+        );
     }
     
     public function save(): void
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('config[language]', 'lang:admin_settings_form_field_language', 'required');
+        $this->form_validation->set_rules(
+            'config[language]',
+            'lang:admin_settings_form_field_language',
+            'required'
+        );
         if (is_mod_rewrite_enabled()) {
-            $this->form_validation->set_rules('config[rewrite_engine_enabled]', 'lang:admin_settings_form_field_rewrite_engine_enabled', 'required');
+            $this->form_validation->set_rules(
+                'config[rewrite_engine_enabled]',
+                'lang:admin_settings_form_field_rewrite_engine_enabled',
+                'required'
+            );
         }
-        $this->form_validation->set_rules('config[url_suffix]', 'lang:admin_settings_form_field_url_suffix', 'callback__url_suffix');
-        $this->form_validation->set_message('_url_suffix', $this->lang->line('admin_settings_form_error_message_url_suffix'));
-        $this->form_validation->set_rules('config[teacher_login_security_timeout]', 'lang:admin_settings_form_field_teacher_login_security_timeout', 'required|integer|greater_than[0]');
-        $this->form_validation->set_rules('config[student_login_security_timeout]', 'lang:admin_settings_form_field_student_login_security_timeout', 'required|integer|greater_than[0]');
-        $this->form_validation->set_rules('config[teacher_login_security_allowed_attempts]', 'lang:admin_settings_form_field_teacher_login_security_allowed_attempts', 'required|integer|greater_than[0]');
-        $this->form_validation->set_rules('config[student_login_security_allowed_attempts]', 'lang:admin_settings_form_field_student_login_security_allowed_attempts', 'required|integer|greater_than[0]');
-        $this->form_validation->set_rules('config[maximum_solition_filesize]', 'lang:admin_settings_form_field_maximum_solition_filesize', 'required|integer|greater_than[0]');
-        $this->form_validation->set_rules('config[readable_file_extensions]', 'lang:admin_settings_form_field_readable_file_extensions', 'required|min_length[0]|regex_match[/^[a-z]+[0-9]*(\,[a-z]+[0-9]*)*$/]');
-        $this->form_validation->set_rules('config[email][protocol]', 'lang:admin_settings_form_field_email_protocol', 'required');
-        $this->form_validation->set_rules('config[email][priority]', 'lang:admin_settings_form_field_email_priority', 'required|integer|greater_than[0]|lower_than[6]');
-        $this->form_validation->set_rules('config[email][smtp_port]', 'lang:admin_settings_form_field_email_smtp_port', 'integer|greater_than[0]');
-        $this->form_validation->set_rules('config[email][smtp_timeout]', 'lang:admin_settings_form_field_email_smtp_timeout', 'integer|greater_than[0]');
-        $this->form_validation->set_rules('moss[moss_user_id]', 'lang:admin_settings_form_field_moss_user_id', 'required|integer|greater_than[0]');
-        $this->form_validation->set_rules('config[test_aging_ticks_to_priority_increase]', 'lang:admin_settings_form_field_test_aging_ticks_to_priority_increase', 'required|integer|greater_than_equal[5]');
-        $this->form_validation->set_rules('config[test_aging_max_tests_to_raise_priority]', 'lang:admin_settings_form_field_test_aging_max_tests_to_raise_priority', 'required|integer|greater_than_equal[5]');
-        $this->form_validation->set_rules('config[test_maximum_enqueued_pe_student]', 'lang:admin_settings_form_field_test_maximum_enqueued_pe_student', 'required|integer|greater_than_equal[3]');
-        $this->form_validation->set_rules('config[test_queue_done_error_lifetime]', 'lang:admin_settings_form_field_test_queue_done_error_lifetime', 'required|integer|greater_than_equal[60]');
+        $this->form_validation->set_rules(
+            'config[url_suffix]',
+            'lang:admin_settings_form_field_url_suffix',
+            'callback__url_suffix'
+        );
+        $this->form_validation->set_message(
+            '_url_suffix',
+            $this->lang->line('admin_settings_form_error_message_url_suffix')
+        );
+        $this->form_validation->set_rules(
+            'config[teacher_login_security_timeout]',
+            'lang:admin_settings_form_field_teacher_login_security_timeout',
+            'required|integer|greater_than[0]'
+        );
+        $this->form_validation->set_rules(
+            'config[student_login_security_timeout]',
+            'lang:admin_settings_form_field_student_login_security_timeout',
+            'required|integer|greater_than[0]'
+        );
+        $this->form_validation->set_rules(
+            'config[teacher_login_security_allowed_attempts]',
+            'lang:admin_settings_form_field_teacher_login_security_allowed_attempts',
+            'required|integer|greater_than[0]'
+        );
+        $this->form_validation->set_rules(
+            'config[student_login_security_allowed_attempts]',
+            'lang:admin_settings_form_field_student_login_security_allowed_attempts',
+            'required|integer|greater_than[0]'
+        );
+        $this->form_validation->set_rules(
+            'config[maximum_solition_filesize]',
+            'lang:admin_settings_form_field_maximum_solition_filesize',
+            'required|integer|greater_than[0]'
+        );
+        $this->form_validation->set_rules(
+            'config[readable_file_extensions]',
+            'lang:admin_settings_form_field_readable_file_extensions',
+            'required|min_length[0]|regex_match[/^[a-z]+[0-9]*(\,[a-z]+[0-9]*)*$/]'
+        );
+        $this->form_validation->set_rules(
+            'config[email][protocol]',
+            'lang:admin_settings_form_field_email_protocol',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'config[email][priority]',
+            'lang:admin_settings_form_field_email_priority',
+            'required|integer|greater_than[0]|lower_than[6]'
+        );
+        $this->form_validation->set_rules(
+            'config[email][smtp_port]',
+            'lang:admin_settings_form_field_email_smtp_port',
+            'integer|greater_than[0]'
+        );
+        $this->form_validation->set_rules(
+            'config[email][smtp_timeout]',
+            'lang:admin_settings_form_field_email_smtp_timeout',
+            'integer|greater_than[0]'
+        );
+        $this->form_validation->set_rules(
+            'moss[moss_user_id]',
+            'lang:admin_settings_form_field_moss_user_id',
+            'required|integer|greater_than[0]'
+        );
+        $this->form_validation->set_rules(
+            'config[test_aging_ticks_to_priority_increase]',
+            'lang:admin_settings_form_field_test_aging_ticks_to_priority_increase',
+            'required|integer|greater_than_equal[5]'
+        );
+        $this->form_validation->set_rules(
+            'config[test_aging_max_tests_to_raise_priority]',
+            'lang:admin_settings_form_field_test_aging_max_tests_to_raise_priority',
+            'required|integer|greater_than_equal[5]'
+        );
+        $this->form_validation->set_rules(
+            'config[test_maximum_enqueued_pe_student]',
+            'lang:admin_settings_form_field_test_maximum_enqueued_pe_student',
+            'required|integer|greater_than_equal[3]'
+        );
+        $this->form_validation->set_rules(
+            'config[test_queue_done_error_lifetime]',
+            'lang:admin_settings_form_field_test_queue_done_error_lifetime',
+            'required|integer|greater_than_equal[60]'
+        );
         
         if ($this->form_validation->run()) {
             $config = $this->protect_config_array($this->input->post('config'));
@@ -196,7 +276,12 @@ class Settings extends LIST_Controller
     
     private function inject_number_of_cache_records(): void
     {
-        $count = $this->db->select('*')->from('output_cache')->where('list_version', $this->config->item('list_version'))->count_all_results();
+        $count = $this
+            ->db
+            ->select('*')
+            ->from('output_cache')
+            ->where('list_version', $this->config->item('list_version'))
+            ->count_all_results();
         
         $this->parser->assign('count_of_cached_records', $count);
     }

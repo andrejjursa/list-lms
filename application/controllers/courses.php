@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Courses controller for frontend.
@@ -34,7 +32,9 @@ class Courses extends LIST_Controller
         $this->parser->add_js_file('courses/selection.js');
         
         $cache_id = $this->usermanager->get_student_cache_id('period_' . ($period_id ?: @$filter['period_id']));
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/courses/index.tpl'), $cache_id)) {
+        if (!$this->_is_cache_enabled()
+            || !$this->parser->isCached($this->parser->find_view('frontend/courses/index.tpl'), $cache_id)
+        ) {
             $periods = new Period();
             if ((int)$period_id === 0) {
                 if (isset($filter['period_id'])) {
@@ -51,7 +51,13 @@ class Courses extends LIST_Controller
             $this->inject_period_options();
             $this->parser->assign(['periods' => $periods]);
         }
-        $this->parser->parse('frontend/courses/index.tpl', [], false, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse(
+            'frontend/courses/index.tpl',
+            [],
+            false,
+            $this->_is_cache_enabled(),
+            $cache_id
+        );
     }
     
     public function signup_to_course($course_id): void
@@ -90,9 +96,16 @@ class Courses extends LIST_Controller
                             $participant->allowed = 1;
                             $participant->save([$student, $course]);
                             $this->db->trans_commit();
-                            $output->message = sprintf($this->lang->line('courses_message_signed_up_for_course_approved'), $this->lang->text($course->name));
+                            $output->message = sprintf(
+                                $this->lang->line('courses_message_signed_up_for_course_approved'),
+                                $this->lang->text($course->name)
+                            );
                             $this->parser->assign('course', $course);
-                            $output->content = $this->parser->parse('frontend/courses/single_course.tpl', [], true);
+                            $output->content = $this->parser->parse(
+                                'frontend/courses/single_course.tpl',
+                                [],
+                                true
+                            );
                             $output->status = true;
                             $this->_action_success();
                         }
@@ -101,14 +114,23 @@ class Courses extends LIST_Controller
                         $participant->allowed = 0;
                         $participant->save([$student, $course]);
                         $this->db->trans_commit();
-                        $output->message = sprintf($this->lang->line('courses_message_signed_up_for_course'), $this->lang->text($course->name));
+                        $output->message = sprintf(
+                            $this->lang->line('courses_message_signed_up_for_course'),
+                            $this->lang->text($course->name)
+                        );
                         $this->parser->assign('course', $course);
-                        $output->content = $this->parser->parse('frontend/courses/single_course.tpl', [], true);
+                        $output->content = $this->parser->parse(
+                            'frontend/courses/single_course.tpl',
+                            [],
+                            true
+                        );
                         $output->status = true;
                         $this->_action_success();
                     }
                 } else {
-                    $output->message = $this->lang->line('courses_message_already_in_course_or_waiting_for_approwal');
+                    $output->message = $this->lang->line(
+                        'courses_message_already_in_course_or_waiting_for_approwal'
+                    );
                     $this->db->trans_rollback();
                 }
             } else {
@@ -150,10 +172,21 @@ class Courses extends LIST_Controller
                 $this->db->trans_commit();
                 $this->usermanager->set_student_data_to_smarty();
                 $period = $course->period->get();
-                $output->content = $this->parser->parse('frontend/courses/period_courses.tpl', ['period' => $period], true);
-                $output->metainfo = $this->parser->parse('partials/frontend_general/selected_course.tpl', [], true);
+                $output->content = $this->parser->parse(
+                    'frontend/courses/period_courses.tpl',
+                    ['period' => $period],
+                    true
+                );
+                $output->metainfo = $this->parser->parse(
+                    'partials/frontend_general/selected_course.tpl',
+                    [],
+                    true
+                );
                 $output->status = true;
-                $output->message = sprintf($this->lang->line('courses_message_switched_to_course'), $this->lang->text($course->name) . ' / ' . $this->lang->text($period->name));
+                $output->message = sprintf(
+                    $this->lang->line('courses_message_switched_to_course'),
+                    $this->lang->text($course->name) . ' / ' . $this->lang->text($period->name)
+                );
                 $this->_action_success();
             } else {
                 $output->message = $this->lang->line('courses_message_cant_switch_to_unsigned_course');
@@ -174,14 +207,22 @@ class Courses extends LIST_Controller
             $this->_init_specific_language($lang);
         }
         $cache_id = 'course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/courses/course_details.tpl'), $cache_id)) {
+        if (!$this->_is_cache_enabled()
+            || !$this->parser->isCached($this->parser->find_view('frontend/courses/course_details.tpl'), $cache_id)
+        ) {
             $course = new Course();
             $course->include_related('period');
             $course->get_by_id($course_id);
             smarty_inject_days();
             $this->parser->assign(['course' => $course]);
         }
-        $this->parser->parse('frontend/courses/course_details.tpl', [], false, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse(
+            'frontend/courses/course_details.tpl',
+            [],
+            false,
+            $this->_is_cache_enabled(),
+            $cache_id
+        );
     }
     
     public function show_description($course_id, $lang = null): void
@@ -191,14 +232,25 @@ class Courses extends LIST_Controller
             $this->_init_specific_language($lang);
         }
         $cache_id = 'course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/courses/show_description.tpl'), $cache_id)) {
+        if (!$this->_is_cache_enabled()
+            || !$this->parser->isCached(
+                $this->parser->find_view('frontend/courses/show_description.tpl'),
+                $cache_id
+            )
+        ) {
             $course = new Course();
             $course->include_related('period');
             $course->get_by_id((int)$course_id);
             smarty_inject_days();
             $this->parser->assign(['course' => $course]);
         }
-        $this->parser->parse('frontend/courses/show_description.tpl', [], false, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse(
+            'frontend/courses/show_description.tpl',
+            [],
+            false,
+            $this->_is_cache_enabled(),
+            $cache_id
+        );
     }
     
     public function course_description(): void
@@ -213,14 +265,25 @@ class Courses extends LIST_Controller
         
         $course_id = $student->active_course_id ?? 'none';
         $cache_id = 'student_' . $student->id . '|course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/courses/course_description.tpl'), $cache_id)) {
+        if (!$this->_is_cache_enabled()
+            || !$this->parser->isCached(
+                $this->parser->find_view('frontend/courses/course_description.tpl'),
+                $cache_id
+            )
+        ) {
             $course = new Course();
             $course->include_related('period');
             $course->get_by_id((int)$course_id);
             smarty_inject_days();
             $this->parser->assign(['course' => $course]);
         }
-        $this->parser->parse('frontend/courses/course_description.tpl', [], false, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse(
+            'frontend/courses/course_description.tpl',
+            [],
+            false,
+            $this->_is_cache_enabled(),
+            $cache_id
+        );
     }
     
     public function quick_course_change($course_id, $current_url): void
@@ -228,7 +291,10 @@ class Courses extends LIST_Controller
         $this->activate_course($course_id);
         $output = $this->output->get_output();
         $output_object = json_decode($output);
-        $this->messages->add_message($output_object->message, $output_object->status ? Messages::MESSAGE_TYPE_SUCCESS : Messages::MESSAGE_TYPE_ERROR);
+        $this->messages->add_message(
+            $output_object->message,
+            $output_object->status ? Messages::MESSAGE_TYPE_SUCCESS : Messages::MESSAGE_TYPE_ERROR
+        );
         
         $decoded_current_url = decode_from_url($current_url);
         redirect($decoded_current_url);

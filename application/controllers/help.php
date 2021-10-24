@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Help controller for both frontend and backend.
@@ -47,8 +45,12 @@ class Help extends LIST_Controller
             $options = [];
             $dirs = scandir(APPPATH . 'manual');
             foreach ($dirs as $dir) {
-                if ($dir !== '.' && $dir !== '..' && is_dir(APPPATH . 'manual/' . $dir) && file_exists(APPPATH . 'manual/' . $dir . '/' . $file_path)) {
-                    $options[$dir] = create_internal_url('help/show/' . $controller . '/' . $topic . '/' . $dir);
+                if ($dir !== '.' && $dir !== '..' && is_dir(APPPATH . 'manual/' . $dir)
+                    && file_exists(APPPATH . 'manual/' . $dir . '/' . $file_path)
+                ) {
+                    $options[$dir] = create_internal_url(
+                        'help/show/' . $controller . '/' . $topic . '/' . $dir
+                    );
                 }
             }
             $this->parser->parse('frontend/help/show_error.tpl', ['options' => $options]);

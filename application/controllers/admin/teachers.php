@@ -431,7 +431,7 @@ class Teachers extends LIST_Controller
         $this->usermanager->teacher_login_protected_redirect();
         $this->_select_teacher_menu_pagetag('teachers_list');
         $url = $this->uri->ruri_to_assoc(3);
-        $teacher_id = isset($url['teacher_id']) ? intval($url['teacher_id']) : 0;
+        $teacher_id = isset($url['teacher_id']) ? (int)$url['teacher_id'] : 0;
         $teacher = new Teacher();
         $teacher->where('id !=', $this->usermanager->get_teacher_id())->get_by_id($teacher_id);
         $this->parser->add_js_file('admin_teachers/edit.js');

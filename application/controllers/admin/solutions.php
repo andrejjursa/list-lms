@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Solutions controller for backend.
@@ -90,18 +88,29 @@ class Solutions extends LIST_Controller
                     $task_set_check->or_where('group_id', null);
                     $task_set_check->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
                     $task_set_check->group_end();
-                    $task_set_check->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                    $task_set_check->where_subquery(
+                        0,
+                        '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                        . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+                    );
                     $task_set_check->group_end();
-                    $task_set_check->or_where_related('task_set_permission', '`group_id` = `course_participants`.`group_id`');
+                    $task_set_check->or_where_related(
+                        'task_set_permission',
+                        '`group_id` = `course_participants`.`group_id`'
+                    );
                     $task_set_check->or_where_related('solution', 'student_id', $student->id);
                     $task_set_check->group_end();
                     $task_set_check->get_by_id($task_set_id);
-                    if ($student->exists() && $task_set_check->exists() && array_key_exists('points', $solution_data) && is_numeric($solution_data['points'])) {
+                    if ($student->exists() && $task_set_check->exists()
+                        && array_key_exists('points', $solution_data) && is_numeric($solution_data['points'])
+                    ) {
                         $solution = new Solution();
                         $solution->where_related_student('id', $student->id);
                         $solution->where_related_task_set('id', $task_set->id);
                         $solution->get();
-                        if (is_null($solution->points) || (float)$solution->points !== (float)$solution_data['points'] || $solution->not_considered != (int)@$solution_data['not_considered']) {
+                        if (is_null($solution->points) || (float)$solution->points !== (float)$solution_data['points']
+                            || $solution->not_considered != (int)@$solution_data['not_considered']
+                        ) {
                             $solution->teacher_id = $this->usermanager->get_teacher_id();
                             $solution->points = (float)$solution_data['points'];
                             $solution->revalidate = 0;
@@ -114,15 +123,24 @@ class Solutions extends LIST_Controller
             }
             if ($this->db->trans_status() && $save_status && $saved_count > 0) {
                 $this->db->trans_commit();
-                $this->messages->add_message('lang:admin_solutions_batch_valuation_success_message_save_ok', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message(
+                    'lang:admin_solutions_batch_valuation_success_message_save_ok',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
                 $this->_action_success();
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_solutions_batch_valuation_error_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_solutions_batch_valuation_error_message_save_failed',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
         } else {
             $this->db->trans_rollback();
-            $this->messages->add_message('lang:admin_solutions_batch_valuation_error_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:admin_solutions_batch_valuation_error_message_save_failed',
+                Messages::MESSAGE_TYPE_ERROR
+            );
         }
         redirect(create_internal_url('admin_solutions/batch_valuation_list/' . $task_set_id));
     }
@@ -138,12 +156,21 @@ class Solutions extends LIST_Controller
         $result->message = '';
         
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('points', 'lang:admin_solutions_remove_points_form_field_points', 'required|numeric|greater_than[0]');
+        $this->form_validation->set_rules(
+            'points',
+            'lang:admin_solutions_remove_points_form_field_points',
+            'required|numeric|greater_than[0]'
+        );
         if ($this->form_validation->run()) {
             $points_to_remove = (float)$this->input->post('points');
             $task_set = new Task_set();
             $task_set->select('*');
-            $task_set->select_subquery('(SELECT `upload_solution` FROM `course_task_set_type_rel` ctst WHERE `ctst`.`course_id` = `${parent}`.`course_id` AND `ctst`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
+            $task_set->select_subquery(
+                '(SELECT `upload_solution` FROM `course_task_set_type_rel` ctst '
+                . 'WHERE `ctst`.`course_id` = `${parent}`.`course_id` '
+                . 'AND `ctst`.`task_set_type_id` = `${parent}`.`task_set_type_id`)',
+                'join_upload_solution'
+            );
             $task_set->include_related_count('task_set_permission');
             $task_set->add_join_condition('`task_set_permissions`.`enabled` = 1');
             $task_set->include_related('course', '*', true, true);
@@ -156,7 +183,15 @@ class Solutions extends LIST_Controller
                     $students = null;
                     $error_code = 0;
                     if ($task_set->task_set_permission_count === 0) {
-                        if ($this->remove_points_iteration($task_set, $points_to_remove, $task_set->id, $task_set->course->id, $task_set->group->id, $error_code, $students)) {
+                        if ($this->remove_points_iteration(
+                            $task_set,
+                            $points_to_remove,
+                            $task_set->id,
+                            $task_set->course->id,
+                            $task_set->group->id,
+                            $error_code,
+                            $students
+                        )) {
                             $notify_students[] = $students;
                         }
                     } else {
@@ -165,7 +200,15 @@ class Solutions extends LIST_Controller
                         $task_set_permissions->include_related('group', '*', true, true);
                         $task_set_permissions->get_iterated();
                         foreach ($task_set_permissions as $task_set_permission) {
-                            if ($this->remove_points_iteration($task_set_permission, $points_to_remove, $task_set->id, $task_set->course->id, $task_set_permission->group_id, $error_code, $students)) {
+                            if ($this->remove_points_iteration(
+                                $task_set_permission,
+                                $points_to_remove,
+                                $task_set->id,
+                                $task_set->course->id,
+                                $task_set_permission->group_id,
+                                $error_code,
+                                $students
+                            )) {
                                 $notify_students[] = $students;
                                 $error_code = 0;
                             }
@@ -175,21 +218,33 @@ class Solutions extends LIST_Controller
                         $student_count = 0;
                         foreach ($notify_students as $notify_student_group) {
                             $student_count += $notify_student_group->result_count();
-                            $result->mail_sent = $this->_send_multiple_emails($notify_student_group, 'lang:admin_solutions_remove_points_notification_subject', 'file:emails/backend/solutions/remove_points_notify.tpl', ['task_set' => $task_set, 'points_to_remove' => $points_to_remove]);
+                            $result->mail_sent = $this->_send_multiple_emails(
+                                $notify_student_group,
+                                'lang:admin_solutions_remove_points_notification_subject',
+                                'file:emails/backend/solutions/remove_points_notify.tpl',
+                                ['task_set' => $task_set, 'points_to_remove' => $points_to_remove]
+                            );
                         }
                         $result->result = true;
-                        $result->message = sprintf($this->lang->line('admin_solutions_remove_points_success'), $student_count);
+                        $result->message = sprintf(
+                            $this->lang->line('admin_solutions_remove_points_success'),
+                            $student_count
+                        );
                         $this->_action_success();
                     } else {
                         $result->message = $this->lang->line('admin_solutions_remove_points_error_some_problem');
                     }
                 } else {
                     $this->db->trans_rollback();
-                    $result->message = $this->lang->line('admin_solutions_remove_points_error_task_set_solution_uploading_disabled');
+                    $result->message = $this->lang->line(
+                        'admin_solutions_remove_points_error_task_set_solution_uploading_disabled'
+                    );
                 }
             } else {
                 $this->db->trans_rollback();
-                $result->message = $this->lang->line('admin_solutions_list_task_set_not_found');
+                $result->message = $this->lang->line(
+                    'admin_solutions_list_task_set_not_found'
+                );
             }
         } else {
             $result->message = $this->form_validation->error_string();
@@ -197,7 +252,15 @@ class Solutions extends LIST_Controller
         $this->output->set_output(json_encode($result));
     }
     
-    private function remove_points_iteration($task_set, $points_to_remove, $task_set_id, $task_set_course_id, $task_set_group_id, &$error_code = 0, &$students = null): bool
+    private function remove_points_iteration(
+        $task_set,
+        $points_to_remove,
+        $task_set_id,
+        $task_set_course_id,
+        $task_set_group_id,
+        &$error_code = 0,
+        &$students = null
+    ): bool
     {
         $this->_transaction_isolation();
         $this->db->trans_begin();
@@ -206,7 +269,12 @@ class Solutions extends LIST_Controller
             if (time() > $timestamp_end) {
                 $participants = new Participant();
                 $participants->select('*');
-                $participants->select_subquery('(SELECT `solutions`.`id` FROM `solutions` WHERE `solutions`.`task_set_id` = ' . $task_set_id . ' AND `solutions`.`student_id` = `${parent}`.`student_id`)', 'solution_id');
+                $participants->select_subquery(
+                    '(SELECT `solutions`.`id` FROM `solutions` '
+                    . 'WHERE `solutions`.`task_set_id` = ' . $task_set_id
+                    . ' AND `solutions`.`student_id` = `${parent}`.`student_id`)',
+                    'solution_id'
+                );
                 $participants->where_related_course('id', $task_set_course_id);
                 if ($task_set->group->exists() && !is_null($task_set_group_id)) {
                     $participants->where_related_group('id', $task_set_group_id);
@@ -233,22 +301,29 @@ class Solutions extends LIST_Controller
                     $students = new Student();
                     $students->where_in('id', $notify_students);
                     $students->get();
-                    //$result->mail_sent = $this->_send_multiple_emails($students, 'lang:admin_solutions_remove_points_notification_subject', 'file:emails/backend/solutions/remove_points_notify.tpl', array('task_set' => $task_set, 'points_to_remove' => $points_to_remove));
+                    /*$result->mail_sent = $this->_send_multiple_emails(
+                        $students,
+                        'lang:admin_solutions_remove_points_notification_subject',
+                        'file:emails/backend/solutions/remove_points_notify.tpl',
+                        ['task_set' => $task_set, 'points_to_remove' => $points_to_remove]
+                    );*/
                     return true;
                 }
-    
+                
                 $this->db->trans_rollback();
                 //$result->message = $this->lang->line('admin_solutions_remove_points_error_unknown');
                 $error_code = 1;
                 return false;
             }
-    
+            
             $this->db->trans_rollback();
-            //$result->message = $this->lang->line('admin_solutions_remove_points_error_task_set_upload_limit_not_reached');
+            /*$result->message = $this->lang->line(
+                'admin_solutions_remove_points_error_task_set_upload_limit_not_reached'
+            );*/
             $error_code = 2;
             return false;
         }
-    
+        
         $this->db->trans_rollback();
         //$result->message = $this->lang->line('admin_solutions_remove_points_error_task_set_upload_not_limited');
         $error_code = 3;
@@ -260,7 +335,11 @@ class Solutions extends LIST_Controller
         $this->_select_teacher_menu_pagetag('solutions');
         $task_set = new Task_set();
         $task_set->select('`task_sets`.*');
-        $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'task_set_total_points');
+        $task_set->select_subquery(
+            '(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` '
+            . 'WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)',
+            'task_set_total_points'
+        );
         $task_set->include_related_count('task_set_permission');
         $task_set->add_join_condition('`task_set_permissions`.`enabled` = 1');
         $task_set->include_related('course', 'name');
@@ -288,8 +367,16 @@ class Solutions extends LIST_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('solution[student_id]', 'lang:admin_solutions_list_form_field_student', 'required|exists_in_table[students.id.1.1]');
-        $this->form_validation->set_rules('solution[points]', 'lang:admin_solutions_list_form_field_points', 'floatpoint');
+        $this->form_validation->set_rules(
+            'solution[student_id]',
+            'lang:admin_solutions_list_form_field_student',
+            'required|exists_in_table[students.id.1.1]'
+        );
+        $this->form_validation->set_rules(
+            'solution[points]',
+            'lang:admin_solutions_list_form_field_points',
+            'floatpoint'
+        );
         
         if ($this->form_validation->run()) {
             $this->_transaction_isolation();
@@ -304,9 +391,16 @@ class Solutions extends LIST_Controller
             $task_set->or_where('group_id', null);
             $task_set->or_where('`course_participants`.`group_id` = `task_sets`.`group_id`');
             $task_set->group_end();
-            $task_set->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_set->where_subquery(
+                0,
+                '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+            );
             $task_set->group_end();
-            $task_set->or_where_related('task_set_permission', '`group_id` = `course_participants`.`group_id`');
+            $task_set->or_where_related(
+                'task_set_permission',
+                '`group_id` = `course_participants`.`group_id`'
+            );
             $task_set->group_end();
             $task_set->get_by_id($task_set_id);
             $created_solution_id = null;
@@ -329,18 +423,33 @@ class Solutions extends LIST_Controller
                 if ($solution->count() === 1) {
                     $created_solution_id = $solution->id;
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_solutions_list_new_solution_created', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_solutions_list_new_solution_created',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                     $this->output->set_internal_value('student_id', $solution->student_id);
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_solutions_list_new_solution_error_solution_exists', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_solutions_list_new_solution_error_solution_exists',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_solutions_list_new_solution_error_student_not_in_course_or_group', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_solutions_list_new_solution_error_student_not_in_course_or_group',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
-            redirect(create_internal_url('admin_solutions/new_solution_form/' . (int)$task_set_id . ($created_solution_id !== null ? '/' . (int)$created_solution_id : '')));
+            redirect(
+                create_internal_url(
+                    'admin_solutions/new_solution_form/' . (int)$task_set_id . ($created_solution_id !== null
+                        ? '/' . (int)$created_solution_id
+                        : '')
+                )
+            );
         } else {
             $this->new_solution_form($task_set_id);
         }
@@ -350,10 +459,20 @@ class Solutions extends LIST_Controller
     {
         $task_set = new Task_set();
         $task_set->select('`task_sets`.*');
-        $task_set->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'task_set_total_points');
+        $task_set->select_subquery(
+            '(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` '
+            . 'WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)',
+            'task_set_total_points'
+        );
         $task_set->get_by_id($task_set_id);
         $this->inject_students($task_set_id);
-        $this->parser->parse('backend/solutions/new_solution_form.tpl', ['task_set' => $task_set, 'last_created_solution_id' => $last_created_solution_id]);
+        $this->parser->parse(
+            'backend/solutions/new_solution_form.tpl',
+            [
+                'task_set'                 => $task_set,
+                'last_created_solution_id' => $last_created_solution_id,
+            ]
+        );
     }
     
     public function display_tasks_list($task_set_id): void
@@ -362,7 +481,11 @@ class Solutions extends LIST_Controller
         $task_set = new Task_set();
         $task_set->get_by_id($task_set_id);
         if ($task_set->exists()) {
-            $tasks = $task_set->task->include_join_fields()->order_by('`task_task_set_rel`.`sorting`', 'asc')->get();
+            $tasks = $task_set
+                ->task
+                ->include_join_fields()
+                ->order_by('`task_task_set_rel`.`sorting`', 'asc')
+                ->get();
             $this->lang->init_overlays('tasks', $tasks, ['name', 'text']);
             $this->parser->assign('tasks', $tasks);
             $this->parser->assign('task_set', $task_set);
@@ -375,7 +498,11 @@ class Solutions extends LIST_Controller
         $this->_add_mathjax();
         $solution = new Solution();
         $solution->select('`solutions`.*');
-        $solution->select_subquery('(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` WHERE `task_set_id` = `task_sets`.`id` AND `task_task_set_rel`.`bonus_task` = 0)', 'task_set_total_points');
+        $solution->select_subquery(
+            '(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` '
+            . 'WHERE `task_set_id` = `task_sets`.`id` AND `task_task_set_rel`.`bonus_task` = 0)',
+            'task_set_total_points'
+        );
         $solution->include_related('task_set', '*', true, true);
         $solution->include_related('task_set/course', 'name');
         $solution->include_related('task_set/course/period', 'name');
@@ -392,7 +519,9 @@ class Solutions extends LIST_Controller
         $group->get();
         
         $project_selection = new Project_selection();
-        $project_selection->select('`project_selections`.*, `task_task_task_set_rel`.`internal_comment` AS `task_join_internal_comment`');
+        $project_selection->select(
+            '`project_selections`.*, `task_task_task_set_rel`.`internal_comment` AS `task_join_internal_comment`'
+        );
         $project_selection->include_related('task', '*', true, true);
         $project_selection->include_related('task/task_set', ['id', 'name']);
         $project_selection->where('task_set_id', $solution->task_set_id);
@@ -442,10 +571,14 @@ class Solutions extends LIST_Controller
                 $output->have_next = true;
                 $output->next_id = $solution->id;
             } else {
-                $output->error_message = $this->lang->line('admin_solutions_valuation_next_solution_message_no_more_solution_to_valuate');
+                $output->error_message = $this->lang->line(
+                    'admin_solutions_valuation_next_solution_message_no_more_solution_to_valuate'
+                );
             }
         } else {
-            $output->error_message = $this->lang->line('admin_solutions_valuation_next_solution_message_this_solution_is_not_valuated');
+            $output->error_message = $this->lang->line(
+                'admin_solutions_valuation_next_solution_message_this_solution_is_not_valuated'
+            );
         }
         $this->db->trans_rollback();
         $this->output->set_content_type('application/json');
@@ -457,7 +590,7 @@ class Solutions extends LIST_Controller
         if ($value === '') {
             return true;
         }
-    
+        
         return $this->form_validation->floatpoint($value);
     }
     
@@ -465,9 +598,20 @@ class Solutions extends LIST_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('solution[points]', 'lang:admin_solutions_valuation_form_field_points', 'trim|callback__tests_points_value_check');
-        $this->form_validation->set_rules('solution[tests_points]', 'lang:admin_solutions_valuation_form_field_tests_points', 'trim|callback__tests_points_value_check');
-        $this->form_validation->set_message('_tests_points_value_check', $this->lang->line('admin_solutions_valuation_form_field_tests_points_value_check_error'));
+        $this->form_validation->set_rules(
+            'solution[points]',
+            'lang:admin_solutions_valuation_form_field_points',
+            'trim|callback__tests_points_value_check'
+        );
+        $this->form_validation->set_rules(
+            'solution[tests_points]',
+            'lang:admin_solutions_valuation_form_field_tests_points',
+            'trim|callback__tests_points_value_check'
+        );
+        $this->form_validation->set_message(
+            '_tests_points_value_check',
+            $this->lang->line('admin_solutions_valuation_form_field_tests_points_value_check_error')
+        );
         
         if ($this->form_validation->run()) {
             $this->_transaction_isolation();
@@ -477,27 +621,46 @@ class Solutions extends LIST_Controller
             $solution->get_by_id($solution_id);
             if ($solution->exists()) {
                 $solution_data = $this->input->post('solution');
-                if ($solution->comment !== $solution_data['comment'] || (float)$solution->points !== (float)$solution_data['points'] || $solution->not_considered != (int)$solution_data['not_considered']) {
+                if ($solution->comment !== $solution_data['comment']
+                    || (float)$solution->points !== (float)$solution_data['points']
+                    || $solution->not_considered != (int)$solution_data['not_considered']
+                ) {
                     $solution->teacher_id = $this->usermanager->get_teacher_id();
                 }
                 $solution->from_array($solution_data, ['comment', 'not_considered', 'disable_evaluation_by_tests']);
-                $solution->points = isset($solution_data['points']) && $solution_data['points'] !== '' ? $solution_data['points'] : null;
-                $solution->tests_points = isset($solution_data['tests_points']) && $solution_data['tests_points'] !== '' ? $solution_data['tests_points'] : null;
+                $solution->points = isset($solution_data['points']) && $solution_data['points'] !== ''
+                    ? $solution_data['points']
+                    : null;
+                $solution->tests_points = isset($solution_data['tests_points']) && $solution_data['tests_points'] !== ''
+                    ? $solution_data['tests_points']
+                    : null;
                 $solution->revalidate = 0;
                 if ($solution->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_solutions_valuation_solution_saved', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_solutions_valuation_solution_saved',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                     $this->output->set_internal_value('student_id', $solution->student_id);
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_solutions_valuation_solution_not_saved', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_solutions_valuation_solution_not_saved',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_solutions_valuation_solution_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_solutions_valuation_solution_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
-            redirect(create_internal_url('admin_solutions/valuation/' . $task_set_id . '/' . $solution_id . '/' . $this->uri->assoc_to_uri($this->uri->ruri_to_assoc(5))));
+            redirect(create_internal_url(
+                    'admin_solutions/valuation/' . $task_set_id . '/' . $solution_id
+                    . '/' . $this->uri->assoc_to_uri($this->uri->ruri_to_assoc(5)))
+            );
         } else {
             $this->valuation($task_set_id, $solution_id);
         }
@@ -571,7 +734,9 @@ class Solutions extends LIST_Controller
         $output = new stdClass();
         $output->status = false;
         $output->value = false;
-        $output->message = $this->lang->line('admin_solutions_valuation_version_metadata_download_lock_error_cant_found');
+        $output->message = $this->lang->line(
+            'admin_solutions_valuation_version_metadata_download_lock_error_cant_found'
+        );
         
         $solution_version = new Solution_version();
         $solution_version->include_related('solution');
@@ -584,15 +749,21 @@ class Solutions extends LIST_Controller
                 $output->value = !($solution_version->download_lock == 0);
                 $output->status = true;
                 if ($output->value) {
-                    $output->message = $this->lang->line('admin_solutions_valuation_version_metadata_download_lock_enabled');
+                    $output->message = $this->lang->line(
+                        'admin_solutions_valuation_version_metadata_download_lock_enabled'
+                    );
                 } else {
-                    $output->message = $this->lang->line('admin_solutions_valuation_version_metadata_download_lock_disabled');
+                    $output->message = $this->lang->line(
+                        'admin_solutions_valuation_version_metadata_download_lock_disabled'
+                    );
                 }
                 $this->db->trans_commit();
                 $this->_action_success();
                 $this->output->set_internal_value('student_id', (int)$solution_version->solution_student_id);
             } else {
-                $output->message = $this->lang->line('admin_solutions_valuation_version_metadata_download_lock_error_cant_save');
+                $output->message = $this->lang->line(
+                    'admin_solutions_valuation_version_metadata_download_lock_error_cant_save'
+                );
                 $this->db->trans_rollback();
             }
         }
@@ -612,12 +783,19 @@ class Solutions extends LIST_Controller
             $file_name = decode_from_url($solution_file);
             $output = $task_set->extract_student_file_by_index($file_name, $zip_index);
             if ($output !== false) {
-                $this->output->set_output('<div class="codepreview_container"><pre class="codepreview prettyprint linenums lang-' . strtolower($output['extension']) . '">' . htmlspecialchars($output['content']) . '</pre></div>');
+                $this->output->set_output(
+                    '<div class="codepreview_container"><pre class="codepreview prettyprint linenums lang-'
+                    . strtolower($output['extension']) . '">' . htmlspecialchars($output['content']) . '</pre></div>'
+                );
             } else {
-                $this->output->set_output($this->lang->line('admin_solutions_valuation_file_content_error_cant_read_file'));
+                $this->output->set_output(
+                    $this->lang->line('admin_solutions_valuation_file_content_error_cant_read_file')
+                );
             }
         } else {
-            $this->output->set_output($this->lang->line('admin_solutions_valuation_file_content_error_task_set_not_found'));
+            $this->output->set_output(
+                $this->lang->line('admin_solutions_valuation_file_content_error_task_set_not_found')
+            );
         }
     }
     
@@ -629,7 +807,13 @@ class Solutions extends LIST_Controller
         }
         $this->store_task_set_selection_filter($filter);
         
-        $this->db->query('CREATE TEMPORARY TABLE course_task_set_type_rel_override AS ( SELECT ctstr.course_id, ctstr.task_set_type_id, ctstr.upload_solution FROM course_task_set_type_rel ctstr ) UNION ( SELECT cs.id as course_id, 0 AS task_set_type_id, 1 AS upload_solution FROM (SELECT id FROM courses) cs )');
+        $this->db->query(
+            'CREATE TEMPORARY TABLE course_task_set_type_rel_override AS ( '
+            . 'SELECT ctstr.course_id, ctstr.task_set_type_id, ctstr.upload_solution '
+            . 'FROM course_task_set_type_rel ctstr ) '
+            . 'UNION ( SELECT cs.id as course_id, 0 AS task_set_type_id, 1 AS upload_solution '
+            . 'FROM (SELECT id FROM courses) cs )'
+        );
         
         $solutions = new Solution();
         $solutions->select_func('COUNT', 'id', 'cnt');
@@ -637,13 +821,24 @@ class Solutions extends LIST_Controller
         $solutions->where_related('task_set', 'id', '${parent}.id');
         
         $task_sets = new Task_set();
-        //$task_sets->select('`task_sets`.*, `course_course_task_set_type_rel`.`upload_solution` AS `join_upload_solution`');
+        /*$task_sets->select(
+            '`task_sets`.*, `course_course_task_set_type_rel`.`upload_solution` AS `join_upload_solution`'
+        );*/
         $task_sets->select('`task_sets`.*');
-        $task_sets->select_subquery('(SELECT `sq_ctst`.`upload_solution` FROM course_task_set_type_rel_override AS `sq_ctst` WHERE `sq_ctst`.`course_id` = `${parent}`.`course_id` AND `sq_ctst`.`task_set_type_id` = `${parent}`.`task_set_type_id`)', 'join_upload_solution');
+        $task_sets->select_subquery(
+            '(SELECT `sq_ctst`.`upload_solution` FROM course_task_set_type_rel_override AS `sq_ctst` '
+            . 'WHERE `sq_ctst`.`course_id` = `${parent}`.`course_id` '
+            . 'AND `sq_ctst`.`task_set_type_id` = `${parent}`.`task_set_type_id`)',
+            'join_upload_solution'
+        );
         //$task_sets->include_related_count('task_set_permission');
         //$task_sets->add_join_condition('`task_set_permissions`.`enabled` = 1');
         $task_sets->select('*');
-        $task_sets->select_subquery('(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = ${parent}.`id` AND `tsp`.`enabled` = 1)', 'task_set_permission_count');
+        $task_sets->select_subquery(
+            '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+            . 'WHERE `tsp`.`task_set_id` = ${parent}.`id` AND `tsp`.`enabled` = 1)',
+            'task_set_permission_count'
+        );
         //$task_sets->include_related_count('solution');
         $task_sets->select_subquery($solutions, 'solution_count');
         $task_sets->include_related_count('task');
@@ -653,20 +848,31 @@ class Solutions extends LIST_Controller
         $task_sets->include_related('task_set_type', 'name');
         //$task_sets->where_related('solution/student/participant/course', 'id', 'courses.id');
         /*$task_sets->include_related('course/task_set_type');
-        $task_sets->where('(`course_task_set_types`.`id` = `task_sets`.`task_set_type_id`)');*/
-        //$task_sets->where('((`course_course_task_set_type_rel`.`task_set_type_id` = `task_sets`.`task_set_type_id` AND `task_sets`.`task_set_type_id` != 0) OR `task_sets`.`task_set_type_id` = 0)');
+        $task_sets->where('(`course_task_set_types`.`id` = `task_sets`.`task_set_type_id`)');
+        $task_sets->where(
+            '((`course_course_task_set_type_rel`.`task_set_type_id` = `task_sets`.`task_set_type_id` '
+            . 'AND `task_sets`.`task_set_type_id` != 0) OR `task_sets`.`task_set_type_id` = 0)'
+        );*/
         $task_sets->where('content_type', $filter['content_type'] ?? 'task_set');
         if (isset($filter['course']) && (int)$filter['course'] > 0) {
             $task_sets->where_related_course('id', (int)$filter['course']);
         }
         if (isset($filter['group']) && $filter['group'] == 'NULL') {
             $task_sets->where_related_group('id', null);
-            $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_sets->where_subquery(
+                0,
+                '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+            );
         } else if (isset($filter['group']) && (int)$filter['group'] > 0) {
             $task_sets->group_start();
             $task_sets->or_group_start();
             $task_sets->where_related_group('id', (int)$filter['group']);
-            $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_sets->where_subquery(
+                0,
+                '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+            );
             $task_sets->group_end();
             $task_sets->or_group_start();
             $task_sets->where_related('task_set_permission/group', 'id', (int)$filter['group']);
@@ -678,7 +884,11 @@ class Solutions extends LIST_Controller
             $old = date('Y-m-d H:i:s', strtotime('now -2 weeks'));
             $task_sets->group_start();
             $task_sets->group_start();
-            $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_sets->where_subquery(
+                0,
+                '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+            );
             $task_sets->group_start();
             $task_sets->where('upload_end_time', null);
             $task_sets->or_where('upload_end_time >', $old);
@@ -686,15 +896,31 @@ class Solutions extends LIST_Controller
             $task_sets->group_end();
             $task_sets->or_group_start();
             $task_sets->where('content_type !=', 'project');
-            $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+            $task_sets->where_subquery(
+                '0 <',
+                '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+            );
             $task_sets->group_start();
-            $task_sets->where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 AND `tsp`.`upload_end_time` IS NULL)');
-            $task_sets->or_where_subquery('0 <', '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 AND `tsp`.`upload_end_time` > \'' . $old . '\')');
+            $task_sets->where_subquery(
+                '0 <',
+                '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 '
+                . 'AND `tsp`.`upload_end_time` IS NULL)'
+            );
+            $task_sets->or_where_subquery(
+                '0 <',
+                '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1 '
+                . 'AND `tsp`.`upload_end_time` > \'' . $old . '\')'
+            );
             $task_sets->group_end();
             $task_sets->group_end();
             $task_sets->group_end();
         }
-        if (isset($filter['content_type'], $filter['task_set_type']) && $filter['content_type'] === 'task_set' && (int)$filter['task_set_type'] > 0) {
+        if (isset($filter['content_type'], $filter['task_set_type']) && $filter['content_type'] === 'task_set'
+            && (int)$filter['task_set_type'] > 0
+        ) {
             $task_sets->where_related_task_set_type('id', (int)$filter['task_set_type']);
         }
         $order_by_direction = $filter['order_by_direction'] === 'desc' ? 'desc' : 'asc';
@@ -716,7 +942,10 @@ class Solutions extends LIST_Controller
         } else if ($filter['order_by_field'] === 'content_type') {
             $task_sets->order_by('content_type', $order_by_direction);
         }
-        $task_sets->get_paged_iterated(isset($filter['page']) ? (int)$filter['page'] : 1, isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25);
+        $task_sets->get_paged_iterated(
+            isset($filter['page']) ? (int)$filter['page'] : 1,
+            isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25
+        );
         //$task_sets->check_last_query();
         $this->lang->init_overlays('task_sets', $task_sets->all_to_array(), ['name']);
         $this->parser->parse('backend/solutions/task_set_list.tpl', ['task_sets' => $task_sets]);
@@ -741,15 +970,31 @@ class Solutions extends LIST_Controller
                 $solutions->where_related('student/participant/group', 'id', (int)$filter['group']);
             }
             $solutions->where_related('student/participant/course', 'id', $task_set->course_id);
-            if ($task_set->content_type === 'project' && isset($filter['author']) && $filter['author'] !== 'all' && $filter['author'] !== '') {
-                $solutions->where_related('student/project_selection/task_set', 'id', $task_set->id);
-                $solutions->where_related('student/project_selection/task/author', 'id', (int)$filter['author']);
+            if ($task_set->content_type === 'project' && isset($filter['author']) && $filter['author'] !== 'all'
+                && $filter['author'] !== ''
+            ) {
+                $solutions->where_related(
+                    'student/project_selection/task_set',
+                    'id',
+                    $task_set->id
+                );
+                $solutions->where_related(
+                    'student/project_selection/task/author',
+                    'id',
+                    (int)$filter['author']
+                );
                 $solutions->group_by('id');
             }
             $solutions->get_iterated();
         }
         
-        $this->parser->parse('backend/solutions/solutions_list_table_content.tpl', ['task_set' => $task_set, 'solutions' => $solutions]);
+        $this->parser->parse(
+            'backend/solutions/solutions_list_table_content.tpl',
+            [
+                'task_set'  => $task_set,
+                'solutions' => $solutions,
+            ]
+        );
     }
     
     public function get_points_overview($task_set_id = null): void
@@ -773,9 +1018,19 @@ class Solutions extends LIST_Controller
                 $solutions->where_related('student/participant/group', 'id', (int)$filter['group']);
             }
             $solutions->where_related('student/participant/course', 'id', $task_set->course_id);
-            if ($task_set->content_type === 'project' && isset($filter['author']) && $filter['author'] !== 'all' && $filter['author'] !== '') {
-                $solutions->where_related('student/project_selection/task_set', 'id', $task_set->id);
-                $solutions->where_related('student/project_selection/task/author', 'id', (int)$filter['author']);
+            if ($task_set->content_type === 'project' && isset($filter['author'])
+                && $filter['author'] !== 'all' && $filter['author'] !== ''
+            ) {
+                $solutions->where_related(
+                    'student/project_selection/task_set',
+                    'id',
+                    $task_set->id
+                );
+                $solutions->where_related(
+                    'student/project_selection/task/author',
+                    'id',
+                    (int)$filter['author']
+                );
                 $solutions->group_by('id');
             }
             $solutions->group_start();
@@ -817,7 +1072,13 @@ class Solutions extends LIST_Controller
         foreach ($groups as $group) {
             $options[$group->id] = $group->name;
         }
-        $this->parser->parse('backend/solutions/groups_from_course.tpl', ['groups' => $options, 'selected' => $selected_id]);
+        $this->parser->parse(
+            'backend/solutions/groups_from_course.tpl',
+            [
+                'groups'   => $options,
+                'selected' => $selected_id,
+            ]
+        );
     }
     
     public function valuation_tables(): void
@@ -843,7 +1104,10 @@ class Solutions extends LIST_Controller
         $this->store_valuation_tables_filter($filter);
         $this->inject_stored_valuation_tables_filter();
         
-        $this->parser->assign('table_data', $this->get_valuation_table_data((int)@$filter['course'], @$filter['group'], (bool)@$filter['simple']));
+        $this->parser->assign(
+            'table_data',
+            $this->get_valuation_table_data((int)@$filter['course'], @$filter['group'], (bool)@$filter['simple'])
+        );
         
         $course = new Course();
         $course->include_related('period');
@@ -852,7 +1116,13 @@ class Solutions extends LIST_Controller
         $group = new Group();
         $group->get_by_id(@$filter['group']);
         
-        $this->parser->parse('backend/solutions/valuation_table_content.tpl', ['course' => $course, 'group' => $group]);
+        $this->parser->parse(
+            'backend/solutions/valuation_table_content.tpl',
+            [
+                'course' => $course,
+                'group'  => $group,
+            ]
+        );
     }
     
     public function student_solution_upload($solution_id): void
@@ -881,21 +1151,39 @@ class Solutions extends LIST_Controller
         $solution->get_by_id((int)$solution_id);
         if ($solution->exists()) {
             if ($solution->task_set->exists()) {
-                $allowed_file_types_array = trim($solution->task_set->allowed_file_types) !== '' ? array_map('trim', explode(',', $solution->task_set->allowed_file_types)) : [];
+                $allowed_file_types_array = trim($solution->task_set->allowed_file_types) !== ''
+                    ? array_map('trim', explode(',', $solution->task_set->allowed_file_types))
+                    : [];
                 $config['upload_path'] = 'private/uploads/solutions/task_set_' . (int)$solution->task_set->id . '/';
-                $config['allowed_types'] = 'zip' . (count($allowed_file_types_array) ? '|' . implode('|', $allowed_file_types_array) : '');
+                $config['allowed_types'] = 'zip' . (count($allowed_file_types_array)
+                        ? '|' . implode('|', $allowed_file_types_array)
+                        : '');
                 $config['max_size'] = (int)$this->config->item('maximum_solition_filesize');
-                $config['file_name'] = $solution->student_id . '_' . $this->normalize_student_name($solution->student_fullname) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $solution->task_set->get_student_file_next_version($solution->student_id) . '.zip';
+                $config['file_name'] =
+                    $solution->student_id . '_' . $this->normalize_student_name($solution->student_fullname)
+                    . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_'
+                    . $solution->task_set->get_student_file_next_version($solution->student_id) . '.zip';
                 @mkdir($config['upload_path'], DIR_READ_MODE);
                 $this->load->library('upload', $config);
                 
                 if ($this->upload->do_upload('upload')) {
                     $upload_data = $this->upload->data();
                     $mimes = $this->upload->mimes_types('zip');
-                    if ((is_array($mimes) && !in_array($upload_data['file_type'], $mimes, true)) || (is_string($mimes) && $upload_data['file_type'] !== $mimes)) {
-                        if (!$this->zip_plain_file_to_archive($upload_data['full_path'], $upload_data['client_name'], $upload_data['file_path'])) {
-                            $this->messages->add_message('lang:admin_solutions_upload_cant_zip_file', Messages::MESSAGE_TYPE_ERROR);
-                            redirect(create_internal_url('admin_solutions/student_solution_upload/' . (int)$solution_id));
+                    if ((is_array($mimes) && !in_array($upload_data['file_type'], $mimes, true))
+                        || (is_string($mimes) && $upload_data['file_type'] !== $mimes)
+                    ) {
+                        if (!$this->zip_plain_file_to_archive(
+                            $upload_data['full_path'],
+                            $upload_data['client_name'],
+                            $upload_data['file_path']
+                        )) {
+                            $this->messages->add_message(
+                                'lang:admin_solutions_upload_cant_zip_file',
+                                Messages::MESSAGE_TYPE_ERROR
+                            );
+                            redirect(create_internal_url(
+                                    'admin_solutions/student_solution_upload/' . (int)$solution_id)
+                            );
                             die();
                         }
                     }
@@ -903,17 +1191,33 @@ class Solutions extends LIST_Controller
                     $solution->save();
                     if ($this->db->trans_status()) {
                         $log = new Log();
-                        $log->add_teacher_solution_upload_log(sprintf($this->lang->line('admin_solutions_upload_log_message'), $config['file_name']), $this->usermanager->get_teacher_id(), $solution->student_id, $solution->id);
+                        $log->add_teacher_solution_upload_log(
+                            sprintf(
+                                $this->lang->line('admin_solutions_upload_log_message'),
+                                $config['file_name']
+                            ),
+                            $this->usermanager->get_teacher_id(),
+                            $solution->student_id,
+                            $solution->id
+                        );
                         $this->db->trans_commit();
-                        $this->messages->add_message('lang:admin_solutions_upload_success', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->messages->add_message(
+                            'lang:admin_solutions_upload_success',
+                            Messages::MESSAGE_TYPE_SUCCESS
+                        );
                         $this->_action_success();
                         $this->output->set_internal_value('student_id', $solution->student_id);
                     } else {
                         $this->db->trans_rollback();
                         @unlink($config['upload_path'] . $config['file_name']);
-                        $this->messages->add_message('lang:admin_solutions_upload_failed', Messages::MESSAGE_TYPE_ERROR);
+                        $this->messages->add_message(
+                            'lang:admin_solutions_upload_failed',
+                            Messages::MESSAGE_TYPE_ERROR
+                        );
                     }
-                    redirect(create_internal_url('admin_solutions/student_solution_upload/' . (int)$solution_id));
+                    redirect(create_internal_url(
+                            'admin_solutions/student_solution_upload/' . (int)$solution_id)
+                    );
                 } else {
                     $this->db->trans_rollback();
                     $this->parser->assign('file_error_message', $this->upload->display_errors('', ''));
@@ -921,7 +1225,10 @@ class Solutions extends LIST_Controller
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_solutions_upload_task_set_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_solutions_upload_task_set_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
         } else {
             $this->db->trans_rollback();
@@ -936,7 +1243,10 @@ class Solutions extends LIST_Controller
         if ($task_set->exists()) {
             $task_set->download_all_solutions();
         } else {
-            $this->messages->add_message('lang:admin_solutions_solutions_download_unknown_task_set', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:admin_solutions_solutions_download_unknown_task_set',
+                Messages::MESSAGE_TYPE_ERROR
+            );
             redirect(create_internal_url('admin_solutions'));
         }
     }
@@ -947,12 +1257,15 @@ class Solutions extends LIST_Controller
             rename($archive_name, rtrim($file_path, '/\\') . '/' . $original_file_name);
             $zip = new ZipArchive();
             if ($zip->open($archive_name, ZipArchive::CREATE) === true) {
-                $zip->addFile(rtrim($file_path, '/\\') . '/' . $original_file_name, $original_file_name);
+                $zip->addFile(
+                    rtrim($file_path, '/\\') . '/' . $original_file_name,
+                    $original_file_name
+                );
                 $zip->close();
                 @unlink(rtrim($file_path, '/\\') . '/' . $original_file_name);
                 return true;
             }
-    
+            
             @unlink(rtrim($file_path, '/\\') . '/' . $original_file_name);
             return false;
         }
@@ -979,15 +1292,25 @@ class Solutions extends LIST_Controller
             $old_filter = $this->filter->restore_filter(self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME);
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
             $this->filter->store_filter(self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME, $new_filter);
-            $this->filter->set_filter_course_name_field(self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME, 'course');
-            $this->filter->set_filter_delete_on_course_change(self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME, ['group']);
+            $this->filter->set_filter_course_name_field(
+                self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME,
+                'course'
+            );
+            $this->filter->set_filter_delete_on_course_change(
+                self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME,
+                ['group']
+            );
         }
     }
     
     private function inject_stored_task_set_selection_filter(): void
     {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
+        $filter = $this->filter->restore_filter(
+            self::STORED_TASK_SET_SELECTION_FILTER_SESSION_NAME,
+            $this->usermanager->get_teacher_id(),
+            'course'
+        );
         $this->parser->assign('filter', $filter);
     }
     
@@ -999,15 +1322,25 @@ class Solutions extends LIST_Controller
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
             $new_filter['simple'] = isset($filter['simple']) && $filter['simple'] === 1 ? 1 : 0;
             $this->filter->store_filter(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME, $new_filter);
-            $this->filter->set_filter_course_name_field(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME, 'course');
-            $this->filter->set_filter_delete_on_course_change(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME, ['group']);
+            $this->filter->set_filter_course_name_field(
+                self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME,
+                'course'
+            );
+            $this->filter->set_filter_delete_on_course_change(
+                self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME,
+                ['group']
+            );
         }
     }
     
     private function inject_stored_valuation_tables_filter(): void
     {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
+        $filter = $this->filter->restore_filter(
+            self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME,
+            $this->usermanager->get_teacher_id(),
+            'course'
+        );
         $this->parser->assign('filter', $filter);
     }
     
@@ -1015,16 +1348,22 @@ class Solutions extends LIST_Controller
     {
         if (is_array($filter)) {
             $this->load->library('filter');
-            $old_filter = $this->filter->restore_filter(self::STORED_SOLUTION_SELECTION_FILTER_SESSION_NAME . '_' . $task_set_id);
+            $old_filter = $this->filter->restore_filter(
+                self::STORED_SOLUTION_SELECTION_FILTER_SESSION_NAME . '_' . $task_set_id
+            );
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
-            $this->filter->store_filter(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME . '_' . $task_set_id, $new_filter);
+            $this->filter->store_filter(
+                self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME . '_' . $task_set_id, $new_filter
+            );
         }
     }
     
     private function inject_stored_solution_list_filter($task_set_id): void
     {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME . '_' . $task_set_id);
+        $filter = $this->filter->restore_filter(
+            self::STORED_VALUATION_TABLES_FILTER_SESSION_NAME . '_' . $task_set_id
+        );
         $this->parser->assign('filter', $filter);
     }
     
@@ -1032,23 +1371,31 @@ class Solutions extends LIST_Controller
     {
         if (is_array($filter)) {
             $this->load->library('filter');
-            $old_filter = $this->filter->restore_filter(self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id);
+            $old_filter = $this->filter->restore_filter(
+                self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id
+            );
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
-            $this->filter->store_filter(self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id, $new_filter);
+            $this->filter->store_filter(
+                self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id, $new_filter
+            );
         }
     }
     
     private function inject_batch_valuation_filter($task_set_id): void
     {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id);
+        $filter = $this->filter->restore_filter(
+            self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id
+        );
         $this->parser->assign('filter', $filter);
     }
     
     private function get_batch_valuation_filter($task_set_id): array
     {
         $this->load->library('filter');
-        return $this->filter->restore_filter(self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id);
+        return $this->filter->restore_filter(
+            self::STORED_BATCH_VALUATION_FILTER_SESSION_NAME . '_' . $task_set_id
+        );
     }
     
     private function inject_courses(): void
@@ -1097,7 +1444,11 @@ class Solutions extends LIST_Controller
                 $students->where_in_related('participant/group', 'id', $group_ids);
             }
             $students->include_related('participant/group', 'name', 'group');
-            $students->where('students.id = `students`.`id` AND NOT EXISTS (SELECT * FROM `solutions` WHERE `solutions`.`student_id` = `students`.`id` AND `solutions`.`task_set_id` = ' . (int)$task_set_id . ')');
+            $students->where(
+                'students.id = `students`.`id` AND NOT EXISTS (SELECT * FROM `solutions` '
+                . 'WHERE `solutions`.`student_id` = `students`.`id` '
+                . 'AND `solutions`.`task_set_id` = ' . (int)$task_set_id . ')'
+            );
             $students->group_by('id');
             $students->order_by_related_with_constant('participant/group', 'name', 'asc');
             $students->order_by_as_fullname('fullname', 'asc');
@@ -1105,7 +1456,9 @@ class Solutions extends LIST_Controller
             $students->get_iterated();
             
             foreach ($students as $student) {
-                $data[is_null($student->group_name) ? 'lang:admin_solutions_student_selection_not_in_group' : $student->group_name][$student->id] = $student->fullname . ' (' . $student->email . ')';
+                $data[is_null($student->group_name)
+                    ? 'lang:admin_solutions_student_selection_not_in_group'
+                    : $student->group_name][$student->id] = $student->fullname . ' (' . $student->email . ')';
             }
         }
         $this->parser->assign('students', $data);
@@ -1114,7 +1467,9 @@ class Solutions extends LIST_Controller
     private function inject_batch_valuation($task_set_id): void
     {
         $filter = $this->input->post('filter');
-        $filter = is_array($filter) && count($filter) > 0 ? $filter : $this->get_batch_valuation_filter((int)$task_set_id);
+        $filter = is_array($filter) && count($filter) > 0
+            ? $filter
+            : $this->get_batch_valuation_filter((int)$task_set_id);
         $this->store_batch_valuation_filter($filter, (int)$task_set_id);
         
         $task_set = new Task_set();
@@ -1191,18 +1546,34 @@ class Solutions extends LIST_Controller
         $task_sets->where('group_id', null);
         $task_sets->include_related('course/group');
         $task_sets->where('id', (int)$task_set_id);
-        $task_sets->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+        $task_sets->where_subquery(
+            0,
+            '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+            . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+        );
         
         $task_sets2 = new Task_set();
         $task_sets2->where('id', (int)$task_set_id);
         $task_sets2->include_related('task_set_permission/group', '*', 'course_group');
         $task_sets2->where_related('task_set_permission', 'enabled', 1);
         $task_sets2->group_start(' NOT ');
-        $task_sets2->or_where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
-        $task_sets2->or_where_subquery(1, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+        $task_sets2->or_where_subquery(
+            0,
+            '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+            . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+        );
+        $task_sets2->or_where_subquery(
+            1,
+            '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+            . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+        );
         $task_sets2->group_end();
         
-        $task_sets->union_iterated($task_sets2, false, $task_sets->union_order_by_constant('course_group_name', 'asc'));
+        $task_sets->union_iterated(
+            $task_sets2,
+            false,
+            $task_sets->union_order_by_constant('course_group_name', 'asc')
+        );
         
         $data = ['' => ''];
         foreach ($task_sets as $task_set) {
@@ -1284,7 +1655,11 @@ class Solutions extends LIST_Controller
             $content_type_task_set->where('content_type', 'task_set');
             $content_type_task_set->where('published', 1);
             $content_type_task_set->where_related_course($course);
-            $content_type_task_set->order_by_related_with_constant('task_set_type', 'name', 'asc');
+            $content_type_task_set->order_by_related_with_constant(
+                'task_set_type',
+                'name',
+                'asc'
+            );
             $content_type_task_set->order_by('task_set_type_id', 'asc');
             $content_type_task_set->order_by('sorting', 'asc');
             $content_type_task_set->order_by('publish_start_time', 'asc');
@@ -1295,7 +1670,11 @@ class Solutions extends LIST_Controller
                 $content_type_task_set->or_where('group_id', null);
                 $content_type_task_set->or_where('group_id', (int)$group_id);
                 $content_type_task_set->group_end();
-                $content_type_task_set->where_subquery(0, '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)');
+                $content_type_task_set->where_subquery(
+                    0,
+                    '(SELECT COUNT(`tsp`.`id`) AS `count` FROM `task_set_permissions` tsp '
+                    . 'WHERE `tsp`.`task_set_id` = `task_sets`.`id` AND `tsp`.`enabled` = 1)'
+                );
                 $content_type_task_set->group_end();
                 $content_type_task_set->group_start('', 'OR ');
                 $content_type_task_set->where_related('task_set_permission', 'group_id', (int)$group_id);
@@ -1345,15 +1724,24 @@ class Solutions extends LIST_Controller
                         $header_items[] = [
                             'type'  => 'task_set',
                             'id'    => $task_set->id,
-                            'name'  => $this->lang->get_overlay_with_default('task_sets', $task_set->id, 'name', $task_set->name),
-                            'title' => is_array($task_sets_data[$task_set->id]['group_name']) ? implode(', ', $task_sets_data[$task_set->id]['group_name']) : $task_sets_data[$task_set->id]['group_name'],
+                            'name'  => $this->lang->get_overlay_with_default(
+                                'task_sets',
+                                $task_set->id,
+                                'name',
+                                $task_set->name
+                            ),
+                            'title' => is_array($task_sets_data[$task_set->id]['group_name'])
+                                ? implode(', ', $task_sets_data[$task_set->id]['group_name'])
+                                : $task_sets_data[$task_set->id]['group_name'],
                         ];
                     }
                     $task_sets_ids[] = $task_set->id;
                 }
             }
             $table_data['header']['content_type_task_set'] = [
-                'content_type_name' => $this->lang->line('admin_solutions_valuation_tables_header_content_type_task_sets'),
+                'content_type_name' => $this->lang->line(
+                    'admin_solutions_valuation_tables_header_content_type_task_sets'
+                ),
                 'items'             => $header_items,
             ];
             
@@ -1371,7 +1759,12 @@ class Solutions extends LIST_Controller
                         $header_items[] = [
                             'type'  => 'task_set',
                             'id'    => $project->id,
-                            'name'  => $this->lang->get_overlay_with_default('task_sets', $project->id, 'name', $project->name),
+                            'name'  => $this->lang->get_overlay_with_default(
+                                'task_sets',
+                                $project->id,
+                                'name',
+                                $project->name
+                            ),
                             'title' => '',
                         ];
                     }
@@ -1380,7 +1773,9 @@ class Solutions extends LIST_Controller
                 
             }
             $table_data['header']['content_type_project'] = [
-                'content_type_name' => $this->lang->line('admin_solutions_valuation_tables_header_content_type_project'),
+                'content_type_name' => $this->lang->line(
+                    'admin_solutions_valuation_tables_header_content_type_project'
+                ),
                 'items'             => $header_items,
             ];
             
@@ -1414,7 +1809,9 @@ class Solutions extends LIST_Controller
                     $solutions->get_iterated();
                     foreach ($solutions as $solution) {
                         $solutions_data[$solution->task_set_id] = [
-                            'points'         => is_null($solution->points) && is_null($solution->tests_points) ? null : ($solution->points + $solution->tests_points),
+                            'points'         => is_null($solution->points) && is_null($solution->tests_points)
+                                ? null
+                                : ($solution->points + $solution->tests_points),
                             'not_considered' => $solution->not_considered,
                             'revalidate'     => $solution->revalidate,
                             'solution_id'    => $solution->id,
@@ -1486,7 +1883,13 @@ class Solutions extends LIST_Controller
                                 }
                             }
                         } else if (!$condensed) {
-                            if (!is_null($task_sets_data[$task_set->id]['group_id'][0]) && !in_array($student->participant_group_id, $task_sets_data[$task_set->id]['group_id'], true)) {
+                            if (!is_null($task_sets_data[$task_set->id]['group_id'][0])
+                                && !in_array(
+                                    $student->participant_group_id,
+                                    $task_sets_data[$task_set->id]['group_id'],
+                                    true
+                                )
+                            ) {
                                 $task_sets_points_array[] = [
                                     'type'   => 'task_set',
                                     'points' => '-',

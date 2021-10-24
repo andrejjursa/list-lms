@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Tests controller for backend.
@@ -421,7 +419,9 @@ class Tests extends LIST_Controller
                 $test->timeout = (int)$test_data['timeout'];
                 $test->enabled = isset($test_data['enabled']) ? 1 : 0;
                 $test->enable_scoring = isset($test_data['enable_scoring']) ? 1 : 0;
-                $test->instructions = isset($test_data['instructions']) ? remove_base_url($test_data['instructions']) : '';
+                $test->instructions = isset($test_data['instructions'])
+                    ? remove_base_url($test_data['instructions'])
+                    : '';
                 $can_save = true;
                 try {
                     $config_data = is_array($this->input->post('configuration'))
@@ -604,7 +604,13 @@ class Tests extends LIST_Controller
         }
     }
     
-    public function run_single_test($test_id, $source_file, $evaluation = false, $student_id = null, $token = ''): void
+    public function run_single_test(
+        $test_id,
+        $source_file,
+        $evaluation = false,
+        $student_id = null,
+        $token = ''
+    ): void
     {
         $output = new stdClass();
         $output->text = '';

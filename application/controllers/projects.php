@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Projects controller for frontend.
@@ -35,14 +33,21 @@ class Projects extends LIST_Controller
         if ($this->_is_cache_enabled()) {
             $this->smarty->caching = Smarty::CACHING_LIFETIME_SAVED;
         }
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/projects/index.tpl'), $cache_id)) {
+        if (!$this->_is_cache_enabled()
+            || !$this->parser->isCached($this->parser->find_view('frontend/projects/index.tpl'), $cache_id)
+        ) {
             $projects_all = $this->get_task_sets($course, $student);
             
             $projects = $this->filter_valid_task_sets($projects_all);
             if ($course->exists()) {
-                if ($this->_is_cache_enabled() && $this->filter_next_task_set_publication_min_cache_lifetime > 0 && $this->filter_next_task_set_publication_min_cache_lifetime <= $this->smarty->cache_lifetime) {
+                if ($this->_is_cache_enabled() && $this->filter_next_task_set_publication_min_cache_lifetime > 0
+                    && $this->filter_next_task_set_publication_min_cache_lifetime <= $this->smarty->cache_lifetime
+                ) {
                     $this->smarty->setCacheLifetime($this->filter_next_task_set_publication_min_cache_lifetime + 1);
-                    $this->parser->setCacheLifetimeForTemplateObject('frontend/projects/index.tpl', $this->filter_next_task_set_publication_min_cache_lifetime + 1);
+                    $this->parser->setCacheLifetimeForTemplateObject(
+                        'frontend/projects/index.tpl',
+                        $this->filter_next_task_set_publication_min_cache_lifetime + 1
+                    );
                 }
                 
                 $this->lang->init_overlays('task_sets', $projects, ['name']);
@@ -50,7 +55,13 @@ class Projects extends LIST_Controller
             }
             $this->parser->assign(['course' => $course]);
         }
-        $this->parser->parse('frontend/projects/index.tpl', [], false, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : false, $cache_id);
+        $this->parser->parse(
+            'frontend/projects/index.tpl',
+            [],
+            false,
+            $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : false,
+            $cache_id
+        );
     }
     
     public function overview($task_set_id_url = null, $language = null): void
@@ -64,13 +75,20 @@ class Projects extends LIST_Controller
             $this->smarty->caching = Smarty::CACHING_LIFETIME_SAVED;
         }
         $cache_id = 'project_' . $task_set_id . '|lang_' . $this->lang->get_current_idiom();
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/projects/overview.tpl'), $cache_id)) {
+        if (!$this->_is_cache_enabled()
+            || !$this->parser->isCached($this->parser->find_view('frontend/projects/overview.tpl'), $cache_id)
+        ) {
             $project_all = $this->get_task_set_overview($task_set_id, $course);
             $project = $this->filter_valid_task_sets($project_all);
             if ($course->exists()) {
-                if ($this->_is_cache_enabled() && $this->filter_next_task_set_publication_min_cache_lifetime > 0 && $this->filter_next_task_set_publication_min_cache_lifetime <= $this->smarty->cache_lifetime) {
+                if ($this->_is_cache_enabled() && $this->filter_next_task_set_publication_min_cache_lifetime > 0
+                    && $this->filter_next_task_set_publication_min_cache_lifetime <= $this->smarty->cache_lifetime
+                ) {
                     $this->smarty->setCacheLifetime($this->filter_next_task_set_publication_min_cache_lifetime + 1);
-                    $this->parser->setCacheLifetimeForTemplateObject('frontend/projects/overview.tpl', $this->filter_next_task_set_publication_min_cache_lifetime + 1);
+                    $this->parser->setCacheLifetimeForTemplateObject(
+                        'frontend/projects/overview.tpl',
+                        $this->filter_next_task_set_publication_min_cache_lifetime + 1
+                    );
                 }
                 $this->lang->init_overlays('task_sets', $project, ['name', 'instructions']);
                 $project = count($project) === 1 ? $project[0] : new Task_set();
@@ -82,7 +100,13 @@ class Projects extends LIST_Controller
             }
             $this->parser->assign(['course' => $course]);
         }
-        $this->parser->parse('frontend/projects/overview.tpl', [], false, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : false, $cache_id);
+        $this->parser->parse(
+            'frontend/projects/overview.tpl',
+            [],
+            false,
+            $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : false,
+            $cache_id
+        );
     }
     
     public function selection($task_set_id_url = null): void
@@ -94,7 +118,9 @@ class Projects extends LIST_Controller
         $this->parser->add_css_file('frontend_projects.css');
         
         $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id);
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/projects/selection.tpl'), $cache_id)) {
+        if (!$this->_is_cache_enabled()
+            || !$this->parser->isCached($this->parser->find_view('frontend/projects/selection.tpl'), $cache_id)
+        ) {
             $project_all = $this->get_task_set($task_set_id, $course, $student);
             $project = $this->filter_valid_task_sets($project_all);
             if ($course->exists()) {
@@ -108,7 +134,13 @@ class Projects extends LIST_Controller
             }
             $this->parser->assign(['course' => $course]);
         }
-        $this->parser->parse('frontend/projects/selection.tpl', [], false, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse(
+            'frontend/projects/selection.tpl',
+            [],
+            false,
+            $this->_is_cache_enabled(),
+            $cache_id
+        );
     }
     
     public function task($task_set_id_url = null, $task_id_url = null): void
@@ -123,10 +155,15 @@ class Projects extends LIST_Controller
         $this->parser->add_js_file('projects/task.js');
         $this->_add_prettify();
         $this->_add_jquery_countdown();
-        $this->parser->assign('max_filesize', compute_size_with_unit((int)($this->config->item('maximum_solition_filesize') * 1024)));
+        $this->parser->assign(
+            'max_filesize',
+            compute_size_with_unit((int)($this->config->item('maximum_solition_filesize') * 1024))
+        );
         
         $cache_id = $this->usermanager->get_student_cache_id('task_set_' . $task_set_id . '|task_' . $task_id);
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/projects/task.tpl'), $cache_id)) {
+        if (!$this->_is_cache_enabled()
+            || !$this->parser->isCached($this->parser->find_view('frontend/projects/task.tpl'), $cache_id)
+        ) {
             $project_all = $this->get_task_set($task_set_id, $course, $student);
             $project = $this->filter_valid_task_sets($project_all);
             if ($course->exists()) {
@@ -147,7 +184,11 @@ class Projects extends LIST_Controller
                 $students->get_iterated();
                 $solution_versions = new Solution_version();
                 $solution_versions->where_related('solution/task_set', 'id', $task_set_id);
-                $solution_versions->where_related('solution', 'student_id', $this->usermanager->get_student_id());
+                $solution_versions->where_related(
+                    'solution',
+                    'student_id',
+                    $this->usermanager->get_student_id()
+                );
                 $query = $solution_versions->get_raw();
                 $versions_metadata = [];
                 if ($query->num_rows()) {
@@ -164,7 +205,13 @@ class Projects extends LIST_Controller
             }
             $this->parser->assign(['course' => $course]);
         }
-        $this->parser->parse('frontend/projects/task.tpl', [], false, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse(
+            'frontend/projects/task.tpl',
+            [],
+            false,
+            $this->_is_cache_enabled(),
+            $cache_id
+        );
     }
     
     public function select_project($task_set_id_url = null, $task_id_url = null): void
@@ -192,7 +239,9 @@ class Projects extends LIST_Controller
             $task_set->get_by_id($task_set_id);
             
             if ($task_set->exists()) {
-                if ($task_set->get_student_files_count($student->id) === 0 && date('Y-m-d H:i:s') <= $task_set->project_selection_deadline) {
+                if ($task_set->get_student_files_count($student->id) === 0
+                    && date('Y-m-d H:i:s') <= $task_set->project_selection_deadline
+                ) {
                     /** @var Task $task */
                     $task = $task_set->task->include_join_fields()->get_by_id($task_id);
                     
@@ -227,41 +276,81 @@ class Projects extends LIST_Controller
                                     $this->db->trans_commit();
                                     $this->_action_success();
                                     $this->output->set_internal_value('task_set_id', $task_set->id);
-                                    $this->messages->add_message($this->lang->line('projects_selection_success'), Messages::MESSAGE_TYPE_SUCCESS);
-                                    redirect(create_internal_url('projects/task/' . $task_set_id_url . '/' . $task_id_url));
+                                    $this->messages->add_message($this->lang->line(
+                                        'projects_selection_success'),
+                                        Messages::MESSAGE_TYPE_SUCCESS
+                                    );
+                                    redirect(
+                                        create_internal_url(
+                                        'projects/task/' . $task_set_id_url . '/' . $task_id_url
+                                        )
+                                    );
                                 } else {
                                     $this->db->trans_rollback();
-                                    $this->messages->add_message($this->lang->line('projects_selection_error_save_failed'), Messages::MESSAGE_TYPE_ERROR);
-                                    redirect(create_internal_url('projects/task/' . $task_set_id_url . '/' . $task_id_url));
+                                    $this->messages->add_message(
+                                        $this->lang->line('projects_selection_error_save_failed'),
+                                        Messages::MESSAGE_TYPE_ERROR
+                                    );
+                                    redirect(
+                                        create_internal_url(
+                                            'projects/task/' . $task_set_id_url . '/' . $task_id_url
+                                        )
+                                    );
                                 }
                             } else {
                                 $this->db->trans_rollback();
-                                $this->messages->add_message($this->lang->line('projects_selection_error_no_free_space'), Messages::MESSAGE_TYPE_ERROR);
-                                redirect(create_internal_url('projects/task/' . $task_set_id_url . '/' . $task_id_url));
+                                $this->messages->add_message(
+                                    $this->lang->line('projects_selection_error_no_free_space'),
+                                    Messages::MESSAGE_TYPE_ERROR
+                                );
+                                redirect(
+                                    create_internal_url(
+                                        'projects/task/' . $task_set_id_url . '/' . $task_id_url
+                                    )
+                                );
                             }
                         } else {
                             $this->db->trans_rollback();
-                            $this->messages->add_message($this->lang->line('projects_selection_error_already_selected'), Messages::MESSAGE_TYPE_ERROR);
-                            redirect(create_internal_url('projects/task/' . $task_set_id_url . '/' . $task_id_url));
+                            $this->messages->add_message(
+                                $this->lang->line('projects_selection_error_already_selected'),
+                                Messages::MESSAGE_TYPE_ERROR
+                            );
+                            redirect(
+                                create_internal_url(
+                                    'projects/task/' . $task_set_id_url . '/' . $task_id_url
+                                )
+                            );
                         }
                     } else {
                         $this->db->trans_rollback();
-                        $this->messages->add_message($this->lang->line('projects_selection_error_task_not_found'), Messages::MESSAGE_TYPE_ERROR);
+                        $this->messages->add_message(
+                            $this->lang->line('projects_selection_error_task_not_found'),
+                            Messages::MESSAGE_TYPE_ERROR
+                        );
                         redirect(create_internal_url('projects/selection/' . $task_set_id_url));
                     }
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message($this->lang->line('projects_selection_error_selection_disabled'), Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        $this->lang->line('projects_selection_error_selection_disabled'),
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                     redirect(create_internal_url('projects/selection/' . $task_set_id_url));
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message($this->lang->line('projects_selection_error_task_set_not_found'), Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    $this->lang->line('projects_selection_error_task_set_not_found'),
+                    Messages::MESSAGE_TYPE_ERROR
+                );
                 redirect(create_internal_url('projects'));
             }
         } else {
             $this->db->trans_rollback();
-            $this->messages->add_message($this->lang->line('projects_selection_error_no_active_course'), Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                $this->lang->line('projects_selection_error_no_active_course'),
+                Messages::MESSAGE_TYPE_ERROR
+            );
             redirect(create_internal_url('projects'));
         }
     }
@@ -303,13 +392,17 @@ class Projects extends LIST_Controller
         $project_selection->where_related($task);
         $project_selection->get();
         
-        if ($student->exists() && $course->exists() && $task_set->exists() && $task->exists() && $project_selection->exists()) {
+        if ($student->exists() && $course->exists() && $task_set->exists()
+            && $task->exists() && $project_selection->exists()
+        ) {
             if ($date <= $task_set->upload_end_time) {
-                $config['upload_path'] = 'private/uploads/solutions/task_set_' . intval($task_set_id) . '/';
+                $config['upload_path'] = 'private/uploads/solutions/task_set_' . (int)$task_set_id . '/';
                 $config['allowed_types'] = 'zip';
                 $config['max_size'] = (int)($this->config->item('maximum_solition_filesize'));
                 $current_version = $task_set->get_student_file_next_version($student->id);
-                $config['file_name'] = $student->id . '_' . $this->normalize_student_name($student) . '_' . substr(md5(time() . rand(-500000, 500000)), 0, 4) . '_' . $current_version . '.zip';
+                $config['file_name'] = $student->id . '_' . $this->normalize_student_name($student) . '_'
+                    . substr(md5(time() . rand(-500000, 500000)), 0, 4)
+                    . '_' . $current_version . '.zip';
                 @mkdir($config['upload_path'], DIR_READ_MODE);
                 $this->load->library('upload', $config);
                 
@@ -344,31 +437,53 @@ class Projects extends LIST_Controller
                     $solution_version->save($solution);
                     if ($this->db->trans_status()) {
                         $log = new Log();
-                        $log->add_student_solution_upload_log(sprintf($this->lang->line('projects_task_solution_upload_log_message'), $config['file_name']), $student, $solution->id);
+                        $log->add_student_solution_upload_log(
+                            sprintf(
+                                $this->lang->line('projects_task_solution_upload_log_message'),
+                                $config['file_name']
+                            ),
+                            $student,
+                            $solution->id
+                        );
                         $this->db->trans_commit();
-                        $this->messages->add_message('lang:projects_task_solution_uploaded', Messages::MESSAGE_TYPE_SUCCESS);
+                        $this->messages->add_message(
+                            'lang:projects_task_solution_uploaded',
+                            Messages::MESSAGE_TYPE_SUCCESS
+                        );
                         $this->_action_success();
                         $this->output->set_internal_value('task_set_id', $solution->task_set_id);
                         $this->output->set_internal_value('task_id', $task->id);
                     } else {
                         $this->db->trans_rollback();
                         @unlink($config['upload_path'] . $config['file_name']);
-                        $this->messages->add_message('lang:projects_task_solution_canceled_due_db_error', Messages::MESSAGE_TYPE_ERROR);
+                        $this->messages->add_message(
+                            'lang:projects_task_solution_canceled_due_db_error',
+                            Messages::MESSAGE_TYPE_ERROR
+                        );
                     }
                     redirect(create_internal_url('projects/task/' . $task_set_id_url . '/' . $task_id_url));
                 } else {
                     $this->db->trans_rollback();
-                    $this->parser->assign('file_error_message', $this->upload->display_errors('', ''));
+                    $this->parser->assign(
+                        'file_error_message',
+                        $this->upload->display_errors('', '')
+                    );
                     $this->task($task_set_id_url, $task_id_url);
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:projects_task_solution_upload_time_error', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:projects_task_solution_upload_time_error',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
                 redirect(create_internal_url('projects/task/' . $task_set_id_url . '/' . $task_id_url));
             }
         } else {
             $this->db->trans_rollback();
-            $this->messages->add_message('lang:projects_task_solution_database_data_wrong_error', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:projects_task_solution_database_data_wrong_error',
+                Messages::MESSAGE_TYPE_ERROR
+            );
             redirect(create_internal_url('projects/task/' . $task_set_id_url . '/' . $task_id_url));
         }
     }
@@ -416,7 +531,11 @@ class Projects extends LIST_Controller
             $task_set->include_related_count('task', 'total_tasks');
             $task_set->where('content_type', 'project');
             $task_set->include_related('project_selection');
-            $task_set->add_join_condition('`project_selections`.`student_id` = ? AND `project_selections`.`task_set_id` = `task_sets`.`id`', [$student->id]);
+            $task_set->add_join_condition(
+                '`project_selections`.`student_id` = ? '
+                . 'AND `project_selections`.`task_set_id` = `task_sets`.`id`',
+                [$student->id]
+            );
             $task_set->include_related('project_selection/task');
             $task_set->order_by('publish_start_time', 'asc');
             $task_set->order_by('upload_end_time', 'asc');
@@ -450,7 +569,11 @@ class Projects extends LIST_Controller
             $task_set->include_related_count('task', 'total_tasks');
             $task_set->where('content_type', 'project');
             $task_set->include_related('project_selection');
-            $task_set->add_join_condition('`project_selections`.`student_id` = ? AND `project_selections`.`task_set_id` = `task_sets`.`id`', [$student->id]);
+            $task_set->add_join_condition(
+                '`project_selections`.`student_id` = ? '
+                . 'AND `project_selections`.`task_set_id` = `task_sets`.`id`',
+                [$student->id]
+            );
             $task_set->include_related('project_selection/task');
             $task_set->order_by('publish_start_time', 'asc');
             $task_set->order_by('upload_end_time', 'asc');

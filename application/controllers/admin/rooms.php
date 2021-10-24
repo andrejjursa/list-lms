@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Rooms controller for backend.
@@ -48,14 +46,43 @@ class Rooms extends LIST_Controller
         $this->load->library('form_validation');
         
         $this->form_validation->set_rules('room[name]', 'lang:admin_rooms_form_field_name', 'required');
-        $this->form_validation->set_rules('room[time_begin]', 'lang:admin_rooms_form_field_time_begin', 'required|callback__is_time');
-        $this->form_validation->set_rules('room[time_end]', 'lang:admin_rooms_form_field_time_end', 'required|callback__is_time|callback__is_later_time');
-        $this->form_validation->set_rules('room[time_day]', 'lang:admin_rooms_form_field_time_day', 'required|callback__is_day');
-        $this->form_validation->set_rules('room[capacity]', 'lang:admin_rooms_form_field_capacity', 'required|integer|greater_than[0]');
-        $this->form_validation->set_rules('room[group_id]', 'group_id', 'required');
-        $this->form_validation->set_message('_is_time', $this->lang->line('admin_rooms_form_error_message_is_time'));
-        $this->form_validation->set_message('_is_day', $this->lang->line('admin_rooms_form_error_message_is_day'));
-        $this->form_validation->set_message('_is_later_time', $this->lang->line('admin_rooms_form_error_message_is_later_time'));
+        $this->form_validation->set_rules(
+            'room[time_begin]',
+            'lang:admin_rooms_form_field_time_begin',
+            'required|callback__is_time'
+        );
+        $this->form_validation->set_rules(
+            'room[time_end]',
+            'lang:admin_rooms_form_field_time_end',
+            'required|callback__is_time|callback__is_later_time'
+        );
+        $this->form_validation->set_rules(
+            'room[time_day]',
+            'lang:admin_rooms_form_field_time_day',
+            'required|callback__is_day'
+        );
+        $this->form_validation->set_rules(
+            'room[capacity]',
+            'lang:admin_rooms_form_field_capacity',
+            'required|integer|greater_than[0]'
+        );
+        $this->form_validation->set_rules(
+            'room[group_id]',
+            'group_id',
+            'required'
+        );
+        $this->form_validation->set_message(
+            '_is_time',
+            $this->lang->line('admin_rooms_form_error_message_is_time')
+        );
+        $this->form_validation->set_message(
+            '_is_day',
+            $this->lang->line('admin_rooms_form_error_message_is_day')
+        );
+        $this->form_validation->set_message(
+            '_is_later_time',
+            $this->lang->line('admin_rooms_form_error_message_is_later_time')
+        );
         
         if ($this->form_validation->run()) {
             $room_data = $this->input->post('room');
@@ -87,17 +114,26 @@ class Rooms extends LIST_Controller
                 }
                 if ($room->save([$teachers->all]) && $group->save($room) && $this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_rooms_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_rooms_flash_message_save_successful',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                     $room->group->get();
                     $this->output->set_internal_value('course_id', $room->group->course_id);
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_rooms_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_rooms_flash_message_save_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_rooms_flash_message_group_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_rooms_flash_message_group_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_rooms/new_room_form/' . (int)$room_data['group_id']));
         } else {
@@ -198,15 +234,44 @@ class Rooms extends LIST_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('room[name]', 'lang:admin_rooms_form_field_name', 'required');
-        $this->form_validation->set_rules('room[time_begin]', 'lang:admin_rooms_form_field_time_begin', 'required|callback__is_time');
-        $this->form_validation->set_rules('room[time_end]', 'lang:admin_rooms_form_field_time_end', 'required|callback__is_time|callback__is_later_time');
-        $this->form_validation->set_rules('room[time_day]', 'lang:admin_rooms_form_field_time_day', 'required|callback__is_day');
-        $this->form_validation->set_rules('room[capacity]', 'lang:admin_rooms_form_field_capacity', 'required|integer|greater_than[0]');
+        $this->form_validation->set_rules(
+            'room[name]',
+            'lang:admin_rooms_form_field_name',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'room[time_begin]',
+            'lang:admin_rooms_form_field_time_begin',
+            'required|callback__is_time'
+        );
+        $this->form_validation->set_rules(
+            'room[time_end]',
+            'lang:admin_rooms_form_field_time_end',
+            'required|callback__is_time|callback__is_later_time'
+        );
+        $this->form_validation->set_rules(
+            'room[time_day]',
+            'lang:admin_rooms_form_field_time_day',
+            'required|callback__is_day'
+        );
+        $this->form_validation->set_rules(
+            'room[capacity]',
+            'lang:admin_rooms_form_field_capacity',
+            'required|integer|greater_than[0]'
+        );
         $this->form_validation->set_rules('room_id', 'room_id', 'required');
-        $this->form_validation->set_message('_is_time', $this->lang->line('admin_rooms_form_error_message_is_time'));
-        $this->form_validation->set_message('_is_day', $this->lang->line('admin_rooms_form_error_message_is_day'));
-        $this->form_validation->set_message('_is_later_time', $this->lang->line('admin_rooms_form_error_message_is_later_time'));
+        $this->form_validation->set_message(
+            '_is_time',
+            $this->lang->line('admin_rooms_form_error_message_is_time')
+        );
+        $this->form_validation->set_message(
+            '_is_day',
+            $this->lang->line('admin_rooms_form_error_message_is_day')
+        );
+        $this->form_validation->set_message(
+            '_is_later_time',
+            $this->lang->line('admin_rooms_form_error_message_is_later_time')
+        );
         
         if ($this->form_validation->run()) {
             $room_id = (int)$this->input->post('room_id');
@@ -240,16 +305,25 @@ class Rooms extends LIST_Controller
                 }
                 if ($room->save([$teachers->all]) && $this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_rooms_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_rooms_flash_message_save_successful',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                     $room->group->get();
                     $this->output->set_internal_value('course_id', $room->group->course_id);
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_rooms_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_rooms_flash_message_save_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
-                $this->messages->add_message('lang:admin_rooms_error_room_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_rooms_error_room_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_rooms/index/' . $group_id));
         } else {

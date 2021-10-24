@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 include_once APPPATH . 'controllers/admin/course_content.php';
 
@@ -17,7 +15,9 @@ class Content extends LIST_Controller
     {
         parent::__construct();
         
-        if ($this->router->method !== 'download_file' && $this->router->method !== 'show_content' && $this->router->method !== 'page') {
+        if ($this->router->method !== 'download_file'
+            && $this->router->method !== 'show_content' && $this->router->method !== 'page'
+        ) {
             $this->usermanager->student_login_protected_redirect();
         }
         $this->_init_language_for_student();
@@ -40,7 +40,9 @@ class Content extends LIST_Controller
         
         $course_id = $student->active_course_id ?? 'none';
         $cache_id = 'student_' . $student->id . '|course_' . $course_id . '|lang_' . $this->lang->get_current_idiom();
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/content/index.tpl'), $cache_id)) {
+        if (!$this->_is_cache_enabled()
+            || !$this->parser->isCached($this->parser->find_view('frontend/content/index.tpl'), $cache_id)
+        ) {
             $this->_transaction_isolation();
             $this->db->trans_start();
             
@@ -68,7 +70,10 @@ class Content extends LIST_Controller
             $cache_lifetime = $this->get_cache_lifetime($course, $public_only);
             
             $this->smarty->setCacheLifetime($cache_lifetime + 1);
-            $this->parser->setCacheLifetimeForTemplateObject('frontend/content/index.tpl', $cache_lifetime + 1);
+            $this->parser->setCacheLifetimeForTemplateObject(
+                'frontend/content/index.tpl',
+                $cache_lifetime + 1
+            );
             
             $this->parser->assign(['content' => $content]);
             $this->parser->assign(['content_groups' => $content_groups]);
@@ -76,7 +81,13 @@ class Content extends LIST_Controller
             
             $this->db->trans_complete();
         }
-        $this->parser->parse('frontend/content/index.tpl', [], false, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : false, $cache_id);
+        $this->parser->parse(
+            'frontend/content/index.tpl',
+            [],
+            false,
+            $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : false,
+            $cache_id
+        );
     }
     
     public function show_content($course_id, $lang = null): void
@@ -87,7 +98,9 @@ class Content extends LIST_Controller
         }
         $student_id = $this->usermanager->is_student_session_valid() ? $this->usermanager->get_student_id() : 0;
         $cache_id = 'course_' . $course_id . '|student_' . $student_id . '|lang_' . $this->lang->get_current_idiom();
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/content/show_content.tpl'), $cache_id)) {
+        if (!$this->_is_cache_enabled()
+            || !$this->parser->isCached($this->parser->find_view('frontend/content/show_content.tpl'), $cache_id)
+        ) {
             $course = new Course();
             $course->include_related('period');
             $course->get_by_id($course_id);
@@ -112,13 +125,22 @@ class Content extends LIST_Controller
             $cache_lifetime = $this->get_cache_lifetime($course, $public_only);
             
             $this->smarty->setCacheLifetime($cache_lifetime + 1);
-            $this->parser->setCacheLifetimeForTemplateObject('frontend/content/index.tpl', $cache_lifetime + 1);
+            $this->parser->setCacheLifetimeForTemplateObject(
+                'frontend/content/index.tpl',
+                $cache_lifetime + 1
+            );
             
             $this->parser->assign(['content' => $content]);
             $this->parser->assign(['content_groups' => $content_groups]);
             $this->parser->assign(['top_level_order' => $top_level_order]);
         }
-        $this->parser->parse('frontend/content/show_content.tpl', [], false, $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : false, $cache_id);
+        $this->parser->parse(
+            'frontend/content/show_content.tpl',
+            [],
+            false,
+            $this->_is_cache_enabled() ? Smarty::CACHING_LIFETIME_SAVED : false,
+            $cache_id
+        );
     }
     
     public function page($course_id, $lang = null): void
@@ -191,7 +213,8 @@ class Content extends LIST_Controller
             $language = '';
         }
         
-        $filepath = realpath(Course_Content::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $path . ($language != '' ? DIRECTORY_SEPARATOR . $language : '') . DIRECTORY_SEPARATOR . $file;
+        $filepath = realpath(Course_Content::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $path .
+            ($language != '' ? DIRECTORY_SEPARATOR . $language : '') . DIRECTORY_SEPARATOR . $file;
         
         if (file_exists($filepath)) {
             $finfo = finfo_open(FILEINFO_MIME_TYPE);

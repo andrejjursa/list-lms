@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Groups controller for frontend.
@@ -25,7 +23,9 @@ class Groups extends LIST_Controller
         $this->_select_student_menu_pagetag('groups');
         $this->parser->add_css_file('frontend_groups.css');
         $cache_id = $this->usermanager->get_student_cache_id();
-        if (!$this->_is_cache_enabled() || !$this->parser->isCached($this->parser->find_view('frontend/groups/index.tpl'), $cache_id)) {
+        if (!$this->_is_cache_enabled()
+            || !$this->parser->isCached($this->parser->find_view('frontend/groups/index.tpl'), $cache_id)
+        ) {
             $student = new Student();
             $student->get_by_id($this->usermanager->get_student_id());
             
@@ -39,7 +39,9 @@ class Groups extends LIST_Controller
             $can_change_group = false;
             
             if ($course->exists()) {
-                if (is_null($course->groups_change_deadline) || date('U', strtotime($course->groups_change_deadline)) >= time()) {
+                if (is_null($course->groups_change_deadline)
+                    || date('U', strtotime($course->groups_change_deadline)) >= time()
+                ) {
                     $can_change_group = true;
                 }
             }
@@ -47,7 +49,13 @@ class Groups extends LIST_Controller
             smarty_inject_days();
             $this->parser->assign(['course' => $course, 'can_change_group' => $can_change_group]);
         }
-        $this->parser->parse('frontend/groups/index.tpl', [], false, $this->_is_cache_enabled(), $cache_id);
+        $this->parser->parse(
+            'frontend/groups/index.tpl',
+            [],
+            false,
+            $this->_is_cache_enabled(),
+            $cache_id
+        );
     }
     
     public function select_group(): void
@@ -63,7 +71,9 @@ class Groups extends LIST_Controller
         if ($group->exists()) {
             $course = $group->course->get();
             
-            if (is_null($course->groups_change_deadline) || date('U', strtotime($course->groups_change_deadline)) >= time()) {
+            if (is_null($course->groups_change_deadline)
+                || date('U', strtotime($course->groups_change_deadline)) >= time()
+            ) {
                 
                 $student = new Student();
                 $student->get_by_id($this->usermanager->get_student_id());
@@ -82,35 +92,63 @@ class Groups extends LIST_Controller
                             $participant->where('allowed', 1);
                             $participants_count = $participant->count();
                             $room = new Room();
-                            $room->where_related($group)->order_by('capacity', 'asc')->limit(1)->get();
+                            $room
+                                ->where_related($group)
+                                ->order_by('capacity', 'asc')
+                                ->limit(1)
+                                ->get();
                             if ($participants_count > (int)$room->capacity) {
                                 $this->db->trans_rollback();
-                                $this->messages->add_message('lang:groups_message_group_is_full', Messages::MESSAGE_TYPE_ERROR);
+                                $this->messages->add_message(
+                                    'lang:groups_message_group_is_full',
+                                    Messages::MESSAGE_TYPE_ERROR
+                                );
                             } else {
                                 $this->db->trans_commit();
-                                $this->messages->add_message(sprintf($this->lang->line('groups_message_group_changed'), $this->lang->text($group->name)), Messages::MESSAGE_TYPE_SUCCESS);
+                                $this->messages->add_message(
+                                    sprintf(
+                                        $this->lang->line('groups_message_group_changed'),
+                                        $this->lang->text($group->name)
+                                    ),
+                                    Messages::MESSAGE_TYPE_SUCCESS
+                                );
                                 $this->_action_success();
                                 $this->output->set_internal_value('course_id', $participant->course_id);
                             }
                         } else {
                             $this->db->trans_rollback();
-                            $this->messages->add_message('lang:groups_message_you_are_in_group', Messages::MESSAGE_TYPE_ERROR);
+                            $this->messages->add_message(
+                                'lang:groups_message_you_are_in_group',
+                                Messages::MESSAGE_TYPE_ERROR
+                            );
                         }
                     } else {
                         $this->db->trans_rollback();
-                        $this->messages->add_message('lang:groups_message_cant_found_participant_record', Messages::MESSAGE_TYPE_ERROR);
+                        $this->messages->add_message(
+                            'lang:groups_message_cant_found_participant_record',
+                            Messages::MESSAGE_TYPE_ERROR
+                        );
                     }
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:groups_message_cant_change_group_of_inactive_course', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:groups_message_cant_change_group_of_inactive_course',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:groups_message_groups_switching_disabled', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:groups_message_groups_switching_disabled',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
         } else {
             $this->db->trans_rollback();
-            $this->messages->add_message('lang:groups_message_group_not_found', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:groups_message_group_not_found',
+                Messages::MESSAGE_TYPE_ERROR
+            );
         }
         
         redirect(create_internal_url('groups'));

@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Students controller for backend.
@@ -59,7 +57,10 @@ class Students extends LIST_Controller
         } else if ($filter['order_by_field'] === 'email') {
             $students->order_by('email', $order_by_direction);
         }
-        $students->get_paged_iterated(isset($filter['page']) ? (int)$filter['page'] : 1, isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25);
+        $students->get_paged_iterated(
+            isset($filter['page']) ? (int)$filter['page'] : 1,
+            isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25
+        );
         $this->parser->parse('backend/students/table_content.tpl', ['students' => $students]);
     }
     
@@ -67,9 +68,21 @@ class Students extends LIST_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('student[fullname]', 'lang:admin_students_form_field_fullname', 'required|max_length[255]');
-        $this->form_validation->set_rules('student[email]', 'lang:admin_students_form_field_email', 'required|valid_email|is_unique[students.email]');
-        $this->form_validation->set_rules('student[password]', 'lang:admin_students_form_field_password', 'required|min_length[6]|max_length[20]');
+        $this->form_validation->set_rules(
+            'student[fullname]',
+            'lang:admin_students_form_field_fullname',
+            'required|max_length[255]'
+        );
+        $this->form_validation->set_rules(
+            'student[email]',
+            'lang:admin_students_form_field_email',
+            'required|valid_email|is_unique[students.email]'
+        );
+        $this->form_validation->set_rules(
+            'student[password]',
+            'lang:admin_students_form_field_password',
+            'required|min_length[6]|max_length[20]'
+        );
         
         $this->_transaction_isolation();
         $this->db->trans_begin();
@@ -81,10 +94,16 @@ class Students extends LIST_Controller
             $student->language = $this->config->item('language');
             if ($student->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->messages->add_message('lang:admin_students_account_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message(
+                    'lang:admin_students_account_save_successful',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_students_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_students_account_save_fail',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_students/new_student_form'));
         } else {
@@ -113,10 +132,25 @@ class Students extends LIST_Controller
         
         $student_id = (int)$this->input->post('student_id');
         
-        $this->form_validation->set_rules('student[fullname]', 'lang:admin_students_form_field_fullname', 'required|max_length[255]');
-        $this->form_validation->set_rules('student[email]', 'lang:admin_students_form_field_email', 'required|valid_email|callback__email_available[' . $student_id . ']');
-        $this->form_validation->set_rules('student[password]', 'lang:admin_students_form_field_password', 'min_length_optional[6]|max_length_optional[20]');
-        $this->form_validation->set_message('_email_available', $this->lang->line('admin_students_form_error_email_not_available'));
+        $this->form_validation->set_rules(
+            'student[fullname]',
+            'lang:admin_students_form_field_fullname',
+            'required|max_length[255]'
+        );
+        $this->form_validation->set_rules(
+            'student[email]',
+            'lang:admin_students_form_field_email',
+            'required|valid_email|callback__email_available[' . $student_id . ']'
+        );
+        $this->form_validation->set_rules(
+            'student[password]',
+            'lang:admin_students_form_field_password',
+            'min_length_optional[6]|max_length_optional[20]'
+        );
+        $this->form_validation->set_message(
+            '_email_available',
+            $this->lang->line('admin_students_form_error_email_not_available')
+        );
         
         $this->_transaction_isolation();
         $this->db->trans_begin();
@@ -131,14 +165,23 @@ class Students extends LIST_Controller
                 }
                 if ($student->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_students_account_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_students_account_save_successful',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_students_account_save_fail', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_students_account_save_fail',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_students_student_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_students_student_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_students'));
         } else {
@@ -188,9 +231,21 @@ class Students extends LIST_Controller
     public function upload_csv_file(): void
     {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('csv_data[delimiter]', 'lang:admin_students_csv_import_form_field_delimiter', 'required|exact_length[1]');
-        $this->form_validation->set_rules('csv_data[enclosure]', 'lang:admin_students_csv_import_form_field_enclosure', 'required|exact_length[1]');
-        $this->form_validation->set_rules('csv_data[escape]', 'lang:admin_students_csv_import_form_field_escape', 'required|exact_length[1]');
+        $this->form_validation->set_rules(
+            'csv_data[delimiter]',
+            'lang:admin_students_csv_import_form_field_delimiter',
+            'required|exact_length[1]'
+        );
+        $this->form_validation->set_rules(
+            'csv_data[enclosure]',
+            'lang:admin_students_csv_import_form_field_enclosure',
+            'required|exact_length[1]'
+        );
+        $this->form_validation->set_rules(
+            'csv_data[escape]',
+            'lang:admin_students_csv_import_form_field_escape',
+            'required|exact_length[1]'
+        );
         if ($this->form_validation->run()) {
             $config = [
                 'upload_path'   => './private/uploads/csv_imports',
@@ -208,7 +263,9 @@ class Students extends LIST_Controller
                     'c' => $post_data['enclosure'],
                     'e' => $post_data['escape'],
                 ];
-                redirect(create_internal_url('admin_students/show_csv_content/' . encode_for_url(serialize($data))));
+                redirect(
+                    create_internal_url('admin_students/show_csv_content/' . encode_for_url(serialize($data)))
+                );
             } else {
                 $this->parser->assign('error_message', $this->upload->display_errors('', ''));
                 $this->csv_import();
@@ -236,9 +293,18 @@ class Students extends LIST_Controller
             $this->inject_courses();
             $this->parser->add_css_file('admin_students.css');
             $this->parser->add_js_file('admin_students/csv_content_list.js');
-            $this->parser->parse('backend/students/show_csv_content.tpl', ['csv_array' => $csv_array, 'csv_cols' => $csv_cols]);
+            $this->parser->parse(
+                'backend/students/show_csv_content.tpl',
+                [
+                    'csv_array' => $csv_array,
+                    'csv_cols'  => $csv_cols,
+                ]
+            );
         } else {
-            $this->messages->add_message('lang:admin_students_csv_import_error_file_not_exist_or_is_unreadable', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:admin_students_csv_import_error_file_not_exist_or_is_unreadable',
+                Messages::MESSAGE_TYPE_ERROR
+            );
             redirect(create_internal_url('admin_students/csv_import'));
         }
     }
@@ -261,11 +327,17 @@ class Students extends LIST_Controller
                 $this->parser->assign('csv_content', $this->get_csv_content($csv_data, $cols, $rows));
                 $this->parser->parse('backend/students/csv_import_screen.tpl');
             } else {
-                $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_invalid_cols_config');
+                $this->parser->assign(
+                    'error_message',
+                    'lang:admin_students_csv_import_error_invalid_cols_config'
+                );
                 $this->show_csv_content($config);
             }
         } else {
-            $this->messages->add_message('lang:admin_students_csv_import_error_file_not_exist_or_is_unreadable', Messages::MESSAGE_TYPE_ERROR);
+            $this->messages->add_message(
+                'lang:admin_students_csv_import_error_file_not_exist_or_is_unreadable',
+                Messages::MESSAGE_TYPE_ERROR
+            );
             redirect(create_internal_url('admin_students/csv_import'));
         }
     }
@@ -297,7 +369,10 @@ class Students extends LIST_Controller
                 } else {
                     $this->db->trans_rollback();
                 }
-                $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_message_student_exists');
+                $this->parser->assign(
+                    'error_message',
+                    'lang:admin_students_csv_import_error_message_student_exists'
+                );
             } else {
                 $this->load->library('form_validation');
                 if ($this->form_validation->valid_email(trim($email))) {
@@ -307,7 +382,10 @@ class Students extends LIST_Controller
                     if ($options['password_type'] === 'default') {
                         $password = $this->config->item('student_import_default_password');
                     } else if ($options['password_type'] === 'random') {
-                        $password = md5(base64_encode(rand(0, 99999999999) . time() . $student->fullname . $student->email) . $this->config->item('encryption_key'));
+                        $password = md5(
+                            base64_encode(rand(0, 99999999999) . time() . $student->fullname
+                                . $student->email) . $this->config->item('encryption_key')
+                        );
                         $password = substr($password, 0, rand(6, 20));
                     }
                     $student->password = $password !== '' ? sha1($password) : '';
@@ -315,7 +393,10 @@ class Students extends LIST_Controller
                     if ($student->save()) {
                         $this->parser->assign('password', $password);
                         $this->db->trans_commit();
-                        $this->parser->assign('success_message', 'lang:admin_students_csv_import_successfully_imported');
+                        $this->parser->assign(
+                            'success_message',
+                            'lang:admin_students_csv_import_successfully_imported'
+                        );
                         
                         if ((bool)$options['send_mail']) {
                             if ($password === '') {
@@ -330,25 +411,40 @@ class Students extends LIST_Controller
                             $this->email->from_system();
                             $this->email->to($student->email);
                             $this->email->subject($this->lang->line('admin_students_csv_import_email_subject'));
-                            $this->email->build_message_body('file:emails/backend/students/csv_import_email.tpl', [
-                                'student'  => $student,
-                                'password' => $password,
-                            ]);
+                            $this->email->build_message_body(
+                                'file:emails/backend/students/csv_import_email.tpl',
+                                [
+                                    'student'  => $student,
+                                    'password' => $password,
+                                ]
+                            );
                             $sent = $this->email->send();
                             $this->_init_language_for_teacher();
                             if ($sent) {
-                                $this->parser->assign('email_success_message', 'lang:admin_students_csv_import_email_sent_successfully');
+                                $this->parser->assign(
+                                    'email_success_message',
+                                    'lang:admin_students_csv_import_email_sent_successfully'
+                                );
                             } else {
-                                $this->parser->assign('email_error_message', 'lang:admin_students_csv_import_email_sent_failed');
+                                $this->parser->assign(
+                                    'email_error_message',
+                                    'lang:admin_students_csv_import_email_sent_failed'
+                                );
                             }
                         }
                     } else {
                         $this->db->trans_rollback();
-                        $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_message_student_save_error');
+                        $this->parser->assign(
+                            'error_message',
+                            'lang:admin_students_csv_import_error_message_student_save_error'
+                        );
                     }
                 } else {
                     $this->db->trans_rollback();
-                    $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_message_student_email_invalid');
+                    $this->parser->assign(
+                        'error_message',
+                        'lang:admin_students_csv_import_error_message_student_email_invalid'
+                    );
                 }
             }
             if ($student->exists()) {
@@ -367,7 +463,10 @@ class Students extends LIST_Controller
                             $participant->allowed = 0;
                             if ($participant->save(['student' => $student, 'course' => $course])) {
                                 $this->db->trans_commit();
-                                $this->parser->assign('course_assignment_success_message', 'lang:admin_students_csv_import_successfully_added_course_participation');
+                                $this->parser->assign(
+                                    'course_assignment_success_message',
+                                    'lang:admin_students_csv_import_successfully_added_course_participation'
+                                );
                                 $this->db->trans_begin();
                                 $course = new Course();
                                 $course->get_by_id((int)$options['assign_to_course']);
@@ -379,27 +478,45 @@ class Students extends LIST_Controller
                                 $participants_count = $participants->count();
                                 if ($participants_count <= $course->capacity) {
                                     $this->db->trans_commit();
-                                    $this->parser->assign('course_assignment_approwal_success_message', 'lang:admin_students_csv_import_successfully_added_course_participation_approwal');
+                                    $this->parser->assign(
+                                        'course_assignment_approwal_success_message',
+                                        'lang:admin_students_csv_import_successfully_added_course_participation_approwal'
+                                    );
                                 } else {
                                     $this->db->trans_rollback();
-                                    $this->parser->assign('course_assignment_approwal_error_message', 'lang:admin_students_csv_import_error_message_added_course_participation_approwal');
+                                    $this->parser->assign(
+                                        'course_assignment_approwal_error_message',
+                                        'lang:admin_students_csv_import_error_message_added_course_participation_approwal'
+                                    );
                                 }
                             } else {
                                 $this->db->trans_rollback();
-                                $this->parser->assign('course_assignment_error_message', 'lang:admin_students_csv_import_error_message_participation_save_failed');
+                                $this->parser->assign(
+                                    'course_assignment_error_message',
+                                    'lang:admin_students_csv_import_error_message_participation_save_failed'
+                                );
                             }
                         } else {
                             $this->db->trans_rollback();
-                            $this->parser->assign('course_assignment_error_message', 'lang:admin_students_csv_import_error_message_already_in_course');
+                            $this->parser->assign(
+                                'course_assignment_error_message',
+                                'lang:admin_students_csv_import_error_message_already_in_course'
+                            );
                         }
                     } else {
                         $this->db->trans_rollback();
-                        $this->parser->assign('course_assignment_error_message', 'lang:admin_students_csv_import_error_message_course_not_found');
+                        $this->parser->assign(
+                            'course_assignment_error_message',
+                            'lang:admin_students_csv_import_error_message_course_not_found'
+                        );
                     }
                 }
             }
         } else {
-            $this->parser->assign('error_message', 'lang:admin_students_csv_import_error_message_nothing_to_import');
+            $this->parser->assign(
+                'error_message',
+                'lang:admin_students_csv_import_error_message_nothing_to_import'
+            );
         }
         $html = $this->parser->parse('backend/students/import_single_line.tpl', [], true);
         $this->output->set_output(json_encode($html));
@@ -419,11 +536,17 @@ class Students extends LIST_Controller
             $student = new Student();
             $student->get_by_id((int)$uri_data['student_id']);
             if ($this->usermanager->force_student_login($student)) {
-                $this->messages->add_message('lang:students_force_loged_in', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message(
+                    'lang:students_force_loged_in',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
                 redirect(create_internal_url('/'));
             }
         }
-        $this->messages->add_message('lang:admin_students_failed_to_force_login', Messages::MESSAGE_TYPE_ERROR);
+        $this->messages->add_message(
+            'lang:admin_students_failed_to_force_login',
+            Messages::MESSAGE_TYPE_ERROR
+        );
         redirect(create_internal_url('admin_students'));
     }
     
@@ -534,14 +657,21 @@ class Students extends LIST_Controller
             $old_filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME);
             $new_filter = is_array($old_filter) ? array_merge($old_filter, $filter) : $filter;
             $this->filter->store_filter(self::STORED_FILTER_SESSION_NAME, $new_filter);
-            $this->filter->set_filter_course_name_field(self::STORED_FILTER_SESSION_NAME, 'course');
+            $this->filter->set_filter_course_name_field(
+                self::STORED_FILTER_SESSION_NAME,
+                'course'
+            );
         }
     }
     
     private function inject_stored_filter(): void
     {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
+        $filter = $this->filter->restore_filter(
+            self::STORED_FILTER_SESSION_NAME,
+            $this->usermanager->get_teacher_id(),
+            'course'
+        );
         $this->parser->assign('filter', $filter);
     }
 }

@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Task_set_types controller for backend.
@@ -38,7 +36,12 @@ class Task_set_types extends LIST_Controller
         $task_set_types->include_related_count('task_set');
         $task_set_types->include_related_count('course');
         $task_set_types->order_by_with_constant('name', 'asc')->get_iterated();
-        $this->parser->parse('backend/task_set_types/table_content.tpl', ['task_set_types' => $task_set_types]);
+        $this->parser->parse(
+            'backend/task_set_types/table_content.tpl',
+            [
+                'task_set_types' => $task_set_types,
+            ]
+        );
     }
     
     public function new_task_set_type_form(): void
@@ -50,7 +53,11 @@ class Task_set_types extends LIST_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('task_set_type[name]', 'lang:admin_task_set_types_form_field_name', 'required');
+        $this->form_validation->set_rules(
+            'task_set_type[name]',
+            'lang:admin_task_set_types_form_field_name',
+            'required'
+        );
         
         if ($this->form_validation->run()) {
             $task_set_type_data = $this->input->post('task_set_type');
@@ -62,11 +69,17 @@ class Task_set_types extends LIST_Controller
             
             if ($task_set_type->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->messages->add_message('lang:admin_task_set_types_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message(
+                    'lang:admin_task_set_types_flash_message_save_successful',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
                 $this->_action_success();
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_task_set_types_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_task_set_types_flash_message_save_failed',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             
             redirect(create_internal_url('admin_task_set_types/new_task_set_type_form'));
@@ -91,7 +104,11 @@ class Task_set_types extends LIST_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('task_set_type[name]', 'lang:admin_task_set_types_form_field_name', 'required');
+        $this->form_validation->set_rules(
+            'task_set_type[name]',
+            'lang:admin_task_set_types_form_field_name',
+            'required'
+        );
         $this->form_validation->set_rules('task_set_type_id', 'id', 'required');
         
         if ($this->form_validation->run()) {
@@ -107,14 +124,23 @@ class Task_set_types extends LIST_Controller
                 
                 if ($task_set_type->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_task_set_types_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_task_set_types_flash_message_save_successful',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_task_set_types_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_task_set_types_flash_message_save_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
-                $this->messages->add_message('lang:admin_task_set_types_error_task_set_type_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_task_set_types_error_task_set_type_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_task_set_types/index'));
         } else {

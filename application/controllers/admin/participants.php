@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Participants controller for backend.
@@ -78,7 +76,10 @@ class Participants extends LIST_Controller
         } else if ($filter['order_by_field'] === 'status') {
             $participants->order_by('allowed', $order_by_direction);
         }
-        $participants->get_paged_iterated(isset($filter['page']) ? (int)$filter['page'] : 1, isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25);
+        $participants->get_paged_iterated(
+            isset($filter['page']) ? (int)$filter['page'] : 1,
+            isset($filter['rows_per_page']) ? (int)$filter['rows_per_page'] : 25
+        );
         $this->parser->parse('backend/participants/table_content.tpl', ['participants' => $participants]);
     }
     
@@ -95,7 +96,13 @@ class Participants extends LIST_Controller
         foreach ($groups as $group) {
             $options[$group->id] = $group->name;
         }
-        $this->parser->parse('backend/participants/groups_from_course.tpl', ['groups' => $options, 'selected' => $selected_id]);
+        $this->parser->parse(
+            'backend/participants/groups_from_course.tpl',
+            [
+                'groups'   => $options,
+                'selected' => $selected_id,
+            ]
+        );
     }
     
     public function approve_participation(): void
@@ -137,11 +144,11 @@ class Participants extends LIST_Controller
             
             if ($process_ok) {
                 $group = $participant->group->get();
-                if ($group->exists()) {
-                    if (!$group->is_related_to($course)) {
-                        $output['message'] = $this->lang->line('admin_participants_message_student_group_not_belongs_to_course');
-                        $process_ok = false;
-                    }
+                if ($group->exists() && !$group->is_related_to($course)) {
+                    $output['message'] = $this->lang->line(
+                        'admin_participants_message_student_group_not_belongs_to_course'
+                    );
+                    $process_ok = false;
                 }
             }
             
@@ -201,7 +208,9 @@ class Participants extends LIST_Controller
                     $participant->delete();
                     $output['message'] = $this->lang->line('admin_participants_message_participant_disapprowed');
                 } else {
-                    $output['message'] = $this->lang->line('admin_participants_message_participant_cant_be_disapprowed');
+                    $output['message'] = $this->lang->line(
+                        'admin_participants_message_participant_cant_be_disapprowed'
+                    );
                     $process_ok = false;
                 }
             }
@@ -251,7 +260,9 @@ class Participants extends LIST_Controller
                     }
                     $output['message'] = $this->lang->line('admin_participants_message_participant_deleted');
                 } else {
-                    $output['message'] = $this->lang->line('admin_participants_message_participant_cant_be_deleted');
+                    $output['message'] = $this->lang->line(
+                        'admin_participants_message_participant_cant_be_deleted'
+                    );
                     $process_ok = false;
                 }
             }
@@ -278,8 +289,16 @@ class Participants extends LIST_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('participant[course]', 'lang:admin_participants_form_field_course', 'required');
-        $this->form_validation->set_rules('participant[students][]', 'lang:admin_participants_form_field_students', 'required');
+        $this->form_validation->set_rules(
+            'participant[course]',
+            'lang:admin_participants_form_field_course',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'participant[students][]',
+            'lang:admin_participants_form_field_students',
+            'required'
+        );
         
         if ($this->form_validation->run()) {
             $this->_transaction_isolation();
@@ -295,14 +314,20 @@ class Participants extends LIST_Controller
             
             if (!$course->exists()) {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_participants_message_course_not_exists', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_participants_message_course_not_exists',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
                 $process_ok = false;
             }
             
             if ($process_ok && $course->exists()) {
                 if ($group->exists() && !$group->is_related_to($course)) {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_participants_message_group_not_belongs_to_course', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_participants_message_group_not_belongs_to_course',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                     $process_ok = false;
                 }
             }
@@ -361,12 +386,19 @@ class Participants extends LIST_Controller
                 $this->db->trans_commit();
                 $info_approved = (int)@$participant_data['allowed'] === 1 ? $added - $disapproved : 0;
                 $info_disapproved = (int)@$participant_data['allowed'] === 1 ? $disapproved : $added;
-                $message = sprintf($this->lang->line('admin_participants_message_addition_successfull'), $info_approved, $info_disapproved);
+                $message = sprintf(
+                    $this->lang->line('admin_participants_message_addition_successfull'),
+                    $info_approved,
+                    $info_disapproved
+                );
                 $this->messages->add_message($message, Messages::MESSAGE_TYPE_SUCCESS);
                 $this->_action_success();
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_participants_messages_error_in_addition_transaction', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_participants_messages_error_in_addition_transaction',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             
             redirect(create_internal_url('admin_participants/add_participant_form'));
@@ -463,7 +495,11 @@ class Participants extends LIST_Controller
     private function inject_stored_filter(): void
     {
         $this->load->library('filter');
-        $filter = $this->filter->restore_filter(self::STORED_FILTER_SESSION_NAME, $this->usermanager->get_teacher_id(), 'course');
+        $filter = $this->filter->restore_filter(
+            self::STORED_FILTER_SESSION_NAME,
+            $this->usermanager->get_teacher_id(),
+            'course'
+        );
         $this->parser->assign('filter', $filter);
     }
     

@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Restrictions controller for backend.
@@ -51,11 +49,29 @@ class Restrictions extends LIST_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('restriction[ip_addresses]', 'lang:admin_restrictions_form_field_ip_addresses', 'required|callback__ip_addresses_validation');
-        $this->form_validation->set_rules('restriction[start_time]', 'lang:admin_restrictions_form_field_start_time', 'required|datetime');
-        $this->form_validation->set_rules('restriction[end_time]', 'lang:admin_restrictions_form_field_end_time', 'required|datetime|callback__time_compare');
-        $this->form_validation->set_message('_ip_addresses_validation', $this->lang->line('admin_restrictions_form_validation_message_ip_addresses'));
-        $this->form_validation->set_message('_time_compare', $this->lang->line('admin_restrictions_form_validation_message_time_compare'));
+        $this->form_validation->set_rules(
+            'restriction[ip_addresses]',
+            'lang:admin_restrictions_form_field_ip_addresses',
+            'required|callback__ip_addresses_validation'
+        );
+        $this->form_validation->set_rules(
+            'restriction[start_time]',
+            'lang:admin_restrictions_form_field_start_time',
+            'required|datetime'
+        );
+        $this->form_validation->set_rules(
+            'restriction[end_time]',
+            'lang:admin_restrictions_form_field_end_time',
+            'required|datetime|callback__time_compare'
+        );
+        $this->form_validation->set_message(
+            '_ip_addresses_validation',
+            $this->lang->line('admin_restrictions_form_validation_message_ip_addresses')
+        );
+        $this->form_validation->set_message(
+            '_time_compare',
+            $this->lang->line('admin_restrictions_form_validation_message_time_compare')
+        );
         
         if ($this->form_validation->run()) {
             $this->_transaction_isolation();
@@ -65,11 +81,17 @@ class Restrictions extends LIST_Controller
             $restriction->from_array($this->input->post('restriction'));
             if ($restriction->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->messages->add_message($this->lang->line('admin_restrictions_flash_message_creation_success'), Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message($this->lang->line(
+                    'admin_restrictions_flash_message_creation_success'),
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
                 $this->_action_success();
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message($this->lang->line('admin_restrictions_flash_message_creation_failed'), Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    $this->lang->line('admin_restrictions_flash_message_creation_failed'),
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             
             redirect(create_internal_url('admin_restrictions/new_restriction_form'));
@@ -142,11 +164,29 @@ class Restrictions extends LIST_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('restriction[ip_addresses]', 'lang:admin_restrictions_form_field_ip_addresses', 'required|callback__ip_addresses_validation');
-        $this->form_validation->set_rules('restriction[start_time]', 'lang:admin_restrictions_form_field_start_time', 'required|datetime');
-        $this->form_validation->set_rules('restriction[end_time]', 'lang:admin_restrictions_form_field_end_time', 'required|datetime|callback__time_compare');
-        $this->form_validation->set_message('_ip_addresses_validation', $this->lang->line('admin_restrictions_form_validation_message_ip_addresses'));
-        $this->form_validation->set_message('_time_compare', $this->lang->line('admin_restrictions_form_validation_message_time_compare'));
+        $this->form_validation->set_rules(
+            'restriction[ip_addresses]',
+            'lang:admin_restrictions_form_field_ip_addresses',
+            'required|callback__ip_addresses_validation'
+        );
+        $this->form_validation->set_rules(
+            'restriction[start_time]',
+            'lang:admin_restrictions_form_field_start_time',
+            'required|datetime'
+        );
+        $this->form_validation->set_rules(
+            'restriction[end_time]',
+            'lang:admin_restrictions_form_field_end_time',
+            'required|datetime|callback__time_compare'
+        );
+        $this->form_validation->set_message(
+            '_ip_addresses_validation',
+            $this->lang->line('admin_restrictions_form_validation_message_ip_addresses')
+        );
+        $this->form_validation->set_message(
+            '_time_compare',
+            $this->lang->line('admin_restrictions_form_validation_message_time_compare')
+        );
         
         if ($this->form_validation->run()) {
             $this->_transaction_isolation();
@@ -159,15 +199,24 @@ class Restrictions extends LIST_Controller
                 $restriction->from_array($this->input->post('restriction'));
                 if ($restriction->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message($this->lang->line('admin_restrictions_flash_messages_update_successful'), Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        $this->lang->line('admin_restrictions_flash_messages_update_successful'),
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message($this->lang->line('admin_restrictions_flash_messages_update_failed'), Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        $this->lang->line('admin_restrictions_flash_messages_update_failed'),
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message($this->lang->line('admin_restrictions_error_message_restriction_not_found'), Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    $this->lang->line('admin_restrictions_error_message_restriction_not_found'),
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             
             redirect(create_internal_url('admin_restrictions'));

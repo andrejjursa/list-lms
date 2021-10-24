@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 require_once APPPATH . 'core/abstract_admin_widget.php';
 

@@ -79,7 +79,8 @@ class Cli_test extends CI_Controller
             try {
                 if ($task_set->exists() && $student->exists() && $tests->exists()) {
                     $version = $test_queue->version;
-                    $run_evaluation = $task_set->enable_tests_scoring > 0 && $task_set->course_test_scoring_deadline >= date('Y-m-d H:i:s') ? true : false;
+                    $run_evaluation = $task_set->enable_tests_scoring > 0
+                    && $task_set->course_test_scoring_deadline >= date('Y-m-d H:i:s');
                     $score_percent = [];
                     $score_points = [];
                     $bonus_percent = [];
@@ -95,17 +96,26 @@ class Cli_test extends CI_Controller
                             $token = '';
                             //echo 'Test queue ' . $test_queue->id . ' is running test ' . $test->id . ' ... ' . PHP_EOL;
                             try {
-                                $test_output = $test_object->run($files[(int)$version]['filepath'], $run_evaluation && $test->enable_scoring > 0, $student->id, $token);
+                                $test_output = $test_object->run(
+                                    $files[(int)$version]['filepath'],
+                                    $run_evaluation && $test->enable_scoring > 0,
+                                    $student->id,
+                                    $token
+                                );
                                 $test_score = $test_object->get_last_test_score();
                             } catch (Exception $e) {
                                 $test_output = $e->getMessage();
                                 $test_score = 0;
                             }
                             $test_queue->set_join_field($test, 'result_text', $test_output);
-                            $test_queue->set_join_field($test, 'evaluation_table', $test_object->get_last_test_scoring());
+                            $test_queue->set_join_field($test,
+                                'evaluation_table',
+                                $test_object->get_last_test_scoring()
+                            );
                             $test_queue->set_join_field($test, 'result', $test_object->get_last_exit_code());
                             
-                            //echo 'Test queue ' . $test_queue->id . ' is done with test ' . $test->id . ' ... ' . PHP_EOL;
+                            //echo 'Test queue ' . $test_queue->id . ' is done with test '
+                            // . $test->id . ' ... ' . PHP_EOL;
                             
                             if ($run_evaluation && $test->enable_scoring > 0) {
                                 $this->db->select('*');
@@ -122,7 +132,9 @@ class Cli_test extends CI_Controller
                                     if ($task_rel->bonus_task == 0) {
                                         $test_queue->set_join_field($test, 'percent_points', $test_score);
                                         $test_queue->set_join_field($test, 'points', $points);
-                                        $score_percent[$task_id] = isset($score_percent[$task_id]) ? $score_percent[$task_id] + $percent : $percent;
+                                        $score_percent[$task_id] = isset($score_percent[$task_id])
+                                            ? $score_percent[$task_id] + $percent
+                                            : $percent;
                                         $percent = (double)$score_percent[$task_id];
                                         $points = (1.0 - $percent) * $min + $percent * $max;
                                         $score_points[$task_id] = /*isset($score_points[$task_id]) ? $score_points[$task_id] + $points :*/
@@ -130,7 +142,9 @@ class Cli_test extends CI_Controller
                                     } else {
                                         $test_queue->set_join_field($test, 'percent_bonus', $test_score);
                                         $test_queue->set_join_field($test, 'bonus', $points);
-                                        $bonus_percent[$task_id] = isset($bonus_percent[$task_id]) ? $bonus_percent[$task_id] + $percent : $percent;
+                                        $bonus_percent[$task_id] = isset($bonus_percent[$task_id])
+                                            ? $bonus_percent[$task_id] + $percent
+                                            : $percent;
                                         $percent = (double)$bonus_percent[$task_id];
                                         $points = (1.0 - $percent) * $min + $percent * $max;
                                         $bonus_points[$task_id] = /*isset($bonus_points[$task_id]) ? $bonus_points[$task_id] + $points :*/
@@ -166,7 +180,9 @@ class Cli_test extends CI_Controller
                     $min_points_limit = -$course->default_points_to_remove;
                     
                     if ($test_count > 0 && $run_evaluation) {
-                        $max_results = $task_set->test_max_allowed < count($score_points) ? $task_set->test_max_allowed : count($score_points);
+                        $max_results = $task_set->test_max_allowed < count($score_points)
+                            ? $task_set->test_max_allowed
+                            : count($score_points);
                         
                         arsort($score_points, SORT_NUMERIC);
                         $i = 0;
@@ -200,7 +216,9 @@ class Cli_test extends CI_Controller
                             if ($solution->exists()) {
                                 if ($solution->not_considered == 0) {
                                     if ($solution->disable_evaluation_by_tests == 0) {
-                                        if ($solution->tests_points < $total_score || is_null($solution->tests_points)) {
+                                        if ($solution->tests_points < $total_score
+                                            || is_null($solution->tests_points)
+                                        ) {
                                             $solution->tests_points = $total_score;
                                             $solution->teacher_id = null;
                                             $solution->best_version = (int)$version;
@@ -229,22 +247,35 @@ class Cli_test extends CI_Controller
                             if ($save_solution) {
                                 $solution->save();
                                 $this->parser->clearCache('frontend/tasks/index.tpl');
-                                $test_queue->result_message = $this->lang->line('admin_tests_test_result_new_points_added');
+                                $test_queue->result_message = $this->lang->line(
+                                    'admin_tests_test_result_new_points_added'
+                                );
                             } else {
                                 if (!$solution_disable_evaluation) {
                                     if (!$solution_not_considered) {
-                                        $test_queue->result_message = sprintf($this->lang->line('admin_tests_test_result_nothing_to_update'), $total_score, $best_old_score);
+                                        $test_queue->result_message = sprintf(
+                                            $this->lang->line('admin_tests_test_result_nothing_to_update'),
+                                            $total_score,
+                                            $best_old_score
+                                        );
                                     } else {
-                                        $test_queue->result_message = $this->lang->line('admin_tests_test_result_solution_not_considered');
+                                        $test_queue->result_message = $this->lang->line(
+                                            'admin_tests_test_result_solution_not_considered'
+                                        );
                                     }
                                 } else {
-                                    $test_queue->result_message = $this->lang->line('admin_tests_test_result_solution_disable_evaluation');
+                                    $test_queue->result_message = $this->lang->line(
+                                        'admin_tests_test_result_solution_disable_evaluation'
+                                    );
                                 }
                             }
                             $test_queue->points = $total_score - $total_bonus;
                             $test_queue->bonus = $total_bonus;
                         } else {
-                            $test_queue->result_message = sprintf($this->lang->line('admin_tests_test_result_minimum_number_of_test_not_selected'), $min_results);
+                            $test_queue->result_message = sprintf(
+                                $this->lang->line('admin_tests_test_result_minimum_number_of_test_not_selected'),
+                                $min_results
+                            );
                         }
                         
                         $result_table_tasks = new Task();
@@ -268,7 +299,9 @@ class Cli_test extends CI_Controller
                         $test_queue->worker = null;
                         $test_queue->status = 2;
                         $test_queue->finish = date('Y-m-d H:i:s');
-                        $test_queue->result_message = $this->lang->line('admin_tests_test_result_testing_finished');
+                        $test_queue->result_message = $this->lang->line(
+                            'admin_tests_test_result_testing_finished'
+                        );
                         $test_queue->save();
                         //$this->db->trans_commit();
                     } else {
@@ -276,7 +309,9 @@ class Cli_test extends CI_Controller
                         $test_queue->worker = null;
                         $test_queue->status = 3;
                         $test_queue->finish = date('Y-m-d H:i:s');
-                        $test_queue->result_message = $this->lang->line('admin_tests_test_result_no_test_selected');
+                        $test_queue->result_message = $this->lang->line(
+                            'admin_tests_test_result_no_test_selected'
+                        );
                         $test_queue->save();
                     }
                 } else {

@@ -1,6 +1,4 @@
-<?php if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
+<?php
 
 /**
  * Periods controller for backend.
@@ -51,14 +49,24 @@ class Periods extends LIST_Controller
         $periods->order_by('sorting', 'asc');
         $periods->include_related_count('course');
         $periods->get_iterated();
-        $this->parser->parse('backend/periods/ajax_periods_list.tpl', ['periods' => $periods, 'fields_config' => $fields_config]);
+        $this->parser->parse(
+            'backend/periods/ajax_periods_list.tpl',
+            [
+                'periods'       => $periods,
+                'fields_config' => $fields_config,
+            ]
+        );
     }
     
     public function create(): void
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('period[name]', 'lang:admin_periods_form_field_name', 'required|is_unique[periods.name]');
+        $this->form_validation->set_rules(
+            'period[name]',
+            'lang:admin_periods_form_field_name',
+            'required|is_unique[periods.name]'
+        );
         
         if ($this->form_validation->run()) {
             $this->_transaction_isolation();
@@ -74,11 +82,17 @@ class Periods extends LIST_Controller
             
             if ($period->save() && $this->db->trans_status()) {
                 $this->db->trans_commit();
-                $this->messages->add_message('lang:admin_periods_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                $this->messages->add_message(
+                    'lang:admin_periods_flash_message_save_successful',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
                 $this->_action_success();
             } else {
                 $this->db->trans_rollback();
-                $this->messages->add_message('lang:admin_periods_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_periods_flash_message_save_failed',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             
             redirect(create_internal_url('admin_periods/new_period_form'));
@@ -112,8 +126,15 @@ class Periods extends LIST_Controller
         $period_id = (int)$this->input->post('period_id');
         
         $this->form_validation->set_rules('period_id', 'id', 'required');
-        $this->form_validation->set_rules('period[name]', 'lang:admin_periods_form_field_name', 'required|callback__is_unique_name_not_in[' . $period_id . ']');
-        $this->form_validation->set_message('_is_unique_name_not_in', $this->lang->line('admin_periods_form_error_message_is_unique_name_not_in'));
+        $this->form_validation->set_rules(
+            'period[name]',
+            'lang:admin_periods_form_field_name',
+            'required|callback__is_unique_name_not_in[' . $period_id . ']'
+        );
+        $this->form_validation->set_message(
+            '_is_unique_name_not_in',
+            $this->lang->line('admin_periods_form_error_message_is_unique_name_not_in')
+        );
         
         if ($this->form_validation->run()) {
             $period = new Period();
@@ -127,14 +148,23 @@ class Periods extends LIST_Controller
                 
                 if ($period->save() && $this->db->trans_status()) {
                     $this->db->trans_commit();
-                    $this->messages->add_message('lang:admin_periods_flash_message_save_successful', Messages::MESSAGE_TYPE_SUCCESS);
+                    $this->messages->add_message(
+                        'lang:admin_periods_flash_message_save_successful',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
                     $this->_action_success();
                 } else {
                     $this->db->trans_rollback();
-                    $this->messages->add_message('lang:admin_periods_flash_message_save_failed', Messages::MESSAGE_TYPE_ERROR);
+                    $this->messages->add_message(
+                        'lang:admin_periods_flash_message_save_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
                 }
             } else {
-                $this->messages->add_message('lang:admin_periods_error_period_not_found', Messages::MESSAGE_TYPE_ERROR);
+                $this->messages->add_message(
+                    'lang:admin_periods_error_period_not_found',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
             redirect(create_internal_url('admin_periods/index'));
         } else {
