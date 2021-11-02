@@ -1220,7 +1220,10 @@ class Solutions extends LIST_Controller
                     );
                 } else {
                     $this->db->trans_rollback();
-                    $this->parser->assign('file_error_message', $this->upload->display_errors('', ''));
+                    $this->parser->assign(
+                        'file_error_message',
+                        $this->upload->display_errors('', '')
+                    );
                     $this->student_solution_upload($solution_id);
                 }
             } else {
@@ -1749,7 +1752,11 @@ class Solutions extends LIST_Controller
             $content_type_project->where('content_type', 'project');
             $content_type_project->where('published', 1);
             $content_type_project->where_related_course($course);
-            $content_type_project->order_by_related_with_constant('task_set_type', 'name', 'asc');
+            $content_type_project->order_by_related_with_constant(
+                'task_set_type',
+                'name',
+                'asc'
+            );
             $content_type_project->order_by('publish_start_time', 'asc');
             $content_type_project->get();
             $header_items = [];

@@ -107,7 +107,9 @@ class Restrictions extends LIST_Controller
             $parts = explode(',', $string);
             foreach ($parts as $part) {
                 $part = trim($part);
-                if (!check_valid_ip_address($part) && !check_valid_ip_range($part) && !check_valid_ip_wildcard($part)) {
+                if (!check_valid_ip_address($part) && !check_valid_ip_range($part)
+                    && !check_valid_ip_wildcard($part)
+                ) {
                     return false;
                 }
             }

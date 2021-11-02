@@ -27,7 +27,9 @@ function match_ip_address_agains($matching_pattern, $ip_address = null): bool
             }
             if (!is_null($range)) {
                 $ip_to_check_long = list_ip_2_number($ip_to_check);
-                if (list_ip_2_number($range['bottom']) <= $ip_to_check_long && $ip_to_check_long <= list_ip_2_number($range['top'])) {
+                if (list_ip_2_number($range['bottom']) <= $ip_to_check_long
+                    && $ip_to_check_long <= list_ip_2_number($range['top'])
+                ) {
                     return true;
                 }
             }
@@ -102,7 +104,8 @@ function check_valid_ip_wildcard($ip_wildcard): ?bool
 function check_valid_ip_range($ip_range): bool
 {
     $parts = explode(':', $ip_range);
-    return (count($parts) === 2) && check_valid_ip_address($parts[0]) && check_valid_ip_address($parts[1]) && list_ip_2_number($parts[0]) <= list_ip_2_number($parts[1]);
+    return (count($parts) === 2) && check_valid_ip_address($parts[0]) && check_valid_ip_address($parts[1])
+        && list_ip_2_number($parts[0]) <= list_ip_2_number($parts[1]);
 }
 
 function list_ip_2_number($ip_address): int

@@ -8,10 +8,10 @@
  *
  * @access    public
  *
- * @param string    the URL
- * @param string    the method: location or redirect
+ * @param string the URL
+ * @param string the method: location or redirect
  *
- * @return    string
+ * @return string
  */
 if (!function_exists('redirect')) {
     function redirect($uri = '', $method = 'location', $http_response_code = 302)
@@ -21,10 +21,10 @@ if (!function_exists('redirect')) {
         }
         
         switch ($method) {
-            case 'refresh'    :
+            case 'refresh':
                 header("Refresh:0;url=" . $uri);
                 break;
-            default            :
+            default:
                 get_instance()->hooks->_call_hook('post_controller');
                 get_instance()->hooks->_call_hook('post_system');
                 header("Location: " . $uri, true, $http_response_code);

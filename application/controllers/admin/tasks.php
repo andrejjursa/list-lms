@@ -171,8 +171,16 @@ class Tasks extends LIST_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('task[name]', 'lang:admin_tasks_form_field_name', 'required');
-        $this->form_validation->set_rules('task[text]', 'lang:admin_tasks_form_field_text', 'required');
+        $this->form_validation->set_rules(
+            'task[name]',
+            'lang:admin_tasks_form_field_name',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'task[text]',
+            'lang:admin_tasks_form_field_text',
+            'required'
+        );
         $this->form_validation->set_rules(
             'task[categories][]',
             'lang:admin_tasks_form_field_categories',
@@ -251,8 +259,16 @@ class Tasks extends LIST_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('task[name]', 'lang:admin_tasks_form_field_name', 'required');
-        $this->form_validation->set_rules('task[text]', 'lang:admin_tasks_form_field_text', 'required');
+        $this->form_validation->set_rules(
+            'task[name]',
+            'lang:admin_tasks_form_field_name',
+            'required'
+        );
+        $this->form_validation->set_rules(
+            'task[text]',
+            'lang:admin_tasks_form_field_text',
+            'required'
+        );
         $this->form_validation->set_rules(
             'task[categories][]',
             'lang:admin_tasks_form_field_categories',

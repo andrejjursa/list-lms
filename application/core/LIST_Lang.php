@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
 /**
  * Overriden language class with support for adding custom language tags and language overlays.
@@ -169,7 +169,14 @@ class LIST_Lang extends CI_Lang
      */
     public function get_overlay(string $table, $table_id, string $column, string $idiom = null): string
     {
-        return $this->replace_null_overlay_text($this->get_overlay_if_exists($table, $table_id, $column, is_null($idiom) ? $this->lang_idiom : $idiom));
+        return $this->replace_null_overlay_text(
+            $this->get_overlay_if_exists(
+                $table,
+                $table_id,
+                $column,
+                is_null($idiom) ? $this->lang_idiom : $idiom
+            )
+        );
     }
     
     /**
@@ -191,7 +198,12 @@ class LIST_Lang extends CI_Lang
         string $idiom = null
     ): string
     {
-        $text = $this->get_overlay_if_exists($table, $table_id, $column, is_null($idiom) ? $this->lang_idiom : $idiom);
+        $text = $this->get_overlay_if_exists(
+            $table,
+            $table_id,
+            $column,
+            is_null($idiom) ? $this->lang_idiom : $idiom
+        );
         return is_null($text) ? $default : $text;
     }
     

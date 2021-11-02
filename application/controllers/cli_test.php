@@ -90,11 +90,12 @@ class Cli_test extends CI_Controller
                         $test_queue->single_test_exec_start = date('Y-m-d H:i:s');
                         $test_queue->save();
                         $files = $task_set->get_student_files($student->id, (int)$version);
-                        if (isset($files[(int)$version]['filepath']) && file_exists($files[(int)$version]['filepath'])) {
+                        if (isset($files[(int)$version]['filepath'])
+                            && file_exists($files[(int)$version]['filepath'])
+                        ) {
                             $test_object = $this->load->test($test->type);
                             $test_object->initialize($test);
                             $token = '';
-                            //echo 'Test queue ' . $test_queue->id . ' is running test ' . $test->id . ' ... ' . PHP_EOL;
                             try {
                                 $test_output = $test_object->run(
                                     $files[(int)$version]['filepath'],
@@ -113,9 +114,6 @@ class Cli_test extends CI_Controller
                                 $test_object->get_last_test_scoring()
                             );
                             $test_queue->set_join_field($test, 'result', $test_object->get_last_exit_code());
-                            
-                            //echo 'Test queue ' . $test_queue->id . ' is done with test '
-                            // . $test->id . ' ... ' . PHP_EOL;
                             
                             if ($run_evaluation && $test->enable_scoring > 0) {
                                 $this->db->select('*');
@@ -137,8 +135,7 @@ class Cli_test extends CI_Controller
                                             : $percent;
                                         $percent = (double)$score_percent[$task_id];
                                         $points = (1.0 - $percent) * $min + $percent * $max;
-                                        $score_points[$task_id] = /*isset($score_points[$task_id]) ? $score_points[$task_id] + $points :*/
-                                            $points;
+                                        $score_points[$task_id] = $points;
                                     } else {
                                         $test_queue->set_join_field($test, 'percent_bonus', $test_score);
                                         $test_queue->set_join_field($test, 'bonus', $points);
@@ -147,8 +144,7 @@ class Cli_test extends CI_Controller
                                             : $percent;
                                         $percent = (double)$bonus_percent[$task_id];
                                         $points = (1.0 - $percent) * $min + $percent * $max;
-                                        $bonus_points[$task_id] = /*isset($bonus_points[$task_id]) ? $bonus_points[$task_id] + $points :*/
-                                            $points;
+                                        $bonus_points[$task_id] = $points;
                                     }
                                 }
                                 $query->free_result();

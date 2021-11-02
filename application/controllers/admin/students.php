@@ -264,7 +264,9 @@ class Students extends LIST_Controller
                     'e' => $post_data['escape'],
                 ];
                 redirect(
-                    create_internal_url('admin_students/show_csv_content/' . encode_for_url(serialize($data)))
+                    create_internal_url(
+                        'admin_students/show_csv_content/' . encode_for_url(serialize($data))
+                    )
                 );
             } else {
                 $this->parser->assign('error_message', $this->upload->display_errors('', ''));

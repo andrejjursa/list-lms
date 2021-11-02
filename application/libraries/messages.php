@@ -1,11 +1,13 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
 /**
  * Flash messages wraping library.
+ *
  * @package LIST_Libraries
- * @author Andrej Jursa
+ * @author  Andrej Jursa
  */
-class Messages {
+class Messages
+{
     
     /**
      * var object $CI CodeIgniter.
@@ -26,20 +28,21 @@ class Messages {
     {
         $this->CI =& get_instance();
         $this->CI->load->library('session');
-        $this->flash_messages_to_smarty();        
+        $this->flash_messages_to_smarty();
     }
     
     /**
      * Add flash message to array of flash messages.
+     *
      * @param string $message message text or language constant prepended with lang: prefix.
-     * @param string $type message type, one of MESSAGE_TYPE_* constant from Messages class.
+     * @param string $type    message type, one of MESSAGE_TYPE_* constant from Messages class.
      */
     public function add_message(string $message, string $type = self::MESSAGE_TYPE_DEFAULT): void
     {
         $flashdata_key = $this->CI->session->flashdata_key;
         $flash_userdata = $flashdata_key . ':new:' . self::FLASH_MESSAGES_NAME;
         $messages = $this->CI->session->userdata($flash_userdata);
-        $messages[] = array('message' => $message, 'type' => $type);
+        $messages[] = ['message' => $message, 'type' => $type];
         $this->CI->session->set_flashdata(self::FLASH_MESSAGES_NAME, $messages);
     }
     
@@ -53,6 +56,7 @@ class Messages {
     
     /**
      * Returns array of all flash messages currently stored in session.
+     *
      * @return array flash messages.
      */
     public function read_messages(): array
@@ -66,7 +70,7 @@ class Messages {
                 $messages[] = $message;
             }
         }
-        return is_array($messages) ? $messages : array();
+        return is_array($messages) ? $messages : [];
     }
     
     /**

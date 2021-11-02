@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
 /**
  * Overriden controller class with few more useful methods.
@@ -79,7 +79,7 @@ class LIST_Controller extends CI_Controller
     protected function _init_specific_language(string $lang_idiom): void
     {
         $languages = $this->lang->get_list_of_languages();
-        if (array_key_exists($lang_idiom, $languages) && $this->lang->get_current_idiom() != $lang_idiom) {
+        if (array_key_exists($lang_idiom, $languages) && $this->lang->get_current_idiom() !== $lang_idiom) {
             $this->lang->reinitialize_for_idiom($lang_idiom);
             $translations = $this->translations->get_translations_for_idiom($lang_idiom);
             $this->lang->add_custom_translations($translations);

@@ -39,7 +39,8 @@ function create_internal_url($relative_url, $force_simple_link = false): string
         return base_url('/' . trim($relative_url, '/')) . $CI->config->item('url_suffix');
     }
     
-    return base_url($CI->config->item('index_page') . '/' . trim($relative_url, '/')) . (!$force_simple_link ? $CI->config->item('url_suffix') : '');
+    return base_url($CI->config->item('index_page') . '/' . trim($relative_url, '/'))
+        . (!$force_simple_link ? $CI->config->item('url_suffix') : '');
 }
 
 /**
@@ -61,14 +62,16 @@ function add_to_internal_url($old_url, $url_part_to_add, $can_add = true): strin
     $suffix = $CI->config->item('url_suffix');
     $base_url = base_url();
     $index_page = $CI->config->item('index_page');
-    if (substr($old_url, 0, strlen($base_url)) === $base_url) {
+    if (strpos($old_url, $base_url) === 0) {
         $new_url = $old_url;
         $add_suffix = false;
         if (substr($new_url, -strlen($index_page)) !== $index_page && substr($new_url, -strlen($suffix)) === $suffix) {
             $new_url = substr($new_url, 0, strlen($new_url) - strlen($suffix));
             $add_suffix = true;
         }
-        return rtrim(rtrim($new_url, '\\/') . '/' . trim(trim($url_part_to_add), '\\/'), '\\/') . ($add_suffix ? $suffix : '');
+        return rtrim(
+                rtrim($new_url, '\\/') . '/' . trim(trim($url_part_to_add), '\\/'), '\\/'
+            ) . ($add_suffix ? $suffix : '');
     }
     
     return $old_url;
@@ -131,7 +134,8 @@ function db_is_mysql(): bool
 {
     $CI =& get_instance();
     $provider = strtolower($CI->db->dbdriver);
-    return $provider === 'mysql' || $provider === 'mysqli' || ($provider === 'pdo' && strpos($CI->db->hostname, 'mysql') !== false);
+    return $provider === 'mysql' || $provider === 'mysqli' ||
+        ($provider === 'pdo' && strpos($CI->db->hostname, 'mysql') !== false);
 }
 
 /**
@@ -215,14 +219,15 @@ function unlink_recursive($dir, $delete_root_too)
 function normalize($string): string
 {
     $table = [
-        'Š' => 'S', 'š' => 's', 'Đ' => 'Dj', 'đ' => 'dj', 'Ž' => 'Z', 'ž' => 'z', 'Č' => 'C', 'č' => 'c', 'Ć' => 'C', 'ć' => 'c',
-        'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',
-        'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O',
-        'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss',
-        'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
-        'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o',
-        'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'ý' => 'y', 'þ' => 'b',
-        'ÿ' => 'y', 'Ŕ' => 'R', 'ŕ' => 'r',
+        'Š' => 'S', 'š' => 's', 'Đ' => 'Dj', 'đ' => 'dj', 'Ž' => 'Z', 'ž' => 'z', 'Č' => 'C', 'č' => 'c',
+        'Ć' => 'C', 'ć' => 'c', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A',
+        'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I',
+        'Î' => 'I', 'Ï' => 'I', 'Ñ' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O',
+        'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss',
+        'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c',
+        'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+        'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o',
+        'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', 'Ŕ' => 'R', 'ŕ' => 'r',
         'ď' => 'd', 'ň' => 'n', 'ľ' => 'l', 'ĺ' => 'l', 'ť' => 't', 'ř' => 'r', 'ź' => 'z', 'ń' => 'n',
         'Ď' => 'D', 'Ň' => 'N', 'Ľ' => 'L', 'Ĺ' => 'L', 'Ť' => 'T', 'Ř' => 'R', 'Ś' => 'S', 'ś' => 's',
     ];
@@ -343,7 +348,9 @@ function remove_base_url_from_overlay_array($overlay_array, $column_name): array
                         foreach ($table_array as $table_id => $table_id_array) {
                             if (is_array($table_id_array) && count($table_id_array)) {
                                 foreach ($table_id_array as $column => $content) {
-                                    if ((is_string($column_name) && $column === $column_name) || (is_array($column_name) && in_array($column, $column_name, true))) {
+                                    if ((is_string($column_name) && $column === $column_name)
+                                        || (is_array($column_name) && in_array($column, $column_name, true))
+                                    ) {
                                         if (!empty($content)) {
                                             $overlay_array[$idiom][$table][$table_id][$column] = remove_base_url($content);
                                         }
@@ -382,16 +389,20 @@ function clone_directory($from, $to): bool
     $files_dirs = scandir($from);
     foreach ($files_dirs as $file_dir) {
         if (is_file(ltrim($from, '/\\') . '/' . $file_dir)) {
-            $result = @copy(ltrim($from, '/\\') . '/' . $file_dir, ltrim($to, '/\\') . '/' . $file_dir);
+            $result = @copy(
+                ltrim($from, '/\\') . '/' . $file_dir,
+                ltrim($to, '/\\') . '/' . $file_dir
+            );
             if ($result === false) {
                 return false;
             }
-        } else {
-            if ($file_dir !== '.' && $file_dir !== '..') {
-                $result = clone_directory(ltrim($from, '/\\') . '/' . $file_dir, ltrim($to, '/\\') . '/' . $file_dir);
-                if ($result === false) {
-                    return false;
-                }
+        } else if ($file_dir !== '.' && $file_dir !== '..') {
+            $result = clone_directory(
+                ltrim($from, '/\\') . '/' . $file_dir,
+                ltrim($to, '/\\') . '/' . $file_dir
+            );
+            if ($result === false) {
+                return false;
             }
         }
     }
@@ -413,7 +424,9 @@ function is_time($number)
         $seconds = $time % 60;
         $minutes = (($time - $seconds) / 60) % 60;
         $hours = ((($time - $seconds) / 60) - $minutes) / 60;
-        return str_pad($hours, 2, '0', STR_PAD_LEFT) . ':' . str_pad($minutes, 2, '0', STR_PAD_LEFT) . ':' . str_pad($seconds, 2, '0', STR_PAD_LEFT);
+        return str_pad($hours, 2, '0', STR_PAD_LEFT) . ':'
+            . str_pad($minutes, 2, '0', STR_PAD_LEFT) . ':'
+            . str_pad($seconds, 2, '0', STR_PAD_LEFT);
     }
     return $number;
 }
@@ -433,17 +446,18 @@ function abbreviation($input): string
         $first_letter = (mb_substr($word, 0, 1));
         $second_letter = (mb_substr($word, 1, 1));
         if ($first_letter >= '0' && $first_letter <= '9') {
-            array_push($letters, $word);
+            $letters[] = $word;
         } else if (mb_strtolower($first_letter) === 'c' && mb_strtolower($second_letter) === 'h') {
-            array_push($letters, mb_strtoupper($first_letter) . 'h');
-        } else if (mb_strtolower($first_letter) === 'd' && (mb_strtolower($second_letter) === 'z' || mb_strtolower($second_letter) === 'ž')) {
-            array_push($letters, mb_strtoupper($first_letter) . mb_strtolower($second_letter));
+            $letters[] = mb_strtoupper($first_letter) . 'h';
+        } else if (mb_strtolower($first_letter) === 'd' && (mb_strtolower($second_letter) === 'z'
+                || mb_strtolower($second_letter) === 'ž')
+        ) {
+            $letters[] = mb_strtoupper($first_letter) . mb_strtolower($second_letter);
         } else {
-            array_push($letters, mb_strtoupper($first_letter));
+            $letters[] = mb_strtoupper($first_letter);
         }
     }
-    $shortname = strtoupper(implode($letters));
-    return $shortname;
+    return strtoupper(implode($letters));
 }
 
 /**

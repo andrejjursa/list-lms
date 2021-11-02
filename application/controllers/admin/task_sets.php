@@ -195,7 +195,9 @@ class Task_sets extends LIST_Controller
         } else {
             $this->db->trans_rollback();
             $output->status = false;
-            $output->message = $this->lang->line('admin_task_sets_sorting_error_course_or_task_set_type_not_found');
+            $output->message = $this->lang->line(
+                'admin_task_sets_sorting_error_course_or_task_set_type_not_found'
+            );
         }
         
         $this->output->set_content_type('application/json');
