@@ -55,7 +55,10 @@ class Category extends DataMapper implements DataMapperExtensionsInterface
     {
         $categories = new Category();
         $categories->include_related_count('task');
-        $categories->order_by('parent_id', 'asc')->order_by_with_constant('name', 'asc')->get();
+        $categories
+            ->order_by('parent_id', 'asc')
+            ->order_by_with_constant('name', 'asc')
+            ->get();
         return $this->make_structure($categories->all);
     }
     
@@ -98,7 +101,10 @@ class Category extends DataMapper implements DataMapperExtensionsInterface
         $cat_array = [];
         if (!isset(self::$cached_categories_array)) {
             $categories = new Category();
-            $query = $categories->select('id, parent_id')->order_by('parent_id', 'asc')->get_raw();
+            $query = $categories
+                ->select('id, parent_id')
+                ->order_by('parent_id', 'asc')
+                ->get_raw();
             if ($query->num_rows() > 0) {
                 foreach ($query->result_array() as $row) {
                     $cat_array[(int)$row['parent_id']][] = (int)$row['id'];

@@ -9,7 +9,7 @@
 class LIST_Session extends CI_Session
 {
     
-    public function sess_update()
+    public function sess_update(): void
     {
         if (!$this->CI->input->is_ajax_request()) {
             parent::sess_update();

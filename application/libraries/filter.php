@@ -9,10 +9,10 @@
 class Filter
 {
     
-    const FILTERS_ARRAY = 'list_filters_array';
-    const FILTERS_SETTINGS = 'list_filters_settings';
-    const FILTER_SETTINGS_COURSE_FIELD = 'course_field';
-    const FILTER_SETTINGS_FIELDS_DELETED_ON_COURSE_CHANGE = 'fields_deleted_on_course_change';
+    public const FILTERS_ARRAY = 'list_filters_array';
+    public const FILTERS_SETTINGS = 'list_filters_settings';
+    public const FILTER_SETTINGS_COURSE_FIELD = 'course_field';
+    public const FILTER_SETTINGS_FIELDS_DELETED_ON_COURSE_CHANGE = 'fields_deleted_on_course_change';
     
     protected $CI = null;
     
@@ -25,10 +25,10 @@ class Filter
     /**
      * This method will store filter data under filter name into session.
      *
-     * @param string       $filter_name name of filter.
-     * @param array<mixed> $filter_data data of filter.
+     * @param string $filter_name name of filter.
+     * @param array  $filter_data data of filter.
      */
-    public function store_filter($filter_name, $filter_data)
+    public function store_filter($filter_name, $filter_data): void
     {
         if (is_array($filter_data) && !empty($filter_data)) {
             $filters = $this->CI->session->userdata(self::FILTERS_ARRAY);
@@ -42,13 +42,13 @@ class Filter
      * If the second and third parameters are set, it will check teacher data for his prefered course and
      * inject this value into filter by specified conditions, only if these filter data are empty.
      *
-     * @param string          $filter_name  name of filter.
-     * @param integer|Teacher $teacher      teacher id or teacher object.
-     * @param string          $course_field field in filter which contain course id in filter.
+     * @param string      $filter_name  name of filter.
+     * @param int|Teacher $teacher      teacher id or teacher object.
+     * @param string      $course_field field in filter which contain course id in filter.
      *
-     * @return array<midex> filter data.
+     * @return array filter data.
      */
-    public function restore_filter($filter_name, $teacher = null, $course_field = null)
+    public function restore_filter($filter_name, $teacher = null, $course_field = null): array
     {
         $filters = $this->CI->session->userdata(self::FILTERS_ARRAY);
         $filters = empty($filters) || is_null($filters) || !is_array($filters) ? [] : $filters;
@@ -72,7 +72,7 @@ class Filter
      * @param string $filter_name name of filter.
      * @param string $field_name  name of field containing course id.
      */
-    public function set_filter_course_name_field($filter_name, $field_name)
+    public function set_filter_course_name_field($filter_name, $field_name): void
     {
         if (is_null($field_name) || (is_string($field_name) && !empty($field_name))) {
             $filter_settings = $this->CI->session->userdata(self::FILTERS_SETTINGS);
@@ -87,7 +87,7 @@ class Filter
      * @param string        $filter_name name of filter.
      * @param array<string> $fields      array of field names.
      */
-    public function set_filter_delete_on_course_change($filter_name, $fields)
+    public function set_filter_delete_on_course_change($filter_name, $fields): void
     {
         if ($this->is_array_of_strings($fields)) {
             $filter_settings = $this->CI->session->userdata(self::FILTERS_SETTINGS);
@@ -101,9 +101,9 @@ class Filter
      *
      * @param string $filter_name name of filter.
      *
-     * @return string name of field or NULL if not set.
+     * @return string|null name of field or NULL if not set.
      */
-    public function get_filter_course_name_field($filter_name)
+    public function get_filter_course_name_field($filter_name): ?string
     {
         $filter_settings = $this->CI->session->userdata(self::FILTERS_SETTINGS);
         if (!isset(
@@ -120,9 +120,9 @@ class Filter
      *
      * @param string $filter_name name of filter.
      *
-     * @return array<string> array of field names or NULL if not set.
+     * @return array<string>|null array of field names or NULL if not set.
      */
-    public function get_filter_delete_on_course_change($filter_name)
+    public function get_filter_delete_on_course_change($filter_name): ?array
     {
         $filter_settings = $this->CI->session->userdata(self::FILTERS_SETTINGS);
         if (!isset(
@@ -139,9 +139,9 @@ class Filter
      *
      * @param Course|integer $course course id, existing course object or NULL.
      *
-     * @return boolean TRUE on success, FALSE otherwise.
+     * @return bool TRUE on success, FALSE otherwise.
      */
-    public function set_all_filters_course($course)
+    public function set_all_filters_course($course): bool
     {
         $course_id = 0;
         if (is_numeric($course) && (int)$course > 0) {
@@ -184,11 +184,11 @@ class Filter
     /**
      * This method will verify if the array passed by parameter is array of strings.
      *
-     * @param array<mixed> $array array to verify.
+     * @param array $array array to verify.
      *
-     * @return boolean TRUE, if parameter is array of strings, FALSE otherwise.
+     * @return bool TRUE, if parameter is array of strings, FALSE otherwise.
      */
-    private function is_array_of_strings($array)
+    private function is_array_of_strings($array): bool
     {
         if (!is_array($array)) {
             return false;

@@ -76,7 +76,7 @@ class CI_Smarty extends Smarty
      *
      * @example $this->smarty->enable_caching(); then do your parse call
      */
-    public function enable_caching()
+    public function enable_caching(): void
     {
         $this->caching = 1;
     }
@@ -88,7 +88,7 @@ class CI_Smarty extends Smarty
      *
      * @example $this->smarty->disable_caching(); then do your parse call
      */
-    public function disable_caching()
+    public function disable_caching(): void
     {
         $this->caching = 0;
     }

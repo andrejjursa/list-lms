@@ -1,61 +1,64 @@
 <?php
 
-class Migration_create_solution_versions extends CI_Migration {
-
-    public function up() {
+class Migration_create_solution_versions extends CI_Migration
+{
+    
+    public function up()
+    {
         $this->dbforge->add_field(
-            array(
-                'id' => array(
-                    'type' => 'INT',
-                    'constraint' => '11',
-                    'unsigned' => TRUE,
-                    'auto_increment' => TRUE,
-                ),
-                'updated' => array(
-                    'type' => 'timestamp',
+            [
+                'id'            => [
+                    'type'           => 'INT',
+                    'constraint'     => '11',
+                    'unsigned'       => true,
+                    'auto_increment' => true,
+                ],
+                'updated'       => [
+                    'type'    => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
-                ),
-                'created' => array(
-                    'type' => 'timestamp',
+                ],
+                'created'       => [
+                    'type'    => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
-                ),
-                'solution_id' => array(
-                    'type' => 'int',
+                ],
+                'solution_id'   => [
+                    'type'       => 'int',
                     'constraint' => '11',
-                    'unsigned' => TRUE,
-                    'null' => TRUE,
-                ),
-                'version' => array(
-                    'type' => 'int',
+                    'unsigned'   => true,
+                    'null'       => true,
+                ],
+                'version'       => [
+                    'type'       => 'int',
                     'constraint' => '11',
-                    'unsigned' => TRUE,
-                    'default' => 0,
-                ),
-                'download_lock' => array(
-                    'type' => 'int',
+                    'unsigned'   => true,
+                    'default'    => 0,
+                ],
+                'download_lock' => [
+                    'type'       => 'int',
                     'constraint' => '1',
-                    'unsigned' => TRUE,
-                    'default' => 0,
-                ),
-                'ip_address' => array(
-                    'type' => 'varchar',
+                    'unsigned'   => true,
+                    'default'    => 0,
+                ],
+                'ip_address'    => [
+                    'type'       => 'varchar',
                     'constraint' => '32',
-                    'null' => TRUE,
-                ),
-            )
+                    'null'       => true,
+                ],
+            ]
         );
-
-        $this->dbforge->add_key('id', TRUE);
+        
+        $this->dbforge->add_key('id', true);
         $this->dbforge->add_key('solution_id');
         $this->dbforge->add_key('version');
-
+        
         $this->dbforge->create_table('solution_versions');
-
+        
         change_mysql_table_to_InnoDB('solution_versions');
     }
-
-    public function down() {
+    
+    public function down()
+    {
         $this->dbforge->drop_table('solution_versions');
     }
-
+    
 }

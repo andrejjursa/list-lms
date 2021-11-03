@@ -1,74 +1,77 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class Migration_tables_for_widgets extends CI_Migration {
-
-    public function up() {
+class Migration_tables_for_widgets extends CI_Migration
+{
+    
+    public function up()
+    {
         $this->dbforge->add_field(
-            array(
-                'id' => array(
-                    'type' => 'INT',
-                    'constraint' => '11',
-                    'unsigned' => TRUE,
-                    'auto_increment' => TRUE,
-                ),
-                'updated' => array(
-                    'type' => 'timestamp',
+            [
+                'id'            => [
+                    'type'           => 'INT',
+                    'constraint'     => '11',
+                    'unsigned'       => true,
+                    'auto_increment' => true,
+                ],
+                'updated'       => [
+                    'type'    => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
-                ),
-                'created' => array(
-                    'type' => 'timestamp',
+                ],
+                'created'       => [
+                    'type'    => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
-                ),
-                'teacher_id' => array(
-                    'type' => 'INT',
+                ],
+                'teacher_id'    => [
+                    'type'       => 'INT',
                     'constraint' => 11,
-                    'unsigned' => TRUE,
-                    'null' => TRUE,
-                ),
-                'widget_type' => array(
-                    'type' => 'VARCHAR',
+                    'unsigned'   => true,
+                    'null'       => true,
+                ],
+                'widget_type'   => [
+                    'type'       => 'VARCHAR',
                     'constraint' => 255,
-                    'default' => '',
-                ),
-                'widget_config' => array(
+                    'default'    => '',
+                ],
+                'widget_config' => [
                     'type' => 'TEXT',
                     'null' => true,
-                ),
-                'position' => array(
-                    'type' => 'INT',
+                ],
+                'position'      => [
+                    'type'       => 'INT',
                     'constraint' => 11,
-                    'unsigned' => TRUE,
-                    'default' => 0,
-                ),
-                'column' => array(
-                    'type' => 'INT',
+                    'unsigned'   => true,
+                    'default'    => 0,
+                ],
+                'column'        => [
+                    'type'       => 'INT',
                     'constraint' => 11,
-                    'unsigned' => TRUE,
-                    'default' => 1,
-                ),
-            )
+                    'unsigned'   => true,
+                    'default'    => 1,
+                ],
+            ]
         );
-
-        $this->dbforge->add_key('id', TRUE);
+        
+        $this->dbforge->add_key('id', true);
         $this->dbforge->add_key('teacher_id');
-
+        
         $this->dbforge->create_table('admin_widgets');
-
+        
         change_mysql_table_to_InnoDB('admin_widgets');
-
-        $this->dbforge->add_column('teachers', array(
-            'widget_columns' => array(
-                'type' => 'INT',
+        
+        $this->dbforge->add_column('teachers', [
+            'widget_columns' => [
+                'type'       => 'INT',
                 'constraint' => 4,
-                'unsigned' => TRUE,
-                'default' => '1',
-            ),
-        ));
+                'unsigned'   => true,
+                'default'    => '1',
+            ],
+        ]);
     }
-
-    public function down() {
+    
+    public function down()
+    {
         $this->dbforge->drop_column('teachers', 'widget_columns');
         $this->dbforge->drop_table('admin_widgets');
     }
-
+    
 }

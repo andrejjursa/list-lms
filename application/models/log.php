@@ -159,7 +159,13 @@ class Log extends DataMapper implements DataMapperExtensionsInterface
      *
      * @return boolean save operation status.
      */
-    public function add_student_solution_download_log($message, $student, $solution_file, $task_set_id, $language = null): bool
+    public function add_student_solution_download_log(
+        $message,
+        $student,
+        $solution_file,
+        $task_set_id,
+        $language = null
+    ): bool
     {
         if (is_null($language)) {
             $language = $this->lang->get_current_idiom();

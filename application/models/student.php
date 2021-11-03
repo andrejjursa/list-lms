@@ -5,23 +5,23 @@ use Application\Interfaces\DataMapperExtensionsInterface;
 /**
  * Student model.
  *
- * @property int         $id
- * @property string      $updated          date time format YYYY-MM-DD HH:MM:SS
- * @property string      $created          date time format YYYY-MM-DD HH:MM:SS
- * @property string      $fullname
- * @property string      $email
- * @property string      $password
- * @property string      $language
- * @property int|null    $active_course_id entity id of model {@see Course}
- * @property string|null $password_token
- * @property Participant $participant
- * @property Solution $solution
- * @property Comment $comment
- * @property Task_set $comment_subscription
- * @property Log $log
+ * @property int               $id
+ * @property string            $updated          date time format YYYY-MM-DD HH:MM:SS
+ * @property string            $created          date time format YYYY-MM-DD HH:MM:SS
+ * @property string            $fullname
+ * @property string            $email
+ * @property string            $password
+ * @property string            $language
+ * @property int|null          $active_course_id entity id of model {@see Course}
+ * @property string|null       $password_token
+ * @property Participant       $participant
+ * @property Solution          $solution
+ * @property Comment           $comment
+ * @property Task_set          $comment_subscription
+ * @property Log               $log
  * @property Project_selection $project_selection
- * @property Test_queue $test_queue
- * @property Course $active_course
+ * @property Test_queue        $test_queue
+ * @property Course            $active_course
  *
  * @method DataMapper where_related_participant(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_solution(mixed $related, string $field = null, string $value = null)
@@ -93,7 +93,8 @@ class Student extends DataMapper implements DataMapperExtensionsInterface
         $CI =& get_instance();
         
         do {
-            $this->password_token = sha1(time() . '-' . $CI->config->item('encryption_key') . '-' . $_SERVER['SCRIPT_FILENAME'] . '-' . rand(1000000, 9999999));
+            $this->password_token = sha1(time() . '-' . $CI->config->item('encryption_key') . '-'
+                . $_SERVER['SCRIPT_FILENAME'] . '-' . rand(1000000, 9999999));
         } while (!$this->form_validation->is_unique($this->password_token, 'students.password_token'));
         
         if (is_numeric($this->id) && (int)$this->id > 0) {

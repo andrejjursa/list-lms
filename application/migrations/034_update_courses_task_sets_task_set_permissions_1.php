@@ -1,57 +1,60 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class Migration_update_courses_task_sets_task_set_permissions_1 extends CI_Migration {
-
-    public function up() {
-        $this->dbforge->add_column('courses', array(
-            'hide_in_lists' => array(
-                'type' => 'int',
-                'unsigned' => TRUE,
+class Migration_update_courses_task_sets_task_set_permissions_1 extends CI_Migration
+{
+    
+    public function up()
+    {
+        $this->dbforge->add_column('courses', [
+            'hide_in_lists' => [
+                'type'       => 'int',
+                'unsigned'   => true,
                 'constraint' => 1,
-                'default' => 0,
-            ),
-        ));
-
-        $this->dbforge->add_column('task_sets', array(
-            'deadline_notification_emails' => array(
+                'default'    => 0,
+            ],
+        ]);
+        
+        $this->dbforge->add_column('task_sets', [
+            'deadline_notification_emails'         => [
                 'type' => 'text',
                 'null' => true,
-            ),
-            'deadline_notified' => array(
-                'type' => 'int',
-                'unsigned' => TRUE,
+            ],
+            'deadline_notified'                    => [
+                'type'       => 'int',
+                'unsigned'   => true,
                 'constraint' => 1,
-                'default' => 0,
-            ),
-            'deadline_notification_emails_handler' => array(
-                'type' => 'int',
-                'unsigned' => TRUE,
+                'default'    => 0,
+            ],
+            'deadline_notification_emails_handler' => [
+                'type'       => 'int',
+                'unsigned'   => true,
                 'constraint' => 2,
-                'default' => 0,
-            ),
-        ));
-
-        $this->dbforge->add_column('task_set_permissions', array(
-            'deadline_notification_emails' => array(
+                'default'    => 0,
+            ],
+        ]);
+        
+        $this->dbforge->add_column('task_set_permissions', [
+            'deadline_notification_emails'         => [
                 'type' => 'text',
                 'null' => true,
-            ),
-            'deadline_notified' => array(
-                'type' => 'int',
-                'unsigned' => TRUE,
+            ],
+            'deadline_notified'                    => [
+                'type'       => 'int',
+                'unsigned'   => true,
                 'constraint' => 1,
-                'default' => 0,
-            ),
-            'deadline_notification_emails_handler' => array(
-                'type' => 'int',
-                'unsigned' => TRUE,
+                'default'    => 0,
+            ],
+            'deadline_notification_emails_handler' => [
+                'type'       => 'int',
+                'unsigned'   => true,
                 'constraint' => 2,
-                'default' => 0,
-            ),
-        ));
+                'default'    => 0,
+            ],
+        ]);
     }
-
-    public function down() {
+    
+    public function down()
+    {
         $this->dbforge->drop_column('courses', 'hide_in_lists');
         $this->dbforge->drop_column('task_sets', 'deadline_notification_emails');
         $this->dbforge->drop_column('task_sets', 'deadline_notified');
@@ -60,5 +63,5 @@ class Migration_update_courses_task_sets_task_set_permissions_1 extends CI_Migra
         $this->dbforge->drop_column('task_set_permissions', 'deadline_notified');
         $this->dbforge->drop_column('task_set_permissions', 'deadline_notification_emails_handler');
     }
-
+    
 }

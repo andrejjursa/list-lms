@@ -77,21 +77,27 @@ class Task extends DataMapper implements DataMapperExtensionsInterface
                     $category = false;
                     $task_set = false;
                     foreach ($cats as $cat) {
-                        if (substr($cat, 0, 9) === 'category:') {
+                        if (strpos($cat, 'category:') === 0) {
                             if (!$category) {
-                                $select_subquery .= ' LEFT OUTER JOIN `task_category_rel` `categories_' . $clause . '` ON `cat_tasks`.`id` = `categories_' . $clause . '`.`task_id` ';
+                                $select_subquery .= ' LEFT OUTER JOIN `task_category_rel` `categories_' . $clause
+                                    . '` ON `cat_tasks`.`id` = `categories_' . $clause . '`.`task_id` ';
                                 $category = true;
                             }
                             $category = new Category();
                             $id_list = $category->get_id_list((int)substr($cat, 9));
-                            $or_where_part .= (!empty($or_where_part) ? ' OR ' : '') . '`categories_' . $clause . '`.`category_id` IN (' . implode(', ', $id_list) . ') ';
-                        } else if (substr($cat, 0, 7) === 'course:') {
+                            $or_where_part .= (!empty($or_where_part) ? ' OR ' : '') . '`categories_' . $clause
+                                . '`.`category_id` IN (' . implode(', ', $id_list) . ') ';
+                        } else if (strpos($cat, 'course:') === 0) {
                             if (!$task_set) {
-                                $select_subquery .= ' LEFT OUTER JOIN `task_task_set_rel` `task_rel_' . $clause . '` ON `cat_tasks`.`id` = `task_rel_' . $clause . '`.`task_id` ';
-                                $select_subquery .= ' LEFT OUTER JOIN `task_sets` `task_set_' . $clause . '` ON `task_rel_' . $clause . '`.`task_set_id` = `task_set_' . $clause . '`.`id` ';
+                                $select_subquery .= ' LEFT OUTER JOIN `task_task_set_rel` `task_rel_' . $clause
+                                    . '` ON `cat_tasks`.`id` = `task_rel_' . $clause . '`.`task_id` ';
+                                $select_subquery .= ' LEFT OUTER JOIN `task_sets` `task_set_' . $clause
+                                    . '` ON `task_rel_' . $clause . '`.`task_set_id` = `task_set_' . $clause
+                                    . '`.`id` ';
                                 $task_set = true;
                             }
-                            $or_where_part .= (!empty($or_where_part) ? ' OR ' : '') . '`task_set_' . $clause . '`.`course_id` = ' . (int)substr($cat, 7);
+                            $or_where_part .= (!empty($or_where_part) ? ' OR ' : '') . '`task_set_' . $clause
+                                . '`.`course_id` = ' . (int)substr($cat, 7);
                         }
                     }
                     $where_part .= $or_where_part . ' ) ';
@@ -113,7 +119,7 @@ class Task extends DataMapper implements DataMapperExtensionsInterface
     public function get_task_files(): array
     {
         if (!is_null($this->id)) {
-            $path = 'private/uploads/task_files/task_' . intval($this->id) . '/';
+            $path = 'private/uploads/task_files/task_' . (int)$this->id . '/';
             return $this->get_files($path);
         }
         
@@ -128,7 +134,7 @@ class Task extends DataMapper implements DataMapperExtensionsInterface
     public function get_task_hidden_files(): array
     {
         if (!is_null($this->id)) {
-            $path = 'private/uploads/task_files/task_' . intval($this->id) . '/hidden/';
+            $path = 'private/uploads/task_files/task_' . (int)$this->id . '/hidden/';
             return $this->get_files($path);
         }
         

@@ -37,7 +37,9 @@ class Restriction extends DataMapper implements DataMapperExtensionsInterface
                 $ip_addresses = explode(',', $restriction_record->ip_addresses);
                 if (count($ip_addresses)) {
                     foreach ($ip_addresses as $matching_pattern) {
-                        if (trim($matching_pattern) !== '' && match_ip_address_agains(trim($matching_pattern), $ip_to_check)) {
+                        if (trim($matching_pattern) !== ''
+                            && match_ip_address_agains(trim($matching_pattern), $ip_to_check)
+                        ) {
                             return true;
                         }
                     }

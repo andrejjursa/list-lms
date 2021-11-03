@@ -17,7 +17,7 @@ class Changelog
     /**
      * @throws Exception
      */
-    public function read($filename)
+    public function read($filename): void
     {
         if (file_exists($filename)) {
             $this->file_content = file_get_contents($filename);
@@ -32,7 +32,7 @@ class Changelog
     /**
      * @throws Exception
      */
-    public function parse()
+    public function parse(): void
     {
         if (is_null($this->file_content)) {
             throw new Exception('Changelog file content not readed.');
@@ -70,7 +70,7 @@ class Changelog
                 } else if (!is_null($current_version)) {
                     $version_lines[] = $line;
                 } else if (is_null($current_version) && (mb_substr($line, 0, 1) !== '#'
-                    && trim($line) !== '')
+                        && trim($line) !== '')
                 ) {
                     throw new exception('Unexpected input on line ' . $line_number . ': ' . $line);
                 }
@@ -87,14 +87,14 @@ class Changelog
         if (is_null($version)) {
             return $this->parsed_content;
         }
-    
+        
         return $this->parsed_content[$version] ?? null;
     }
     
     /**
      * @throws exception
      */
-    protected function parse_version($lines, $line_number)
+    protected function parse_version($lines, $line_number): array
     {
         $output = [];
         
@@ -147,15 +147,13 @@ class Changelog
                         if (is_null($ml_command_lang_overlay) || $ml_command_lang_overlay === '') {
                             $last_command = new ChangelogNode($ml_command_type, $ml_command_text);
                             $output[] = $last_command;
+                        } else if (!is_null($last_command) && $last_command->getType() === $ml_command_type) {
+                            $last_command->addLangOverlay($ml_command_lang_overlay, $ml_command_text);
                         } else {
-                            if (!is_null($last_command) && $last_command->getType() === $ml_command_type) {
-                                $last_command->addLangOverlay($ml_command_lang_overlay, $ml_command_text);
-                            } else {
-                                throw new exception(
-                                    'Unexpected language overlay definition for command ' . $ml_command_type
-                                    . ' on line ' . $ml_command_line_number . '.'
-                                );
-                            }
+                            throw new exception(
+                                'Unexpected language overlay definition for command ' . $ml_command_type
+                                . ' on line ' . $ml_command_line_number . '.'
+                            );
                         }
                     } else {
                         throw new Exception(
@@ -198,7 +196,7 @@ class ChangelogNode
     protected $texts = [];
     protected $type = self::TYPE_NEW;
     
-    function __construct($type = self::TYPE_NEW, $text = '')
+    public function __construct($type = self::TYPE_NEW, $text = '')
     {
         $this->type = $type;
         $this->texts = [
@@ -206,24 +204,24 @@ class ChangelogNode
         ];
     }
     
-    function addLangOverlay($lang, $text = '')
+    public function addLangOverlay($lang, $text = ''): void
     {
         if (trim($lang) !== '' && trim($text) !== '') {
             $this->texts['langs'][trim($lang)] = trim($text);
         }
     }
     
-    function getType()
+    public function getType()
     {
         return $this->type;
     }
     
-    function getText($lang = null)
+    public function getText($lang = null)
     {
         if (is_null($lang)) {
             return $this->texts['default'];
         }
-    
+        
         return $this->texts['langs'][$lang] ?? $this->texts['default'];
     }
 }

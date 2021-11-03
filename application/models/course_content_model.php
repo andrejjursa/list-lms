@@ -5,25 +5,25 @@ use Application\Interfaces\DataMapperExtensionsInterface;
 /**
  * Course content model.
  *
- * @property int      $id
- * @property string   $updated date time format YYYY-MM-DD HH:MM:SS
- * @property string   $created date time format YYYY-MM-DD HH:MM:SS
- * @property string   $title
- * @property string   $text
- * @property int|null $course_id entity id of model {@see Course}
- * @property bool $published
- * @property string|null $published_from date time format YYYY-MM-DD HH:MM:SS
- * @property string|null $published_to date time format YYYY-MM-DD HH:MM:SS
- * @property bool $public
- * @property int $sorting
- * @property int|null $course_content_group_id entity id of model {@see Course_content_group}
- * @property string $files_visibility
- * @property int|null $creator_id entity id of model {@see Teacher}
- * @property int|null $updator_id entity id of model {@see Teacher}
- * @property Course $course
+ * @property int                  $id
+ * @property string               $updated                 date time format YYYY-MM-DD HH:MM:SS
+ * @property string               $created                 date time format YYYY-MM-DD HH:MM:SS
+ * @property string               $title
+ * @property string               $text
+ * @property int|null             $course_id               entity id of model {@see Course}
+ * @property bool                 $published
+ * @property string|null          $published_from          date time format YYYY-MM-DD HH:MM:SS
+ * @property string|null          $published_to            date time format YYYY-MM-DD HH:MM:SS
+ * @property bool                 $public
+ * @property int                  $sorting
+ * @property int|null             $course_content_group_id entity id of model {@see Course_content_group}
+ * @property string               $files_visibility
+ * @property int|null             $creator_id              entity id of model {@see Teacher}
+ * @property int|null             $updator_id              entity id of model {@see Teacher}
+ * @property Course               $course
  * @property Course_content_group $course_content_group
- * @property Teacher $creator
- * @property Teacher $updator
+ * @property Teacher              $creator
+ * @property Teacher              $updator
  *
  * @method DataMapper where_related_course(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_course_content_group(mixed $related, string $field = null, string $value = null)
@@ -69,10 +69,14 @@ class Course_content_model extends DataMapper implements DataMapperExtensionsInt
         if (!is_null($content_group_id)) {
             if (is_int($content_group_id)) {
                 $group_id = (int)$content_group_id;
-            } else if ($content_group_id instanceof Course_content_group && $content_group_id->exists() && !is_null($content_group_id->id)) {
+            } else if ($content_group_id instanceof Course_content_group && $content_group_id->exists()
+                && !is_null($content_group_id->id)
+            ) {
                 $group_id = (int)$content_group_id->id;
             } else {
-                throw new InvalidArgumentException('Argument $content_group_id must be NULL, integer or preloaded Course_content_group.');
+                throw new InvalidArgumentException(
+                    'Argument $content_group_id must be NULL, integer or preloaded Course_content_group.'
+                );
             }
         }
         
@@ -171,7 +175,8 @@ class Course_content_model extends DataMapper implements DataMapperExtensionsInt
             $language = '';
         }
         
-        $path = realpath(Course_content::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR . $this->stored->id . ($language !== '' ? DIRECTORY_SEPARATOR . $language : '') . DIRECTORY_SEPARATOR;
+        $path = realpath(Course_content::COURSE_CONTENT_MASTER_FILE_STORAGE) . DIRECTORY_SEPARATOR
+            . $this->stored->id . ($language !== '' ? DIRECTORY_SEPARATOR . $language : '') . DIRECTORY_SEPARATOR;
         
         if (!file_exists($path)) {
             return [];

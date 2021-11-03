@@ -6,37 +6,43 @@
  * Time: 16:02
  */
 
-class cli_progress_bar {
-
+class cli_progress_bar
+{
+    
     protected $state = 0;
-    protected $states = array('|', '/', '-', '\\');
+    protected $states = ['|', '/', '-', '\\'];
     protected $bar_length = 80;
     protected $done = 0;
     protected $from = 100;
-
-    public function init($maximum, $bar_size = 50) {
+    
+    public function init($maximum, $bar_size = 50): void
+    {
         $this->from = $maximum;
         $this->bar_length = $bar_size;
         $this->state = 0;
         $this->done = 0;
     }
-
-    public function tick() {
+    
+    public function tick(): void
+    {
         $this->state = ($this->state + 1) % count($this->states);
         $this->print_bar();
     }
-
-    public function finish() {
+    
+    public function finish(): void
+    {
         $this->print_bar();
         echo "\n";
     }
-
-    public function increment($by = 1) {
+    
+    public function increment($by = 1): void
+    {
         $this->done += $by;
         $this->print_bar();
     }
-
-    protected function  print_bar() {
+    
+    protected function print_bar(): void
+    {
         $to_print = '';
         $to_print .= $this->states[$this->state] . ' ';
         $total_done = $this->done >= 0 ? ($this->done <= $this->from ? $this->done : $this->from) : 0;
@@ -52,16 +58,19 @@ class cli_progress_bar {
         $this->back_to_first_column();
         echo $to_print;
     }
-
-    protected function back_to_first_column() {
+    
+    protected function back_to_first_column(): void
+    {
         echo chr(27) . '[0G'; // Set cursor to first column
     }
-
-    protected function up_n_lines($n) {
+    
+    protected function up_n_lines($n): void
+    {
         echo chr(27) . '[' . $n . 'A';
     }
-
-    public function print_text($text, $tick = FALSE) {
+    
+    public function print_text($text, $tick = false): void
+    {
         $this->back_to_first_column();
         echo str_repeat(' ', $this->bar_length + 11);
         $this->back_to_first_column();
@@ -72,5 +81,5 @@ class cli_progress_bar {
             $this->print_bar();
         }
     }
-
+    
 }

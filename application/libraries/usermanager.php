@@ -42,7 +42,7 @@ class Usermanager
      *
      * @return boolean TRUE, if student account is authenticated, FALSE otherwise.
      */
-    public function is_student_session_valid()
+    public function is_student_session_valid(): ?bool
     {
         if (is_null($this->student_login_verified)) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT);
@@ -66,7 +66,7 @@ class Usermanager
      *
      * @return boolean TRUE, if teacher account is authenticated, FALSE otherwise.
      */
-    public function is_teacher_session_valid()
+    public function is_teacher_session_valid(): ?bool
     {
         if (is_null($this->teacher_login_verified)) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER);
@@ -93,7 +93,7 @@ class Usermanager
      *
      * @return boolean TRUE, if student authentification is successful, FALSE otherwise (i.e. bad e-mail of password).
      */
-    public function authenticate_student_login($email, $password)
+    public function authenticate_student_login($email, $password): bool
     {
         $student = new Student();
         $student->where('email', $email);
@@ -101,9 +101,7 @@ class Usermanager
         $student->get();
         if ($student->exists()) {
             $userdata = $student->to_array();
-            unset($userdata['password']);
-            unset($userdata['created']);
-            unset($userdata['updated']);
+            unset($userdata['password'], $userdata['created'], $userdata['updated']);
             $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_STUDENT, $userdata);
             $this->validate_student_login_verification(true);
             $log = new Log();
@@ -114,7 +112,7 @@ class Usermanager
             );
             return true;
         }
-    
+        
         $this->validate_student_login_verification(false);
         $this->add_login_failed_record($email, self::ACCOUNT_TYPE_STUDENT);
         return false;
@@ -127,13 +125,11 @@ class Usermanager
      *
      * @return boolean TRUE, if student authentification is successful, FALSE otherwise (i.e. $student is not loaded).
      */
-    public function force_student_login(Student $student)
+    public function force_student_login(Student $student): bool
     {
         if ($student->exists()) {
             $userdata = $student->to_array();
-            unset($userdata['password']);
-            unset($userdata['created']);
-            unset($userdata['updated']);
+            unset($userdata['password'], $userdata['created'], $userdata['updated']);
             $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_STUDENT, $userdata);
             $this->validate_student_login_verification(true);
             $log = new Log();
@@ -144,7 +140,7 @@ class Usermanager
             );
             return true;
         }
-    
+        
         return false;
     }
     
@@ -156,7 +152,7 @@ class Usermanager
      *
      * @return boolean TRUE, if teacher authentification is successful, FALSE otherwise (i.e. bad e-mail of password).
      */
-    public function authenticate_teacher_login($email, $password)
+    public function authenticate_teacher_login($email, $password): bool
     {
         $teacher = new Teacher();
         $teacher->where('email', $email);
@@ -164,14 +160,12 @@ class Usermanager
         $teacher->get();
         if ($teacher->exists()) {
             $userdata = $teacher->to_array();
-            unset($userdata['password']);
-            unset($userdata['created']);
-            unset($userdata['updated']);
+            unset($userdata['password'], $userdata['created'], $userdata['updated']);
             $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_TEACHER, $userdata);
             $this->validate_teacher_login_verification(true);
             return true;
         }
-    
+        
         $this->validate_teacher_login_verification(false);
         $this->add_login_failed_record($email, self::ACCOUNT_TYPE_TEACHER);
         return false;
@@ -185,7 +179,7 @@ class Usermanager
      *
      * @return boolean TRUE, if number of login attempts exceed allowed, FALSE otherwise.
      */
-    public function is_login_attempts_exceeded($email, $acc_type = self::ACCOUNT_TYPE_TEACHER)
+    public function is_login_attempts_exceeded($email, $acc_type = self::ACCOUNT_TYPE_TEACHER): bool
     {
         $account_type = $acc_type == self::ACCOUNT_TYPE_TEACHER ? 'teacher' : 'student';
         $this->CI->config->load('datamapper');
@@ -215,7 +209,7 @@ class Usermanager
      * @param string $email    e-mail address of account.
      * @param string $acc_type type of account (ACCOUNT_TYPE_* constant).
      */
-    public function add_login_failed_record($email, $acc_type = self::ACCOUNT_TYPE_TEACHER)
+    public function add_login_failed_record($email, $acc_type = self::ACCOUNT_TYPE_TEACHER): void
     {
         $account_type = $acc_type == self::ACCOUNT_TYPE_TEACHER ? 'teacher' : 'student';
         $this->CI->config->load('datamapper');
@@ -233,7 +227,7 @@ class Usermanager
     /**
      * Reloads student data from database to session.
      */
-    public function refresh_student_userdata()
+    public function refresh_student_userdata(): void
     {
         if ($this->is_student_session_valid()) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT);
@@ -241,9 +235,7 @@ class Usermanager
             $student->get_by_id(@$userdata['id']);
             if ($student->exists()) {
                 $userdata = $student->to_array();
-                unset($userdata['password']);
-                unset($userdata['created']);
-                unset($userdata['updated']);
+                unset($userdata['password'], $userdata['created'], $userdata['updated']);
                 $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_STUDENT, $userdata);
             }
         }
@@ -252,7 +244,7 @@ class Usermanager
     /**
      * Reloads teacher data from database to session.
      */
-    public function refresh_teacher_userdata()
+    public function refresh_teacher_userdata(): void
     {
         if ($this->is_teacher_session_valid()) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER);
@@ -260,9 +252,7 @@ class Usermanager
             $teacher->get_by_id(@$userdata['id']);
             if ($teacher->exists()) {
                 $userdata = $teacher->to_array();
-                unset($userdata['password']);
-                unset($userdata['created']);
-                unset($userdata['updated']);
+                unset($userdata['password'], $userdata['created'], $userdata['updated']);
                 $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_TEACHER, $userdata);
             }
         }
@@ -275,7 +265,7 @@ class Usermanager
      *
      * @return boolean TRUE, if language is set and session stored, FALSE otherwise.
      */
-    public function set_teacher_language($language)
+    public function set_teacher_language($language): bool
     {
         if ($this->is_teacher_session_valid()) {
             $all_langs = $this->CI->lang->get_list_of_languages();
@@ -300,7 +290,7 @@ class Usermanager
      * @param boolean $send_current_url if this is set to TRUE (default), current url will be encoded and sent to login
      *                                  page, so user will be redirected back to it after successful login.
      */
-    public function student_login_protected_redirect($send_current_url = true)
+    public function student_login_protected_redirect($send_current_url = true): void
     {
         if (!$this->is_student_session_valid()) {
             $current_url = encode_for_url($this->clear_current_url());
@@ -320,7 +310,7 @@ class Usermanager
      * @param boolean $send_current_url if this is set to TRUE (default), current url will be encoded and sent to login
      *                                  page, so user will be redirected back to it after successful login.
      */
-    public function teacher_login_protected_redirect($send_current_url = true)
+    public function teacher_login_protected_redirect($send_current_url = true): void
     {
         if (!$this->is_teacher_session_valid()) {
             $current_url = encode_for_url($this->clear_current_url());
@@ -339,7 +329,7 @@ class Usermanager
      *
      * @return string language code.
      */
-    public function get_student_language()
+    public function get_student_language(): string
     {
         if ($this->is_student_session_valid()) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT);
@@ -353,7 +343,7 @@ class Usermanager
      *
      * @return string language code.
      */
-    public function get_teacher_language()
+    public function get_teacher_language(): string
     {
         if ($this->is_teacher_session_valid()) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER);
@@ -367,7 +357,7 @@ class Usermanager
      *
      * @return int student id.
      */
-    public function get_student_id()
+    public function get_student_id(): int
     {
         if ($this->is_student_session_valid()) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT);
@@ -381,7 +371,7 @@ class Usermanager
      *
      * @return int teacher id.
      */
-    public function get_teacher_id()
+    public function get_teacher_id(): int
     {
         if ($this->is_teacher_session_valid()) {
             $userdata = $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER);
@@ -393,7 +383,7 @@ class Usermanager
     /**
      * This function will remove student session data and log him off.
      */
-    public function do_student_logout()
+    public function do_student_logout(): void
     {
         $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_STUDENT, []);
         $this->validate_student_login_verification(false);
@@ -402,7 +392,7 @@ class Usermanager
     /**
      * This function will remove teacher session data and log him off.
      */
-    public function do_teacher_logout()
+    public function do_teacher_logout(): void
     {
         $this->CI->session->set_userdata(SESSION_AUTH_LOGIN_TEACHER, []);
         $this->validate_teacher_login_verification(false);
@@ -412,13 +402,16 @@ class Usermanager
      * This function will send data from student session to smarty template variable called 'list_student_account' and
      * create variable 'list_student_account_model' with student model.
      */
-    public function set_student_data_to_smarty()
+    public function set_student_data_to_smarty(): void
     {
         $this->CI->load->library('parser');
         $student = new Student();
         if ($this->is_student_session_valid()) {
             $student->get_by_id($this->get_student_id());
-            $this->CI->parser->assign('list_student_account', $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT));
+            $this->CI->parser->assign(
+                'list_student_account',
+                $this->CI->session->userdata(SESSION_AUTH_LOGIN_STUDENT)
+            );
         } else {
             $this->CI->parser->assign('list_student_account', []);
         }
@@ -428,11 +421,14 @@ class Usermanager
     /**
      * This function will send data from teacher session to smarty template variable called 'list_teacher_account'.
      */
-    public function set_teacher_data_to_smarty()
+    public function set_teacher_data_to_smarty(): void
     {
         $this->CI->load->library('parser');
         if ($this->is_teacher_session_valid()) {
-            $this->CI->parser->assign('list_teacher_account', $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER));
+            $this->CI->parser->assign(
+                'list_teacher_account',
+                $this->CI->session->userdata(SESSION_AUTH_LOGIN_TEACHER)
+            );
         } else {
             $this->CI->parser->assign('list_teacher_account', []);
         }
@@ -444,7 +440,7 @@ class Usermanager
      *
      * @return string current url.
      */
-    public function clear_current_url()
+    public function clear_current_url(): string
     {
         $current_url = current_url();
         if ($this->CI->config->item('rewrite_engine_enabled') && is_mod_rewrite_enabled()) {
@@ -467,13 +463,13 @@ class Usermanager
      *
      * @return string cache id.
      */
-    public function get_student_cache_id()
+    public function get_student_cache_id(): string
     {
         $args = func_get_args();
         $cache_id = 'student_' . $this->get_student_id() . '|lang_' . $this->get_student_language();
         if (count($args)) {
             foreach ($args as $arg) {
-                if (strlen($arg)) {
+                if ($arg != '') {
                     $cache_id .= '|' . $arg;
                 }
             }
@@ -486,7 +482,7 @@ class Usermanager
      *
      * @return string cache id.
      */
-    public function get_student_simple_cache_id($student_id = null)
+    public function get_student_simple_cache_id($student_id = null): string
     {
         return 'student_' . (is_null($student_id) ? $this->get_student_id() : $student_id);
     }
@@ -497,7 +493,7 @@ class Usermanager
      *
      * @param boolean $status status can be TRUE, FALSE or NULL.
      */
-    protected function validate_student_login_verification($status = null)
+    protected function validate_student_login_verification($status = null): void
     {
         if ($status === null || $status === true || $status === false) {
             $this->student_login_verified = $status;
@@ -509,7 +505,7 @@ class Usermanager
      *
      * @param boolean $status status can be TRUE, FALSE or NULL.
      */
-    protected function validate_teacher_login_verification($status = null)
+    protected function validate_teacher_login_verification($status = null): void
     {
         if ($status === null || $status === true || $status === false) {
             $this->teacher_login_verified = $status;

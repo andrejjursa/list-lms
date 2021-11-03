@@ -1,37 +1,39 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class Migration_update_courses_rooms_create_rooms_teachers_rel_1 extends CI_Migration {
+class Migration_update_courses_rooms_create_rooms_teachers_rel_1 extends CI_Migration
+{
     
-    public function up() {
-        $this->dbforge->add_column('courses', array(
-            'allow_subscription_to' => array(
+    public function up()
+    {
+        $this->dbforge->add_column('courses', [
+            'allow_subscription_to' => [
                 'type' => 'timestamp',
-                'null' => TRUE,
-            ),
-        ));
+                'null' => true,
+            ],
+        ]);
         
-        $this->dbforge->add_column('rooms', array(
-            'teachers_plain' => array(
+        $this->dbforge->add_column('rooms', [
+            'teachers_plain' => [
                 'type' => 'text',
-                'null' => TRUE,
-            ),
-        ));
+                'null' => true,
+            ],
+        ]);
         
         $this->dbforge->add_field(
-            array(
-                'room_id' => array(
-                    'type' => 'INT',
+            [
+                'room_id'    => [
+                    'type'       => 'INT',
                     'constraint' => '11',
-                    'unsigned' => TRUE,
-                    'null' => TRUE,
-                ),
-                'teacher_id' => array(
-                    'type' => 'INT',
+                    'unsigned'   => true,
+                    'null'       => true,
+                ],
+                'teacher_id' => [
+                    'type'       => 'INT',
                     'constraint' => '11',
-                    'unsigned' => TRUE,
-                    'null' => TRUE,
-                ),
-            )
+                    'unsigned'   => true,
+                    'null'       => true,
+                ],
+            ]
         );
         
         $this->dbforge->add_key('room_id');
@@ -42,7 +44,8 @@ class Migration_update_courses_rooms_create_rooms_teachers_rel_1 extends CI_Migr
         change_mysql_table_to_InnoDB('rooms_teachers_rel');
     }
     
-    public function down() {
+    public function down()
+    {
         $this->dbforge->drop_column('courses', 'allow_subscription_to');
         $this->dbforge->drop_column('rooms', 'teachers_plain');
         $this->dbforge->drop_table('rooms_teachers_rel');

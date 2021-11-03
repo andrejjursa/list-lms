@@ -29,7 +29,7 @@ class Plupload
      *
      * @param string $targetDir target directory.
      */
-    public function do_upload($targetDir)
+    public function do_upload($targetDir): void
     {
         $this->CI->output->set_header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         $this->CI->output->set_header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
@@ -72,7 +72,7 @@ class Plupload
         if (strpos($contentType, "multipart") !== false) {
             if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
                 // Open temp file
-                $out = @fopen("{$filePath}.upload_part", $chunk == 0 ? "wb" : "ab");
+                $out = @fopen("{$filePath}.upload_part", $chunk === 0 ? "wb" : "ab");
                 if ($out) {
                     // Read binary input stream and append it to temp file
                     $in = @fopen($_FILES['file']['tmp_name'], "rb");
@@ -113,7 +113,7 @@ class Plupload
             }
         } else {
             // Open temp file
-            $out = @fopen("{$filePath}.upload_part", $chunk == 0 ? "wb" : "ab");
+            $out = @fopen("{$filePath}.upload_part", $chunk === 0 ? "wb" : "ab");
             if ($out) {
                 // Read binary input stream and append it to temp file
                 $in = @fopen("php://input", "rb");
@@ -144,7 +144,7 @@ class Plupload
             }
         }
         
-        if (!$chunks || $chunk == $chunks - 1) {
+        if (!$chunks || $chunk === $chunks - 1) {
             $oldFilePath = $filePath;
             if (file_exists($filePath)) {
                 $filePath = $targetDir . DIRECTORY_SEPARATOR . $this->get_new_filename($fileName, $targetDir);
@@ -162,7 +162,7 @@ class Plupload
      *
      * @return boolean information about successfullnes of operation.
      */
-    public function clear_temporary_files($targetDir)
+    public function clear_temporary_files($targetDir): bool
     {
         return $this->remove_temporary_files($targetDir);
     }
@@ -175,7 +175,7 @@ class Plupload
      *
      * @return string new name.
      */
-    private function get_new_filename($fileName, $targetDir)
+    private function get_new_filename($fileName, $targetDir): string
     {
         $ext = strrpos($fileName, '.');
         $fileName_a = substr($fileName, 0, $ext);
@@ -197,7 +197,7 @@ class Plupload
      * @return boolean TRUE, when directory is scaned and files are removed, FALSE when target directory is not
      *                 directory or can't be opened.
      */
-    private function remove_temporary_files($targetDir, $filePath = '')
+    private function remove_temporary_files($targetDir, $filePath = ''): bool
     {
         $maxFileAge = 5 * 3600; // Temp file age in seconds
         
@@ -215,7 +215,7 @@ class Plupload
             closedir($dir);
             return true;
         }
-    
+        
         return false;
     }
     

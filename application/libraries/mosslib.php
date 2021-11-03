@@ -70,7 +70,7 @@ class mosslib
      *
      * @throws Exception
      */
-    public function setLanguage($lang)
+    public function setLanguage($lang): bool
     {
         if (in_array($lang, $this->allowed_languages)) {
             $this->options['l'] = $lang;
@@ -85,7 +85,7 @@ class mosslib
      *
      * @return array
      */
-    public function getAllowedLanguages()
+    public function getAllowedLanguages(): array
     {
         $supported_languages = $this->allowed_languages;
         sort($supported_languages);
@@ -100,7 +100,7 @@ class mosslib
      * @throws Exception
      * @see -d in MOSS-Documentation
      */
-    public function setDirectoryMode($enabled)
+    public function setDirectoryMode($enabled): bool
     {
         if (is_bool($enabled)) {
             $this->options['d'] = (int)$enabled;
@@ -118,7 +118,7 @@ class mosslib
      * @throws Exception
      * @see -b in MOSS-Documentation
      */
-    public function addBaseFile($file)
+    public function addBaseFile($file): bool
     {
         if (file_exists($file) && is_readable($file)) {
             $this->basefiles[] = $file;
@@ -136,7 +136,7 @@ class mosslib
      * @throws Exception
      * @see -m in MOSS-Documentation
      */
-    public function setIngoreLimit($limit)
+    public function setIngoreLimit($limit): bool
     {
         if (is_int($limit) && $limit > 1) {
             $this->options['m'] = (int)$limit;
@@ -153,7 +153,7 @@ class mosslib
      *
      * @see -s in MOSS-Documentation
      */
-    public function setCommentString($comment)
+    public function setCommentString($comment): bool
     {
         $this->options['c'] = $comment;
         return true;
@@ -167,7 +167,7 @@ class mosslib
      * @throws Exception
      * @see -n in MOSS-Documentation
      */
-    public function setResultLimit($limit)
+    public function setResultLimit($limit): bool
     {
         if (is_int($limit) && $limit > 1) {
             $this->options['n'] = (int)$limit;
@@ -185,7 +185,7 @@ class mosslib
      * @throws Exception
      * @see -x in MOSS-Documentation
      */
-    public function setExperimentalServer($enabled)
+    public function setExperimentalServer($enabled): bool
     {
         if (is_bool($enabled)) {
             $this->options['x'] = (int)$enabled;
@@ -202,7 +202,7 @@ class mosslib
      *
      * @throws Exception
      */
-    public function addFile($file)
+    public function addFile($file): bool
     {
         if (file_exists($file) && is_readable($file)) {
             $this->files[] = $file;
@@ -217,9 +217,10 @@ class mosslib
      *
      * @param string $path
      *
+     * @throws Exception
      * @example addByWildcard("/files/*.c")
      */
-    public function addByWildcard($path)
+    public function addByWildcard($path): void
     {
         foreach (glob($path) as $file) {
             $this->addFile($file);
@@ -232,7 +233,7 @@ class mosslib
      * @return string
      * @throws Exception
      */
-    public function send()
+    public function send(): string
     {
         $socket = fsockopen($this->server, $this->port, $errno, $errstr);
         if (!$socket) {
@@ -283,7 +284,7 @@ class mosslib
      *
      * @return void
      */
-    private function uploadFile($handle, $file, $id)
+    private function uploadFile($handle, $file, $id): void
     {
         $size = filesize($file);
         $file_name_fixed = str_replace(" ", "_", $file);

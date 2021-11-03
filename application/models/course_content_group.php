@@ -48,10 +48,20 @@ class Course_content_group extends DataMapper implements DataMapperExtensionsInt
             if ($valueText) {
                 $output[$group->course_id][] = [
                     'value' => $group->id,
-                    'text'  => $ci->lang->get_overlay_with_default('course_content_groups', $group->id, 'title', $group->title),
+                    'text'  => $ci->lang->get_overlay_with_default(
+                        'course_content_groups',
+                        $group->id,
+                        'title',
+                        $group->title
+                    ),
                 ];
             } else {
-                $output[$group->id] = $ci->lang->get_overlay_with_default('course_content_groups', $group->id, 'title', $group->title);
+                $output[$group->id] = $ci->lang->get_overlay_with_default(
+                    'course_content_groups',
+                    $group->id,
+                    'title',
+                    $group->title
+                );
             }
         }
         
@@ -73,7 +83,9 @@ class Course_content_group extends DataMapper implements DataMapperExtensionsInt
             return false;
         }
         
-        if (date('Y-m-d H:i:s', strtotime('-5 minutes')) <= date('Y-m-d H:i:s', strtotime($this->stored->created))) {
+        if (date('Y-m-d H:i:s', strtotime('-5 minutes'))
+            <= date('Y-m-d H:i:s', strtotime($this->stored->created))
+        ) {
             return true;
         }
         

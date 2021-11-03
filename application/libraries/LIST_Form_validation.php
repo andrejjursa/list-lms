@@ -14,9 +14,9 @@ class LIST_Form_validation extends CI_Form_validation
      *
      * @param string|array $str string to evaluate.
      *
-     * @return boolean validation result.
+     * @return bool validation result.
      */
-    public function required_no_html($str)
+    public function required_no_html($str): bool
     {
         if (!is_array($str)) {
             $striped = preg_replace(
@@ -24,7 +24,7 @@ class LIST_Form_validation extends CI_Form_validation
                 '',
                 str_replace('&nbsp;', ' ', html_entity_decode(strip_tags($str)))
             );
-            return (trim($striped) == '') ? false : true;
+            return !((trim($striped) === ''));
         }
         
         return $this->required($str);
@@ -37,9 +37,9 @@ class LIST_Form_validation extends CI_Form_validation
      * @param string $str   current value of form field.
      * @param string $field form field name, can be array.
      *
-     * @return boolean validation result.
+     * @return bool validation result.
      */
-    public function matches($str, $field)
+    public function matches($str, $field): bool
     {
         if (strpos($field, '[') !== false) {
             $fld = $this->get_post_array_value($field);
@@ -58,12 +58,12 @@ class LIST_Form_validation extends CI_Form_validation
     /**
      * Optional version of min_length().
      *
-     * @param string  $str    string to evauluate, it must be empty or it must have at least $length characters.
-     * @param integer $length minimum number of characters in string $str.
+     * @param string $str    string to evauluate, it must be empty or it must have at least $length characters.
+     * @param int    $length minimum number of characters in string $str.
      *
-     * @return boolean TRUE, if conditions are satisfied, FALSE otherwise.
+     * @return bool TRUE, if conditions are satisfied, FALSE otherwise.
      */
-    public function min_length_optional($str, $length)
+    public function min_length_optional($str, $length): bool
     {
         if (empty($str)) {
             return true;
@@ -75,12 +75,12 @@ class LIST_Form_validation extends CI_Form_validation
     /**
      * Optional version of max_length().
      *
-     * @param string  $str    string to evauluate, it must be empty or it must not have more than $length characters.
-     * @param integer $length maximum number of characters in string $str.
+     * @param string $str    string to evauluate, it must be empty or it must not have more than $length characters.
+     * @param int    $length maximum number of characters in string $str.
      *
-     * @return boolean TRUE, if conditions are satisfied, FALSE otherwise.
+     * @return bool TRUE, if conditions are satisfied, FALSE otherwise.
      */
-    public function max_length_optional($str, $length)
+    public function max_length_optional($str, $length): bool
     {
         if (empty($str)) {
             return true;
@@ -97,9 +97,9 @@ class LIST_Form_validation extends CI_Form_validation
      *                      (third part) and most often occurrence (fourth part). Start table with question mark for
      *                      test if value is set to int (if not, test is true).
      *
-     * @return boolean TRUE, if condition is satisfied, FALSE othewise.
+     * @return bool TRUE, if condition is satisfied, FALSE othewise.
      */
-    public function exists_in_table($str, $table)
+    public function exists_in_table($str, $table): bool
     {
         if (mb_strpos($table, '?') === 0) {
             if (!is_int($str) || (int)$str <= 0) {
@@ -130,14 +130,14 @@ class LIST_Form_validation extends CI_Form_validation
      *
      * @param string $str string to evaluate.
      *
-     * @return boolean TRUE, if string is floating point value, FALSE otherwise.
+     * @return bool TRUE, if string is floating point value, FALSE otherwise.
      */
-    public function floatpoint($str)
+    public function floatpoint($str): bool
     {
-        if ($str == '') {
+        if ($str === '') {
             return true;
         }
-        $pattern = '/^-{0,1}(0|[1-9]{1}[0-9]*)(\.[0-9]+){0,1}$/';
+        $pattern = '/^-?(0|\d\d*)(\.\d+)?$/';
         if (preg_match($pattern, $str)) {
             return true;
         }
@@ -150,9 +150,9 @@ class LIST_Form_validation extends CI_Form_validation
      * @param string $str string to evaluate.
      * @param double $min minimum value.
      *
-     * @return boolean TRUE on success.
+     * @return bool TRUE on success.
      */
-    public function greater_than_equal($str, $min)
+    public function greater_than_equal($str, $min): bool
     {
         if (!is_numeric($str)) {
             return false;
@@ -166,9 +166,9 @@ class LIST_Form_validation extends CI_Form_validation
      * @param string $str string to evaluate.
      * @param double $max maximum value.
      *
-     * @return boolean TRUE on success.
+     * @return bool TRUE on success.
      */
-    public function less_than_equal($str, $max)
+    public function less_than_equal($str, $max): bool
     {
         if (!is_numeric($str)) {
             return false;
@@ -182,9 +182,9 @@ class LIST_Form_validation extends CI_Form_validation
      * @param string $str   string to evaluate.
      * @param string $field POST field as written in html input element name attribute.
      *
-     * @return boolean TRUE on success.
+     * @return bool TRUE on success.
      */
-    public function less_than_field_or_equal($str, $field)
+    public function less_than_field_or_equal($str, $field): bool
     {
         if (!is_numeric($str)) {
             return false;
@@ -199,9 +199,9 @@ class LIST_Form_validation extends CI_Form_validation
      * @param string $str   string to evaluate.
      * @param string $field POST field as written in html input element name attribute.
      *
-     * @return boolean TRUE on success.
+     * @return bool TRUE on success.
      */
-    public function greater_than_field_or_equal($str, $field)
+    public function greater_than_field_or_equal($str, $field): bool
     {
         if (!is_numeric($str)) {
             return false;
@@ -215,11 +215,11 @@ class LIST_Form_validation extends CI_Form_validation
      *
      * @param string $str string to evaluate.
      *
-     * @return boolean TRUE if empty or contains only comma separated list of email addresses.
+     * @return bool TRUE if empty or contains only comma separated list of email addresses.
      */
-    public function zero_or_more_valid_emails($str)
+    public function zero_or_more_valid_emails($str): bool
     {
-        if (trim($str) == '') {
+        if (trim($str) === '') {
             return true;
         }
         
@@ -231,14 +231,14 @@ class LIST_Form_validation extends CI_Form_validation
      *
      * @param string $str string to evaluate.
      *
-     * @return boolean TRUE if condition is satisfied.
+     * @return bool TRUE if condition is satisfied.
      */
     public function datetime($str)
     {
-        if ($str == '') {
+        if ($str === '') {
             return true;
         }
-        $pattern = '/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/';
+        $pattern = '/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/';
         return (bool)preg_match($pattern, $str);
     }
     
@@ -255,16 +255,16 @@ class LIST_Form_validation extends CI_Form_validation
      *
      * @return array<string> array of keys to the $_POST superglobal.
      */
-    private function get_keys($field)
+    private function get_keys($field): array
     {
-        if (strpos($field, '[') !== false and preg_match_all('/\[(.*?)\]/', $field, $matches)) {
+        if (strpos($field, '[') !== false && preg_match_all('/\[(.*?)\]/', $field, $matches)) {
             // Note: Due to a bug in current() that affects some versions
             // of PHP we can not pass function call directly into it
             $x = explode('[', $field);
             $indexes[] = current($x);
             
             for ($i = 0, $iMax = count($matches['0']); $i < $iMax; $i++) {
-                if ($matches['1'][$i] != '') {
+                if ($matches['1'][$i] !== '') {
                     $indexes[] = $matches['1'][$i];
                 }
             }
@@ -279,12 +279,12 @@ class LIST_Form_validation extends CI_Form_validation
      *
      * @param $array_config configuration of array keys.
      *
-     * @return NULL if not found, mixed otherwise.
+     * @return mixed null if not found, mixed otherwise.
      */
     private function get_post_array_value($array_config)
     {
         $path = explode('[', str_replace(']', '', $array_config));
-        $fld = isset($_POST[$path[0]]) ? $_POST[$path[0]] : null;
+        $fld = $_POST[$path[0]] ?? null;
         if ($fld === null) {
             return null;
         }

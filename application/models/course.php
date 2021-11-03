@@ -134,7 +134,13 @@ class Course extends DataMapper implements DataMapperExtensionsInterface
                 $zip_archive->addFromString('readme.txt', $readme);
                 foreach ($task_sets as $task_set) {
                     $overlay_name = $this->lang->get_overlay('task_sets', $task_set->id, 'name');
-                    $task_set->add_files_to_zip_archive($zip_archive, $this, normalizeForFilesystem(trim($overlay_name) === '' ? $task_set->name : $overlay_name) . '_(' . $task_set->id . ')');
+                    $task_set->add_files_to_zip_archive(
+                        $zip_archive,
+                        $this,
+                        normalizeForFilesystem(
+                            trim($overlay_name) === '' ? $task_set->name : $overlay_name
+                        ) . '_(' . $task_set->id . ')'
+                    );
                 }
                 $zip_archive->close();
                 header('Content-Description: File Transfer');
@@ -172,7 +178,8 @@ class Course extends DataMapper implements DataMapperExtensionsInterface
         $path = 'private/extracted_solutions/';
         $i = 0;
         do {
-            $filename = 'course_solutions_' . date('U') . '_' . (string)($this->id ?? 'unknown') . ($i > 0 ? '_' . $i : '') . '.zip';
+            $filename = 'course_solutions_' . date('U') . '_' . (string)($this->id ?? 'unknown')
+                . ($i > 0 ? '_' . $i : '') . '.zip';
             $i++;
         } while (file_exists($path . $filename));
         return $path . $filename;

@@ -26,7 +26,7 @@ class LIST_Email extends CI_Email
      * Extended constructor, which will first load default e-mail configuration from config file and then merge it with
      * provided custom configuration. It will also load all default addresses to internal variable.
      *
-     * @param array<mixed> $config configuration options.
+     * @param array $config configuration options.
      */
     public function __construct($config = [])
     {
@@ -47,7 +47,7 @@ class LIST_Email extends CI_Email
      * @throws Exception when there is error in configuration (ie. missing/null array indexes or invalid e-mail
      *                   address).
      */
-    public function from_system()
+    public function from_system(): LIST_Email
     {
         $this->CI->load->library('form_validation');
         if (isset($this->default_addresses['system']['name'], $this->default_addresses['system']['email'])
@@ -67,7 +67,7 @@ class LIST_Email extends CI_Email
      * @throws Exception when there is error in configuration (ie. missing/null array indexes or invalid e-mail
      *                   address).
      */
-    public function reply_to_system()
+    public function reply_to_system(): LIST_Email
     {
         $this->CI->load->library('form_validation');
         if (isset($this->default_addresses['system']['name'], $this->default_addresses['system']['email'])
@@ -83,13 +83,13 @@ class LIST_Email extends CI_Email
     /**
      * Will construct and set html message by provided smarty template code or smarty template file.
      *
-     * @param string       $template can be template code or template file (file must be prepended by file: prefix, ie.
-     *                               'file:emails/new_user.tpl').
-     * @param array<mixed> $tpl_data template data.
+     * @param string $template can be template code or template file (file must be prepended by file: prefix, ie.
+     *                         'file:emails/new_user.tpl').
+     * @param array  $tpl_data template data.
      *
      * @return LIST_Email this object for method chaining.
      */
-    public function build_message_body($template, $tpl_data = [])
+    public function build_message_body($template, $tpl_data = []): LIST_Email
     {
         $message = '';
         if (stripos($template, 'file:') === 0) {
@@ -101,7 +101,7 @@ class LIST_Email extends CI_Email
         return $this;
     }
     
-    protected function _get_alt_message()
+    protected function _get_alt_message(): string
     {
         $generate_alt_message = empty($this->alt_message);
         if ($generate_alt_message) {
@@ -137,5 +137,3 @@ class LIST_Email extends CI_Email
         return $output;
     }
 }
-
-?>

@@ -1,20 +1,23 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class Migration_update_teachers_1 extends CI_Migration {
-
-    public function up() {
-        $this->dbforge->add_column('teachers', array(
-            'prefered_course_id' => array(
-                'type' => 'int',
+class Migration_update_teachers_1 extends CI_Migration
+{
+    
+    public function up()
+    {
+        $this->dbforge->add_column('teachers', [
+            'prefered_course_id' => [
+                'type'       => 'int',
                 'constraint' => '11',
-                'null' => TRUE,
-                'unsigned' => TRUE,
-            ),
-        ));
+                'null'       => true,
+                'unsigned'   => true,
+            ],
+        ]);
     }
-
-    public function down() {
+    
+    public function down()
+    {
         $this->dbforge->drop_column('teachers', 'prefered_course_id');
     }
-
+    
 }

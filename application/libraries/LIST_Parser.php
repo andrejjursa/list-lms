@@ -82,7 +82,7 @@ class LIST_Parser extends CI_Parser
      *
      * @return string
      */
-    public function set_theme($name)
+    public function set_theme($name): string
     {
         // Store the theme name
         $this->_theme_name = trim($name);
@@ -90,7 +90,7 @@ class LIST_Parser extends CI_Parser
         // Our themes can have a functions.php file just like Wordpress
         $functions_file = config_item('theme_path') . $this->_theme_name . '/functions.php';
         
-        // Incase we have a theme in the application directory
+        // In case we have a theme in the application directory
         $functions_file2 = APPPATH . "themes/" . $this->_theme_name . '/functions.php';
         
         // If we have a functions file, include it
@@ -112,9 +112,9 @@ class LIST_Parser extends CI_Parser
      *
      * @return string
      */
-    public function get_theme()
+    public function get_theme(): string
     {
-        return (isset($this->_theme_name)) ? $this->_theme_name : '';
+        return $this->_theme_name ?? '';
     }
     
     /**
@@ -126,14 +126,14 @@ class LIST_Parser extends CI_Parser
      * @access public
      * @return string
      */
-    public function current_module()
+    public function current_module(): string
     {
         // Modular Separation / Modular Extensions has been detected
         if (method_exists($this->CI->router, 'fetch_module')) {
             $module = $this->CI->router->fetch_module();
             return (!empty($module)) ? $module : '';
         }
-    
+        
         return '';
     }
     
@@ -151,7 +151,7 @@ class LIST_Parser extends CI_Parser
      * @param $cache_id
      * @param $theme
      *
-     * @return string
+     * @return string|bool
      */
     public function parse($template, $data = [], $return = false, $caching = false, $cache_id = '', $theme = '')
     {
@@ -212,9 +212,10 @@ class LIST_Parser extends CI_Parser
      *
      * @access public
      *
-     * @param $file
+     * @param       $file
+     * @param array $attributes
      */
-    public function add_css_file($file, $attributes = [])
+    public function add_css_file($file, $attributes = []): void
     {
         include_once APPPATH . 'third_party/Smarty/plugins/modifier.add_file_version.php';
         $defaults = [
@@ -242,9 +243,10 @@ class LIST_Parser extends CI_Parser
      *
      * @access public
      *
-     * @param $file
+     * @param       $file
+     * @param array $attributes
      */
-    public function add_js_file($file, $attributes = [])
+    public function add_js_file($file, $attributes = []): void
     {
         include_once APPPATH . 'third_party/Smarty/plugins/modifier.add_file_version.php';
         $defaults = [
@@ -264,7 +266,7 @@ class LIST_Parser extends CI_Parser
         ];
     }
     
-    public function add_js($content, $attributes = [])
+    public function add_js($content, $attributes = []): void
     {
         $defaults = [
             'type' => 'text/javascript',
@@ -284,7 +286,7 @@ class LIST_Parser extends CI_Parser
     /**
      * Clear the list of CSS files attached to template
      */
-    public function clear_css_files()
+    public function clear_css_files(): void
     {
         $this->css_files = [];
     }
@@ -292,7 +294,7 @@ class LIST_Parser extends CI_Parser
     /**
      * Clear the list of JS files attached to template
      */
-    public function clear_js_files()
+    public function clear_js_files(): void
     {
         $this->js_files = [];
     }
@@ -304,11 +306,12 @@ class LIST_Parser extends CI_Parser
      *
      * @access public
      *
-     * @param $file
+     * @param       $file
+     * @param array $attributes
      *
      * @return string
      */
-    public function css($file, $attributes = [])
+    public function css($file, $attributes = []): string
     {
         $defaults = [
             'media' => 'screen',
@@ -317,7 +320,7 @@ class LIST_Parser extends CI_Parser
         ];
         
         $attributes = array_merge($defaults, $attributes);
-    
+        
         return '<link rel="' . $attributes['rel'] . '" type="' . $attributes['type'] . '" href="' .
             base_url(config_item('theme_path') . $this->get_theme() . "/css/" . $file)
             . '" media="' . $attributes['media'] . '">';
@@ -330,18 +333,19 @@ class LIST_Parser extends CI_Parser
      *
      * @access public
      *
-     * @param $file
+     * @param       $file
+     * @param array $attributes
      *
      * @return string
      */
-    public function js($file, $attributes = [])
+    public function js($file, $attributes = []): string
     {
         $defaults = [
             'type' => 'text/javascript',
         ];
         
         $attributes = array_merge($defaults, $attributes);
-    
+        
         return '<script type="' . $attributes['type'] . '" src="' . base_url(config_item('theme_path')
                 . $this->get_theme() . "/js/" . $file) . '"></script>';
     }
@@ -353,11 +357,12 @@ class LIST_Parser extends CI_Parser
      *
      * @access public
      *
-     * @param $file
+     * @param       $file
+     * @param array $attributes
      *
      * @return string
      */
-    public function img($file, $attributes = [])
+    public function img($file, $attributes = []): string
     {
         $defaults = [
             'alt'   => '',
@@ -365,7 +370,7 @@ class LIST_Parser extends CI_Parser
         ];
         
         $attributes = array_merge($defaults, $attributes);
-    
+        
         return '<img src ="' . base_url(config_item('theme_path') . $this->get_theme() . "/img/" . $file)
             . '" alt="' . $attributes['alt'] . '" title="' . $attributes['title'] . '" />';
     }
@@ -382,7 +387,7 @@ class LIST_Parser extends CI_Parser
      *
      * @return string
      */
-    public function theme_url($location = '')
+    public function theme_url($location = ''): string
     {
         // The path to return
         $return = base_url(config_item('theme_path') . $this->get_theme()) . "/";
@@ -404,7 +409,7 @@ class LIST_Parser extends CI_Parser
      *
      * @return string The path and file found
      */
-    public function find_view($file)
+    public function find_view($file): ?string
     {
         $current_path = $this->_current_path;
         $path = $this->_find_view($file);
@@ -412,7 +417,7 @@ class LIST_Parser extends CI_Parser
         return $path;
     }
     
-    public function setCacheLifetimeForTemplateObject($file, $cache_lifetime)
+    public function setCacheLifetimeForTemplateObject($file, $cache_lifetime): void
     {
         $path = $this->find_view($file);
         if (count($this->CI->smarty->template_objects) > 0) {
@@ -435,7 +440,7 @@ class LIST_Parser extends CI_Parser
      *
      * @return string The path and file found
      */
-    protected function _find_view($file)
+    protected function _find_view($file): ?string
     {
         // We have no path by default
         $path = null;
@@ -467,7 +472,7 @@ class LIST_Parser extends CI_Parser
      *
      * @access protected
      */
-    protected function _add_paths()
+    protected function _add_paths(): void
     {
         // Iterate over our saved locations and find the file
         foreach ($this->_template_locations as $location) {
@@ -482,7 +487,7 @@ class LIST_Parser extends CI_Parser
      *
      * @access protected
      */
-    protected function _update_theme_paths()
+    protected function _update_theme_paths(): void
     {
         // Store a whole heap of template locations
         $this->_template_locations = [
