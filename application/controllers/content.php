@@ -200,7 +200,7 @@ class Content extends LIST_Controller
             }
         } else {
             $this->usermanager->teacher_login_protected_redirect();
-    
+            
         }
         $this->do_download_file($path, $language, decode_from_url($file));
     }
@@ -237,17 +237,19 @@ class Content extends LIST_Controller
             fclose($f);
             exit;
         }
-    
+        
         $this->file_not_found();
     }
     
     private function file_not_found(): void
     {
-        $heading = 'File not found';
-        $message = 'Requested file was not found. It may be moved, deleted or may be hidden from public.';
+        $code = "
+        \$heading = 'File not found';
+        \$message = 'Requested file was not found. It may be moved, deleted or may be hidden from public.';
+        ";
         $file = file_get_contents(APPPATH . 'errors/error_404.php');
         ob_start();
-        eval('?>' . $file);
+        eval($code . '?>' . $file);
         $output = ob_get_clean();
         $this->output->set_status_header(404, 'Not found');
         $this->output->set_output($output);
