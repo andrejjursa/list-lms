@@ -79,10 +79,8 @@ class LIST_Parser extends CI_Parser
      * @access public
      *
      * @param $name
-     *
-     * @return string
      */
-    public function set_theme($name): string
+    public function set_theme($name): void
     {
         // Store the theme name
         $this->_theme_name = trim($name);
