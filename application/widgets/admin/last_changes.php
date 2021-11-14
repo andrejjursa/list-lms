@@ -5,23 +5,26 @@
  *
  * @author Andrej
  */
-class Last_changes extends abstract_admin_widget {
+class Last_changes extends abstract_admin_widget
+{
     
     public function getContentTypeName(): string
     {
         return $this->lang->line('widget_admin_last_changes_widget_type_name');
     }
-
+    
     public function mergeConfiguration($old_configuration, $new_configuration): array
     {
         return $old_configuration ?? [];
     }
-
-    public function preConfigureForm():void {}
-
+    
+    public function preConfigureForm(): void
+    {
+    }
+    
     public function render(): void
     {
-        $CI = & get_instance();
+        $CI = &get_instance();
         $this->load->config('list');
         $version = $CI->config->item('list_version');
         $this->lang->load('admin/settings');
@@ -34,11 +37,17 @@ class Last_changes extends abstract_admin_widget {
             $this->parser->assign('error', $error->getMessage());
         }
         $this->parser->add_css_file('admin_settings.css');
-        $this->parser->parse('widgets/admin/last_changes/main.tpl', array('content' => $this->changelog->get($version), 'version' => $version));
+        $this->parser->parse(
+            'widgets/admin/last_changes/main.tpl',
+            [
+                'content' => $this->changelog->get($version),
+                'version' => $version,
+            ]
+        );
     }
-
+    
     public function validateConfiguration($configuration): bool
     {
-        return TRUE;
-    }    
+        return true;
+    }
 }
