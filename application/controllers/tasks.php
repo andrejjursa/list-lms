@@ -1024,7 +1024,7 @@ class Tasks extends LIST_Controller
                 ->where('id', $task_set->task_set_type_id)
                 ->include_join_fields()
                 ->get();
-            if ($task_set_type->exists() && $task_set_type->join_upload_solution === 1) {
+            if ($task_set_type->exists() && (int)$task_set_type->join_upload_solution === 1) {
                 if (is_null($task_set->pb_upload_end_time)) {
                     return true;
                 }
