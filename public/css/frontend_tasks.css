@@ -64,8 +64,14 @@ div.task_text { padding: 4px; border-bottom: 1px solid gray; }
 div.task_points { padding: 4px; border-bottom: 1px solid gray; }
 div.task_author { padding: 4px; border-bottom: 1px solid gray; margin-bottom: 4px; }
 div.task_files { padding: 4px; border-bottom: 1px solid gray; }
+div.task_files div.task_files_title { font-weight: bold; padding-bottom: 3px; }
 div.task_files div.task_file { padding-left: 5px; }
-div.task_files div.task_file a { text-decoration: none; line-height: 1.5em; }
+div.task_files div.task_file a::before { content: '\f15b'; font-family: FontAwesome; padding-right: 5px; transition: color 100ms ease-in-out; }
+div.task_files div.task_file a { text-decoration: none; line-height: 1.5em; color: green; transition: color 100ms ease-in-out; }
+div.task_files div.task_file a:hover { color: yellowgreen; }
+div.task_files div.task_file a:hover::before { color: yellowgreen; }
+div.task_files div.task_file a:active { color: darkgreen; }
+div.task_files div.task_file a:active::before { color: darkgreen; content: '\f016'; }
 span.bonus_task { color: red; }
 
 h2.task_name { margin-bottom: 10px; }
