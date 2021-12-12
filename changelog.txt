@@ -25,6 +25,9 @@ VERSION 1.7.0 | 2021-12-12
 CHANGE Kompletná interná refaktorizácia kódu aplikácie spojená s optimalizáciami.
 CHANGE [lang:english] Complete internal re-factorisation of the application code. The code was also optimized.
 
+FIX Na text úloh v editore zostavy úloh je teraz aplikované zvýrazňovanie kódu a tiež preklad rovníc.
+FIX [lang:english] Code highlighting as well as equation translation are now applied to the task text in the task set editor.
+
 END VERSION
 
 VERSION 1.6.9 | 2021-09-21
