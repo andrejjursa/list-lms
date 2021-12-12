@@ -76,3 +76,6 @@ div.project_selection_list div.project_selection_student.operations_disabled { b
 fieldset.sorting_list ul.sorting_list { list-style-type: none; }
 fieldset.sorting_list ul.sorting_list li.sorted_item { border: 1px solid green; background-color: #6DC052; margin: 1px 0; padding: 2px; cursor: pointer; }
 fieldset.sorting_list ul.sorting_list li.task-set-sorting-placeholder { height: 1.1em; margin: 1px 0; padding: 2px; border: 1px solid gray; background-color: silver; }
+
+#tasks_sortable.ui-sortable li.task_sorting_item { background: #E8E8E8; }
+#tasks_sortable.ui-sortable li.task_sorting_item .task .text_content { background: white; }

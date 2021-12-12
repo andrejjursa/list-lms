@@ -776,6 +776,8 @@ class Task_sets extends LIST_Controller
         }
         
         $this->_add_tinymce4();
+        $this->_add_prettify();
+        $this->_add_mathjax();
         $this->parser->add_js_file('jquery.activeform.js');
         $this->parser->add_js_file('admin_task_sets/edit.js');
         $this->parser->add_js_file('admin_task_sets/form.js');
