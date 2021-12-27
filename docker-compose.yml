@@ -16,6 +16,7 @@ services:
       - "server.listdev:127.0.0.1"
     links:
       - list-database
+      - list-rabbitmq
     environment:
       LIST_DATABASE_HOSTNAME: list-database
       LIST_DATABASE_USER: root
@@ -23,6 +24,11 @@ services:
       LIST_DATABASE_NAME: list-dev
       LIST_CONFIG_BASE_URL: http://server.listdev/
       LIST_ENVIRONMENT: development
+      LIST_AMQP_HOST: list-rabbitmq
+      LIST_AMQP_PORT: 5672
+      LIST_AMQP_USER: guest
+      LIST_AMQP_PASSWORD: guest
+      LIST_AMQP_VHOST: list
       XDEBUG_CONFIG: >
         remote_host=host.docker.internal
         remote_autostart=1
@@ -52,6 +58,16 @@ services:
       - "server.listdev:127.0.0.1"
     environment:
       ADMINER_DEFAULT_SERVER: list-database
+
+  list-rabbitmq:
+    image: rabbitmq:3-management-alpine
+    hostname: server.listdev
+    domainname: listdev
+    ports:
+      - 15672:15672
+      - 15692:15692
+    extra_hosts:
+      - "server.listdev:127.0.0.1"
 
 volumes:
   list-database-data:

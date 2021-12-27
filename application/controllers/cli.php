@@ -1032,6 +1032,43 @@ class Cli extends CI_Controller
         echo 'Done ...' . "\n";
     }
     
+    public function test_message(): void
+    {
+        $this->config->load('amqp');
+        $connection = new \Application\Services\AMQP\Connection(
+            $this->config->item('amqp_host'),
+            $this->config->item('amqp_port'),
+            $this->config->item('amqp_user'),
+            $this->config->item('amqp_password'),
+            $this->config->item('amqp_vhost')
+        );
+        
+        $publisherFactory = new \Application\Services\AMQP\Factory\PublisherFactory($connection);
+        $testQueuePublisher = $publisherFactory->getTestQueuePublisher();
+        
+        $message = new \Application\Services\AMQP\Messages\TestMessage();
+        $message->setMessage('Hello world!');
+        
+        $testQueuePublisher->publishMessage($message);
+    }
+    
+    public function test_consume(): void
+    {
+        $this->config->load('amqp');
+        $connection = new \Application\Services\AMQP\Connection(
+            $this->config->item('amqp_host'),
+            $this->config->item('amqp_port'),
+            $this->config->item('amqp_user'),
+            $this->config->item('amqp_password'),
+            $this->config->item('amqp_vhost')
+        );
+        
+        $consumerFactory = new \Application\Services\AMQP\Factory\ConsumerFactory($connection);
+        $testConsumer = $consumerFactory->getTestConsumer();
+        
+        $testConsumer->consumeQueue();
+    }
+    
     private function find_and_delete_old_upload_part(
         $path_base,
         $path_add,
