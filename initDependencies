@@ -118,7 +118,7 @@ NPM_PARAMS=""
 BOWER_PARAMS="--allow-root"
 
 if [ "$1" != "dev" ]; then
-    COMPOSER_PARAMS="--no-dev"
+    COMPOSER_PARAMS="--no-dev --optimize-autoloader --classmap-authoritative"
     NPM_PARAMS="--production"
     BOWER_PARAMS="$BOWER_PARAMS --production"
 fi

@@ -1,112 +1,115 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class Migration_create_groups_rooms extends CI_Migration {
-
-    public function up() {
+class Migration_create_groups_rooms extends CI_Migration
+{
+    
+    public function up()
+    {
         change_mysql_table_to_InnoDB('lang_overlays');
-
+        
         $this->dbforge->add_field(
-            array(
-                'id' => array(
-                    'type' => 'INT',
-                    'constraint' => '11',
-                    'unsigned' => TRUE,
-                    'auto_increment' => TRUE,
-                ),
-                'updated' => array(
-                    'type' => 'timestamp',
+            [
+                'id'        => [
+                    'type'           => 'INT',
+                    'constraint'     => '11',
+                    'unsigned'       => true,
+                    'auto_increment' => true,
+                ],
+                'updated'   => [
+                    'type'    => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
-                ),
-                'created' => array(
-                    'type' => 'timestamp',
+                ],
+                'created'   => [
+                    'type'    => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
-                ),
-                'name' => array(
-                    'type' => 'VARCHAR',
+                ],
+                'name'      => [
+                    'type'       => 'VARCHAR',
                     'constraint' => 255,
-                    'default' => '',
-                ),
-                'course_id' => array(
-                    'type' => 'INT',
+                    'default'    => '',
+                ],
+                'course_id' => [
+                    'type'       => 'INT',
                     'constraint' => '11',
-                    'null' => TRUE,
-                    'unsigned' => TRUE,
-                ),
-            )
+                    'null'       => true,
+                    'unsigned'   => true,
+                ],
+            ]
         );
-
-        $this->dbforge->add_key('id', TRUE);
+        
+        $this->dbforge->add_key('id', true);
         $this->dbforge->add_key('course_id');
-
+        
         $this->dbforge->create_table('groups');
-
+        
         change_mysql_table_to_InnoDB('groups');
-
+        
         $this->dbforge->add_field(
-            array(
-                'id' => array(
-                    'type' => 'INT',
-                    'constraint' => '11',
-                    'unsigned' => TRUE,
-                    'auto_increment' => TRUE,
-                ),
-                'updated' => array(
-                    'type' => 'timestamp',
-					'default' => '1970-01-01 01:00:01',
-                ),
-                'created' => array(
-                    'type' => 'timestamp',
-					'default' => '1970-01-01 01:00:01',
-                ),
-                'name' => array(
-                    'type' => 'VARCHAR',
+            [
+                'id'         => [
+                    'type'           => 'INT',
+                    'constraint'     => '11',
+                    'unsigned'       => true,
+                    'auto_increment' => true,
+                ],
+                'updated'    => [
+                    'type'    => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
+                ],
+                'created'    => [
+                    'type'    => 'timestamp',
+                    'default' => '1970-01-01 01:00:01',
+                ],
+                'name'       => [
+                    'type'       => 'VARCHAR',
                     'constraint' => 255,
-                    'default' => '',
-                ),
-                'group_id' => array(
-                    'type' => 'INT',
+                    'default'    => '',
+                ],
+                'group_id'   => [
+                    'type'       => 'INT',
                     'constraint' => '11',
-                    'null' => TRUE,
-                    'unsigned' => TRUE,
-                ),
-                'time_begin' => array(
-                    'type' => 'INT',
+                    'null'       => true,
+                    'unsigned'   => true,
+                ],
+                'time_begin' => [
+                    'type'       => 'INT',
                     'constraint' => 6,
-                    'unsigned' => TRUE,
-                    'default' => 0,
-                ),
-                'time_end' => array(
-                    'type' => 'INT',
+                    'unsigned'   => true,
+                    'default'    => 0,
+                ],
+                'time_end'   => [
+                    'type'       => 'INT',
                     'constraint' => 6,
-                    'unsigned' => TRUE,
-                    'default' => 0,
-                ),
-                'time_day' => array(
-                    'type' => 'INT',
+                    'unsigned'   => true,
+                    'default'    => 0,
+                ],
+                'time_day'   => [
+                    'type'       => 'INT',
                     'constraint' => 2,
-                    'unsigned' => TRUE,
-                    'default' => 0,
-                ),
-                'capacity' => array(
-                    'type' => 'INT',
+                    'unsigned'   => true,
+                    'default'    => 0,
+                ],
+                'capacity'   => [
+                    'type'       => 'INT',
                     'constraint' => 4,
-                    'unsigned' => TRUE,
-                    'default' => 0,
-                ),
-            )
+                    'unsigned'   => true,
+                    'default'    => 0,
+                ],
+            ]
         );
-
-        $this->dbforge->add_key('id', TRUE);
+        
+        $this->dbforge->add_key('id', true);
         $this->dbforge->add_key('group_id');
-
+        
         $this->dbforge->create_table('rooms');
-
+        
         change_mysql_table_to_InnoDB('rooms');
     }
-
-    public function down() {
+    
+    public function down()
+    {
         $this->dbforge->drop_table('groups');
         $this->dbforge->drop_table('rooms');
     }
-
+    
 }

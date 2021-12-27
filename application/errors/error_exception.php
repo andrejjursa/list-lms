@@ -1,4 +1,8 @@
-<?php require_once(BASEPATH . 'core/Input.php'); ?>
+<?php require_once(BASEPATH . 'core/Input.php');
+/**
+ * @var Throwable $exception
+ */
+?>
 <?php $local_input = new CI_Input(); ?>
 <?php if ($local_input->is_cli_request()): ?>
 

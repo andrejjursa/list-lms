@@ -4,11 +4,11 @@
 # parameter 2 = number of workers
 
 function execWorker {
-	lockfile -r 0 $2 > /dev/null 2> /dev/null
+	lockfile -r 0 "$2" > /dev/null 2> /dev/null
 	locked=$?
 	if [ $locked -eq 0 ] ; then
-		sudo -u www-data php $PATH_TO_SCRIPT/index.php cli_test index $1
-		rm -f $2
+		sudo -E -u www-data php "$PATH_TO_SCRIPT/index.php" cli_test index "$1"
+		rm -f "$2"
 	fi
 }
 
@@ -16,21 +16,21 @@ function runWorkersAsync {
 	while true; do
 		for ((worker_id = 1; worker_id <= $2; worker_id++))
 		do
-			FILEPATH=$PATH_TO_LOCK_DIR/worker_${worker_id}_lock.lock
-			execWorker $worker_id $FILEPATH &
-			sleep 0.005
+			FILEPATH="$PATH_TO_LOCK_DIR/worker_${worker_id}_lock.lock"
+			execWorker "$worker_id" "$FILEPATH" &
+			sleep 0.005 || sleep 0.005s
 		done
-		sleep $WAIT_TIME
-		sudo -u www-data php $PATH_TO_SCRIPT/index.php cli_test aging &
-		sleep $WAIT_TIME
+		sleep "$WAIT_TIME" || sleep "${WAIT_TIME}s"
+		sudo -E -u www-data php "$PATH_TO_SCRIPT/index.php" cli_test aging &
+		sleep "$WAIT_TIME" || sleep "${WAIT_TIME}s"
 	done
 }
 
-MY_PATH="`dirname \"$0\"`"              # relative
-MY_PATH="`( cd \"$MY_PATH\" && pwd )`"  # absolutized and normalized
+MY_PATH=$(dirname "$0")              # relative
+MY_PATH=$( cd "$MY_PATH" && pwd )  # absolute and normalized
 if [ -z "$MY_PATH" ] ; then
   # error; for some reason, the path is not accessible
-  # to the script (e.g. permissions re-evaled after suid)
+  # to the script (e.g. permissions re-evaluated after suid)
   echo "Failed to determine script path. Exiting ..."
   exit 1  # fail
 fi
@@ -48,10 +48,10 @@ WAIT_TIME=$( bc -l <<< "$1/2" )
 
 echo "Executing workers: $2 workers will be run approximately each $1 seconds."
 
-rm -f $PATH_TO_LOCK_DIR/*
+rm -f "$PATH_TO_LOCK_DIR/*"
 
-sudo -u www-data php $PATH_TO_SCRIPT/index.php cli_test reset_all
+sudo -E -u www-data php "$PATH_TO_SCRIPT/index.php" cli_test reset_all
 
-runWorkersAsync $1 $2 &
+runWorkersAsync "$1" "$2" &
 echo "Workers are run asynchronously, you can terminate this run by command: kill $!"
-echo "Last control script for worker have pid $!." > $WORKERS_INFO_FILE
+echo "Last control script for worker have pid $!." > "$WORKERS_INFO_FILE"

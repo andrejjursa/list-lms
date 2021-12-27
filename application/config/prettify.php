@@ -1,40 +1,40 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-$config['prettify']['highlighters'] = array(
-    'c' => array(
+$config['prettify']['highlighters'] = [
+    'c'      => [
         'name' => 'C',
-    ),
-    'cpp' => array(
+    ],
+    'cpp'    => [
         'name' => 'C++',
-    ),
-    'cs' => array(
+    ],
+    'cs'     => [
         'name' => 'C#',
-    ),
-    'css' => array(
+    ],
+    'css'    => [
         'name' => 'CSS',
-    ),
-    'hs' => array(
+    ],
+    'hs'     => [
         'name' => 'Haskell',
-    ),
-    'html' => array(
+    ],
+    'html'   => [
         'name' => 'HTML',
-    ),
-    'pas' => array(
+    ],
+    'pas'    => [
         'name' => 'Pascal',
-    ),
-    'php' => array(
+    ],
+    'php'    => [
         'name' => 'PHP',
-    ),
-    'pl' => array(
+    ],
+    'pl'     => [
         'name' => 'Prolog',
-    ),
-    'python' => array(
+    ],
+    'python' => [
         'name' => 'Python',
-    ),
-    'java' => array(
+    ],
+    'java'   => [
         'name' => 'Java',
-    ),
-    'js' => array(
+    ],
+    'js'     => [
         'name' => 'JavaScript',
-    ),
-);
+    ],
+];

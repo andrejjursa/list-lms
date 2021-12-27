@@ -1,47 +1,50 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class Migration_create_lang_overlays extends CI_Migration {
-
-    public function up() {
+class Migration_create_lang_overlays extends CI_Migration
+{
+    
+    public function up()
+    {
         $this->dbforge->add_field(
-            array(
-                'table' => array(
-                    'type' => 'VARCHAR',
+            [
+                'table'    => [
+                    'type'       => 'VARCHAR',
                     'constraint' => 128,
-                    'default' => '',
-                ),
-                'table_id' => array(
-                    'type' => 'INT',
+                    'default'    => '',
+                ],
+                'table_id' => [
+                    'type'       => 'INT',
                     'constraint' => '11',
-                    'default' => 0,
-                ),
-                'idiom' => array(
-                    'type' => 'VARCHAR',
+                    'default'    => 0,
+                ],
+                'idiom'    => [
+                    'type'       => 'VARCHAR',
                     'constraint' => 32,
-                    'default' => '',
-                ),
-                'column' => array(
-                    'type' => 'VARCHAR',
+                    'default'    => '',
+                ],
+                'column'   => [
+                    'type'       => 'VARCHAR',
                     'constraint' => 128,
-                    'default' => '',
-                ),
-                'text' => array(
+                    'default'    => '',
+                ],
+                'text'     => [
                     'type' => 'TEXT',
                     'null' => true,
-                ),
-            )
+                ],
+            ]
         );
-
-        $this->dbforge->add_key('table', TRUE);
-        $this->dbforge->add_key('table_id', TRUE);
-        $this->dbforge->add_key('idiom', TRUE);
-        $this->dbforge->add_key('column', TRUE);
-
+        
+        $this->dbforge->add_key('table', true);
+        $this->dbforge->add_key('table_id', true);
+        $this->dbforge->add_key('idiom', true);
+        $this->dbforge->add_key('column', true);
+        
         $this->dbforge->create_table('lang_overlays');
     }
-
-    public function down() {
+    
+    public function down()
+    {
         $this->dbforge->drop_table('lang_overlays');
     }
-
+    
 }

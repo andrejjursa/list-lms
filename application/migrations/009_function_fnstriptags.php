@@ -1,8 +1,10 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class Migration_function_fnstriptags extends CI_Migration {
-
-    public function up() {
+class Migration_function_fnstriptags extends CI_Migration
+{
+    
+    public function up()
+    {
         $this->db->query('DROP FUNCTION IF EXISTS fnStripTags');
         $this->db->query('CREATE FUNCTION fnStripTags( Dirty text )  
  RETURNS text CHARSET utf8  
@@ -24,7 +26,8 @@ class Migration_function_fnstriptags extends CI_Migration {
  END;');
     }
     
-    public function down() {
+    public function down()
+    {
         $this->db->query('DROP FUNCTION IF EXISTS fnStripTags');
     }
     

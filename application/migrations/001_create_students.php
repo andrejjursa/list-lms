@@ -1,63 +1,66 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class Migration_create_students extends CI_Migration {
-
-    public function up() {
+class Migration_create_students extends CI_Migration
+{
+    
+    public function up()
+    {
         $this->dbforge->add_field(
-            array(
-                'id' => array(
-                    'type' => 'INT',
-                    'constraint' => '11',
-                    'unsigned' => TRUE,
-                    'auto_increment' => TRUE,
-                ),
-                'updated' => array(
-                    'type' => 'timestamp',
+            [
+                'id'               => [
+                    'type'           => 'INT',
+                    'constraint'     => '11',
+                    'unsigned'       => true,
+                    'auto_increment' => true,
+                ],
+                'updated'          => [
+                    'type'    => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
-                ),
-                'created' => array(
-                    'type' => 'timestamp',
+                ],
+                'created'          => [
+                    'type'    => 'timestamp',
                     'default' => '1970-01-01 01:00:01',
-                ),
-                'fullname' => array(
-                    'type' => 'VARCHAR',
+                ],
+                'fullname'         => [
+                    'type'       => 'VARCHAR',
                     'constraint' => 255,
-                    'default' => '',
-                ),
-                'email' => array(
-                    'type' => 'VARCHAR',
+                    'default'    => '',
+                ],
+                'email'            => [
+                    'type'       => 'VARCHAR',
                     'constraint' => 255,
-                    'default' => '',
-                ),
-                'password' => array(
-                    'type' => 'VARCHAR',
+                    'default'    => '',
+                ],
+                'password'         => [
+                    'type'       => 'VARCHAR',
                     'constraint' => 40,
-                    'default' => '',
-                ),
-                'language' => array(
-                    'type' => 'VARCHAR',
+                    'default'    => '',
+                ],
+                'language'         => [
+                    'type'       => 'VARCHAR',
                     'constraint' => 32,
-                    'default' => '',
-                ),
-                'active_course_id' => array(
-                    'type' => 'INT',
+                    'default'    => '',
+                ],
+                'active_course_id' => [
+                    'type'       => 'INT',
                     'constraint' => '11',
-                    'unsigned' => TRUE,
-                    'null' => TRUE,
-                ),
-            )
+                    'unsigned'   => true,
+                    'null'       => true,
+                ],
+            ]
         );
-
-        $this->dbforge->add_key('id', TRUE);
+        
+        $this->dbforge->add_key('id', true);
         $this->dbforge->add_key('active_course_id');
-
+        
         $this->dbforge->create_table('students');
-
+        
         change_mysql_table_to_InnoDB('students');
     }
-
-    public function down() {
+    
+    public function down()
+    {
         $this->dbforge->drop_table('students');
     }
-
+    
 }

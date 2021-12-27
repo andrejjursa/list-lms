@@ -1,4 +1,9 @@
-<?php require_once(BASEPATH . 'core/Input.php'); ?>
+<?php require_once(BASEPATH . 'core/Input.php');
+/**
+ * @var string $heading
+ * @var string $message
+ */
+?>
 <?php $local_input = new CI_Input(); ?>
 <?php if ($local_input->is_cli_request()): ?>
 

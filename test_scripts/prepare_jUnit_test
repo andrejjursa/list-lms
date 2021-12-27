@@ -14,7 +14,7 @@ rm -f $TEST_PATH/*.class 2> /dev/null
 rm -f $TEST_PATH/*/*.class 2> /dev/null
 rm -f $TEST_PATH/*/*/*.class 2> /dev/null
 
-cd $TEST_PATH
+cd $TEST_PATH || exit 1
 
 mkdir $TEST_PATH/__list_out > /dev/null
 chgrp testovac $TEST_PATH/__list_out > /dev/null
@@ -27,24 +27,24 @@ echo "<pre>" > $OUTPUT_FILE
 echo "Stage 1 / 2: source code compilation ..." >> $OUTPUT_FILE
 #cp -r $CURRENT_PATH/../docker_source/java/* $TEST_PATH/.
 /usr/bin/javac $JAVAC_ARGS Test${TESTCLASS}.java $ENCODING 2> $COMPILATION_LOG
-exitcode=$?
+exitCode=$?
 cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE
 grep "unmappable character for encoding UTF-8" $COMPILATION_LOG > /dev/null
 if [[ $? -eq 0 ]] ; then
 	echo "<br /> Failed to compile source codes with encoding UTF-8, retrying with CP1250.<br />" >> $OUTPUT_FILE
 	/usr/bin/javac $JAVAC_ARGS Test${TESTCLASS}.java -encoding cp1250 2> $COMPILATION_LOG
-	exitcode=$?
+	exitCode=$?
 	cat $COMPILATION_LOG | grep -v "assert" >> $OUTPUT_FILE
 
 fi
-if [[ $exitcode -ne 0 ]] ; then
+if [[ $exitCode -ne 0 ]] ; then
 	echo "<br />Stage 1 failed. Compilation unsuccessful. Please correct the above errors before the tests will be run.</pre>" >> $OUTPUT_FILE
-	cd $CURRENT_PATH
+	cd $CURRENT_PATH || exit 100
 	exit 100
 fi
-cd $CURRENT_PATH
+cd $CURRENT_PATH || exit 1
 # STAGE 2 Run:
-echo "<br />Stage 2 / 2: running test ..." >> $OUTPUT_FILE
+echo "<br />Stage 2 / 2: running test ..." >> "$OUTPUT_FILE"
 rm -f $TEST_PATH/*.java 2> /dev/null
 cp -fr $TEST_PATH/* $TEST_PATH/__list_out 2> /dev/null
 rm -f $TEST_PATH/__list_out/__list_output.txt 2> /dev/null
@@ -53,12 +53,12 @@ rm -f $TEST_PATH/__list_encrypt_phrase.txt 2> /dev/null
 chgrp -R testovac $TEST_PATH/__list_out/* 2> /dev/null
 chmod -R g+w $TEST_PATH/__list_out/* 2> /dev/null
 find $TEST_PATH/__list_out/ -type d -exec chmod a+x,g+x {} +
-cd $TEST_PATH/__list_out
+cd $TEST_PATH/__list_out || exit 1
 echo "----- Running test file Test$TESTCLASS.class<br />" >> $OUTPUT_FILE
-#ls -la --recursive >> $OUTPUT_FILE
-#echo sudo -u testovac $CURRENT_PATH/execute_jUnit_test $TESTCLASS $TIMEOUT $CURRENT_PATH >> $OUTPUT_FILE 2>> $OUTPUT_FILE
+#ls -la --recursive >> "$OUTPUT_FILE"
+#echo sudo -E -u testovac "$CURRENT_PATH/execute_jUnit_test" "$TESTCLASS" "$TIMEOUT" "$CURRENT_PATH" >> "$OUTPUT_FILE" 2>> "$OUTPUT_FILE"
 sudo -u testovac $CURRENT_PATH/execute_jUnit_test $TESTCLASS $TIMEOUT $CURRENT_PATH >> $OUTPUT_FILE 2>> $OUTPUT_FILE
-exitcode=$?
+exitCode=$?
 cp -f $TEST_PATH/__list_out/__list_score.txt $TEST_PATH/__list_score.txt 2> /dev/null
 echo "----- Testing finished.</pre>" >> $OUTPUT_FILE
-exit $exitcode
+exit $exitCode

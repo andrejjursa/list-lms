@@ -1,4 +1,4 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /*
 | -------------------------------------------------------------------
 | AUTO-LOADER
@@ -37,7 +37,7 @@
 |
 */
 
-$autoload['packages'] = array();
+$autoload['packages'] = [];
 
 
 /*
@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('datamapper', 'parser');
+$autoload['libraries'] = ['datamapper', 'parser'];
 
 
 /*
@@ -64,7 +64,7 @@ $autoload['libraries'] = array('datamapper', 'parser');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'application');
+$autoload['helper'] = ['url', 'application'];
 
 
 /*
@@ -80,7 +80,7 @@ $autoload['helper'] = array('url', 'application');
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = [];
 
 
 /*
@@ -96,7 +96,7 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array('students', 'admin/teachers', 'admin/common');
+$autoload['language'] = ['students', 'admin/teachers', 'admin/common'];
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array('students', 'admin/teachers', 'admin/common');
 |
 */
 
-$autoload['model'] = array();
+$autoload['model'] = [];
 
 
 /* End of file autoload.php */

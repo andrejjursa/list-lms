@@ -1,26 +1,30 @@
 <?php
 
-class Unevaluated_solutions extends abstract_admin_widget {
+class Unevaluated_solutions extends abstract_admin_widget
+{
     
-    public function getContentTypeName() {
+    public function getContentTypeName(): string
+    {
         return $this->lang->line('widget_admin_unevaluated_solutions_widget_type_name');
     }
-
-    public function mergeConfiguration($old_configuration, $new_configuration) {
+    
+    public function mergeConfiguration($old_configuration, $new_configuration): array
+    {
         if (!is_array($old_configuration)) {
             return $new_configuration;
         }
         return array_merge($old_configuration, $new_configuration);
     }
-
-    public function preConfigureForm() {
+    
+    public function preConfigureForm(): void
+    {
         $courses = new Course();
         $courses->include_related('period');
         $courses->order_by_related('period', 'sorting', 'asc');
         $courses->order_by_with_constant('name');
         $courses->get_iterated();
         
-        $courses_list = array('' => '');
+        $courses_list = ['' => ''];
         
         foreach ($courses as $course) {
             $courses_list[$this->lang->text($course->period_name)][$course->id] = $this->lang->text($course->name);
@@ -28,8 +32,9 @@ class Unevaluated_solutions extends abstract_admin_widget {
         
         $this->parser->assign('courses', $courses_list);
     }
-
-    public function render() {
+    
+    public function render(): void
+    {
         $course = new Course();
         $course->include_related('period');
         $course->get_by_id((int)@$this->config['course_id']);
@@ -59,18 +64,24 @@ class Unevaluated_solutions extends abstract_admin_widget {
         }
         $this->parser->parse('widgets/admin/unevaluated_solutions/main.tpl');
     }
-
-    public function validateConfiguration($configuration) {
+    
+    public function validateConfiguration($configuration): bool
+    {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('configure[course_id]', 'lang:widget_admin_unevaluated_solutions_configure_form_field_course', 'required');
+        $this->form_validation->set_rules(
+            'configure[course_id]',
+            'lang:widget_admin_unevaluated_solutions_configure_form_field_course',
+            'required'
+        );
         
         return $this->form_validation->run();
-    }    
+    }
     
-    public function defaultConfiguration() {
-        return array(
-            'course_id' => NULL,
-        );
+    public function defaultConfiguration(): array
+    {
+        return [
+            'course_id' => null,
+        ];
     }
 }

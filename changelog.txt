@@ -20,6 +20,19 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.7.0 | 2021-12-12
+
+CHANGE Kompletná interná refaktorizácia kódu aplikácie spojená s optimalizáciami.
+CHANGE [lang:english] Complete internal re-factorisation of the application code. The code was also optimized.
+
+FIX Na text úloh v editore zostavy úloh je teraz aplikované zvýrazňovanie kódu a tiež preklad rovníc.
+FIX [lang:english] Code highlighting as well as equation translation are now applied to the task text in the task set editor.
+
+FIX Zoznam priložených súborov k úlohe v študentskom rozhraní je teraz správne naštýlovaný.
+FIX [lang:english] The list of files attached to the task in the studen interface is properly styled now.
+
+END VERSION
+
 VERSION 1.6.9 | 2021-09-21
 
 FIX Opravené zobrazovanie komentárov od učitela k študentskému riešeniu úloh.

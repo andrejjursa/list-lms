@@ -1,50 +1,58 @@
 version: '3.7'
 
 services:
-        list-server:
-                build:
-                        context: .docker-compose/server/
-                image: local-list-server-image
-                volumes:
-                        - .:/app
-                working_dir: /app
-                hostname: server.listdev
-                domainname: listdev
-                ports:
-                        - 80:80
-                extra_hosts:
-                        - "server.listdev:127.0.0.1"
-                links:
-                        - list-database
-                environment:
-                        LIST_DATABASE_HOSTNAME: list-database
-                        LIST_DATABASE_USER: root
-                        LIST_DATABASE_PASSWORD: root
-                        LIST_DATABASE_NAME: list-dev
-                        LIST_CONFIG_BASE_URL: http://server.listdev/
-                        LIST_ENVIRONMENT: development
+  list-server:
+    build:
+      context: .docker-compose/server/
+    image: local-list-server-image
+    volumes:
+      - .:/app
+    working_dir: /app
+    hostname: server.listdev
+    domainname: listdev
+    ports:
+      - 80:80
+    extra_hosts:
+      - "server.listdev:127.0.0.1"
+    links:
+      - list-database
+    environment:
+      LIST_DATABASE_HOSTNAME: list-database
+      LIST_DATABASE_USER: root
+      LIST_DATABASE_PASSWORD: root
+      LIST_DATABASE_NAME: list-dev
+      LIST_CONFIG_BASE_URL: http://server.listdev/
+      LIST_ENVIRONMENT: development
+      XDEBUG_CONFIG: >
+        remote_host=host.docker.internal
+        remote_autostart=1
+        remote_connect_back=0
 
-        list-database:
-                image: mariadb:10
-                environment:
-                        MYSQL_ROOT_PASSWORD: root
-                        MYSQL_DATABASE: list-dev
-                volumes:
-                        - list-database-data:/var/lib/mysql
+  list-database:
+    image: mariadb:10
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: list-dev
+    volumes:
+      - list-database-data:/var/lib/mysql
+    ports:
+      - 43306:3306
+    hostname: server.listdev
+    domainname: listdev
 
-        list-adminer:
-                image: adminer:latest
-                links:
-                        - list-database
-                hostname: server.listdev
-                domainname: listdev
-                ports:
-                        - 8080:8080
-                extra_hosts:
-                        - "server.listdev:127.0.0.1"
-                environment:
-                        ADMINER_DEFAULT_SERVER: list-database
+  list-adminer:
+    image: adminer:latest
+    links:
+      - list-database
+    hostname: server.listdev
+    domainname: listdev
+    ports:
+      - 8080:8080
+    extra_hosts:
+      - "server.listdev:127.0.0.1"
+    environment:
+      ADMINER_DEFAULT_SERVER: list-database
 
 volumes:
-        list-database-data:
+  list-database-data:
 
