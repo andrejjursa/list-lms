@@ -16,7 +16,8 @@
     "ext-pcntl": "*",
     "ext-zip": "*",
     "mathjax/mathjax": "^2.7",
-    "php-amqplib/php-amqplib": "^3.1"
+    "php-amqplib/php-amqplib": "^3.1",
+    "psr/container": "^1.0"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "*",

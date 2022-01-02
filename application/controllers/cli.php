@@ -1034,16 +1034,8 @@ class Cli extends CI_Controller
     
     public function test_message(): void
     {
-        $this->config->load('amqp');
-        $connection = new \Application\Services\AMQP\Connection(
-            $this->config->item('amqp_host'),
-            $this->config->item('amqp_port'),
-            $this->config->item('amqp_user'),
-            $this->config->item('amqp_password'),
-            $this->config->item('amqp_vhost')
-        );
-        
-        $publisherFactory = new \Application\Services\AMQP\Factory\PublisherFactory($connection);
+        $container = \Application\Services\DependencyInjection\ContainerFactory::getContainer();
+        $publisherFactory = $container->get(\Application\Services\AMQP\Factory\PublisherFactory::class);
         $testQueuePublisher = $publisherFactory->getTestQueuePublisher();
         
         $message = new \Application\Services\AMQP\Messages\TestMessage();
@@ -1054,16 +1046,9 @@ class Cli extends CI_Controller
     
     public function test_consume(): void
     {
-        $this->config->load('amqp');
-        $connection = new \Application\Services\AMQP\Connection(
-            $this->config->item('amqp_host'),
-            $this->config->item('amqp_port'),
-            $this->config->item('amqp_user'),
-            $this->config->item('amqp_password'),
-            $this->config->item('amqp_vhost')
-        );
+        $container = \Application\Services\DependencyInjection\ContainerFactory::getContainer();
+        $consumerFactory = $container->get(\Application\Services\AMQP\Factory\ConsumerFactory::class);
         
-        $consumerFactory = new \Application\Services\AMQP\Factory\ConsumerFactory($connection);
         $testConsumer = $consumerFactory->getTestConsumer();
         
         $testConsumer->consumeQueue();
