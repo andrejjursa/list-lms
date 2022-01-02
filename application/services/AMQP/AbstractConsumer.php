@@ -77,6 +77,7 @@ abstract class AbstractConsumer implements ConsumerInterface
         while ($channel->is_consuming() && $this->running) {
             try {
                 $channel->wait(null, false, 5);
+                pcntl_signal_dispatch();
             } catch (ErrorException|AMQPTimeoutException $e) {
             }
             if (!$this->running) {

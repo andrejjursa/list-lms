@@ -41,3 +41,5 @@ public/js/tinymce4
 /vendor/
 /node_modules/
 /bower_components/
+
+supervisord.log
