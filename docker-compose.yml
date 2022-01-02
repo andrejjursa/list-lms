@@ -63,6 +63,8 @@ services:
     image: rabbitmq:3-management-alpine
     hostname: server.listdev
     domainname: listdev
+    volumes:
+      - list-rabbitmq-data:/var/lib/rabbitmq/mnesia/
     ports:
       - 15672:15672
       - 15692:15692
@@ -71,4 +73,5 @@ services:
 
 volumes:
   list-database-data:
+  list-rabbitmq-data:
 
