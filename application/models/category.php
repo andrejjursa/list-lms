@@ -74,7 +74,9 @@ class Category extends DataMapper implements DataMapperExtensionsInterface
     {
         $output = [];
         foreach ($categories as $key => $category) {
-            if ($category->parent_id === $parent) {
+            $isChild = ($parent === null && $category->parent_id === null)
+                || ($parent !== null && (int)$parent === (int)$category->parent_id);
+            if ($isChild) {
                 $output[]['category'] = $category;
                 unset($categories[$key]);
             }
