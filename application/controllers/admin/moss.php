@@ -358,7 +358,7 @@ class moss extends LIST_Controller
         $output = false;
         
         foreach ($solutions as $id => $config) {
-            if (isset($config['selected']) && $config['selected'] === 1) {
+            if (isset($config['selected']) && (int)$config['selected'] === 1) {
                 $output = true;
                 break;
             }
