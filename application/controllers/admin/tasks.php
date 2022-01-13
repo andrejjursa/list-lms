@@ -208,7 +208,7 @@ class Tasks extends LIST_Controller
                     Messages::MESSAGE_TYPE_SUCCESS
                 );
                 $this->_action_success();
-                if ($this->input->post('submit_and_go_to_list') !== null) {
+                if ($this->input->post('submit_and_go_to_list') !== false) {
                     redirect(create_internal_url('admin_tasks'));
                 } else {
                     redirect(create_internal_url('admin_tasks/edit/task_id/' . $task->id));
