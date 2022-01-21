@@ -662,15 +662,15 @@ class Task_sets extends LIST_Controller
             $task_set->group_id = (int)$task_set_data['group_id'] > 0 ? (int)$task_set_data['group_id'] : null;
             $task_set->room_id = (int)$task_set_data['room_id'] > 0 ? (int)$task_set_data['room_id'] : null;
             $task_set->publish_start_time =
-                preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['publish_start_time'])
+                preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['publish_start_time'] ?? null)
                     ? $task_set_data['publish_start_time']
                     : null;
             $task_set->upload_end_time =
-                preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['upload_end_time'])
+                preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['upload_end_time'] ?? null)
                     ? $task_set_data['upload_end_time']
                     : null;
             $task_set->project_selection_deadline =
-                preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['project_selection_deadline'])
+                preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['project_selection_deadline'] ?? null)
                     ? $task_set_data['project_selection_deadline']
                     : null;
             $task_set->comments_enabled =
@@ -984,17 +984,17 @@ class Task_sets extends LIST_Controller
             $task_set->room_id = (int)($task_set_data['room_id']) > 0 ? (int)($task_set_data['room_id']) : null;
             $task_set->publish_start_time =
                 isset($task_set_data['publish_start_time'])
-                && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['publish_start_time'])
+                && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['publish_start_time'] ?? null)
                     ? $task_set_data['publish_start_time']
                     : null;
             $task_set->upload_end_time =
                 isset($task_set_data['upload_end_time'])
-                && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['upload_end_time'])
+                && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['upload_end_time'] ?? null)
                     ? $task_set_data['upload_end_time']
                     : null;
             $task_set->project_selection_deadline =
                 isset($task_set_data['project_selection_deadline'])
-                && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['project_selection_deadline'])
+                && preg_match(self::REGEXP_PATTERN_DATETIME, $task_set_data['project_selection_deadline'] ?? null)
                     ? $task_set_data['project_selection_deadline']
                     : null;
             $task_set->comments_enabled =

@@ -148,8 +148,8 @@ class Logs extends LIST_Controller
         $log->get_by_id($log_id);
         
         if ($log->exists()) {
-            if ($log->log_type === Log::LOG_TYPE_STUDENT_SOLUTION_UPLOAD
-                || $log->log_type === Log::LOG_TYPE_TEACHER_SOLUTION_UPLOAD
+            if ((int)$log->log_type === Log::LOG_TYPE_STUDENT_SOLUTION_UPLOAD
+                || (int)$log->log_type === Log::LOG_TYPE_TEACHER_SOLUTION_UPLOAD
             ) {
                 $solution = new Solution();
                 $solution->include_related('student');
@@ -158,7 +158,7 @@ class Logs extends LIST_Controller
                 $solution->include_related('task_set/course/period');
                 $solution->get_by_id((int)$log->affected_row_primary_id);
                 $this->parser->assign('solution', $solution);
-            } else if ($log->log_type === Log::LOG_TYPE_STUDENT_SOLUTION_DOWNLOAD) {
+            } else if ((int)$log->log_type === Log::LOG_TYPE_STUDENT_SOLUTION_DOWNLOAD) {
                 $additional_data = unserialize($log->additional_data);
                 $task_set = new Task_set();
                 $task_set->include_related('course');
