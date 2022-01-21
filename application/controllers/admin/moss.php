@@ -213,11 +213,11 @@ class moss extends LIST_Controller
                     if (!$all_extracted) {
                         break;
                     }
-                    if (isset($config['selected']) && $config['selected'] === 1) {
+                    if (isset($config['selected']) && (int)$config['selected'] === 1) {
                         set_time_limit(120);
                         $version = $config['version'] ?? 0;
                         $student = $config['student'] ?? 0;
-                        $file = $task_set->get_student_files($student, $version);
+                        $file = $task_set->get_student_files((int)$student, (int)$version);
                         if (count($file) === 1) {
                             $file = $file[$version];
                             $subdir = '/' . normalize($file['file_name']) . '_sid-'

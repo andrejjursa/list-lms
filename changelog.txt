@@ -20,6 +20,19 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.7.4 | 2022-01-21
+
+FIX Opravený problém so zobrazovaním detailu záznamov aktivít.
+FIX [lang:english] Fixed problem with displaying details about log records.
+
+FIX Opravený problém, ktorý spôsoboval chybu extrakcie súborov odosielaných do MOSS.
+FIX [lang:english] Fixed problem that causes error in extraction of files which are about to be sent to MOSS.
+
+FIX Opravený problém s vytváraním zostáv úloh.
+FIX [lang:english] Fixed problem with creation of task sets.
+
+END VERSION
+
 VERSION 1.7.3 | 2022-01-13
 
 FIX Opravený problém so správaním sa aplikácie po vytvorení novej úlohy.
