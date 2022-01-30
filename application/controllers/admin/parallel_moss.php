@@ -20,6 +20,9 @@ class parallel_moss extends LIST_Controller
     {
         $this->_select_teacher_menu_pagetag('parallel_moss');
         
+        $this->parser->add_css_file('admin_parallel_moss.css');
+        $this->parser->add_js_file('admin_parallel_moss/parallel_moss.js');
+        
         $this->parser->assign('moss_enabled', $this->is_moss_user_id_set());
         
         $this->parser->parse('backend/parallel_moss/index.tpl');
