@@ -156,6 +156,13 @@ $cache = array (
       array (
       ),
     ),
+    'parallel_moss_comparison' => 
+    array (
+      'field' => 'parallel_moss_comparison',
+      'rules' => 
+      array (
+      ),
+    ),
   ),
   'has_one' => 
   array (
@@ -279,6 +286,17 @@ $cache = array (
       'other_field' => 'teacher',
       'join_self_as' => 'teacher',
       'join_other_as' => 'test_queue',
+      'join_table' => '',
+      'reciprocal' => false,
+      'auto_populate' => NULL,
+      'cascade_delete' => true,
+    ),
+    'parallel_moss_comparison' => 
+    array (
+      'class' => 'parallel_moss_comparison',
+      'other_field' => 'teacher',
+      'join_self_as' => 'teacher',
+      'join_other_as' => 'parallel_moss_comparison',
       'join_table' => '',
       'reciprocal' => false,
       'auto_populate' => NULL,

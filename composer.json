@@ -29,7 +29,9 @@
   "autoload": {
     "psr-4": {
       "Application\\Interfaces\\": "application/interface/",
-      "Application\\Services\\": "application/services/"
+      "Application\\Services\\": "application/services/",
+      "Application\\ModelTraits\\": "application/modelTraits/",
+      "Application\\MetaClass\\": "application/metaclass/"
     }
   },
   "minimum-stability": "dev",
