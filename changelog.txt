@@ -20,6 +20,47 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.7.5 | 2022-01-23
+
+FIX Opravený problém so spúšťaním testov v administrácii.
+FIX [lang:english] Fixed problem with tests execution in administration.
+
+END VERSION
+
+VERSION 1.7.4 | 2022-01-21
+
+FIX Opravený problém so zobrazovaním detailu záznamov aktivít.
+FIX [lang:english] Fixed problem with displaying details about log records.
+
+FIX Opravený problém, ktorý spôsoboval chybu extrakcie súborov odosielaných do MOSS.
+FIX [lang:english] Fixed problem that causes error in extraction of files which are about to be sent to MOSS.
+
+FIX Opravený problém s vytváraním zostáv úloh.
+FIX [lang:english] Fixed problem with creation of task sets.
+
+END VERSION
+
+VERSION 1.7.3 | 2022-01-13
+
+FIX Opravený problém so správaním sa aplikácie po vytvorení novej úlohy.
+FIX [lang:english] Fixed problem with application behaviour related to creation of new task.
+
+END VERSION
+
+VERSION 1.7.2 | 2022-01-05
+
+FIX Oprava v rozhraní MOSSu.
+FIX [lang:english] Fixed interface of MOSS.
+
+END VERSION
+
+VERSION 1.7.1 | 2022-01-04
+
+FIX Opravený strom kategórií.
+FIX [lang:english] Category tree fixed.
+
+END VERSION
+
 VERSION 1.7.0 | 2021-12-12
 
 CHANGE Kompletná interná refaktorizácia kódu aplikácie spojená s optimalizáciami.

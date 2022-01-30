@@ -250,7 +250,7 @@ abstract class abstract_test
      *
      * @param string      $input_zip_file path to zip file with source code to be tested.
      * @param boolean     $save_score     enables or disables saving score into score database table.
-     * @param string      $score_token    unique identification token for batch test set.
+     * @param null|string $score_token    unique identification token for batch test set.
      * @param int|Student $score_student  id or initialized student model.
      *
      * @return string result of test in text/html or plain/text form.
@@ -258,10 +258,10 @@ abstract class abstract_test
      *                       not found.
      */
     public function run(
-        string $input_zip_file,
-        bool   $save_score = false,
-        string $score_token = '',
-               $score_student = null
+        string  $input_zip_file,
+        bool    $save_score = false,
+        ?string $score_token = '',
+                $score_student = null
     ): string
     {
         $this->test_scoring = null;
