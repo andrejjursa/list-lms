@@ -23,10 +23,15 @@
                         <th>Status</th>
                         <th>Started at</th>
                         <th>Finished at</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr></tr>
+                <tfoot id="table_pagination_footer_id">
+                    <tr>
+                        <td colspan="8">{include file='partials/backend_general/pagination.tpl'}</td>
+                    </tr>
                 </tfoot>
                 <tbody></tbody>
             </table>

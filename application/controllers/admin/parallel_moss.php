@@ -32,7 +32,8 @@ class parallel_moss extends LIST_Controller
     {
         $comparisons = new Parallel_moss_comparison();
         $comparisons->include_related('teacher', 'fullname');
-        $comparisons->get_paged_iterated(1, 10);
+        $comparisons->order_by('created', 'desc');
+        $comparisons->get_paged_iterated(1, 25);
         
         $output = [
             'data' => [],
