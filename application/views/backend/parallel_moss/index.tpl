@@ -5,7 +5,9 @@
     {include file='partials/backend_general/flash_messages.tpl' inline}
     {if $moss_enabled}
         <fieldset>
-
+            <a href="{internal_url url='admin_parallel_moss/new_comparison'}" class="button">
+                {translate line='admin_parallel_moss_new_comparison_button_label'}
+            </a>
         </fieldset>
 
         <fieldset>
