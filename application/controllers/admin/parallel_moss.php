@@ -190,6 +190,7 @@ class parallel_moss extends LIST_Controller
     
     public function new_comparison()
     {
+        $this->_select_teacher_menu_pagetag('parallel_moss');
         $this->parser->parse('backend/parallel_moss/new_comparison.tpl');
     }
     

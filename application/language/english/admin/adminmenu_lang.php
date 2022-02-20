@@ -28,6 +28,7 @@ $lang['adminmenu_title_valuation_tables'] = 'Valuation tables';
 $lang['adminmenu_title_comparation'] = 'Comparation';
 $lang['adminmenu_title_java_comparator'] = 'Java comparator';
 $lang['adminmenu_title_moss_comparator'] = 'MOSS comparator';
+$lang['adminmenu_title_parallel_moss_comparator'] = 'MOSS comparator (advanced)';
 $lang['adminmenu_title_restrictions'] = 'Restrictions';
 $lang['adminmenu_title_application_changelog'] = 'Changelog';
 $lang['adminmenu_title_manual_index'] = 'User manual';

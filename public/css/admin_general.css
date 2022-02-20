@@ -222,6 +222,8 @@ div.overflow div.extend { overflow-x: auto; }
 
 ul.error-notification-dialog-list { margin-left: 1em; }
 
+span.fa.menu_item_active { color: white; }
+
 @media only screen and (max-width: 960px) {
     #pagewrap_id { width: 960px; min-width: 960px; }
     #headerwrap_id { width: 960px; position: static; }

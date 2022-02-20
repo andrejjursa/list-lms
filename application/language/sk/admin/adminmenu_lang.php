@@ -28,6 +28,7 @@ $lang['adminmenu_title_valuation_tables'] = 'Tabuľky hodnotení';
 $lang['adminmenu_title_comparation'] = 'Porovnávanie';
 $lang['adminmenu_title_java_comparator'] = 'Porovnávač Java';
 $lang['adminmenu_title_moss_comparator'] = 'Porovnávač MOSS';
+$lang['adminmenu_title_parallel_moss_comparator'] = 'Porovnávač MOSS (pokročilý)';
 $lang['adminmenu_title_restrictions'] = 'Obmedzenia';
 $lang['adminmenu_title_application_changelog'] = 'Záznam zmien';
 $lang['adminmenu_title_manual_index'] = 'Použív. manuál';
