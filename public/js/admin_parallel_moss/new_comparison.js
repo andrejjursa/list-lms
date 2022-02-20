@@ -28,10 +28,84 @@ jQuery(document).ready(function($) {
             taskSetsField.addClass('hidden');
             comparisonBox.append(taskSetsField);
 
+            var solutionsSelection = $('<div>');
+            solutionsSelection.addClass('solutions-selection');
+            solutionsSelection.addClass('hidden');
+            comparisonBox.append(solutionsSelection);
+
             var render_task_sets = function (selectedCourse) {
+                var render_solutions_selection = function (selectedTaskSet) {
+                    solutionsSelection.html('');
+                    if (selectedTaskSet == 0) {
+                        solutionsSelection.addClass('hidden');
+                        return;
+                    }
+                    solutionsSelection.removeClass('hidden');
+
+                    var solutionsList = $('<fieldset>');
+                    solutionsList.addClass('solutions-list');
+                    solutionsSelection.append(solutionsList);
+
+                    var solutionsUrl = mainForm.attr('data-solutions_url') + '/' + selectedTaskSet;
+                    api_ajax_load_json(solutionsUrl, 'post', {}, function (data) {
+                        var solutions = data.data.solutions;
+
+                        for (var i in solutions) {
+                            var solution = solutions[i];
+
+                            var solutionBox = $('<div>');
+                            solutionBox.addClass('solution_box');
+                            solutionBox.addClass('field');
+                            solutionsList.append(solutionBox);
+
+                            var solutionLabel = $('<label>');
+                            solutionBox.append(solutionLabel);
+
+                            var solutionSelector = $('<input>');
+                            solutionSelector.attr('type', 'checkbox');
+                            solutionSelector.attr('value', 1);
+                            solutionSelector.attr('checked', 'checked');
+                            solutionSelector.attr('name', 'comparison[' + courses + '][solution][' + solution.id + '][selected]');
+                            solutionLabel.append(solutionSelector);
+
+                            var solutionStudent = $('<span>');
+                            solutionStudent.text(solution.student.fullname);
+                            solutionLabel.append(solutionStudent);
+
+                            var solutionVersionWrap = $('<p>');
+                            solutionVersionWrap.addClass('input');
+                            solutionBox.append(solutionVersionWrap);
+
+                            var solutionVersion = $('<select>');
+                            solutionVersion.attr('size', '1');
+                            solutionVersion.attr('name', 'comparison[' + courses + '][solution][' + solution.id + '][version]');
+                            solutionVersionWrap.append(solutionVersion);
+
+                            var versions = solution.versions;
+
+                            var selectVersion = 0;
+                            for (var v in versions) {
+                                var version = versions[v];
+
+                                var option = $('<option>');
+                                option.attr('value', version.version);
+                                option.text((version.version === solution.best_version ? '* ' :'') + version.version);
+                                solutionVersion.append(option);
+                                selectVersion = Math.max(selectVersion, version.version);
+                            }
+                            if (solution.best_version !== null) {
+                                selectVersion = solution.best_version;
+                            }
+                            solutionVersion.val(selectVersion);
+
+                        }
+                    });
+                }
+
                 taskSetsField.html('');
                 if (selectedCourse == 0) {
                     taskSetsField.addClass('hidden');
+                    render_solutions_selection(0);
                     return;
                 }
                 taskSetsField.removeClass('hidden');
@@ -51,6 +125,9 @@ jQuery(document).ready(function($) {
                 taskSetsInput.attr('name', 'comparison[' + courses + '][task_set_id]');
                 taskSetsInput.attr('id', 'task_set_name_' + courses + '_id');
                 taskSetsInput.attr('disabled', 'disabled');
+                taskSetsInput.on('change', function (event) {
+                    render_solutions_selection(event.target.value);
+                });
                 taskSetsInputWrap.append(taskSetsInput);
 
                 var taskSetsUrl = mainForm.attr('data-task_sets_url') + '/' + selectedCourse;
@@ -65,7 +142,6 @@ jQuery(document).ready(function($) {
                     var contentTypes = data.data;
                     for (var contentType in contentTypes) {
                         var taskSets = contentTypes[contentType];
-                        console.log(contentType, taskSets);
                         if (taskSets.length === 0) {
                             continue;
                         }

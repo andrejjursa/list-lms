@@ -10,8 +10,26 @@ table.comparisons_table tbody tr td.controlls { width: 1px; }
 
 table.comparisons_table tfoot td { text-align: right; background-color: rgba(192, 192, 192, 128); padding: 2px; border-radius: 4px; }
 
-div.field.hidden { display: none; }
+div.field.hidden,
+div.solutions-selection.hidden { display: none; }
 
 div.comparison_box { padding: 0.5em; border: 1px solid black; border-radius: 0.8em; margin-top: 0.5em; position: relative; }
 div.comparison_box div.delete_box { position: absolute; top: -0.2em; right: -0.2em; border: 1px red solid; padding: 0.1em; border-radius: 0.2em; background-color: indianred; }
 div.comparison_box div.delete_box a { color: darkred; text-decoration: none; }
+
+div.solutions-selection { clear: both; }
+fieldset.solutions-list div.solution_box > label { display: flex; flex-flow: row wrap; justify-content: space-between; align-items: center; width: 80%; }
+fieldset.solutions-list div.solution_box > label input[type=checkbox] { display: inline-block; width: 1em; margin-right: 0.1em; margin-left: 0.1em; align-self: center; }
+fieldset.solutions-list div.solution_box > label span { display: inline-block; width: calc(100% - 1.2em); align-self: center; }
+fieldset.solutions-list div.solution_box > p.input { margin-left: 80%; display: block; width: 20%; }
+fieldset.solutions-list div.solution_box > p.input select { width: 90%; }
+
+@media screen and (min-width: 900px) {
+
+    fieldset.solutions-list { display: flex; flex-flow: row wrap; justify-content: left; align-content: stretch; align-items: stretch; }
+    div.solution_box { width: 50%; display: block; }
+}
+
+@media screen and (min-width: 1600px) {
+    div.solution_box { width: 25%; }
+}

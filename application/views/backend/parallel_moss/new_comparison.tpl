@@ -15,6 +15,7 @@
             id="main_form_id"
             data-courses_url="{internal_url url='admin_parallel_moss/get_courses'}"
             data-task_sets_url="{internal_url url='admin_parallel_moss/get_task_sets'}"
+            data-solutions_url="{internal_url url='admin_parallel_moss/get_solutions'}"
             data-lang_add_new_comparison_button_text="{translate|escape:'html' line='admin_parallel_moss_add_new_comparison_button_text'}"
             data-lang_add_new_comparison_button_title="{translate|escape:'html' line='admin_parallel_moss_add_new_comparison_button_title'}"
             data-lang_remove_comparison_title="{translate|escape:'html' line='admin_parallel_moss_remove_comparison_title'}"
