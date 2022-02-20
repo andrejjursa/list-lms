@@ -7,9 +7,6 @@ jQuery(document).ready(function($) {
         });
     };
 
-    reload_comparisons();
-    var timer = setInterval(reload_comparisons, 10000);
-
     var fill_table = function(data) {
         var tbody = $('#comparisons_table_id tbody');
         tbody.html('');
@@ -155,5 +152,8 @@ jQuery(document).ready(function($) {
             $(per_page_select).append(newOption);
         }
     };
+
+    reload_comparisons();
+    var timer = setInterval(reload_comparisons, 10000);
 
 });

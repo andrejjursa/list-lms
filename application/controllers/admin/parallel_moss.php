@@ -97,12 +97,15 @@ class parallel_moss extends LIST_Controller
         $taskSets->get_iterated();
         
         $output = [
-            'data' => [],
+            'data' => [
+                'task_set' => [],
+                'project' => [],
+            ],
         ];
     
         /** @var Task_set $taskSet */
         foreach ($taskSets as $taskSet) {
-            $output['data'][] = [
+            $output['data'][$taskSet->content_type][] = [
                 'id' => $taskSet->id,
                 'name' => $this->lang->get_overlay_with_default(
                     'task_sets',
@@ -191,6 +194,8 @@ class parallel_moss extends LIST_Controller
     public function new_comparison()
     {
         $this->_select_teacher_menu_pagetag('parallel_moss');
+        $this->parser->add_css_file('admin_parallel_moss.css');
+        $this->parser->add_js_file('admin_parallel_moss/new_comparison.js');
         $this->parser->parse('backend/parallel_moss/new_comparison.tpl');
     }
     
