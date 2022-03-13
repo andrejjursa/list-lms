@@ -51,10 +51,8 @@ use Application\Interfaces\DataMapperExtensionsInterface;
  * @method DataMapper where_related_comment(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_task_set_permission(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_project_selection(mixed $related, string $field = null, string $value = null)
- * @method DataMapper where_related_comment_subscriber_student(mixed $related, string $field = null, string $value =
- *         null)
- * @method DataMapper where_related_comment_subscriber_teacher(mixed $related, string $field = null, string $value =
- *         null)
+ * @method DataMapper where_related_comment_subscriber_student(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_comment_subscriber_teacher(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_test_queue(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_course(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_task_set_type(mixed $related, string $field = null, string $value = null)

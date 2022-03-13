@@ -12,7 +12,7 @@
         </div>
         <div class="field_login">
             <label for="id_teacher_password">{translate line='admin_teachers_login_label_password'}:</label>
-            <p class="input"><input type="password" name="teacher[password]" value="{$smarty.post.teacher.password|escape:'html'}" id="id_teacher_password" /></p>
+            <p class="input"><input type="password" name="teacher[password]" value="" id="id_teacher_password" /></p>
             {form_error field='teacher[password]' left_delimiter = '<p class="error"><span class="message">' right_delimiter='</span></p>'}
         </div>
         <div class="buttons_login">

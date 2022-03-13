@@ -16,6 +16,7 @@
             data-courses_url="{internal_url url='admin_parallel_moss/get_courses'}"
             data-task_sets_url="{internal_url url='admin_parallel_moss/get_task_sets'}"
             data-solutions_url="{internal_url url='admin_parallel_moss/get_solutions'}"
+            data-settings_url="{internal_url url='admin_parallel_moss/get_settings'}"
             data-lang_add_new_comparison_button_text="{translate|escape:'html' line='admin_parallel_moss_add_new_comparison_button_text'}"
             data-lang_add_new_comparison_button_title="{translate|escape:'html' line='admin_parallel_moss_add_new_comparison_button_title'}"
             data-lang_remove_comparison_title="{translate|escape:'html' line='admin_parallel_moss_remove_comparison_title'}"
@@ -23,6 +24,7 @@
             data-lang_form_task_set_label="{translate|escape:'html' line='admin_parallel_moss_form_task_set_label'}"
             data-lang_task_set_content_task_sets="{translate|escape:'html' line='admin_parallel_moss_task_set_content_task_sets'}"
             data-lang_task_set_content_projects="{translate|escape:'html' line='admin_parallel_moss_task_set_content_projects'}"
+            data-lang_task_set_solutions_are_empty="{translate|escape:'html' line='admin_parallel_moss_task_set_solutions_are_empty'}"
         ></div>
     </form>
 {/block}

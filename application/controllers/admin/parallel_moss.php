@@ -199,6 +199,20 @@ class parallel_moss extends LIST_Controller
         $this->parser->parse('backend/parallel_moss/new_comparison.tpl');
     }
     
+    public function get_settings()
+    {
+        $this->config->load('moss');
+        
+        $output = [
+            'data' => [
+                'languages' => $this->config->item('moss_langs_for_list'),
+            ],
+        ];
+        
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+    
     protected function is_moss_user_id_set(): bool
     {
         $this->load->config('moss');

@@ -24,6 +24,9 @@ fieldset.solutions-list div.solution_box > label span { display: inline-block; w
 fieldset.solutions-list div.solution_box > p.input { margin-left: 80%; display: block; width: 20%; }
 fieldset.solutions-list div.solution_box > p.input select { width: 90%; }
 
+div.comparison_content_box { margin-top: 0.5em; border-top: 1px solid black; padding-top: 0; }
+div.comparison_settings_box { margin-top: 0.5em; border-top: 1px solid black; padding-top: 0; }
+
 @media screen and (min-width: 900px) {
 
     fieldset.solutions-list { display: flex; flex-flow: row wrap; justify-content: left; align-content: stretch; align-items: stretch; }

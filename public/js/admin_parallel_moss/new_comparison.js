@@ -6,6 +6,43 @@ jQuery(document).ready(function($) {
         var mainForm = $('#main_form_id');
         mainForm.html('');
 
+        var submitButton = $('<input>');
+
+        var submitValidation = function () {
+            submitButton.attr('disabled', 'disabled');
+
+            var valid = false;
+
+            var language = mainForm.find('select[name="moss_setup[l]"]');
+
+            if ($(language).val() !== '') {
+                valid = true;
+            }
+
+            var selected = 0;
+
+            var comparisonCheckboxes = mainForm.find('input[type=checkbox][name^=comparison]');
+
+            for (var i = 0; i < comparisonCheckboxes.length; i++) {
+                if (!$(comparisonCheckboxes.get(i)).is(':checked')) {
+                    continue;
+                }
+                var name = $(comparisonCheckboxes.get(i)).attr('name');
+                var versinSelect = name.replace('selected', 'version');
+
+                var version = mainForm.find('select[name="' + versinSelect + '"]');
+                if (version.length === 1 && $(version).val() !== '' && parseInt($(version).val()) > 0) {
+                    selected++;
+                }
+            }
+
+            valid = valid && (selected >= 2);
+
+            if (valid) {
+                submitButton.removeAttr('disabled');
+            }
+        };
+
         var resolve_task_set_content_type_name = function (content_type) {
             if (content_type === 'task_set') {
                 return mainForm.attr('data-lang_task_set_content_task_sets');
@@ -35,6 +72,8 @@ jQuery(document).ready(function($) {
 
             var render_task_sets = function (selectedCourse) {
                 var render_solutions_selection = function (selectedTaskSet) {
+                    submitValidation();
+
                     solutionsSelection.html('');
                     if (selectedTaskSet == 0) {
                         solutionsSelection.addClass('hidden');
@@ -49,6 +88,17 @@ jQuery(document).ready(function($) {
                     var solutionsUrl = mainForm.attr('data-solutions_url') + '/' + selectedTaskSet;
                     api_ajax_load_json(solutionsUrl, 'post', {}, function (data) {
                         var solutions = data.data.solutions;
+
+                        if (solutions.length === 0) {
+                            var errorDiv = $('<div>');
+                            errorDiv.addClass('flash_message').addClass('message_error');
+                            errorDiv.text(mainForm.attr('data-lang_task_set_solutions_are_empty'));
+                            solutionsList.replaceWith(errorDiv);
+
+                            submitValidation();
+
+                            return;
+                        }
 
                         for (var i in solutions) {
                             var solution = solutions[i];
@@ -66,6 +116,7 @@ jQuery(document).ready(function($) {
                             solutionSelector.attr('value', 1);
                             solutionSelector.attr('checked', 'checked');
                             solutionSelector.attr('name', 'comparison[' + courses + '][solution][' + solution.id + '][selected]');
+                            solutionSelector.change(submitValidation);
                             solutionLabel.append(solutionSelector);
 
                             var solutionStudent = $('<span>');
@@ -99,6 +150,8 @@ jQuery(document).ready(function($) {
                             solutionVersion.val(selectVersion);
 
                         }
+
+                        submitValidation();
                     });
                 }
 
@@ -214,6 +267,7 @@ jQuery(document).ready(function($) {
             closeButton.attr('title', mainForm.attr('data-lang_remove_comparison_title'));
             closeButton.on('click', function () {
                 comparisonBox.remove();
+                submitValidation();
             });
             closeButtonBox.append(closeButton);
 
@@ -232,6 +286,56 @@ jQuery(document).ready(function($) {
         var comparisonContentBox = $('<div>');
         comparisonContentBox.addClass('comparison_content_box');
         mainForm.append(comparisonContentBox);
+
+        var comparisonSettingsBox = $('<div>');
+        comparisonSettingsBox.addClass('comparison_settings_box');
+        mainForm.append(comparisonSettingsBox);
+
+        var languageField = $('<div>');
+        languageField.addClass('field');
+        comparisonSettingsBox.append(languageField);
+
+        var languageLabel = $('<label>');
+        languageLabel.addClass('required');
+        languageLabel.text('Language:');
+        languageField.append(languageLabel);
+
+        var languageInputWrap = $('<div>');
+        languageInputWrap.addClass('input');
+        languageField.append(languageInputWrap);
+
+        var languageSelect = $('<select>');
+        languageSelect.attr('size', '1');
+        languageSelect.attr('name', 'moss_setup[l]');
+        languageSelect.change(submitValidation);
+        languageInputWrap.append(languageSelect);
+
+        var languageEmptyOption = $('<option>');
+        languageEmptyOption.attr('value', '');
+        languageEmptyOption.text('');
+        languageSelect.append(languageEmptyOption);
+
+        var url = mainForm.attr('data-settings_url');
+        api_ajax_load_json(url, 'post', {}, function (data) {
+            for (var lang in data.data.languages) {
+                var langName = data.data.languages[lang];
+
+                var option = $('<option>');
+                option.attr('value', lang);
+                option.text(langName);
+                languageSelect.append(option);
+            }
+        });
+
+        var comparisonControlBox = $('<div>');
+        comparisonControlBox.addClass('comparison_control_box');
+        mainForm.append(comparisonControlBox);
+
+        submitButton.attr('type', 'submit');
+        submitButton.attr('disabled', 'disabled');
+        submitButton.addClass('button');
+        submitButton.text('Submit');
+        comparisonControlBox.append(submitButton);
     };
 
     construct_form();

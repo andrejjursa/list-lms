@@ -16,3 +16,4 @@ $lang['admin_parallel_moss_form_course_label'] = 'Course';
 $lang['admin_parallel_moss_form_task_set_label'] = 'Task set';
 $lang['admin_parallel_moss_task_set_content_task_sets'] = 'Task sets';
 $lang['admin_parallel_moss_task_set_content_projects'] = 'Projects';
+$lang['admin_parallel_moss_task_set_solutions_are_empty'] = 'There are no solutions for this selection.';

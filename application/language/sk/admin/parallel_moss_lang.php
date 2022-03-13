@@ -16,3 +16,4 @@ $lang['admin_parallel_moss_form_course_label'] = 'Kurz';
 $lang['admin_parallel_moss_form_task_set_label'] = 'Zostava úloh';
 $lang['admin_parallel_moss_task_set_content_task_sets'] = 'Zostavy úloh';
 $lang['admin_parallel_moss_task_set_content_projects'] = 'Projekty';
+$lang['admin_parallel_moss_task_set_solutions_are_empty'] = 'V tomto výbere nie sú žiadne riešenia.';
