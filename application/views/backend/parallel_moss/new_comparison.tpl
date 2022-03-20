@@ -25,6 +25,9 @@
             data-lang_task_set_content_task_sets="{translate|escape:'html' line='admin_parallel_moss_task_set_content_task_sets'}"
             data-lang_task_set_content_projects="{translate|escape:'html' line='admin_parallel_moss_task_set_content_projects'}"
             data-lang_task_set_solutions_are_empty="{translate|escape:'html' line='admin_parallel_moss_task_set_solutions_are_empty'}"
+            data-lang_fieldset_legend_solutions="{translate|escape:'html' line='admin_parallel_moss_fieldset_legend_solutions'}"
+            data-lang_fieldset_legend_base_files="{translate|escape:'html' line='admin_parallel_moss_fieldset_legend_base_files'}"
+            data-lang_form_language_label="{translate|escape:'html' line='admin_parallel_moss_form_language_label'}"
         ></div>
     </form>
 {/block}

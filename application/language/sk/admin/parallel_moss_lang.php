@@ -17,3 +17,6 @@ $lang['admin_parallel_moss_form_task_set_label'] = 'Zostava úloh';
 $lang['admin_parallel_moss_task_set_content_task_sets'] = 'Zostavy úloh';
 $lang['admin_parallel_moss_task_set_content_projects'] = 'Projekty';
 $lang['admin_parallel_moss_task_set_solutions_are_empty'] = 'V tomto výbere nie sú žiadne riešenia.';
+$lang['admin_parallel_moss_fieldset_legend_solutions'] = 'Riešenia';
+$lang['admin_parallel_moss_fieldset_legend_base_files'] = 'Základné súbory';
+$lang['admin_parallel_moss_form_language_label'] = 'Programovací jazyk';
