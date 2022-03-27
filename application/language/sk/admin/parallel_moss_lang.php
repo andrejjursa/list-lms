@@ -20,3 +20,7 @@ $lang['admin_parallel_moss_task_set_solutions_are_empty'] = 'V tomto výbere nie
 $lang['admin_parallel_moss_fieldset_legend_solutions'] = 'Riešenia';
 $lang['admin_parallel_moss_fieldset_legend_base_files'] = 'Základné súbory';
 $lang['admin_parallel_moss_form_language_label'] = 'Programovací jazyk';
+$lang['admin_parallel_moss_form_sensitivity_label'] = 'Citlivosť MOSS-u';
+$lang['admin_parallel_moss_form_sensitivity_hint'] = 'Ak nejaký prechod kódom bude rovnaký vo viacerých programoch a jeho počet výskytov bude vyšší ako táto hodnota, bude tento prechod kódom považovaný za legitímny (ako keby sa nachádzal aj v niektorom zo základných súborov).';
+$lang['admin_parallel_moss_form_number_of_results_label'] = 'Počet súborov vo výsledkoch';
+$lang['admin_parallel_moss_form_number_of_results_hint'] = 'Táto hodnota určuje počet porovnávaných súborov vo výsledku.';

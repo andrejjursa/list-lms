@@ -11,13 +11,21 @@ jQuery(document).ready(function($) {
         const submitValidation = function () {
             submitButton.attr('disabled', 'disabled');
 
-            let valid = false;
-
             const language = mainForm.find('select[name="moss_setup[l]"]');
 
-            if ($(language).val() !== '') {
-                valid = true;
-            }
+            let valid = ($(language).val() !== '');
+
+            const sensitivity = mainForm.find('input[name="moss_setup[m]"]');
+
+            valid = valid && (
+                $(sensitivity).val() !== '' && !isNaN($(sensitivity).val()) && parseInt($(sensitivity).val()) >= 0
+            );
+
+            const numberOfResults = mainForm.find('input[name="moss_setup[n]"]');
+
+            valid = valid && (
+                $(numberOfResults).val() !== '' && !isNaN($(numberOfResults).val()) && parseInt($(numberOfResults).val()) > 0
+            );
 
             let selected = 0;
 
@@ -392,9 +400,69 @@ jQuery(document).ready(function($) {
             }
         });
 
+        const sensitivityField = $('<div>');
+        sensitivityField.addClass('field');
+        comparisonSettingsBox.append(sensitivityField);
+
+        const sensitivityLabel = $('<label>');
+        sensitivityLabel.addClass('required');
+        sensitivityLabel.text(mainForm.attr('data-lang_form_sensitivity_label') + ':');
+        sensitivityField.append(sensitivityLabel);
+
+        const sensitivityInputWrap = $('<div>');
+        sensitivityInputWrap.addClass('input');
+        sensitivityField.append(sensitivityInputWrap);
+
+        const sensitivityInput = $('<input>');
+        sensitivityInput.attr('type', 'number');
+        sensitivityInput.attr('step', '1');
+        sensitivityInput.attr('value', '10');
+        sensitivityInput.attr('min', '0');
+        sensitivityInput.attr('name', 'moss_setup[m]');
+        sensitivityInput.change(submitValidation);
+        sensitivityInputWrap.append(sensitivityInput);
+
+        const sensitivityHint = $('<p>');
+        sensitivityHint.addClass('input');
+        sensitivityField.append(sensitivityHint);
+
+        const sensitivityHintEm = $('<em>');
+        sensitivityHintEm.text(mainForm.attr('data-lang_form_sensitivity_hint'));
+        sensitivityHint.append(sensitivityHintEm);
+
         const comparisonControlBox = $('<div>');
         comparisonControlBox.addClass('comparison_control_box');
         mainForm.append(comparisonControlBox);
+
+        const numberOfResultsField = $('<div>');
+        numberOfResultsField.addClass('field');
+        comparisonSettingsBox.append(numberOfResultsField);
+
+        const numberOfResultsLabel = $('<label>');
+        numberOfResultsLabel.addClass('required');
+        numberOfResultsLabel.text(mainForm.attr('data-lang_form_number_of_results_label') + ':');
+        numberOfResultsField.append(numberOfResultsLabel);
+
+        const numberOfResultsInputWrap = $('<div>');
+        numberOfResultsInputWrap.addClass('input');
+        numberOfResultsField.append(numberOfResultsInputWrap);
+
+        const numberOfResultsInput = $('<input>');
+        numberOfResultsInput.attr('type', 'number');
+        numberOfResultsInput.attr('step', '1');
+        numberOfResultsInput.attr('min', '1');
+        numberOfResultsInput.attr('value', '250');
+        numberOfResultsInput.attr('name', 'moss_setup[n]');
+        numberOfResultsInput.change(submitValidation);
+        numberOfResultsInputWrap.append(numberOfResultsInput);
+
+        const numberOfResultsHint = $('<p>');
+        numberOfResultsHint.addClass('input');
+        numberOfResultsField.append(numberOfResultsHint);
+
+        const numberOfResultsHintEm = $('<em>');
+        numberOfResultsHintEm.text(mainForm.attr('data-lang_form_number_of_results_hint'));
+        numberOfResultsHint.append(numberOfResultsHintEm);
 
         submitButton.attr('type', 'submit');
         submitButton.attr('disabled', 'disabled');

@@ -1,5 +1,7 @@
 <?php
 
+use Application\DataObjects\ParallelMoss\Configuration;
+
 /**
  * Controller for parallel moss implementation.
  */
@@ -197,6 +199,34 @@ class parallel_moss extends LIST_Controller
         $this->parser->add_css_file('admin_parallel_moss.css');
         $this->parser->add_js_file('admin_parallel_moss/new_comparison.js');
         $this->parser->parse('backend/parallel_moss/new_comparison.tpl');
+    }
+    
+    public function create_comparison()
+    {
+        $rawConfig = $this->input->post();
+        $json = json_encode($rawConfig);
+        
+        $mossConfig = new Configuration(
+            $rawConfig['moss_setup']['l'] ?? 'unknown',
+            (int)$rawConfig['moss_setup']['m'] ?? 10,
+            (int)$rawConfig['moss_setup']['n'] ?? 250
+        );
+        
+        foreach ($rawConfig['comparison'] as $comparisonData) {
+            foreach ($comparisonData['baseFile'] as $baseFiles) {
+                array_walk($baseFiles, function (string $baseFile) use ($mossConfig) {
+                    $mossConfig->addBaseFile($baseFile);
+                });
+            }
+            foreach ($comparisonData['solution'] as $solutionId => $solutionData) {
+                if (isset($solutionData['selected']) && (bool)(int)$solutionData['selected']) {
+                    $mossConfig->addSolution((int)$solutionId, (int)$solutionData['version']);
+                }
+            }
+        }
+        
+        $this->output->set_content_type('application/json');
+        $this->output->set_output('{ "output": ' . $mossConfig->toJson() . ', "input":' . $json . '}');
     }
     
     public function get_settings()

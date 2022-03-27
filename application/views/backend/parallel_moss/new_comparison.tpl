@@ -10,7 +10,7 @@
     </span>
     {include file='partials/backend_general/flash_messages.tpl' inline}
 
-    <form action="" method="post">
+    <form action="{internal_url url='admin_parallel_moss/create_comparison'}" method="post">
         <div
             id="main_form_id"
             data-courses_url="{internal_url url='admin_parallel_moss/get_courses'}"
@@ -28,6 +28,10 @@
             data-lang_fieldset_legend_solutions="{translate|escape:'html' line='admin_parallel_moss_fieldset_legend_solutions'}"
             data-lang_fieldset_legend_base_files="{translate|escape:'html' line='admin_parallel_moss_fieldset_legend_base_files'}"
             data-lang_form_language_label="{translate|escape:'html' line='admin_parallel_moss_form_language_label'}"
+            data-lang_form_sensitivity_label="{translate|escape:'html' line='admin_parallel_moss_form_sensitivity_label'}"
+            data-lang_form_sensitivity_hint="{translate|escape:'html' line='admin_parallel_moss_form_sensitivity_hint'}"
+            data-lang_form_number_of_results_label="{translate|escape:'html' line='admin_parallel_moss_form_number_of_results_label'}"
+            data-lang_form_number_of_results_hint="{translate|escape:'html' line='admin_parallel_moss_form_number_of_results_hint'}"
         ></div>
     </form>
 {/block}
