@@ -4,7 +4,9 @@ namespace Application\Services\AMQP\Factory;
 
 use Application\Services\AMQP\Connection;
 use Application\Services\AMQP\Exchanges\DirectExchange;
+use Application\Services\AMQP\Exchanges\Moss\MossExchange;
 use Application\Services\AMQP\Publisher;
+use Application\Services\AMQP\Queues\Moss\ComparisonQueue;
 use Application\Services\AMQP\Queues\TestQueue;
 
 class PublisherFactory
@@ -15,6 +17,9 @@ class PublisherFactory
     /** @var DirectExchange */
     protected $directExchange;
     
+    /** @var MossExchange */
+    protected $mossExchange;
+    
     /**
      * @param Connection $connection
      */
@@ -22,6 +27,7 @@ class PublisherFactory
     {
         $this->connection = $connection;
         $this->directExchange = new DirectExchange();
+        $this->mossExchange = new MossExchange();
     }
     
     public function getTestQueuePublisher(): Publisher
@@ -30,6 +36,15 @@ class PublisherFactory
             $this->connection,
             new TestQueue(),
             $this->directExchange
+        );
+    }
+    
+    public function getComparisonQueuePublisher(): Publisher
+    {
+        return new Publisher(
+            $this->connection,
+            new ComparisonQueue(),
+            $this->mossExchange
         );
     }
 }

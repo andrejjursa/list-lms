@@ -1,6 +1,9 @@
 <?php
 
 use Application\DataObjects\ParallelMoss\Configuration;
+use Application\Services\AMQP\Factory\PublisherFactory;
+use Application\Services\AMQP\Messages\Moss\StartComparisonMessage;
+use Application\Services\DependencyInjection\ContainerFactory;
 
 /**
  * Controller for parallel moss implementation.
@@ -204,7 +207,6 @@ class parallel_moss extends LIST_Controller
     public function create_comparison()
     {
         $rawConfig = $this->input->post();
-        $json = json_encode($rawConfig);
         
         $mossConfig = new Configuration(
             $rawConfig['moss_setup']['l'] ?? 'unknown',
@@ -225,8 +227,25 @@ class parallel_moss extends LIST_Controller
             }
         }
         
-        $this->output->set_content_type('application/json');
-        $this->output->set_output('{ "output": ' . $mossConfig->toJson() . ', "input":' . $json . '}');
+        $mossTable = new Parallel_moss_comparison();
+        $mossTable->status = Parallel_moss_comparison::STATUS_QUEUED;
+        $mossTable->configuration = $mossConfig->toArray();
+        $mossTable->teacher_id = $this->usermanager->get_teacher_id();
+        $mossTable->save();
+        
+        $container = ContainerFactory::getContainer();
+        
+        /** @var PublisherFactory $publisherFactory */
+        $publisherFactory = $container->get(PublisherFactory::class);
+        
+        $publisher = $publisherFactory->getComparisonQueuePublisher();
+        
+        $message = new StartComparisonMessage();
+        $message->setParallelMossComparisonID($mossTable->id);
+        
+        $publisher->publishMessage($message);
+        
+        redirect(create_internal_url('admin_parallel_moss/index'));
     }
     
     public function get_settings()

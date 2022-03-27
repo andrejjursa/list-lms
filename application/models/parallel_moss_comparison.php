@@ -26,6 +26,11 @@ use Application\ModelTraits\JSONFieldTrait;
  */
 class Parallel_moss_comparison extends DataMapper implements DataMapperExtensionsInterface
 {
+    public const STATUS_QUEUED = 'queued';
+    public const STATUS_PROCESSING = 'processing';
+    public const STATUS_FINISHED = 'finished';
+    public const STATUS_FAILED = 'failed';
+    
     use JSONFieldTrait;
     
     public $has_one = [

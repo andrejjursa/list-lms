@@ -32,7 +32,8 @@
       "Application\\Services\\": "application/services/",
       "Application\\ModelTraits\\": "application/modelTraits/",
       "Application\\MetaClass\\": "application/metaclass/",
-      "Application\\DataObjects\\": "application/dataObjects/"
+      "Application\\DataObjects\\": "application/dataObjects/",
+      "Application\\Exceptions\\": "application/exceptions/"
     }
   },
   "minimum-stability": "dev",

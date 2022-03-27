@@ -1,5 +1,10 @@
 <?php
 
+use Application\Services\AMQP\Factory\ConsumerFactory;
+use Application\Services\AMQP\Factory\PublisherFactory;
+use Application\Services\AMQP\Messages\TestMessage;
+use Application\Services\DependencyInjection\ContainerFactory;
+
 /**
  * Controller for CLI requests.
  *
@@ -1034,11 +1039,12 @@ class Cli extends CI_Controller
     
     public function test_message(): void
     {
-        $container = \Application\Services\DependencyInjection\ContainerFactory::getContainer();
-        $publisherFactory = $container->get(\Application\Services\AMQP\Factory\PublisherFactory::class);
+        $container = ContainerFactory::getContainer();
+        /** @var PublisherFactory $publisherFactory */
+        $publisherFactory = $container->get(PublisherFactory::class);
         $testQueuePublisher = $publisherFactory->getTestQueuePublisher();
         
-        $message = new \Application\Services\AMQP\Messages\TestMessage();
+        $message = new TestMessage();
         $message->setMessage('Hello world!');
         
         $testQueuePublisher->publishMessage($message);
@@ -1046,12 +1052,23 @@ class Cli extends CI_Controller
     
     public function test_consume(): void
     {
-        $container = \Application\Services\DependencyInjection\ContainerFactory::getContainer();
-        $consumerFactory = $container->get(\Application\Services\AMQP\Factory\ConsumerFactory::class);
+        $container = ContainerFactory::getContainer();
+        $consumerFactory = $container->get(ConsumerFactory::class);
         
         $testConsumer = $consumerFactory->getTestConsumer();
         
         $testConsumer->consumeQueue();
+    }
+    
+    public function moss_consume(): void
+    {
+        $container = ContainerFactory::getContainer();
+        /** @var ConsumerFactory $consumerFactory */
+        $consumerFactory = $container->get(ConsumerFactory::class);
+        
+        $mossConsumer = $consumerFactory->getMossConsumer();
+        
+        $mossConsumer->consumeQueue();
     }
     
     private function find_and_delete_old_upload_part(

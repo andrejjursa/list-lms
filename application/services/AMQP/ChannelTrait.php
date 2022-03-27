@@ -22,18 +22,7 @@ trait ChannelTrait
     protected function getChannel()
     {
         $channel = $this->connection->getConnection()->channel();
-        
-        $channel->queue_declare(
-            $this->queue->getName(),
-            $this->queue->isPassive(),
-            $this->queue->isDurable(),
-            $this->queue->isExclusive(),
-            $this->queue->isAutoDelete(),
-            $this->queue->isNoWait(),
-            $this->queue->getArguments(),
-            $this->queue->getTicket()
-        );
-        
+    
         $channel->exchange_declare(
             $this->exchange->getExchange(),
             $this->exchange->getType(),
@@ -44,6 +33,17 @@ trait ChannelTrait
             $this->exchange->isNoWait(),
             $this->exchange->getArguments(),
             $this->exchange->getTicket()
+        );
+    
+        $channel->queue_declare(
+            $this->queue->getName(),
+            $this->queue->isPassive(),
+            $this->queue->isDurable(),
+            $this->queue->isExclusive(),
+            $this->queue->isAutoDelete(),
+            $this->queue->isNoWait(),
+            $this->queue->getArguments(),
+            $this->queue->getTicket()
         );
         
         $channel->queue_bind($this->queue->getName(), $this->exchange->getExchange());

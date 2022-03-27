@@ -29,7 +29,7 @@ services:
       LIST_AMQP_PORT: 5672
       LIST_AMQP_USER: guest
       LIST_AMQP_PASSWORD: guest
-      LIST_AMQP_VHOST: list
+      LIST_AMQP_VHOST: /
       XDEBUG_CONFIG: >
         remote_host=host.docker.internal
         remote_autostart=1
