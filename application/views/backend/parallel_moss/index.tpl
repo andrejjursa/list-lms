@@ -17,14 +17,21 @@
 
                 </form>
             </div>
-            <table class="comparisons_table" id="comparisons_table_id">
+            <table class="comparisons_table" id="comparisons_table_id"
+               data-lang_comparison_status_queued="{translate|escape:'html' line='admin_parallel_moss_comparison_status_queued'}"
+               data-lang_comparison_status_processing="{translate|escape:'html' line='admin_parallel_moss_comparison_status_processing'}"
+               data-lang_comparison_status_finished="{translate|escape:'html' line='admin_parallel_moss_comparison_status_finished'}"
+               data-lang_comparison_status_failed="{translate|escape:'html' line='admin_parallel_moss_comparison_status_failed'}"
+               data-lang_comparison_action_pending="{translate|escape:'html' line='admin_parallel_moss_comparison_action_pending'}"
+               data-lang_comparison_action_waiting="{translate|escape:'html' line='admin_parallel_moss_comparison_action_waiting'}"
+            >
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Teacher</th>
-                        <th>Status</th>
-                        <th>Started at</th>
-                        <th>Finished at</th>
+                        <th>{translate line='admin_parallel_moss_comparisons_table_header_teacher'}</th>
+                        <th>{translate line='admin_parallel_moss_comparisons_table_header_status'}</th>
+                        <th>{translate line='admin_parallel_moss_comparisons_table_header_started_at'}</th>
+                        <th>{translate line='admin_parallel_moss_comparisons_table_header_finished_at'}</th>
                         <th></th>
                         <th></th>
                         <th></th>

@@ -465,7 +465,7 @@ jQuery(document).ready(function($) {
         submitButton.attr('type', 'submit');
         submitButton.attr('disabled', 'disabled');
         submitButton.addClass('button');
-        submitButton.text('Submit');
+        submitButton.attr('value', mainForm.attr('data-lang_form_submit'));
         comparisonControlBox.append(submitButton);
     };
 

@@ -9,7 +9,7 @@ $lang['admin_parallel_moss_all_planed_and_finished_comparisons'] = 'All planed a
 
 $lang['admin_parallel_moss_general_error_user_id_not_set'] = 'MOSS user id is not set. You need to set user id in L.I.S.T. setting to enable this module.';
 
-$lang['admin_parallel_moss_add_new_comparison_button_text'] = 'Add new comparison';
+$lang['admin_parallel_moss_add_new_comparison_button_text'] = 'Add task set/project into comparison';
 $lang['admin_parallel_moss_add_new_comparison_button_title'] = 'Add new course/task set to comparison.';
 $lang['admin_parallel_moss_remove_comparison_title'] = 'Remove this course/task set from comparison.';
 $lang['admin_parallel_moss_form_course_label'] = 'Course';
@@ -24,3 +24,16 @@ $lang['admin_parallel_moss_form_sensitivity_label'] = 'MOSS Sensitivity';
 $lang['admin_parallel_moss_form_sensitivity_hint'] = 'When some passage of code appears in many programs and the number of appearance is greater than this value, the code passage will be considered as legitimate (just like it appear in one of base files).';
 $lang['admin_parallel_moss_form_number_of_results_label'] = 'Number of files in results';
 $lang['admin_parallel_moss_form_number_of_results_hint'] = 'This value determines the number of matching files to show in the results.';
+$lang['admin_parallel_moss_form_submit_new_comparison'] = 'Submit solutions comparison';
+
+$lang['admin_parallel_moss_comparisons_table_header_teacher'] = 'Teacher';
+$lang['admin_parallel_moss_comparisons_table_header_status'] = 'Status';
+$lang['admin_parallel_moss_comparisons_table_header_started_at'] = 'Started at';
+$lang['admin_parallel_moss_comparisons_table_header_finished_at'] = 'Finished at';
+
+$lang['admin_parallel_moss_comparison_status_queued'] = 'queued';
+$lang['admin_parallel_moss_comparison_status_processing'] = 'processing';
+$lang['admin_parallel_moss_comparison_status_finished'] = 'finished';
+$lang['admin_parallel_moss_comparison_status_failed'] = 'failed';
+$lang['admin_parallel_moss_comparison_action_pending'] = 'pending';
+$lang['admin_parallel_moss_comparison_action_waiting'] = 'waiting';

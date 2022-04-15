@@ -221,12 +221,12 @@ class parallel_moss extends LIST_Controller
         );
         
         foreach ($rawConfig['comparison'] as $comparisonData) {
-            foreach ($comparisonData['baseFile'] as $baseFiles) {
+            foreach ($comparisonData['baseFile'] ?? [] as $baseFiles) {
                 array_walk($baseFiles, function (string $baseFile) use ($mossConfig) {
                     $mossConfig->addBaseFile($baseFile);
                 });
             }
-            foreach ($comparisonData['solution'] as $solutionId => $solutionData) {
+            foreach ($comparisonData['solution'] ?? [] as $solutionId => $solutionData) {
                 if (isset($solutionData['selected']) && (bool)(int)$solutionData['selected']) {
                     $mossConfig->addSolution((int)$solutionId, (int)$solutionData['version']);
                 }

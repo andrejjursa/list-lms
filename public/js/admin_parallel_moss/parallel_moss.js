@@ -2,6 +2,8 @@ jQuery(document).ready(function($) {
 
     var timer;
 
+    var comparisonTable = $('#comparisons_table_id');
+
     var create_url_query = function() {
         var data = {};
 
@@ -52,13 +54,23 @@ jQuery(document).ready(function($) {
             } else if (row.status === 'failed') {
                 statusHTML = '<i class="fa fa-exclamation" aria-hidden="true" style="color: red;"></i> ';
             }
-            statusHTML += row.status;
+            statusHTML += comparisonTable.attr('data-lang_comparison_status_' + row.status);
             tdStatus.html(statusHTML);
             tr.append(tdStatus);
 
             var tdStarted = $('<td>');
             if (row.processing_start === null) {
-                tdStarted.html('<i class="fa fa-cog fa-spin fa-fw" aria-hidden="true" style="color: orange;"></i> pending');
+                if (row.status === 'queued') {
+                    tdStarted.html(
+                        '<i class="fa fa-ellipsis-h" aria-hidden="true" style="color: blue;"></i> '
+                        + comparisonTable.attr('data-lang_comparison_action_waiting')
+                    );
+                } else {
+                    tdStarted.html(
+                        '<i class="fa fa-cog fa-spin fa-fw" aria-hidden="true" style="color: orange;"></i> '
+                        + comparisonTable.attr('data-lang_comparison_action_pending')
+                    );
+                }
             } else {
                 tdStarted.html('<i class="fa fa-check" aria-hidden="true" style="color: green;"></i> ' + row.processing_start);
             }
@@ -66,7 +78,17 @@ jQuery(document).ready(function($) {
 
             var tdFinished = $('<td>');
             if (row.processing_finish === null) {
-                tdFinished.html('<i class="fa fa-cog fa-spin fa-fw" aria-hidden="true" style="color: orange;"></i> pending');
+                if (row.status === 'queued') {
+                    tdFinished.html(
+                        '<i class="fa fa-ellipsis-h" aria-hidden="true" style="color: blue;"></i> '
+                        + comparisonTable.attr('data-lang_comparison_action_waiting')
+                    );
+                } else {
+                    tdFinished.html(
+                        '<i class="fa fa-cog fa-spin fa-fw" aria-hidden="true" style="color: orange;"></i> '
+                        + comparisonTable.attr('data-lang_comparison_action_pending')
+                    );
+                }
             } else {
                 var symbol = '<i class="fa fa-check" aria-hidden="true" style="color: green;"></i> ';
                 if (row.status !== 'finished') {

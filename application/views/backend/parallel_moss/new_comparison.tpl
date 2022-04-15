@@ -32,6 +32,7 @@
             data-lang_form_sensitivity_hint="{translate|escape:'html' line='admin_parallel_moss_form_sensitivity_hint'}"
             data-lang_form_number_of_results_label="{translate|escape:'html' line='admin_parallel_moss_form_number_of_results_label'}"
             data-lang_form_number_of_results_hint="{translate|escape:'html' line='admin_parallel_moss_form_number_of_results_hint'}"
+            data-lang_form_submit="{translate|escape:'html' line='admin_parallel_moss_form_submit_new_comparison'}"
         ></div>
     </form>
 {/block}
