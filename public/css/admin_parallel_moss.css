@@ -35,6 +35,12 @@ fieldset.base-files-list div.base-files-checkboxes > label span { display: inlin
 div.comparison_content_box { margin-top: 0.5em; border-top: 1px solid black; padding-top: 0; }
 div.comparison_settings_box { margin-top: 0.5em; border-top: 1px solid black; padding-top: 0; }
 
+div.solutions-selection fieldset,
+div.base-files-selection fieldset { border: 1px solid gray; border-radius: 5px; padding: 10px; background-color: white; }
+div.solutions-selection fieldset legend,
+div.base-files-selection fieldset legend { border: 1px solid gray; border-radius: 5px; background-color: white; font-weight: bold; padding: 4px; }
+div.base-files-selection { margin-top: 0.5em; }
+
 @media screen and (min-width: 900px) {
     fieldset.solutions-list { display: flex; flex-flow: row wrap; justify-content: left; align-content: stretch; align-items: stretch; }
     div.solution_box { width: 50%; display: block; }

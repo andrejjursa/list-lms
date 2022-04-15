@@ -114,7 +114,6 @@ jQuery(document).ready(function($) {
 
                     const solutionsUrl = mainForm.attr('data-solutions_url') + '/' + selectedTaskSet;
                     api_ajax_load_json(solutionsUrl, 'post', {}, function (data) {
-                        console.log(data);
                         const solutions = data.data.solutions;
 
                         if (solutions.length === 0) {
@@ -188,7 +187,6 @@ jQuery(document).ready(function($) {
 
                         for (let i in baseFiles) {
                             const baseFile = baseFiles[i];
-                            console.log(baseFile);
 
                             const baseFileTaskDiv = $('<div>');
                             baseFileTaskDiv.addClass('base-files-for-task');
