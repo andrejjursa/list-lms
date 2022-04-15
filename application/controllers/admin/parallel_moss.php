@@ -4,6 +4,7 @@ use Application\DataObjects\ParallelMoss\Configuration;
 use Application\Services\AMQP\Factory\PublisherFactory;
 use Application\Services\AMQP\Messages\Moss\StartComparisonMessage;
 use Application\Services\DependencyInjection\ContainerFactory;
+use Application\Services\Moss\RequestFactory;
 
 /**
  * Controller for parallel moss implementation.
@@ -35,10 +36,15 @@ class parallel_moss extends LIST_Controller
     
     public function get_comparisons()
     {
+        $container = ContainerFactory::getContainer();
+        /** @var RequestFactory $requestFactory */
+        $requestFactory = $container->get(RequestFactory::class);
+        $request = $requestFactory->constructGetComparisonsRequest($this->input->get());
+        
         $comparisons = new Parallel_moss_comparison();
         $comparisons->include_related('teacher', 'fullname');
         $comparisons->order_by('created', 'desc');
-        $comparisons->get_paged_iterated(1, 25);
+        $comparisons->get_paged_iterated($request->getPage(), $request->getPageSize());
         
         $output = [
             'data' => [],

@@ -1,8 +1,20 @@
 jQuery(document).ready(function($) {
-    
+
+    var timer;
+
+    var create_url_query = function() {
+        var data = {};
+
+        data.page = $($('select[name=paging_page]').get(0)).val();
+        data.pageSize = $($('select[name=paging_rows_per_page]').get(0)).val();
+
+        var query = $.param(data);
+        return query === '' ? '' : '?' + query;
+    };
+
     var reload_comparisons = function() {
         var url = $('#filter_form_id').attr('action');
-        api_ajax_load_json(url, 'post', {}, function(data) {
+        api_ajax_load_json(url + create_url_query(), 'post', {}, function(data) {
             fill_table(data);
         });
     };
@@ -111,6 +123,9 @@ jQuery(document).ready(function($) {
         $(strongs[4]).text(typeof pagination.total_rows !== 'undefined' ? pagination.total_rows : 0);
 
         var pages_select = $(tfoot).find('select[name=paging_page]').get(0);
+
+        $(pages_select).unbind('change');
+
         $(pages_select).html('');
 
         for (var page = 1; page <= (typeof pagination.total_pages !== 'undefined' ? pagination.total_pages : 0); ++page) {
@@ -124,7 +139,14 @@ jQuery(document).ready(function($) {
             $(pages_select).append(option);
         }
 
+        $(pages_select).on('change', function () {
+            reload_comparisons();
+        });
+
         var per_page_select = $(tfoot).find('select[name=paging_rows_per_page]').get(0);
+
+        $(per_page_select).unbind('change');
+
         var options = $(per_page_select).find('option');
         var toSelect = typeof pagination.page_size !== 'undefined' ? pagination.page_size : 0;
         var isSelected = false;
@@ -151,9 +173,13 @@ jQuery(document).ready(function($) {
             newOption.attr('selected', 'selected');
             $(per_page_select).append(newOption);
         }
+
+        $(per_page_select).on('change', function () {
+            reload_comparisons();
+        });
     };
 
     reload_comparisons();
-    var timer = setInterval(reload_comparisons, 10000);
+    timer = setInterval(reload_comparisons, 10000);
 
 });
