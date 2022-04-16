@@ -5,6 +5,7 @@ use Application\Services\AMQP\Factory\PublisherFactory;
 use Application\Services\AMQP\Messages\Moss\StartComparisonMessage;
 use Application\Services\DependencyInjection\ContainerFactory;
 use Application\Services\Moss\RequestFactory;
+use Application\Services\Moss\Service\ConfigurationBuilder;
 
 /**
  * Controller for parallel moss implementation.
@@ -212,34 +213,18 @@ class parallel_moss extends LIST_Controller
     
     public function create_comparison()
     {
-        $rawConfig = $this->input->post();
+        $container = ContainerFactory::getContainer();
         
-        $mossConfig = new Configuration(
-            $rawConfig['moss_setup']['l'] ?? 'unknown',
-            (int)$rawConfig['moss_setup']['m'] ?? 10,
-            (int)$rawConfig['moss_setup']['n'] ?? 250
-        );
+        /** @var ConfigurationBuilder $configurationBuilder */
+        $configurationBuilder = $container->get(ConfigurationBuilder::class);
         
-        foreach ($rawConfig['comparison'] as $comparisonData) {
-            foreach ($comparisonData['baseFile'] ?? [] as $baseFiles) {
-                array_walk($baseFiles, function (string $baseFile) use ($mossConfig) {
-                    $mossConfig->addBaseFile($baseFile);
-                });
-            }
-            foreach ($comparisonData['solution'] ?? [] as $solutionId => $solutionData) {
-                if (isset($solutionData['selected']) && (bool)(int)$solutionData['selected']) {
-                    $mossConfig->addSolution((int)$solutionId, (int)$solutionData['version']);
-                }
-            }
-        }
+        $mossConfig = $configurationBuilder->fromPostData($this->input->post());
         
         $mossTable = new Parallel_moss_comparison();
         $mossTable->status = Parallel_moss_comparison::STATUS_QUEUED;
         $mossTable->configuration = $mossConfig->toArray();
         $mossTable->teacher_id = $this->usermanager->get_teacher_id();
         $mossTable->save();
-        
-        $container = ContainerFactory::getContainer();
         
         /** @var PublisherFactory $publisherFactory */
         $publisherFactory = $container->get(PublisherFactory::class);
