@@ -9,6 +9,7 @@ use Application\Services\AMQP\Exchanges\DirectExchange;
 use Application\Services\AMQP\Exchanges\Moss\MossExchange;
 use Application\Services\AMQP\Queues\Moss\ComparisonQueue;
 use Application\Services\AMQP\Queues\TestQueue;
+use Application\Services\Moss\Service\MossExecutionService;
 
 class ConsumerFactory
 {
@@ -21,14 +22,18 @@ class ConsumerFactory
     /** @var MossExchange */
     protected $mossExchange;
     
+    /** @var MossExecutionService */
+    protected $mossExecutionService;
+    
     /**
      * @param Connection $connection
      */
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, MossExecutionService $mossExecutionService)
     {
         $this->connection = $connection;
         $this->directExchange = new DirectExchange();
         $this->mossExchange = new MossExchange();
+        $this->mossExecutionService = $mossExecutionService;
     }
     
     public function getTestConsumer(): TestConsumer
@@ -38,6 +43,11 @@ class ConsumerFactory
     
     public function getMossConsumer(): MossConsumer
     {
-        return new MossConsumer($this->connection, new ComparisonQueue(), $this->mossExchange);
+        return new MossConsumer(
+            $this->connection,
+            new ComparisonQueue(),
+            $this->mossExchange,
+            $this->mossExecutionService
+        );
     }
 }

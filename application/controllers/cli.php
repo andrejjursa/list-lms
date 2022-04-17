@@ -8,20 +8,20 @@ use Application\Services\DependencyInjection\ContainerFactory;
 /**
  * Controller for CLI requests.
  *
- * @property LIST_Loader          $load
- * @property LIST_Output          $output
- * @property CI_Migration         $migration
- * @property cli_progress_bar     $cli_progress_bar
- * @property LIST_Lang            $lang
- * @property LIST_Form_validation $form_validation
- * @property CI_DB                $db
- * @property CI_Config            $config
- * @property Configurator         $configurator
- * @property Translations         $translations
- * @property LIST_Email           $email
- * @property CI_Router            $router
- * @property CI_Input             $input
- * @property LIST_Parser          $parser
+ * @property LIST_Loader                          $load
+ * @property LIST_Output                          $output
+ * @property CI_Migration                         $migration
+ * @property cli_progress_bar                     $cli_progress_bar
+ * @property LIST_Lang                            $lang
+ * @property LIST_Form_validation                 $form_validation
+ * @property CI_DB|DataMapper|CI_DB_active_record $db
+ * @property CI_Config                            $config
+ * @property Configurator                         $configurator
+ * @property Translations                         $translations
+ * @property LIST_Email                           $email
+ * @property CI_Router                            $router
+ * @property CI_Input                             $input
+ * @property LIST_Parser                          $parser
  *
  * @package LIST_CLI_Controllers
  * @author  Andrej Jursa

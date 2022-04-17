@@ -4,6 +4,7 @@ namespace Application\Services\DependencyInjection\Factories;
 
 use Application\Services\AMQP\Connection;
 use Application\Services\AMQP\Factory\ConsumerFactory;
+use Application\Services\Moss\Service\MossExecutionService;
 use Psr\Container\ContainerInterface;
 
 class ConsumerFactoryObjectFactory implements ServiceFactoryInterface
@@ -15,7 +16,8 @@ class ConsumerFactoryObjectFactory implements ServiceFactoryInterface
     public function __invoke(string $id, ContainerInterface $container)
     {
         return new ConsumerFactory(
-            $container->get(Connection::class)
+            $container->get(Connection::class),
+            $container->get(MossExecutionService::class)
         );
     }
 }
