@@ -36,7 +36,7 @@ class StartComparisonMessage implements MessageInterface
     
     public function getDeliveryMode(): int
     {
-        return AMQPMessage::DELIVERY_MODE_NON_PERSISTENT;
+        return AMQPMessage::DELIVERY_MODE_PERSISTENT;
     }
     
     public function getPriority(): ?int

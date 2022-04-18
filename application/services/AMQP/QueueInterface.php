@@ -22,4 +22,6 @@ interface QueueInterface
     public function getArguments();
     
     public function getTicket(): ?int;
+    
+    public function getRoutingKey(): string;
 }

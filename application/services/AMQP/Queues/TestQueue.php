@@ -49,4 +49,9 @@ class TestQueue implements \Application\Services\AMQP\QueueInterface
     {
         return null;
     }
+    
+    public function getRoutingKey(): string
+    {
+        return 'test';
+    }
 }

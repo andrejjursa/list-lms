@@ -12,6 +12,7 @@ $cache = array (
     6 => 'processing_start',
     7 => 'processing_finish',
     8 => 'result_link',
+    9 => 'failure_message',
   ),
   'validation' => 
   array (
@@ -81,6 +82,13 @@ $cache = array (
     'result_link' => 
     array (
       'field' => 'result_link',
+      'rules' => 
+      array (
+      ),
+    ),
+    'failure_message' => 
+    array (
+      'field' => 'failure_message',
       'rules' => 
       array (
       ),

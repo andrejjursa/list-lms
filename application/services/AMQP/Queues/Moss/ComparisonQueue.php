@@ -47,4 +47,9 @@ class ComparisonQueue implements QueueInterface
     {
         return null;
     }
+    
+    public function getRoutingKey(): string
+    {
+        return 'moss_comparison';
+    }
 }

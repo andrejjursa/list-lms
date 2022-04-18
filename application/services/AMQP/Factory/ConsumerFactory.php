@@ -25,15 +25,22 @@ class ConsumerFactory
     /** @var MossExecutionService */
     protected $mossExecutionService;
     
+    /** @var PublisherFactory */
+    protected $publisherFactory;
+    
     /**
      * @param Connection $connection
      */
-    public function __construct(Connection $connection, MossExecutionService $mossExecutionService)
-    {
+    public function __construct(
+        Connection $connection,
+        MossExecutionService $mossExecutionService,
+        PublisherFactory $publisherFactory
+    ) {
         $this->connection = $connection;
         $this->directExchange = new DirectExchange();
         $this->mossExchange = new MossExchange();
         $this->mossExecutionService = $mossExecutionService;
+        $this->publisherFactory = $publisherFactory;
     }
     
     public function getTestConsumer(): TestConsumer
@@ -47,7 +54,8 @@ class ConsumerFactory
             $this->connection,
             new ComparisonQueue(),
             $this->mossExchange,
-            $this->mossExecutionService
+            $this->mossExecutionService,
+            $this->publisherFactory
         );
     }
 }

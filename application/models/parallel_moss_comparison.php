@@ -17,6 +17,7 @@ use Application\ModelTraits\JSONFieldTrait;
  * @property null|string    $processing_start  date time format YYYY-MM-DD HH:MM:SS
  * @property null|string    $processing_finish date time format YYYY-MM-DD HH:MM:SS
  * @property null|string    $result_link
+ * @property null|string    $failure_message
  * @property PagedMetaClass $paged
  *
  * @method DataMapper where_related_teacher(mixed $related, string $field = null, string $value = null)

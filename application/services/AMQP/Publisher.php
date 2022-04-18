@@ -27,7 +27,19 @@ class Publisher
         
         $channel->basic_publish(
             $this->constructMessage($message),
-            $this->exchange->getExchange()
+            $this->exchange->getExchange(),
+            $this->queue->getRoutingKey()
+        );
+    }
+    
+    public function publishMessageWithDelay(MessageInterface $message, int $milliseconds): void
+    {
+        $routingKey = '';
+        $channel = $this->getChannelForDelayQueue($milliseconds, $routingKey);
+        $channel->basic_publish(
+            $this->constructMessage($message),
+            $this->exchange->getExchange(),
+            $routingKey
         );
     }
     

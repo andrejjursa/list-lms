@@ -1,6 +1,5 @@
 <?php
 
-use Application\DataObjects\ParallelMoss\Configuration;
 use Application\Services\AMQP\Factory\PublisherFactory;
 use Application\Services\AMQP\Messages\Moss\StartComparisonMessage;
 use Application\Services\DependencyInjection\ContainerFactory;
@@ -67,6 +66,7 @@ class parallel_moss extends LIST_Controller
                 'processing_start'  => $comparison->processing_start,
                 'processing_finish' => $comparison->processing_finish,
                 'result_link'       => $comparison->result_link,
+                'failure_message'   => $comparison->failure_message,
                 'configuration'     => $comparison->configuration,
             ];
         }
