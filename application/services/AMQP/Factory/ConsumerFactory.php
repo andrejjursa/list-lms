@@ -10,6 +10,7 @@ use Application\Services\AMQP\Exchanges\Moss\MossExchange;
 use Application\Services\AMQP\Queues\Moss\ComparisonQueue;
 use Application\Services\AMQP\Queues\TestQueue;
 use Application\Services\Moss\Service\MossExecutionService;
+use Symfony\Component\Lock\LockFactory;
 
 class ConsumerFactory
 {
@@ -28,19 +29,27 @@ class ConsumerFactory
     /** @var PublisherFactory */
     protected $publisherFactory;
     
+    /** @var LockFactory */
+    protected $lockFactory;
+    
     /**
-     * @param Connection $connection
+     * @param Connection           $connection
+     * @param MossExecutionService $mossExecutionService
+     * @param PublisherFactory     $publisherFactory
+     * @param LockFactory          $lockFactory
      */
     public function __construct(
         Connection $connection,
         MossExecutionService $mossExecutionService,
-        PublisherFactory $publisherFactory
+        PublisherFactory $publisherFactory,
+        LockFactory $lockFactory
     ) {
         $this->connection = $connection;
         $this->directExchange = new DirectExchange();
         $this->mossExchange = new MossExchange();
         $this->mossExecutionService = $mossExecutionService;
         $this->publisherFactory = $publisherFactory;
+        $this->lockFactory = $lockFactory;
     }
     
     public function getTestConsumer(): TestConsumer
@@ -55,7 +64,8 @@ class ConsumerFactory
             new ComparisonQueue(),
             $this->mossExchange,
             $this->mossExecutionService,
-            $this->publisherFactory
+            $this->publisherFactory,
+            $this->lockFactory
         );
     }
 }

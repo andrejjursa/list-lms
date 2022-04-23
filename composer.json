@@ -17,7 +17,9 @@
     "mathjax/mathjax": "^2.7",
     "php-amqplib/php-amqplib": "^3.1",
     "psr/container": "^1.0",
-    "ramsey/uuid": "^3.9"
+    "ramsey/uuid": "^3.9",
+    "symfony/lock": "^4.4",
+    "predis/predis": "^1.1"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "*",

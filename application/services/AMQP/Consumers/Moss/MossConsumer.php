@@ -11,12 +11,14 @@ use Application\Services\AMQP\QueueInterface;
 use Application\Services\Moss\Service\MossExecutionService;
 use CI_Controller;
 use PhpAmqpLib\Message\AMQPMessage;
+use Symfony\Component\Lock\LockFactory;
 
 class MossConsumer extends AbstractConsumer
 {
     protected const CONSUMER_TAG = 'moss_consumer';
     
     protected const NO_MOSS_ID_MESSAGE_DELAY = 60000; // milliseconds
+    protected const NO_LOCK_ACQUIRED_MESSAGE_DELAY = 10000; // milliseconds
     
     /**
      * @var MossExecutionService
@@ -28,6 +30,9 @@ class MossConsumer extends AbstractConsumer
      */
     protected $publisherFactory;
     
+    /** @var LockFactory */
+    protected $lockFactory;
+    
     /**
      * @var CI_Controller
      */
@@ -38,11 +43,13 @@ class MossConsumer extends AbstractConsumer
         QueueInterface $queue,
         ExchangeInterface $exchange,
         MossExecutionService $mossExecutionService,
-        PublisherFactory $publisherFactory
+        PublisherFactory $publisherFactory,
+        LockFactory $lockFactory
     ) {
         parent::__construct($connection, $queue, $exchange);
         $this->mossExecutionService = $mossExecutionService;
         $this->publisherFactory = $publisherFactory;
+        $this->lockFactory = $lockFactory;
         $this->CI =& get_instance();
         $this->CI->config->load('moss');
     }
@@ -63,12 +70,28 @@ class MossConsumer extends AbstractConsumer
             $message->nack(false);
             return;
         }
+    
+        $lock = $this->lockFactory->createLock(
+            sprintf(
+                'moss_comparison_id_%d_lock',
+                $applicationMessage->getParallelMossComparisonID()
+            )
+        );
         
+        if (!$lock->acquire()) {
+            $publisher = $this->publisherFactory->getComparisonQueuePublisher();
+            $publisher->publishMessageWithDelay($applicationMessage, self::NO_LOCK_ACQUIRED_MESSAGE_DELAY);
+            $message->nack(false);
+            return;
+        }
+    
         try {
             $this->mossExecutionService->execute($applicationMessage);
             $message->ack();
         } catch (\Throwable $exception) {
             $message->nack(false);
+        } finally {
+            $lock->release();
         }
     }
     

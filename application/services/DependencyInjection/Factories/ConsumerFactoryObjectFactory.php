@@ -19,7 +19,8 @@ class ConsumerFactoryObjectFactory implements ServiceFactoryInterface
         return new ConsumerFactory(
             $container->get(Connection::class),
             $container->get(MossExecutionService::class),
-            $container->get(PublisherFactory::class)
+            $container->get(PublisherFactory::class),
+            $container->get('symfony_lock_factory')
         );
     }
 }

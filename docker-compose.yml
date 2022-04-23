@@ -18,6 +18,7 @@ services:
     links:
       - list-database
       - list-rabbitmq
+      - list-redis
     environment:
       LIST_DATABASE_HOSTNAME: list-database
       LIST_DATABASE_USER: root
@@ -30,6 +31,9 @@ services:
       LIST_AMQP_USER: guest
       LIST_AMQP_PASSWORD: guest
       LIST_AMQP_VHOST: /
+      LIST_REDIS_LOCK_HOST: list-redis
+      LIST_REDIS_LOCK_PORT: 6379
+      LIST_REDIS_LOCK_SCHEME: tcp
       XDEBUG_CONFIG: >
         remote_host=host.docker.internal
         remote_autostart=1
@@ -71,6 +75,12 @@ services:
       - 15692:15692
     extra_hosts:
       - "server.listdev:127.0.0.1"
+
+  list-redis:
+    image: redis:6-alpine
+    ports:
+      - 6379:6379
+
 
 volumes:
   list-database-data:
