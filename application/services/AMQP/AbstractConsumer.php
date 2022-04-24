@@ -49,7 +49,15 @@ abstract class AbstractConsumer implements ConsumerInterface
         
         while ($this->running || $this->restart) {
             $this->restart = false;
-            $this->doConsume();
+            try {
+                $this->doConsume();
+            } catch (\Throwable $exception) {
+                echo 'Message: ' . $exception->getMessage() . PHP_EOL;
+                echo 'File: ' . $exception->getFile() . PHP_EOL;
+                echo 'Line: ' . $exception->getLine() . PHP_EOL;
+                echo 'Code: ' . $exception->getCode() . PHP_EOL;
+                echo $exception->getTraceAsString() . PHP_EOL;
+            }
         }
     }
     

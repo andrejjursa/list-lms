@@ -92,7 +92,11 @@ class MossExecutionService
                 $mosslib->addFile($file);
             }
             $response = trim($mosslib->send());
-            return true;
+            if ($response !== '') {
+                return true;
+            }
+            $response = 'MOSS does not returned link to results.';
+            return false;
         } catch (\Throwable $exception) {
             $response = $exception->getMessage();
             return false;

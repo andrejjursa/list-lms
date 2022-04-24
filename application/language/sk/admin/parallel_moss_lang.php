@@ -37,3 +37,7 @@ $lang['admin_parallel_moss_comparison_status_finished'] = 'ukončené';
 $lang['admin_parallel_moss_comparison_status_failed'] = 'zlyhané';
 $lang['admin_parallel_moss_comparison_action_pending'] = 'prebieha';
 $lang['admin_parallel_moss_comparison_action_waiting'] = 'čaká sa';
+
+$lang['admin_parallel_moss_comparison_requeue_queued'] = 'Porovnanie je znovu zaradené na spracovanie.';
+$lang['admin_parallel_moss_comparison_requeue_not_found'] = 'Záznam o porovnaní sa nenašiel.';
+$lang['admin_parallel_moss_comparison_requeue_invalid_status'] = 'Spracovanie porovnania je ukončené a nemôže byť znovu zaradené na spracovanie.';

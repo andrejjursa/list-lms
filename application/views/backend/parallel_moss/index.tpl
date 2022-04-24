@@ -24,6 +24,10 @@
                data-lang_comparison_status_failed="{translate|escape:'html' line='admin_parallel_moss_comparison_status_failed'}"
                data-lang_comparison_action_pending="{translate|escape:'html' line='admin_parallel_moss_comparison_action_pending'}"
                data-lang_comparison_action_waiting="{translate|escape:'html' line='admin_parallel_moss_comparison_action_waiting'}"
+               data-lang_comparison_requeue_queued="{translate|escape:'html' line='admin_parallel_moss_comparison_requeue_queued'}"
+               data-lang_comparison_requeue_notFound="{translate|escape:'html' line='admin_parallel_moss_comparison_requeue_not_found'}"
+               data-lang_comparison_requeue_invalidStatus="{translate|escape:'html' line='admin_parallel_moss_comparison_requeue_invalid_status'}"
+               data-link_requeue="{internal_url url='admin_parallel_moss/requeue_comparison'}"
             >
                 <thead>
                     <tr>
@@ -32,8 +36,6 @@
                         <th>{translate line='admin_parallel_moss_comparisons_table_header_status'}</th>
                         <th>{translate line='admin_parallel_moss_comparisons_table_header_started_at'}</th>
                         <th>{translate line='admin_parallel_moss_comparisons_table_header_finished_at'}</th>
-                        <th></th>
-                        <th></th>
                         <th></th>
                     </tr>
                 </thead>

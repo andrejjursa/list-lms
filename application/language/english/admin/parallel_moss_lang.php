@@ -37,3 +37,7 @@ $lang['admin_parallel_moss_comparison_status_finished'] = 'finished';
 $lang['admin_parallel_moss_comparison_status_failed'] = 'failed';
 $lang['admin_parallel_moss_comparison_action_pending'] = 'pending';
 $lang['admin_parallel_moss_comparison_action_waiting'] = 'waiting';
+
+$lang['admin_parallel_moss_comparison_requeue_queued'] = 'Comparison re-queued for processing.';
+$lang['admin_parallel_moss_comparison_requeue_not_found'] = 'The comparison record was not found.';
+$lang['admin_parallel_moss_comparison_requeue_invalid_status'] = 'The comparison processing is finished and can\'t be re-queued for further processing.';

@@ -41,6 +41,8 @@ div.solutions-selection fieldset legend,
 div.base-files-selection fieldset legend { border: 1px solid gray; border-radius: 5px; background-color: white; font-weight: bold; padding: 4px; }
 div.base-files-selection { margin-top: 0.5em; }
 
+a.button.controlElement { width: 2em; text-align: center; }
+
 @media screen and (min-width: 900px) {
     fieldset.solutions-list { display: flex; flex-flow: row wrap; justify-content: left; align-content: stretch; align-items: stretch; }
     div.solution_box { width: 50%; display: block; }

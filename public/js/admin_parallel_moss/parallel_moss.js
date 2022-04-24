@@ -98,36 +98,65 @@ jQuery(document).ready(function($) {
             }
             tr.append(tdFinished);
 
-            var tdControlsDetails = $('<td>');
-            tdControlsDetails.addClass('controlls');
+            const tdControls = $('<td>');
+            tdControls.addClass('controlls');
 
-            var buttonDetails = $('<a>');
-            buttonDetails.addClass('button');
-            buttonDetails.html('<i class="fa fa-folder-open" aria-hidden="true"></i>');
-            tdControlsDetails.append(buttonDetails);
-
-            tr.append(tdControlsDetails);
-
-            var tdControlsResults = $('<td>');
-            tdControlsResults.addClass('controlls');
             if (row.status === 'finished') {
-                var buttonResults = $('<a>');
-                buttonResults.addClass('button').addClass('special').addClass('results');
+                const buttonResults = $('<a>');
+                buttonResults.addClass('button').addClass('results').addClass('controlElement');
                 buttonResults.attr('href', row.result_link);
                 buttonResults.attr('target', '_blank');
                 buttonResults.html('<i class="fa fa-external-link" aria-hidden="true"></i>');
-                tdControlsResults.append(buttonResults);
-            }
-            tr.append(tdControlsResults);
-            var tdControlsRequeue = $('<td>');
-            tdControlsRequeue.addClass('controlls');
-            if (row.status === 'failed') {
-                var buttonRequeue = $('<a>');
-                buttonRequeue.addClass('button').addClass('delete');
+                tdControls.append(buttonResults);
+            } else if (row.status === 'failed') {
+                if (row.failure_message !== null) {
+                    const buttonFailureStatus = $('<a>');
+                    buttonFailureStatus.addClass('button').addClass('delete').addClass('controlElement');
+                    buttonFailureStatus.html('<i class="fa fa-question" aria-hidden="true"></i>');
+                    const failureMessage = row.failure_message;
+                    const eventFunction = function () {
+                        alert(failureMessage);
+                    };
+                    buttonFailureStatus.on('click', eventFunction);
+                    tdControls.append(buttonFailureStatus);
+                }
+            } else {
+                const buttonRequeue = $('<a>');
+                buttonRequeue.addClass('button').addClass('special').addClass('controlElement');
                 buttonRequeue.html('<i class="fa fa-refresh" aria-hidden="true"></i>');
-                tdControlsRequeue.append(buttonRequeue);
+                const thisRowID = row.id;
+                const eventFunction = function () {
+                    api_ajax_load_json(
+                        comparisonTable.attr('data-link_requeue') + '/' + thisRowID,
+                        'post',
+                        {},
+                        function (data) {
+                            if (data.status === 'queued') {
+                                show_notification(
+                                    comparisonTable.attr('data-lang_comparison_requeue_queued'),
+                                    'success'
+                                );
+                                reload_comparisons();
+                            } else if (data.status === 'notFound') {
+                                show_notification(
+                                    comparisonTable.attr('data-lang_comparison_requeue_notFound'),
+                                    'error'
+                                );
+                            } else if (data.status === 'invalidStatus') {
+                                show_notification(
+                                    comparisonTable.attr('data-lang_comparison_requeue_invalidStatus'),
+                                    'error'
+                                );
+                                reload_comparisons();
+                            }
+                        }
+                    );
+                };
+                buttonRequeue.click(eventFunction);
+                tdControls.append(buttonRequeue);
             }
-            tr.append(tdControlsRequeue);
+
+            tr.append(tdControls);
         }
 
         fill_pagination(data.pagination);

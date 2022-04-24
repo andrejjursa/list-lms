@@ -211,7 +211,7 @@ class parallel_moss extends LIST_Controller
         $this->parser->parse('backend/parallel_moss/new_comparison.tpl');
     }
     
-    public function create_comparison()
+    public function create_comparison(): void
     {
         $container = ContainerFactory::getContainer();
         
@@ -237,6 +237,46 @@ class parallel_moss extends LIST_Controller
         $publisher->publishMessage($message);
         
         redirect(create_internal_url('admin_parallel_moss/index'));
+    }
+    
+    public function requeue_comparison(int $id): void
+    {
+        $container = ContainerFactory::getContainer();
+        
+        $mossTable = new Parallel_moss_comparison();
+        $mossTable->get_by_id($id);
+        
+        $output = new stdClass();
+        
+        if (!$mossTable->exists()) {
+            $output->status = 'notFound';
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode($output));
+            return;
+        }
+        
+        if (in_array($mossTable->status, [Parallel_moss_comparison::STATUS_FAILED, Parallel_moss_comparison::STATUS_FINISHED], true)) {
+            $output->status = 'invalidStatus';
+            $this->output->set_content_type('application/json');
+            $this->output->set_output(json_encode($output));
+            return;
+        }
+        
+        /** @var PublisherFactory $publisherFactory */
+        $publisherFactory = $container->get(PublisherFactory::class);
+        
+        $publisher = $publisherFactory->getComparisonQueuePublisher();
+        
+        $message = new StartComparisonMessage();
+        $message->setParallelMossComparisonID($mossTable->id);
+        
+        for ($i=0;$i<1000;$i++) {
+            $publisher->publishMessage($message);
+        }
+        
+        $output->status = 'queued';
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
     }
     
     public function get_settings()
