@@ -35,6 +35,20 @@ jQuery(document).ready(function($) {
             tdId.text(row.id);
             tr.append(tdId);
 
+            var tdName = $('<td>');
+            tr.append(tdName);
+
+            if (row.comparison_name !== null) {
+                var tdNameSpan = $('<span>');
+                var short = row.comparison_name.split(' ').slice(0, 5).join(' ');
+                if (short !== row.comparison_name) {
+                    short += ' ...';
+                }
+                tdNameSpan.text(short);
+                tdNameSpan.attr('title', row.comparison_name);
+                tdName.append(tdNameSpan);
+            }
+
             var tdTeacher = $('<td>');
             if (row.teacher === null) {
                 tdTeacher.text('-');

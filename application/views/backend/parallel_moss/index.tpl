@@ -32,6 +32,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>{translate line='admin_parallel_moss_comparisons_table_header_comparison_name'}</th>
                         <th>{translate line='admin_parallel_moss_comparisons_table_header_teacher'}</th>
                         <th>{translate line='admin_parallel_moss_comparisons_table_header_status'}</th>
                         <th>{translate line='admin_parallel_moss_comparisons_table_header_started_at'}</th>

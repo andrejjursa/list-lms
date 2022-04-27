@@ -1,48 +1,25 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 $cache = array (
-  'table' => 'parallel_moss_comparisons',
+  'table' => 'admin_widgets',
   'fields' => 
   array (
     0 => 'id',
-    1 => 'comparison_name',
-    2 => 'updated',
-    3 => 'created',
-    4 => 'status',
-    5 => 'teacher_id',
-    6 => 'configuration',
-    7 => 'processing_start',
-    8 => 'processing_finish',
-    9 => 'result_link',
-    10 => 'failure_message',
+    1 => 'updated',
+    2 => 'created',
+    3 => 'teacher_id',
+    4 => 'widget_type',
+    5 => 'widget_config',
+    6 => 'position',
+    7 => 'column',
   ),
   'validation' => 
   array (
-    'configuration' => 
-    array (
-      'label' => 'configuration',
-      'rules' => 
-      array (
-        0 => 'jsonEncode',
-      ),
-      'get_rules' => 
-      array (
-        0 => 'jsonDecode',
-      ),
-      'field' => 'configuration',
-    ),
     'id' => 
     array (
       'field' => 'id',
       'rules' => 
       array (
         0 => 'integer',
-      ),
-    ),
-    'comparison_name' => 
-    array (
-      'field' => 'comparison_name',
-      'rules' => 
-      array (
       ),
     ),
     'updated' => 
@@ -59,13 +36,6 @@ $cache = array (
       array (
       ),
     ),
-    'status' => 
-    array (
-      'field' => 'status',
-      'rules' => 
-      array (
-      ),
-    ),
     'teacher_id' => 
     array (
       'field' => 'teacher_id',
@@ -73,30 +43,30 @@ $cache = array (
       array (
       ),
     ),
-    'processing_start' => 
+    'widget_type' => 
     array (
-      'field' => 'processing_start',
+      'field' => 'widget_type',
       'rules' => 
       array (
       ),
     ),
-    'processing_finish' => 
+    'widget_config' => 
     array (
-      'field' => 'processing_finish',
+      'field' => 'widget_config',
       'rules' => 
       array (
       ),
     ),
-    'result_link' => 
+    'position' => 
     array (
-      'field' => 'result_link',
+      'field' => 'position',
       'rules' => 
       array (
       ),
     ),
-    'failure_message' => 
+    'column' => 
     array (
-      'field' => 'failure_message',
+      'field' => 'column',
       'rules' => 
       array (
       ),
@@ -114,8 +84,8 @@ $cache = array (
     'teacher' => 
     array (
       'class' => 'teacher',
-      'other_field' => 'parallel_moss_comparison',
-      'join_self_as' => 'parallel_moss_comparison',
+      'other_field' => 'admin_widget',
+      'join_self_as' => 'admin_widget',
       'join_other_as' => 'teacher',
       'join_table' => '',
       'reciprocal' => false,
@@ -130,7 +100,6 @@ $cache = array (
   array (
     'get_rules' => 
     array (
-      0 => 'configuration',
     ),
     'matches' => 
     array (

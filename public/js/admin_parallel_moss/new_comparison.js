@@ -462,6 +462,24 @@ jQuery(document).ready(function($) {
         numberOfResultsHintEm.text(mainForm.attr('data-lang_form_number_of_results_hint'));
         numberOfResultsHint.append(numberOfResultsHintEm);
 
+        const comparisonNameField = $('<div>');
+        comparisonNameField.addClass('field');
+        comparisonSettingsBox.append(comparisonNameField);
+
+        const comparisonNameLabel = $('<label>');
+        comparisonNameLabel.text(mainForm.attr('data-lang_form_comparison_name_label') + ':');
+        comparisonNameField.append(comparisonNameLabel);
+
+        const comparisonNameInputWrap = $('<div>');
+        comparisonNameInputWrap.addClass('input');
+        comparisonNameField.append(comparisonNameInputWrap);
+
+        const comparisonNameInput = $('<input>');
+        comparisonNameInput.attr('type', 'text');
+        comparisonNameInput.attr('maxlength', 255);
+        comparisonNameInput.attr('name', 'comparison_name');
+        comparisonNameInputWrap.append(comparisonNameInput);
+
         submitButton.attr('type', 'submit');
         submitButton.attr('disabled', 'disabled');
         submitButton.addClass('button');

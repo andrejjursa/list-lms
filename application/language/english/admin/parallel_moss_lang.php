@@ -24,8 +24,10 @@ $lang['admin_parallel_moss_form_sensitivity_label'] = 'MOSS Sensitivity';
 $lang['admin_parallel_moss_form_sensitivity_hint'] = 'When some passage of code appears in many programs and the number of appearance is greater than this value, the code passage will be considered as legitimate (just like it appear in one of base files).';
 $lang['admin_parallel_moss_form_number_of_results_label'] = 'Number of files in results';
 $lang['admin_parallel_moss_form_number_of_results_hint'] = 'This value determines the number of matching files to show in the results.';
+$lang['admin_parallel_moss_form_comparison_name_label'] = 'Comparison name';
 $lang['admin_parallel_moss_form_submit_new_comparison'] = 'Submit solutions comparison';
 
+$lang['admin_parallel_moss_comparisons_table_header_comparison_name'] = 'Comparison name';
 $lang['admin_parallel_moss_comparisons_table_header_teacher'] = 'Teacher';
 $lang['admin_parallel_moss_comparisons_table_header_status'] = 'Status';
 $lang['admin_parallel_moss_comparisons_table_header_started_at'] = 'Started at';

@@ -8,6 +8,7 @@ use Application\ModelTraits\JSONFieldTrait;
  * Parallel MOSS comparison model.
  *
  * @property int            $id
+ * @property null|string    $comparison_name
  * @property string         $updated           date time format YYYY-MM-DD HH:MM:SS
  * @property string         $created           date time format YYYY-MM-DD HH:MM:SS
  * @property string         $status

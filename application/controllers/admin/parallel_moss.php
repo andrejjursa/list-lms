@@ -54,6 +54,7 @@ class parallel_moss extends LIST_Controller
         foreach ($comparisons as $comparison) {
             $output['data'][] = [
                 'id'                => $comparison->id,
+                'comparison_name'   => $comparison->comparison_name,
                 'created'           => $comparison->created,
                 'updated'           => $comparison->updated,
                 'teacher'           => isset($comparison->teacher_id)
@@ -91,7 +92,7 @@ class parallel_moss extends LIST_Controller
         /** @var Course $course */
         foreach ($courses as $course) {
             $output['data'][$this->lang->text($course->period_name)][] = [
-                'id' => $course->id,
+                'id'   => $course->id,
                 'name' => $this->lang->text($course->name),
             ];
         }
@@ -111,14 +112,14 @@ class parallel_moss extends LIST_Controller
         $output = [
             'data' => [
                 'task_set' => [],
-                'project' => [],
+                'project'  => [],
             ],
         ];
-    
+        
         /** @var Task_set $taskSet */
         foreach ($taskSets as $taskSet) {
             $output['data'][$taskSet->content_type][] = [
-                'id' => $taskSet->id,
+                'id'   => $taskSet->id,
                 'name' => $this->lang->get_overlay_with_default(
                     'task_sets',
                     $taskSet->id,
@@ -127,7 +128,7 @@ class parallel_moss extends LIST_Controller
                 ),
             ];
         }
-    
+        
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
@@ -148,20 +149,20 @@ class parallel_moss extends LIST_Controller
         
         $output = [
             'data' => [
-                'solutions' => [],
+                'solutions'  => [],
                 'base_files' => [],
             ],
         ];
-    
+        
         /** @var Solution $solution */
         foreach ($solutions as $solution) {
             $studentFiles = $taskSet->get_student_files($solution->student_id);
             $versions = [];
             foreach ($studentFiles as $studentFile) {
                 $versions[] = [
-                    'version' => $studentFile['version'],
-                    'file' => $studentFile['file'],
-                    'file_name' => $studentFile['file_name'],
+                    'version'     => $studentFile['version'],
+                    'file'        => $studentFile['file'],
+                    'file_name'   => $studentFile['file_name'],
                     'random_hash' => $studentFile['random_hash'],
                 ];
             }
@@ -169,13 +170,13 @@ class parallel_moss extends LIST_Controller
                 ? (int)$solution->best_version
                 : null;
             $output['data']['solutions'][] = [
-                'id' => $solution->id,
-                'student' => [
-                    'id' => $solution->student_id,
+                'id'           => $solution->id,
+                'student'      => [
+                    'id'       => $solution->student_id,
                     'fullname' => $solution->student_fullname,
                 ],
                 'best_version' => $bestVersion,
-                'versions' => $versions,
+                'versions'     => $versions,
             ];
         }
         
@@ -188,17 +189,17 @@ class parallel_moss extends LIST_Controller
         /** @var Task $task */
         foreach ($tasks as $task) {
             $output['data']['base_files'][] = [
-                'task_id' => $task->id,
+                'task_id'   => $task->id,
                 'task_name' => $this->lang->get_overlay_with_default(
                     'tasks',
                     $task->id,
                     'name',
                     $task->name
                 ),
-                'files' => $this->construct_base_files_for_task($task->id),
+                'files'     => $this->construct_base_files_for_task($task->id),
             ];
         }
-    
+        
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
@@ -220,10 +221,18 @@ class parallel_moss extends LIST_Controller
         
         $mossConfig = $configurationBuilder->fromPostData($this->input->post());
         
+        $comparisonName = $this->input->post('comparison_name');
+        if (!is_string($comparisonName) || trim($comparisonName) === '') {
+            $comparisonName = null;
+        } else {
+            $comparisonName = mb_substr(trim($comparisonName), 0, 255);
+        }
+        
         $mossTable = new Parallel_moss_comparison();
         $mossTable->status = Parallel_moss_comparison::STATUS_QUEUED;
         $mossTable->configuration = $mossConfig->toArray();
         $mossTable->teacher_id = $this->usermanager->get_teacher_id();
+        $mossTable->comparison_name = $comparisonName;
         $mossTable->save();
         
         /** @var PublisherFactory $publisherFactory */
@@ -270,7 +279,7 @@ class parallel_moss extends LIST_Controller
         $message = new StartComparisonMessage();
         $message->setParallelMossComparisonID($mossTable->id);
         
-        for ($i=0;$i<1000;$i++) {
+        for ($i = 0; $i < 1000; $i++) {
             $publisher->publishMessage($message);
         }
         

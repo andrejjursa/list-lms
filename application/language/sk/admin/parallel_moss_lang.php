@@ -24,8 +24,10 @@ $lang['admin_parallel_moss_form_sensitivity_label'] = 'Citlivosť MOSS-u';
 $lang['admin_parallel_moss_form_sensitivity_hint'] = 'Ak nejaký prechod kódom bude rovnaký vo viacerých programoch a jeho počet výskytov bude vyšší ako táto hodnota, bude tento prechod kódom považovaný za legitímny (ako keby sa nachádzal aj v niektorom zo základných súborov).';
 $lang['admin_parallel_moss_form_number_of_results_label'] = 'Počet súborov vo výsledkoch';
 $lang['admin_parallel_moss_form_number_of_results_hint'] = 'Táto hodnota určuje počet porovnávaných súborov vo výsledku.';
+$lang['admin_parallel_moss_form_comparison_name_label'] = 'Názov porovnania';
 $lang['admin_parallel_moss_form_submit_new_comparison'] = 'Odoslať porovnanie riešení';
 
+$lang['admin_parallel_moss_comparisons_table_header_comparison_name'] = 'Názov porovnania';
 $lang['admin_parallel_moss_comparisons_table_header_teacher'] = 'Učiteľ';
 $lang['admin_parallel_moss_comparisons_table_header_status'] = 'Stav';
 $lang['admin_parallel_moss_comparisons_table_header_started_at'] = 'Začaté o';
