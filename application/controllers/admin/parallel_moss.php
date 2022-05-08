@@ -5,12 +5,17 @@ use Application\Services\AMQP\Messages\Moss\StartComparisonMessage;
 use Application\Services\DependencyInjection\ContainerFactory;
 use Application\Services\Moss\RequestFactory;
 use Application\Services\Moss\Service\ConfigurationBuilder;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Request;
 
 /**
  * Controller for parallel moss implementation.
  */
 class parallel_moss extends LIST_Controller
 {
+    private const RESPONSE_HTTP_NOT_FOUND = 404;
+    
     public function __construct()
     {
         parent::__construct();
@@ -72,6 +77,74 @@ class parallel_moss extends LIST_Controller
             ];
         }
         $output['pagination'] = (array)$comparisons->paged;
+        
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($output));
+    }
+    
+    public function verify_comparisons(): void
+    {
+        $container = ContainerFactory::getContainer();
+        /** @var ClientInterface $client */
+        $client = $container->get('moss_http_client');
+        
+        $this->_transaction_isolation();
+        $this->db->trans_begin();
+        
+        $comparisons = new Parallel_moss_comparison();
+        $comparisons->get_iterated();
+        
+        $output = new stdClass();
+        $output->data = [
+            'errors' => null,
+            'deleted' => null,
+        ];
+        
+        $deleteIds = [];
+        $currentTime = new DateTimeImmutable();
+        
+        /** @var Parallel_moss_comparison $comparison */
+        foreach ($comparisons as $comparison) {
+            set_time_limit(60);
+            try {
+                $datetime = new DateTimeImmutable($comparison->processing_finish);
+                $diff = $datetime->diff($currentTime);
+            } catch (Exception $e) {
+                $output->data['errors'][] = [
+                    'id' => $comparison->id,
+                    'reason' => $e->getMessage(),
+                ];
+                continue;
+            }
+            if ($diff->days < 2) {
+                continue;
+            }
+            if ($comparison->status === Parallel_moss_comparison::STATUS_FINISHED) {
+                $request = new Request('HEAD', $comparison->result_link);
+                try {
+                    $response = $client->send($request);
+                } catch (GuzzleException $e) {
+                    if ($e->getResponse()->getStatusCode() === self::RESPONSE_HTTP_NOT_FOUND) {
+                        $deleteIds[] = $comparison->id;
+                        $output->data['deleted'][] = $comparison->id;
+                        continue;
+                    }
+                    $output->data['errors'][] = [
+                        'id' => $comparison->id,
+                        'reason' => $e->getMessage(),
+                    ];
+                }
+            } elseif ($comparison->status === Parallel_moss_comparison::STATUS_FAILED) {
+                $deleteIds[] = $comparison->id;
+                $output->data['deleted'][] = $comparison->id;
+            }
+        }
+        
+//        $comparisons = new Parallel_moss_comparison();
+//        $comparisons->where_in('id', $deleteIds);
+//        $comparisons->delete();
+        
+        $this->db->trans_commit();
         
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));

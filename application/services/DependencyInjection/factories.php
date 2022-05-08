@@ -7,6 +7,7 @@ use Application\Services\DependencyInjection\Factories\AmqpConnectionFactory;
 use Application\Services\DependencyInjection\Factories\ConfigFactory;
 use Application\Services\DependencyInjection\Factories\ConsumerFactoryObjectFactory;
 use Application\Services\DependencyInjection\Factories\GetComparisonsRequestMapperFactory;
+use Application\Services\DependencyInjection\Factories\Moss\Guzzle\MOSSClientFactory;
 use Application\Services\DependencyInjection\Factories\Moss\Service\ConfigurationBuilderFactory;
 use Application\Services\DependencyInjection\Factories\Moss\Service\MossExecutionServiceFactory;
 use Application\Services\DependencyInjection\Factories\MossRequestFactoryFactory;
@@ -31,6 +32,7 @@ return [
     MossRequestFactory::class          => MossRequestFactoryFactory::class,
     ConfigurationBuilder::class        => ConfigurationBuilderFactory::class,
     MossExecutionService::class        => MossExecutionServiceFactory::class,
+    'moss_http_client'                 => MOSSClientFactory::class,
     /* Redis */
     'lock_redis'                       => RedisClientFactory::class,
     /* Symfony/Lock */

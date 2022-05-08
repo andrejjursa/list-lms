@@ -19,7 +19,8 @@
     "psr/container": "^1.0",
     "ramsey/uuid": "^3.9",
     "symfony/lock": "^4.4",
-    "predis/predis": "^1.1"
+    "predis/predis": "^1.1",
+    "guzzlehttp/guzzle": "^6.5"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "*",
