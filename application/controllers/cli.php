@@ -4,6 +4,7 @@ use Application\Services\AMQP\Factory\ConsumerFactory;
 use Application\Services\AMQP\Factory\PublisherFactory;
 use Application\Services\AMQP\Messages\TestMessage;
 use Application\Services\DependencyInjection\ContainerFactory;
+use Application\Services\Moss\Service\MossCleanUpService;
 
 /**
  * Controller for CLI requests.
@@ -40,26 +41,28 @@ class Cli extends CI_Controller
     
     public function __destruct()
     {
-        echo "\n";
+        echo PHP_EOL;
     }
     
     public function index(): void
     {
-        echo 'This is CLI controller for LIST' . "\n\n";
+        echo 'This is CLI controller for LIST' . PHP_EOL . PHP_EOL;
         
-        echo 'Available commands:' . "\n";
-        echo '  update_database [migration version]' . "\n";
-        echo '  new_teacher' . "\n";
-        echo '  lamsfet_import - WARNING: do not execute on live installation' . "\n";
-        echo '  clear_lockdown' . "\n";
-        echo '  generate_encryption_key' . "\n";
-        echo '  apply_lockdown' . "\n";
-        echo '  fix_broken_link' . "\n";
-        echo '  send_deadline_notifications' . "\n";
-        echo '  garbage_collector' . "\n";
-        echo '  merge_configuration' . "\n";
-        echo '  upgrade_java_tests' . "\n";
-        echo '  clear_cache';
+        echo 'Available commands:' . PHP_EOL;
+        echo '  update_database [migration version]' . PHP_EOL;
+        echo '  new_teacher' . PHP_EOL;
+        echo '  lamsfet_import - WARNING: do not execute on live installation' . PHP_EOL;
+        echo '  clear_lockdown' . PHP_EOL;
+        echo '  generate_encryption_key' . PHP_EOL;
+        echo '  apply_lockdown' . PHP_EOL;
+        echo '  fix_broken_link' . PHP_EOL;
+        echo '  send_deadline_notifications' . PHP_EOL;
+        echo '  garbage_collector' . PHP_EOL;
+        echo '  merge_configuration' . PHP_EOL;
+        echo '  upgrade_java_tests' . PHP_EOL;
+        echo '  clear_cache' . PHP_EOL;
+        echo '  moss_consume' . PHP_EOL;
+        echo '  moss_clean_up_comparisons' . PHP_EOL;
     }
     
     public function upgrade_java_tests(): void
@@ -324,9 +327,9 @@ class Cli extends CI_Controller
     public function clear_cache(): void
     {
         $this->load->database();
-        echo 'Clearing cache ...' . "\n";
+        echo 'Clearing cache ...' . PHP_EOL;
         $this->parser->clearAllCache();
-        echo 'Clearing compiled versions of templates ...' . "\n";
+        echo 'Clearing compiled versions of templates ...' . PHP_EOL;
         $this->parser->clearCompiledTemplate();
     }
     
@@ -378,10 +381,10 @@ class Cli extends CI_Controller
         if (is_null($migration)) {
             $this->migration->latest();
             if ($this->migration->error_string()) {
-                echo 'Error occured:' . "\n\n";
+                echo 'Error occured:' . PHP_EOL . PHP_EOL;
                 echo $this->migration->error_string();
             } else {
-                echo 'SUCCESS!' . "\n";
+                echo 'SUCCESS!' . PHP_EOL;
                 $this->_recreate_production_cache();
                 echo 'Cache refreshed, ' . $cleared . ' old cache files deleted.';
             }
@@ -395,10 +398,10 @@ class Cli extends CI_Controller
             }
             $this->migration->version((int)$migration);
             if ($this->migration->error_string()) {
-                echo 'Error occured:' . "\n\n";
+                echo 'Error occured:' . PHP_EOL . PHP_EOL;
                 echo $this->migration->error_string();
             } else {
-                echo 'SUCCESS!' . "\n";
+                echo 'SUCCESS!' . PHP_EOL;
                 $this->_recreate_production_cache();
                 echo 'Cache refreshed, ' . $cleared . ' old cache files deleted.';
             }
@@ -415,34 +418,34 @@ class Cli extends CI_Controller
         $this->load->database();
         $languages = $this->lang->get_list_of_languages();
         
-        echo 'Create new teacher' . "\n\n";
+        echo 'Create new teacher' . PHP_EOL . PHP_EOL;
         $name = $this->_get_cli_user_input('Teacher full name');
         $email = $this->_get_cli_user_input('Teacher e-mail');
         $password = $this->_get_cli_user_input('Teacher password');
         if (count($languages)) {
             echo 'Available languages:';
             foreach ($languages as $language_key => $language_value) {
-                echo "\n" . '  (' . $language_key . ') for ' . normalize($language_value) . '';
+                echo PHP_EOL . '  (' . $language_key . ') for ' . normalize($language_value) . '';
             }
         }
-        $language = $this->_get_cli_user_input("\n" . 'Select teacher language');
+        $language = $this->_get_cli_user_input(PHP_EOL . 'Select teacher language');
         
         $this->load->library('form_validation');
         
         if (!$this->form_validation->required($name) || !$this->form_validation->required($email)
             || !$this->form_validation->required($password) || !$this->form_validation->required($language)
         ) {
-            echo 'ERROR: Some parameter(s) is(are) missing.' . "\n";
+            echo 'ERROR: Some parameter(s) is(are) missing.' . PHP_EOL;
         } else if (!$this->form_validation->valid_email($email)) {
-            echo 'ERROR: E-mail is invalid.' . "\n";
+            echo 'ERROR: E-mail is invalid.' . PHP_EOL;
         } else if (!$this->form_validation->is_unique($email, 'teachers.email')) {
-            echo 'ERROR: E-mail must be unique.' . "\n";
+            echo 'ERROR: E-mail must be unique.' . PHP_EOL;
         } else if (!$this->form_validation->min_length($password, 6)) {
-            echo 'ERROR: Password must have at least 6 characters.' . "\n";
+            echo 'ERROR: Password must have at least 6 characters.' . PHP_EOL;
         } else if (!$this->form_validation->max_length($password, 20)) {
-            echo 'ERROR: Password must not be longer than 20 characters.' . "\n";
+            echo 'ERROR: Password must not be longer than 20 characters.' . PHP_EOL;
         } else if (!array_key_exists($language, $languages)) {
-            echo 'ERROR: Desired language not found.' . "\n";
+            echo 'ERROR: Desired language not found.' . PHP_EOL;
         } else {
             $teacher = new Teacher();
             $teacher->fullname = $name;
@@ -456,10 +459,10 @@ class Cli extends CI_Controller
             $teacher->get_by_email($email);
             if ($teacher->result_count() === 1) {
                 $this->db->trans_commit();
-                echo "\n" . 'Teacher account created!';
+                echo PHP_EOL . 'Teacher account created!';
             } else {
                 $this->db->trans_rollback();
-                echo "\n" . 'Teacher account failed to be created!';
+                echo PHP_EOL . 'Teacher account failed to be created!';
             }
         }
     }
@@ -479,19 +482,19 @@ class Cli extends CI_Controller
         $lamsfet_url = $this->config->item('lamsfet_url');
         
         echo 'This script will import some database data and files from LaMSfET at '
-            . $lamsfet_url . ' (from application/config/lamsfet.php)' . "\n\n";
+            . $lamsfet_url . ' (from application/config/lamsfet.php)' . PHP_EOL . PHP_EOL;
         echo 'WARNING: THIS SCRIPT WILL TRUNCATE CONTENT TABLES OF LIST AND DELETE '
-            . 'ALL TASK FILES, TASK UNIT TEST FILES AND SOLUTION FILES FROM HARD DRIVE!' . "\n\n";
+            . 'ALL TASK FILES, TASK UNIT TEST FILES AND SOLUTION FILES FROM HARD DRIVE!' . PHP_EOL . PHP_EOL;
         $answer = $this->_get_cli_user_input('Do you want to execute this import script? (yes)');
         if ($answer !== 'yes') {
-            echo 'Import canceled.' . "\n";
+            echo 'Import canceled.' . PHP_EOL;
             return;
         }
         $this->load->helper('lamsfet');
         
-        echo 'Starting LaMSfET data migration to LIST ...' . "\n\n";
+        echo 'Starting LaMSfET data migration to LIST ...' . PHP_EOL . PHP_EOL;
         
-        echo 'Locking down LIST ...' . "\n\n";
+        echo 'Locking down LIST ...' . PHP_EOL . PHP_EOL;
         $this->configurator->set_config_array('lockdown', ['system_lockdown' => true]);
         
         $lamsfet_db->reconnect();
@@ -507,11 +510,11 @@ class Cli extends CI_Controller
         $tasks_labels = lamsfet_fetch_table('tasks_labels', $lamsfet_db);
         $tasks_in_sets = lamsfet_fetch_table('tasks_in_sets', $lamsfet_db);
         
-        echo "\n";
+        echo PHP_EOL;
         
         list_import_prepare();
         
-        echo "\n";
+        echo PHP_EOL;
         
         $this->db->reconnect();
         list_import_lamsfet_set_types($set_types);
@@ -534,7 +537,7 @@ class Cli extends CI_Controller
         
         echo "\n\n ... DONE!\n\n";
         
-        echo 'Unlocking LIST ...' . "\n";
+        echo 'Unlocking LIST ...' . PHP_EOL;
         $this->configurator->set_config_array('lockdown', ['system_lockdown' => false]);
     }
     
@@ -547,7 +550,7 @@ class Cli extends CI_Controller
     {
         $this->config->load('lockdown');
         $this->load->library('configurator');
-        echo 'Releasing system lockdown...' . "\n";
+        echo 'Releasing system lockdown...' . PHP_EOL;
         $this->configurator->set_config_array('lockdown', ['system_lockdown' => false]);
     }
     
@@ -559,7 +562,7 @@ class Cli extends CI_Controller
         $this->config->load('lockdown');
         $this->load->library('configurator');
         $this->configurator->set_config_array('lockdown', ['system_lockdown' => true]);
-        echo 'System locked...' . "\n";
+        echo 'System locked...' . PHP_EOL;
     }
     
     /**
@@ -601,15 +604,15 @@ class Cli extends CI_Controller
     {
         $this->load->database();
         $this->load->helper('lamsfet');
-        echo 'This script will repair all broken links in tasks.' . "\n\n";
-        echo 'Please specify the broken prefix here.' . "\n\n";
-        echo 'Example:' . "\n";
-        echo 'Your installation is: http://www.domain.com/list/' . "\n";
-        echo 'Your links in tasks starts with: list/index.php/....' . "\n";
-        echo 'But they should be: index.php/...' . "\n";
-        echo 'Then the prefix is: list/' . "\n\n";
+        echo 'This script will repair all broken links in tasks.' . PHP_EOL . PHP_EOL;
+        echo 'Please specify the broken prefix here.' . PHP_EOL . PHP_EOL;
+        echo 'Example:' . PHP_EOL;
+        echo 'Your installation is: http://www.domain.com/list/' . PHP_EOL;
+        echo 'Your links in tasks starts with: list/index.php/....' . PHP_EOL;
+        echo 'But they should be: index.php/...' . PHP_EOL;
+        echo 'Then the prefix is: list/' . PHP_EOL . PHP_EOL;
         $broken_prefix = $this->_get_cli_user_input('Your broken prefix');
-        echo "\n\n";
+        echo PHP_EOL . PHP_EOL;
         $this->apply_lockdown();
         fix_broken_tasks_links($broken_prefix);
         $this->clear_lockdown();
@@ -798,7 +801,7 @@ class Cli extends CI_Controller
     
     public function garbage_collector(): void
     {
-        echo 'Running garbage collector script ...' . "\n";
+        echo 'Running garbage collector script ...' . PHP_EOL;
         
         $this->load->helper('application');
         
@@ -812,7 +815,7 @@ class Cli extends CI_Controller
         $path_to_comparator_files = 'public/comparator/';
         $time_for_comparator_folders_to_remain_untouched = 21600;
         
-        //echo ' Clearing old Java comparator working directories:' . "\n";
+        //echo ' Clearing old Java comparator working directories:' . PHP_EOL;
         $this->cli_progress_bar->print_text(' Clearing old Java comparator working directories:');
         
         $dirs = scandir($path_to_comparator_files);
@@ -828,9 +831,9 @@ class Cli extends CI_Controller
                     if ($current_time - $dir_mod_time >= $time_for_comparator_folders_to_remain_untouched) {
                         $deleted++;
                         unlink_recursive($path_to_comparator_files . $dir, true);
-                        $to_print .= ':  OLD - deleting' . "\n";
+                        $to_print .= ':  OLD - deleting' . PHP_EOL;
                     } else {
-                        $to_print .= ':  SAFE' . "\n";
+                        $to_print .= ':  SAFE' . PHP_EOL;
                     }
                     $this->cli_progress_bar->print_text($to_print, true);
                 } else {
@@ -839,10 +842,10 @@ class Cli extends CI_Controller
             }
         }
         if ($total_dirs === 0) {
-            //echo '  No directories ...' . "\n";
+            //echo '  No directories ...' . PHP_EOL;
             $this->cli_progress_bar->print_text('  No directories ...');
         }
-        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . PHP_EOL;
         $this->cli_progress_bar->print_text(
             ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.'
         );
@@ -853,7 +856,7 @@ class Cli extends CI_Controller
         $path_to_moss_files = 'private/moss/';
         $time_for_moss_folders_to_remain_untouched = 21600;
         
-        //echo ' Clearing old MOSS comparator working directories:' . "\n";
+        //echo ' Clearing old MOSS comparator working directories:' . PHP_EOL;
         $this->cli_progress_bar->print_text(' Clearing old MOSS comparator working directories:');
         
         $dirs = scandir($path_to_moss_files);
@@ -869,9 +872,9 @@ class Cli extends CI_Controller
                     if ($current_time - $dir_mod_time >= $time_for_moss_folders_to_remain_untouched) {
                         $deleted++;
                         unlink_recursive($path_to_moss_files . $dir, true);
-                        $to_print .= ':  OLD - deleting' . "\n";
+                        $to_print .= ':  OLD - deleting' . PHP_EOL;
                     } else {
-                        $to_print .= ':  SAFE' . "\n";
+                        $to_print .= ':  SAFE' . PHP_EOL;
                     }
                     $this->cli_progress_bar->print_text($to_print, true);
                 } else {
@@ -880,10 +883,10 @@ class Cli extends CI_Controller
             }
         }
         if ($total_dirs === 0) {
-            //echo '  No directories ...' . "\n";
+            //echo '  No directories ...' . PHP_EOL;
             $this->cli_progress_bar->print_text('  No directories ...');
         }
-        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . PHP_EOL;
         $this->cli_progress_bar->print_text(
             ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.'
         );
@@ -894,7 +897,7 @@ class Cli extends CI_Controller
         $path_to_extracted_solutions = 'private/extracted_solutions/';
         $time_for_extracted_solutions_to_remain_untouched = 1800;
         
-        //echo ' Clearing old extracted solutions working directories:' . "\n";
+        //echo ' Clearing old extracted solutions working directories:' . PHP_EOL;
         $this->cli_progress_bar->print_text(' Clearing old extracted solutions working directories:');
         
         $dirs = scandir($path_to_extracted_solutions);
@@ -910,9 +913,9 @@ class Cli extends CI_Controller
                     if ($current_time - $dir_mod_time >= $time_for_extracted_solutions_to_remain_untouched) {
                         $deleted++;
                         unlink_recursive($path_to_extracted_solutions . $dir, true);
-                        $to_print .= ':  OLD - deleting' . "\n";
+                        $to_print .= ':  OLD - deleting' . PHP_EOL;
                     } else {
-                        $to_print .= ':  SAFE' . "\n";
+                        $to_print .= ':  SAFE' . PHP_EOL;
                     }
                     $this->cli_progress_bar->print_text($to_print, true);
                 } else {
@@ -921,10 +924,10 @@ class Cli extends CI_Controller
             }
         }
         if ($total_dirs === 0) {
-            //echo '  No directories ...' . "\n";
+            //echo '  No directories ...' . PHP_EOL;
             $this->cli_progress_bar->print_text('  No directories ...');
         }
-        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . PHP_EOL;
         $this->cli_progress_bar->print_text(
             ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.'
         );
@@ -935,7 +938,7 @@ class Cli extends CI_Controller
         $path_to_test_to_execute = 'private/test_to_execute/';
         $time_for_test_to_execute_to_remain_untouched = 3600;
         
-        //echo ' Clearing old test to execute working directories:' . "\n";
+        //echo ' Clearing old test to execute working directories:' . PHP_EOL;
         $this->cli_progress_bar->print_text(' Clearing old test to execute working directories:');
         
         $dirs = scandir($path_to_test_to_execute);
@@ -951,9 +954,9 @@ class Cli extends CI_Controller
                     if ($current_time - $dir_mod_time >= $time_for_test_to_execute_to_remain_untouched) {
                         $deleted++;
                         unlink_recursive($path_to_test_to_execute . $dir, true);
-                        $to_print .= ':  OLD - deleting' . "\n";
+                        $to_print .= ':  OLD - deleting' . PHP_EOL;
                     } else {
-                        $to_print .= ':  SAFE' . "\n";
+                        $to_print .= ':  SAFE' . PHP_EOL;
                     }
                     $this->cli_progress_bar->print_text($to_print, true);
                 } else {
@@ -962,10 +965,10 @@ class Cli extends CI_Controller
             }
         }
         if ($total_dirs === 0) {
-            //echo '  No directories ...' . "\n";
+            //echo '  No directories ...' . PHP_EOL;
             $this->cli_progress_bar->print_text('  No directories ...');
         }
-        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . "\n";
+        //echo ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.' . PHP_EOL;
         $this->cli_progress_bar->print_text(
             ' Done, ' . $deleted . ' from ' . $total_dirs . ' directories deleted.'
         );
@@ -974,7 +977,7 @@ class Cli extends CI_Controller
         // ----------- UNFINISHED TASK FILES UPLOADS ---------------------------
         
         $total_number = 0;
-        //echo ' Clearing unfinished uploads of task files:' . "\n";
+        //echo ' Clearing unfinished uploads of task files:' . PHP_EOL;
         $this->cli_progress_bar->print_text(' Clearing unfinished uploads of task files:');
         $deleted = $this->find_and_delete_old_upload_part(
             'private/uploads/task_files/',
@@ -984,10 +987,10 @@ class Cli extends CI_Controller
             $total_number
         );
         if ($total_number === 0) {
-            //echo '  No files ...' . "\n";
+            //echo '  No files ...' . PHP_EOL;
             $this->cli_progress_bar->print_text('  No files ...');
         }
-        //echo ' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.' . "\n";
+        //echo ' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.' . PHP_EOL;
         $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.');
         $this->cli_progress_bar->increment();
         
@@ -1002,10 +1005,10 @@ class Cli extends CI_Controller
             $total_number
         );
         if ($total_number === 0) {
-            //echo '  No files ...' . "\n";
+            //echo '  No files ...' . PHP_EOL;
             $this->cli_progress_bar->print_text('  No files ...');
         }
-        //echo ' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.' . "\n";
+        //echo ' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.' . PHP_EOL;
         $this->cli_progress_bar->print_text(' Done, ' . $deleted . ' from ' . $total_number . ' files deleted.');
         $this->cli_progress_bar->increment();
         
@@ -1034,7 +1037,7 @@ class Cli extends CI_Controller
         $this->cli_progress_bar->increment();
         $this->cli_progress_bar->finish();
         
-        echo 'Done ...' . "\n";
+        echo 'Done ...' . PHP_EOL;
     }
     
     public function test_message(): void
@@ -1071,6 +1074,33 @@ class Cli extends CI_Controller
         $mossConsumer->consumeQueue();
     }
     
+    public function moss_clean_up_comparisons(): void
+    {
+        $container = ContainerFactory::getContainer();
+        /** @var MossCleanUpService $cleanUpService */
+        $cleanUpService = $container->get(MossCleanUpService::class);
+        
+        echo 'MOSS comparisons cleanup, this operation may take a while ...' . PHP_EOL;
+        
+        $output = $cleanUpService->cleanUpComparisons();
+        
+        if (count($output['deleted']) > 0) {
+            printf('Total of %d comparison records were deleted.' . PHP_EOL, count($output['deleted']));
+        } else {
+            echo 'Nothing to delete now.' . PHP_EOL;
+        }
+        if (count($output['errors']) > 0) {
+            /** @var array{id: int, reason: string} $error */
+            foreach ($output['errors'] as $error) {
+                printf(
+                    'ERROR: comparison record %d can\'t be deleted because %s' . PHP_EOL,
+                    $error['id'],
+                    $error['reason']
+                );
+            }
+        }
+    }
+    
     private function find_and_delete_old_upload_part(
         $path_base,
         $path_add,
@@ -1104,11 +1134,11 @@ class Cli extends CI_Controller
                             $to_print = '  ' . $path_add . $file;
                             $filemtime = filemtime($path_base . $path_add . $file);
                             if ($current_time - $filemtime >= $max_time) {
-                                $to_print .= ':  OLD - deleting' . "\n";
+                                $to_print .= ':  OLD - deleting' . PHP_EOL;
                                 $deleted++;
                                 @unlink($path_base . $path_add . $file);
                             } else {
-                                $to_print .= ':  SAFE' . "\n";
+                                $to_print .= ':  SAFE' . PHP_EOL;
                             }
                             $this->cli_progress_bar->print_text($to_print, true);
                         }
@@ -1166,12 +1196,12 @@ class Cli extends CI_Controller
         $result = $this->db->get('migrations', 1);
         if ($result->num_rows() === 1) {
             if ($result->row()->version !== $this->_get_last_migration_version()) {
-                echo '  Current migration version isn\'t the latest one.' . "\n"
-                    . '  Cache will be rebuild on first hit.' . "\n";
+                echo '  Current migration version isn\'t the latest one.' . PHP_EOL
+                    . '  Cache will be rebuild on first hit.' . PHP_EOL;
                 return;
             }
         } else {
-            echo '  Migrations database table doe\'s not exists. Cache can\'t be recreated.' . "\n";
+            echo '  Migrations database table doe\'s not exists. Cache can\'t be recreated.' . PHP_EOL;
             return;
         }
         
@@ -1191,7 +1221,7 @@ class Cli extends CI_Controller
                         if (class_exists($class_name)
                             && in_array('DataMapper', class_parents($class_name), true)
                         ) {
-                            echo '  DataMapper model ' . $class_name . ' cached again ...' . "\n";
+                            echo '  DataMapper model ' . $class_name . ' cached again ...' . PHP_EOL;
                             $model = new $class_name();
                             $model->limit(1)->get_iterated();
                         }
