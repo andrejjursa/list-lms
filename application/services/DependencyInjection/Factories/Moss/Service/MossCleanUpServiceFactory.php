@@ -14,6 +14,9 @@ class MossCleanUpServiceFactory implements ServiceFactoryInterface
      */
     public function __invoke(string $id, ContainerInterface $container)
     {
-        return new MossCleanUpService($container->get('moss_http_client'));
+        return new MossCleanUpService(
+            $container->get('moss_http_client'),
+            $container->get('symfony_lock_factory')
+        );
     }
 }

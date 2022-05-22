@@ -1082,7 +1082,17 @@ class Cli extends CI_Controller
         
         echo 'MOSS comparisons cleanup, this operation may take a while ...' . PHP_EOL;
         
-        $output = $cleanUpService->cleanUpComparisons();
+        try {
+            $output = $cleanUpService->cleanUpComparisons();
+        } catch (Throwable $exception) {
+            printf(
+                'An error occurred during the process:%1$sMessage: %2$s%1$sTrace:%1$s%3$s',
+                PHP_EOL,
+                $exception->getMessage(),
+                $exception->getTraceAsString()
+            );
+            return;
+        }
         
         if (count($output['deleted']) > 0) {
             printf('Total of %d comparison records were deleted.' . PHP_EOL, count($output['deleted']));

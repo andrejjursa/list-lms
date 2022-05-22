@@ -43,3 +43,4 @@ public/js/tinymce4
 /bower_components/
 
 supervisord.log
+docker-compose.override.yml

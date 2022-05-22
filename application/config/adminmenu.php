@@ -191,14 +191,6 @@ $config['adminmenu'] = [
                 'class'   => '',
                 'sub'     => null,
             ],
-            [
-                'title'   => 'lang:adminmenu_title_java_comparator',
-                'pagetag' => 'comparator',
-                'link'    => 'admin_comparator',
-                'icon'    => '<i class="fa fa-columns" aria-hidden="true"></i>',
-                'class'   => '',
-                'sub'     => null,
-            ],
         ],
     ],
     [
