@@ -1,5 +1,7 @@
 <?php
 
+use PhpParser\Node\Expr\Cast\Double;
+
 /**
  * Abstract test class.
  *
@@ -53,19 +55,19 @@ abstract class abstract_test
     /**
      * Returns last test score.
      *
-     * @return int test score;
+     * @return float test score;
      */
-    public function get_last_test_score(): int
+    public function get_last_test_score(): float
     {
         $score_total = 0;
         if (is_array($this->test_scoring) && count($this->test_scoring)) {
             foreach ($this->test_scoring as $test_scoring_object) {
-                $score_total += (double)$test_scoring_object->current;
+                $score_total += (float)$test_scoring_object->current;
             }
-            if ($score_total > 100) {
-                $score_total = 100;
-            } else if ($score_total < 0) {
-                $score_total = 0;
+            if ($score_total > 100.0) {
+                $score_total = 100.0;
+            } else if ($score_total < 0.0) {
+                $score_total = 0.0;
             }
         }
         return $score_total;

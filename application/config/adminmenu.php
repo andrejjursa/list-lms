@@ -184,9 +184,9 @@ $config['adminmenu'] = [
                 'sub'     => null,
             ],
             [
-                'title'   => 'lang:adminmenu_title_java_comparator',
-                'pagetag' => 'comparator',
-                'link'    => 'admin_comparator',
+                'title'   => 'lang:adminmenu_title_parallel_moss_comparator',
+                'pagetag' => 'parallel_moss',
+                'link'    => 'admin_parallel_moss',
                 'icon'    => '<i class="fa fa-columns" aria-hidden="true"></i>',
                 'class'   => '',
                 'sub'     => null,

@@ -1,6 +1,6 @@
 <?php
 
-$lang['admin_moss_page_title'] = 'Porovnávač MOSS';
+$lang['admin_moss_page_title'] = 'Porovnávač MOSS (vyradený)';
 
 $lang['admin_moss_fieldset_legend_task_set'] = 'Výber zostavy';
 $lang['admin_moss_fieldset_legend_protocol'] = 'Protokol porovnávania / nastavenie';

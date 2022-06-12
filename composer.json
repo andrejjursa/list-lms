@@ -7,25 +7,39 @@
       "email": "dragoo@thelambda.sk"
     }
   ],
-  "minimum-stability": "dev",
   "require": {
     "php": "7.1.*",
-    "mathjax/mathjax": "^2.7",
+    "ext-fileinfo": "*",
     "ext-json": "*",
-    "ext-zip": "*",
     "ext-mbstring": "*",
-    "ext-fileinfo": "*"
+    "ext-pcntl": "*",
+    "ext-zip": "*",
+    "mathjax/mathjax": "^2.7",
+    "php-amqplib/php-amqplib": "^3.1",
+    "psr/container": "^1.0",
+    "ramsey/uuid": "^3.9",
+    "symfony/lock": "^4.4",
+    "predis/predis": "^1.1",
+    "guzzlehttp/guzzle": "^6.5"
+  },
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "*",
+    "ergebnis/composer-normalize": "^2.8",
+    "phpcompatibility/php-compatibility": "*",
+    "rector/rector": "^0.12",
+    "roave/security-advisories": "dev-latest",
+    "squizlabs/php_codesniffer": "3.*"
   },
   "autoload": {
     "psr-4": {
-      "Application\\Interfaces\\": "application/interface/"
+      "Application\\Interfaces\\": "application/interface/",
+      "Application\\Services\\": "application/services/",
+      "Application\\ModelTraits\\": "application/modelTraits/",
+      "Application\\MetaClass\\": "application/metaclass/",
+      "Application\\DataObjects\\": "application/dataObjects/",
+      "Application\\Exceptions\\": "application/exceptions/"
     }
   },
-  "require-dev": {
-    "phpcompatibility/php-compatibility": "*",
-    "squizlabs/php_codesniffer": "3.*",
-    "dealerdirect/phpcodesniffer-composer-installer": "*",
-    "rector/rector": "^0.12.3"
-  },
+  "minimum-stability": "dev",
   "prefer-stable": true
 }
