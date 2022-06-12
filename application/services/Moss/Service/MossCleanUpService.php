@@ -62,6 +62,7 @@ class MossCleanUpService
     
         try {
             $comparisons = new Parallel_moss_comparison();
+            $comparisons->limit(1000);
             $comparisons->get_iterated();
     
             $output = [
@@ -150,5 +151,10 @@ class MossCleanUpService
         } finally {
             $lock->release();
         }
+        
+        return [
+            'errors'  => [],
+            'deleted' => [],
+        ];
     }
 }
