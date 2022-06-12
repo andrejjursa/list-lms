@@ -148,13 +148,9 @@ class MossCleanUpService
             return $output;
         } catch (Throwable $ex) {
             $this->db->trans_rollback();
+            throw new \RuntimeException('Process failed!', 0, $ex);
         } finally {
             $lock->release();
         }
-        
-        return [
-            'errors'  => [],
-            'deleted' => [],
-        ];
     }
 }
