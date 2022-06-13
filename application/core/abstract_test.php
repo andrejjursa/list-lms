@@ -53,9 +53,9 @@ abstract class abstract_test
     /**
      * Returns last test score.
      *
-     * @return int test score;
+     * @return float test score;
      */
-    public function get_last_test_score(): int
+    public function get_last_test_score(): float
     {
         $score_total = 0;
         if (is_array($this->test_scoring) && count($this->test_scoring)) {
