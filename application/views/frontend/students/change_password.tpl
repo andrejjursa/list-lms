@@ -12,12 +12,12 @@
                 </div>
                 <div class="field_login">
                     <label for="student_password_id">{translate line='students_change_password_form_label_password'}:</label>
-                    <p class="input"><input type="password" name="student[password]" value="{$smarty.post.student.password|escape:'html'}" id="student_password_id" /></p>
+                    <p class="input"><input type="password" name="student[password]" value="" id="student_password_id" /></p>
                     {form_error field='student[password]' left_delimiter = '<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>
                 <div class="field_login">
                     <label for="student_verify_id">{translate line='students_change_password_form_label_verify'}:</label>
-                    <p class="input"><input type="password" name="student[verify]" value="{$smarty.post.student.verify|escape:'html'}" id="student_verify_id" /></p>
+                    <p class="input"><input type="password" name="student[verify]" value="" id="student_verify_id" /></p>
                     {form_error field='student[verify]' left_delimiter = '<p class="error"><span class="message">' right_delimiter='</span></p>'}
                 </div>
                 <div class="buttons">

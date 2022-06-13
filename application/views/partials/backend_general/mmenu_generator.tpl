@@ -1,3 +1,4 @@
+{function name='is_menu_item_active' menu_item=''}{if $list_adminmenu_current eq $menu_item}menu_item_active{/if}{/function}
 <script type="text/javascript">
     jQuery(document).ready(function($) {
         $('nav#list-navigation').show().mmenu({
@@ -20,16 +21,17 @@
                 size: 40,
                 top: [
                     '<a href="javascript:void(0);" id="navigation_open_close"><span class="fa fa-bars"></span></a>',
-                    '<a href="{internal_url url='admin'}" title="{translate line='adminmenu_title_dashboard'}"><span class="fa fa-home"></span></a>',
-                    '<a href="{internal_url url='admin_tasks'}" title="{translate line='adminmenu_title_tasks'}"><span class="fa fa-tasks"></span></a>',
-                    '<a href="{internal_url url='admin_task_sets'}" title="{translate line='adminmenu_title_task_sets'}"><span class="fa fa-list"></span></a>',
-                    '<a href="{internal_url url='admin_moss'}" title="{translate line='adminmenu_title_moss_comparator'}"><span class="fa fa-balance-scale"></span></a>',
-                    '<a href="{internal_url url='admin_course_content'}" title="{translate line='adminmenu_title_course_content'}"><span class="fa fa-archive"></span></a>',
-                    '<a href="{internal_url url='admin_solutions'}" title="{translate line='adminmenu_title_solutions'}"><span class="fa fa-check-square-o"></span></a>',
-                    '<a href="{internal_url url='admin_solutions/valuation_tables'}" title="{translate line='adminmenu_title_valuation_tables'}"><span class="fa fa-table"></span></a>'
+                    '<a href="{internal_url url='admin'}" title="{translate line='adminmenu_title_dashboard'}"><span class="fa fa-home {is_menu_item_active menu_item='dashboard'}"></span></a>',
+                    '<a href="{internal_url url='admin_tasks'}" title="{translate line='adminmenu_title_tasks'}"><span class="fa fa-tasks {is_menu_item_active menu_item='tasks'}"></span></a>',
+                    '<a href="{internal_url url='admin_task_sets'}" title="{translate line='adminmenu_title_task_sets'}"><span class="fa fa-list {is_menu_item_active menu_item='task_sets'}"></span></a>',
+                    '<a href="{internal_url url='admin_moss'}" title="{translate line='adminmenu_title_moss_comparator'}"><span class="fa fa-balance-scale {is_menu_item_active menu_item='moss'}"></span></a>',
+                    '<a href="{internal_url url='admin_parallel_moss'}" title="{translate line='adminmenu_title_parallel_moss_comparator'}"><span class="fa fa-balance-scale {is_menu_item_active menu_item='parallel_moss'}"></span></a>',
+                    '<a href="{internal_url url='admin_course_content'}" title="{translate line='adminmenu_title_course_content'}"><span class="fa fa-archive {is_menu_item_active menu_item='course_content'}"></span></a>',
+                    '<a href="{internal_url url='admin_solutions'}" title="{translate line='adminmenu_title_solutions'}"><span class="fa fa-check-square-o {is_menu_item_active menu_item='solutions'}"></span></a>',
+                    '<a href="{internal_url url='admin_solutions/valuation_tables'}" title="{translate line='adminmenu_title_valuation_tables'}"><span class="fa fa-table {is_menu_item_active menu_item='valuation_tables'}"></span></a>'
                 ],
                 'bottom': [
-                    '<a href="{internal_url url='admin_teachers/my_account'}" title="{translate line='adminmenu_title_teacher_account'}"><span class="fa fa-id-card-o"></span></a>',
+                    '<a href="{internal_url url='admin_teachers/my_account'}" title="{translate line='adminmenu_title_teacher_account'}"><span class="fa fa-id-card-o {is_menu_item_active menu_item='teacher_account'}"></span></a>',
                     '<a href="{internal_url url='admin_teachers/logout'}" title="{translate line='adminmenu_title_logout'}" class="adminmenu_logout"><span class="fa fa-sign-out"></span></a>'
                 ]
             },

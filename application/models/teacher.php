@@ -5,26 +5,27 @@ use Application\Interfaces\DataMapperExtensionsInterface;
 /**
  * Teacher model.
  *
- * @property int                  $id
- * @property string               $updated            date time format YYYY-MM-DD HH:MM:SS
- * @property string               $created            date time format YYYY-MM-DD HH:MM:SS
- * @property string               $fullname
- * @property string               $email
- * @property string               $password
- * @property string               $language
- * @property int|null             $prefered_course_id entity id of model {@see Course}
- * @property int                  $widget_columns
- * @property Solution             $solution
- * @property Comment              $comment
- * @property Task                 $task
- * @property Task_set             $comment_subscription
- * @property Room                 $room
- * @property Log                  $log
- * @property Admin_widget         $admin_widget
- * @property Test_queue           $test_queue
- * @property Course_content_model $created_content
- * @property Course_content_model $updated_content
- * @property Course               $prefered_course
+ * @property int                      $id
+ * @property string                   $updated            date time format YYYY-MM-DD HH:MM:SS
+ * @property string                   $created            date time format YYYY-MM-DD HH:MM:SS
+ * @property string                   $fullname
+ * @property string                   $email
+ * @property string                   $password
+ * @property string                   $language
+ * @property int|null                 $prefered_course_id entity id of model {@see Course}
+ * @property int                      $widget_columns
+ * @property Solution                 $solution
+ * @property Comment                  $comment
+ * @property Task                     $task
+ * @property Task_set                 $comment_subscription
+ * @property Room                     $room
+ * @property Log                      $log
+ * @property Admin_widget             $admin_widget
+ * @property Test_queue               $test_queue
+ * @property Course_content_model     $created_content
+ * @property Course_content_model     $updated_content
+ * @property Course                   $prefered_course
+ * @property Parallel_moss_comparison $parallel_moss_comparison
  *
  * @method DataMapper where_related_solution(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_comment(mixed $related, string $field = null, string $value = null)
@@ -37,6 +38,7 @@ use Application\Interfaces\DataMapperExtensionsInterface;
  * @method DataMapper where_related_created_content(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_updated_content(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_prefered_course(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_parallel_moss_comparison(mixed $related, string $field = null, string $value = null)
  *
  * @package LIST_DM_Models
  * @author  Andrej Jursa
@@ -79,6 +81,7 @@ class Teacher extends DataMapper implements DataMapperExtensionsInterface
             'join_self_as'  => 'updator',
             'join_other_as' => 'updated_content',
         ],
+        'parallel_moss_comparison',
     ];
     public $has_one = [
         'prefered_course' => [

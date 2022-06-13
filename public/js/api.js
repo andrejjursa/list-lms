@@ -528,6 +528,22 @@ var api_ajax_update = function(url, method, data, onSuccess, onError, dataType, 
     });
 };
 
+var api_ajax_load_json = function(url, method, data, onSuccess, onError, synchronous, timeout) {
+    method = method === undefined ? 'post' : method;
+    data = data === undefined ? {} : data;
+    onError = onError === undefined ? function(jqXHR) {
+        display_notification(
+            'Request failed! Status ' + jqXHR.status + ' (' + jqXHR.statusText + '), with message: ' + jqXHR.responseText,
+            'error'
+        );
+    } : onError;
+    onSuccess = onSuccess === undefined ? function(data, statusText, jqXHR) {} : onSuccess;
+    synchronous = synchronous === undefined ? false : (typeof synchronous === 'boolean' ? synchronous : false);
+    timeout = timeout === undefined ? 0 : (typeof timeout === 'number' ? timeout : 0);
+
+    api_ajax_update(url, method, data, onSuccess, onError, 'json', synchronous, timeout);
+};
+
 /**
 *
 *  Base64 encode / decode

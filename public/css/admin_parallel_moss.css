@@ -1,0 +1,57 @@
+table.comparisons_table { width: 100%; }
+table.comparisons_table thead tr th { text-align: left; font-weight: bold; }
+table.comparisons_table thead tr th { padding: 2px; background-color: rgba(192,192,192,128); }
+table.comparisons_table thead tr th:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+table.comparisons_table thead tr th:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+table.comparisons_table tbody td { padding: 2px; line-height: 1.6em; }
+table.comparisons_table tbody tr:nth-child(even) { background-color: rgba(255, 255, 255, 128); }
+table.comparisons_table tbody td > i.fa { width: 1.1em; text-align: center; }
+table.comparisons_table tbody tr td.controlls { width: 1px; }
+
+table.comparisons_table tfoot td { text-align: right; background-color: rgba(192, 192, 192, 128); padding: 2px; border-radius: 4px; }
+
+div.field.hidden,
+div.solutions-selection.hidden, div.base-files-selection.hidden { display: none; }
+
+div.comparison_box { padding: 0.5em; border: 1px solid black; border-radius: 0.8em; margin-top: 0.5em; position: relative; }
+div.comparison_box div.delete_box { position: absolute; top: -0.2em; right: -0.2em; border: 1px red solid; padding: 0.1em; border-radius: 0.2em; background-color: indianred; }
+div.comparison_box div.delete_box a { color: darkred; text-decoration: none; }
+
+div.solutions-selection, div.base-files-selection { clear: both; }
+fieldset.solutions-list div.solution_box > label { display: flex; flex-flow: row wrap; justify-content: space-between; align-items: center; width: 80%; }
+fieldset.solutions-list div.solution_box > label input[type=checkbox] { display: inline-block; width: 1em; margin-right: 0.1em; margin-left: 0.1em; align-self: center; }
+fieldset.solutions-list div.solution_box > label span { display: inline-block; width: calc(100% - 1.2em); align-self: center; }
+fieldset.solutions-list div.solution_box > p.input { margin-left: 80%; display: block; width: 20%; }
+fieldset.solutions-list div.solution_box > p.input select { width: 90%; }
+
+fieldset.base-files-list div.base-files-for-task:first-of-type { margin-top: 0.4em; }
+fieldset.base-files-list div.base-files-for-task:not(:last-of-type) { margin-bottom: 0.4em; padding-bottom: 0.4em; border-bottom: 1px solid black; }
+
+fieldset.base-files-list div.base-files-task-name { border-bottom: 1px dashed black; font-weight: bold; padding-bottom: 2px; }
+fieldset.base-files-list div.base-files-checkboxes > label { display: flex; flex-flow: row wrap; justify-content: space-between; align-items: center; width: 100%; cursor: pointer; margin-top: 0.2em; margin-bottom: 0.2em; }
+fieldset.base-files-list div.base-files-checkboxes > label input[type=checkbox] { display: inline-block; width: 1em; margin-left: 0.1em; margin-right: 0.1em; align-self: center; }
+fieldset.base-files-list div.base-files-checkboxes > label span { display: inline-block; width: calc(100% - 1.2em); align-self: center; font-weight: bold; }
+
+div.comparison_content_box { margin-top: 0.5em; border-top: 1px solid black; padding-top: 0; }
+div.comparison_settings_box { margin-top: 0.5em; border-top: 1px solid black; padding-top: 0; }
+
+div.solutions-selection fieldset,
+div.base-files-selection fieldset { border: 1px solid gray; border-radius: 5px; padding: 10px; background-color: white; }
+div.solutions-selection fieldset legend,
+div.base-files-selection fieldset legend { border: 1px solid gray; border-radius: 5px; background-color: white; font-weight: bold; padding: 4px; }
+div.base-files-selection { margin-top: 0.5em; }
+
+a.button.controlElement { width: 2em; text-align: center; }
+
+@media screen and (min-width: 900px) {
+    fieldset.solutions-list { display: flex; flex-flow: row wrap; justify-content: left; align-content: stretch; align-items: stretch; }
+    div.solution_box { width: 50%; display: block; }
+
+    fieldset.base-files-list div.base-files-checkboxes { display: flex; flex-flow: row wrap; justify-content: left; align-content: stretch; align-items: stretch; }
+    fieldset.base-files-list div.base-files-checkboxes > label { width: 50%; }
+}
+
+@media screen and (min-width: 1600px) {
+    div.solution_box { width: 25%; }
+    fieldset.base-files-list div.base-files-checkboxes > label { width: 25%; }
+}

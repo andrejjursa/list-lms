@@ -1,6 +1,6 @@
 <?php 
 
-$lang['admin_moss_page_title'] = 'MOSS comparator';
+$lang['admin_moss_page_title'] = 'MOSS comparator (deprecated)';
 
 $lang['admin_moss_fieldset_legend_task_set'] = 'Task set selection';
 $lang['admin_moss_fieldset_legend_protocol'] = 'Comparation protocol / configuration';

@@ -7,6 +7,7 @@ services:
     image: local-list-server-image
     volumes:
       - .:/app
+      - ./supervisord/dev-consumers.conf:/opt/docker/etc/supervisor.d/dev-consumers.conf:ro
     working_dir: /app
     hostname: server.listdev
     domainname: listdev
@@ -16,6 +17,8 @@ services:
       - "server.listdev:127.0.0.1"
     links:
       - list-database
+      - list-rabbitmq
+      - list-redis
     environment:
       LIST_DATABASE_HOSTNAME: list-database
       LIST_DATABASE_USER: root
@@ -23,6 +26,14 @@ services:
       LIST_DATABASE_NAME: list-dev
       LIST_CONFIG_BASE_URL: http://server.listdev/
       LIST_ENVIRONMENT: development
+      LIST_AMQP_HOST: list-rabbitmq
+      LIST_AMQP_PORT: 5672
+      LIST_AMQP_USER: guest
+      LIST_AMQP_PASSWORD: guest
+      LIST_AMQP_VHOST: /
+      LIST_REDIS_LOCK_HOST: list-redis
+      LIST_REDIS_LOCK_PORT: 6379
+      LIST_REDIS_LOCK_SCHEME: tcp
       XDEBUG_CONFIG: >
         remote_host=host.docker.internal
         remote_autostart=1
@@ -53,6 +64,25 @@ services:
     environment:
       ADMINER_DEFAULT_SERVER: list-database
 
+  list-rabbitmq:
+    image: rabbitmq:3-management-alpine
+    hostname: server.listdev
+    domainname: listdev
+    volumes:
+      - list-rabbitmq-data:/var/lib/rabbitmq/mnesia/
+    ports:
+      - 15672:15672
+      - 15692:15692
+    extra_hosts:
+      - "server.listdev:127.0.0.1"
+
+  list-redis:
+    image: redis:6-alpine
+    ports:
+      - 6379:6379
+
+
 volumes:
   list-database-data:
+  list-rabbitmq-data:
 

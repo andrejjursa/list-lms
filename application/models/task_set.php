@@ -51,10 +51,8 @@ use Application\Interfaces\DataMapperExtensionsInterface;
  * @method DataMapper where_related_comment(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_task_set_permission(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_project_selection(mixed $related, string $field = null, string $value = null)
- * @method DataMapper where_related_comment_subscriber_student(mixed $related, string $field = null, string $value =
- *         null)
- * @method DataMapper where_related_comment_subscriber_teacher(mixed $related, string $field = null, string $value =
- *         null)
+ * @method DataMapper where_related_comment_subscriber_student(mixed $related, string $field = null, string $value = null)
+ * @method DataMapper where_related_comment_subscriber_teacher(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_test_queue(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_course(mixed $related, string $field = null, string $value = null)
  * @method DataMapper where_related_task_set_type(mixed $related, string $field = null, string $value = null)
@@ -406,7 +404,8 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface
     public function extract_student_zip_to_folder(
         string $real_filename,
         string $folder,
-        ?array $extensions = null
+        ?array $extensions = null,
+        array &$extractedFilesList = []
     ): bool
     {
         $file_info = $this->get_specific_file_info($real_filename);
@@ -415,6 +414,10 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface
             $open = $zip_file->open($file_info['filepath']);
             if (!is_array($extensions)) {
                 $zip_file->extractTo($folder);
+                for ($index = 0; $index < $zip_file->numFiles; $index++) {
+                    $filename = $zip_file->getNameIndex($index);
+                    $extractedFilesList[] = $filename;
+                }
             } else {
                 for ($index = 0; $index < $zip_file->numFiles; $index++) {
                     $filename = $zip_file->getNameIndex($index);
@@ -423,6 +426,7 @@ class Task_set extends DataMapper implements DataMapperExtensionsInterface
                         $ext = substr($filename, $ext_pos + 1);
                         if (in_array($ext, $extensions, true)) {
                             $zip_file->extractTo($folder, $filename);
+                            $extractedFilesList[] = $filename;
                         }
                     }
                 }

@@ -3,30 +3,30 @@
 /**
  * Overriden controller class with few more useful methods.
  *
- * @property CI_URI               $uri
- * @property LIST_Parser          $parser
- * @property LIST_Session         $session
- * @property LIST_Lang            $lang
- * @property LIST_Loader          $load
- * @property LIST_Form_validation $form_validation
- * @property LIST_Email           $email
- * @property CI_Config            $config
- * @property Usermanager          $usermanager
- * @property CI_Input             $input
- * @property Translations         $translations
- * @property CI_Router            $router
- * @property CI_DB                $db
- * @property LIST_Output          $output
- * @property Messages             $messages
- * @property Filter               $filter
- * @property Smarty               $smarty
- * @property CI_Upload            $upload
- * @property CI_Image_lib         $image_lib
- * @property Plupload             $plupload
- * @property mosslib              $mosslib
- * @property Configurator         $configurator
- * @property Changelog            $changelog
- * @property Test_score           $test_score
+ * @property CI_URI                               $uri
+ * @property LIST_Parser                          $parser
+ * @property LIST_Session                         $session
+ * @property LIST_Lang                            $lang
+ * @property LIST_Loader                          $load
+ * @property LIST_Form_validation                 $form_validation
+ * @property LIST_Email                           $email
+ * @property CI_Config                            $config
+ * @property Usermanager                          $usermanager
+ * @property CI_Input                             $input
+ * @property Translations                         $translations
+ * @property CI_Router                            $router
+ * @property CI_DB|DataMapper|CI_DB_active_record $db
+ * @property LIST_Output                          $output
+ * @property Messages                             $messages
+ * @property Filter                               $filter
+ * @property Smarty                               $smarty
+ * @property CI_Upload                            $upload
+ * @property CI_Image_lib                         $image_lib
+ * @property Plupload                             $plupload
+ * @property mosslib                              $mosslib
+ * @property Configurator                         $configurator
+ * @property Changelog                            $changelog
+ * @property Test_score                           $test_score
  *
  * @package LIST_Core
  * @author  Andrej Jursa
@@ -220,7 +220,7 @@ class LIST_Controller extends CI_Controller
      * @param string $level transaction isolation level, one of TRANSACTION_ISOLATION_* of MY_Controller class.
      * @param string $area  area of where isolation is aplied, one of TRANSACTION_AREA_* of MY_Controller class.
      */
-    protected function _transaction_isolation(
+    public function _transaction_isolation(
         string $level = self::TRANSACTION_ISOLATION_SERIALIZABLE,
         string $area = self::TRANSACTION_AREA_SESSION
     ): void

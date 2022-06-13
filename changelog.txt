@@ -20,6 +20,19 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.8.0 | 2022-06-12
+
+NEW Nová implementácia porovnávača zdrojových kódov MOSS so spracovaním na pozadí a možnosťou porovnávat viacero zostáv úloh naraz.
+NEW [lang:english] New implementation of MOSS source codes comparison with background processing and ability to compare multiple task sets together.
+
+CHANGE Pôvodná implementácia pre MOSS je teraz v stave "vyradená" a bude odstránená v ďalšej verzii.
+CHANGE [lang:english] Original implementation of MOSS is now "deprecated" and will be removed in the next version.
+
+REMOVE Ostránená stará implementácia porovnávača pre zdrojové kódy jazyka Java.
+REMOVE [lang:english] Removed old implementation of Java language source codes comparator.
+
+END VERSION
+
 VERSION 1.7.5 | 2022-01-23
 
 FIX Opravený problém so spúšťaním testov v administrácii.
