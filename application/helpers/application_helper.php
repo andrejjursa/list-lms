@@ -29,7 +29,7 @@ function is_mod_rewrite_enabled(): bool
  *
  * @return string internal url.
  */
-function create_internal_url($relative_url, $force_simple_link = false): string
+function create_internal_url(string $relative_url, bool $force_simple_link = false): string
 {
     $CI =& get_instance();
     if (!$force_simple_link && $CI->config->item('rewrite_engine_enabled') && is_mod_rewrite_enabled()) {

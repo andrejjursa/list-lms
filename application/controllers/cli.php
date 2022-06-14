@@ -1063,15 +1063,27 @@ class Cli extends CI_Controller
         $testConsumer->consumeQueue();
     }
     
+    /**
+     * @throws Exception
+     */
     public function moss_consume(): void
     {
-        $container = ContainerFactory::getContainer();
-        /** @var ConsumerFactory $consumerFactory */
-        $consumerFactory = $container->get(ConsumerFactory::class);
-        
-        $mossConsumer = $consumerFactory->getMossConsumer();
-        
-        $mossConsumer->consumeQueue();
+        try {
+            $container = ContainerFactory::getContainer();
+            /** @var ConsumerFactory $consumerFactory */
+            $consumerFactory = $container->get(ConsumerFactory::class);
+    
+            $mossConsumer = $consumerFactory->getMossConsumer();
+    
+            $mossConsumer->consumeQueue();
+        } catch (Exception $exception) {
+            echo 'ERROR: ' . $exception->getMessage() . PHP_EOL;
+            echo 'FILE: ' . $exception->getFile() . PHP_EOL;
+            echo 'LINE: ' . $exception->getLine() . PHP_EOL;
+            echo 'CODE: ' . $exception->getCode() . PHP_EOL;
+            echo 'TRACE:' . PHP_EOL . $exception->getTraceAsString() . PHP_EOL;
+            throw $exception;
+        }
     }
     
     public function moss_clean_up_comparisons(): void
