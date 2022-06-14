@@ -27,7 +27,7 @@
                data-lang_comparison_requeue_queued="{translate|escape:'html' line='admin_parallel_moss_comparison_requeue_queued'}"
                data-lang_comparison_requeue_notFound="{translate|escape:'html' line='admin_parallel_moss_comparison_requeue_not_found'}"
                data-lang_comparison_requeue_invalidStatus="{translate|escape:'html' line='admin_parallel_moss_comparison_requeue_invalid_status'}"
-               data-link_requeue="{internal_url url='admin_parallel_moss/requeue_comparison'}"
+               data-link_requeue="{internal_url url='admin_parallel_moss/requeue_comparison' simple=true}"
             >
                 <thead>
                     <tr>
