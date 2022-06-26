@@ -11,6 +11,11 @@ This short manual describes the settings necessary to make the MOSS Comparator w
   $config['moss_user_id'] = '<here goes your moss user id>';
   ```
   
+  You can set the MOSS consumer to stop when it handles a message:
+  ```php
+  $config['moss_stop_on_message'] = true;
+  ```
+  
   Do not update other parameters!
 
 * `application/config/amqp.php` configures the connection to the AMQP service, like __RabbitMQ__, for example.

@@ -38,3 +38,9 @@ $config['moss_langs_file_extensions'] = [
     'haskell' => ['hs'],
     'prolog'  => ['pl'],
 ];
+
+/*
+ * MOSS Consumer stop after message is handled:
+ */
+
+$config['moss_stop_on_message'] = false;
