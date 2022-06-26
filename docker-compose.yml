@@ -40,7 +40,7 @@ services:
         remote_connect_back=0
 
   list-database:
-    image: mariadb:10
+    image: mariadb:10.7
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: list-dev
