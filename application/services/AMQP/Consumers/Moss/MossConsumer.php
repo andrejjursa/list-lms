@@ -88,6 +88,9 @@ class MossConsumer extends AbstractConsumer
         try {
             $this->mossExecutionService->execute($applicationMessage);
             $message->ack();
+            if ((bool)$this->CI->config->item('moss_stop_on_message') === true) {
+                $this->stopConsumer();
+            }
         } catch (\Throwable $exception) {
             $message->nack(false);
         } finally {

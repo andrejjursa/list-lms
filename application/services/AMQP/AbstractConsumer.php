@@ -35,7 +35,7 @@ abstract class AbstractConsumer implements ConsumerInterface
         $this->messageReconstruction = new MessageReconstruction();
     }
     
-    protected function getMessageReconstruction(): MessageReconstruction
+    final protected function getMessageReconstruction(): MessageReconstruction
     {
         return $this->messageReconstruction;
     }
@@ -100,13 +100,18 @@ abstract class AbstractConsumer implements ConsumerInterface
             if ($signal === SIGHUP) {
                 $this->restart = true;
             }
-            $this->running = false;
+            $this->stopConsumer();
         };
         
         pcntl_signal(SIGTERM, $handler);
         pcntl_signal(SIGINT, $handler);
         pcntl_signal(SIGHUP, $handler);
         pcntl_signal(SIGUSR1, $handler);
+    }
+    
+    final protected function stopConsumer(): void
+    {
+        $this->running = false;
     }
     
 }
