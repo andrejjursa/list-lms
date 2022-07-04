@@ -22,6 +22,7 @@
                data-lang_comparison_status_processing="{translate|escape:'html' line='admin_parallel_moss_comparison_status_processing'}"
                data-lang_comparison_status_finished="{translate|escape:'html' line='admin_parallel_moss_comparison_status_finished'}"
                data-lang_comparison_status_failed="{translate|escape:'html' line='admin_parallel_moss_comparison_status_failed'}"
+               data-lang_comparison_status_restart="{translate|escape:'html' line='admin_parallel_moss_comparison_status_restart'}"
                data-lang_comparison_action_pending="{translate|escape:'html' line='admin_parallel_moss_comparison_action_pending'}"
                data-lang_comparison_action_waiting="{translate|escape:'html' line='admin_parallel_moss_comparison_action_waiting'}"
                data-lang_comparison_requeue_queued="{translate|escape:'html' line='admin_parallel_moss_comparison_requeue_queued'}"

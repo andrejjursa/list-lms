@@ -81,7 +81,7 @@ class MossCleanUpService
                 $lock->refresh();
                 try {
                     $finishDateTime = new DateTimeImmutable($comparison->processing_finish);
-                    $diff = $finishDateTime->diff($currentTime);
+                    $diffFinish = $finishDateTime->diff($currentTime);
                     $startDateTime = new DateTimeImmutable($comparison->processing_start);
                     $diffStart = $startDateTime->diff($currentTime);
                 } catch (Exception $e) {
@@ -91,7 +91,12 @@ class MossCleanUpService
                     ];
                     continue;
                 }
-                if ($comparison->status === Parallel_moss_comparison::STATUS_PROCESSING && $diffStart->days >= 1) {
+                if (in_array(
+                    $comparison->status,
+                    [Parallel_moss_comparison::STATUS_PROCESSING, Parallel_moss_comparison::STATUS_RESTART],
+                    true
+                    ) && $diffStart->days >= 1
+                ) {
                     $comparison->status = Parallel_moss_comparison::STATUS_FAILED;
                     $comparison->failure_message = 'Force stop of crashed comparison job.';
                     $comparison->processing_finish = $currentTime->format('Y-m-d H:i:s');
@@ -102,7 +107,7 @@ class MossCleanUpService
                     ];
                     continue;
                 }
-                if ($diff->days < 2) {
+                if ($diffFinish->days < 2) {
                     continue;
                 }
                 if ($comparison->status === Parallel_moss_comparison::STATUS_FINISHED) {

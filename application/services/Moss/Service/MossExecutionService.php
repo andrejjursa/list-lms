@@ -17,12 +17,48 @@ use Task_set;
 
 class MossExecutionService
 {
+    public const RESTARTS_MAXIMUM = 5;
+    public const RESTARTS_DELAYS = [
+        0 => 0,
+        1 => 10,
+        2 => 60,
+        3 => 180,
+        4 => 600,
+        5 => 1800,
+    ];
+    
+    /**
+     * @var null|string
+     */
+    protected $status = null;
+    
+    /**
+     * @var null|int
+     */
+    protected $restarts = null;
+    
     /** @var ConfigurationBuilder */
     protected $configurationBuilder;
     
     public function __construct(ConfigurationBuilder $configurationBuilder)
     {
         $this->configurationBuilder = $configurationBuilder;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+    
+    /**
+     * @return int|null
+     */
+    public function getRestarts(): ?int
+    {
+        return $this->restarts;
     }
     
     /**
@@ -41,7 +77,10 @@ class MossExecutionService
         $id = $startComparisonMessage->getParallelMossComparisonID();
         
         $mossModel = $this->getParallelMossComparisonModel($id);
-        $this->assertMossModelStatus($mossModel, Parallel_moss_comparison::STATUS_QUEUED);
+        $this->assertMossModelStatus(
+            $mossModel,
+            [Parallel_moss_comparison::STATUS_QUEUED, Parallel_moss_comparison::STATUS_RESTART]
+        );
         $this->setMossModelStatus($mossModel, Parallel_moss_comparison::STATUS_PROCESSING);
     
         $dir = null;
@@ -55,7 +94,12 @@ class MossExecutionService
                 $this->setMossModelStatus($mossModel, Parallel_moss_comparison::STATUS_FINISHED, $response);
                 return true;
             } else {
-                $this->setMossModelStatus($mossModel, Parallel_moss_comparison::STATUS_FAILED, $response);
+                if (($mossModel->restarts ?? 0) < self::RESTARTS_MAXIMUM) {
+                    $this->setMossModelStatus($mossModel, Parallel_moss_comparison::STATUS_RESTART);
+                    $this->incrementRestarts($mossModel);
+                } else {
+                    $this->setMossModelStatus($mossModel, Parallel_moss_comparison::STATUS_FAILED, $response);
+                }
                 return false;
             }
         } catch (\Throwable $exception) {
@@ -153,18 +197,18 @@ class MossExecutionService
     
     /**
      * @param Parallel_moss_comparison $model
-     * @param string                   $status
+     * @param array<string>            $status
      *
      * @return void
      *
      * @throws MossModelInWrongStatus
      */
-    private function assertMossModelStatus(Parallel_moss_comparison $model, string $status): void
+    private function assertMossModelStatus(Parallel_moss_comparison $model, array $status): void
     {
-        if ($model->status !== $status) {
+        if (!in_array($model->status, $status, true)) {
             throw new MossModelInWrongStatus(sprintf(
-                'Wrong status of the moss database record, has to be "%s" and is "%s".',
-                $status,
+                'Wrong status of the moss database record, has to be one of "%s" and is "%s".',
+                implode(', ', $status),
                 $model->status
             ));
         }
@@ -185,21 +229,52 @@ class MossExecutionService
         $model->status = $status;
         if ($status === Parallel_moss_comparison::STATUS_PROCESSING) {
             $model->processing_start = date('Y-m-d H:i:s.u');
+            $model->processing_finish = null;
         }
         if (in_array(
             $status,
-            [Parallel_moss_comparison::STATUS_FINISHED, Parallel_moss_comparison::STATUS_FAILED],
+            [
+                Parallel_moss_comparison::STATUS_FINISHED,
+                Parallel_moss_comparison::STATUS_FAILED,
+                Parallel_moss_comparison::STATUS_RESTART,
+            ],
             true
         )) {
            $model->processing_finish = date('Y-m-d H:i:s.u');
         }
         if ($status === Parallel_moss_comparison::STATUS_FINISHED && $result !== null) {
             $model->result_link = $result;
+        } else {
+            $model->result_link = null;
         }
-        if ($status === Parallel_moss_comparison::STATUS_FAILED && $result !== null) {
+        if (in_array(
+            $status,
+            [Parallel_moss_comparison::STATUS_FAILED, Parallel_moss_comparison::STATUS_RESTART],
+            true
+            ) && $result !== null
+        ) {
             $model->failure_message = $result;
+        } else {
+            $model->failure_message = null;
         }
         $model->save();
+        $this->status = $model->status;
+    }
+    
+    /**
+     * @param Parallel_moss_comparison $model
+     *
+     * @return void
+     */
+    private function incrementRestarts(
+        Parallel_moss_comparison $model
+    ): void {
+        if (($model->restarts ?? 0) >= self::RESTARTS_MAXIMUM) {
+            return;
+        }
+        $model->restarts = ($model->restarts ?? 0) + 1;
+        $model->save();
+        $this->restarts = $model->restarts;
     }
     
     /**

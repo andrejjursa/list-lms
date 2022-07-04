@@ -67,14 +67,19 @@ jQuery(document).ready(function($) {
                 statusHTML = '<i class="fa fa-check" aria-hidden="true" style="color: green;"></i> ';
             } else if (row.status === 'failed') {
                 statusHTML = '<i class="fa fa-exclamation" aria-hidden="true" style="color: red;"></i> ';
+            } else if (row.status === 'restart') {
+                statusHTML = '<i class="fa fa-repeat" aria-hidden="true" style="color: fuchsia;"></i> ';
             }
             statusHTML += comparisonTable.attr('data-lang_comparison_status_' + row.status);
+            if (row.status === 'restart') {
+                statusHTML += ' (' + (row.restarts === null ? '-' : row.restarts) + ')';
+            }
             tdStatus.html(statusHTML);
             tr.append(tdStatus);
 
             var tdStarted = $('<td>');
             if (row.processing_start === null) {
-                if (row.status === 'queued') {
+                if (row.status === 'queued' || row.status === 'restart') {
                     tdStarted.html(
                         '<i class="fa fa-ellipsis-h" aria-hidden="true" style="color: blue;"></i> '
                         + comparisonTable.attr('data-lang_comparison_action_waiting')
@@ -92,7 +97,7 @@ jQuery(document).ready(function($) {
 
             var tdFinished = $('<td>');
             if (row.processing_finish === null) {
-                if (row.status === 'queued') {
+                if (row.status === 'queued' || row.status === 'restart') {
                     tdFinished.html(
                         '<i class="fa fa-ellipsis-h" aria-hidden="true" style="color: blue;"></i> '
                         + comparisonTable.attr('data-lang_comparison_action_waiting')
@@ -122,7 +127,7 @@ jQuery(document).ready(function($) {
                 buttonResults.attr('target', '_blank');
                 buttonResults.html('<i class="fa fa-external-link" aria-hidden="true"></i>');
                 tdControls.append(buttonResults);
-            } else if (row.status === 'failed') {
+            } else if (row.status === 'failed' || row.status === 'restart') {
                 if (row.failure_message !== null) {
                     const buttonFailureStatus = $('<a>');
                     buttonFailureStatus.addClass('button').addClass('delete').addClass('controlElement');

@@ -69,6 +69,7 @@ class parallel_moss extends LIST_Controller
                     ]
                     : null,
                 'status'            => $comparison->status,
+                'restarts'          => $comparison->restarts,
                 'processing_start'  => $comparison->processing_start,
                 'processing_finish' => $comparison->processing_finish,
                 'result_link'       => $comparison->result_link,
@@ -269,7 +270,14 @@ class parallel_moss extends LIST_Controller
             return;
         }
         
-        if (in_array($mossTable->status, [Parallel_moss_comparison::STATUS_FAILED, Parallel_moss_comparison::STATUS_FINISHED], true)) {
+        if (in_array(
+            $mossTable->status,
+            [
+                Parallel_moss_comparison::STATUS_FAILED,
+                Parallel_moss_comparison::STATUS_FINISHED,
+                Parallel_moss_comparison::STATUS_RESTART,
+            ], true
+        )) {
             $output->status = 'invalidStatus';
             $this->output->set_content_type('application/json');
             $this->output->set_output(json_encode($output));
