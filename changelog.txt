@@ -20,6 +20,14 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+
+VERSION 1.8.3 | 2022-07-04
+
+NEW Pridané automatické reštartovanie zlyhaného porovnávania, maximálne 5-krát, s predlžujúcim sa časom čakania na znovuspracovanie.
+NEW [lang:english] Added automatic restarting of failed comparisons, maximum 5-times, with increasing wait time for re-processing.
+
+END VERSION
+
 VERSION 1.8.2 | 2022-06-26
 
 NEW Pridaná možnosť nastavit MOSS consumer na automatické ukončenie po spracovaní úlohy.

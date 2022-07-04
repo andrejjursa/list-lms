@@ -86,8 +86,18 @@ class MossConsumer extends AbstractConsumer
         }
     
         try {
-            $this->mossExecutionService->execute($applicationMessage);
+            $result = $this->mossExecutionService->execute($applicationMessage);
             $message->ack();
+            if (!$result && $this->mossExecutionService->getStatus() === \Parallel_moss_comparison::STATUS_RESTART) {
+                $timeout = MossExecutionService::RESTARTS_DELAYS[$this->mossExecutionService->getRestarts()] ?? 3600;
+                $timeout *= 1000;
+                $publisher = $this->publisherFactory->getComparisonQueuePublisher();
+                if ($timeout > 0) {
+                    $publisher->publishMessageWithDelay($applicationMessage, $timeout);
+                } else {
+                    $publisher->publishMessage($applicationMessage);
+                }
+            }
             if ((bool)$this->CI->config->item('moss_stop_on_message') === true) {
                 $this->stopConsumer();
             }

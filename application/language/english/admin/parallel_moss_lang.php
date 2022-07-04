@@ -37,6 +37,7 @@ $lang['admin_parallel_moss_comparison_status_queued'] = 'queued';
 $lang['admin_parallel_moss_comparison_status_processing'] = 'processing';
 $lang['admin_parallel_moss_comparison_status_finished'] = 'finished';
 $lang['admin_parallel_moss_comparison_status_failed'] = 'failed';
+$lang['admin_parallel_moss_comparison_status_restart'] = 'restarting';
 $lang['admin_parallel_moss_comparison_action_pending'] = 'pending';
 $lang['admin_parallel_moss_comparison_action_waiting'] = 'waiting';
 
