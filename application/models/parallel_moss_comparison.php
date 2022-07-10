@@ -12,6 +12,7 @@ use Application\ModelTraits\JSONFieldTrait;
  * @property string         $updated           date time format YYYY-MM-DD HH:MM:SS
  * @property string         $created           date time format YYYY-MM-DD HH:MM:SS
  * @property string         $status
+ * @property null|int       $restarts
  * @property null|int       $teacher_id
  * @property null|Teacher   $teacher
  * @property array          $configuration
@@ -32,6 +33,7 @@ class Parallel_moss_comparison extends DataMapper implements DataMapperExtension
     public const STATUS_PROCESSING = 'processing';
     public const STATUS_FINISHED = 'finished';
     public const STATUS_FAILED = 'failed';
+    public const STATUS_RESTART = 'restart';
     
     use JSONFieldTrait;
     

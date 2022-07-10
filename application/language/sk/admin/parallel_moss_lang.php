@@ -37,6 +37,7 @@ $lang['admin_parallel_moss_comparison_status_queued'] = 'zaradené';
 $lang['admin_parallel_moss_comparison_status_processing'] = 'spracovávané';
 $lang['admin_parallel_moss_comparison_status_finished'] = 'ukončené';
 $lang['admin_parallel_moss_comparison_status_failed'] = 'zlyhané';
+$lang['admin_parallel_moss_comparison_status_restart'] = 'reštartuje sa';
 $lang['admin_parallel_moss_comparison_action_pending'] = 'prebieha';
 $lang['admin_parallel_moss_comparison_action_waiting'] = 'čaká sa';
 
