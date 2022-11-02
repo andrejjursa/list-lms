@@ -26,10 +26,10 @@ services:
       # LIST_DATABASE_PASSWORD: root
       # LIST_DATABASE_NAME: list-dev
       # ===============================
-      LIST_DATABASE_HOSTNAME: kempelen.dai.fmph.uniba.sk
+      LIST_DATABASE_HOSTNAME: list.fmph.uniba.sk
       LIST_DATABASE_USER: timotea
       LIST_DATABASE_PASSWORD: gastanko123
-      LIST_DATABASE_NAME: timotea_list
+      LIST_DATABASE_NAME: timotea
       LIST_CONFIG_BASE_URL: http://server.listdev/
       LIST_ENVIRONMENT: development
       LIST_AMQP_HOST: list-rabbitmq
