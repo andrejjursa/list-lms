@@ -1112,19 +1112,16 @@ class Tasks extends LIST_Controller
         $task_sets = is_array($i_task_sets)
             ? $i_task_sets
             : (is_object($i_task_sets) && $i_task_sets instanceof Task_set ? $i_task_sets->all : []);
-        
         $ids = [0];
         $typeIds = [0];
         if (count($task_sets) > 0) {
             foreach ($task_sets as $task_set) {
                 $ids[] = $task_set->id;
-                $typeIds[] = $task_set->task_set_type->id;
+                $typeIds[] = $task_set->task_set_type_id;
             }
         }
         
         $solutions = $student->solution->where_in_related('task_set', 'id', $ids)->get_iterated();
-        
-        
         
         $points = [];
         
@@ -1142,10 +1139,21 @@ class Tasks extends LIST_Controller
         
         
         foreach ($typeIds as $task_set_id) {
-            $row = $this->db->query("select course_task_set_type_rel.min_points as 'min_points' from course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id . " and course_task_set_type_rel.task_set_type_id=" . $task_set_id)->row();
-            if (isset($row) && isset($row["min_points"])) {
-                $output[$task_set_id]["min"] = $row["min_points"];
+            if (!isset($task_set_id)) continue;
+            $query= $this->db->query("select course_task_set_type_rel.min_points as 'min_points',".
+                "course_task_set_type_rel.min_points_in_percentage as 'percentage', ".
+                "course_task_set_type_rel.include_in_total as 'include_in_total'".
+                "from course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id .
+                " and course_task_set_type_rel.task_set_type_id=" . $task_set_id);
+            $row = $query->first_row('array');
+            if (isset($row) && isset($row['min_points']) && trim($row['min_points']) != '' && isset($row['percentage']) && trim($row['percentage']) != '') {
+                $output[$task_set_id]['min'] = $row['min_points'];
+                $output[$task_set_id]['min_in_percentage'] = $row['percentage'] == 1;
             }
+            if (isset($row) && isset($row['include_in_total']) && trim($row['include_in_total']) != '') {
+                $output[$task_set_id]['include_in_total'] = $row['include_in_total'] == 1;
+            }
+            
         }
         
         if (count($task_sets) > 0) {
@@ -1153,9 +1161,11 @@ class Tasks extends LIST_Controller
                 $output['total'] += (isset($points[$task_set->id]) && $points[$task_set->id]['considered'])
                     ? $points[$task_set->id]['points']
                     : 0;
-                $output['max'] += !is_null($task_set->points_override)
-                    ? $task_set->points_override
-                    : $task_set->total_points;
+                if ($output[$task_set->task_set_type_id]['include_in_total']) {
+                    $output['max'] += !is_null($task_set->points_override)
+                        ? $task_set->points_override
+                        : $task_set->total_points;
+                }
                 $output[$task_set->task_set_type_id]['total'] = ($output[$task_set->task_set_type_id]['total'] ?? 0) + (
                     isset($points[$task_set->id]) && $points[$task_set->id]['considered']
                         ? $points[$task_set->id]['points']
@@ -1168,7 +1178,6 @@ class Tasks extends LIST_Controller
                     );
             }
         }
-        
         return $output;
     }
     

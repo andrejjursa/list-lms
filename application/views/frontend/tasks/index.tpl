@@ -112,12 +112,16 @@
             </tfoot>
             <tbody>
                 {foreach $task_set_types as $task_set_type}
-                <tr>
+                <tr class="{(isset($points[$task_set_type->id].include_in_total) && !$points[$task_set_type->id].include_in_total) ? 'tr_task_set_type_not_included' : ''}">
                     <td class="td_task_set_type">{translate_text|str_to_first_upper|truncate:20 text=$task_set_type->name}</td>
-                    {if is_null($points[$task_set_type->id].min_points)}
+                    {if is_null($points[$task_set_type->id].min)}
                         <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval}</td>
                     {else}
-                        <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval}&nbsp;(&nbsp;{translate line='tasks_left_bar_points_table_footer_sum_points'}&nbsp;{$points[$task_set_type->id].min_points|floatval})</td>
+                        {if !$points[$task_set_type->id].min_in_percentage}
+                            <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval} ({translate line='tasks_left_bar_points_min'}&nbsp;{$points[$task_set_type->id].min|floatval})</td>
+                        {else}
+                            <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval} ({translate line='tasks_left_bar_points_min'}&nbsp;{($points[$task_set_type->id].min * $points[$task_set_type->id].max)|floatval})</td>
+                        {/if}
                     {/if}
                 </tr>
                 {/foreach}
