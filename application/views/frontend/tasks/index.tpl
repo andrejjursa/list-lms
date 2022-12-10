@@ -114,7 +114,11 @@
                 {foreach $task_set_types as $task_set_type}
                 <tr>
                     <td class="td_task_set_type">{translate_text|str_to_first_upper|truncate:20 text=$task_set_type->name}</td>
-                    <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval}</td>
+                    {if is_null($points[$task_set_type->id].min_points)}
+                        <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval}</td>
+                    {else}
+                        <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval}&nbsp;(&nbsp;{translate line='tasks_left_bar_points_table_footer_sum_points'}&nbsp;{$points[$task_set_type->id].min_points|floatval})</td>
+                    {/if}
                 </tr>
                 {/foreach}
             </tbody>

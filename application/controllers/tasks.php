@@ -59,7 +59,7 @@ class Tasks extends LIST_Controller
                 $this->lang->init_overlays('task_sets', $task_sets, ['name']);
                 $this->parser->assign('task_sets', $task_sets);
                 
-                $points = $this->compute_points($task_sets, $student);
+                $points = $this->compute_points($course,$task_sets, $student);
                 $this->parser->assign('points', $points);
             }
             $this->parser->assign(['course' => $course]);
@@ -782,6 +782,7 @@ class Tasks extends LIST_Controller
         $course->include_related('period', 'name');
         $course->get();
         
+        
         $task_set = new Task_set();
         $task_set2 = new Task_set();
         $group = new Group();
@@ -790,6 +791,9 @@ class Tasks extends LIST_Controller
             $group->where_related_participant('student_id', $student->id);
             $group->where_related_participant('course_id', $course->id);
             $group->get();
+    
+            $course->task_set_type->order_by_with_constant('name', 'asc')->get_iterated();
+            
             
             $task_set->select(
                 '`task_sets`.*, `rooms`.`time_day` AS `pb_time_day`, `rooms`.`time_begin` AS `pb_time_begin`, '
@@ -1103,21 +1107,24 @@ class Tasks extends LIST_Controller
         return $output;
     }
     
-    private function compute_points($i_task_sets, Student $student): array
+    private function compute_points(Course $course, $i_task_sets, Student $student): array
     {
         $task_sets = is_array($i_task_sets)
             ? $i_task_sets
             : (is_object($i_task_sets) && $i_task_sets instanceof Task_set ? $i_task_sets->all : []);
         
         $ids = [0];
-        
+        $typeIds = [0];
         if (count($task_sets) > 0) {
             foreach ($task_sets as $task_set) {
                 $ids[] = $task_set->id;
+                $typeIds[] = $task_set->task_set_type->id;
             }
         }
         
         $solutions = $student->solution->where_in_related('task_set', 'id', $ids)->get_iterated();
+        
+        
         
         $points = [];
         
@@ -1132,6 +1139,14 @@ class Tasks extends LIST_Controller
             'total' => 0,
             'max'   => 0,
         ];
+        
+        
+        foreach ($typeIds as $task_set_id) {
+            $row = $this->db->query("select course_task_set_type_rel.min_points as 'min_points' from course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id . " and course_task_set_type_rel.task_set_type_id=" . $task_set_id)->row();
+            if (isset($row) && isset($row["min_points"])) {
+                $output[$task_set_id]["min"] = $row["min_points"];
+            }
+        }
         
         if (count($task_sets) > 0) {
             foreach ($task_sets as $task_set) {
