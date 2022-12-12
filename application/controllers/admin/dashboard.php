@@ -34,9 +34,6 @@ class Dashboard extends LIST_Controller
         
         $this->parser->add_js_file('admin_dashboard/widgets.js');
         $this->parser->add_css_file('admin_dashboard.css');
-        $this->_add_tinymce4();
-        $this->_add_prettify();
-        $this->parser->add_js_file('formula/edit.js');
         
         if (count($widget_types_list)) {
             foreach ($widget_types_list as $widget_type => $widget_type_name) {
