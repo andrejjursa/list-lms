@@ -1158,10 +1158,10 @@ class Tasks extends LIST_Controller
         
         if (count($task_sets) > 0) {
             foreach ($task_sets as $task_set) {
-                $output['total'] += (isset($points[$task_set->id]) && $points[$task_set->id]['considered'])
-                    ? $points[$task_set->id]['points']
-                    : 0;
                 if ($output[$task_set->task_set_type_id]['include_in_total']) {
+                    $output['total'] += (isset($points[$task_set->id]) && $points[$task_set->id]['considered'])
+                        ? $points[$task_set->id]['points']
+                        : 0;
                     $output['max'] += !is_null($task_set->points_override)
                         ? $task_set->points_override
                         : $task_set->total_points;
