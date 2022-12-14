@@ -1,4 +1,4 @@
-{extends file='layouts/backend_popup.tpl'}
+{extends file='layouts/backend.tpl'}
 {block title}{translate|sprintf:{translate_text|default:{translate line='admin_courses_error_course_not_found'} text=$course->name} line='admin_course_task_set_types_editor_page_header'}{/block}
 {block main_content}
     <h3>{translate|sprintf:{translate_text|default:{translate line='admin_courses_error_course_not_found'} text=$course->name} line='admin_course_task_set_types_editor_page_header'}</h3>

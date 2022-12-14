@@ -20,4 +20,5 @@
 </div>
 <div class="buttons">
     <input type="submit" value="{translate line='admin_courses_form_task_set_type_button_submit'}" name="submit_button" class="button" />
+    <a href="{internal_url url="admin_courses"}" class="button special">{translate line='common_button_back'}</a>
 </div>

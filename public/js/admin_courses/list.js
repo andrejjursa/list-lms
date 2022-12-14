@@ -57,30 +57,6 @@ jQuery(document).ready(function($) {
         
         $(document).on('click', '#table_content a.delete', delete_course);
         
-        $(document).on('click', '#table_content a.task_set_types_editor', function(event) {
-            event.preventDefault();
-            var url = $(this).attr('href');
-            $.fancybox(url, {
-                type: 'iframe',
-                width: '100%',
-                height: '100%',
-                autoSize: false,
-                autoHeight: false,
-                autoWidth: false,
-                helpers: {
-                    overlay: {
-                        css: {
-                            background: 'rgba(255,255,255,0)'
-                        }
-                    }
-                },
-                beforeClose: function() {
-                    reload_table_content();
-                    return true;
-                }
-            });
-        });
-        
         $(document).on('click', '#table_content a.mail_to_course', function(event) {
             event.preventDefault();
             var url = $(this).attr('href');
@@ -102,8 +78,6 @@ jQuery(document).ready(function($) {
         });
         
     } else if ($('#add_task_set_type_form_id').length !== 0) {
-        make_switchable_form('#add_task_set_type_form_id');
-        
         var reload_table_content = function() {
             api_ajax_load(global_base_url + 'index.php/admin_courses/get_task_set_types/course_id/' + current_course, '#table_content_id');
         };
