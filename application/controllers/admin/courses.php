@@ -488,6 +488,7 @@ class Courses extends LIST_Controller
         
         $url = $this->uri->ruri_to_assoc(3);
         $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
+        $task_set_type_data = $this->input->post('task_set_type');
         
         $this->form_validation->set_rules(
             'task_set_type[id]',
@@ -499,9 +500,34 @@ class Courses extends LIST_Controller
             'lang:admin_courses_form_field_upload_solution',
             'required'
         );
+
+        if (isset($task_set_type_data['join_min_points']) && $task_set_type_data['join_min_points'] != '') {
+            $this->form_validation->set_rules(
+                'task_set_type[join_min_points]',
+                'lang:admin_courses_form_field_min_points',
+                'numeric|greater_than_or_equal[0]'
+            );
+        }
+
+        $this->form_validation->set_rules(
+            'task_set_type[join_min_points_in_percentage]',
+            'lang:admin_courses_form_field_min_points_in_percentage',
+            'required'
+        );
+
+        $this->form_validation->set_rules(
+            'task_set_type[join_include_in_total]',
+            'lang:admin_courses_form_field_include_in_total',
+            'required'
+        );
+
+        $this->form_validation->set_rules(
+            'task_set_type[join_virtual]',
+            'lang:admin_courses_form_field_virtual',
+            'required'
+        );
         
         if ($this->form_validation->run()) {
-            $task_set_type_data = $this->input->post('task_set_type');
             $course = new Course();
             $course->get_by_id($course_id);
             $task_set_type = new Task_set_type();
@@ -514,8 +540,37 @@ class Courses extends LIST_Controller
                 $course->set_join_field(
                     $task_set_type,
                     'upload_solution',
-                    (int)$task_set_type_data['join_upload_solution']
+                    ((int)$task_set_type_data['join_virtual'] == 1) ? 0 : (int)$task_set_type_data['join_upload_solution']
                 );
+                $course->set_join_field(
+                    $task_set_type,
+                    'min_points',
+                    (float)$task_set_type_data['join_min_points']
+                );
+                $course->set_join_field(
+                    $task_set_type,
+                    'min_points_in_percentage',
+                    (int)$task_set_type_data['join_min_points_in_percentage']
+                );
+                $course->set_join_field(
+                    $task_set_type,
+                    'include_in_total',
+                    (int)$task_set_type_data['join_include_in_total']
+                );
+                $course->set_join_field(
+                    $task_set_type,
+                    'virtual',
+                    (int)$task_set_type_data['join_virtual']
+                );
+
+                if ((int)$task_set_type_data['join_virtual'] == 1) {
+                    $course->set_join_field(
+                        $task_set_type,
+                        'formula',
+                        $task_set_type_data['join_formula']
+                    );
+                }
+
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message(
