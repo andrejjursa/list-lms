@@ -120,7 +120,7 @@
                         {if !$points[$task_set_type->id].min_in_percentage}
                             <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval} ({translate line='tasks_left_bar_points_min'}&nbsp;{$points[$task_set_type->id].min|floatval})</td>
                         {else}
-                            <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval} ({translate line='tasks_left_bar_points_min'}&nbsp;{($points[$task_set_type->id].min * $points[$task_set_type->id].max)|floatval})</td>
+                            <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval} ({translate line='tasks_left_bar_points_min'}&nbsp;{($points[$task_set_type->id].min * $points[$task_set_type->id].max / 100)|floatval})</td>
                         {/if}
                     {/if}
                 </tr>

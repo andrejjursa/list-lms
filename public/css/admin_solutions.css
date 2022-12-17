@@ -96,6 +96,7 @@
     #valutation_table tbody tr td.type_task_set.flag_notConsidered { color: magenta; }
     #valutation_table tbody tr td.type_summary,
     #valutation_table tbody tr td.type_task_set_type { font-weight: bold; }
+    #valutation_table tbody tr td.type_task_set_type_completed { font-weight: bold; }
     #valutation_table tbody tr td a { text-decoration: none; color: green; }
     #valutation_table tbody tr td a:hover { text-decoration: underline; }
     #valutation_table tbody tr:nth-child(2n) td { background-color: #dddddd; }
@@ -106,6 +107,8 @@
     #valutation_table tbody tr:nth-child(2n+1) td.type_name { background-color: #99ff99; }
     #valutation_table tbody tr:nth-child(2n) td.type_task_set_type { background-color: #ffffcc; }
     #valutation_table tbody tr:nth-child(2n+1) td.type_task_set_type { background-color: #ffff99; }
+    #valutation_table tbody tr:nth-child(2n) td.type_task_set_type_completed { background-color: #bcefbc; }
+    #valutation_table tbody tr:nth-child(2n+1) td.type_task_set_type_completed { background-color: #89ef89; }
     #valutation_table tbody tr:nth-child(2n) td.type_summary { background-color: #ccffff; }
     #valutation_table tbody tr:nth-child(2n+1) td.type_summary { background-color: #99ffff; }
     #valutation_table tbody tr:nth-child(2n) td.type_summary.ctype_task_set { background-color: #ffffcc; }
