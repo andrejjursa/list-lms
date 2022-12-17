@@ -51,9 +51,9 @@ jQuery(document).ready(function($) {
                 }
             });
 
-            // const types = ['Item1', 'Item2', 'Item3', 'Item4', 'Item5', 'Item6'];
+            const types = ['Item1', 'Item2', 'Item3', 'Item4', 'Item5', 'Item6'];
             var menuItems = [];
-            types.forEach(type => {
+            all_task_set_types.forEach(type => {
                 menuItems.push({
                     text: type,
                     onclick: function () {

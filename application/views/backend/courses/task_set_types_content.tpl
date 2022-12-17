@@ -17,7 +17,7 @@
         {else}-{/if}
     </td>
     <td>
-        {$no_yes_options[$task_set_type->join_include_in_total_score|intval]}
+        {$no_yes_options[$task_set_type->join_include_in_total|intval]}
     </td>
     <td>
         {$no_yes_options[$task_set_type->join_virtual|intval]}
@@ -27,12 +27,12 @@
         {else}-{/if}
     </td>
     <td class="controlls">
-        <a href="{internal_url url="admin_courses/save_task_set_type"}" class="button save_button" title="{translate line='admin_courses_form_button_submit'}">
-            <span class="list-icon list-icon-save"></span>
+        <a href="{internal_url url="admin_courses/edit_task_set_type/course_id/{$course->id}/task_set_type_id/{$task_set_type->id}"}" class="button edit" title="{translate line='admin_courses_table_controlls_edit'}">
+            <span class="list-icon list-icon-edit"></span>
         </a>
     </td>
     <td class="controlls">
-        <a href="{internal_url url="admin_courses/delete_task_set_type"}" class="button delete" title="{translate line='admin_courses_table_controlls_delete'}">
+        <a href="{internal_url url="admin_courses/delete_task_set_type/course_id/{$course->id}/task_set_type_id/{$task_set_type->id}"}" class="button delete" title="{translate line='admin_courses_table_controlls_delete'}">
             <span class="list-icon list-icon-delete"></span>
         </a>
     </td>
