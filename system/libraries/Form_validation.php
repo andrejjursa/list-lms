@@ -504,7 +504,6 @@ class CI_Form_validation {
 			else
 			{
                 if ($rules == ['formula_not_null']) {
-                    var_dump($_POST);
                     $line = $this->_error_messages['formula_not_null'];
                     $message = sprintf($line, $this->_translate_fieldname($row['label']));
                     $this->_field_data[$row['field']]['error'] = $message;

@@ -1282,7 +1282,7 @@ class Courses extends LIST_Controller
         $operatory = ['+', '-', '×', '/', '%', '&lt;=', '&gt;=', '&lt;', '&gt;', '==', '!=', '∧', '∨', '?', ':', '¬'];
         
         // Zabezpecenie, ze vsetky prvky formuly su oddelene
-        $formula = str_replace(["<p>", "</p>"], "", $formula);
+        $formula = str_replace(["<p>", "</p>", "<span>", "</span>"], "", $formula);
         $formula = str_replace("(", " ( ", $formula);
         $formula = str_replace(")", " ) ", $formula);
         foreach($operatory as $operator) {
@@ -1339,6 +1339,9 @@ class Courses extends LIST_Controller
                         }
                     }
                     $condition = $vals->pop();
+                    if (is_string($condition)) {
+                        return null;
+                    }
                     $znamienka->pop();
                     $vals->push(new Ternary_operator($left, $right, $condition));
                     continue;
