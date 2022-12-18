@@ -37,6 +37,6 @@ class Ternary_operator implements Formula
     
     public function toString()
     {
-        return $this->condition.toString() . " ? " . $this->left.toString() . " : " . $this->right.toString();
+        return "( ".$this->condition->toString() . " ? " . $this->left->toString() . " : " . $this->right->toString()." )";
     }
 }

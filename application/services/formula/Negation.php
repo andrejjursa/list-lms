@@ -22,6 +22,6 @@ class Negation implements Formula_node
     
     public function toString(): string
     {
-        return "( !" . $this->original_formula.toString() . ")";
+        return "( ¬ " . $this->original_formula->toString() . " )";
     }
 }
