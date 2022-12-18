@@ -24,6 +24,7 @@
     </td>
     <td>
         {if $task_set_type->join_virtual|intval == 1}{$task_set_type->join_formula}
+{*        {if $task_set_type->join_virtual|intval == 1}{$task_set_type->join_formula_object}*}
         {else}-{/if}
     </td>
     <td class="controlls">
