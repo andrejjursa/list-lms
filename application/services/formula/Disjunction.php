@@ -35,6 +35,6 @@ class Disjunction implements Formula
     
     public function toString(): string
     {
-        return "(" . $this->get_left().toString() . " v " .$this->get_right().toString() . ")";
+        return "( " . $this->get_left()->toString() . " v " .$this->get_right()->toString() . " )";
     }
 }

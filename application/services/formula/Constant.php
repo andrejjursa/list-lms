@@ -19,11 +19,11 @@ class Constant implements Formula_node
     
     public function evaluate(): bool
     {
-        return $this->value == 0;
+        return $this->value != null;
     }
     
     public function toString(): string
     {
-        return $this->value.$this->toString();
+        return (string) $this->value;
     }
 }

@@ -35,6 +35,6 @@ class Smaller_or_equal implements Formula
     
     public function toString(): string
     {
-        return "(" . $this->get_left().toString() . " <= " .$this->get_right().toString() . ")";
+        return "( " . $this->get_left()->toString() . " <= " .$this->get_right()->toString() . " )";
     }
 }
