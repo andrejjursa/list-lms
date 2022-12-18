@@ -338,7 +338,6 @@ class CI_Form_validation {
 					$this->_field_data[$field]['postdata'] = $_POST[$field];
 				}
 			}
-
 			$this->_execute($row, explode('|', $row['rules']), $this->_field_data[$field]['postdata']);
 		}
 
@@ -457,7 +456,15 @@ class CI_Form_validation {
 	}
 
 	// --------------------------------------------------------------------
-
+    
+    public function addPost ($field, $subfield, $data) {
+        if (is_null($subfield)) {
+            $_POST[$field] = $data;
+        } else {
+          $_POST[$field][$subfield] = $data;
+        }
+    }
+    
 	/**
 	 * Executes the Validation routines
 	 *
@@ -496,6 +503,17 @@ class CI_Form_validation {
 			}
 			else
 			{
+                if ($rules == ['formula_not_null']) {
+                    var_dump($_POST);
+                    $line = $this->_error_messages['formula_not_null'];
+                    $message = sprintf($line, $this->_translate_fieldname($row['label']));
+                    $this->_field_data[$row['field']]['error'] = $message;
+    
+                    if ( ! isset($this->_error_array[$row['field']]))
+                    {
+                        $this->_error_array[$row['field']] = $message;
+                    }
+                }
 				return;
 			}
 		}

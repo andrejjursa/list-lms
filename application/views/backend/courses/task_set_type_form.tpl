@@ -92,6 +92,7 @@
         <textarea name="task_set_type[join_formula]" id="task_set_type_join_formula_id"
             class="tinymce">{$join_formula}</textarea>
         {form_error field='task_set_type[join_formula]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
+        {form_error field='task_set_type[join_formula_object]' left_delimiter='<p class="error"><span class="message">' right_delimiter='</span></p>'}
     </p>
 </div>
 <div class="buttons">

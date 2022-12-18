@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
     $('textarea.tinymce').tinymce({
         theme: 'modern',
 
-        toolbar1: "+ - * / % | < > <= >= == != ∧ ∨ ¬ | ternary | const type",
+        toolbar1: "+ - × / % | < > <= >= == != ∧ ∨ ¬ | ternary | const type",
 
         setup: function(editor) {
             const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', 'Backspace'];
@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
                 }
             });
 
-            const mathOper = ['+', '-', '/', '%'];
+            const mathOper = ['+', '-', '×', '/', '%'];
             mathOper.forEach(e => {
                 editor.addButton(e, {
                     text: e,
@@ -51,13 +51,12 @@ jQuery(document).ready(function($) {
                 }
             });
 
-            const types = ['Item1', 'Item2', 'Item3', 'Item4', 'Item5', 'Item6'];
             var menuItems = [];
             all_task_set_types.forEach(type => {
                 menuItems.push({
                     text: type,
                     onclick: function () {
-                        editor.insertContent(type);
+                        editor.insertContent(type.replaceAll(' ', '_'));
                     }
                 });
             });
