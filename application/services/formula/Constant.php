@@ -24,6 +24,6 @@ class Constant implements Formula_node
     
     public function toString(): string
     {
-        return $this->value.$this->toString();
+        return $this->value.toString();
     }
 }

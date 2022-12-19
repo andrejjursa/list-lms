@@ -1842,7 +1842,21 @@ class Solutions extends LIST_Controller
                             ];
                             $last_task_set_type_key = count($task_sets_points_array) - 1;
                         }
+                        
                         $points = 0;
+                        $points_included_in_total_score = 0;
+                        $included = true;
+    
+                        $db_query = $this->db->query("select course_task_set_type_rel.include_in_total as 'included' " .
+                            "from course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id .
+                            " and course_task_set_type_rel.task_set_type_id=" . $last_task_set_type_id);
+                        $result = $db_query->first_row('array');
+                        if (isset($result) && isset($result['included']) && trim($result['included']) != ''){
+                            if($result['included'] == 0) {
+                                $included = false;
+                            }
+                        }
+                        
                         if (isset($solutions_data[$task_set->id])) {
                             if ($solutions_data[$task_set->id]['not_considered']) {
                                 if (!$condensed) {
@@ -1876,6 +1890,9 @@ class Solutions extends LIST_Controller
                                         ];
                                     }
                                     $points = (float)$solutions_data[$task_set->id]['points'];
+                                    if($included){
+                                        $points_included_in_total_score = (float)$solutions_data[$task_set->id]['points'];
+                                    }
                                 } else {
                                     if (!$condensed) {
                                         $task_sets_points_array[] = [
@@ -1887,6 +1904,9 @@ class Solutions extends LIST_Controller
                                         ];
                                     }
                                     $points = (float)$solutions_data[$task_set->id]['points'];
+                                    if($included){
+                                        $points_included_in_total_score = (float)$solutions_data[$task_set->id]['points'];
+                                    }
                                 }
                             }
                         } else if (!$condensed) {
@@ -1912,7 +1932,7 @@ class Solutions extends LIST_Controller
                         }
                         $task_sets_points += $points;
                         $task_sets_points_array[$last_task_set_type_key]['points'] += $points;
-                        $student_line['total_points'] += $points;
+                        $student_line['total_points'] += $points_included_in_total_score;
                         $student_line['task_sets_points_total'] = $task_sets_points;
                     }
                 }
