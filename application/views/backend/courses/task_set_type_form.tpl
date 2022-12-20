@@ -1,5 +1,7 @@
 {include file='partials/backend_general/flash_messages.tpl' inline}
 
+
+{* Helper for assigning starting values to variables used in the form, based on if the page was first-time rendered or it was rendered because of unsucessfull form submit. *}
 {if $smarty.post}
     {assign 'task_set_type_id' $smarty.post.task_set_type.id}
     {assign 'join_upload_solution' $smarty.post.task_set_type.join_upload_solution}
@@ -87,7 +89,7 @@
     </p>
 </div>
 <div class="field" id="task_set_type_join_formula_field_id" {if $smarty.post.task_set_type.join_virtual|intval != 1}style="display:none"{/if}>
-    <label for="task_set_type_join_formula_id">{translate line='admin_courses_form_label_formula'}:</label>
+    <label class="required" for="task_set_type_join_formula_id">{translate line='admin_courses_form_label_formula'}:</label>
     <p class="input">
         <textarea name="task_set_type[join_formula]" id="task_set_type_join_formula_id"
             class="tinymce">{$join_formula}</textarea>

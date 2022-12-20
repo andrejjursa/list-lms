@@ -1146,6 +1146,9 @@ class Courses extends LIST_Controller
         }
     }
     
+    /** 
+     * Renders a course task set types listing page, along with a form for adding a new task set type to the course, which includes a TinyMCE formula notation editor.
+     */
     public function task_set_types(): void
     {
         $url = $this->uri->ruri_to_assoc(3);
@@ -1166,6 +1169,9 @@ class Courses extends LIST_Controller
         ]);
     }
 
+    /** 
+     * Renders a form page, which includes a TinyMCE formula notation editor, for editing existing task set type in the given course.
+     */
     public function edit_task_set_type(): void 
     {
         $url = $this->uri->ruri_to_assoc(3);
@@ -1215,6 +1221,11 @@ class Courses extends LIST_Controller
         ]);
     }
 
+    /** 
+     * @param array $task_set_type_data submited form data
+     * @return bool 
+     * Validates submitted form data for adding/editing a task set type in the course and returns true if validation succeeds false otherwise.
+     */
     public function validate_task_set_type_form($task_set_type_data): bool
     {
         $this->load->library('form_validation');
@@ -1423,6 +1434,11 @@ class Courses extends LIST_Controller
         return $result;
     }
     
+    /**
+     * Creates a new task set type for the given course if the validation succeeds. 
+     * This includes calling the parse function for transforming the formula from string format to an instance of the appropriate class and saving it in the database in serialized form.
+     * At the end current page will be rerendered, with the appropriate result status messages.
+     */
     public function add_task_set_type(): void
     {
         $url = $this->uri->ruri_to_assoc(3);
@@ -1484,10 +1500,8 @@ class Courses extends LIST_Controller
                     $course->set_join_field(
                         $task_set_type,
                         'formula_object',
-                        serialize($task_set_type_data['join_formula_object']) // TODO build formula here
+                        serialize($task_set_type_data['join_formula_object'])
                     );
-                    // TODO validacia formuly
-                    // TODO spracovat formulu, build formula object, ulozit do DB
                 }
 
                 if ($this->db->trans_status()) {
@@ -1516,6 +1530,12 @@ class Courses extends LIST_Controller
         }
     }
     
+    /**
+     * Updates a given task set type in the specified course if the validation succeeds. 
+     * This includes calling the parse function for transforming the formula from string format to an instance of the appropriate class and saving it in the database in serialized form.
+     * If the validation fails, the page will be rerendered with validation error messages.
+     * If the validation succeeds the user will be redirected to the course task set types listing page.
+     */
     public function save_task_set_type(): void
     {
         $url = $this->uri->ruri_to_assoc(3);
@@ -1578,10 +1598,8 @@ class Courses extends LIST_Controller
                     $course->set_join_field(
                         $task_set_type,
                         'formula_object',
-                        serialize($task_set_type_data['join_formula_object']) // TODO build formula here
+                        serialize($task_set_type_data['join_formula_object'])
                     );
-                    // TODO validacia formuly
-                    // TODO spracovat formulu, build formula object, ulozit do DB
                 }
                 
                 if ($this->db->trans_status()) {
@@ -1610,6 +1628,11 @@ class Courses extends LIST_Controller
         }
     }
     
+    /**
+     * Deletes a given task set type in the specified course if the validation succeeds. 
+     * This includes unlinking all task sets for the given task set type.
+     * User will be then redirected to the same page, which will now display the result status message.
+     */
     public function delete_task_set_type(): void
     {
         $url = $this->uri->ruri_to_assoc(3);
