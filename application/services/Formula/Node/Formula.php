@@ -2,13 +2,24 @@
 
 namespace Application\Services\Formula\Node;
 
-/**
- * @property Formula_node $left
- * @property Formula_node $right
- */
+use Application\Exceptions\FormulaException\NotImplementedException;
 
-interface Formula extends Formula_node
+class Formula implements Formula_node
 {
-    public function get_left();
-    public function get_right();
+    public $left, $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right) {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function evaluate(): float
+    {
+        throw new NotImplementedException("Method not implemented");
+    }
+    
+    public function toString(): string
+    {
+        throw new NotImplementedException("Method not implemented");
+    }
 }

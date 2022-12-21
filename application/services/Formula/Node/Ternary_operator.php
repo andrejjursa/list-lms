@@ -2,39 +2,19 @@
 
 namespace Application\Services\Formula\Node;
 
-class Ternary_operator implements Formula
+class Ternary_operator extends Formula
 {
-    private $left;
-    private $right;
     private $condition;
     
     public function __construct(Formula_node $left, Formula_node $right, Formula_node $condition)
     {
-        $this->left = $left;
-        $this->right = $right;
+        parent::__construct($left, $right);
         $this->condition = $condition;
     }
     
-    public function get_left(): Formula_node
+    public function evaluate(): float
     {
-        return $this->left;
-    }
-    
-    public function get_right(): Formula_node
-    {
-        return $this->right;
-    }
-    
-    public function compute(): float
-    {
-        // TODO: Implement compute() method.
-        return 0;
-    }
-    
-    public function evaluate(): bool
-    {
-        // TODO: Implement evaluate() method.
-        return true;
+        return $this->condition->evaluate() != 0 ? $this->left->evaluate() : $this->right->evaluate();
     }
     
     public function toString(): string

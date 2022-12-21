@@ -2,8 +2,6 @@
 
 namespace Application\Services\Formula\Node;
 
-use Application\Services\Formula\Node\Formula_node;
-
 class Negation implements Formula_node
 {
     private $original_formula;
@@ -12,16 +10,10 @@ class Negation implements Formula_node
         $this->original_formula = $original_formula;
     }
     
-    public function compute(): float
+    public function evaluate(): float
     {
-        // TODO: Implement compute() method.
-        return 0;
-    }
-    
-    public function evaluate(): bool
-    {
-        // TODO: Implement evaluate() method.
-        return true;
+        $val = $this->original_formula->evaluate();
+        return $val == 0;
     }
     
     public function toString(): string
