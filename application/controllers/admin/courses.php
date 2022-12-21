@@ -1384,6 +1384,7 @@ class Courses extends LIST_Controller
                         $vals->push(new Multiplication($left, $right));
                         break;
                     case "/":
+                        // TODO if $right === 0 throw exception
                         $vals->push(new Division($left, $right));
                         break;
                     case "%":
