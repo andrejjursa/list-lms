@@ -6,7 +6,7 @@ class Constant implements Formula_node
 {
     public $value;
     
-    public function __construct(Float $value){
+    public function __construct(float $value){
         $this->value = $value;
     }
     

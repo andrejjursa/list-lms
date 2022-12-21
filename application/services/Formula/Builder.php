@@ -17,6 +17,8 @@ class Builder
     
     public function build($input): ?Formula_node
     {
-        return $this->nodeFactory->getAddition(new Constant(5), new Constant(10));
+//        return $this->nodeFactory->getAddition(new Constant(5), new Constant(10));
+        // TODO parse input formula string here
+        return null;
     }
 }
