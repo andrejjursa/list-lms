@@ -489,7 +489,8 @@ class LIST_Controller extends CI_Controller
     
     protected function _is_cache_enabled()
     {
-        return $this->config->item('enable_hooks');
+        // return $this->config->item('enable_hooks');
+        return false;
     }
     
     protected function _action_success(): void

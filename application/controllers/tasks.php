@@ -1,5 +1,657 @@
 <?php
+interface Formula_node
+{
+    public function compute();
+    public function evaluate();
+    public function toString();
+}
+/**
+ * @property Formula_node $left
+ * @property Formula_node $right
+ */
 
+interface Formula extends Formula_node
+{
+    public function get_left();
+    public function get_right();
+}
+
+class Addition implements Formula
+{
+    private $left;
+    private $right;
+    //ak to bude lepsie mozu sa dat ako public a vyhodit gettery
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " + " .$this->get_right()->toString() . ")";
+    }
+}
+class Conjunction implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " ∧ " .$this->get_right()->toString() . ")";
+    }
+}
+class Constant implements Formula_node
+{
+    private $value;
+
+    public function __construct(Float $value){
+        $this->value = $value;
+    }
+
+    public function get_value(){
+        return $this->value;
+    }
+
+    public function compute(): float
+    {
+        return $this->value;
+    }
+
+    public function evaluate(): bool
+    {
+        return $this->value == 0;
+    }
+
+    public function toString(): string
+    {
+        return (string) $this->value;
+    }
+}
+class Disjunction implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " v " .$this->get_right()->toString() . ")";
+    }
+}
+class Division implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " / " .$this->get_right()->toString() . ")";
+    }
+}
+class Equal implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " == " .$this->get_right()->toString() . ")";
+    }
+}
+class Greater implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " > " .$this->get_right()->toString() . ")";
+    }
+}
+class Greater_or_equal implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left()
+    {
+        return $this->left;
+    }
+
+    public function get_right()
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " >= " .$this->get_right()->toString() . ")";
+    }
+}
+class Modulo implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " % " .$this->get_right()->toString() . ")";
+    }
+}
+class Multiplication implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " * " . $this->get_right()->toString() . ")";
+    }
+}
+class Negation implements Formula_node
+{
+    private $original_formula;
+
+    public function __construct(Formula_node $original_formula){
+        $this->original_formula = $original_formula;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "( ¬ " . $this->original_formula->toString() . " )";
+    }
+}
+class Not_equal implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " != " .$this->get_right()->toString() . ")";
+    }
+}
+class Smaller implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " < " .$this->get_right()->toString() . ")";
+    }
+}
+class Smaller_or_equal implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " <= " .$this->get_right()->toString() . ")";
+    }
+}
+class Subtraction implements Formula
+{
+    private $left;
+    private $right;
+
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " - " .$this->get_right()->toString() . ")";
+    }
+}
+class Ternary_operator implements Formula
+{
+    private $left;
+    private $right;
+    private $condition;
+
+    public function __construct(Formula_node $left, Formula_node $right, Formula_node $condition)
+    {
+        $this->left = $left;
+        $this->right = $right;
+        $this->condition = $condition;
+    }
+
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString()
+    {
+        return $this->condition->toString() . " ? " . $this->left->toString() . " : " . $this->right->toString();
+    }
+}
+class Variable implements Formula_node
+{
+    private $name;
+    private $type_id;
+    private $value;
+
+    public function __construct(string $name, int $type_id)
+    {
+        $this->name = $name;
+        $this->type_id = $type_id;
+    }
+
+    public function get_name(): string
+    {
+        return $this->name;
+    }
+
+    public function get_type_id(): int
+    {
+        return $this->type_id;
+    }
+
+    public function get_value(): float
+    {
+        return $this->value;
+    }
+
+    public function set_value(float $value)
+    {
+        $this->value = $value;
+    }
+
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+
+    public function toString(): string
+    {
+        return $this->name;
+    }
+}
 /**
  * Tasks controller for frontend.
  *
@@ -60,6 +712,7 @@ class Tasks extends LIST_Controller
                 $this->parser->assign('task_sets', $task_sets);
                 
                 $points = $this->compute_points($task_sets, $student);
+                $this->add_virtual_task_set_types_data($points, $course->id);
                 $this->parser->assign('points', $points);
             }
             $this->parser->assign(['course' => $course]);
@@ -1102,7 +1755,71 @@ class Tasks extends LIST_Controller
         
         return $output;
     }
-    
+
+    /**
+     * @param points an array with the student's points data from non-virtual task set types.
+     * @param max determines whether the resulting array should contain maximum points ​​or total points.
+     * @return array with task set types ids as keys and points as values ([type_id => max_points/total_points, ...]).
+     * Extracts necessary data for formula evaluation from the given points array.
+     */
+    private function extract_evaluation_data($points, $max=false): array
+    {
+        $evaluation_data = [];
+
+        foreach ($points as $key=>$value) {
+            if ($key == 'max' || $key == 'total') {
+                continue;
+            }
+            $evaluation_data[$key] = $max ? $value['max'] : $value['total'];
+        }
+        return $evaluation_data;
+    }
+
+    /**
+     * @param course_id id of course which we are interested in.
+     * @return Task_set_types in the course which are marked as virtual.
+     * Finds and returns all virtual task set types along with their join fields from the given course.
+     */
+    private function get_virtual_task_set_types($course_id) : Task_set_type
+    {
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type
+            ->include_join_fields()
+            ->where('virtual', 1)
+            ->get();
+
+        return $course->task_set_type;
+    }
+
+    /**
+     * @param points a reference to an array with the student's points data from non-virtual task set types.
+     * @param course_id id of course which we are interested in.
+     * Adds virtual task set types points data to the given points array and
+     * increases total points by the appropriate amount in the points array.
+     */
+    private function add_virtual_task_set_types_data(&$points, $course_id) : void {
+        $virtual_types = $this->get_virtual_task_set_types($course_id);
+        $evaluation_data_total = $this->extract_evaluation_data($points);
+        $evaluation_data_max = $this->extract_evaluation_data($points);
+
+        foreach ($virtual_types as $type) {
+            $formula = unserialize($type->join_formula_object); 
+            $max_points = round($formula->compute($evaluation_data_max), 1);
+            $total_points = round($formula->compute($evaluation_data_total), 1);
+
+            $points[$type->id] = [
+                'total' => $total_points,
+                'max' => $max_points,
+            ];
+
+            if ($type->join_include_in_total) {
+                $points['total'] += $total_points;
+                $points['max'] += $max_points;
+            }
+        }
+    }
+
     private function compute_points($i_task_sets, Student $student): array
     {
         $task_sets = is_array($i_task_sets)
