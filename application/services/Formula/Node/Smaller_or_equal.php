@@ -4,10 +4,16 @@ namespace Application\Services\Formula\Node;
 
 class Smaller_or_equal extends Formula
 {
-    public function evaluate(): float
+    public $logic = true;
+    
+    public function evaluate($map)
     {
-        // TODO: Implement evaluate() method.
-        return 0;
+        if ($this->left->evaluate($map) == null || $this->right->evaluate($map) == null)
+            return null;
+        if($this->left->evaluate($map) <= $this->right->evaluate($map))
+            return 1;
+        else
+            return 0;
     }
     
     public function toString(): string

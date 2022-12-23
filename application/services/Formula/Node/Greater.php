@@ -4,10 +4,11 @@ namespace Application\Services\Formula\Node;
 
 class Greater extends Formula
 {
-    public function evaluate(): float
+    public $logic = true;
+    
+    public function evaluate($map)
     {
-        // TODO: Implement evaluate() method.
-        return 0;
+        return $this->left->evaluate($map) > $this->right->evaluate($map);
     }
     
     public function toString(): string

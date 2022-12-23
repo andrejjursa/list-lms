@@ -5,6 +5,7 @@ namespace Application\Services\Formula\Node;
 class Ternary_operator extends Formula
 {
     private $condition;
+    public $logic = false;
     
     public function __construct(Formula_node $left, Formula_node $right, Formula_node $condition)
     {
@@ -12,9 +13,11 @@ class Ternary_operator extends Formula
         $this->condition = $condition;
     }
     
-    public function evaluate(): float
+    public function evaluate($map)
     {
-        return $this->condition->evaluate() != 0 ? $this->left->evaluate() : $this->right->evaluate();
+        if(! $this->condition->logic)
+            return null;
+        return $this->condition->evaluate($map) != 0 ? $this->left->evaluate($map) : $this->right->evaluate($map);
     }
     
     public function toString(): string
