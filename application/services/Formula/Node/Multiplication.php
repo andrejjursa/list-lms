@@ -4,10 +4,13 @@ namespace Application\Services\Formula\Node;
 
 class Multiplication extends Formula
 {
-    public function evaluate(): float
+    public $logic = false;
+    
+    public function evaluate($map)
     {
-        // TODO: Implement evaluate() method.
-        return 0;
+        if($this->left->logic || $this->right->logic)
+            return null;
+        return $this->left->evaluate($map) * $this->right->evaluate($map);
     }
     
     public function toString(): string

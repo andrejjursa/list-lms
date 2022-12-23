@@ -7,6 +7,7 @@ class Variable implements Formula_node
     public $name;
     public $type_id;
     public $value;
+    public $logic = false;
     
     public function __construct(string $name, int $type_id)
     {
@@ -14,10 +15,9 @@ class Variable implements Formula_node
         $this->type_id = $type_id;
     }
     
-    public function evaluate(): float
+    public function evaluate($map)
     {
-        // TODO: Implement evaluate() method.
-        return 0;
+        return $map[$this->type_id];
     }
     
     public function toString(): string
