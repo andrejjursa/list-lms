@@ -8,12 +8,7 @@ class Smaller_or_equal extends Formula
     
     public function evaluate($map)
     {
-        if ($this->left->evaluate($map) == null || $this->right->evaluate($map) == null)
-            return null;
-        if($this->left->evaluate($map) <= $this->right->evaluate($map))
-            return 1;
-        else
-            return 0;
+        return $this->left->evaluate($map) <= $this->right->evaluate($map);
     }
     
     public function toString(): string
