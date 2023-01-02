@@ -4,7 +4,7 @@ namespace Application\Services\Formula\Node;
 
 class Negation implements Formula_node
 {
-    private $original_formula;
+    public $original_formula;
     public $logic = true;
     
     public function __construct(Formula_node $original_formula){

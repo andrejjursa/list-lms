@@ -17,7 +17,11 @@ class Variable implements Formula_node
     
     public function evaluate($map)
     {
-        return $map[$this->type_id];
+        if (array_key_exists($this->type_id,$map)) {
+            $value = $map[$this->type_id];
+            return $value;
+        }
+        return 0;
     }
     
     public function toString(): string
