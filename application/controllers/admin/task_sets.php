@@ -1855,6 +1855,7 @@ class Task_sets extends LIST_Controller
     {
         $task_set_types = new Task_set_type();
         $task_set_types->include_related('course', '*', true, true);
+        $task_set_types->where_join_field('course', 'virtual', 0);
         $task_set_types->order_by_related('course', 'id', 'true');
         $task_set_types->order_by_with_constant('name', 'asc');
         $task_set_types->get_iterated();

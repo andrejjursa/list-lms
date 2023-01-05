@@ -15,9 +15,12 @@ class Variable implements Formula_node
         $this->type_id = $type_id;
     }
     
-    public function evaluate($map)
+    public function evaluate($map): ?float
     {
-        return $map[$this->type_id];
+        if (array_key_exists($this->type_id, $map)) {
+            return $map[$this->type_id];
+        }
+        return null;
     }
     
     public function toString(): string

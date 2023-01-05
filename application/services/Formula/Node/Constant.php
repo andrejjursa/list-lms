@@ -11,7 +11,7 @@ class Constant implements Formula_node
         $this->value = $value;
     }
     
-    public function evaluate($map): float
+    public function evaluate($map): ?float
     {
         return $this->value;
     }

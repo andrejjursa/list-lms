@@ -1,5 +1,18 @@
 <?php
+/**
+ *  Probably should not be here, but I don't know where to properly load the classes
+ */
+ include_once "application/services/Formula/Node/Formula_node.php";
+ include_once "application/services/Formula/Node/Formula.php";
+ foreach (glob("application/services/Formula/Node/*.php") as $filename)
+ {
+     include_once $filename;
+ }
+ include_once "application/services/Formula/NodeFactory.php";
 
+ use \Application\Services\Formula\NodeFactory;
+ use \Application\Services\Formula\Node\Formula_node;
+ 
 /**
  * Tasks controller for frontend.
  *
@@ -60,6 +73,7 @@ class Tasks extends LIST_Controller
                 $this->parser->assign('task_sets', $task_sets);
                 
                 $points = $this->compute_points($task_sets, $student);
+                $this->add_virtual_task_set_types_data($points, $course->id);
                 $this->parser->assign('points', $points);
             }
             $this->parser->assign(['course' => $course]);
@@ -1102,7 +1116,91 @@ class Tasks extends LIST_Controller
         
         return $output;
     }
+
+    /**
+     * @param points an array with the student's points data from non-virtual task set types.
+     * @param max determines whether the resulting array should contain maximum points ​​or total points.
+     * @return array with task set types ids as keys and points as values ([type_id => max_points/total_points, ...]).
+     * Extracts necessary data for formula evaluation from the given points array.
+     */
+    private function extract_evaluation_data($points, $max=false): array
+    {
+        $evaluation_data = [];
+
+        foreach ($points as $key=>$value) {
+            if ($key == 'max' || $key == 'total') {
+                continue;
+            }
+            $evaluation_data[$key] = $max ? $value['max'] : $value['total'];
+        }
+        return $evaluation_data;
+    }
+
+    /**
+     * @param course_id id of course which we are interested in.
+     * @return Task_set_types in the course which are marked as virtual.
+     * Finds and returns all virtual task set types along with their join fields from the given course.
+     */
+    private function get_virtual_task_set_types($course_id) : Task_set_type
+    {
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type
+            ->include_join_fields()
+            ->where('virtual', 1)
+            ->get();
+
+        return $course->task_set_type;
+    }
+
+    /**
+     * @param points a reference to an array with the student's points data from non-virtual task set types.
+     * @param course_id id of course which we are interested in.
+     * Adds virtual task set types points data to the given points array and
+     * increases total points by the appropriate amount in the points array.
+     */
+    private function add_virtual_task_set_types_data(&$points, $course_id) : void {
+        
+        $virtual_types = $this->get_virtual_task_set_types($course_id);
+        $evaluation_data_total = $this->extract_evaluation_data($points);
+        $evaluation_data_max = $this->extract_evaluation_data($points,true);
+        $nodeFactory = new application\services\Formula\NodeFactory();
+        foreach ($virtual_types as $type) {
+            /**
+             * @var Formula_node $formula
+             */
+            $formula = unserialize($type->join_formula_object);
+            //( ( ( Cvicenie + Domaca_Uloha ) * 0.4 ) + ( Skuska * 0.6 ) )
+            /*$formula = $nodeFactory->getAddition($nodeFactory->getVariable("Cvicenia",33),$nodeFactory->getConstant(5));
+            echo serialize($formula);
+            echo "&nbsp;&nbsp;&nbsp;";
+            $formula = $nodeFactory->getAddition($nodeFactory->getVariable("Virtual2",39),$nodeFactory->getVariable("Domaca Uloha",34));
+            echo serialize($formula);
+            echo "<formula>" . $formula->toString() . "</formula>";*/
+            
+            if ($nodeFactory->hasDependencyLoops($course_id,$type->id,$formula,$virtual_types)) {
+                $points[$type->id] = [
+                    'total' => "err",
+                    'max'   => "err",
+                ];
+            } else {
+                $max_points = round($nodeFactory->evaluateWithDependencies($course_id,$type->id, $formula, $evaluation_data_max, $virtual_types), 1);
+                $total_points = round($nodeFactory->evaluateWithDependencies($course_id,$type->id, $formula, $evaluation_data_total, $virtual_types), 1);
     
+    
+                $points[$type->id] = [
+                    'total' => $total_points,
+                    'max'   => $max_points,
+                ];
+    
+                if ($type->join_include_in_total) {
+                    $points['total'] += $total_points;
+                    $points['max'] += $max_points;
+                }
+            }
+        }
+    }
+
     private function compute_points($i_task_sets, Student $student): array
     {
         $task_sets = is_array($i_task_sets)

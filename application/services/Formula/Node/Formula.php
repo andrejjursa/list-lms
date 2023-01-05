@@ -13,7 +13,7 @@ class Formula implements Formula_node
         $this->right = $right;
     }
     
-    public function evaluate($map)
+    public function evaluate($map): ?float
     {
         throw new NotImplementedException("Method not implemented");
     }

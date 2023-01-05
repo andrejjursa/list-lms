@@ -6,9 +6,13 @@ class Smaller extends Formula
 {
     public $logic = true;
     
-    public function evaluate($map)
+    public function evaluate($map): ?float
     {
-        return $this->left->evaluate($map) < $this->right->evaluate($map);
+        if($this->left->evaluate($map) == null || $this->right->evaluate($map) == null)
+            return null;
+        if($this->left->evaluate($map) < $this->right->evaluate($map))
+            return 1;
+        return 0;
     }
     
     public function toString(): string
