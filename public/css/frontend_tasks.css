@@ -40,6 +40,7 @@ table.points_table thead tr th.th_points { text-align: right; width: 1px; }
 table.points_table tbody tr td { border-bottom: 1px dashed gray; padding: 3px; text-align: left; }
 table.points_table tbody tr:last-child td { border-bottom: 0; }
 table.points_table tbody tr td.td_points { text-align: right !important; width: 1px; }
+table.points_table tbody tr.tr_task_set_type_not_included { color: mediumblue; }
 table.points_table tfoot tr td { background-color: #99ff99; padding: 4px 3px; text-align: left; }
 table.points_table tfoot tr td.td_task_set_type { border-bottom-left-radius: 3px; }
 table.points_table tfoot tr td.td_points { text-align: right; width: 1px; border-bottom-right-radius: 3px; }

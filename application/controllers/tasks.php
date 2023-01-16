@@ -1,5 +1,18 @@
 <?php
+/**
+ *  Probably should not be here, but I don't know where to properly load the classes
+ */
+ include_once "application/services/Formula/Node/Formula_node.php";
+ include_once "application/services/Formula/Node/Formula.php";
+ foreach (glob("application/services/Formula/Node/*.php") as $filename)
+ {
+     include_once $filename;
+ }
+ include_once "application/services/Formula/NodeFactory.php";
 
+ use \Application\Services\Formula\NodeFactory;
+ use \Application\Services\Formula\Node\Formula_node;
+ 
 /**
  * Tasks controller for frontend.
  *
@@ -59,7 +72,8 @@ class Tasks extends LIST_Controller
                 $this->lang->init_overlays('task_sets', $task_sets, ['name']);
                 $this->parser->assign('task_sets', $task_sets);
                 
-                $points = $this->compute_points($task_sets, $student);
+                $points = $this->compute_points($course,$task_sets, $student);
+                $this->add_virtual_task_set_types_data($points, $course->id);
                 $this->parser->assign('points', $points);
             }
             $this->parser->assign(['course' => $course]);
@@ -782,6 +796,7 @@ class Tasks extends LIST_Controller
         $course->include_related('period', 'name');
         $course->get();
         
+        
         $task_set = new Task_set();
         $task_set2 = new Task_set();
         $group = new Group();
@@ -790,6 +805,9 @@ class Tasks extends LIST_Controller
             $group->where_related_participant('student_id', $student->id);
             $group->where_related_participant('course_id', $course->id);
             $group->get();
+    
+            $course->task_set_type->order_by_with_constant('name', 'asc')->get_iterated();
+            
             
             $task_set->select(
                 '`task_sets`.*, `rooms`.`time_day` AS `pb_time_day`, `rooms`.`time_begin` AS `pb_time_begin`, '
@@ -1102,18 +1120,103 @@ class Tasks extends LIST_Controller
         
         return $output;
     }
+
+    /**
+     * @param points an array with the student's points data from non-virtual task set types.
+     * @param max determines whether the resulting array should contain maximum points ​​or total points.
+     * @return array with task set types ids as keys and points as values ([type_id => max_points/total_points, ...]).
+     * Extracts necessary data for formula evaluation from the given points array.
+     */
+    private function extract_evaluation_data($points, $max=false): array
+    {
+        $evaluation_data = [];
+
+        foreach ($points as $key=>$value) {
+            if ($key == 'max' || $key == 'total') {
+                continue;
+            }
+            $evaluation_data[$key] = $max ? $value['max'] : $value['total'];
+        }
+        return $evaluation_data;
+    }
+
+    /**
+     * @param course_id id of course which we are interested in.
+     * @return Task_set_types in the course which are marked as virtual.
+     * Finds and returns all virtual task set types along with their join fields from the given course.
+     */
+    private function get_virtual_task_set_types($course_id) : Task_set_type
+    {
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type
+            ->include_join_fields()
+            ->where('virtual', 1)
+            ->get();
+
+        return $course->task_set_type;
+    }
+
+    /**
+     * @param points a reference to an array with the student's points data from non-virtual task set types.
+     * @param course_id id of course which we are interested in.
+     * Adds virtual task set types points data to the given points array and
+     * increases total points by the appropriate amount in the points array.
+     */
+    private function add_virtual_task_set_types_data(&$points, $course_id) : void {
+        
+        $virtual_types = $this->get_virtual_task_set_types($course_id);
+        $evaluation_data_total = $this->extract_evaluation_data($points);
+        $evaluation_data_max = $this->extract_evaluation_data($points,true);
+        $nodeFactory = new application\services\Formula\NodeFactory();
+        foreach ($virtual_types as $type) {
+            /**
+             * @var Formula_node $formula
+             */
+            $formula = unserialize($type->join_formula_object);
+            //( ( ( Cvicenie + Domaca_Uloha ) * 0.4 ) + ( Skuska * 0.6 ) )
+            /*$formula = $nodeFactory->getAddition($nodeFactory->getVariable("Cvicenia",33),$nodeFactory->getConstant(5));
+            echo serialize($formula);
+            echo "&nbsp;&nbsp;&nbsp;";
+            $formula = $nodeFactory->getAddition($nodeFactory->getVariable("Virtual2",39),$nodeFactory->getVariable("Domaca Uloha",34));
+            echo serialize($formula);
+            echo "<formula>" . $formula->toString() . "</formula>";*/
+            
+            if ($nodeFactory->hasDependencyLoops($course_id,$type->id,$formula,$virtual_types)) {
+                $points[$type->id] = [
+                    'total' => "err",
+                    'max'   => "err",
+                ];
+            } else {
+                $max_points = round($nodeFactory->evaluateWithDependencies($course_id,$type->id, $formula, $evaluation_data_max, $virtual_types), 1);
+                $total_points = round($nodeFactory->evaluateWithDependencies($course_id,$type->id, $formula, $evaluation_data_total, $virtual_types), 1);
     
-    private function compute_points($i_task_sets, Student $student): array
+   
+                $points[$type->id] = [
+                    'total' => $total_points,
+                    'max'   => $max_points,
+                ];
+    
+                if ($type->join_include_in_total) {
+                    $points['total'] += $total_points;
+                    $points['max'] += $max_points;
+                }
+            }
+        }
+    }
+
+
+    private function compute_points(Course $course, $i_task_sets, Student $student): array
     {
         $task_sets = is_array($i_task_sets)
             ? $i_task_sets
             : (is_object($i_task_sets) && $i_task_sets instanceof Task_set ? $i_task_sets->all : []);
-        
         $ids = [0];
-        
+        $typeIds = [0];
         if (count($task_sets) > 0) {
             foreach ($task_sets as $task_set) {
                 $ids[] = $task_set->id;
+                $typeIds[] = $task_set->task_set_type_id;
             }
         }
         
@@ -1133,14 +1236,35 @@ class Tasks extends LIST_Controller
             'max'   => 0,
         ];
         
+        
+        foreach ($typeIds as $task_set_id) {
+            if (!isset($task_set_id)) continue;
+            $query= $this->db->query("select course_task_set_type_rel.min_points as 'min_points',".
+                "course_task_set_type_rel.min_points_in_percentage as 'percentage', ".
+                "course_task_set_type_rel.include_in_total as 'include_in_total'".
+                "from course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id .
+                " and course_task_set_type_rel.task_set_type_id=" . $task_set_id);
+            $row = $query->first_row('array');
+            if (isset($row) && isset($row['min_points']) && trim($row['min_points']) != '' && isset($row['percentage']) && trim($row['percentage']) != '') {
+                $output[$task_set_id]['min'] = $row['min_points'];
+                $output[$task_set_id]['min_in_percentage'] = $row['percentage'] == 1;
+            }
+            if (isset($row) && isset($row['include_in_total']) && trim($row['include_in_total']) != '') {
+                $output[$task_set_id]['include_in_total'] = $row['include_in_total'] == 1;
+            }
+            
+        }
+        
         if (count($task_sets) > 0) {
             foreach ($task_sets as $task_set) {
-                $output['total'] += (isset($points[$task_set->id]) && $points[$task_set->id]['considered'])
-                    ? $points[$task_set->id]['points']
-                    : 0;
-                $output['max'] += !is_null($task_set->points_override)
-                    ? $task_set->points_override
-                    : $task_set->total_points;
+                if ($output[$task_set->task_set_type_id]['include_in_total']) {
+                    $output['total'] += (isset($points[$task_set->id]) && $points[$task_set->id]['considered'])
+                        ? $points[$task_set->id]['points']
+                        : 0;
+                    $output['max'] += !is_null($task_set->points_override)
+                        ? $task_set->points_override
+                        : $task_set->total_points;
+                }
                 $output[$task_set->task_set_type_id]['total'] = ($output[$task_set->task_set_type_id]['total'] ?? 0) + (
                     isset($points[$task_set->id]) && $points[$task_set->id]['considered']
                         ? $points[$task_set->id]['points']
@@ -1153,7 +1277,6 @@ class Tasks extends LIST_Controller
                     );
             }
         }
-        
         return $output;
     }
     
