@@ -1686,6 +1686,11 @@ class Solutions extends LIST_Controller
                 $content_type_task_set->or_where_in('id', $task_sets_out_of_group_ids);
                 $content_type_task_set->group_end();
             }
+            $content_type_task_set->select_subquery(
+                '(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` '
+                . 'WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)',
+                'total_points'
+            );
             $content_type_task_set->get();
             $header_items = [];
             if ($content_type_task_set->result_count() > 0) {
@@ -1832,8 +1837,26 @@ class Solutions extends LIST_Controller
                     $task_sets_points = 0;
                     $last_task_set_type_id = null;
                     $last_task_set_type_key = null;
+                    
+                    $max_points = 0;
                     foreach ($content_type_task_set->all as $task_set) {
                         if ($last_task_set_type_id !== $task_set->task_set_type_id) {
+                            if ($last_task_set_type_id !== null) {
+                                $query = $this->db->query("select course_task_set_type_rel.min_points as 'min_points'," .
+                                    "course_task_set_type_rel.min_points_in_percentage as 'percentage' " .
+                                    "from course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id .
+                                    " and course_task_set_type_rel.task_set_type_id=" . $last_task_set_type_id);
+                                $row = $query->first_row('array');
+                                if (isset($row) && isset($row['min_points']) && trim($row['min_points']) != '' && isset($row['percentage']) && trim($row['percentage']) != '') {
+                                    $min_points = $row['min_points'];
+                                    if ($row['percentage'] == 1) {
+                                      $min_points = $min_points * $max_points / 100;
+                                    }
+                                    if ($task_sets_points_array[$last_task_set_type_key]['points'] >= $min_points) {
+                                        $task_sets_points_array[$last_task_set_type_key]['type'] = 'task_set_type_completed';
+                                    }
+                                }
+                            }
                             $last_task_set_type_id = $task_set->task_set_type_id;
                             $task_sets_points_array[] = [
                                 'type'   => 'task_set_type',
@@ -1841,8 +1864,23 @@ class Solutions extends LIST_Controller
                                 'flag'   => 'ok',
                             ];
                             $last_task_set_type_key = count($task_sets_points_array) - 1;
+                            $max_points = 0;
                         }
+                        $max_points += $task_set->total_points;
                         $points = 0;
+                        
+                        $points_included_in_total_score = 0;
+                        $included = true;
+                        $db_query = $this->db->query("select course_task_set_type_rel.include_in_total as 'included' " .
+                            "from course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id .
+                            " and course_task_set_type_rel.task_set_type_id=" . $last_task_set_type_id);
+                        $result = $db_query->first_row('array');
+                        if (isset($result) && isset($result['included']) && trim($result['included']) != ''){
+                            if($result['included'] == 0) {
+                                $included = false;
+                            }
+                        }
+                        
                         if (isset($solutions_data[$task_set->id])) {
                             if ($solutions_data[$task_set->id]['not_considered']) {
                                 if (!$condensed) {
@@ -1876,6 +1914,9 @@ class Solutions extends LIST_Controller
                                         ];
                                     }
                                     $points = (float)$solutions_data[$task_set->id]['points'];
+                                    if($included){
+                                        $points_included_in_total_score = (float)$solutions_data[$task_set->id]['points'];
+                                    }
                                 } else {
                                     if (!$condensed) {
                                         $task_sets_points_array[] = [
@@ -1887,6 +1928,9 @@ class Solutions extends LIST_Controller
                                         ];
                                     }
                                     $points = (float)$solutions_data[$task_set->id]['points'];
+                                    if($included){
+                                        $points_included_in_total_score = (float)$solutions_data[$task_set->id]['points'];
+                                    }
                                 }
                             }
                         } else if (!$condensed) {
@@ -1912,8 +1956,27 @@ class Solutions extends LIST_Controller
                         }
                         $task_sets_points += $points;
                         $task_sets_points_array[$last_task_set_type_key]['points'] += $points;
-                        $student_line['total_points'] += $points;
+                       
+                        
+                        
+                        
+                        
+                        $student_line['total_points'] += $points_included_in_total_score;
                         $student_line['task_sets_points_total'] = $task_sets_points;
+                    }
+                    $query = $this->db->query("select course_task_set_type_rel.min_points as 'min_points'," .
+                        "course_task_set_type_rel.min_points_in_percentage as 'percentage' " .
+                        "from course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id .
+                        " and course_task_set_type_rel.task_set_type_id=" . $last_task_set_type_id);
+                    $row = $query->first_row('array');
+                    if (isset($row) && isset($row['min_points']) && trim($row['min_points']) != '' && isset($row['percentage']) && trim($row['percentage']) != '') {
+                        $min_points = $row['min_points'];
+                        if ($row['percentage'] == 1) {
+                            $min_points = $min_points * $max_points /100;
+                        }
+                        if ($task_sets_points_array[$last_task_set_type_key]['points'] >= $min_points) {
+                            $task_sets_points_array[$last_task_set_type_key]['type'] = 'task_set_type_completed';
+                        }
                     }
                 }
                 $student_line['task_sets_points'] = $task_sets_points_array;

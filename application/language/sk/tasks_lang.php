@@ -49,6 +49,7 @@ $lang['tasks_task_author_unknown'] = 'Neznámy';
 $lang['tasks_task_is_bonus_task'] = 'Bonusová úloha';
 $lang['tasks_instructions_header'] = 'Inštrukcie';
 $lang['tasks_left_bar_points_title'] = 'Body za úlohy';
+$lang['tasks_left_bar_points_min'] = 'min';
 $lang['tasks_left_bar_points_table_header_task_set_type'] = 'Typ úlohy';
 $lang['tasks_left_bar_points_table_header_points'] = 'Body';
 $lang['tasks_left_bar_points_table_footer_sum_points'] = 'Spolu';
