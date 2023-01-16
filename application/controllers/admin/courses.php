@@ -701,6 +701,9 @@ class Stack {
     
 }
 
+use Application\Services\DependencyInjection\ContainerFactory;
+use Application\Services\Formula\Builder;
+
 /**
  * Courses controller for backend.
  *
@@ -1228,6 +1231,12 @@ class Courses extends LIST_Controller
      */
     public function validate_task_set_type_form($task_set_type_data): bool
     {
+        // formula builder
+        $container = ContainerFactory::getContainer();
+        /** @var Builder $formulaBuilder */
+        $formulaBuilder = $container->get(Builder::class);
+        $formula = $formulaBuilder->build("");
+        
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules(

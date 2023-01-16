@@ -1,4 +1,17 @@
 <?php
+/**
+ *  Probably should not be here, but I don't know where to properly load the classes
+ */
+include_once "application/services/Formula/Node/Formula_node.php";
+include_once "application/services/Formula/Node/Formula.php";
+foreach (glob("application/services/Formula/Node/*.php") as $filename)
+{
+    include_once $filename;
+}
+include_once "application/services/Formula/NodeFactory.php";
+
+use \Application\Services\Formula\NodeFactory;
+use \Application\Services\Formula\Node\Formula_node;
 
 /**
  * Solutions controller for backend.
@@ -1103,10 +1116,12 @@ class Solutions extends LIST_Controller
         $filter = $this->input->post('filter');
         $this->store_valuation_tables_filter($filter);
         $this->inject_stored_valuation_tables_filter();
+
+        $table_data = $this->get_valuation_table_data((int)@$filter['course'], @$filter['group'], (bool)@$filter['simple']);
+        $this->add_virtual_task_set_types_data($table_data, (int)@$filter['course']);
         
         $this->parser->assign(
-            'table_data',
-            $this->get_valuation_table_data((int)@$filter['course'], @$filter['group'], (bool)@$filter['simple'])
+            'table_data', $table_data
         );
         
         $course = new Course();
@@ -1599,6 +1614,89 @@ class Solutions extends LIST_Controller
         }
         
         $this->parser->assign('authors', $authors);
+    }
+
+    /**
+     * @param table_data an array with all students' points data from non-virtual task set types and task sets used in the valuation table.
+     * @return array where the key is the student's id and value is an array with task set types ids as keys and student's total points as values ([student_id => [type_id => total_points], ...]).
+     * Extracts necessary data for formula evaluation from the given points array.
+     */
+    private function extract_evaluation_data($table_data): array
+    {
+        $evaluation_data = [];
+        foreach ($table_data['content'] as $student_data) {
+            $student_id = $student_data['id'];
+            $evaluation_data[$student_id] = [];
+            
+            foreach ($student_data['task_sets_points'] as $index=>$points_data) {
+                if ($points_data['type'] == 'task_set_type') {
+                    $task_set_type_id = $table_data['header']['content_type_task_set']['items'][$index]['id'];
+                    $evaluation_data[$student_id][$task_set_type_id] = $points_data['points'];
+                }
+            }
+        }
+        return $evaluation_data;
+    }
+
+    /**
+     * @param course_id id of course which we are interested in.
+     * @return Task_set_types in the course which are marked as virtual.
+     * Finds and returns all virtual task set types along with their join fields from the given course.
+     */
+    private function get_virtual_task_set_types($course_id) : Task_set_type
+    {
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type
+            ->include_join_fields()
+            ->where('virtual', 1)
+            ->get();
+
+        return $course->task_set_type;
+    }
+
+    /**
+     * @param table_data a reference to an array with all students' points data from non-virtual task set types and task sets used in the valuation table.
+     * @param course_id id of course which we are interested in.
+     * Adds virtual task set types points data to the given points array and increases total points by the appropriate amount in the points array.
+     */
+    private function add_virtual_task_set_types_data(&$table_data, $course_id) : void {
+        $virtual_types = $this->get_virtual_task_set_types($course_id);
+        $evaluation_data = $this->extract_evaluation_data($table_data);
+        $nodeFactory = new application\services\Formula\NodeFactory();
+        foreach ($virtual_types as $type) {
+            $formula = unserialize($type->join_formula_object); 
+
+            $table_data['header']['content_type_task_set']['items'][] = [
+                'type'  => 'task_set_type',
+                'id'    => $type->id,
+                'name'  => $this->lang->text($type->name),
+                'title' => '',
+            ];
+
+            foreach ($table_data['content'] as $index=>$student_data) {
+                if ($nodeFactory->hasDependencyLoops($course_id,$type->id,$formula,$virtual_types)) {
+                    $table_data['content'][$index]['task_sets_points'][] = [
+                        'type'   => 'task_set_type',
+                        'points' => 'err',
+                        'flag'   => 'ok',
+                    ];
+                } else {
+                    $points = round($nodeFactory->evaluateWithDependencies($course_id, $type->id, $formula, $evaluation_data[$student_data['id']], $virtual_types), 1);
+    
+                    $table_data['content'][$index]['task_sets_points'][] = [
+                        'type'   => 'task_set_type',
+                        'points' => $points,
+                        'flag'   => 'ok',
+                    ];
+                    $table_data['content'][$index]['task_sets_points_total'] += $points;
+    
+                    if ($type->join_include_in_total == 1) {
+                        $table_data['content'][$index]['total_points'] += $points;
+                    }
+                }
+            }
+        }
     }
     
     private function get_valuation_table_data($course_id, $group_id = null, $condensed = false): array
