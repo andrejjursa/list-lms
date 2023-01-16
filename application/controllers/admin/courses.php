@@ -1,4 +1,705 @@
 <?php
+interface Formula_node
+{
+    public function compute();
+    public function evaluate();
+    public function toString();
+}
+/**
+ * @property Formula_node $left
+ * @property Formula_node $right
+ */
+
+interface Formula extends Formula_node
+{
+    public function get_left();
+    public function get_right();
+}
+
+class Addition implements Formula
+{
+    private $left;
+    private $right;
+    //ak to bude lepsie mozu sa dat ako public a vyhodit gettery
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " + " .$this->get_right()->toString() . ")";
+    }
+}
+class Conjunction implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " ∧ " .$this->get_right()->toString() . ")";
+    }
+}
+class Constant implements Formula_node
+{
+    private $value;
+    
+    public function __construct(Float $value){
+        $this->value = $value;
+    }
+    
+    public function get_value(){
+        return $this->value;
+    }
+    
+    public function compute(): float
+    {
+        return $this->value;
+    }
+    
+    public function evaluate(): bool
+    {
+        return $this->value == 0;
+    }
+    
+    public function toString(): string
+    {
+        return (string) $this->value;
+    }
+}
+class Disjunction implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " v " .$this->get_right()->toString() . ")";
+    }
+}
+class Division implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " / " .$this->get_right()->toString() . ")";
+    }
+}
+class Equal implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " == " .$this->get_right()->toString() . ")";
+    }
+}
+class Greater implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " > " .$this->get_right()->toString() . ")";
+    }
+}
+class Greater_or_equal implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left()
+    {
+        return $this->left;
+    }
+    
+    public function get_right()
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " >= " .$this->get_right()->toString() . ")";
+    }
+}
+class Modulo implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " % " .$this->get_right()->toString() . ")";
+    }
+}
+class Multiplication implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " * " . $this->get_right()->toString() . ")";
+    }
+}
+class Negation implements Formula_node
+{
+    private $original_formula;
+    
+    public function __construct(Formula_node $original_formula){
+        $this->original_formula = $original_formula;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "( ¬ " . $this->original_formula->toString() . " )";
+    }
+}
+class Not_equal implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " != " .$this->get_right()->toString() . ")";
+    }
+}
+class Smaller implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " < " .$this->get_right()->toString() . ")";
+    }
+}
+class Smaller_or_equal implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " <= " .$this->get_right()->toString() . ")";
+    }
+}
+class Subtraction implements Formula
+{
+    private $left;
+    private $right;
+    
+    public function __construct(Formula_node $left, Formula_node $right)
+    {
+        $this->left = $left;
+        $this->right = $right;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return "(" . $this->get_left()->toString() . " - " .$this->get_right()->toString() . ")";
+    }
+}
+class Ternary_operator implements Formula
+{
+    private $left;
+    private $right;
+    private $condition;
+    
+    public function __construct(Formula_node $left, Formula_node $right, Formula_node $condition)
+    {
+        $this->left = $left;
+        $this->right = $right;
+        $this->condition = $condition;
+    }
+    
+    public function get_left(): Formula_node
+    {
+        return $this->left;
+    }
+    
+    public function get_right(): Formula_node
+    {
+        return $this->right;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString()
+    {
+        return $this->condition->toString() . " ? " . $this->left->toString() . " : " . $this->right->toString();
+    }
+}
+class Variable implements Formula_node
+{
+    private $name;
+    private $type_id;
+    private $value;
+    
+    public function __construct(string $name, int $type_id)
+    {
+        $this->name = $name;
+        $this->type_id = $type_id;
+    }
+    
+    public function get_name(): string
+    {
+        return $this->name;
+    }
+    
+    public function get_type_id(): int
+    {
+        return $this->type_id;
+    }
+    
+    public function get_value(): float
+    {
+        return $this->value;
+    }
+    
+    public function set_value(float $value)
+    {
+        $this->value = $value;
+    }
+    
+    public function compute(): float
+    {
+        // TODO: Implement compute() method.
+        return 0;
+    }
+    
+    public function evaluate(): bool
+    {
+        // TODO: Implement evaluate() method.
+        return true;
+    }
+    
+    public function toString(): string
+    {
+        return $this->name;
+    }
+}
+class Stack {
+    public $top;
+    public $stack = array();
+    
+    function __construct() {
+        $this->top = -1;
+    }
+    
+    public function print() {
+        return $this->stack;
+    }
+    
+    public function isEmpty() {
+        if($this->top == -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function size() {
+        return $this->top+1;
+    }
+    
+    public function push($x) {
+        $this->stack[++$this->top] = $x;
+        
+    }
+    
+    public function pop() {
+        if($this->top < 0){
+            return null;
+        } else {
+            $top = $this->stack[$this->top];
+            $this->stack[$this->top--];
+            return $top;
+        }
+    }
+    
+    public function topElement() {
+        if($this->top < 0) {
+            return null;
+        } else {
+            return $this->stack[$this->top];
+        }
+    }
+    
+}
 
 /**
  * Courses controller for backend.
@@ -445,16 +1146,62 @@ class Courses extends LIST_Controller
         }
     }
     
+    /** 
+     * Renders a course task set types listing page, along with a form for adding a new task set type to the course, which includes a TinyMCE formula notation editor.
+     */
     public function task_set_types(): void
     {
         $url = $this->uri->ruri_to_assoc(3);
         $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
         $course = new Course();
         $course->get_by_id($course_id);
+
+        $this->_add_tinymce4();
+        $this->_add_prettify();
+        $this->parser->add_js_file('admin_courses/formula.js');
+
         $this->inject_unused_task_set_types($course_id);
         $this->parser->add_js_file('admin_courses/list.js');
         $this->parser->add_css_file('admin_courses.css');
-        $this->parser->parse('backend/courses/task_set_types.tpl', ['course' => $course]);
+        $this->parser->parse('backend/courses/task_set_types.tpl', [
+            'course' => $course,
+            'all_task_set_types' => $course->task_set_type->get()
+        ]);
+    }
+
+    /** 
+     * Renders a form page, which includes a TinyMCE formula notation editor, for editing existing task set type in the given course.
+     */
+    public function edit_task_set_type(): void 
+    {
+        $url = $this->uri->ruri_to_assoc(3);
+        $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
+        $task_set_type_id =isset($url['task_set_type_id']) ? (int)$url['task_set_type_id'] : 0;
+
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course
+            ->task_set_type
+            ->include_join_fields()
+            ->where('task_set_type_id', $task_set_type_id)
+            ->get();
+
+        $current_course = new Course();
+        $current_course->get_by_id($course_id);
+        $current_course->task_set_type->get();
+
+        $this->_add_tinymce4();
+        $this->_add_prettify();
+        $this->parser->add_js_file('admin_courses/formula.js');
+
+        $this->parser->add_js_file('admin_courses/list.js');
+        $this->parser->add_css_file('admin_courses.css');
+        $this->parser->parse('backend/courses/task_set_type_edit.tpl', [
+            'course' => $course, 
+            'task_set_type' => $course->task_set_type,
+            'all_task_set_types' => $current_course->task_set_type,
+            'edit' => true
+        ]);
     }
     
     public function get_task_set_types(): void
@@ -473,22 +1220,16 @@ class Courses extends LIST_Controller
             'course'         => $course,
         ]);
     }
-    
-    public function get_task_set_type_form(): void
-    {
-        $url = $this->uri->ruri_to_assoc(3);
-        $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
-        $this->inject_unused_task_set_types($course_id);
-        $this->parser->parse('backend/courses/add_task_set_type_form.tpl');
-    }
-    
-    public function add_task_set_type(): void
+
+    /** 
+     * @param array $task_set_type_data submited form data
+     * @return bool 
+     * Validates submitted form data for adding/editing a task set type in the course and returns true if validation succeeds false otherwise.
+     */
+    public function validate_task_set_type_form($task_set_type_data): bool
     {
         $this->load->library('form_validation');
-        
-        $url = $this->uri->ruri_to_assoc(3);
-        $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
-        
+
         $this->form_validation->set_rules(
             'task_set_type[id]',
             'lang:admin_courses_form_field_task_set_type_name',
@@ -499,13 +1240,226 @@ class Courses extends LIST_Controller
             'lang:admin_courses_form_field_upload_solution',
             'required'
         );
+
+        if (isset($task_set_type_data['join_min_points']) && $task_set_type_data['join_min_points'] != '') {
+            $this->form_validation->set_rules(
+                'task_set_type[join_min_points]',
+                'lang:admin_courses_form_field_min_points',
+                'numeric|greater_than_or_equal[0]'
+            );
+        }
+
+        $this->form_validation->set_rules(
+            'task_set_type[join_min_points_in_percentage]',
+            'lang:admin_courses_form_field_min_points_in_percentage',
+            'required'
+        );
+
+        $this->form_validation->set_rules(
+            'task_set_type[join_include_in_total]',
+            'lang:admin_courses_form_field_include_in_total',
+            'required'
+        );
+
+        $this->form_validation->set_rules(
+            'task_set_type[join_virtual]',
+            'lang:admin_courses_form_field_virtual',
+            'required'
+        );
         
-        if ($this->form_validation->run()) {
-            $task_set_type_data = $this->input->post('task_set_type');
-            $course = new Course();
-            $course->get_by_id($course_id);
+        if (isset($task_set_type_data['join_virtual']) && $task_set_type_data['join_virtual'] == 1) {
+            $this->form_validation->set_rules(
+                'task_set_type[join_formula]',
+                'lang:admin_courses_form_field_formula',
+                'required'
+            );
+    
+            $this->form_validation->addPost("task_set_type", "join_formula_object", $task_set_type_data['join_formula_object']);
+            $this->form_validation->set_rules(
+                'task_set_type[join_formula_object]',
+                'lang:admin_courses_form_field_formula_object',
+                'formula_not_null'
+            );
+            $this->form_validation->set_message(
+                'formula_not_null',
+                $this->lang->line('admin_courses_form_formula_build_failed')
+            );
+        }
+
+        return $this->form_validation->run();
+    }
+    
+    public function parseFormula($formula, $types) {
+        $operatory = ['+', '-', '×', '/', '%', '&lt;=', '&gt;=', '&lt;', '&gt;', '==', '!=', '∧', '∨', '?', ':', '¬'];
+        
+        // Zabezpecenie, ze vsetky prvky formuly su oddelene
+        $formula = str_replace(["<p>", "</p>", "<span>", "</span>"], "", $formula);
+        $formula = str_replace("(", " ( ", $formula);
+        $formula = str_replace(")", " ) ", $formula);
+        foreach($operatory as $operator) {
+            $formula = str_replace($operator, " ".$operator." ", $formula);
+        }
+        $formula = preg_replace("(&lt; =)", " &lt;= ", $formula);
+        $formula = preg_replace("(&gt; =)", " &gt;= ", $formula);
+        
+        $ary = array_filter(explode(" ", $formula));
+        // stacks
+        $zatvorky = new Stack();
+        $vals = new Stack();
+        $znamienka = new Stack();
+        foreach($ary as $item) {
+            
+            if ($item == "("){
+                $zatvorky->push($item);
+            } elseif (in_array($item, $operatory)) {
+                $znamienka->push($item);
+            } elseif ($item == ")") {
+                if ($zatvorky->isEmpty() || $vals->isEmpty() || $znamienka->isEmpty()) {
+                    echo "1";
+                    return NULL;
+                }
+                $right = $vals->pop();
+                if (is_string($right)) {
+                    if (is_numeric($right) != 1){
+                        $right = str_replace("_", " ", $right);
+                        $right = new Variable($right, $types[$right]);
+                    } else {
+                        $right = new Constant((float) $right);
+                    }
+                }
+                $operator = $znamienka->pop();
+                $zatvorky->pop();
+                
+                if ($operator == "¬") {
+                    $vals->push(new Negation($right));
+                    continue;
+                }
+                
+                if ($operator == ":") {
+                    if ($znamienka->isEmpty() || $znamienka->topElement() != "?" || $vals->size() < 2){
+                        echo "2";
+                        return NULL;
+                    }
+                    $left = $vals->pop();
+                    if (is_string($left)){
+                        if (is_numeric($left) != 1){
+                            $left = str_replace("_", " ", $left);
+                            $left = new Variable($left, $types[$left]);
+                        } else {
+                            $left = new Constant((float) $left);
+                        }
+                    }
+                    $condition = $vals->pop();
+                    if (is_string($condition)) {
+                        return null;
+                    }
+                    $znamienka->pop();
+                    $vals->push(new Ternary_operator($left, $right, $condition));
+                    continue;
+                }
+                
+                if ($vals->isEmpty()) {
+                    echo "3";
+                    return NULL;
+                }
+                $left = $vals->pop();
+                
+                if (is_string($left)){
+                    if (is_numeric($left) != 1){
+                        $left = str_replace("_", " ", $left);
+                        $left = new Variable($left, $types[$left]);
+                    } else {
+                        $left = new Constant((float) $left);
+                    }
+                }
+                
+                switch ($operator) {
+                    case "+":
+                        $vals->push(new Addition($left, $right));
+                        break;
+                    case "-":
+                        $vals->push(new Subtraction($left, $right));
+                        break;
+                    case "×":
+                        $vals->push(new Multiplication($left, $right));
+                        break;
+                    case "/":
+                        // TODO if $right === 0 throw exception
+                        $vals->push(new Division($left, $right));
+                        break;
+                    case "%":
+                        $vals->push(new Modulo($left, $right));
+                        break;
+                    case "&lt;":
+                        $vals->push(new Smaller($left, $right));
+                        break;
+                    case "&gt;":
+                        $vals->push(new Greater($left, $right));
+                        break;
+                    case "&lt;=":
+                        $vals->push(new Smaller_or_equal($left, $right));
+                        break;
+                    case "&gt;=":
+                        $vals->push(new Greater_or_equal($left, $right));
+                        break;
+                    case "==":
+                        $vals->push(new Equal($left, $right));
+                        break;
+                    case "!=":
+                        $vals->push(new Not_equal($left, $right));
+                        break;
+                    case "∧":
+                        $vals->push(new Conjunction($left, $right));
+                        break;
+                    case "∨":
+                        $vals->push(new Disjunction($left, $right));
+                        break;
+                }
+                
+            } else {
+                if ($item == "_"){
+//                    echo "4";
+                    return NULL;
+                }
+                $vals->push($item); // constanta alebo premenna
+            }
+            
+        }
+        $result = $vals->pop();
+        
+        if (!$zatvorky->isEmpty() || !$vals->isEmpty() || !$znamienka->isEmpty()) {
+//            echo "5";
+            return NULL;
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * Creates a new task set type for the given course if the validation succeeds. 
+     * This includes calling the parse function for transforming the formula from string format to an instance of the appropriate class and saving it in the database in serialized form.
+     * At the end current page will be rerendered, with the appropriate result status messages.
+     */
+    public function add_task_set_type(): void
+    {
+        $url = $this->uri->ruri_to_assoc(3);
+        $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type->get();
+        $task_set_types = $course->task_set_type;
+        $types = [];
+        foreach($task_set_types->all as $type){
+            $types[$type->name] = $type->id;
+        }
+        
+        $task_set_type_data = $this->input->post('task_set_type');
+        $task_set_type_data['join_formula_object'] = $this->parseFormula($task_set_type_data['join_formula'], $types);
+        
+        if ($this->validate_task_set_type_form($task_set_type_data)) {
             $task_set_type = new Task_set_type();
             $task_set_type->get_by_id((int)$task_set_type_data['id']);
+            
             if ($course->exists() && $task_set_type->exists()) {
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
@@ -514,8 +1468,43 @@ class Courses extends LIST_Controller
                 $course->set_join_field(
                     $task_set_type,
                     'upload_solution',
-                    (int)$task_set_type_data['join_upload_solution']
+                    ((int)$task_set_type_data['join_virtual'] == 1) ? 0 : (int)$task_set_type_data['join_upload_solution']
                 );
+                $course->set_join_field(
+                    $task_set_type,
+                    'min_points',
+                    (float)$task_set_type_data['join_min_points']
+                );
+                $course->set_join_field(
+                    $task_set_type,
+                    'min_points_in_percentage',
+                    (int)$task_set_type_data['join_min_points_in_percentage']
+                );
+                $course->set_join_field(
+                    $task_set_type,
+                    'include_in_total',
+                    (int)$task_set_type_data['join_include_in_total']
+                );
+                $course->set_join_field(
+                    $task_set_type,
+                    'virtual',
+                    (int)$task_set_type_data['join_virtual']
+                );
+
+                if ((int)$task_set_type_data['join_virtual'] == 1) {
+                    $course->set_join_field(
+                        $task_set_type,
+                        'formula',
+                        $task_set_type_data['join_formula']
+                    );
+
+                    $course->set_join_field(
+                        $task_set_type,
+                        'formula_object',
+                        serialize($task_set_type_data['join_formula_object'])
+                    );
+                }
+
                 if ($this->db->trans_status()) {
                     $this->db->trans_commit();
                     $this->messages->add_message(
@@ -536,94 +1525,163 @@ class Courses extends LIST_Controller
                     Messages::MESSAGE_TYPE_ERROR
                 );
             }
-            redirect(create_internal_url('admin_courses/get_task_set_type_form/course_id/' . $course_id));
+            redirect(create_internal_url('admin_courses/task_set_types/course_id/' . $course_id));
         } else {
-            $this->get_task_set_type_form();
+            $this->task_set_types();
         }
     }
     
+    /**
+     * Updates a given task set type in the specified course if the validation succeeds. 
+     * This includes calling the parse function for transforming the formula from string format to an instance of the appropriate class and saving it in the database in serialized form.
+     * If the validation fails, the page will be rerendered with validation error messages.
+     * If the validation succeeds the user will be redirected to the course task set types listing page.
+     */
     public function save_task_set_type(): void
     {
-        $this->output->set_content_type('application/json');
-        $this->load->library('form_validation');
+        $url = $this->uri->ruri_to_assoc(3);
+        $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type->get();
+        $task_set_types = $course->task_set_type;
+        $types = [];
+        foreach($task_set_types->all as $type){
+            $types[$type->name] = $type->id;
+        }
         
-        $this->form_validation->set_rules('upload_solution', 'upload_solution', 'required');
-        $this->form_validation->set_rules('task_set_type_id', 'task_set_type_id', 'required');
-        $this->form_validation->set_rules('course_id', 'course_id', 'required');
+        $task_set_type_data = $this->input->post('task_set_type');
+        $task_set_type_data['join_formula_object'] = $this->parseFormula($task_set_type_data['join_formula'], $types);
         
-        if ($this->form_validation->run()) {
-            $course_id = (int)$this->input->post('course_id');
-            $task_set_type_id = (int)$this->input->post('task_set_type_id');
-            $upload_solution = (int)$this->input->post('upload_solution');
-            
+        if ($this->validate_task_set_type_form($task_set_type_data)) {
             $course = new Course();
             $course->get_by_id($course_id);
-            
             $task_set_type = new Task_set_type();
-            $task_set_type->get_by_id($task_set_type_id);
-            
+            $task_set_type->get_by_id((int)$task_set_type_data['id']);
+
             if ($course->exists() && $task_set_type->exists()) {
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
-                
-                $task_set_type->set_join_field($course, 'upload_solution', $upload_solution);
-                if ($this->db->trans_status()) {
-                    $this->db->trans_commit();
-                    $this->output->set_output(json_encode(true));
-                    $this->_action_success();
-                    
-                    return;
+
+                $course->set_join_field(
+                    $task_set_type,
+                    'upload_solution',
+                    ((int)$task_set_type_data['join_virtual'] == 1) ? 0 : (int)$task_set_type_data['join_upload_solution']
+                );
+                $course->set_join_field(
+                    $task_set_type,
+                    'min_points',
+                    (float)$task_set_type_data['join_min_points']
+                );
+                $course->set_join_field(
+                    $task_set_type,
+                    'min_points_in_percentage',
+                    (int)$task_set_type_data['join_min_points_in_percentage']
+                );
+                $course->set_join_field(
+                    $task_set_type,
+                    'include_in_total',
+                    (int)$task_set_type_data['join_include_in_total']
+                );
+                $course->set_join_field(
+                    $task_set_type,
+                    'virtual',
+                    (int)$task_set_type_data['join_virtual']
+                );
+
+                if ((int)$task_set_type_data['join_virtual'] == 1) {
+                    $course->set_join_field(
+                        $task_set_type,
+                        'formula',
+                        $task_set_type_data['join_formula']
+                    );
+
+                    $course->set_join_field(
+                        $task_set_type,
+                        'formula_object',
+                        serialize($task_set_type_data['join_formula_object'])
+                    );
                 }
                 
-                $this->db->trans_rollback();
+                if ($this->db->trans_status()) {
+                    $this->db->trans_commit();
+                    $this->messages->add_message(
+                        'lang:admin_courses_message_task_set_type_updated',
+                        Messages::MESSAGE_TYPE_SUCCESS
+                    );
+                    $this->_action_success();
+                } else {
+                    $this->db->trans_rollback();
+                    $this->messages->add_message(
+                        'lang:admin_courses_message_task_set_type_update_failed',
+                        Messages::MESSAGE_TYPE_ERROR
+                    );
+                }
+            } else {
+                $this->messages->add_message(
+                    'lang:admin_courses_message_task_set_type_update_failed',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
             }
+            redirect(create_internal_url('admin_courses/task_set_types/course_id/' . $course_id));
+        } else {
+            $this->edit_task_set_type();
         }
-        $this->output->set_output(json_encode(false));
     }
     
+    /**
+     * Deletes a given task set type in the specified course if the validation succeeds. 
+     * This includes unlinking all task sets for the given task set type.
+     * User will be then redirected to the same page, which will now display the result status message.
+     */
     public function delete_task_set_type(): void
     {
-        $this->output->set_content_type('application/json');
-        $this->load->library('form_validation');
+        $url = $this->uri->ruri_to_assoc(3);
+        $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
+        $task_set_type_id =isset($url['task_set_type_id']) ? (int)$url['task_set_type_id'] : 0;
         
-        $this->form_validation->set_rules('task_set_type_id', 'task_set_type_id', 'required');
-        $this->form_validation->set_rules('course_id', 'course_id', 'required');
-        
-        if ($this->form_validation->run()) {
-            $course_id = (int)$this->input->post('course_id');
-            $task_set_type_id = (int)$this->input->post('task_set_type_id');
+        $course = new Course();
+        $course->get_by_id($course_id);
             
-            $course = new Course();
-            $course->get_by_id($course_id);
+        $task_set_type = new Task_set_type();
+        $task_set_type->get_by_id($task_set_type_id);
             
-            $task_set_type = new Task_set_type();
-            $task_set_type->get_by_id($task_set_type_id);
-            
-            if ($course->exists() && $task_set_type->exists()) {
-                $this->_transaction_isolation();
-                $this->db->trans_begin();
+        if ($course->exists() && $task_set_type->exists()) {
+            $this->_transaction_isolation();
+            $this->db->trans_begin();
                 
-                $course->delete($task_set_type);
+            $course->delete($task_set_type);
                 
-                $task_sets = new Task_set();
-                $task_sets->where_related_course('id', $course_id);
-                $task_sets->where_related_task_set_type('id', $task_set_type_id);
-                $task_sets->get_iterated();
-                foreach ($task_sets as $task_set) {
-                    $task_set->delete($task_set_type);
-                }
+            $task_sets = new Task_set();
+            $task_sets->where_related_course('id', $course_id);
+            $task_sets->where_related_task_set_type('id', $task_set_type_id);
+            $task_sets->get_iterated();
                 
-                if ($this->db->trans_status()) {
-                    $this->db->trans_commit();
-                    $this->output->set_output(json_encode(true));
-                    
-                    return;
-                }
-                
-                $this->db->trans_rollback();
+            foreach ($task_sets as $task_set) {
+                $task_set->delete($task_set_type);
             }
+                
+            if ($this->db->trans_status()) {
+                $this->db->trans_commit();
+                $this->messages->add_message(
+                    'lang:admin_courses_message_task_set_type_deleted',
+                    Messages::MESSAGE_TYPE_SUCCESS
+                );
+                $this->_action_success();
+            } else {
+                $this->db->trans_rollback();
+                $this->messages->add_message(
+                    'lang:admin_courses_message_task_set_type_delete_failed',
+                    Messages::MESSAGE_TYPE_ERROR
+                );
+            }
+        } else {
+            $this->messages->add_message(
+                'lang:admin_courses_message_task_set_type_delete_failed',
+                Messages::MESSAGE_TYPE_ERROR
+            );
         }
-        $this->output->set_output(json_encode(false));
+        redirect(create_internal_url('admin_courses/task_set_types/course_id/' . $course_id));
     }
     
     public function download_solutions($course_id): void
