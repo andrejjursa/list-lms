@@ -2,7 +2,11 @@
 /**
  *  Probably should not be here, but I don't know where to properly load the classes
  */
- include_once "application/services/Formula/Node/Formula_node.php";
+
+use Application\Services\DependencyInjection\ContainerFactory;
+use Application\Services\Formula\FormulaService;
+
+include_once "application/services/Formula/Node/Formula_node.php";
  include_once "application/services/Formula/Node/Formula.php";
  foreach (glob("application/services/Formula/Node/*.php") as $filename)
  {
@@ -10,8 +14,6 @@
  }
  include_once "application/services/Formula/NodeFactory.php";
 
- use \Application\Services\Formula\NodeFactory;
- use \Application\Services\Formula\Node\Formula_node;
  
 /**
  * Tasks controller for frontend.
@@ -1164,45 +1166,15 @@ class Tasks extends LIST_Controller
      * increases total points by the appropriate amount in the points array.
      */
     private function add_virtual_task_set_types_data(&$points, $course_id) : void {
-        
         $virtual_types = $this->get_virtual_task_set_types($course_id);
         $evaluation_data_total = $this->extract_evaluation_data($points);
         $evaluation_data_max = $this->extract_evaluation_data($points,true);
-        $nodeFactory = new application\services\Formula\NodeFactory();
-        foreach ($virtual_types as $type) {
-            /**
-             * @var Formula_node $formula
-             */
-            $formula = unserialize($type->join_formula_object);
-            //( ( ( Cvicenie + Domaca_Uloha ) * 0.4 ) + ( Skuska * 0.6 ) )
-            /*$formula = $nodeFactory->getAddition($nodeFactory->getVariable("Cvicenia",33),$nodeFactory->getConstant(5));
-            echo serialize($formula);
-            echo "&nbsp;&nbsp;&nbsp;";
-            $formula = $nodeFactory->getAddition($nodeFactory->getVariable("Virtual2",39),$nodeFactory->getVariable("Domaca Uloha",34));
-            echo serialize($formula);
-            echo "<formula>" . $formula->toString() . "</formula>";*/
-            
-            if ($nodeFactory->hasDependencyLoops($course_id,$type->id,$formula,$virtual_types)) {
-                $points[$type->id] = [
-                    'total' => "err",
-                    'max'   => "err",
-                ];
-            } else {
-                $max_points = round($nodeFactory->evaluateWithDependencies($course_id,$type->id, $formula, $evaluation_data_max, $virtual_types), 1);
-                $total_points = round($nodeFactory->evaluateWithDependencies($course_id,$type->id, $formula, $evaluation_data_total, $virtual_types), 1);
     
-   
-                $points[$type->id] = [
-                    'total' => $total_points,
-                    'max'   => $max_points,
-                ];
+        $container = ContainerFactory::getContainer();
+        /** @var FormulaService $formulaService */
+        $formulaService = $container->get(FormulaService::class);
+        // TODO Timotea: zavolat formulaService metodu na vyhodnotenie formul, kedze $table_data je referencia tak formulaService rovno donho prida hodnoty z eval / null
     
-                if ($type->join_include_in_total) {
-                    $points['total'] += $total_points;
-                    $points['max'] += $max_points;
-                }
-            }
-        }
     }
 
 

@@ -10,8 +10,8 @@ foreach (glob("application/services/Formula/Node/*.php") as $filename)
 }
 include_once "application/services/Formula/NodeFactory.php";
 
-use \Application\Services\Formula\NodeFactory;
-use \Application\Services\Formula\Node\Formula_node;
+use Application\Services\DependencyInjection\ContainerFactory;
+use Application\Services\Formula\FormulaService;
 
 /**
  * Solutions controller for backend.
@@ -1656,47 +1656,19 @@ class Solutions extends LIST_Controller
     }
 
     /**
-     * @param table_data a reference to an array with all students' points data from non-virtual task set types and task sets used in the valuation table.
-     * @param course_id id of course which we are interested in.
+     * @param array $table_data a reference to an array with all students' points data from non-virtual task set types and task sets used in the valuation table.
+     * @param int   $course_id  id of course which we are interested in.
      * Adds virtual task set types points data to the given points array and increases total points by the appropriate amount in the points array.
      */
     private function add_virtual_task_set_types_data(&$table_data, $course_id) : void {
         $virtual_types = $this->get_virtual_task_set_types($course_id);
         $evaluation_data = $this->extract_evaluation_data($table_data);
-        $nodeFactory = new application\services\Formula\NodeFactory();
-        foreach ($virtual_types as $type) {
-            $formula = unserialize($type->join_formula_object); 
-
-            $table_data['header']['content_type_task_set']['items'][] = [
-                'type'  => 'task_set_type',
-                'id'    => $type->id,
-                'name'  => $this->lang->text($type->name),
-                'title' => '',
-            ];
-
-            foreach ($table_data['content'] as $index=>$student_data) {
-                if ($nodeFactory->hasDependencyLoops($course_id,$type->id,$formula,$virtual_types)) {
-                    $table_data['content'][$index]['task_sets_points'][] = [
-                        'type'   => 'task_set_type',
-                        'points' => 'err',
-                        'flag'   => 'ok',
-                    ];
-                } else {
-                    $points = round($nodeFactory->evaluateWithDependencies($course_id, $type->id, $formula, $evaluation_data[$student_data['id']], $virtual_types), 1);
-    
-                    $table_data['content'][$index]['task_sets_points'][] = [
-                        'type'   => 'task_set_type',
-                        'points' => $points,
-                        'flag'   => 'ok',
-                    ];
-                    $table_data['content'][$index]['task_sets_points_total'] += $points;
-    
-                    if ($type->join_include_in_total == 1) {
-                        $table_data['content'][$index]['total_points'] += $points;
-                    }
-                }
-            }
-        }
+        
+        $container = ContainerFactory::getContainer();
+        /** @var FormulaService $formulaService */
+        $formulaService = $container->get(FormulaService::class);
+        // TODO Timotea: zavolat formulaService metodu na vyhodnotenie formul, kedze $table_data je referencia tak formulaService rovno donho prida hodnoty z eval / null
+        
     }
     
     private function get_valuation_table_data($course_id, $group_id = null, $condensed = false): array
