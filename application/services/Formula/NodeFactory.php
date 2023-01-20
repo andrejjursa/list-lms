@@ -9,6 +9,8 @@ use Application\Services\Formula\Node\Equal;
 use Application\Services\Formula\Node\Formula_node;
 use Application\Services\Formula\Node\Greater;
 use Application\Services\Formula\Node\Greater_or_equal;
+use Application\Services\Formula\Node\MaxFunction;
+use Application\Services\Formula\Node\MinFunction;
 use Application\Services\Formula\Node\Modulo;
 use Application\Services\Formula\Node\Multiplication;
 use Application\Services\Formula\Node\Negation;
@@ -104,5 +106,15 @@ class NodeFactory
     public function getVariable(string $name, int $type_id): Variable
     {
         return new Variable($name, $type_id);
+    }
+    
+    public function getMinFunction(Formula_node $left, Formula_node $right): MinFunction
+    {
+        return new MinFunction($left, $right);
+    }
+    
+    public function getMaxFunction(Formula_node $left, Formula_node $right): MaxFunction
+    {
+        return new MaxFunction($left, $right);
     }
 }

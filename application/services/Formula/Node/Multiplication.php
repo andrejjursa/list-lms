@@ -10,9 +10,13 @@ class Multiplication extends Formula
     {
         if($this->left->logic || $this->right->logic)
             return null;
-        if($this->left->evaluate($map) == null || $this->right->evaluate($map) == null)
+    
+        $left_result = $this->left->evaluate($map);
+        $right_result = $this->right->evaluate($map);
+        
+        if($left_result == null || $right_result == null)
             return null;
-        return $this->left->evaluate($map) * $this->right->evaluate($map);
+        return $left_result * $right_result;
     }
     
     public function toString(): string
