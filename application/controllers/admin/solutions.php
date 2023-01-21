@@ -1629,7 +1629,7 @@ class Solutions extends LIST_Controller
             $evaluation_data[$student_id] = [];
             
             foreach ($student_data['task_sets_points'] as $index=>$points_data) {
-                if ($points_data['type'] == 'task_set_type') {
+                if ($points_data['type'] == 'task_set_type' || $points_data['type'] == 'task_set_type_completed') {
                     $task_set_type_id = $table_data['header']['content_type_task_set']['items'][$index]['id'];
                     $evaluation_data[$student_id][$task_set_type_id] = $points_data['points'];
                 }
@@ -1663,12 +1663,48 @@ class Solutions extends LIST_Controller
     private function add_virtual_task_set_types_data(&$table_data, $course_id) : void {
         $virtual_types = $this->get_virtual_task_set_types($course_id);
         $evaluation_data = $this->extract_evaluation_data($table_data);
+    
+        foreach ($virtual_types as $virtual_type) {
+            $table_data['header']['content_type_task_set']['items'][] = [
+                'type'  => 'task_set_type',
+                'id'    => $virtual_type->id,
+                'name'  => $this->lang->text($virtual_type->name),
+                'title' => '',
+            ];
+        }
         
         $container = ContainerFactory::getContainer();
         /** @var FormulaService $formulaService */
         $formulaService = $container->get(FormulaService::class);
-        // TODO Timotea: zavolat formulaService metodu na vyhodnotenie formul, kedze $table_data je referencia tak formulaService rovno donho prida hodnoty z eval / null
+        $formula_evaluation_data = $formulaService->evaluate_formulas($evaluation_data, $virtual_types);
         
+        foreach($table_data['content'] as $index=>$student_data){
+            $student_formula_eval_data = $formula_evaluation_data[$student_data['id']];
+
+            foreach ($virtual_types as $virtual_type) {
+                $virtual_type_id = $virtual_type->id;
+                $points = $student_formula_eval_data[$virtual_type_id];
+                $rounded_points = round($points, 1);
+                if ($points === -1){
+                    $table_data['content'][$index]['task_sets_points'][] = [
+                        'type'   => 'task_set_type',
+                        'points' => 'err',
+                        'flag'   => 'ok',
+                    ];
+                }
+                else {
+                    $table_data['content'][$index]['task_sets_points'][] = [
+                        'type'   => 'task_set_type',
+                        'points' => $rounded_points,
+                        'flag'   => 'ok',
+                    ];
+                    $table_data['content'][$index]['task_sets_points_total'] += $rounded_points;
+                }
+                if ($virtual_type->join_include_in_total == 1) {
+                    $table_data['content'][$index]['total_points'] += $rounded_points;
+                }
+            }
+        }
     }
     
     private function get_valuation_table_data($course_id, $group_id = null, $condensed = false): array
