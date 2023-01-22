@@ -3,17 +3,16 @@
  *  Probably should not be here, but I don't know where to properly load the classes
  */
 
+include_once "application/services/Formula/Node/Formula_node.php";
+include_once "application/services/Formula/Node/Formula.php";
+foreach (glob("application/services/Formula/Node/*.php") as $filename)
+{
+    include_once $filename;
+}
+include_once "application/services/Formula/NodeFactory.php";
+ 
 use Application\Services\DependencyInjection\ContainerFactory;
 use Application\Services\Formula\FormulaService;
-
-include_once "application/services/Formula/Node/Formula_node.php";
- include_once "application/services/Formula/Node/Formula.php";
- foreach (glob("application/services/Formula/Node/*.php") as $filename)
- {
-     include_once $filename;
- }
- include_once "application/services/Formula/NodeFactory.php";
-
  
 /**
  * Tasks controller for frontend.
@@ -75,7 +74,7 @@ class Tasks extends LIST_Controller
                 $this->parser->assign('task_sets', $task_sets);
                 
                 $points = $this->compute_points($course,$task_sets, $student);
-                $this->add_virtual_task_set_types_data($points, $course->id);
+                $this->add_virtual_task_set_types_data($points, $course->id, $student->id);
                 $this->parser->assign('points', $points);
             }
             $this->parser->assign(['course' => $course]);
@@ -1124,20 +1123,22 @@ class Tasks extends LIST_Controller
     }
 
     /**
-     * @param points an array with the student's points data from non-virtual task set types.
+     * @param table_data an array with the student's points data from non-virtual task set types.
+     * @param student_id id of current student.
      * @param max determines whether the resulting array should contain maximum points ​​or total points.
-     * @return array with task set types ids as keys and points as values ([type_id => max_points/total_points, ...]).
+     * @return array where the key is the student's id and value is an array with task set types ids as keys and student's total/max points as values ([student_id => [type_id => total_points], ...]).
      * Extracts necessary data for formula evaluation from the given points array.
      */
-    private function extract_evaluation_data($points, $max=false): array
+    private function extract_evaluation_data($table_data, $student_id, $max=false): array
     {
         $evaluation_data = [];
+        $evaluation_data[$student_id] = [];
 
-        foreach ($points as $key=>$value) {
+        foreach ($table_data as $key=>$value) {
             if ($key == 'max' || $key == 'total') {
                 continue;
             }
-            $evaluation_data[$key] = $max ? $value['max'] : $value['total'];
+            $evaluation_data[$student_id][$key] = $max ? $value['max'] : $value['total'];
         }
         return $evaluation_data;
     }
@@ -1160,21 +1161,48 @@ class Tasks extends LIST_Controller
     }
 
     /**
-     * @param points a reference to an array with the student's points data from non-virtual task set types.
+     * @param table_data a reference to an array with the student's points data from non-virtual task set types.
+     * @param student_id id of current student.
      * @param course_id id of course which we are interested in.
      * Adds virtual task set types points data to the given points array and
      * increases total points by the appropriate amount in the points array.
      */
-    private function add_virtual_task_set_types_data(&$points, $course_id) : void {
+    private function add_virtual_task_set_types_data(&$table_data, $course_id, $student_id) : void {
         $virtual_types = $this->get_virtual_task_set_types($course_id);
-        $evaluation_data_total = $this->extract_evaluation_data($points);
-        $evaluation_data_max = $this->extract_evaluation_data($points,true);
+        $evaluation_data= $this->extract_evaluation_data($table_data, $student_id);
+        $max_evaluation_data = $this->extract_evaluation_data($table_data,$student_id, true);
     
         $container = ContainerFactory::getContainer();
         /** @var FormulaService $formulaService */
         $formulaService = $container->get(FormulaService::class);
-        // TODO Timotea: zavolat formulaService metodu na vyhodnotenie formul, kedze $table_data je referencia tak formulaService rovno donho prida hodnoty z eval / null
-    
+        $formula_evaluation_data = $formulaService->evaluate_formulas($evaluation_data, $virtual_types);
+        $formula_max_evaluation_data = $formulaService->evaluate_formulas($max_evaluation_data, $virtual_types);
+
+        foreach ($virtual_types as $virtual_type) {
+            $virtual_type_id = $virtual_type->id;
+            $points = $formula_evaluation_data[$student_id][$virtual_type_id];
+            $max_points = $formula_max_evaluation_data[$student_id][$virtual_type_id];
+            $rounded_points = round($points, 2);
+            $rounded_max_points = round($max_points, 2);
+
+            if ($points === -1) {
+                $table_data[$virtual_type->id] = [
+                    'total' => 'err',
+                    'max' => 'err',
+                    'include_in_total' => $virtual_type->join_include_in_total
+                ];
+            } else {
+                $table_data[$virtual_type->id] = [
+                    'total' => $rounded_points,
+                    'max' => $rounded_max_points,
+                    'include_in_total' => $virtual_type->join_include_in_total
+                ];
+                if ($virtual_type->join_include_in_total) {
+                    $table_data['total'] += $rounded_points;
+                    $table_data['max'] += $rounded_max_points;
+                }
+            }
+        }
     }
 
 

@@ -1618,7 +1618,8 @@ class Solutions extends LIST_Controller
 
     /**
      * @param table_data an array with all students' points data from non-virtual task set types and task sets used in the valuation table.
-     * @return array where the key is the student's id and value is an array with task set types ids as keys and student's total points as values ([student_id => [type_id => total_points], ...]).
+     * @param max determines whether the resulting array should contain maximum points ​​or total points.
+     * @return array where the key is the student's id and value is an array with task set types ids as keys and student's total/max points as values ([student_id => [type_id => total_points], ...]).
      * Extracts necessary data for formula evaluation from the given points array.
      */
     private function extract_evaluation_data($table_data, $max=false): array
