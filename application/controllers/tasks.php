@@ -74,7 +74,7 @@ class Tasks extends LIST_Controller
                 $this->parser->assign('task_sets', $task_sets);
                 
                 $points = $this->compute_points($course,$task_sets, $student);
-                $this->add_virtual_task_set_types_data($points, $course->id, $student->id);
+                $this->add_virtual_task_set_types_data($points, $course->id);
                 $this->parser->assign('points', $points);
             }
             $this->parser->assign(['course' => $course]);
@@ -1124,21 +1124,19 @@ class Tasks extends LIST_Controller
 
     /**
      * @param table_data an array with the student's points data from non-virtual task set types.
-     * @param student_id id of current student.
      * @param max determines whether the resulting array should contain maximum points ​​or total points.
-     * @return array where the key is the student's id and value is an array with task set types ids as keys and student's total/max points as values ([student_id => [type_id => total_points], ...]).
+     * @return array with task set types ids as keys and points as values ([type_id => max_points/total_points, ...]).
      * Extracts necessary data for formula evaluation from the given points array.
      */
-    private function extract_evaluation_data($table_data, $student_id, $max=false): array
+    private function extract_evaluation_data($table_data, $max=false): array
     {
         $evaluation_data = [];
-        $evaluation_data[$student_id] = [];
 
         foreach ($table_data as $key=>$value) {
             if ($key == 'max' || $key == 'total') {
                 continue;
             }
-            $evaluation_data[$student_id][$key] = $max ? $value['max'] : $value['total'];
+            $evaluation_data[$key] = $max ? $value['max'] : $value['total'];
         }
         return $evaluation_data;
     }
@@ -1162,26 +1160,25 @@ class Tasks extends LIST_Controller
 
     /**
      * @param table_data a reference to an array with the student's points data from non-virtual task set types.
-     * @param student_id id of current student.
      * @param course_id id of course which we are interested in.
      * Adds virtual task set types points data to the given points array and
      * increases total points by the appropriate amount in the points array.
      */
-    private function add_virtual_task_set_types_data(&$table_data, $course_id, $student_id) : void {
+    private function add_virtual_task_set_types_data(&$table_data, $course_id) : void {
         $virtual_types = $this->get_virtual_task_set_types($course_id);
-        $evaluation_data= $this->extract_evaluation_data($table_data, $student_id);
-        $max_evaluation_data = $this->extract_evaluation_data($table_data,$student_id, true);
+        $evaluation_data= $this->extract_evaluation_data($table_data);
+        $max_evaluation_data = $this->extract_evaluation_data($table_data, true);
     
         $container = ContainerFactory::getContainer();
         /** @var FormulaService $formulaService */
         $formulaService = $container->get(FormulaService::class);
-        $formula_evaluation_data = $formulaService->evaluate_formulas($evaluation_data, $virtual_types);
-        $formula_max_evaluation_data = $formulaService->evaluate_formulas($max_evaluation_data, $virtual_types);
+        $formula_evaluation_data = $formulaService->evaluate_formulas_for_student($evaluation_data, $virtual_types);
+        $formula_max_evaluation_data = $formulaService->evaluate_formulas_for_student($max_evaluation_data, $virtual_types);
 
         foreach ($virtual_types as $virtual_type) {
             $virtual_type_id = $virtual_type->id;
-            $points = $formula_evaluation_data[$student_id][$virtual_type_id];
-            $max_points = $formula_max_evaluation_data[$student_id][$virtual_type_id];
+            $points = $formula_evaluation_data[$virtual_type_id];
+            $max_points = $formula_max_evaluation_data[$virtual_type_id];
             $rounded_points = round($points, 2);
             $rounded_max_points = round($max_points, 2);
 
