@@ -40,7 +40,7 @@ jQuery(document).ready(function($) {
             editor.addButton('¬', {
                 text: '¬',
                 onclick: function(_) {
-                    editor.insertContent('¬ ( _ )');
+                    editor.insertContent('( ¬ _ )');
                 }
             })
 
@@ -56,7 +56,7 @@ jQuery(document).ready(function($) {
                 menuItems.push({
                     text: type,
                     onclick: function () {
-                        editor.insertContent(type.replaceAll(' ', '_'));
+                        editor.insertContent('~' + type.replaceAll(' ', '_'));
                     }
                 });
             });

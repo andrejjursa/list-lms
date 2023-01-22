@@ -529,11 +529,21 @@ class Courses extends LIST_Controller
      */
     public function validate_task_set_type_form($task_set_type_data): bool
     {
-        // TODO Formula Service - BUILD FORMULA
+        $url = $this->uri->ruri_to_assoc(3);
+        $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type->get();
+        $task_set_types = $course->task_set_type;
+        $types = [];
+        foreach($task_set_types->all as $type){
+            $types[$type->name] = $type->id;
+        }
+        
         $container = ContainerFactory::getContainer();
         /** @var FormulaService $formulaService */
         $formulaService = $container->get(FormulaService::class);
-//        $formula = $formulaService->build("");
+        $formula = $formulaService->build($task_set_type_data['join_formula'], $types);
         
         $this->load->library('form_validation');
 
