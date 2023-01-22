@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
     $('textarea.tinymce').tinymce({
         theme: 'modern',
 
-        toolbar1: "+ - × / % | < > <= >= == != ∧ ∨ ¬ | ternary | const type",
+        toolbar1: "+ - × / % | < > <= >= == != ∧ ∨ ¬ | ternary | min max | const type",
 
         setup: function(editor) {
             const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', 'Backspace'];
@@ -40,7 +40,7 @@ jQuery(document).ready(function($) {
             editor.addButton('¬', {
                 text: '¬',
                 onclick: function(_) {
-                    editor.insertContent('¬ ( _ )');
+                    editor.insertContent('( ¬ _ )');
                 }
             })
 
@@ -51,12 +51,26 @@ jQuery(document).ready(function($) {
                 }
             });
 
+            editor.addButton('min', {
+                text: 'min( )',
+                onclick: function(_) {
+                    editor.insertContent('MIN( _ , _ )');
+                }
+            });
+
+            editor.addButton('max', {
+                text: 'max( )',
+                onclick: function(_) {
+                    editor.insertContent('MAX( _ , _ )');
+                }
+            });
+
             var menuItems = [];
             all_task_set_types.forEach(type => {
                 menuItems.push({
                     text: type,
                     onclick: function () {
-                        editor.insertContent(type.replaceAll(' ', '_'));
+                        editor.insertContent('~' + type.replaceAll(' ', '_'));
                     }
                 });
             });

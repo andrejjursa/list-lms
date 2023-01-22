@@ -45,6 +45,10 @@ table.points_table tfoot tr td { background-color: #99ff99; padding: 4px 3px; te
 table.points_table tfoot tr td.td_task_set_type { border-bottom-left-radius: 3px; }
 table.points_table tfoot tr td.td_points { text-align: right; width: 1px; border-bottom-right-radius: 3px; }
 
+div.color_legend { margin: 20px 0px 20px 5px;}
+div.color_legend div.color_legend_data { margin-top: 5px;}
+div.color_legend div.blue_text {color: mediumblue;}
+
 table.tests_queue_table { width: 100%; border-collapse: collapse; }
 table.tests_queue_table thead tr th { background-color: #99ff99; padding: 4px 3px; font-weight: bold; text-align: left; }
 table.tests_queue_table thead tr th:first-child { border-top-left-radius: 3px; }

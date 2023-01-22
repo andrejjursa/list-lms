@@ -12,7 +12,7 @@
         <input type="hidden" value="{$task_set_type->id|intval}" name="task_set_type_id">
         <input type="hidden" value="{$course->id|intval}" name="course_id"></td>
     <td>
-        {if $task_set_type->join_min_points}
+        {if $task_set_type->join_min_points != null}
             {$task_set_type->join_min_points}{if $task_set_type->join_min_points_in_percentage}%{/if}
         {else}-{/if}
     </td>
@@ -24,7 +24,6 @@
     </td>
     <td>
         {if $task_set_type->join_virtual|intval == 1}{$task_set_type->join_formula}
-{*        {if $task_set_type->join_virtual|intval == 1}{$task_set_type->join_formula_object}*}
         {else}-{/if}
     </td>
     <td class="controlls">

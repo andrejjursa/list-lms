@@ -2,16 +2,17 @@
 /**
  *  Probably should not be here, but I don't know where to properly load the classes
  */
- include_once "application/services/Formula/Node/Formula_node.php";
- include_once "application/services/Formula/Node/Formula.php";
- foreach (glob("application/services/Formula/Node/*.php") as $filename)
- {
-     include_once $filename;
- }
- include_once "application/services/Formula/NodeFactory.php";
 
- use \Application\Services\Formula\NodeFactory;
- use \Application\Services\Formula\Node\Formula_node;
+include_once "application/services/Formula/Node/Formula_node.php";
+include_once "application/services/Formula/Node/Formula.php";
+foreach (glob("application/services/Formula/Node/*.php") as $filename)
+{
+    include_once $filename;
+}
+include_once "application/services/Formula/NodeFactory.php";
+ 
+use Application\Services\DependencyInjection\ContainerFactory;
+use Application\Services\Formula\FormulaService;
  
 /**
  * Tasks controller for frontend.
@@ -1122,16 +1123,16 @@ class Tasks extends LIST_Controller
     }
 
     /**
-     * @param points an array with the student's points data from non-virtual task set types.
+     * @param table_data an array with the student's points data from non-virtual task set types.
      * @param max determines whether the resulting array should contain maximum points ​​or total points.
      * @return array with task set types ids as keys and points as values ([type_id => max_points/total_points, ...]).
      * Extracts necessary data for formula evaluation from the given points array.
      */
-    private function extract_evaluation_data($points, $max=false): array
+    private function extract_evaluation_data($table_data, $max=false): array
     {
         $evaluation_data = [];
 
-        foreach ($points as $key=>$value) {
+        foreach ($table_data as $key=>$value) {
             if ($key == 'max' || $key == 'total') {
                 continue;
             }
@@ -1158,48 +1159,44 @@ class Tasks extends LIST_Controller
     }
 
     /**
-     * @param points a reference to an array with the student's points data from non-virtual task set types.
+     * @param table_data a reference to an array with the student's points data from non-virtual task set types.
      * @param course_id id of course which we are interested in.
      * Adds virtual task set types points data to the given points array and
      * increases total points by the appropriate amount in the points array.
      */
-    private function add_virtual_task_set_types_data(&$points, $course_id) : void {
-        
+    private function add_virtual_task_set_types_data(&$table_data, $course_id) : void {
         $virtual_types = $this->get_virtual_task_set_types($course_id);
-        $evaluation_data_total = $this->extract_evaluation_data($points);
-        $evaluation_data_max = $this->extract_evaluation_data($points,true);
-        $nodeFactory = new application\services\Formula\NodeFactory();
-        foreach ($virtual_types as $type) {
-            /**
-             * @var Formula_node $formula
-             */
-            $formula = unserialize($type->join_formula_object);
-            //( ( ( Cvicenie + Domaca_Uloha ) * 0.4 ) + ( Skuska * 0.6 ) )
-            /*$formula = $nodeFactory->getAddition($nodeFactory->getVariable("Cvicenia",33),$nodeFactory->getConstant(5));
-            echo serialize($formula);
-            echo "&nbsp;&nbsp;&nbsp;";
-            $formula = $nodeFactory->getAddition($nodeFactory->getVariable("Virtual2",39),$nodeFactory->getVariable("Domaca Uloha",34));
-            echo serialize($formula);
-            echo "<formula>" . $formula->toString() . "</formula>";*/
-            
-            if ($nodeFactory->hasDependencyLoops($course_id,$type->id,$formula,$virtual_types)) {
-                $points[$type->id] = [
-                    'total' => "err",
-                    'max'   => "err",
+        $evaluation_data= $this->extract_evaluation_data($table_data);
+        $max_evaluation_data = $this->extract_evaluation_data($table_data, true);
+    
+        $container = ContainerFactory::getContainer();
+        /** @var FormulaService $formulaService */
+        $formulaService = $container->get(FormulaService::class);
+        $formula_evaluation_data = $formulaService->evaluate_formulas_for_student($evaluation_data, $virtual_types);
+        $formula_max_evaluation_data = $formulaService->evaluate_formulas_for_student($max_evaluation_data, $virtual_types);
+
+        foreach ($virtual_types as $virtual_type) {
+            $virtual_type_id = $virtual_type->id;
+            $points = $formula_evaluation_data[$virtual_type_id];
+            $max_points = $formula_max_evaluation_data[$virtual_type_id];
+            $rounded_points = round($points, 2);
+            $rounded_max_points = round($max_points, 2);
+
+            if ($points === null) {
+                $table_data[$virtual_type->id] = [
+                    'total' => 'err',
+                    'max' => 'err',
+                    'include_in_total' => $virtual_type->join_include_in_total
                 ];
             } else {
-                $max_points = round($nodeFactory->evaluateWithDependencies($course_id,$type->id, $formula, $evaluation_data_max, $virtual_types), 1);
-                $total_points = round($nodeFactory->evaluateWithDependencies($course_id,$type->id, $formula, $evaluation_data_total, $virtual_types), 1);
-    
-   
-                $points[$type->id] = [
-                    'total' => $total_points,
-                    'max'   => $max_points,
+                $table_data[$virtual_type->id] = [
+                    'total' => $rounded_points,
+                    'max' => $rounded_max_points,
+                    'include_in_total' => $virtual_type->join_include_in_total
                 ];
-    
-                if ($type->join_include_in_total) {
-                    $points['total'] += $total_points;
-                    $points['max'] += $max_points;
+                if ($virtual_type->join_include_in_total) {
+                    $table_data['total'] += $rounded_points;
+                    $table_data['max'] += $rounded_max_points;
                 }
             }
         }

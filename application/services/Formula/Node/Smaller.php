@@ -8,9 +8,12 @@ class Smaller extends Formula
     
     public function evaluate($map): ?float
     {
-        if($this->left->evaluate($map) == null || $this->right->evaluate($map) == null)
+        $left_result = $this->left->evaluate($map);
+        $right_result = $this->right->evaluate($map);
+        
+        if($left_result == null || $right_result == null)
             return null;
-        if($this->left->evaluate($map) < $this->right->evaluate($map))
+        if($left_result < $right_result)
             return 1;
         return 0;
     }
