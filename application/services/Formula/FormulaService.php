@@ -17,7 +17,11 @@ class FormulaService
     
     public function build($input, $types): ?Formula_node
     {
-        $regular_exp = '/((MAX)?(MIN)?)\(([^()]*)\)/';
+        $regular_exp = '/(MAX )?(MIN )?\(([^()]*)\)/';
+        
+        preg_match('/[)]\s*[(]/', $input, $find);
+        if (count($find) > 0)
+            return null;
         
         $expression = str_replace(["<p>", "</p>", "<span>", "</span>"], "", $input);
         $expression = str_replace("(", " ( ", $expression);
@@ -35,7 +39,6 @@ class FormulaService
         preg_match_all($regular_exp, $expression, $matches);
         while(true){
             $tokens = $matches[0];
-            
             if (count($tokens) === 0){
                 $expression = str_replace(' ', '', $expression);
                 return $formulas[$expression];

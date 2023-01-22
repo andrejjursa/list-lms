@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
     $('textarea.tinymce').tinymce({
         theme: 'modern',
 
-        toolbar1: "+ - × / % | < > <= >= == != ∧ ∨ ¬ | ternary | const type",
+        toolbar1: "+ - × / % | < > <= >= == != ∧ ∨ ¬ | ternary | min max | const type",
 
         setup: function(editor) {
             const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', 'Backspace'];
@@ -48,6 +48,20 @@ jQuery(document).ready(function($) {
                 text: 'ternary',
                 onclick: function(_) {
                     editor.insertContent('( _ ? _ : _ )');
+                }
+            });
+
+            editor.addButton('min', {
+                text: 'min( )',
+                onclick: function(_) {
+                    editor.insertContent('MIN( _ , _ )');
+                }
+            });
+
+            editor.addButton('max', {
+                text: 'max( )',
+                onclick: function(_) {
+                    editor.insertContent('MAX( _ , _ )');
                 }
             });
 
