@@ -165,4 +165,10 @@
             </tbody>
         </table>
     </div>
+    <div class="color_legend">
+        <div class="color_legend_title"><h4>{translate line='tasks_left_bar_color_legend_title'}</h4></div>
+        <div class="color_legend_data">{translate line='tasks_left_bar_color_legend_data_black'}</div>
+        <div class="color_legend_data blue_text">{translate line='tasks_left_bar_color_legend_data_blue'}</div>
+    </div>
+
 {/block}

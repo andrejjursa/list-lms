@@ -17,6 +17,9 @@ class FormulaService
     
     public function build($input, $types): ?Formula_node
     {
+        if ($input === null || strlen($input) == 0)
+            return null;
+        
         $regular_exp = '/(MAX )?(MIN )?\(([^()]*)\)/';
         
         preg_match('/[)]\s*[(]/', $input, $find);
@@ -66,6 +69,7 @@ class FormulaService
                 return null;
             }
         }
+        return null;
     }
     
     private function build_token($token, $formulas, $types): ?Formula_node{
@@ -220,7 +224,7 @@ class FormulaService
             
             if (count($not_processed) == count($to_process)) {
                 foreach($not_processed as $virtual_type){
-                    $virtual_types_results[$virtual_type->id] = -1;
+                    $virtual_types_results[$virtual_type->id] = null;
                 }
                 break;
             }

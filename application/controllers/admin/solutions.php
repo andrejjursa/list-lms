@@ -1703,7 +1703,7 @@ class Solutions extends LIST_Controller
                     }
                 }
 
-                if ($points === -1){
+                if ($points === null){
                     $table_data['content'][$index]['task_sets_points'][] = [
                         'type'   => 'task_set_type',
                         'points' => 'err',

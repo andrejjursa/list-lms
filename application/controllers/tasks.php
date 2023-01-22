@@ -1182,7 +1182,7 @@ class Tasks extends LIST_Controller
             $rounded_points = round($points, 2);
             $rounded_max_points = round($max_points, 2);
 
-            if ($points === -1) {
+            if ($points === null) {
                 $table_data[$virtual_type->id] = [
                     'total' => 'err',
                     'max' => 'err',
