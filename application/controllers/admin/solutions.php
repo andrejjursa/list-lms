@@ -1684,7 +1684,7 @@ class Solutions extends LIST_Controller
             foreach ($virtual_types as $virtual_type) {
                 $virtual_type_id = $virtual_type->id;
                 $points = $student_formula_eval_data[$virtual_type_id];
-                $rounded_points = round($points, 1);
+                $rounded_points = round($points, 2);
                 if ($points === -1){
                     $table_data['content'][$index]['task_sets_points'][] = [
                         'type'   => 'task_set_type',

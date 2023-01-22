@@ -527,7 +527,7 @@ class Courses extends LIST_Controller
      * @return bool 
      * Validates submitted form data for adding/editing a task set type in the course and returns true if validation succeeds false otherwise.
      */
-    public function validate_task_set_type_form($task_set_type_data): bool
+    public function validate_task_set_type_form(&$task_set_type_data): bool
     {
         $url = $this->uri->ruri_to_assoc(3);
         $course_id = isset($url['course_id']) ? (int)$url['course_id'] : 0;
@@ -543,7 +543,6 @@ class Courses extends LIST_Controller
         $container = ContainerFactory::getContainer();
         /** @var FormulaService $formulaService */
         $formulaService = $container->get(FormulaService::class);
-        $formula = $formulaService->build($task_set_type_data['join_formula'], $types);
         
         $this->load->library('form_validation');
 
@@ -590,8 +589,15 @@ class Courses extends LIST_Controller
                 'lang:admin_courses_form_field_formula',
                 'required'
             );
+
+            $formula = null;
+            if (isset($task_set_type_data['join_formula']) && is_string($task_set_type_data['join_virtual'])) {
+                $formula = $formulaService->build($task_set_type_data['join_formula'], $types);
+            }
+
+            $task_set_type_data['join_formula_object'] = $formula;
+            $this->form_validation->addPost("task_set_type", "join_formula_object", $formula);
     
-            $this->form_validation->addPost("task_set_type", "join_formula_object", $task_set_type_data['join_formula_object']);
             $this->form_validation->set_rules(
                 'task_set_type[join_formula_object]',
                 'lang:admin_courses_form_field_formula_object',
@@ -618,18 +624,8 @@ class Courses extends LIST_Controller
         $course = new Course();
         $course->get_by_id($course_id);
         $course->task_set_type->get();
-        $task_set_types = $course->task_set_type;
-        $types = [];
-        foreach($task_set_types->all as $type){
-            $types[$type->name] = $type->id;
-        }
         
         $task_set_type_data = $this->input->post('task_set_type');
-    
-        $container = ContainerFactory::getContainer();
-        /** @var FormulaService $formulaService */
-        $formulaService = $container->get(FormulaService::class);
-        $task_set_type_data['join_formula_object'] = $formulaService->build($task_set_type_data['join_formula'], $types);
         
         if ($this->validate_task_set_type_form($task_set_type_data)) {
             $task_set_type = new Task_set_type();
@@ -719,19 +715,8 @@ class Courses extends LIST_Controller
         $course = new Course();
         $course->get_by_id($course_id);
         $course->task_set_type->get();
-        $task_set_types = $course->task_set_type;
-        $types = [];
-        foreach($task_set_types->all as $type){
-            $types[$type->name] = $type->id;
-        }
         
         $task_set_type_data = $this->input->post('task_set_type');
-    
-        $container = ContainerFactory::getContainer();
-        /** @var FormulaService $formulaService */
-        $formulaService = $container->get(FormulaService::class);
-        
-        $task_set_type_data['join_formula_object'] = $formulaService->build($task_set_type_data['join_formula'], $types);
         
         if ($this->validate_task_set_type_form($task_set_type_data)) {
             $course = new Course();
