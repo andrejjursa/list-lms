@@ -1621,7 +1621,7 @@ class Solutions extends LIST_Controller
      * @return array where the key is the student's id and value is an array with task set types ids as keys and student's total points as values ([student_id => [type_id => total_points], ...]).
      * Extracts necessary data for formula evaluation from the given points array.
      */
-    private function extract_evaluation_data($table_data): array
+    private function extract_evaluation_data($table_data, $max=false): array
     {
         $evaluation_data = [];
         foreach ($table_data['content'] as $student_data) {
@@ -1631,7 +1631,7 @@ class Solutions extends LIST_Controller
             foreach ($student_data['task_sets_points'] as $index=>$points_data) {
                 if ($points_data['type'] == 'task_set_type' || $points_data['type'] == 'task_set_type_completed') {
                     $task_set_type_id = $table_data['header']['content_type_task_set']['items'][$index]['id'];
-                    $evaluation_data[$student_id][$task_set_type_id] = $points_data['points'];
+                    $evaluation_data[$student_id][$task_set_type_id] = ($max) ? $points_data['max_points'] : $points_data['points'] ;
                 }
             }
         }
@@ -1663,7 +1663,8 @@ class Solutions extends LIST_Controller
     private function add_virtual_task_set_types_data(&$table_data, $course_id) : void {
         $virtual_types = $this->get_virtual_task_set_types($course_id);
         $evaluation_data = $this->extract_evaluation_data($table_data);
-    
+        $max_evaluation_data = $this->extract_evaluation_data($table_data, true);
+
         foreach ($virtual_types as $virtual_type) {
             $table_data['header']['content_type_task_set']['items'][] = [
                 'type'  => 'task_set_type',
@@ -1677,7 +1678,8 @@ class Solutions extends LIST_Controller
         /** @var FormulaService $formulaService */
         $formulaService = $container->get(FormulaService::class);
         $formula_evaluation_data = $formulaService->evaluate_formulas($evaluation_data, $virtual_types);
-        
+        $formula_max_evaluation_data = $formulaService->evaluate_formulas($max_evaluation_data, $virtual_types);
+
         foreach($table_data['content'] as $index=>$student_data){
             $student_formula_eval_data = $formula_evaluation_data[$student_data['id']];
 
@@ -1685,6 +1687,21 @@ class Solutions extends LIST_Controller
                 $virtual_type_id = $virtual_type->id;
                 $points = $student_formula_eval_data[$virtual_type_id];
                 $rounded_points = round($points, 2);
+                $min_points = $virtual_type->join_min_points;
+                $minReached = false;
+                
+                if ($min_points != null) {
+                    if ($virtual_type->join_min_points_in_percentage == 1) {
+                        $student_formula_max_eval_data = $formula_max_evaluation_data[$student_data['id']];
+                        $max_points = $student_formula_max_eval_data[$virtual_type_id];
+ 
+
+                        $minReached = $points / $max_points * 100 >= $min_points;
+                    } else {
+                        $minReached = $points >= $min_points;
+                    }
+                }
+
                 if ($points === -1){
                     $table_data['content'][$index]['task_sets_points'][] = [
                         'type'   => 'task_set_type',
@@ -1694,7 +1711,9 @@ class Solutions extends LIST_Controller
                 }
                 else {
                     $table_data['content'][$index]['task_sets_points'][] = [
-                        'type'   => 'task_set_type',
+                        'type'   => ($minReached) 
+                            ? 'task_set_type_completed' 
+                            : 'task_set_type',
                         'points' => $rounded_points,
                         'flag'   => 'ok',
                     ];
@@ -1973,6 +1992,7 @@ class Solutions extends LIST_Controller
                             $max_points = 0;
                         }
                         $max_points += $task_set->total_points;
+                        $task_sets_points_array[$last_task_set_type_key]['max_points'] = $max_points;
                         $points = 0;
                         
                         $points_included_in_total_score = 0;
@@ -2083,6 +2103,7 @@ class Solutions extends LIST_Controller
                         if ($task_sets_points_array[$last_task_set_type_key]['points'] >= $min_points) {
                             $task_sets_points_array[$last_task_set_type_key]['type'] = 'task_set_type_completed';
                         }
+                        $task_sets_points_array[$last_task_set_type_key]['max_points'] = $max_points;
                     }
                 }
                 $student_line['task_sets_points'] = $task_sets_points_array;

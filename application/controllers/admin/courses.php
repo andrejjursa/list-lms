@@ -634,17 +634,22 @@ class Courses extends LIST_Controller
             if ($course->exists() && $task_set_type->exists()) {
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
+
+                $join_upload_solution = ((int)$task_set_type_data['join_virtual'] == 1) ? 0 : (int)$task_set_type_data['join_upload_solution'];
+
+                $join_min_points = (is_null($task_set_type_data['join_min_points']) || empty($task_set_type_data['join_min_points']))  ? null : (float)$task_set_type_data['join_min_points'];
+
                 
                 $course->save($task_set_type);
                 $course->set_join_field(
                     $task_set_type,
                     'upload_solution',
-                    ((int)$task_set_type_data['join_virtual'] == 1) ? 0 : (int)$task_set_type_data['join_upload_solution']
+                    $join_upload_solution
                 );
                 $course->set_join_field(
                     $task_set_type,
                     'min_points',
-                    (float)$task_set_type_data['join_min_points']
+                    $join_min_points
                 );
                 $course->set_join_field(
                     $task_set_type,
@@ -728,15 +733,19 @@ class Courses extends LIST_Controller
                 $this->_transaction_isolation();
                 $this->db->trans_begin();
 
+                $join_upload_solution = ((int)$task_set_type_data['join_virtual'] == 1) ? 0 : (int)$task_set_type_data['join_upload_solution'];
+
+                $join_min_points = (is_null($task_set_type_data['join_min_points']) || empty($task_set_type_data['join_min_points']))  ? null : (float)$task_set_type_data['join_min_points'];
+
                 $course->set_join_field(
                     $task_set_type,
                     'upload_solution',
-                    ((int)$task_set_type_data['join_virtual'] == 1) ? 0 : (int)$task_set_type_data['join_upload_solution']
+                    $join_upload_solution
                 );
                 $course->set_join_field(
                     $task_set_type,
                     'min_points',
-                    (float)$task_set_type_data['join_min_points']
+                    $join_min_points
                 );
                 $course->set_join_field(
                     $task_set_type,
