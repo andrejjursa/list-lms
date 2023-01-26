@@ -20,6 +20,12 @@ class FormulaService
         if ($input === null || strlen($input) == 0)
             return null;
         
+        $left_bracket_count = substr_count($input, "(");
+        $right_bracket_count = substr_count($input, ")");
+        
+        if ($left_bracket_count < 1 && $left_bracket_count !== $right_bracket_count)
+            return null;
+        
         $regular_exp = '/(MAX )?(MIN )?\(([^()]*)\)/';
         
         preg_match('/[)]\s*[(]/', $input, $find);
@@ -44,7 +50,13 @@ class FormulaService
             $tokens = $matches[0];
             if (count($tokens) === 0){
                 $expression = str_replace(' ', '', $expression);
-                return $formulas[$expression];
+                
+                if (key_exists($expression, $formulas)){
+                    return $formulas[$expression];
+                }
+                else {
+                    return null;
+                }
             }
             
             foreach($tokens as $token) {
