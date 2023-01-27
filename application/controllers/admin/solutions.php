@@ -2,12 +2,6 @@
 /**
  *  Probably should not be here, but I don't know where to properly load the classes
  */
-include_once "application/services/Formula/Node/Formula_node.php";
-include_once "application/services/Formula/Node/Formula.php";
-foreach (glob("application/services/Formula/Node/*.php") as $filename)
-{
-    include_once $filename;
-}
 include_once "application/services/Formula/NodeFactory.php";
 
 use Application\Services\DependencyInjection\ContainerFactory;

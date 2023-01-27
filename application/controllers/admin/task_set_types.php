@@ -66,27 +66,19 @@ class Task_set_types extends LIST_Controller
             'lang:admin_task_set_types_form_field_name',
             'required'
         );
-
-        $task_set_type_data = $this->input->post('task_set_type');
-
-        if (isset($task_set_type_data['identifier'])) {
-            if (empty($task_set_type_data['identifier'])) {
-                $task_set_type_data['identifier'] = null;
-            } else if (!$this->identifier_is_unique($task_set_type_data['identifier'])) {
-                $this->form_validation->addPost("task_set_type", "identifier", null);
-                $this->form_validation->set_rules(
-                    'task_set_type[identifier]',
-                    'lang:admin_task_set_types_form_field_identifier',
-                    'required'
-                );
-            }
-        }
         
+        $this->form_validation->set_rules(
+            'task_set_type[identifier]',
+            'lang:admin_task_set_types_form_field_identifier',
+            'required|min_length[2]|alpha_dash|is_unique[task_set_types.identifier]'
+        );
+
         if ($this->form_validation->run()) {
+            $task_set_type_data = $this->input->post('task_set_type');
             $task_set_type = new Task_set_type();
-            $task_set_type->from_array($task_set_type_data, ['identifier']);
             $task_set_type->from_array($task_set_type_data, ['name']);
-            
+            $task_set_type->from_array($task_set_type_data, ['identifier']);
+    
             $this->_transaction_isolation();
             $this->db->trans_begin();
             
@@ -133,26 +125,25 @@ class Task_set_types extends LIST_Controller
             'required'
         );
         $this->form_validation->set_rules('task_set_type_id', 'id', 'required');
-
+    
+    
         $task_set_type_data = $this->input->post('task_set_type');
         $task_set_type_id = (int)$this->input->post('task_set_type_id');
-
-        if (isset($task_set_type_data['identifier'])) {
-            if (empty($task_set_type_data['identifier'])) {
-                $task_set_type_data['identifier'] = null;
-            } else if (!$this->identifier_is_unique($task_set_type_data['identifier'], $task_set_type_id)) {
-                $this->form_validation->addPost("task_set_type", "identifier", null);
-                $this->form_validation->set_rules(
-                    'task_set_type[identifier]',
-                    'lang:admin_task_set_types_form_field_identifier',
-                    'required'
-                );
-                $this->form_validation->set_message(
-                    'required',
-                    $this->lang->line('admin_task_set_types_identifier_not_unique')
-                );
-            }
-        }
+    
+        $task_set_types = new Task_set_type();
+        $is_unique = $task_set_types->where(
+                array('identifier' => $task_set_type_data['identifier'], 'id !=' => strval($task_set_type_id))
+            )->count() == 0;
+        
+        $identifier_rules = 'required|min_length[2]|alpha_dash';
+        if (!$is_unique)
+            $identifier_rules .= '|is_unique[task_set_types.identifier]';
+        
+        $this->form_validation->set_rules(
+            'task_set_type[identifier]',
+            'lang:admin_task_set_types_form_field_identifier',
+            $identifier_rules
+        );
         
         if ($this->form_validation->run()) {
             $task_set_type_id = (int)$this->input->post('task_set_type_id');
