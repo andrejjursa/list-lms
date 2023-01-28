@@ -14,7 +14,7 @@ class Negation implements Formula_node
     public function evaluate($map): ?float
     {
         $val = $this->original_formula->evaluate($map);
-        if($val == null)
+        if($val === null)
             return null;
         if($val == 1)
             return 0;

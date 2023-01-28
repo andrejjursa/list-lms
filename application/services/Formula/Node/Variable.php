@@ -25,6 +25,6 @@ class Variable implements Formula_node
     
     public function toString(): string
     {
-        return $this->name;
+        return '~'. $this->name;
     }
 }

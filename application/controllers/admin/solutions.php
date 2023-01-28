@@ -1618,10 +1618,26 @@ class Solutions extends LIST_Controller
      */
     private function extract_evaluation_data($table_data, $max=false): array
     {
+        $course_id = $this->input->post('filter')['course'];
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type->get();
+        $task_set_types = $course->task_set_type
+            ->include_join_fields()
+            ->where('virtual', 0)
+            ->get();
+        $types = array_map(function ($type) {
+            return $type->id;
+        }, $task_set_types->all);
+        
         $evaluation_data = [];
         foreach ($table_data['content'] as $student_data) {
             $student_id = $student_data['id'];
             $evaluation_data[$student_id] = [];
+            
+            foreach($types as $type_id){
+                $evaluation_data[$student_id][$type_id] = 0;
+            }
             
             foreach ($student_data['task_sets_points'] as $index=>$points_data) {
                 if ($points_data['type'] == 'task_set_type' || $points_data['type'] == 'task_set_type_completed') {
@@ -1680,23 +1696,27 @@ class Solutions extends LIST_Controller
 
             foreach ($virtual_types as $virtual_type) {
                 $virtual_type_id = $virtual_type->id;
-                $points = $student_formula_eval_data[$virtual_type_id];
-                $rounded_points = round($points, 2);
-                $min_points = $virtual_type->join_min_points;
-                $minReached = false;
+                $points = null;
+                $rounded_points = 0;
                 
-                if ($min_points != null) {
-                    if ($virtual_type->join_min_points_in_percentage == 1) {
-                        $student_formula_max_eval_data = $formula_max_evaluation_data[$student_data['id']];
-                        $max_points = $student_formula_max_eval_data[$virtual_type_id];
- 
-
-                        $minReached = $points / $max_points * 100 >= $min_points;
-                    } else {
-                        $minReached = $points >= $min_points;
+                if (array_key_exists($virtual_type_id, $student_formula_eval_data)) {
+                    $points = $student_formula_eval_data[$virtual_type_id];
+                    $rounded_points = round($points, 2);
+                    $min_points = $virtual_type->join_min_points;
+                    $minReached = false;
+    
+                    if ($min_points != null) {
+                        if ($virtual_type->join_min_points_in_percentage == 1) {
+                            $student_formula_max_eval_data = $formula_max_evaluation_data[$student_data['id']];
+                            $max_points = $student_formula_max_eval_data[$virtual_type_id];
+            
+            
+                            $minReached = $points / $max_points * 100 >= $min_points;
+                        } else {
+                            $minReached = $points >= $min_points;
+                        }
                     }
                 }
-
                 if ($points === null){
                     $table_data['content'][$index]['task_sets_points'][] = [
                         'type'   => 'task_set_type',

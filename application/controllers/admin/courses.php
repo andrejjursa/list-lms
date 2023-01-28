@@ -554,7 +554,9 @@ class Courses extends LIST_Controller
         $task_set_types = $course->task_set_type;
         $types = [];
         foreach($task_set_types->all as $type){
-            $types[$type->identifier] = $type->id;
+            if (!empty($type->identifier)){
+                $types[$type->identifier] = $type->id;
+            }
         }
         
         $container = ContainerFactory::getContainer();

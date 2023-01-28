@@ -125,8 +125,7 @@ class Task_set_types extends LIST_Controller
             'required'
         );
         $this->form_validation->set_rules('task_set_type_id', 'id', 'required');
-    
-    
+        
         $task_set_type_data = $this->input->post('task_set_type');
         $task_set_type_id = (int)$this->input->post('task_set_type_id');
     
@@ -149,6 +148,9 @@ class Task_set_types extends LIST_Controller
             $task_set_type_id = (int)$this->input->post('task_set_type_id');
             $task_set_type = new Task_set_type();
             $task_set_type->get_by_id($task_set_type_id);
+            
+            $prev_identifier = $task_set_type->stored->identifier;
+            
             if ($task_set_type->exists()) {
                 $task_set_type->from_array($task_set_type_data, ['name']);
                 $task_set_type->from_array($task_set_type_data, ['identifier']);
@@ -157,6 +159,7 @@ class Task_set_types extends LIST_Controller
                 $this->db->trans_begin();
                 
                 if ($task_set_type->save() && $this->db->trans_status()) {
+                    $this->update_in_virtual($prev_identifier, $task_set_type->identifier);
                     $this->db->trans_commit();
                     $this->messages->add_message(
                         'lang:admin_task_set_types_flash_message_save_successful',
@@ -179,6 +182,37 @@ class Task_set_types extends LIST_Controller
             redirect(create_internal_url('admin_task_set_types/index'));
         } else {
             $this->edit();
+        }
+    }
+    
+    private function update_in_virtual($previous, $new) {
+        if (empty($previous))
+            return;
+        $courses = new Course();
+        $courses->include_related('period', 'name');
+        $courses->order_by_related('period', 'sorting', 'asc');
+        $courses->order_by_with_constant('name');
+        $courses->get_iterated();
+        
+        foreach ($courses as $course_raw) {
+            $course = new Course();
+            $course->get_by_id($course_raw->id);
+            
+            
+            $virtual = $course->task_set_type
+                ->include_join_fields()
+                ->where('virtual', 1)
+                ->get();
+            foreach($virtual as $type){
+                $task_set_type = new Task_set_type();
+                $task_set_type->get_by_id($type->id);
+                
+                $course->set_join_field(
+                    $task_set_type,
+                    'formula',
+                    str_replace('~'.$previous, '~'.$new, $type->join_formula)
+                );
+            }
         }
     }
     
