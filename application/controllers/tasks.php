@@ -1122,15 +1122,24 @@ class Tasks extends LIST_Controller
         return $output;
     }
 
-    /**
-     * @param table_data an array with the student's points data from non-virtual task set types.
-     * @param max determines whether the resulting array should contain maximum points ​​or total points.
-     * @return array with task set types ids as keys and points as values ([type_id => max_points/total_points, ...]).
-     * Extracts necessary data for formula evaluation from the given points array.
-     */
-    private function extract_evaluation_data($table_data, $max=false): array
+    private function extract_evaluation_data($table_data, $course_id, $max=false): array
     {
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type->get();
+        $task_set_types = $course->task_set_type
+            ->include_join_fields()
+            ->where('virtual', 0)
+            ->get();
+
+        $types = array_map(function ($type) {
+            return $type->id;
+        }, $task_set_types->all);
+
         $evaluation_data = [];
+        foreach($types as $type_id){
+            $evaluation_data[$type_id] = 0;
+        }
 
         foreach ($table_data as $key=>$value) {
             if ($key == 'max' || $key == 'total') {
@@ -1141,11 +1150,6 @@ class Tasks extends LIST_Controller
         return $evaluation_data;
     }
 
-    /**
-     * @param course_id id of course which we are interested in.
-     * @return Task_set_types in the course which are marked as virtual.
-     * Finds and returns all virtual task set types along with their join fields from the given course.
-     */
     private function get_virtual_task_set_types($course_id) : Task_set_type
     {
         $course = new Course();
@@ -1158,16 +1162,10 @@ class Tasks extends LIST_Controller
         return $course->task_set_type;
     }
 
-    /**
-     * @param table_data a reference to an array with the student's points data from non-virtual task set types.
-     * @param course_id id of course which we are interested in.
-     * Adds virtual task set types points data to the given points array and
-     * increases total points by the appropriate amount in the points array.
-     */
     private function add_virtual_task_set_types_data(&$table_data, $course_id) : void {
         $virtual_types = $this->get_virtual_task_set_types($course_id);
-        $evaluation_data= $this->extract_evaluation_data($table_data);
-        $max_evaluation_data = $this->extract_evaluation_data($table_data, true);
+        $evaluation_data= $this->extract_evaluation_data($table_data, $course_id);
+        $max_evaluation_data = $this->extract_evaluation_data($table_data, $course_id, true);
     
         $container = ContainerFactory::getContainer();
         /** @var FormulaService $formulaService */
