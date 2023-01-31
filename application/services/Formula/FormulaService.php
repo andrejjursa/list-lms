@@ -40,8 +40,9 @@ class FormulaService
         // check same amount of paranthesis
         $left_brackets = substr_count($expression, "(");
         $right_brackets = substr_count($expression, ")");
-        if ($left_brackets !== $right_brackets)
+        if ($left_brackets !== $right_brackets) {
             return null;
+        }
         
         // regular expression looking for a single unit of arithmetic expression without any inner expressions
         // e.g. '( 1 + 2 )' and not something like '(1 + ( 2 + 3 ) )'
@@ -49,8 +50,9 @@ class FormulaService
         
         // initial check of valid parentheses
         preg_match('/[)]\s*[(]/', $expression, $find);
-        if (count($find) > 0)
+        if (count($find) > 0) {
             return null;
+        }
         
         $count = 1;
         $formulas = [];
@@ -87,14 +89,16 @@ class FormulaService
         if (substr($token, 0, 1) != '('){
             $split = preg_split('/[(,)\s]/', $token, -1, PREG_SPLIT_NO_EMPTY);
             
-            if (count($split) !== 3)
+            if (count($split) !== 3) {
                 return null;
+            }
             $function = $split[0];
             $left = $this->interpret_value($split[1], $formulas, $types);
             $right = $this->interpret_value($split[2], $formulas, $types);
             
-            if (in_array(null, [$function, $left, $right]))
+            if (in_array(null, [$function, $left, $right])) {
                 return null;
+            }
             
             switch($function){
                 case 'MAX':
@@ -104,38 +108,40 @@ class FormulaService
                 default:
                     return null;
             }
-        }
-        else{
+        } else {
             $split = preg_split('/[()\s]/', $token, -1, PREG_SPLIT_NO_EMPTY);
             $count = count($split);
             
             // double brackets e.g. ' ( ( 5 + 6 ) )'
-            if ($count == 1)
+            if ($count == 1) {
                 return $this->interpret_value($split[0], $formulas, $types);
+            }
     
             // unary operator
             if ($count == 2){
                 $operator = $split[0];
                 $formula = $this->interpret_value($split[1], $formulas, $types);
         
-                if ($formula === null)
+                if ($formula === null) {
                     return null;
-                switch($operator){
-                    case '¬':
-                        return $this->nodeFactory->getNegation($formula);
+                }
+                if ($operator === '¬') {
+                    return $this->nodeFactory->getNegation($formula);
                 }
             }
             
             // ternary operator
             if ($count === 5) {
-                if ($split[1] !== '?' || $split[3] !== ':')
+                if ($split[1] !== '?' || $split[3] !== ':') {
                     return null;
+                }
                 $condition = $this->interpret_value($split[0], $formulas, $types);
                 $left = $this->interpret_value($split[2], $formulas, $types);
                 $right = $this->interpret_value($split[4], $formulas, $types);
     
-                if (in_array(null, [$condition, $left, $right]))
+                if (in_array(null, [$condition, $left, $right])) {
                     return null;
+                }
                 
                 return $this->nodeFactory->getTernary($left, $right, $condition);
             }
@@ -146,8 +152,9 @@ class FormulaService
                 $operator = $split[1];
                 $right = $this->interpret_value($split[2], $formulas, $types);
                 
-                if (in_array(null, [$left, $right]))
+                if (in_array(null, [$left, $right])) {
                     return null;
+                }
                 switch($operator){
                     case '+':
                         return $this->nodeFactory->getAddition($left, $right);
@@ -220,8 +227,7 @@ class FormulaService
                 if ($result !== null){
                     $student_data[$virtual_type->id] = $result;
                     $virtual_types_results[$virtual_type->id] = $result;
-                }
-                else {
+                } else {
                     $not_processed[] = $virtual_type;
                 }
             }

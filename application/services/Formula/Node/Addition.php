@@ -14,8 +14,9 @@ class Addition extends Formula
         $left_result = $this->left->evaluate($map);
         $right_result = $this->right->evaluate($map);
         
-        if($left_result === null || $right_result === null)
+        if($left_result === null || $right_result === null) {
             return null;
+        }
         
         return $left_result + $right_result;
     }

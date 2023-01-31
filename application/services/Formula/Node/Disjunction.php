@@ -11,11 +11,13 @@ class Disjunction extends Formula
         $left_result = $this->left->evaluate($map);
         $right_result = $this->right->evaluate($map);
         
-        if($left_result === null || $right_result === null)
+        if($left_result === null || $right_result === null) {
             return null;
+        }
         
-        if($left_result || $right_result)
+        if($left_result || $right_result) {
             return 1;
+        }
         return 0;
     }
     
