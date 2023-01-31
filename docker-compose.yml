@@ -16,20 +16,14 @@ services:
     extra_hosts:
       - "server.listdev:127.0.0.1"
     links:
-      # - list-database
+      - list-database
       - list-rabbitmq
       - list-redis
     environment:
-      # ======= local database config: =======
-      # LIST_DATABASE_HOSTNAME: list-database
-      # LIST_DATABASE_USER: root
-      # LIST_DATABASE_PASSWORD: root
-      # LIST_DATABASE_NAME: list-dev
-      # ===============================
-      LIST_DATABASE_HOSTNAME: list.fmph.uniba.sk
-      LIST_DATABASE_USER: timotea
-      LIST_DATABASE_PASSWORD: gastanko123
-      LIST_DATABASE_NAME: timotea
+      LIST_DATABASE_HOSTNAME: list-database
+      LIST_DATABASE_USER: root
+      LIST_DATABASE_PASSWORD: root
+      LIST_DATABASE_NAME: list-dev
       LIST_CONFIG_BASE_URL: http://server.listdev/
       LIST_ENVIRONMENT: development
       LIST_AMQP_HOST: list-rabbitmq
@@ -44,31 +38,30 @@ services:
         remote_host=host.docker.internal
         remote_autostart=1
         remote_connect_back=0
+  list-database:
+    image: mariadb:10.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: list-dev
+    volumes:
+      - list-database-data:/var/lib/mysql
+    ports:
+      - 43306:3306
+    hostname: server.listdev
+    domainname: listdev
 
-  # list-database:
-  #   image: mariadb:10.7
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root
-  #     MYSQL_DATABASE: list-dev
-  #   # volumes:
-  #   #   - list-database-data:/var/lib/mysql
-  #   ports:
-  #     - 43306:3306
-  #   hostname: server.listdev
-  #   domainname: listdev
-
-  # list-adminer:
-  #   image: adminer:latest
-  #   links:
-  #     - list-database
-  #   hostname: server.listdev
-  #   domainname: listdev
-  #   ports:
-  #     - 8080:8080
-  #   extra_hosts:
-  #     - "server.listdev:127.0.0.1"
-  #   environment:
-  #     ADMINER_DEFAULT_SERVER: list-database
+  list-adminer:
+    image: adminer:latest
+    links:
+      - list-database
+    hostname: server.listdev
+    domainname: listdev
+    ports:
+      - 8080:8080
+    extra_hosts:
+      - "server.listdev:127.0.0.1"
+    environment:
+      ADMINER_DEFAULT_SERVER: list-database
 
   list-rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -91,4 +84,3 @@ services:
 volumes:
   list-database-data:
   list-rabbitmq-data:
-

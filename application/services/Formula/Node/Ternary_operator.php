@@ -21,8 +21,9 @@ class Ternary_operator extends Formula
         $left_result = $this->left->evaluate($map);
         $right_result = $this->right->evaluate($map);
         
-        if($left_result == null || $right_result == null)
+        if($left_result === null || $right_result === null) {
             return null;
+        }
         return $this->condition->evaluate($map) != 0 ? $left_result : $right_result;
     }
     

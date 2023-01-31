@@ -11,14 +11,15 @@ class MinFunction extends Formula
         $left_result = $this->left->evaluate($map);
         $right_result = $this->right->evaluate($map);
         
-        if($left_result == null || $right_result == null)
+        if($left_result === null || $right_result === null) {
             return null;
+        }
         
         return $left_result < $right_result ? $left_result : $right_result;
     }
     
     public function toString(): string
     {
-        return "%MIN( " . $this->left->toString() . " , " .$this->right->toString() . " )";
+        return "MIN( " . $this->left->toString() . " , " .$this->right->toString() . " )";
     }
 }

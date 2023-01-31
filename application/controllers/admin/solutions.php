@@ -2,12 +2,6 @@
 /**
  *  Probably should not be here, but I don't know where to properly load the classes
  */
-include_once "application/services/Formula/Node/Formula_node.php";
-include_once "application/services/Formula/Node/Formula.php";
-foreach (glob("application/services/Formula/Node/*.php") as $filename)
-{
-    include_once $filename;
-}
 include_once "application/services/Formula/NodeFactory.php";
 
 use Application\Services\DependencyInjection\ContainerFactory;
@@ -1120,9 +1114,7 @@ class Solutions extends LIST_Controller
         $table_data = $this->get_valuation_table_data((int)@$filter['course'], @$filter['group'], (bool)@$filter['simple']);
         $this->add_virtual_task_set_types_data($table_data, (int)@$filter['course']);
         
-        $this->parser->assign(
-            'table_data', $table_data
-        );
+        $this->parser->assign('table_data', $table_data);
         
         $course = new Course();
         $course->include_related('period');
@@ -1624,10 +1616,26 @@ class Solutions extends LIST_Controller
      */
     private function extract_evaluation_data($table_data, $max=false): array
     {
+        $course_id = $this->input->post('filter')['course'];
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type->get();
+        $task_set_types = $course->task_set_type
+            ->include_join_fields()
+            ->where('virtual', 0)
+            ->get();
+        $types = array_map(function ($type) {
+            return $type->id;
+        }, $task_set_types->all);
+        
         $evaluation_data = [];
         foreach ($table_data['content'] as $student_data) {
             $student_id = $student_data['id'];
             $evaluation_data[$student_id] = [];
+            
+            foreach($types as $type_id){
+                $evaluation_data[$student_id][$type_id] = 0;
+            }
             
             foreach ($student_data['task_sets_points'] as $index=>$points_data) {
                 if ($points_data['type'] == 'task_set_type' || $points_data['type'] == 'task_set_type_completed') {
@@ -1640,8 +1648,8 @@ class Solutions extends LIST_Controller
     }
 
     /**
-     * @param course_id id of course which we are interested in.
-     * @return Task_set_types in the course which are marked as virtual.
+     * @param int $course_id id of course which we are interested in.
+     * @return Task_set_type collection in the course which are marked as virtual.
      * Finds and returns all virtual task set types along with their join fields from the given course.
      */
     private function get_virtual_task_set_types($course_id) : Task_set_type
@@ -1686,31 +1694,32 @@ class Solutions extends LIST_Controller
 
             foreach ($virtual_types as $virtual_type) {
                 $virtual_type_id = $virtual_type->id;
-                $points = $student_formula_eval_data[$virtual_type_id];
-                $rounded_points = round($points, 2);
-                $min_points = $virtual_type->join_min_points;
-                $minReached = false;
+                $points = null;
+                $rounded_points = 0;
                 
-                if ($min_points != null) {
-                    if ($virtual_type->join_min_points_in_percentage == 1) {
-                        $student_formula_max_eval_data = $formula_max_evaluation_data[$student_data['id']];
-                        $max_points = $student_formula_max_eval_data[$virtual_type_id];
- 
-
-                        $minReached = $points / $max_points * 100 >= $min_points;
-                    } else {
-                        $minReached = $points >= $min_points;
+                if (array_key_exists($virtual_type_id, $student_formula_eval_data)) {
+                    $points = $student_formula_eval_data[$virtual_type_id];
+                    $rounded_points = round($points, 2);
+                    $min_points = $virtual_type->join_min_points;
+                    $minReached = false;
+    
+                    if ($min_points != null) {
+                        if ($virtual_type->join_min_points_in_percentage == 1) {
+                            $student_formula_max_eval_data = $formula_max_evaluation_data[$student_data['id']];
+                            $max_points = $student_formula_max_eval_data[$virtual_type_id];
+                            $minReached = $points / $max_points * 100 >= $min_points;
+                        } else {
+                            $minReached = $points >= $min_points;
+                        }
                     }
                 }
-
                 if ($points === null){
                     $table_data['content'][$index]['task_sets_points'][] = [
                         'type'   => 'task_set_type',
                         'points' => 'err',
                         'flag'   => 'ok',
                     ];
-                }
-                else {
+                } else {
                     $table_data['content'][$index]['task_sets_points'][] = [
                         'type'   => ($minReached) 
                             ? 'task_set_type_completed' 
@@ -1813,8 +1822,8 @@ class Solutions extends LIST_Controller
                 $content_type_task_set->group_end();
             }
             $content_type_task_set->select_subquery(
-                '(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` '
-                . 'WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)',
+                '(SELECT SUM(`points_total`) AS `points` FROM `task_task_set_rel` ' .
+                'WHERE `task_set_id` = `${parent}`.`id` AND `task_task_set_rel`.`bonus_task` = 0)',
                 'total_points'
             );
             $content_type_task_set->get();
@@ -1968,12 +1977,13 @@ class Solutions extends LIST_Controller
                     foreach ($content_type_task_set->all as $task_set) {
                         if ($last_task_set_type_id !== $task_set->task_set_type_id) {
                             if ($last_task_set_type_id !== null) {
-                                $query = $this->db->query("select course_task_set_type_rel.min_points as 'min_points'," .
-                                    "course_task_set_type_rel.min_points_in_percentage as 'percentage' " .
-                                    "from course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id .
-                                    " and course_task_set_type_rel.task_set_type_id=" . $last_task_set_type_id);
+                                $query = $this->db->query("SELECT course_task_set_type_rel.min_points AS 'min_points'," .
+                                    "course_task_set_type_rel.min_points_in_percentage AS 'percentage' " .
+                                    "FROM course_task_set_type_rel WHERE course_task_set_type_rel.course_id=" . $course->id .
+                                    " AND course_task_set_type_rel.task_set_type_id=" . $last_task_set_type_id);
                                 $row = $query->first_row('array');
-                                if (isset($row) && isset($row['min_points']) && trim($row['min_points']) != '' && isset($row['percentage']) && trim($row['percentage']) != '') {
+                                if (isset($row) && isset($row['min_points']) && trim($row['min_points']) != '' &&
+                                    isset($row['percentage']) && trim($row['percentage']) != '') {
                                     $min_points = $row['min_points'];
                                     if ($row['percentage'] == 1) {
                                       $min_points = $min_points * $max_points / 100;
@@ -2083,20 +2093,16 @@ class Solutions extends LIST_Controller
                         }
                         $task_sets_points += $points;
                         $task_sets_points_array[$last_task_set_type_key]['points'] += $points;
-                       
-                        
-                        
-                        
-                        
                         $student_line['total_points'] += $points_included_in_total_score;
                         $student_line['task_sets_points_total'] = $task_sets_points;
                     }
-                    $query = $this->db->query("select course_task_set_type_rel.min_points as 'min_points'," .
-                        "course_task_set_type_rel.min_points_in_percentage as 'percentage' " .
-                        "from course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id .
-                        " and course_task_set_type_rel.task_set_type_id=" . $last_task_set_type_id);
+                    $query = $this->db->query("SELECT course_task_set_type_rel.min_points AS 'min_points'," .
+                        "course_task_set_type_rel.min_points_in_percentage AS 'percentage' " .
+                        "FROM course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id .
+                        " AND course_task_set_type_rel.task_set_type_id=" . $last_task_set_type_id);
                     $row = $query->first_row('array');
-                    if (isset($row) && isset($row['min_points']) && trim($row['min_points']) != '' && isset($row['percentage']) && trim($row['percentage']) != '') {
+                    if (isset($row) && isset($row['min_points']) && trim($row['min_points']) != ''
+                        && isset($row['percentage']) && trim($row['percentage']) != '') {
                         $min_points = $row['min_points'];
                         if ($row['percentage'] == 1) {
                             $min_points = $min_points * $max_points /100;

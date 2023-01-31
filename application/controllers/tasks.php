@@ -1,16 +1,5 @@
 <?php
-/**
- *  Probably should not be here, but I don't know where to properly load the classes
- */
 
-include_once "application/services/Formula/Node/Formula_node.php";
-include_once "application/services/Formula/Node/Formula.php";
-foreach (glob("application/services/Formula/Node/*.php") as $filename)
-{
-    include_once $filename;
-}
-include_once "application/services/Formula/NodeFactory.php";
- 
 use Application\Services\DependencyInjection\ContainerFactory;
 use Application\Services\Formula\FormulaService;
  
@@ -809,7 +798,6 @@ class Tasks extends LIST_Controller
     
             $course->task_set_type->order_by_with_constant('name', 'asc')->get_iterated();
             
-            
             $task_set->select(
                 '`task_sets`.*, `rooms`.`time_day` AS `pb_time_day`, `rooms`.`time_begin` AS `pb_time_begin`, '
                 . '`rooms`.`id` AS `pb_room_id`, `task_sets`.`publish_start_time` AS `pb_publish_start_time`, '
@@ -1122,15 +1110,24 @@ class Tasks extends LIST_Controller
         return $output;
     }
 
-    /**
-     * @param table_data an array with the student's points data from non-virtual task set types.
-     * @param max determines whether the resulting array should contain maximum points ​​or total points.
-     * @return array with task set types ids as keys and points as values ([type_id => max_points/total_points, ...]).
-     * Extracts necessary data for formula evaluation from the given points array.
-     */
-    private function extract_evaluation_data($table_data, $max=false): array
+    private function extract_evaluation_data($table_data, $course_id, $max=false): array
     {
+        $course = new Course();
+        $course->get_by_id($course_id);
+        $course->task_set_type->get();
+        $task_set_types = $course->task_set_type
+            ->include_join_fields()
+            ->where('virtual', 0)
+            ->get();
+
+        $types = array_map(function ($type) {
+            return $type->id;
+        }, $task_set_types->all);
+
         $evaluation_data = [];
+        foreach($types as $type_id){
+            $evaluation_data[$type_id] = 0;
+        }
 
         foreach ($table_data as $key=>$value) {
             if ($key == 'max' || $key == 'total') {
@@ -1141,11 +1138,6 @@ class Tasks extends LIST_Controller
         return $evaluation_data;
     }
 
-    /**
-     * @param course_id id of course which we are interested in.
-     * @return Task_set_types in the course which are marked as virtual.
-     * Finds and returns all virtual task set types along with their join fields from the given course.
-     */
     private function get_virtual_task_set_types($course_id) : Task_set_type
     {
         $course = new Course();
@@ -1158,16 +1150,10 @@ class Tasks extends LIST_Controller
         return $course->task_set_type;
     }
 
-    /**
-     * @param table_data a reference to an array with the student's points data from non-virtual task set types.
-     * @param course_id id of course which we are interested in.
-     * Adds virtual task set types points data to the given points array and
-     * increases total points by the appropriate amount in the points array.
-     */
     private function add_virtual_task_set_types_data(&$table_data, $course_id) : void {
         $virtual_types = $this->get_virtual_task_set_types($course_id);
-        $evaluation_data= $this->extract_evaluation_data($table_data);
-        $max_evaluation_data = $this->extract_evaluation_data($table_data, true);
+        $evaluation_data= $this->extract_evaluation_data($table_data, $course_id);
+        $max_evaluation_data = $this->extract_evaluation_data($table_data, $course_id, true);
     
         $container = ContainerFactory::getContainer();
         /** @var FormulaService $formulaService */
@@ -1186,13 +1172,13 @@ class Tasks extends LIST_Controller
                 $table_data[$virtual_type->id] = [
                     'total' => 'err',
                     'max' => 'err',
-                    'include_in_total' => $virtual_type->join_include_in_total
+                    'include_in_total' => $virtual_type->join_include_in_total,
                 ];
             } else {
                 $table_data[$virtual_type->id] = [
                     'total' => $rounded_points,
                     'max' => $rounded_max_points,
-                    'include_in_total' => $virtual_type->join_include_in_total
+                    'include_in_total' => $virtual_type->join_include_in_total,
                 ];
                 if ($virtual_type->join_include_in_total) {
                     $table_data['total'] += $rounded_points;
@@ -1236,13 +1222,14 @@ class Tasks extends LIST_Controller
         
         foreach ($typeIds as $task_set_id) {
             if (!isset($task_set_id)) continue;
-            $query= $this->db->query("select course_task_set_type_rel.min_points as 'min_points',".
-                "course_task_set_type_rel.min_points_in_percentage as 'percentage', ".
-                "course_task_set_type_rel.include_in_total as 'include_in_total'".
-                "from course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id .
-                " and course_task_set_type_rel.task_set_type_id=" . $task_set_id);
+            $query= $this->db->query("SELECT course_task_set_type_rel.min_points AS 'min_points',".
+                "course_task_set_type_rel.min_points_in_percentage AS 'percentage', ".
+                "course_task_set_type_rel.include_in_total AS 'include_in_total'".
+                "FROM course_task_set_type_rel where course_task_set_type_rel.course_id=" . $course->id .
+                " AND course_task_set_type_rel.task_set_type_id=" . $task_set_id);
             $row = $query->first_row('array');
-            if (isset($row) && isset($row['min_points']) && trim($row['min_points']) != '' && isset($row['percentage']) && trim($row['percentage']) != '') {
+            if (isset($row) && isset($row['min_points']) && trim($row['min_points']) != '' &&
+                isset($row['percentage']) && trim($row['percentage']) != '') {
                 $output[$task_set_id]['min'] = $row['min_points'];
                 $output[$task_set_id]['min_in_percentage'] = $row['percentage'] == 1;
             }

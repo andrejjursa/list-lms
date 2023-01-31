@@ -1,12 +1,4 @@
 jQuery(document).ready(function($) {
-    /**
-     * Show/hides upload solution and formula field in the form based on the 
-     * virtual field value. 
-     * If the task set type is marked as virtual upload solution will be turned 
-     * off and hidden, the formula field will be shown. 
-     * Otherwise, the formula field will be hidden and the upload solution 
-     * field will be shown.
-     */
     var toggle_upload_solution = function() {
         if ($('select[name="task_set_type[join_virtual]"]').val() === "1") {
             $('#task_set_type_join_upload_solution_field_id').hide();
