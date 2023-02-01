@@ -6,6 +6,8 @@ use Application\Services\AMQP\Factory\PublisherFactory;
 use Application\Services\DependencyInjection\Factories\AmqpConnectionFactory;
 use Application\Services\DependencyInjection\Factories\ConfigFactory;
 use Application\Services\DependencyInjection\Factories\ConsumerFactoryObjectFactory;
+use Application\Services\DependencyInjection\Factories\Formula\FormulaServiceFactory;
+use Application\Services\DependencyInjection\Factories\Formula\NodeFactoryFactory;
 use Application\Services\DependencyInjection\Factories\GetComparisonsRequestMapperFactory;
 use Application\Services\DependencyInjection\Factories\Moss\Guzzle\MOSSClientFactory;
 use Application\Services\DependencyInjection\Factories\Moss\Service\ConfigurationBuilderFactory;
@@ -15,6 +17,8 @@ use Application\Services\DependencyInjection\Factories\MossRequestFactoryFactory
 use Application\Services\DependencyInjection\Factories\PublisherFactoryObjectFactory;
 use Application\Services\DependencyInjection\Factories\Redis\RedisClientFactory;
 use Application\Services\DependencyInjection\Factories\Symfony\Lock\SymfonyLockFactory;
+use Application\Services\Formula\FormulaService;
+use Application\Services\Formula\NodeFactory;
 use Application\Services\Moss\RequestFactory as MossRequestFactory;
 use Application\Services\Moss\RequestMapper\GetComparisonsRequestMapper;
 use Application\Services\Moss\Service\ConfigurationBuilder;
@@ -40,4 +44,6 @@ return [
     'lock_redis'                       => RedisClientFactory::class,
     /* Symfony/Lock */
     'symfony_lock_factory'             => SymfonyLockFactory::class,
+    FormulaService::class              => FormulaServiceFactory::class,
+    NodeFactory::class                 => NodeFactoryFactory::class
 ];

@@ -111,10 +111,26 @@
                 </tr>
             </tfoot>
             <tbody>
+                {assign 'total_points' 0}{assign 'max_points' 0}
                 {foreach $task_set_types as $task_set_type}
-                <tr>
+                
+                {if $points[$task_set_type->id].total == 'err'}
+                    {$total_points = 'err'}{$max_points = 'err'}
+                {else}
+                    {$total_points = $points[$task_set_type->id].total|floatval}{$max_points = $points[$task_set_type->id].max|floatval}
+                {/if} 
+
+                <tr class="{(isset($points[$task_set_type->id].include_in_total) && !$points[$task_set_type->id].include_in_total) ? 'tr_task_set_type_not_included' : ''}">
                     <td class="td_task_set_type">{translate_text|str_to_first_upper|truncate:20 text=$task_set_type->name}</td>
-                    <td class="td_points">{$points[$task_set_type->id].total|floatval}&nbsp;/&nbsp;{$points[$task_set_type->id].max|floatval}</td>
+                    {if is_null($points[$task_set_type->id].min)}
+                        <td class="td_points">{$total_points}&nbsp;/&nbsp;{$max_points}</td>
+                    {else}
+                        {if !$points[$task_set_type->id].min_in_percentage}
+                            <td class="td_points">{$total_points}&nbsp;/&nbsp;{$max_points} ({translate line='tasks_left_bar_points_min'}&nbsp;{$points[$task_set_type->id].min|floatval})</td>
+                        {else}
+                            <td class="td_points">{$total_points}&nbsp;/&nbsp;{$max_points} ({translate line='tasks_left_bar_points_min'}&nbsp;{($points[$task_set_type->id].min * $points[$task_set_type->id].max / 100)|floatval})</td>
+                        {/if}
+                    {/if}
                 </tr>
                 {/foreach}
             </tbody>
@@ -149,4 +165,10 @@
             </tbody>
         </table>
     </div>
+    <div class="color_legend">
+        <div class="color_legend_title"><h4>{translate line='tasks_left_bar_color_legend_title'}</h4></div>
+        <div class="color_legend_data">{translate line='tasks_left_bar_color_legend_data_black'}</div>
+        <div class="color_legend_data blue_text">{translate line='tasks_left_bar_color_legend_data_blue'}</div>
+    </div>
+
 {/block}
