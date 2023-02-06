@@ -1,5 +1,7 @@
 FROM webdevops/php-apache-dev:7.1
 
+ENV DEBIAN_FRONTEND="noninteractive"
+
 RUN apt update && apt upgrade -y && apt install -y npm sudo procmail software-properties-common
 
 RUN eval cdir=$(pwd) && mkdir -p /opt/java && cd /opt/java && \
