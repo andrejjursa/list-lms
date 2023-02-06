@@ -37,7 +37,7 @@
             </select>
             <input type="submit" value="{translate line='admin_dashboard_button_set_columns'}" class="button" />
         </fieldset>
-    </form>    
+    </form>
 {/block}
 {block custom_head}<script type="text/javascript">
     var widget_list = {$widget_list|json_encode};

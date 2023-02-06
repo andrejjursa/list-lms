@@ -1,4 +1,14 @@
 jQuery(document).ready(function($) {
+    var toggle_upload_solution = function() {
+        if ($('select[name="task_set_type[join_virtual]"]').val() === "1") {
+            $('#task_set_type_join_upload_solution_field_id').hide();
+            $('select[name="task_set_type[join_upload_solution]"]').val("0");
+            $('#task_set_type_join_formula_field_id').show();
+        } else {
+            $('#task_set_type_join_upload_solution_field_id').show()
+            $('#task_set_type_join_formula_field_id').hide();
+        }
+    }
     
     if ($('#new_course_form_id').length !== 0) {
         make_switchable_form('#new_course_form_id');
@@ -57,30 +67,6 @@ jQuery(document).ready(function($) {
         
         $(document).on('click', '#table_content a.delete', delete_course);
         
-        $(document).on('click', '#table_content a.task_set_types_editor', function(event) {
-            event.preventDefault();
-            var url = $(this).attr('href');
-            $.fancybox(url, {
-                type: 'iframe',
-                width: '100%',
-                height: '100%',
-                autoSize: false,
-                autoHeight: false,
-                autoWidth: false,
-                helpers: {
-                    overlay: {
-                        css: {
-                            background: 'rgba(255,255,255,0)'
-                        }
-                    }
-                },
-                beforeClose: function() {
-                    reload_table_content();
-                    return true;
-                }
-            });
-        });
-        
         $(document).on('click', '#table_content a.mail_to_course', function(event) {
             event.preventDefault();
             var url = $(this).attr('href');
@@ -102,75 +88,18 @@ jQuery(document).ready(function($) {
         });
         
     } else if ($('#add_task_set_type_form_id').length !== 0) {
-        make_switchable_form('#add_task_set_type_form_id');
-        
         var reload_table_content = function() {
             api_ajax_load(global_base_url + 'index.php/admin_courses/get_task_set_types/course_id/' + current_course, '#table_content_id');
         };
         
-        var reload_form = function() {
-            api_ajax_load(global_base_url + 'index.php/admin_courses/get_task_set_type_form/course_id/' + current_course, '#add_task_set_type_form_id');
-        };
-        
         reload_table_content(); 
+        toggle_upload_solution();
+
+        $(document).on('change', 'select[name="task_set_type[join_virtual]"]', toggle_upload_solution);
         
-        $('#add_task_set_type_form_id').submit(function(event) {
-            event.preventDefault();
-            var url = $(this).attr('action');
-            var data = $(this).serializeArray();
-            var success = function() {
-                if ($('#add_task_set_type_form_id .flash_message.message_success').length > 0) {
-                    reload_table_content();
-                }
-            };
-            api_ajax_load(url, '#add_task_set_type_form_id', 'post', data, success);
-        }); 
-        
-        $(document).on('click', '#table_content_id a.save_button', function(event) {
-            event.preventDefault();
-            var url = $(this).attr('href');
-            var data = {};
-            $(this).parents('tr.task_set_types_table_row').find('select, input').each(function() {
-                data[$(this).attr('name')] = $(this).val();
-            });
-            console.log(url);
-            console.log(data);
-            api_ajax_update(url, 'post', data, function(output) {
-                if (output) {
-                    reload_table_content();
-                    show_notification(messages.save_success, 'success');
-                } else {
-                    show_notification(messages.save_failed, 'error');
-                }
-            }, function() {
-                show_notification(messages.save_failed, 'error');
-            });
-        });  
-        
-        $(document).on('click', '#table_content_id a.delete', function(event) {
-            event.preventDefault();
-            
-            if (!confirm(messages.delete_question)) { return; }
-            
-            var url = $(this).attr('href');
-            var data = {};
-            $(this).parents('tr.task_set_types_table_row').find('select, input').each(function() {
-                data[$(this).attr('name')] = $(this).val();
-            });
-            console.log(url);
-            console.log(data);
-            api_ajax_update(url, 'post', data, function(output) {
-                if (output) {
-                    reload_table_content();
-                    reload_form();
-                    show_notification(messages.delete_success, 'success');
-                } else {
-                    show_notification(messages.delete_failed, 'error');
-                }
-            }, function() {
-                show_notification(messages.delete_failed, 'error');
-            });
-        }); 
+    } else if ($('#edit_task_set_type_form_id').length !== 0) {
+        toggle_upload_solution();
+
+        $(document).on('change', 'select[name="task_set_type[join_virtual]"]', toggle_upload_solution);
     }
-    
 });
