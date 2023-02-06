@@ -20,6 +20,12 @@
 # in the body of this report comments can't be used.                           #
 ################################################################################
 
+VERSION 1.9.0 | 2023-02-06
+
+NEW Pridané virtuálne typy zostáv úloh s dynamickým výpočtom bodov.
+NEW [lang:english] Added virtual task set types with dynamic points calculation.
+
+END VERSION
 
 VERSION 1.8.3 | 2022-07-04
 
