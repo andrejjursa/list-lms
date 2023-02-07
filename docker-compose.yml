@@ -38,7 +38,6 @@ services:
         remote_host=host.docker.internal
         remote_autostart=1
         remote_connect_back=0
-
   list-database:
     image: mariadb:10.7
     environment:
@@ -85,4 +84,3 @@ services:
 volumes:
   list-database-data:
   list-rabbitmq-data:
-
