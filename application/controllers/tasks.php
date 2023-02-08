@@ -1128,7 +1128,7 @@ class Tasks extends LIST_Controller
         foreach($types as $type_id){
             $evaluation_data[$type_id] = 0;
         }
-
+        
         foreach ($table_data as $key=>$value) {
             if ($key == 'max' || $key == 'total') {
                 continue;
@@ -1160,19 +1160,20 @@ class Tasks extends LIST_Controller
         $formulaService = $container->get(FormulaService::class);
         $formula_evaluation_data = $formulaService->evaluate_formulas_for_student($evaluation_data, $virtual_types);
         $formula_max_evaluation_data = $formulaService->evaluate_formulas_for_student($max_evaluation_data, $virtual_types);
-
-        foreach ($virtual_types as $virtual_type) {
+        
+        foreach ($virtual_types->all as $virtual_type) {
             $virtual_type_id = $virtual_type->id;
             $points = $formula_evaluation_data[$virtual_type_id];
             $max_points = $formula_max_evaluation_data[$virtual_type_id];
             $rounded_points = round($points, 2);
             $rounded_max_points = round($max_points, 2);
-
             if ($points === null) {
                 $table_data[$virtual_type->id] = [
                     'total' => 'err',
                     'max' => 'err',
                     'include_in_total' => $virtual_type->join_include_in_total,
+                    'min' => null,
+                    'min_in_percentage' => null,
                 ];
             } else {
                 $table_data[$virtual_type->id] = [
@@ -1183,6 +1184,10 @@ class Tasks extends LIST_Controller
                 if ($virtual_type->join_include_in_total) {
                     $table_data['total'] += $rounded_points;
                     $table_data['max'] += $rounded_max_points;
+                }
+                if ($virtual_type->join_min_points !== null) {
+                    $table_data[$virtual_type_id]['min'] = $virtual_type->join_min_points;
+                    $table_data[$virtual_type_id]['min_in_percentage'] = $virtual_type->join_min_points_in_percentage == 1;
                 }
             }
         }
