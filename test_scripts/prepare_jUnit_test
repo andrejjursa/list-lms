@@ -6,7 +6,7 @@ TEST_PATH=$3
 OUTPUT_FILE="$TEST_PATH/__list_output.txt"
 COMPILATION_LOG="$TEST_PATH/__list_compilation_log.txt"
 ENCODING="-encoding UTF-8"
-JAVAC_ARGS="-Xlint:unchecked --enable-preview --source 15 -cp /usr/share/java/junit4.jar:."
+JAVAC_ARGS="-Xlint:unchecked --enable-preview --source 17 -cp /usr/share/java/junit4.jar:."
 CURRENT_PATH=$( cd "$( dirname "$0" )" && pwd )
 
 # Remove all .class files:

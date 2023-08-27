@@ -28,7 +28,11 @@ if [[ $TRY_UCS2LE -ne 0 ]] ; then
   rm -f $OUTPUT_FILE'.x'
   # echo "compiling failed, trying with UCS-2LE encoding..." >> $OUTPUT_FILE
   mv list_simple_cpp_test.cpp list_simple_cpp_test.cpp.pending
-  for x in *.cpp *.CPP ; do mv $x conv.$x ; iconv -f UCS-2LE -t utf-8 conv.$x -o $x ; rm conv.$x ; done 
+  for x in *.cpp *.CPP ; do 
+    mv $x conv.$x  2> /dev/null
+    iconv -f UCS-2LE -t utf-8 conv.$x -o $x  2> /dev/null
+    rm conv.$x  2> /dev/null
+  done 
   g++ $COPTIONS -c $(ls *.cpp *.CPP) >> $OUTPUT_FILE 2> $OUTPUT_FILE'.x'
   RV1=$?
   mv list_simple_cpp_test.cpp.pending list_simple_cpp_test.cpp

@@ -43,4 +43,4 @@ $config['moss_langs_file_extensions'] = [
  * MOSS Consumer stop after message is handled:
  */
 
-$config['moss_stop_on_message'] = false;
+$config['moss_stop_on_message'] = true;

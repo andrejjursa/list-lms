@@ -3,4 +3,12 @@
 MyPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PHPPATH=$( which php )
 
-$PHPPATH $MyPATH/../index.php cli "$@"
+echo "starting $PHPPATH $MyPATH/../index.php cli $@ ..." 
+if [ "$(whoami)" != "elieste" ]; then
+  sudo -u elieste nohup $PHPPATH $MyPATH/../index.php cli "$@" & 
+else
+  nohup $PHPPATH $MyPATH/../index.php cli "$@" & 
+fi
+
+#echo "exiting with 0"
+exit 0
