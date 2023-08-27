@@ -1,5 +1,11 @@
 {include file='partials/tests_general/file_input.tpl' label_lang='txt_tests_config_form_simple_test_zip_file' field_name='zip_file' hint_lang='txt_tests_config_form_simple_test_zip_file_hint' inline}
 {include file='partials/tests_general/textline_input.tpl'
+label_lang='txt_tests_config_form_simple_test_file_to_run'
+label_class='required'
+hint_lang='txt_tests_config_form_simple_test_file_to_run_hint'
+field_name='file_to_run'
+inline}
+{include file='partials/tests_general/textline_input.tpl'
 label_lang='txt_tests_config_form_simple_test_scoring_percents'
 label_class='required'
 hint_lang='txt_tests_config_form_simple_test_scoring_percents_hint'
