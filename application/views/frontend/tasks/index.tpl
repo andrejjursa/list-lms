@@ -114,7 +114,7 @@
                 {assign 'total_points' 0}{assign 'max_points' 0}
                 {foreach $task_set_types as $task_set_type}
                 
-                {if $points[$task_set_type->id].total == 'err'}
+                {if $points[$task_set_type->id].total === 'err'}
                     {$total_points = 'err'}{$max_points = 'err'}
                 {else}
                     {$total_points = $points[$task_set_type->id].total|floatval}{$max_points = $points[$task_set_type->id].max|floatval}
