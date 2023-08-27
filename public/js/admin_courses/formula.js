@@ -9,7 +9,8 @@ jQuery(document).ready(function($) {
         toolbar1: "+ - × / % | < > <= >= == != ∧ ∨ ¬ | ternary | min max | const type",
 
         setup: function(editor) {
-            const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', 'Backspace'];
+            const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', 
+		                 'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Space'];
 
             editor.on('keydown', e => {
                 if (!allowedKeys.includes(e.key)){

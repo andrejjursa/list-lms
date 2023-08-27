@@ -1160,7 +1160,7 @@ class Tasks extends LIST_Controller
         $formulaService = $container->get(FormulaService::class);
         $formula_evaluation_data = $formulaService->evaluate_formulas_for_student($evaluation_data, $virtual_types);
         $formula_max_evaluation_data = $formulaService->evaluate_formulas_for_student($max_evaluation_data, $virtual_types);
-        foreach ($virtual_types as $virtual_type) {
+        foreach ($virtual_types->all as $virtual_type) {
             $virtual_type_id = $virtual_type->id;
             $points = $formula_evaluation_data[$virtual_type_id];
             $max_points = $formula_max_evaluation_data[$virtual_type_id];
