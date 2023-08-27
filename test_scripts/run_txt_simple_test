@@ -1,0 +1,8 @@
+#!/bin/bash
+BIN_PATH=$1
+TIMEOUT=$2
+TO_RUN=$3
+SCORING_FILE=$4
+
+nice $BIN_PATH/run_with_timeout $TIMEOUT $TO_RUN $SCORING_FILE 
+chmod a+r $SCORING_FILE

@@ -1,0 +1,44 @@
+#!/bin/bash
+TIMEOUT=$1
+WORKING_PATH=$2
+BIN_PATH=`pwd`/test_scripts
+RUN_FILE=strykoFedorLietajuciPES
+
+COPTIONS=-Wno-write-strings
+
+OUTPUT_FILE=$WORKING_PATH'__list_output.txt'
+SCORING_FILE=$WORKING_PATH'__list_score.txt'
+
+cd $WORKING_PATH
+rm -f $RUN_FILE *.o
+echo "----- compiling... ----- <pre>" >> $OUTPUT_FILE
+rm -f $OUTPUT_FILE'.x'
+g++ $COPTIONS -c $(ls *.cpp *.CPP) >> $OUTPUT_FILE 2> $OUTPUT_FILE'.x'
+RV1=$?
+
+if [[ $RV1 -ne 0 ]] ; then
+  echo "</pre><br>----- compilation did not work out well, please send us a mail -----<br>" >> $OUTPUT_FILE
+  echo "<pre>" >> $OUTPUT_FILE
+  cat $OUTPUT_FILE'.x' >> $OUTPUT_FILE
+  echo "</pre>" >> $OUTPUT_FILE
+  rm -f $OUTPUT_FILE'.x'
+else
+  rm -f $OUTPUT_FILE'.x'
+  if ! g++ $COPTIONS -c *.cpp ; then
+    echo "</pre><br>----- compiling of test failed, this is our fault! please send us a mail! -----<pre>" >> $OUTPUT_FILE
+  else
+    echo "</pre><br>----- linking... -----<br><pre>" >> $OUTPUT_FILE 
+    g++ -o $RUN_FILE *.o >> $OUTPUT_FILE 2>> $OUTPUT_FILE
+    if [[ $? -ne 0 ]] ; then
+      echo "</pre><br>----- linking did not work out well, please fix your errors, upload a new version and try again ----<br><pre>" >> $OUTPUT_FILE
+    else
+      echo "</pre><br>----- running test, timeout time is $TIMEOUT ms... -----<br><pre>" >> $OUTPUT_FILE
+      chgrp testovac . 
+      chmod g+w .
+      sudo -u testovac $BIN_PATH/run_txt_simple_test $BIN_PATH $TIMEOUT $WORKING_PATH$RUN_FILE $SCORING_FILE  >> $OUTPUT_FILE 2>> $OUTPUT_FILE
+      echo "</pre><br>----- run finished with `cat $SCORING_FILE` % success -----<br>" >> $OUTPUT_FILE
+    fi
+  fi
+fi
+
+
