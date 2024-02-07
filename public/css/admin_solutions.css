@@ -92,7 +92,6 @@
     #valutation_table tbody tr td { padding: 3px; text-align: center; }
     #valutation_table tbody tr td.type_task_set.flag_notSubmitted { color: red; }
     #valutation_table tbody tr td.type_task_set.flag_notInGroup { color: darkslategrey; }
-    #valutation_table tbody tr td.type_task_set.flag_revalidate { color: blue; }
     #valutation_table tbody tr td.type_task_set.flag_notConsidered { color: magenta; }
     #valutation_table tbody tr td.type_summary,
     #valutation_table tbody tr td.type_task_set_type { font-weight: bold; }
@@ -115,6 +114,7 @@
     #valutation_table tbody tr:nth-child(2n+1) td.type_summary.ctype_task_set { background-color: #ffff99; }
     #valutation_table tbody tr:nth-child(2n) td.type_summary.ctype_project { background-color: #ffcccc; }
     #valutation_table tbody tr:nth-child(2n+1) td.type_summary.ctype_project { background-color: #ff9999; }
+    #valutation_table tbody tr td.type_task_set.flag_revalidate { color: blue; background-color: red; }
     #valutation_table thead tr th { padding: 3px; text-align: center; font-weight: bold; }
     #valutation_table thead tr th.content_type_task_sets { background-color: #f4ffa4; }
     #valutation_table thead tr th.content_type_projects { background-color: #ffc6c6; }
