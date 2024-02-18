@@ -94,15 +94,20 @@ class parallel_moss extends LIST_Controller
         $output = [
             'data' => [],
         ];
-        
+
+        $allcorses = [];
         /** @var Course $course */
-        foreach ($courses as $course) {
-            $output['data'][$this->lang->text($course->period_name)][] = [
-                'id'   => $course->id,
-                'name' => $this->lang->text($course->name),
+        foreach ($courses as $course) 
+            $allcorses[intval($course->id)] = [ $course->period_name, $course->id, $course->name ];
+
+        krsort($allcorses, SORT_NUMERIC);
+
+        foreach ($allcorses as $key  => $crs) {
+            $output['data'][$this->lang->text($crs[0])][] = [
+                'id'   => $crs[1],
+                'name' => $this->lang->text($crs[2]),
             ];
         }
-        
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($output));
     }
