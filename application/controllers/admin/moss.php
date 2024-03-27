@@ -324,6 +324,8 @@ class moss extends LIST_Controller
             $this->mosslib->setResultLimit((int)$config['n']);
             
             $this->load->config('moss');
+
+            $this->mosslib->appendlog(" moss execute()...");
             
             $moss_lang_file_extensions = $this->config->item('moss_langs_file_extensions');
             $extensions = $moss_lang_file_extensions[$config['l']];
@@ -333,6 +335,9 @@ class moss extends LIST_Controller
             
             $current_path = getcwd();
             chdir($path);
+
+            $this->mosslib->appendlog(" mosslib->send()...\n");
+
             $results = $this->mosslib->send();
             chdir($current_path);
             

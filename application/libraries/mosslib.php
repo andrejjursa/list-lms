@@ -226,6 +226,23 @@ class mosslib
             $this->addFile($file);
         }
     }
+
+    /**
+     * append line to log /var/log/listmoss/listmoss.log
+     *
+     * @param string $msg
+     * @example appendlog("contacting moss server...");
+     */
+    public function appendlog($msg): void
+    {
+        $logdir="/var/log/listmoss";
+        $logfile="listmoss.log";
+	if (!is_dir($logdir)) return;
+        $logf=fopen($logdir . "/" . $logfile, "a+");
+	if (!$logf) return;
+        fwrite($logf, strftime("%F %T") . $msg . "\n");
+        fclose($logf);
+    }
     
     /**
      * Send the request to the server and wait for the response
@@ -235,19 +252,24 @@ class mosslib
      */
     public function send(): string
     {
+        $this->appendlog(" calling fsockopen()...");
         $socket = fsockopen($this->server, $this->port, $errno, $errstr);
+        $this->appendlog(" fsockopen() => " . $socket);
+
         if (!$socket) {
             throw new Exception(
                 "Socket-Error: " . $this->server . ":" . $this->port . " - " . $errstr . " (" . $errno . ")",
                 8
             );
         } else {
+            stream_set_timeout($socket, 90);
+    
             fwrite($socket, "moss " . $this->userid . "\n");
             fwrite($socket, "directory " . $this->options['d'] . "\n");
             fwrite($socket, "X " . $this->options['x'] . "\n");
             fwrite($socket, "maxmatches " . $this->options['m'] . "\n");
             fwrite($socket, "show " . $this->options['n'] . "\n");
-            
+                
             //Language Check
             fwrite($socket, "language " . $this->options['l'] . "\n");
             $read = trim(fgets($socket));
@@ -256,21 +278,52 @@ class mosslib
                 fclose($socket);
                 throw new Exception("Unsupported language", 1);
             }
-            
+                
             foreach ($this->basefiles as $bfile) {
+                $this->appendlog(" uploading basefile $bfile...");
                 $this->uploadFile($socket, $bfile, 0);
             }
-            
+                
             $i = 1;
             foreach ($this->files as $file) {
+                $this->appendlog(" uploading file $file...");
                 $this->uploadFile($socket, $file, $i);
                 $i++;
             }
-            
-            fwrite($socket, "query 0 " . $this->options['c'] . "\n");
-            $read = fgets($socket);
+                
+            $this->appendlog(" sending query...");
+            fwrite($socket, "query 0 " . $this->options['c']);
+            $this->appendlog(" reading response...");
+            for ($i = 0; $i < 10; $i++) {
+                $read = fgets($socket);
+                if (false == $read) {
+                    $meta=stream_get_meta_data($socket);
+                    if ($meta['eof'] == 1) {
+                        $this->appendlog(" EOF");
+                        break;
+                    }
+                    if ($meta['timed_out'] != 1) {
+                        $this->appendlog(" read error: " . serialize($meta));
+                        break;
+                    }
+                    $this->appendlog(" TIMED_OUT, retrying read " . ($i + 1));
+                    usleep(200000);
+                }
+                else {
+                    $meta=stream_get_meta_data($socket);
+                    $this->appendlog(" response: $read\n writing end and closing... \n read stats OK:" . serialize($meta));
+                    break;
+                }
+            }
             fwrite($socket, "end\n");
             fclose($socket);
+	    if ($i >= 10) 
+	    {
+                $this->appendlog(" giving up.\n--------------");
+                throw new Exception("Moss server timed out", 9);
+            } 
+    
+            $this->appendlog(" returning.\n--------------");
             return $read;
         }
     }
@@ -286,10 +339,24 @@ class mosslib
      */
     private function uploadFile($handle, $file, $id): void
     {
+        if (str_contains($file, "__MACOSX")) return;
+
         $size = filesize($file);
-        $file_name_fixed = str_replace(" ", "_", $file);
-        fwrite($handle, "file " . $id . " " . $this->options['l'] . " " . $size . " " . $file_name_fixed . "\n");
-        fwrite($handle, file_get_contents($file));
+
+        $file_name_fixed1 = str_replace(" ", "_", $file);
+        $file_name_fixed2 = str_replace("(", "_", $file_name_fixed1);
+        $file_name_fixed = str_replace(")", "_", $file_name_fixed2);
+
+        if (false == fwrite($handle, "file " . $id . " " . $this->options['l'] . " " . $size . " " . $file_name_fixed . "\n")) { 
+            $this->appendlog(" error uloading file header\n--------------");
+        }
+        else {
+            $contents = file_get_contents($file);
+            if (false == fwrite($handle, $contents)) {
+                $this->appendlog(" error uloading file content\n--------------");
+            }
+        }
+        $this->appendlog(" upld ok " . strlen($contents));
     }
     
 }
