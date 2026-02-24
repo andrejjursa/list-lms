@@ -43,6 +43,10 @@
                     </div>
                     {/if}
                     <div class="field">
+                        <label>{translate line='admin_solutions_list_table_header_ip_address'}:</label>
+                        <p class="input">{$solution->ip_address}</p>
+                    </div>
+                    <div class="field">
                         <label for="solution_not_considered_id">{translate line='admin_solutions_valuation_form_label_not_considered'}:</label>
                         <p class="input"><input type="checkbox" value="1" name="solution[not_considered]" id="solution_not_considered_id"{if $smarty.post.solution.not_considered|default:$solution->not_considered} checked="checked"{/if} /></p>
                     </div>
