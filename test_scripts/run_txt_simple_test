@@ -4,5 +4,11 @@ TIMEOUT=$2
 TO_RUN=$3
 SCORING_FILE=$4
 
+ulimit -u 100        # user processes
+ulimit -d 4000000    # data segment (kbytes)
+ulimit -v 4294968    # virtual memory (kbytes)
+ulimit -f 1000000    # max file size (blocks)
+ulimit -m 4000000    # max memory size (kbytes)
+ulimit -t 86400      # max runtime (seconds) - timeout specified in test still applies
 nice $BIN_PATH/run_with_timeout $TIMEOUT $TO_RUN $SCORING_FILE 
 chmod a+r $SCORING_FILE

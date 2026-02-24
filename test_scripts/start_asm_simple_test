@@ -1,0 +1,71 @@
+#!/bin/bash
+TIMEOUT=$1
+WORKING_PATH=$2
+TEST_SOURCE=$3
+FOLDER_TO_TEST=$(basename "$WORKING_PATH")
+ASM_OUTGOING_PATH="/var/www/list/private/asm_test_for_remote_eval"
+ASM_INCOMING_PATH="/var/www/list/private/asm_test_for_remote_result"
+
+OUTPUT_FILE='__list_output.txt'
+SCORING_FILE='__list_score.txt'
+
+echo $TIMEOUT > $WORKING_PATH/timeout.txt
+
+echo "testing $TEST_SOURCE ..." > $WORKING_PATH/$OUTPUT_FILE
+
+# rename the main() function from student solution
+mv $WORKING_PATH/$TEST_SOURCE.cpp $WORKING_PATH/$TEST_SOURCE.wait_a_bit
+if compgen -G "$WORKING_PATH/*.c" ; then
+  for f in $WORKING_PATH/*.c; do 
+    mv "$f" "$f.input"
+    sed -E "s/^[ \t]*(int|void)[ \t]+main\(/#pragma warning(default:4716)\nint main2(/g" "$f.input" > "$f"
+    rm "$f.input"
+  done
+fi
+if compgen -G "$WORKING_PATH/*.cpp" ; then
+  for f in $WORKING_PATH/*.cpp ; do 
+    mv "$f" "$f.input"
+    sed -E "s/^[ \t]*(int|void)[ \t]+main\(/#pragma warning(default:4716)\nint main2(/g" "$f.input" > "$f"
+    rm "$f.input"
+  done
+fi
+mv $WORKING_PATH/$TEST_SOURCE.wait_a_bit $WORKING_PATH/$TEST_SOURCE.cpp
+
+if compgen -G "$WORKING_PATH/*.c" ; then
+  for f in $WORKING_PATH/*.cpp ; do
+    mv "$f" "${f%.cpp}.c"
+  done
+fi
+
+mkdir $ASM_INCOMING_PATH/$FOLDER_TO_TEST
+
+# this is dirty, but otherwise elieste could not scp 
+chmod go+w $WORKING_PATH
+chmod go+w $ASM_INCOMING_PATH/$FOLDER_TO_TEST
+
+cp -pr $WORKING_PATH $ASM_OUTGOING_PATH
+
+attempts=60 
+while [ ! -f "$ASM_OUTGOING_PATH/$FOLDER_TO_TEST/accepted.txt" ]; do
+  sleep 0.5
+  attempts=$((attempts - 1))
+  if [ "$attempts" -eq 0 ]; then
+    break
+  fi
+done
+
+rm -rf $ASM_OUTGOING_PATH/$FOLDER_TO_TEST
+
+attempts=180 
+while [ ! -f "$ASM_INCOMING_PATH/$FOLDER_TO_TEST/$OUTPUT_FILE" ]; do
+  sleep 0.5
+  attempts=$((attempts - 1))
+  if [ "$attempts" -eq 0 ]; then
+    break
+  fi
+done
+
+mv $ASM_INCOMING_PATH/$FOLDER_TO_TEST/$OUTPUT_FILE $WORKING_PATH
+mv $ASM_INCOMING_PATH/$FOLDER_TO_TEST/$SCORING_FILE $WORKING_PATH
+rm -rf $ASM_INCOMING_PATH/$FOLDER_TO_TEST
+
